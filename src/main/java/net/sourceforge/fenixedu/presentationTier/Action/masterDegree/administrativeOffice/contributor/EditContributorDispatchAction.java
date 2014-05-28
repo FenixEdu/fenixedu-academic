@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 14/Mar/2003
  *
@@ -13,6 +31,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -26,13 +45,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/editContributor", module = "academicAdministration", formBean = "createContributorForm")
+@Mapping(path = "/editContributor", module = "academicAdministration", formBean = "createContributorForm",
+        functionality = EditContributorsDispatchAction.class)
 @Forwards({ @Forward(name = "EditReady", path = "/academicAdminOffice/contributor/editContributor.jsp"),
         @Forward(name = "EditSuccess", path = "/academicAdminOffice/contributor/editContributorSuccess.jsp") })
-@Exceptions(value = { @ExceptionHandling(
-        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class,
-        key = "resources.Action.exceptions.ExistingActionException",
-        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+@Exceptions(value = { @ExceptionHandling(type = ExistingActionException.class,
+        key = "resources.Action.exceptions.ExistingActionException", handler = FenixErrorExceptionHandler.class,
+        scope = "request") })
 public class EditContributorDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,

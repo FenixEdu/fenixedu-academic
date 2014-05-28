@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests;
 
 import java.io.ByteArrayOutputStream;
@@ -14,7 +32,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -28,11 +46,15 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -41,17 +63,20 @@ import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
+@StrutsFunctionality(app = AcademicAdminServicesApp.class, path = "rectorate-submission", titleKey = "link.rectorateSubmission",
+        accessGroup = "academic(SERVICE_REQUESTS_RECTORAL_SENDING)")
 @Mapping(path = "/rectorateDocumentSubmission", module = "academicAdministration")
 @Forwards({ @Forward(name = "index", path = "/academicAdminOffice/rectorateDocumentSubmission/batchIndex.jsp"),
         @Forward(name = "viewBatch", path = "/academicAdminOffice/rectorateDocumentSubmission/showBatch.jsp") })
 public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchAction {
+
+    @EntryPoint
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Set<AdministrativeOffice> offices =
-                AcademicAuthorizationGroup.getOfficesForOperation(getLoggedPerson(request),
-                        AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING);
+                AcademicAuthorizationGroup.getOfficesForOperation(getLoggedPerson(request), AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING);
 
         request.setAttribute("unsent",
                 RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(offices, RectorateSubmissionState.UNSENT));
@@ -180,8 +205,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
             protected void makeLine(AcademicServiceRequest academicServiceRequest) {
                 IDocumentRequest document = (IDocumentRequest) academicServiceRequest;
 
-                ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-                ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+                ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+                ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
                 addCell("Código", document.getRegistryCode().getCode());
                 addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
                 switch (document.getDocumentRequestType()) {

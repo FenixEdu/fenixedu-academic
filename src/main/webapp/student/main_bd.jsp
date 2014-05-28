@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -5,18 +25,16 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <html:xhtml/>
 
-<head>
-	<link rel="stylesheet"  href="<%= request.getContextPath() %>/CSS/main_bd.css">
-</head>
+<style>
+table tr.disabled td { color: #bbb; }
+table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
+</style>
 
-<p>
-	<img src="<%= request.getContextPath() %>/images/portalEst-id.gif" alt="<bean:message key="portalEst-id" bundle="IMAGE_RESOURCES" />" />
-</p>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<div class="photo" align="center">
-	<img src="<%= request.getContextPath() %>/images/student_photo1.jpg" alt="<bean:message key="student_photo1" bundle="IMAGE_RESOURCES" />" width="150" height="100" />
-	<img src="<%= request.getContextPath() %>/images/student_photo2.jpg" alt="<bean:message key="student_photo2" bundle="IMAGE_RESOURCES" />" width="150" height="100" />
-	<img src="<%= request.getContextPath() %>/images/student_photo3.jpg" alt="<bean:message key="student_photo3" bundle="IMAGE_RESOURCES" />" width="150" height="100" />
+<div class="photo" align="center" style="margin-bottom: 15px">
+	<img src="${pageContext.request.contextPath}/images/student_photo1.jpg" alt="<bean:message key="student_photo1" bundle="IMAGE_RESOURCES" />" width="185" height="123" />
+	<img src="${pageContext.request.contextPath}/images/student_photo2.jpg" alt="<bean:message key="student_photo2" bundle="IMAGE_RESOURCES" />" width="185" height="123" />
+	<img src="${pageContext.request.contextPath}/images/student_photo3.jpg" alt="<bean:message key="student_photo3" bundle="IMAGE_RESOURCES" />" width="185" height="123" />
 </div>
 <p>
 	<bean:message key="message.info.student" />
@@ -40,7 +58,6 @@
 	</div>
 </logic:notEmpty>
 
-
 <logic:notEmpty name="studentPortalBeans">
 	<logic:iterate id="studentPortalBean" name="studentPortalBeans">
 		<h3 class="mtop15 mbottom05">
@@ -62,9 +79,9 @@
 
 				<th rowspan="<%= rowNumber %>" style="vertical-align: top; padding-right: 2em; text-align: left;">
 					<h4 class="mtop025">
-					<app:contentLink name="executionCoursesAnnouncement" property="executionCourse.site" target="_blank">
+					<a href="${executionCoursesAnnouncement.executionCourse.site.fullPath}" target="_blank">
 							<bean:write name="executionCoursesAnnouncement" property="executionCourse.nome"/>
-					</app:contentLink>
+					</a>
 					</h4>
 				</th>
 				<th></th>
@@ -75,14 +92,14 @@
 			</tr>
 			<logic:notEmpty name="executionCoursesAnnouncement" property="evaluationAnnouncements">
 				<logic:iterate id="evaluationAnnouncement" name="executionCoursesAnnouncement" property="evaluationAnnouncements">
-					<!-- Várias condições para:
+					<%-- Várias condições para:
 							Testes/Exames: 	disabled, se já foram realizados
 											warning, se está a decorrer o seu prazo de inscrição
 											normal, se ainda estão para decorrer
 											
 							Agrupamentos:	normal, se está inscrito
 											disabled, se não está inscrito e o periodo de inscrição expirou
-					 -->
+					 --%>
 					 
 				<tr class="<bean:write name="evaluationAnnouncement" property="status"/>">
 				

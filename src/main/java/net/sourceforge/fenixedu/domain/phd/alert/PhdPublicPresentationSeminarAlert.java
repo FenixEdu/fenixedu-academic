@@ -1,12 +1,30 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -16,11 +34,15 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.collect.FluentIterable;
 
 public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSeminarAlert_Base {
 
@@ -40,13 +62,13 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getSubjectPrefixed(process,
+        return new MultiLanguageString(Locale.getDefault(), AlertService.getSubjectPrefixed(process,
                 AlertMessage.create("message.phd.alert.public.presentation.seminar.subject")));
     }
 
     private MultiLanguageString buildBody(final PhdIndividualProgramProcess process) {
         int days = getDaysUntilNow(process.getWhenStartedStudies());
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getBodyText(process, AlertMessage.create(
+        return new MultiLanguageString(Locale.getDefault(), AlertService.getBodyText(process, AlertMessage.create(
                 "message.phd.alert.public.presentation.seminar.body", process.getWhenStartedStudies().toString("dd/MM/yyyy"),
                 String.valueOf(days < 1 ? 1 : days), getGuidersNames(process))));
     }
@@ -130,24 +152,23 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private void generateMessageForCoodinator() {
-        generateMessage(new FixedSetGroup(getProcess().getPhdProgram().getCoordinatorsFor(
-                ExecutionYear.readCurrentExecutionYear())));
+        generateMessage(UserGroup.of(Person.convertToUsers(getProcess().getPhdProgram().getCoordinatorsFor(
+        ExecutionYear.readCurrentExecutionYear()))));
 
     }
 
     private void generateMessageForAcademicOffice() {
-        generateMessage(new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess()
-                .getPhdProgram()));
+        generateMessage(AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram()));
     }
 
     private void generateMessageForStudent() {
-        generateMessage(new FixedSetGroup(getProcess().getPerson()));
+        generateMessage(UserGroup.of(getProcess().getPerson().getUser()));
     }
 
     private void generateMessageForGuiders() {
         for (final PhdParticipant guiding : getProcess().getGuidings()) {
             if (guiding.isInternal()) {
-                generateMessage(new FixedSetGroup(((InternalPhdParticipant) guiding).getPerson()));
+                generateMessage(UserGroup.of(((InternalPhdParticipant) guiding).getPerson().getUser()));
             } else {
                 new Message(getSender(), Collections.<ReplyTo> emptyList(), Collections.<Recipient> emptyList(),
                         buildMailSubject(), buildMailBody(), Collections.singleton(guiding.getEmail()));
@@ -156,7 +177,8 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private void generateMessage(Group group) {
-        new PhdAlertMessage(getProcess(), group.getElements(), getFormattedSubject(), getFormattedBody());
+        Set<Person> members = FluentIterable.from(group.getMembers()).transform(Person.userToPerson).toSet();
+        new PhdAlertMessage(getProcess(), members, getFormattedSubject(), getFormattedBody());
         new Message(getSender(), new Recipient("", group), buildMailSubject(), buildMailBody());
     }
 

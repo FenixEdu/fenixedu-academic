@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -25,8 +43,8 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
-import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
@@ -50,14 +68,10 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
-import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
-import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ExecutionCoursePredicates;
@@ -70,6 +84,8 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
@@ -82,7 +98,6 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
@@ -497,9 +512,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             for (; !getMetadatas().isEmpty(); getMetadatas().iterator().next().delete()) {
                 ;
             }
-            for (; !getTestGroups().isEmpty(); getTestGroups().iterator().next().delete()) {
-                ;
-            }
             for (; !getExportGroupings().isEmpty(); getExportGroupings().iterator().next().delete()) {
                 ;
             }
@@ -606,7 +618,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         for (ExecutionCourseForum forum : getForuns()) {
-            if (forum.getConversationThreads().size() != 0) {
+            if (forum.getConversationThreadSet().size() != 0) {
                 throw new DomainException("error.execution.course.cant.delete");
             }
         }
@@ -1207,47 +1219,44 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return visibleMetadata;
     }
 
-    public void createForum(MultiLanguageString name, MultiLanguageString description) {
-
-        if (hasForumWithName(name)) {
-            throw new DomainException("executionCourse.already.existing.forum");
-        }
-        this.addForuns(new ExecutionCourseForum(name, description));
-    }
-
     public ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
-        return new ExecutionCourseAnnouncementBoard(name, this, new ExecutionCourseTeachersGroup(this), null, new RoleTypeGroup(
-                RoleType.MANAGER), ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
+        RoleType roleType = RoleType.MANAGER;
+        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), null, RoleGroup.get(roleType),
+                ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
                 ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC, ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
     }
 
-    public boolean hasForumWithName(MultiLanguageString name) {
-        return hasSite() && getForumByName(name) != null;
-    }
-
-    public ExecutionCourseForum getForumByName(MultiLanguageString name) {
-        if (!hasSite()) {
-            return null;
-        }
-
-        return getSite().getForumByName(name);
-    }
-
-    public void addForuns(ExecutionCourseForum forum) {
-        if (!hasSite()) {
-            throw new DomainException("error.cannot.add.forum.empty.site");
-        }
-
-        getSite().addForum(forum);
-    }
-
-    public void checkIfCanAddForum(MultiLanguageString name) {
-        if (!hasSite()) {
-            throw new DomainException("error.cannot.add.forum.empty.site");
-        }
+    public void createForum(MultiLanguageString name, MultiLanguageString description) {
         if (hasForumWithName(name)) {
             throw new DomainException("executionCourse.already.existing.forum");
         }
+        this.addForum(new ExecutionCourseForum(name, description));
+    }
+
+    @Override
+    public void addForum(ExecutionCourseForum executionCourseForum) {
+        checkIfCanAddForum(executionCourseForum.getNormalizedName());
+        super.addForum(executionCourseForum);
+    }
+
+    public void checkIfCanAddForum(MultiLanguageString name) {
+        if (hasForumWithName(name)) {
+            throw new DomainException("executionCourse.already.existing.forum");
+        }
+    }
+
+    public boolean hasForumWithName(MultiLanguageString name) {
+        return getForumByName(name) != null;
+    }
+
+    public ExecutionCourseForum getForumByName(MultiLanguageString name) {
+        for (final ExecutionCourseForum executionCourseForum : getForuns()) {
+            if (executionCourseForum.getNormalizedName().equalInAnyLanguage(name)) {
+                return executionCourseForum;
+            }
+        }
+
+        return null;
     }
 
     public SortedSet<Degree> getDegreesSortedByDegreeName() {
@@ -1657,7 +1666,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public String getNome() {
-        if (Language.getUserLanguage() == Language.en && hasAnyAssociatedCurricularCourses()) {
+        if (I18N.getLocale().equals(MultiLanguageString.en) && hasAnyAssociatedCurricularCourses()) {
             final StringBuilder stringBuilder = new StringBuilder();
 
             final Set<String> names = new HashSet<String>();
@@ -1702,6 +1711,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return getNome();
     }
 
+    public String getPrettyAcronym() {
+        return getSigla().replaceAll("[0-9]", "");
+    }
+
     public String getDegreePresentationString() {
         SortedSet<Degree> degrees = this.getDegreesSortedByDegreeName();
         String result = "";
@@ -1714,46 +1727,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             i++;
         }
         return result;
-    }
-
-    public boolean hasPublishedTestGroups() {
-        return this.getPublishedTestGroupsCount() > 0;
-    }
-
-    public Integer getPublishedTestGroupsCount() {
-        return this.getPublishedTestGroups().size();
-    }
-
-    public boolean hasFinishedTestGroups() {
-        return this.getFinishedTestGroupsCount() > 0;
-    }
-
-    public Integer getFinishedTestGroupsCount() {
-        return this.getFinishedTestGroups().size();
-    }
-
-    public List<NewTestGroup> getPublishedTestGroups() {
-        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
-
-        for (NewTestGroup testGroup : this.getTestGroups()) {
-            if (testGroup.getStatus().equals(TestGroupStatus.PUBLISHED)) {
-                testGroups.add(testGroup);
-            }
-        }
-
-        return testGroups;
-    }
-
-    public List<NewTestGroup> getFinishedTestGroups() {
-        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
-
-        for (NewTestGroup testGroup : this.getTestGroups()) {
-            if (testGroup.isCorrected()) {
-                testGroups.add(testGroup);
-            }
-        }
-
-        return testGroups;
     }
 
     public Registration getRegistration(Person person) {
@@ -2095,11 +2068,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
 
-    public Set<AllocatableSpace> getAllRooms() {
-        Set<AllocatableSpace> result = new HashSet<AllocatableSpace>();
+    public Set<Space> getAllRooms() {
+        Set<Space> result = new HashSet<Space>();
         Set<Lesson> lessons = getLessons();
         for (Lesson lesson : lessons) {
-            AllocatableSpace room = lesson.getSala();
+            Space room = lesson.getSala();
             if (room != null) {
                 result.add(room);
             }
@@ -2111,9 +2084,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (hasEvaluationMethod()) {
             final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
-            return evaluationElements != null && evaluationElements.hasContent(Language.pt) ? evaluationElements
-                    .getContent(Language.pt) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
-                    .getEvaluationMethod() : "";
+            return evaluationElements != null && evaluationElements.hasContent(MultiLanguageString.pt) ? evaluationElements
+                    .getContent(MultiLanguageString.pt) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
+                    .next().getEvaluationMethod() : "";
         } else {
             return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
         }
@@ -2123,20 +2096,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (hasEvaluationMethod()) {
             final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
-            return evaluationElements != null && evaluationElements.hasContent(Language.en) ? evaluationElements
-                    .getContent(Language.en) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
-                    .getEvaluationMethod() : "";
+            return evaluationElements != null && evaluationElements.hasContent(MultiLanguageString.en) ? evaluationElements
+                    .getContent(MultiLanguageString.en) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
+                    .next().getEvaluationMethod() : "";
         } else {
             return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
         }
     }
 
-    public List<ExecutionCourseForum> getForuns() {
-        if (hasSite()) {
-            return new ArrayList<ExecutionCourseForum>(getSite().getForuns());
-        } else {
-            return Collections.emptyList();
-        }
+    public Set<ExecutionCourseForum> getForuns() {
+        return getForumSet();
     }
 
     public AcademicInterval getAcademicInterval() {
@@ -2247,7 +2216,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return associatedAdHocEvaluations;
     }
 
-    public boolean functionsAt(final Campus campus) {
+    public boolean functionsAt(final Space campus) {
         final ExecutionYear executionYear = getExecutionYear();
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
             final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
@@ -2426,7 +2395,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
      */
     public MultiLanguageString getNameI18N() {
         MultiLanguageString nameI18N = new MultiLanguageString();
-        nameI18N = nameI18N.with(Language.pt, super.getNome());
+        nameI18N = nameI18N.with(MultiLanguageString.pt, super.getNome());
 
         final StringBuilder stringBuilder = new StringBuilder();
 
@@ -2446,7 +2415,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         if (stringBuilder.length() > 0) {
-            nameI18N = nameI18N.with(Language.en, stringBuilder.toString());
+            nameI18N = nameI18N.with(MultiLanguageString.en, stringBuilder.toString());
             return nameI18N;
         }
 
@@ -2461,10 +2430,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         if (unique) {
-            nameI18N = nameI18N.with(Language.en, nameEn);
+            nameI18N = nameI18N.with(MultiLanguageString.en, nameEn);
             return nameI18N;
         } else {
-            nameI18N = nameI18N.with(Language.en, super.getNome());
+            nameI18N = nameI18N.with(MultiLanguageString.en, super.getNome());
             return nameI18N;
         }
     }
@@ -2717,7 +2686,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean getHasAnnouncements() {
         ExecutionCourseAnnouncementBoard board = getBoard();
         if (board != null) {
-            return !board.getAnnouncements().isEmpty();
+            return !board.getAnnouncementSet().isEmpty();
         }
         return false;
     }
@@ -2902,16 +2871,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     @Deprecated
     public boolean hasAnyAssociatedSummaries() {
         return !getAssociatedSummariesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestGroup> getTestGroups() {
-        return getTestGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTestGroups() {
-        return !getTestGroupsSet().isEmpty();
     }
 
     @Deprecated

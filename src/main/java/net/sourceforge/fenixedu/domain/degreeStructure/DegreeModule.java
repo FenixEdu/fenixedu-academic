@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.text.Collator;
@@ -8,6 +26,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -32,8 +51,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class DegreeModule extends DegreeModule_Base {
@@ -44,7 +63,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
         public int compare(DegreeModule o1, DegreeModule o2) {
             String name1;
             String name2;
-            if (Language.getLocale().toString().equalsIgnoreCase("pt")) {
+            if (I18N.getLocale().toString().equalsIgnoreCase("pt")) {
                 name1 = o1.getName();
                 name2 = o2.getName();
             } else {
@@ -94,7 +113,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
      * @return A string with one possible full name of this course group
      */
     protected void getOneFullName(final StringBuilder result, final ExecutionSemester executionSemester) {
-        final String selfName = getNameI18N(executionSemester).getContent(Language.getUserLanguage());
+        final String selfName = getNameI18N(executionSemester).getContent();
 
         if (isRoot()) {
             result.append(selfName);
@@ -126,18 +145,17 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return getOneFullName(null);
     }
 
-    public String getOneFullNameI18N(final Language language) {
+    public String getOneFullNameI18N(final Locale language) {
         return getOneFullNameI18N(null, language);
     }
 
-    public String getOneFullNameI18N(final ExecutionSemester executionSemester, Language language) {
+    public String getOneFullNameI18N(final ExecutionSemester executionSemester, Locale language) {
         final StringBuilder result = new StringBuilder();
         getOneFullNameI18N(result, executionSemester, language);
         return result.toString();
     }
 
-    protected void getOneFullNameI18N(final StringBuilder result, final ExecutionSemester executionSemester,
-            final Language language) {
+    protected void getOneFullNameI18N(final StringBuilder result, final ExecutionSemester executionSemester, final Locale language) {
         final String selfName = getNameI18N(executionSemester).getContent(language);
 
         if (isRoot()) {
@@ -163,12 +181,12 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
         String name = getName(executionSemester);
         if (name != null && name.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, name);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, name);
         }
 
         String nameEn = getNameEn(executionSemester);
         if (nameEn != null && nameEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, nameEn);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, nameEn);
         }
 
         return multiLanguageString;

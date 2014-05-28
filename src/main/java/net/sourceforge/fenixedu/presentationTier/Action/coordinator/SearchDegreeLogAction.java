@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
 import java.util.ArrayList;
@@ -9,7 +27,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.SearchDegreeLogBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -17,8 +34,6 @@ import net.sourceforge.fenixedu.domain.DegreeLog;
 import net.sourceforge.fenixedu.domain.DegreeLog.DegreeLogTypes;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -29,20 +44,18 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-@Mapping(module = "coordinator", path = "/searchDLog", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "search", path = "/coordinator/viewLogSearch.jsp", tileProperties = @Tile(
-        navLocal = "/coordinator/coordinatorMainMenu.jsp", title = "private.coordinator.activityregistry.consult")) })
+@Mapping(module = "coordinator", path = "/searchDLog", functionality = DegreeCoordinatorIndex.class)
+@Forwards(value = { @Forward(name = "search", path = "/coordinator/viewLogSearch.jsp") })
 public class SearchDegreeLogAction extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.newSetCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -55,9 +68,6 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanOID);
 
         final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
-
-        final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-        request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
 
         Degree degree = executionDegree.getDegree();
 
@@ -75,8 +85,8 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        Degree degree = getDomainObject(request, "degreeCurricularPlanID");
-        SearchDegreeLogBean sdlb = readSearchBean(request, degree);
+        DegreeCurricularPlan dcp = getDomainObject(request, "degreeCurricularPlanID");
+        SearchDegreeLogBean sdlb = readSearchBean(request, dcp.getDegree());
 
         searchLogs(sdlb);
         request.setAttribute("searchBean", sdlb);

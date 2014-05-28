@@ -1,8 +1,29 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType"%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant"%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisFile"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
+<%@page import="java.util.Locale"%>
 <%@page import="java.util.List"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
 <%@page import="net.sourceforge.fenixedu.domain.Degree"%>
@@ -39,12 +60,12 @@
 			<bean:message key="link.scientificCouncil.thesis.proposal.approve" />
 		</html:link>
 		|
-		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#rejectProposalDivA" onclick="document.getElementById('rejectProposalDiv').style.display='block'">
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><html:link href="#rejectProposalDivA" onclick="document.getElementById('rejectProposalDiv').style.display='block'">
 			<bean:message key="link.scientificCouncil.thesis.proposal.reject" />
 		</html:link>
     </logic:equal>
     <logic:equal name="thesis" property="approved" value="true">
-		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#rejectProposalDivA" onclick="document.getElementById('rejectProposalDiv').style.display='block'">
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><html:link href="#rejectProposalDivA" onclick="document.getElementById('rejectProposalDiv').style.display='block'">
 			<bean:message key="link.scientificCouncil.thesis.proposal.disapprove"/>
 		</html:link>
     </logic:equal>
@@ -107,7 +128,7 @@
 </div>
 
 <%
-	final List<Language> languages = thesis.getLanguages();
+	final List<Locale> languages = thesis.getLanguages();
 %>
 <table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 	<tr>
@@ -115,10 +136,10 @@
 			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.language"/>
 		</th>
 		<%
-			for (final Language language : languages) {
+			for (final Locale language : languages) {
 		%>
 				<th>
-					<bean:message bundle="LANGUAGE_RESOURCES" key="<%= "language." + language.name() %>"/>
+					<bean:message bundle="LANGUAGE_RESOURCES" key="<%= "language." + language %>"/>
 				</th>
 		<%
 			}
@@ -129,7 +150,7 @@
 			<bean:message bundle="STUDENT_RESOURCES" key="finalDegreeWorkProposalHeader.title"/>
 		</th>
 		<%
-			for (final Language language : languages) {
+			for (final Locale language : languages) {
 			    final MultiLanguageString mls = thesis.getTitle();
 			    final String string = mls == null ? null : mls.getContent(language);
 		%>
@@ -145,7 +166,7 @@
 			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.keywords"/>
 		</th>
 		<%
-			for (final Language language : languages) {
+			for (final Locale language : languages) {
 			    final MultiLanguageString mls = thesis.getKeywords();
 			    final String string = mls == null ? null : mls.getContent(language);
 		%>
@@ -161,7 +182,7 @@
 			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.abstract"/>
 		</th>
 		<%
-			for (final Language language : languages) {
+			for (final Locale language : languages) {
 			    final MultiLanguageString mls = thesis.getThesisAbstract();
 			    final String string = mls == null ? null : mls.getContent(language);
 		%>
@@ -222,7 +243,7 @@
 			%>
 					&nbsp;&nbsp;&nbsp;
 					<em>
-						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#thesisDissertationFileBeanDivA" onclick="document.getElementById('thesisDissertationFileBeanDiv').style.display='block'">
+						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><html:link href="#thesisDissertationFileBeanDivA" onclick="document.getElementById('thesisDissertationFileBeanDiv').style.display='block'">
 							<bean:message key="link.thesis.substitute.extended.abstract"/>
 						</html:link>
 					</em>
@@ -237,7 +258,7 @@
 			%>
 					&nbsp;&nbsp;&nbsp;
 					<em>
-						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#thesisExtendendAbstractFileBeanDivA" onclick="document.getElementById('thesisExtendendAbstractFileBeanDiv').style.display='block'">
+						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><html:link href="#thesisExtendendAbstractFileBeanDivA" onclick="document.getElementById('thesisExtendendAbstractFileBeanDiv').style.display='block'">
 							<bean:message key="link.thesis.substitute.extended.abstract"/>
 						</html:link>
 					</em>
@@ -359,7 +380,7 @@
 			<bean:define id="dateCreator" name="thesis" property="creation" />
 			<td><bean:message key="label.thesis.operation.creation" bundle="STUDENT_RESOURCES"/></td>
 			<td>
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="thesis" property="creator.person.username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=<bean:write name="thesis" property="creator.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
 			<td><bean:write name="thesis" property="creator.personName" /> </td>
@@ -373,7 +394,7 @@
 		<bean:define id="dateSubmission" name="thesis" property="submission" />
 			<td><bean:message key="label.thesis.operation.submission"  bundle="STUDENT_RESOURCES"/></td>
 			<td>
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="thesis" property="submitter.person.username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=<bean:write name="thesis" property="submitter.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
 			<td><bean:write name="thesis" property="submitter.personName"/></td>
@@ -387,7 +408,7 @@
 			<bean:define id="dateConfirmation" name="thesis" property="confirmation" />
 			<td><bean:message key="label.thesis.operation.confirmation" bundle="STUDENT_RESOURCES" /></td>
 			<td>
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="thesis" property="confirmer.person.username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=<bean:write name="thesis" property="confirmer.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
 			<td><bean:write name="thesis" property="confirmer.personName"/></td>
@@ -401,7 +422,7 @@
 			<bean:define id="dateApproval" name="thesis" property="approval" />
 			<td><bean:message key="label.thesis.operation.approval" bundle="STUDENT_RESOURCES" /></td>
 			<td>
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="thesis" property="proposalApprover.person.username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=<bean:write name="thesis" property="proposalApprover.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
 			<td><bean:write name="thesis" property="proposalApprover.personName"/></td>

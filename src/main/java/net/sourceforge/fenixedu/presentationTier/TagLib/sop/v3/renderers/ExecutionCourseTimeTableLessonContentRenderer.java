@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
@@ -11,11 +29,11 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 
 /**
@@ -55,16 +73,17 @@ public class ExecutionCourseTimeTableLessonContentRenderer extends LessonSlotCon
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
 
             strBuffer.append(lesson.getShiftTypeCodesPrettyPrint()).append("&nbsp;");
-            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
                 strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
-                strBuffer.append(allocatableSpace.getNome()).append("&amp;objectCode=");
+                strBuffer.append(allocatableSpace.getName()).append("&amp;objectCode=");
                 strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getExternalId());
                 strBuffer.append("&amp;executionPeriodOID=");
                 strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getExternalId())
                         .append("'>");
-                strBuffer.append(allocatableSpace.getNome()).append("</a>");
+                strBuffer.append(allocatableSpace.getName()).append("</a>");
+
             }
 
         } else if (showOccupation instanceof InfoLessonInstanceAggregation) {
@@ -75,15 +94,15 @@ public class ExecutionCourseTimeTableLessonContentRenderer extends LessonSlotCon
             final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 
             strBuffer.append(shift.getShiftTypesCodePrettyPrint()).append("&nbsp;");
-            final AllocatableSpace allocatableSpace = aggregation.getAllocatableSpace();
+            final Space allocatableSpace = aggregation.getAllocatableSpace();
             if (allocatableSpace != null) {
                 strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
-                strBuffer.append(allocatableSpace.getNome()).append("&amp;objectCode=");
+                strBuffer.append(allocatableSpace.getName()).append("&amp;objectCode=");
                 strBuffer.append(executionSemester.getExternalId());
                 strBuffer.append("&amp;executionPeriodOID=");
                 strBuffer.append(executionSemester.getExternalId()).append("'>");
-                strBuffer.append(allocatableSpace.getNome()).append("</a>");
+                strBuffer.append(allocatableSpace.getName()).append("</a>");
             }
 
         } else if (showOccupation instanceof InfoExam) {

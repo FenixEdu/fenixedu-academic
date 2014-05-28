@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * DiaSemana.java
  *
@@ -6,10 +24,11 @@
 
 package net.sourceforge.fenixedu.util;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * 
@@ -64,19 +83,19 @@ public class DiaSemana extends FenixUtil {
         int diaSemana = this.diaSemana.intValue();
         switch (diaSemana) {
         case SEGUNDA_FEIRA:
-            return new DateTime().withDayOfWeek(1).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(1).dayOfWeek().getAsShortText(I18N.getLocale());
         case TERCA_FEIRA:
-            return new DateTime().withDayOfWeek(2).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(2).dayOfWeek().getAsShortText(I18N.getLocale());
         case QUARTA_FEIRA:
-            return new DateTime().withDayOfWeek(3).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(3).dayOfWeek().getAsShortText(I18N.getLocale());
         case QUINTA_FEIRA:
-            return new DateTime().withDayOfWeek(4).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(4).dayOfWeek().getAsShortText(I18N.getLocale());
         case SEXTA_FEIRA:
-            return new DateTime().withDayOfWeek(5).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(5).dayOfWeek().getAsShortText(I18N.getLocale());
         case SABADO:
-            return new DateTime().withDayOfWeek(6).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(6).dayOfWeek().getAsShortText(I18N.getLocale());
         case DOMINGO:
-            return new DateTime().withDayOfWeek(7).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(7).dayOfWeek().getAsShortText(I18N.getLocale());
         }
         return "Error: Invalid week day";
     }

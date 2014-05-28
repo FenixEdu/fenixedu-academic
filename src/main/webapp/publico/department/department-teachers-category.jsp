@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -10,7 +30,7 @@
 
 <div class="breadcumbs mvert0">
     <bean:define id="institutionUrl">
-        <%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>
+        <%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>
     </bean:define>
     <bean:define id="structureUrl">
         <bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
@@ -66,7 +86,7 @@
 			<ul>
 					<logic:iterate id="category" name="categories" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory" >
 						<li>
-							<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= "#" + category.getName()%>"><fr:view name="category" property="name.content"/></a><br/>
+							<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= "#" + category.getName()%>"><fr:view name="category" property="name.content"/></a><br/>
 						</li>
 					</logic:iterate>
 			</ul>
@@ -78,7 +98,7 @@
 <logic:iterate id="category" name="categories" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory" indexId="index">
 	<h2 id="<%= category.getName() %>" class="greytxt mtop2 separator1" >
 		<fr:view name="category" property="name.content"/>
-		<logic:notEqual name="index" value="0"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#logoist" style="<%= "padding-left: 1em; background: url(" + request.getContextPath() + "/images/cross_up.gif) left center no-repeat;" %>"><bean:message key="link.top" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></a></logic:notEqual>
+		<logic:notEqual name="index" value="0"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#logoist" style="<%= "padding-left: 1em; background: url(" + request.getContextPath() + "/images/cross_up.gif) left center no-repeat;" %>"><bean:message key="link.top" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></a></logic:notEqual>
 	</h2>
 
 	<bean:define id="byCategory" value="true" toScope="request"/>

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.alumni;
 
 import java.util.ArrayList;
@@ -9,28 +27,29 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniApplication.AlumniAcademicPathApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "alumni", path = "/searchAlumni", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "viewAlumniDetails", path = "/alumni/viewAlumniDetails.jsp", tileProperties = @Tile(
-                title = "private.alumni.academicpath.searchalumni")),
-        @Forward(name = "showAlumniList", path = "/alumni/showAlumniList.jsp", tileProperties = @Tile(
-                title = "private.alumni.academicpath.searchalumni")) })
+@StrutsFunctionality(app = AlumniAcademicPathApp.class, path = "search-alumni", titleKey = "link.search.alumni")
+@Mapping(module = "alumni", path = "/searchAlumni")
+@Forwards({ @Forward(name = "viewAlumniDetails", path = "/alumni/viewAlumniDetails.jsp"),
+        @Forward(name = "showAlumniList", path = "/alumni/showAlumniList.jsp") })
 public class AlumniSearchDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward showAlumniList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

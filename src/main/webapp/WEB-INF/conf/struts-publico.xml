@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE struts-config PUBLIC
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
       <!-- ========== Data Source Configuration =============================== -->
       <!-- ========== Form Bean Definitions ================================== -->
@@ -158,31 +181,7 @@
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
             <action forward="/consultExams.jsp" path="/consultExams"></action>
-            <!-- null pointer exceptions from readByOId -->
-            <action forward="/nonExistingError.jsp" path="/nonExistingObject"></action>
-            <!-- page not found -->
-            <action path="/notFound" type="net.sourceforge.fenixedu.presentationTier.Action.NotFoundAction">
-            </action>
-            <action forward="df.notAuthorized" path="/notAuthorized">
-            </action>
             <!-- page fronting actions -->
-            <action scope="request" validate="true" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.InitiateSessionDispatchAction" input="/index.do?method=prepare&amp;page=0" name="pagedIndexForm" path="/index">
-                  <forward path="/index.jsp" name="showForm"></forward>
-                  <forward path="/index.do?method=prepare&amp;page=0" name="choose"></forward>
-            </action>
-            <action scope="request" validate="true" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.InitiateSessionDispatchAction" input="/index.do?method=prepare&amp;page=0" name="pagedIndexForm" path="/indexNew">
-                  <forward path="consultRooms" name="showForm"></forward>
-                  <!--<forward name="choose" path="/index.do?method=prepare&amp;page=0"/>-->
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ConsultTimeTablesDispatchAction" scope="request" path="/consultTimeTables" parameter="method">
-                  <forward path="/consultTimeTablesCriterias.jsp" name="criteriaPage"></forward>
-                  <forward path="/viewClasses.do" name="showTimeTables"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseContextDispatchAction" validate="true" scope="request" path="/chooseContextDA" parameter="method" name="chooseSearchContextForm" input="/chooseContextDA.do?method=preparePublic&amp;page=0&amp;inputPage=chooseContext">
-                  <forward path="/chooseContext.jsp" name="chooseContext"></forward>
-                  <forward path="/viewClasses.do" name="classSearch"></forward>
-                  <forward path="/prepareSelectExecutionCourseAction.do" name="executionCourseSearch"></forward>
-            </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseContextDispatchActionNew" validate="false" scope="request" path="/chooseContextDANew" parameter="method" name="chooseSearchContextForm" input="/chooseContextDANew.do?method=prepare&amp;page=0&amp;inputPage=chooseContext">
                   <forward path="/chooseContextDANew.do?method=nextPagePublic&amp;page=0&amp;nextPage=classSearch&amp;inputPage=chooseContext" name="prepare"></forward>
                   <forward path="/chooseContext.jsp" name="chooseContext"></forward>
@@ -193,9 +192,6 @@
             <!-- Turnos -->
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareSelectExecutionCourseAction" path="/prepareSelectExecutionCourseAction">
                   <forward path="/prepareSelectExecutionCourse.jsp" name="sucess"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction" scope="request" parameter="method" input="/chooseContextDA.do?method=nextPagePublic&amp;nextPage=executionCourseSearch" name="chooseExecutionCourseFormWithDynamicMailDistribution" path="/viewSiteExecutionCourse">
-                  <forward path="/executionCourseSite.jsp" name="sucess"></forward>
             </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ExecutionCourseDA" parameter="method" path="/executionCourse">
                   <forward path="execution-course-first-page" name="execution-course-first-page"></forward>
@@ -238,9 +234,6 @@
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.RoomSiteViewerDispatchAction" validate="true" scope="request" path="/viewRoomNew" name="indexForm" parameter="method" input="/chooseRoomsFormNew.do">
                   <forward path="/siteViewerRoomNew.do?method=roomViewer" name="roomViewer"></forward>
             </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectSemesterAction" path="/prepareViewRoomOcupation">
-                  <forward path="/chooseSemester.jsp" name="Sucess"></forward>
-            </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassTimeTableAction" path="/viewClassTimeTable" input="/viewClassTimeTable.jsp">
                   <forward path="/viewClassTimeTable.jsp" name="Sucess"></forward>
             </action>
@@ -249,17 +242,10 @@
             </action>
             <!-- Start of Gesdis-->
             <!-- Summaries -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction" validate="true" parameter="method" input="/executionCourseNotFound.jsp" scope="request" name="showSummaryForm" path="/viewSite">
-                  <forward path="executionCourseSite" name="sucess"></forward>
-                  <forward path="moved-permanently" name="moved-permanently"></forward>
-            </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchActionNew" validate="true" parameter="method" input="/executionCourseNotFoundNew.jsp" scope="request" name="showSummaryForm" path="/viewSiteNew">
                   <forward path="/executionCourseSiteNew.jsp" name="sucess"></forward>
             </action>
             <!-- Site viewer -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction" validate="true" parameter="method" input="/executionCourseNotFound.jsp" scope="request" name="showSummaryForm" path="/viewSiteSummaries">
-                  <forward path="/executionCourseSite.jsp" name="sucess"></forward>
-            </action>
             <!-- End of Gesdis-->
             <!-- EXAMS -->
             <action validate="true" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExamDayAndShiftDispatchAction" name="chooseDayAndShiftForm" input="/chooseDayAndShift.jsp" path="/chooseDayAndShiftForm">
@@ -287,17 +273,6 @@
                   <forward path="viewRoom" name="roomViewer"></forward>
                   <forward path="viewExecutionCourse" name="executionCourseViewer"></forward>
             </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction" parameter="method" scope="request" input="/siteViewerError.jsp" path="/siteViewerRoomNew">
-                  <forward path="viewRoomNew" name="roomViewer"></forward>
-                  <forward path="viewExecutionCourse" name="executionCourseViewer"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchActionNew" parameter="method" scope="request" input="/siteViewerError.jsp" path="/siteViewerNew">
-                  <forward path="viewRoom" name="roomViewer"></forward>
-                  <forward path="/viewExecutionCourse.jsp" name="executionCourseViewer"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction" scope="request" validate="true" parameter="method" path="/viewExecutionCourse" input="/prepareSelectExecutionCourse.jsp" name="chooseExecutionCourseForm">
-                  <forward path="/viewExecutionCourse.jsp" name="executionCourseViewer"></forward>
-            </action>
             <!-- by gedl September the 11th, 2003 -->
             <!-- For degrees Site-->
             <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreesAction" path="/showDegrees">
@@ -316,82 +291,12 @@
             </action>
             <!--   "/showDegreeSite.do?method=showCurricularPlan"  -->
             <action forward="/finalDegreeWorks.do?method=prepareSearch&amp;page=0" path="/viewFinalDegreeWorkProposals"></action>
-            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.sms.SmsControllerDispatchAction" path="/smsController"></action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareSelectExecutionCourseAction" path="/prepareSelectExecutionCourseActionNew">
                   <forward path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0" name="sucess"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewAllExamsByDegreeAndCurricularYearAction" path="/viewAllExamsByDegreeAndCurricularYear">
-                  <forward path="viewAllExamsByDegreeAndCurricularYear" name="Sucess"></forward>
-            </action>
-            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA" path="/showPublications">
-                  <forward path="show-publications" name="showPublications"></forward>
-            </action>
-            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA" path="/searchPublications">
-                  <forward path="search-homepage-publications" name="SearchPublication"></forward>
-            </action>
-            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA" path="/showPatents">
-                  <forward path="show-patents" name="showPatents"></forward>
-            </action>
-            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA" path="/showInterests">
-                  <forward path="show-interests" name="showInterests"></forward>
-            </action>
-            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA" path="/showParticipations">
-                  <forward path="show-participations" name="showParticipations"></forward>
-            </action>
-            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA" path="/showPrizes">
-                  <forward path="show-prizes" name="showPrizes"></forward>
-            </action>
-            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA" path="/viewHomepage">
-                  <forward path="view-homepage" name="view-homepage"></forward>
-                  <forward path="list-homepages-teachers" name="list-homepages-teachers"></forward>
-                  <forward path="list-homepages-employees" name="list-homepages-employees"></forward>
-                  <forward path="list-homepages-students" name="list-homepages-students"></forward>
-                  <forward path="list-homepages-alumni" name="list-homepages-alumni"></forward>
-                  <forward path="view-homepage-section" name="site-section"></forward>
-                  <forward path="view-homepage-section-deny" name="site-section-deny"></forward>
-                  <forward path="view-homepage-section-adviseLogin" name="site-section-adviseLogin"></forward>
-                  <forward path="view-homepage-item" name="site-item"></forward>
-                  <forward path="view-homepage-item-deny" name="site-item-deny"></forward>
-                  <forward path="view-homepage-item-adviseLogin" name="site-item-adviseLogin"></forward>
-                  <forward path="homepage-stats" name="homepage-stats"></forward>
-                  <forward path="not-found-homepage" name="not-found-homepage"></forward>
-                  <forward path="show-publications" name="showPublications"></forward>
-                  <forward path="show-patents" name="showPatents"></forward>
-                  <forward path="show-interests" name="showInterests"></forward>
-            </action>
-            <!--  Dspace Search -->
-            <!-- View Research Result -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowResearchResultInHomePage" parameter="method" path="/showResearchResult">
-                  <forward path="show-result" name="showResult"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowResearchResultInHomePage" parameter="method" path="/homepage/showResearchResult">
-                  <forward path="show-result" name="showResult"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowResearchResultInUnitSite" parameter="method" path="/unitSite/showResearchResult">
-                  <forward path="show-research-unit-result" name="showResult"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.BibTexManagementDispatchAction" parameter="method" path="/bibtexExport">
-                  <forward path="/homepage/research/showPublicationBibtex.jsp" name="PublicationExportedToBibtex"></forward>
             </action>
             <!-- =========== RSS ======================== -->
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.rss.GenerateSummariesRSS" path="/summariesRSS"></action>
             <!--============ Basic Uni site ============-->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA" parameter="method" path="/units/viewSite">
-                  <forward path="basicUnit-site-front-page-banner-intro" name="frontPage-BANNER_INTRO"></forward>
-                  <forward path="basicUnit-site-front-page-intro-banner" name="frontPage-INTRO_BANNER"></forward>
-                  <forward path="basicUnit-site-front-page-intro-float" name="frontPage-BANNER_INTRO_COLLAPSED"></forward>
-                  <forward path="basicUnit-section" name="site-section"></forward>
-                  <forward path="basicUnit-section-deny" name="site-section-deny"></forward>
-                  <forward path="basicUnit-section-adviseLogin" name="site-section-adviseLogin"></forward>
-                  <forward path="basicUnit-item" name="site-item"></forward>
-                  <forward path="basicUnit-item-deny" name="site-item-deny"></forward>
-                  <forward path="basicUnit-item-adviseLogin" name="site-item-adviseLogin"></forward>
-                  <forward path="basicUnit-organization" name="unit-organization"></forward>
-                  <forward path="/units/announcements.do" name="announcementsAction"></forward>
-                  <forward path="/units/events.do" name="eventsAction"></forward>
-                  <forward path="/units/announcementsRSS.do" name="announcementsRSSAction"></forward>
-                  <forward path="/units/eventsRSS.do" name="eventsRSSAction"></forward>
-            </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.AnnouncementsBoardDA" parameter="method" path="/units/announcements">
                   <forward path="public-basicUnit-list-announcements" name="listAnnouncements"></forward>
                   <forward path="basicUnit-view-announcement" name="viewAnnouncement"></forward>
@@ -402,96 +307,7 @@
             </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitAnnouncementsRSS" parameter="method" path="/units/announcementsRSS"></action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitEventsRSS" parameter="method" path="/units/eventsRSS"></action>
-            <!--  Tutoring Site -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA" parameter="method" path="/tutoring/viewSite">
-                  <forward path="basicUnit-site-front-page-banner-intro" name="frontPage-BANNER_INTRO"></forward>
-                  <forward path="basicUnit-site-front-page-intro-banner" name="frontPage-INTRO_BANNER"></forward>
-                  <forward path="basicUnit-site-front-page-intro-float" name="frontPage-BANNER_INTRO_COLLAPSED"></forward>
-                  <forward path="basicUnit-section" name="site-section"></forward>
-                  <forward path="basicUnit-section-deny" name="site-section-deny"></forward>
-                  <forward path="basicUnit-section-adviseLogin" name="site-section-adviseLogin"></forward>
-                  <forward path="basicUnit-item" name="site-item"></forward>
-                  <forward path="basicUnit-item-deny" name="site-item-deny"></forward>
-                  <forward path="basicUnit-item-adviseLogin" name="site-item-adviseLogin"></forward>
-                  <forward path="basicUnit-organization" name="unit-organization"></forward>
-                  <forward path="/units/announcements.do" name="announcementsAction"></forward>
-                  <forward path="/units/events.do" name="eventsAction"></forward>
-                  <forward path="/units/announcementsRSS.do" name="announcementsRSSAction"></forward>
-                  <forward path="/units/eventsRSS.do" name="eventsRSSAction"></forward>
-            </action>
-            <!--  Assembly Site -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA" parameter="method" path="/aestatutaria/viewSite">
-                  <forward path="basicUnit-site-front-page-banner-intro" name="frontPage-BANNER_INTRO"></forward>
-                  <forward path="basicUnit-site-front-page-intro-banner" name="frontPage-INTRO_BANNER"></forward>
-                  <forward path="basicUnit-site-front-page-intro-float" name="frontPage-BANNER_INTRO_COLLAPSED"></forward>
-                  <forward path="basicUnit-section" name="site-section"></forward>
-                  <forward path="basicUnit-section-deny" name="site-section-deny"></forward>
-                  <forward path="basicUnit-section-adviseLogin" name="site-section-adviseLogin"></forward>
-                  <forward path="basicUnit-item" name="site-item"></forward>
-                  <forward path="basicUnit-item-deny" name="site-item-deny"></forward>
-                  <forward path="basicUnit-item-adviseLogin" name="site-item-adviseLogin"></forward>
-                  <forward path="basicUnit-organization" name="unit-organization"></forward>
-                  <forward path="/units/announcements.do" name="announcementsAction"></forward>
-                  <forward path="/units/events.do" name="eventsAction"></forward>
-                  <forward path="/units/announcementsRSS.do" name="announcementsRSSAction"></forward>
-                  <forward path="/units/eventsRSS.do" name="eventsRSSAction"></forward>
-            </action>
-            <!-- Thesis Direct Access -->
-            <!--  Directive Council Students Site -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA" parameter="method" path="/studentsSite/viewSite">
-                  <forward path="basicUnit-site-front-page-banner-intro" name="frontPage-BANNER_INTRO"></forward>
-                  <forward path="basicUnit-site-front-page-intro-banner" name="frontPage-INTRO_BANNER"></forward>
-                  <forward path="basicUnit-site-front-page-intro-float" name="frontPage-BANNER_INTRO_COLLAPSED"></forward>
-                  <forward path="basicUnit-section" name="site-section"></forward>
-                  <forward path="basicUnit-section-deny" name="site-section-deny"></forward>
-                  <forward path="basicUnit-section-adviseLogin" name="site-section-adviseLogin"></forward>
-                  <forward path="basicUnit-item" name="site-item"></forward>
-                  <forward path="basicUnit-item-deny" name="site-item-deny"></forward>
-                  <forward path="basicUnit-item-adviseLogin" name="site-item-adviseLogin"></forward>
-                  <forward path="basicUnit-organization" name="unit-organization"></forward>
-                  <forward path="/units/announcements.do" name="announcementsAction"></forward>
-                  <forward path="/units/events.do" name="eventsAction"></forward>
-                  <forward path="/units/announcementsRSS.do" name="announcementsRSSAction"></forward>
-                  <forward path="/units/eventsRSS.do" name="eventsRSSAction"></forward>
-            </action>
-            <!--  Directive Council Students Site -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA" parameter="method" path="/managementCouncilSite/viewSite">
-                  <forward path="basicUnit-site-front-page-banner-intro" name="frontPage-BANNER_INTRO"></forward>
-                  <forward path="basicUnit-site-front-page-intro-banner" name="frontPage-INTRO_BANNER"></forward>
-                  <forward path="basicUnit-site-front-page-intro-float" name="frontPage-BANNER_INTRO_COLLAPSED"></forward>
-                  <forward path="basicUnit-section" name="site-section"></forward>
-                  <forward path="basicUnit-section-deny" name="site-section-deny"></forward>
-                  <forward path="basicUnit-section-adviseLogin" name="site-section-adviseLogin"></forward>
-                  <forward path="basicUnit-item" name="site-item"></forward>
-                  <forward path="basicUnit-item-deny" name="site-item-deny"></forward>
-                  <forward path="basicUnit-item-adviseLogin" name="site-item-adviseLogin"></forward>
-                  <forward path="basicUnit-organization" name="unit-organization"></forward>
-                  <forward path="/units/announcements.do" name="announcementsAction"></forward>
-                  <forward path="/units/events.do" name="eventsAction"></forward>
-                  <forward path="/units/announcementsRSS.do" name="announcementsRSSAction"></forward>
-                  <forward path="/units/eventsRSS.do" name="eventsRSSAction"></forward>
-            </action>
-            <!--  EDAM SITE -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA" parameter="method" path="/managementEdamSite/viewSite">
-                  <forward path="basicUnit-site-front-page-banner-intro" name="frontPage-BANNER_INTRO"></forward>
-                  <forward path="basicUnit-site-front-page-intro-banner" name="frontPage-INTRO_BANNER"></forward>
-                  <forward path="basicUnit-site-front-page-intro-float" name="frontPage-BANNER_INTRO_COLLAPSED"></forward>
-                  <forward path="basicUnit-section" name="site-section"></forward>
-                  <forward path="basicUnit-section-deny" name="site-section-deny"></forward>
-                  <forward path="basicUnit-section-adviseLogin" name="site-section-adviseLogin"></forward>
-                  <forward path="basicUnit-item" name="site-item"></forward>
-                  <forward path="basicUnit-item-deny" name="site-item-deny"></forward>
-                  <forward path="basicUnit-item-adviseLogin" name="site-item-adviseLogin"></forward>
-                  <forward path="basicUnit-organization" name="unit-organization"></forward>
-                  <forward path="/units/announcements.do" name="announcementsAction"></forward>
-                  <forward path="/units/events.do" name="eventsAction"></forward>
-                  <forward path="/units/announcementsRSS.do" name="announcementsRSSAction"></forward>
-                  <forward path="/units/eventsRSS.do" name="eventsRSSAction"></forward>
-            </action>
             <!-- Department site -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA" parameter="method" path="/department/searchPublication">
-                  <forward path="search-research-unit-publications" name="SearchPublication"></forward>
-            </action>
             <action forward="/department/departmentSite.do?method=employees" path="/department/departmentEmployees"></action>
             <action forward="/department/departmentSite.do?method=degrees" path="/department/degrees"></action>
             <action forward="/department/departmentSite.do?method=teachers" path="/department/teachers"></action>
@@ -514,9 +330,6 @@
                   <forward path="scientificCouncil-view-event" name="viewAnnouncement"></forward>
             </action>
             <!-- ===== Scientific Area Visualization ======= -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowResearchResultInUnitSite" parameter="method" path="/scientificArea/showResearchResult">
-                  <forward path="show-scientificArea-unit-result" name="showResult"></forward>
-            </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.AnnouncementsBoardDA" parameter="method" path="/scientificArea/announcements">
                   <forward path="public-basicUnit-list-announcements" name="listAnnouncements"></forward>
                   <forward path="basicUnit-view-announcement" name="viewAnnouncement"></forward>
@@ -527,24 +340,9 @@
             </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitAnnouncementsRSS" parameter="method" path="/scientificArea/announcementsRSS"></action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitEventsRSS" parameter="method" path="/scientificArea/eventsRSS"></action>
-            <!-- ===== ResearchUnit Site Visualization ===== -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA" parameter="method" path="/researchSite/searchPublication">
-                  <forward path="search-research-unit-publications" name="SearchPublication"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA" parameter="method" path="/department/searchPublication">
-                  <forward path="department-search-publications" name="SearchPublication"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA" parameter="method" path="/scientificArea/searchPublication">
-                  <forward path="scientific-area-search-publications" name="SearchPublication"></forward>
-            </action>
             <!--===== Content Actions ======-->
             <!-- =================== Find Spaces Interface  =================== -->
             <!-- =================== Alumni Registration  =================== -->
-            <action type="com.octo.captcha.module.struts.image.RenderImageCaptchaAction" path="/jcaptcha"></action>
-            <action validate="true" scope="request" type="com.octo.captcha.module.struts.VerifyCaptchaChallengeAction" parameter="method" path="/LoginCaptcha">
-                  <forward redirect="true" path="/alumni.do?method=validateFenixAcessData" name="success"></forward>
-                  <forward redirect="true" path="/teste.jsp" name="failure"></forward>
-            </action>
             <!-- =================== Alumni Registration  =================== -->
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
@@ -583,11 +381,6 @@
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-publico.xml" property="pathnames"></set-property>
-      </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
-            <set-property value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixMetaObjectFactory" property="metaObjectFactory"></set-property>
-            <set-property value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixUserIdentityFactory" property="userIdentityFactory"></set-property>
-            <set-property value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixSchemaFactory" property="schemaFactory"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
             <set-property value="/WEB-INF/tiles/public/tiles-public-definitions.xml,/WEB-INF/tiles/public/tiles-public-pages-definitions.xml" property="definitions-config"></set-property>

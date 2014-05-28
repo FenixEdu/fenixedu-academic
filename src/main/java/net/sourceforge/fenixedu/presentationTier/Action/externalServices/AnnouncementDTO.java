@@ -1,16 +1,35 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Author : Goncalo Luiz
  * Creation Date: Jul 31, 2006,4:09:13 PM
  */
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -48,7 +67,7 @@ public class AnnouncementDTO {
     public AnnouncementDTO() {
     }
 
-    public AnnouncementDTO(final Announcement announcement, final Language language) {
+    public AnnouncementDTO(final Announcement announcement, final Locale language) {
 
         setCreationDate(getFormattedDate(announcement.getCreationDate()));
         setLastModification(getFormattedDate(announcement.getLastModification()));
@@ -82,11 +101,11 @@ public class AnnouncementDTO {
         return dateTime == null ? null : dateTime.toString(DATE_TIME_FORMAT);
     }
 
-    private String getContentFrom(final MultiLanguageString multiLanguageString, final Language language) {
+    private String getContentFrom(final MultiLanguageString multiLanguageString, final Locale language) {
         if (multiLanguageString == null) {
             return null;
         }
-        return multiLanguageString.hasLanguage(language) ? multiLanguageString.getContent(language) : multiLanguageString
+        return multiLanguageString.hasLocale(language) ? multiLanguageString.getContent(language) : multiLanguageString
                 .getContent();
     }
 
@@ -222,7 +241,7 @@ public class AnnouncementDTO {
         return this.campus;
     }
 
-    public void setCampus(Campus campus) {
+    public void setCampus(Space campus) {
         this.campus = campus == null ? "EXTERNAL" : campus.getName();
     }
 
@@ -234,7 +253,7 @@ public class AnnouncementDTO {
         this.categories = categories;
     }
 
-    private void setCategoriesFromAnnouncement(Announcement announcement, final Language language) {
+    private void setCategoriesFromAnnouncement(Announcement announcement, final Locale language) {
         java.util.List<String> categories = new java.util.ArrayList<String>();
 
         for (AnnouncementCategory category : announcement.getCategories()) {

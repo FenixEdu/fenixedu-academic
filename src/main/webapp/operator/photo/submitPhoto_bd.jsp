@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -12,6 +32,10 @@
 		margin-top: 30px;
 		width: 500px;
 		margin-left: 10px;
+	}
+	#upload-button {
+		left: 155px !important;
+		top: 300px !important;
 	}
 </style>
 
@@ -57,7 +81,6 @@
 	});
 </script>
 
-<em><bean:message key="operator.module.title" bundle="MANAGER_RESOURCES"/></em>
 <h2><bean:message key="link.operator.submitPhoto"/></h2>
 
 <html:messages id="message" message="true" bundle="MANAGER_RESOURCES" property="error">
@@ -91,31 +114,3 @@
 	  <bean:message key="button.submit" />
    </html:submit>
 </fr:form>
-
-<%--
-<html:form styleId="photoForm" action="/submitPhoto.do?method=photoUpload" enctype="multipart/form-data">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
-	
-	<input type="hidden" id="phroperCaption" value="<%= request.getAttribute("phroperCaption") != null ? request.getAttribute("phroperCaption") : "" %>" />
-	<input type="hidden" id="phroperSubCaption" value="<%= request.getAttribute("phroperSubCaption") != null ? request.getAttribute("phroperSubCaption") : "" %>" />
-	<input type="hidden" id="phroperButtonCaption" value="<%= request.getAttribute("phroperButtonCaption") != null ? request.getAttribute("phroperButtonCaption") : "" %>" />
-	<input type="hidden" id="phroperLoadingCaption" value="<%= request.getAttribute("phroperLoadingCaption") != null ? request.getAttribute("phroperLoadingCaption") : "" %>" />
-
-	<table class="tstyle5 thlight thright thmiddle mtop05">
-		<tr>
-			<th><bean:message key="property.login.username" /></th>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" size="55"/></td>
-		</tr>
-		<tr>
-			<th><bean:message key="title.loadMarks" /></th>
-			<td><html:file bundle="HTMLALT_RESOURCES" altKey="file.theFile" property="theFile" size="50"/></td>
-		</tr>
-	</table>
-
-	<p>
-		<html:submit styleId="submitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-			<bean:message key="button.save"/>
-		</html:submit>
-	</p>
-</html:form> 
---%>

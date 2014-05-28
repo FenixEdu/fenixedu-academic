@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -6,7 +26,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="string" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <logic:present name="homepage">
@@ -75,20 +94,20 @@
 									<logic:match name="homepage" property="researchUnitHomepage" value="http://">
 										<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 										<td>
-											<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
+											<html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 										</td>
 									</logic:match>
 									<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://">
 										<logic:match name="homepage" property="researchUnitHomepage" value="https://">
 											<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 											<td>
-												<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
+												<html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 											</td>
 										</logic:match>
 										<logic:notMatch name="homepage" property="researchUnitHomepage" value="https://">
 											<td>
 												<bean:define id="url" type="java.lang.String">http://<bean:write name="homepage" property="researchUnitHomepage"/></bean:define>
-												<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
+												<html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 											</td>
 										</logic:notMatch>
 									</logic:notMatch>

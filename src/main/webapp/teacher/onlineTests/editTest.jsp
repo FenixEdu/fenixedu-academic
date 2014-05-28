@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
@@ -16,7 +36,7 @@
 <html:form action="/testEdition">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editTest"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>"/>
 <table>
 	<tr>
 		<td><b><bean:message key="label.title"/></b></td>
@@ -32,15 +52,15 @@
 <table>
 	<tr>
 		<td><div class="gen-button">
-		<html:link page="<%= "/testEdition.do?method=prepareEditTestHeader&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+		<html:link page="<%= "/testEdition.do?method=prepareEditTestHeader&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 		<bean:message key="link.editTestHeader" />
 		</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 		<td><div class="gen-button">
-		<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+		<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 		<bean:message key="label.test.insertQuestion"/>
 		</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 		<td><div class="gen-button">
-		<html:link page="<%= "/testsManagement.do?method=showTests&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+		<html:link page="<%= "/testsManagement.do?method=showTests&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 		<bean:message key="label.finish"/>
 		</html:link></div></td>
 	</tr>
@@ -58,11 +78,11 @@
 		<bean:define id="questionCode" name="thisQuestion" property="externalId"/>
 		<tr><td><table><tr><td>
 			<div class="gen-button">
-			<html:link page="<%= "/testQuestionEdition.do?method=prepareEditTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
+			<html:link page="<%= "/testQuestionEdition.do?method=prepareEditTestQuestion&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
 			<bean:message key="title.editTestQuestion" />
 			</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 			<td><div class="gen-button">
-			<html:link page="<%= "/testEdition.do?method=deleteTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
+			<html:link page="<%= "/testEdition.do?method=deleteTestQuestion&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
 			<bean:message key="link.removeTestQuestion" />
 			</html:link></div></td>
 		</tr></table><tr><td>
@@ -82,11 +102,11 @@
 	<table>
 		<tr><td>
 			<div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+			<html:link page="<%= "/testsManagement.do?method=showAvailableQuestions&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 			<bean:message key="label.test.insertQuestion" />
 			</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 			<td><div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=showTests&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+			<html:link page="<%= "/testsManagement.do?method=showTests&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 			<bean:message key="label.finish" />
 			</html:link></div></td>
 		</tr>

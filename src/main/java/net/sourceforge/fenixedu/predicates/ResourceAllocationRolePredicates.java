@@ -1,13 +1,27 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
-import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
-import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant;
-import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -21,8 +35,7 @@ public class ResourceAllocationRolePredicates {
     public static final AccessControlPredicate<Lesson> checkPermissionsToManageLessons = new AccessControlPredicate<Lesson>() {
         @Override
         public boolean evaluate(Lesson lesson) {
-            ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
-            return true;
+            return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
         }
     };
 
@@ -31,8 +44,7 @@ public class ResourceAllocationRolePredicates {
     public static final AccessControlPredicate<Shift> checkPermissionsToManageShifts = new AccessControlPredicate<Shift>() {
         @Override
         public boolean evaluate(Shift shift) {
-            ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
-            return true;
+            return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
         }
     };
 
@@ -42,8 +54,7 @@ public class ResourceAllocationRolePredicates {
             new AccessControlPredicate<SchoolClass>() {
                 @Override
                 public boolean evaluate(SchoolClass schoolClass) {
-                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
-                    return true;
+                    return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
                 }
             };
 
@@ -53,8 +64,7 @@ public class ResourceAllocationRolePredicates {
             new AccessControlPredicate<LessonInstance>() {
                 @Override
                 public boolean evaluate(LessonInstance lessonInstance) {
-                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
-                    return true;
+                    return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
                 }
             };
 
@@ -75,53 +85,10 @@ public class ResourceAllocationRolePredicates {
                         return true;
                     }
 
-                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);
-                    return true;
+                    return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
                 }
             };
 
     // Punctual Rooms Occupation Management Predicates
 
-    public static final AccessControlPredicate<PunctualRoomsOccupationRequest> checkPermissionsToManagePunctualRoomsOccupationRequests =
-            new AccessControlPredicate<PunctualRoomsOccupationRequest>() {
-                @Override
-                public boolean evaluate(PunctualRoomsOccupationRequest request) {
-
-                    Person loggedPerson = AccessControl.getPerson();
-
-                    if (loggedPerson.hasRole(RoleType.TEACHER) || loggedPerson.hasAnyProfessorships()) {
-                        return true;
-                    }
-
-                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);
-                    return true;
-                }
-            };
-
-    public static final AccessControlPredicate<PunctualRoomsOccupationComment> checkPermissionsToManagePunctualRoomsOccupationComments =
-            new AccessControlPredicate<PunctualRoomsOccupationComment>() {
-                @Override
-                public boolean evaluate(PunctualRoomsOccupationComment comment) {
-                    return checkPermissionsToManagePunctualRoomsOccupationRequests.evaluate(comment.getRequest());
-                }
-            };
-
-    public static final AccessControlPredicate<PunctualRoomsOccupationStateInstant> checkPermissionsToManagePunctualRoomsOccupationStateInstants =
-            new AccessControlPredicate<PunctualRoomsOccupationStateInstant>() {
-                @Override
-                public boolean evaluate(PunctualRoomsOccupationStateInstant stateInstant) {
-                    return checkPermissionsToManagePunctualRoomsOccupationRequests.evaluate(stateInstant.getRequest());
-                }
-            };
-
-    // Resource Allocation Access Groups Predicates
-
-    public static final AccessControlPredicate<ResourceAllocationRole> checkPermissionsToManageAccessGroups =
-            new AccessControlPredicate<ResourceAllocationRole>() {
-                @Override
-                public boolean evaluate(ResourceAllocationRole role) {
-                    ResourceAllocationRole.checkIfPersonIsResourceAllocationSuperUser(AccessControl.getPerson());
-                    return true;
-                }
-            };
 }

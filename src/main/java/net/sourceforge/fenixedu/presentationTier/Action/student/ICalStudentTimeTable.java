@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
 import java.util.List;
@@ -13,13 +31,15 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -28,6 +48,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.hash.Hashing;
+
+@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "label.title.sync", path = "sync",
+        bundle = "MessagingResources", titleKey = "label.title.sync")
 @Mapping(path = "/ICalTimeTable", module = "student")
 @Forwards({
         @Forward(name = "viewOptions", path = "/student/iCalendar/viewCalendarInformation.jsp", tileProperties = @Tile(
@@ -53,6 +77,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
@@ -112,7 +137,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
                         + user.getPrivateKey().getPrivateKeyValidity().toString() + "##" + "## This is for " + to + " calendar")
                         .getBytes());
 
-        return DigestUtils.shaHex(encrypted);
+        return Hashing.sha1().hashBytes(encrypted).toString();
     }
 
     public static String getUrl(String to, Registration registration, HttpServletRequest request) throws Exception {

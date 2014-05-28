@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.gep;
 
 import java.io.IOException;
@@ -24,7 +42,6 @@ import net.sourceforge.fenixedu.domain.reports.EurAceReportFile;
 import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
 import net.sourceforge.fenixedu.domain.reports.GepReportFile;
 import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
-import net.sourceforge.fenixedu.domain.reports.PublicationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesDfaReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesGraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
@@ -40,26 +57,26 @@ import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import net.sourceforge.fenixedu.domain.reports.WrittenEvaluationReportFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepPortalApp;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "gep", path = "/reportsByDegreeType", scope = "session", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "selectDegreeType", path = "/gep/reportsByDegreeType.jsp", tileProperties = @Tile(
-                title = "private.gep.gepportal.reportsbydegreetype")),
-        @Forward(name = "viewReports", path = "/gep/viewReports.jsp", tileProperties = @Tile(
-                title = "private.gep.gepportal.reportsbydegreetype")) })
+@StrutsFunctionality(app = GepPortalApp.class, path = "reports", titleKey = "link.reports")
+@Mapping(module = "gep", path = "/reportsByDegreeType")
+@Forwards({ @Forward(name = "selectDegreeType", path = "/gep/reportsByDegreeType.jsp"),
+        @Forward(name = "viewReports", path = "/gep/viewReports.jsp") })
 public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private static final int MAX_AUTHORIZED_REPORT_FILES = 20;
@@ -112,7 +129,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
         return QueueJob.getLastJobsForClassOrSubClass(GepReportFile.class, 5);
     }
 
-    @SuppressWarnings("unused")
+    @EntryPoint
     public ActionForward selectDegreeType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         ReportBean reportBean = getRenderedObject();
@@ -463,19 +480,6 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     @SuppressWarnings("unused")
-    public ActionForward downloadPublications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
-        if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
-            return selectDegreeType(mapping, actionForm, request, response);
-        }
-        final String format = getFormat(request);
-
-        prepareNewJobResponse(request, ReportFileFactory.createPublicationsReportFile(format));
-
-        return selectDegreeType(mapping, actionForm, request, response);
-    }
-
-    @SuppressWarnings("unused")
     public ActionForward downloadTeachersByShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
@@ -654,8 +658,6 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
             return TeacherCreditsReportFile.class;
         case 24:
             return EffectiveTeachingLoadReportFile.class;
-        case 25:
-            return PublicationReportFile.class;
         default:
             return null;
         }

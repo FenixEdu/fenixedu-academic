@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.awt.Color;
@@ -8,6 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -16,7 +35,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.photograph.AspectRatio;
@@ -31,13 +49,14 @@ import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.commons.i18n.I18N;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.google.common.io.ByteStreams;
 
@@ -57,22 +76,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         super();
         setRootDomainObject(Bennu.getInstance());
         setSubmission(new DateTime());
-    }
-
-    @Deprecated
-    public Photograph(ContentType contentType, ByteArray content, ByteArray compressed, PhotoType photoType) {
-        this();
-        setContentType(contentType);
-        setPhotoType(photoType);
-        new PhotographContent(this, PhotographContentSize.DOC_SIZE, compressed);
-        if (content != null) {
-            new PhotographContent(this, PhotographContentSize.RAW, content);
-        }
-    }
-
-    @Deprecated
-    public Photograph(ContentType contentType, ByteArray content, PhotoType photoType) {
-        this(contentType, content, compressImage(content.getBytes(), contentType), photoType);
     }
 
     public Photograph(PhotoType photoType, ContentType contentType, ByteArray original) {
@@ -129,13 +132,13 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
                 }
                 final EmailAddress institutionalOrDefaultEmailAddress = getPerson().getInstitutionalOrDefaultEmailAddress();
                 if (institutionalOrDefaultEmailAddress != null) {
-                    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Language.getDefaultLocale());
+                    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Locale.getDefault());
                     Set<String> sendTo = Collections.singleton(institutionalOrDefaultEmailAddress.getValue());
 
                     SystemSender systemSender = getRootDomainObject().getSystemSender();
-                    new Message(systemSender, systemSender.getConcreteReplyTos(),
-                            new Recipient(new PersonGroup(getPerson())).asCollection(),
-                            bundle.getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY), "");
+                    new Message(systemSender, systemSender.getConcreteReplyTos(), new Recipient(UserGroup.of(getPerson()
+                            .getUser())).asCollection(), bundle.getString(REJECTION_MAIL_SUBJECT_KEY),
+                            bundle.getString(REJECTION_MAIL_BODY_KEY), "");
                 }
 
             }
@@ -157,21 +160,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
             previous.setState(PhotoState.USER_REJECTED);
         }
         super.setPrevious(previous);
-    }
-
-    @Deprecated
-    public byte[] getContents() {
-        return getContents(PhotographContentSize.DOC_SIZE);
-    }
-
-    @Deprecated
-    public byte[] getContents(PhotographContentSize size) {
-        for (PhotographContent content : getContentSet()) {
-            if (content.getSize().equals(size)) {
-                return content.getBytes();
-            }
-        }
-        throw new DomainException("error.photograph.has.no.content.of.requested.size");
     }
 
     @Atomic
@@ -291,16 +279,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.PhotographContent> getContent() {
-        return getContentSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyContent() {
-        return !getContentSet().isEmpty();
-    }
-
-    @Deprecated
     public boolean hasNext() {
         return getNext() != null;
     }
@@ -376,7 +354,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         try {
             image =
                     Picture.readImage(ByteStreams.toByteArray(Photograph.class.getClassLoader().getResourceAsStream(
-                            "images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif")));
+                            "images/photo_placer01_" + I18N.getLocale().getLanguage() + ".gif")));
             return processImage(image, xRatio, yRatio, width, height, pictureMode);
         } catch (IOException e) {
             return null;

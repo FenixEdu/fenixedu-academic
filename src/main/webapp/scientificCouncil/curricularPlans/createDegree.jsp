@@ -1,12 +1,33 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication$ScientificCurricularPlansManagement" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	
-	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['create.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['degree']}"/>
 	</h:outputFormat>
@@ -52,7 +73,6 @@
 			<h:selectOneMenu id="bolonhaDegreeType" value="#{DegreeManagement.bolonhaDegreeType}" onchange="this.form.submit();">
 				<f:selectItems value="#{DegreeManagement.bolonhaDegreeTypes}" />
 			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:message for="bolonhaDegreeType" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
@@ -104,4 +124,4 @@
 		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 
-</ft:tilesView>
+</f:view>

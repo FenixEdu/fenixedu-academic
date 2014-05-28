@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 
 import java.io.Serializable;
@@ -15,18 +33,18 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = DirectiveCouncilApplication.class, path = "gratuity-reports",
+        titleKey = "label.directiveCouncil.gratuityReports")
 @Mapping(path = "/gratuityReports", module = "directiveCouncil")
-@Forwards({
-
-@Forward(name = "showReport", path = "/directiveCouncil/gratuityReports/showReport.jsp", tileProperties = @Tile(
-        title = "private.steeringcouncil.reportsfees")) })
+@Forwards(@Forward(name = "showReport", path = "/directiveCouncil/gratuityReports/showReport.jsp"))
 public class GratuityReportsDA extends FenixDispatchAction {
 
     public static class GratuityReportParametersBean implements Serializable {
@@ -91,6 +109,7 @@ public class GratuityReportsDA extends FenixDispatchAction {
 
     }
 
+    @EntryPoint
     public ActionForward showReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

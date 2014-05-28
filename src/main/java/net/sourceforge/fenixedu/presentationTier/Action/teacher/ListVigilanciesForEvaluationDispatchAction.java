@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.ArrayList;
@@ -16,7 +34,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus;
 import net.sourceforge.fenixedu.domain.vigilancy.OwnCourseVigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -26,15 +44,16 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "teacher", path = "/evaluation/vigilancy/vigilantsForEvaluation", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "listVigilantsForEvaluation", path = "list-vigilants-for-evaluation"),
-        @Forward(name = "editReportForEvaluation", path = "edit-report-for-evaluation") })
-public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAction {
+@Mapping(module = "teacher", path = "/evaluation/vigilancy/vigilantsForEvaluation", functionality = ManageExecutionCourseDA.class)
+public class ListVigilanciesForEvaluationDispatchAction extends ExecutionCourseBaseAction {
+
+    private ActionForward doForward(HttpServletRequest request, String path) {
+        request.setAttribute("teacher$actual$page", path);
+        return new ActionForward("/evaluation/evaluationFrame.jsp");
+    }
 
     private void setState(HttpServletRequest request) {
         String executionCourseID = request.getParameter("executionCourseID");
@@ -60,14 +79,13 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
             HttpServletResponse response) {
         setState(request);
         request.setAttribute("unconvokeRequest", new VariantBean());
-        return mapping.findForward("listVigilantsForEvaluation");
-
+        return doForward(request, "/teacher/evaluation/vigilancies/viewVigilancies.jsp");
     }
 
     public ActionForward editReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         setState(request);
-        return mapping.findForward("editReportForEvaluation");
+        return doForward(request, "/teacher/evaluation/vigilancies/editVigilanciesReport.jsp");
     }
 
     public ActionForward changeConvokeStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,

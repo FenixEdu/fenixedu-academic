@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
 
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
 <form-validation>
    <formset>	   
         <constant>
@@ -157,15 +179,6 @@
 			</field>
 			<field property="place" depends="required" page="1">
 				<arg0 key="label.property.support-lesson-place" />
-			</field>
-    	</form>
-    	<!-- ================================================================ -->    	
-    	<form name="otherTypeCreditLineForm">
-			<field property="reason" depends="required" page="1">
-				<arg0 key="label.otherTypeCreditLine.reason"/>
-			</field>
-			<field property="credits" depends="required,double" page="1">
-				<arg0 key="label.otherTypeCreditLine.credits"/>
 			</field>
     	</form>
 	</formset>

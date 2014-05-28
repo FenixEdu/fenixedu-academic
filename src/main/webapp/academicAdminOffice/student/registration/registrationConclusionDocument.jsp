@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -7,7 +27,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
 <%@page import="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice" %>
 <%@page import="net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.DegreeFinalizationCertificate"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.joda.time.LocalDate"%>
 
 <html:xhtml />
@@ -140,7 +160,7 @@
 </logic:equal>	
 
 <%
-	request.setAttribute("degreeFinalizationDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	request.setAttribute("degreeFinalizationDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", I18N.getLocale()));
 	final Integer finalAverage = registrationConclusionBean.getFinalAverage();	
 	request.setAttribute("finalAverage", finalAverage);
 	request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(finalAverage));
@@ -152,7 +172,7 @@
 	request.setAttribute("administrativeOfficeCoordinator", administrativeOfficeCoordinator);
 	request.setAttribute("administrativeOfficeCoordinatorGender", administrativeOfficeCoordinator.isMale() ? "" : "a");
 	request.setAttribute("administrativeOfficeName", office.getUnit().getName());
-	request.setAttribute("day", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	request.setAttribute("day", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", I18N.getLocale()));
 %>
 
 <table class="apura-final mtop2" width="90%" cellspacing="0" border="0">

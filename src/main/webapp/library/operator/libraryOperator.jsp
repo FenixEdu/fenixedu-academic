@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance"%>
 <%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
@@ -25,14 +45,14 @@
 	}
 </script>
 
-<table>
+<table style="width: 90%">
 	<tr>
 		<td style="vertical-align: bottom;"><fr:form action="/libraryOperator.do?method=selectLibrary">
 				<fr:edit id="attendance" name="attendance">
 					<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
 						<fr:slot name="library" key="label.library" layout="menu-select-postback" required="true">
 							<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.library.LibraryProvider" />
-							<fr:property name="format" value="Biblioteca ${spaceBuilding.nameWithCampus}" />
+							<fr:property name="format" value="Biblioteca \${parent.parent.presentationName}" />
 							<fr:property name="destination" value="postback" />
 						</fr:slot>
 					</fr:schema>
@@ -47,15 +67,17 @@
 		<td>
 			<div style="float: right; margin-left: 10px; margin-top: 15px;">
 				<logic:present name="attendance" property="library">
-					<html:img align="middle" action="/libraryOperator.do?method=createAreaXYChart" paramId="library" paramName="attendance" paramProperty="library.externalId" />
+					 				
+					<bean:message key="label.library.ocupation" />: <%= net.sourceforge.fenixedu.domain.space.SpaceUtils.currentAttendaceCount(((net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance)request.getAttribute("attendance")).getLibrary()) %> / ${attendance.library.allocatableCapacity}
 				</logic:present>
-			</div></td>
+			</div>
+		</td>
 </table>
 
 <logic:present name="attendance" property="library">
 
 	<bean:define id="libraryId" name="attendance" property="library.externalId" />
-	<table>
+	<table style="width: 90%">
 		<tr>
 			<td style="vertical-align: top;">
 				<h3 class="mtop2"><bean:message key="label.find.person" bundle="LIBRARY_RESOURCES" /></h3>
@@ -155,28 +177,25 @@
 								<fr:property name="useParent" value="true" />
 								<fr:property name="moduleRelative" value="false" />
 								<fr:property name="contextRelative" value="true" />
-								<fr:property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=${person.istUsername}" />
+								<fr:property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=\${person.istUsername}" />
 							</fr:slot>
 							<fr:slot name="person.name" key="label.person.name" />
 							<fr:slot name="person.istUsername" key="label.person.istUsername" />
-							<logic:present name="attendance" property="personLibraryCardNumber">
-								<fr:slot name="personLibraryCardNumber" key="label.person.libraryCardNumber" />
-							</logic:present>
 							<fr:slot name="person.emailForSendingEmails" layout="null-as-label" key="label.card.person.email" />
 							<fr:slot name="person.mobile" key="label.person.mobile" />
 							
-							<logic:notEmpty name="attendance" property="giafProfessionalDataSet">
+							<%-- <logic:notEmpty name="attendance" property="giafProfessionalDataSet">
 								<logic:iterate id="giafProfessionalDataSet" name="attendance" property="giafProfessionalDataSet" indexId="i">
 									<bean:define id="labelId" name="giafProfessionalDataSet" property="professionalCategory.categoryType"/>
 									<fr:slot name="<%="giafProfessionalDataSet["+ i+"]"%>" key="<%=labelId.toString() %>" bundle="ENUMERATION_RESOURCES">
-										<fr:property name="format" value="${contractSituation.name}" />
+										<fr:property name="format" value="\${contractSituation.name}" />
 										<logic:notEmpty name="giafProfessionalDataSet" property="personProfessionalData.person.workingPlaceUnitForAnyRoleType">
-											<fr:property name="format" value="${contractSituation.name} <br/> ${personProfessionalData.person.workingPlaceUnitForAnyRoleType.presentationName}" />
+											<fr:property name="format" value="\${contractSituation.name} <br/> \${personProfessionalData.person.workingPlaceUnitForAnyRoleType.presentationName}" />
 											<fr:property name="escaped" value="false" />
 										</logic:notEmpty>
 									</fr:slot>
 								</logic:iterate>
-							</logic:notEmpty>
+							</logic:notEmpty> --%>
 							<logic:present name="attendance" property="externalTeacherUnit">
 								<fr:slot name="externalTeacherUnit.presentationName" key="label.person.externalTeacher" />
 							</logic:present>
@@ -209,17 +228,6 @@
 							<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05" />
 						</fr:layout>
 					</fr:view>
-					<bean:define id="userHasHigherClerance" value="<%= "" + Bennu.getInstance().getLibraryCardSystem().getHigherClearenceGroup().allows(Authenticate.getUser()) %>" />
-					<logic:equal name="userHasHigherClerance" value="true">
-						<logic:notPresent name="attendance" property="personLibraryCardNumber">
-							<bean:define id="personIstUsername" name="attendance" property="person.istUsername" />
-							<p>
-								<html:link action="<%= "/libraryOperator.do?method=generateCardNumber&personIstUsername=" + personIstUsername + "&libraryId=" + libraryId %>" onclick="return confirm('Tem a certeza que pretende gerar um código Millenium para esta pessoa? A operação não é reversível.');">
-									<bean:message key="button.generateLibraryNumber" bundle="LIBRARY_RESOURCES" />
-								</html:link>
-							</p>
-						</logic:notPresent>
-					</logic:equal>
 
 					<logic:present name="attendance" property="personAttendance">
 						<fr:form action="/libraryOperator.do?method=exitPlace">
@@ -250,8 +258,8 @@
 												<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
 													<fr:slot name="selectedSpace" key="label.person.place" layout="menu-select">
 														<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance$PlaceProvider" />
-														<fr:property name="sortBy" value="spaceInformation.presentationName" />
-														<fr:property name="format" value="${spaceInformation.presentationName}" />
+														<fr:property name="sortBy" value="presentationName" />
+														<fr:property name="format" value="\${presentationName}" />
 														<fr:property name="defaultText" value="label.space.libraryResourceNone" />
 														<fr:property name="bundle" value="LIBRARY_RESOURCES" />
 														<fr:property name="key" value="true" />
@@ -272,13 +280,14 @@
 						</logic:notPresent>
 					</logic:equal>
 				</logic:present>
+				
 			</td>
-
+			
 			<td style="vertical-align: top;">
 				<div style="float: right; margin-left: 120px;">
 					<h3 class="mtop2"><bean:message key="label.attendances" bundle="LIBRARY_RESOURCES" />
 					</h3>
-
+					
 					<fr:view name="attendance" property="libraryAttendances">
 						<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.domain.space.SpaceAttendances">
 							<fr:slot name="person.istUsername" key="label.person.istUsername" />

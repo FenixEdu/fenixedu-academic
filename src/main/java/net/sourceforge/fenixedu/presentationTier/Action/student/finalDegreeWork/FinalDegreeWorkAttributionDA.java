@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created 2004/04/25
  */
@@ -20,6 +38,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentSeniorsApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -30,26 +49,26 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
  */
+@StrutsFunctionality(app = StudentSeniorsApp.class, path = "confirm-attribution",
+        titleKey = "link.finalDegreeWork.confirmAttribution")
 @Mapping(module = "student", path = "/finalDegreeWorkAttribution",
-        input = "/finalDegreeWorkAttribution.do?method=prepare&page=0", attribute = "finalDegreeWorkAttributionForm",
-        formBean = "finalDegreeWorkAttributionForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "NoConfirmationInProcessException", path = "/student/finalDegreeWork/noConfirmationInProcess.jsp"),
-        @Forward(name = "prepareShowFinalDegreeWorkList", path = "/finalDegreeWorkAttribution.do?method=prepare&page=0"),
-        @Forward(name = "showFinalDegreeWorkList", path = "/student/finalDegreeWork/attribution.jsp", tileProperties = @Tile(
-                title = "private.student.finalists.confirmattribution")) })
+        input = "/finalDegreeWorkAttribution.do?method=prepare&page=0", formBean = "finalDegreeWorkAttributionForm")
+@Forwards({ @Forward(name = "NoConfirmationInProcessException", path = "/student/finalDegreeWork/noConfirmationInProcess.jsp"),
+        @Forward(name = "prepareShowFinalDegreeWorkList", path = "/student/finalDegreeWorkAttribution.do?method=prepare&page=0"),
+        @Forward(name = "showFinalDegreeWorkList", path = "/student/finalDegreeWork/attribution.jsp") })
 @Exceptions(
         value = {
                 @ExceptionHandling(
@@ -64,6 +83,7 @@ import pt.ist.fenixframework.FenixFramework;
                         scope = "request") })
 public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final ExecutionYear executionYear) throws Exception {
         final DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;

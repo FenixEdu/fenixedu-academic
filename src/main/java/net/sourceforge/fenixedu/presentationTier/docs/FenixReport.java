@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.docs;
 
 import java.io.Serializable;
@@ -12,11 +30,10 @@ import net.sourceforge.fenixedu.util.DateI18NUtil;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class FenixReport implements Serializable {
 
@@ -35,7 +52,7 @@ abstract public class FenixReport implements Serializable {
 
     private final Locale locale;
 
-    private final Language language;
+    private final Locale language;
 
     static final protected String EMPTY_STR = StringUtils.EMPTY;
 
@@ -50,7 +67,7 @@ abstract public class FenixReport implements Serializable {
     static final protected String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
     protected FenixReport() {
-        this(null, Language.getLocale());
+        this(null, I18N.getLocale());
     }
 
     protected FenixReport(final Locale locale) {
@@ -62,7 +79,7 @@ abstract public class FenixReport implements Serializable {
         this.enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
         this.applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources", locale);
         this.locale = locale;
-        this.language = Language.valueOf(locale.getLanguage());
+        this.language = locale;
     }
 
     public final Collection<?> getDataSource() {
@@ -93,7 +110,7 @@ abstract public class FenixReport implements Serializable {
         return locale;
     }
 
-    public Language getLanguage() {
+    public Locale getLanguage() {
         return language;
     }
 

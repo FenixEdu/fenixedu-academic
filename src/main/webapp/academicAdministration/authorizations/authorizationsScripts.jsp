@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@page import="net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType"%>
 
 <!--[if lt IE 9]>
@@ -15,8 +35,20 @@
 
 /* Typography */
 
-header, nav, section, article, aside, footer {
-	display:block;
+#authorizationList header {
+	margin-top: 0;
+	padding-top: 5px;
+	display: block;
+}
+
+#cursos_acc.affix {
+	top: 20px;
+}
+
+#cursos_acc {
+	max-height: 90%;
+	min-height: 400px;
+	overflow-y: auto;
 }
 
 #container {
@@ -38,17 +70,12 @@ h2 span {
 }
 
 /* General */
-a {
-	color: #105c93;
-}
-
 ul {
 	list-style: none;
 }
 
 /* Structure */
 #main {
-	width: 65%;
 	position: relative;
 }
 
@@ -56,18 +83,6 @@ ul {
 	position: relative;
 	height: 100%;
 	min-height: 600px;
-}
-
-#sidebar {
-	width: 32%;
-	margin-left: 2%;
-	position:absolute;
-	top:0;
-	right:0;
-	max-height: 100%;
-	min-height: 400px;
-	overflow-y: auto;
-	overflow-x: hidden;
 }
 
 /* Period */
@@ -81,7 +96,7 @@ ul {
 }
 
 #period header {
-	padding: 6px 14px;
+	padding: 15px 14px;
 	border-bottom: 1px solid #cccccc;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
@@ -105,7 +120,7 @@ ul {
 	color: #848484;
 	font-size: 12px;
 	font-weight: bold;
-	float: right;
+	float: right !important;
 	margin-top: -20px;
 	text-decoration: none;
 	border-bottom: none;
@@ -176,7 +191,7 @@ ul.courses-list {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7e38c', endColorstr='#cad77f',GradientType=0 );
 }
 
-.peopleInUnit header {
+.unit header {
 	background:#f1d67e;
 	background-image: linear-gradient(bottom, rgb(254,225,139) 100%, rgb(241,214,126) 0%);
 	background-image: -o-linear-gradient(bottom, rgb(254,225,139) 100%, rgb(241,214,126) 0%);
@@ -425,9 +440,7 @@ a,input,.symbol {
 
 </style>
 
-<script src="../javaScript/jquery/jquery-1.8.0.min.js"></script>
-
-<script src="../javaScript/jquery/jquery-ui-1.8.23.min.js"></script>
+<script src="${pageContext.request.contextPath}/javaScript/jquery/jquery-ui.js"></script>
 
 <script type="text/javascript">
 
@@ -563,13 +576,8 @@ a,input,.symbol {
 		return OIDs;
 	}
 	
-	var stuff;
-	
 	function changedValue(element) {
-		
-		var newValue = element.attr("value");
-		
-		stuff = element;
+		var newValue = element.find(":selected").val();
 		
 		if($.inArray(newValue, allowPrograms) > -1) {
 			element.parents().eq(5).find("#programs").removeClass('inactive');
@@ -623,11 +631,6 @@ a,input,.symbol {
 					    }
 					}
 				%>
-
-				$("#cursos_acc").accordion({
-					icons : false,
-					autoHeight : false
-				});
 
 				$(".courses-list li img").click(removeFunction);
 				$(".offices-list li img").click(removeFunction);

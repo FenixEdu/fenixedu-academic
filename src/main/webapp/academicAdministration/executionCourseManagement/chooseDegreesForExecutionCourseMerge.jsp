@@ -1,3 +1,24 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ page isELIgnored="true"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -38,7 +59,7 @@
 
 <html:form action="/chooseDegreesForExecutionCourseMerge.do?method=chooseDegreesAndExecutionPeriod" styleId="submitForm">
 	<fr:edit id="degreeBean" name="degreeBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction$DegreesMergeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA$DegreesMergeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="academicInterval" layout="menu-select" key="label.mergedegrees.academicinterval" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		        <fr:property name="providerClass"
 		            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AcademicIntervalProvider" />

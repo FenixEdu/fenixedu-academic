@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -12,7 +32,7 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods">
+<html:link action="/managePhdEnrolmentPeriods.do?method=manageEnrolmentPeriods">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
@@ -22,7 +42,7 @@
 <%--  ### End of Error Messages  ### --%>
 
 
-<fr:edit id="enrolmentPeriod" name="enrolmentPeriod" action="/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods">
+<fr:edit id="enrolmentPeriod" name="enrolmentPeriod" action="/managePhdEnrolmentPeriods.do?method=manageEnrolmentPeriods">
 
 	<fr:schema bundle="PHD_RESOURCES" type="<%= EnrolmentPeriod.class.getName() %>">
 		<fr:slot name="startDate" />

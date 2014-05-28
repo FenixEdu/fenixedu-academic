@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -10,25 +28,27 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.collect.Ordering;
 
 public class UnitSite extends UnitSite_Base {
 
-    private static MultiLanguageString TOP_SECTION_NAME = new MultiLanguageString().with(Language.pt, "Topo").with(Language.en,
-            "Top");
+    private static MultiLanguageString TOP_SECTION_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Topo").with(
+            MultiLanguageString.en, "Top");
 
-    private static MultiLanguageString SIDE_SECTION_NAME = new MultiLanguageString().with(Language.pt, "Lateral").with(
-            Language.en, "Side");
+    private static MultiLanguageString SIDE_SECTION_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Lateral")
+            .with(MultiLanguageString.en, "Side");
 
     static {
         getRelationUnitSiteManagers().addListener(new ManageWebsiteManagerRole());
@@ -45,8 +65,8 @@ public class UnitSite extends UnitSite_Base {
         setShowAnnouncements(true);
         setShowEvents(true);
 
-        new Section(this, TOP_SECTION_NAME);
-        new Section(this, SIDE_SECTION_NAME);
+        addAssociatedSections(SIDE_SECTION_NAME);
+        addAssociatedSections(TOP_SECTION_NAME);
     }
 
     public UnitSite(Unit unit) {
@@ -56,8 +76,8 @@ public class UnitSite extends UnitSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new FixedSetGroup(getManagers());
+    public Group getOwner() {
+        return UserGroup.of(Person.convertToUsers(getManagers()));
     }
 
     @Override
@@ -134,19 +154,14 @@ public class UnitSite extends UnitSite_Base {
     }
 
     @Override
-    public boolean isDeletable() {
-        return super.isDeletable() && !hasAnyBanners() && !hasLogo() && getManagersOfUnitSiteGroup() == null;
-    }
-
-    @Override
-    protected void disconnect() {
+    public void delete() {
         deleteLinks(getTopLinksSet());
         for (final Person person : getManagersSet()) {
             removeManagers(person);
         }
         setUnit(null);
         deleteLinks(getFooterLinksSet());
-        super.disconnect();
+        super.delete();
     }
 
     protected void deleteLinks(final Set<UnitSiteLink> unitSiteLinks) {
@@ -238,7 +253,7 @@ public class UnitSite extends UnitSite_Base {
     }
 
     public Section getSideSection() {
-        for (Section section : getAssociatedSections()) {
+        for (Section section : getAssociatedSectionSet()) {
             if (isSideSection(section)) {
                 return section;
             }
@@ -248,8 +263,8 @@ public class UnitSite extends UnitSite_Base {
     }
 
     private boolean isSideSection(Section section) {
-        String pt = section.getName().getContent(Language.pt);
-        String en = section.getName().getContent(Language.en);
+        String pt = section.getName().getContent(MultiLanguageString.pt);
+        String en = section.getName().getContent(MultiLanguageString.en);
 
         return (pt != null && pt.equalsIgnoreCase("lateral")) || (en != null && en.equalsIgnoreCase("side"));
     }
@@ -342,38 +357,34 @@ public class UnitSite extends UnitSite_Base {
 
     }
 
-    // TODO: Refactor this part in order to have relations instead of a naming
-    // convention.
-
-    private Container getHardCodedContainers(MultiLanguageString name) {
-        for (Content content : getChildrenAsContent()) {
-            if (content.getName().equalInAnyLanguage(name)) {
-                return (Container) content;
-            }
-        }
-        return null;
-    }
-
-    public Container getSideContainer() {
-        return getHardCodedContainers(this.SIDE_SECTION_NAME);
-    }
-
-    public Container getTopContainer() {
-        return getHardCodedContainers(this.TOP_SECTION_NAME);
-    }
-
     @Override
-    public boolean isUnitSite() {
-        return true;
-    }
-
-    @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
-        groups.add(new WebSiteManagersGroup(this));
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> groups = super.getContextualPermissionGroups();
+        groups.add(ManagersOfUnitSiteGroup.get(this));
         groups.addAll(getUnit().getGroups());
 
         return groups;
+    }
+
+    @Override
+    public CmsContent getInitialContent() {
+        if (getTemplate() != null && !getTemplate().getOrderedSections().isEmpty()) {
+            return getTemplate().getOrderedSections().get(0);
+        }
+        Section section = getSideSection();
+        if (section == null) {
+            return super.getInitialContent();
+        }
+        return section.getChildSet().isEmpty() ? null : Ordering.natural().min(section.getChildSet());
+    }
+
+    @Override
+    public String getReversePath() {
+        return super.getReversePath() + getSpecificPart();
+    }
+
+    private String getSpecificPart() {
+        return this.getClass() == UnitSite.class ? "/" + getExternalId() : "";
     }
 
     @Deprecated

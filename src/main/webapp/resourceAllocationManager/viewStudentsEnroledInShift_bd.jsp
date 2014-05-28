@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -6,41 +26,19 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 
-<script language="Javascript" type="text/javascript">
-<!--
+<jsp:include page="/commons/contextShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
 
-var select = false;
-
-function invertSelect(){
-	if ( select == false ) { 
-		select = true; 
-	} else { 
-		select = false;
-	}
-	if(document.forms[0].studentIDs.type=='checkbox'){
-		var e = document.forms[0].studentIDs;
-		e.checked = select;
-	}else{
-		for (var i=0; i<document.forms[0].studentIDs.length; i++){
-			var e = document.forms[0].studentIDs[i];
-			e.checked = select;
-		}
-	}
-}
-// -->
-</script>
-
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
-<h2><bean:message key="link.manage.turnos"/></h2>
-
-<p class="mbottom05">O curso seleccionado &eacute;:</p>
-<strong><jsp:include page="context.jsp"/></strong>
+<h2><bean:message key="link.manage.turnos"/> <span class="small">${executionDegree.executionDegree.degreeCurricularPlan.name}</span></h2>
 
 <bean:define id="shiftName" name="<%= PresentationConstants.SHIFT %>" property="nome"/>
 <bean:define id="shiftId" name="<%= PresentationConstants.SHIFT %>" property="externalId"/>
 <bean:define id="shiftType" name="<%= PresentationConstants.SHIFT %>" property="shiftTypesIntegerComparator"/>
 
-<h3>Alunos Inscritos</h3>
+<html:link action="/manageShift.do?method=prepareEditShift&page=0&shift_oid=${shift.externalId}&execution_course_oid=${executionCourseOID}&academicInterval=${academicInterval}&curricular_year_oid=${curricular_year_oid}&execution_degree_oid=${execution_degree_oid}">
+	<bean:message key="button.back" />
+</html:link>
+
+<h3>Alunos Inscritos <span class="small">${shift.nome}</span></h3>
 
 <p>
 	<logic:present name="<%= PresentationConstants.EXECUTION_COURSE %>" scope="request">
@@ -48,13 +46,10 @@ function invertSelect(){
 	</logic:present>
 </p>
 
-<p>Turno: <bean:write name="shiftName"/></p>
-
-
 <logic:present name="<%= PresentationConstants.STUDENT_LIST %>" scope="request">
-<html:form action="/manageShiftStudents">
-	<table>
-		<tr>
+<html:form styleClass="col-lg-8" action="/manageShift">
+	<table class="table">
+		<thead>
 			<th>
 			</th>
 			<th>
@@ -71,7 +66,7 @@ function invertSelect(){
 			</th>
 			<th>
 			</th>
-		</tr>
+		</thead>
 		<logic:iterate id="shiftEnrolment" name="shift" property="shift.shiftEnrolmentsOrderedByDate">
 			<bean:define id="student" name="shiftEnrolment" property="registration"/>
 			<tr>
@@ -109,7 +104,6 @@ function invertSelect(){
 </p>
 
 <logic:present name="<%= PresentationConstants.SHIFTS %>" scope="request">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeStudentsShift"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oldShiftId" property="oldShiftId" value="<%= pageContext.findAttribute("shiftId").toString() %>"/>
 

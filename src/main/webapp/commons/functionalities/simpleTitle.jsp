@@ -1,16 +1,21 @@
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%--
 
-<logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
-	<bean:write name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>"
-		property="selectedTopLevelContainer.name"/> -
-	<logic:present name="<%= net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext.CONTEXT_KEY %>">
-        <bean:define id="funcContext" name="<%= net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContent" type="net.sourceforge.fenixedu.domain.contents.Content"/>
-        <bean:write name="funcContext" property="name" />
-    </logic:present>
-</logic:present>
+    Copyright © 2002 Instituto Superior Técnico
 
-<logic:notPresent name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
-    <jsp:include page="/commons/blank.jsp"/>
-</logic:notPresent>
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+${actual$site.template.functionality.title.content} - ${actual$content.name} -

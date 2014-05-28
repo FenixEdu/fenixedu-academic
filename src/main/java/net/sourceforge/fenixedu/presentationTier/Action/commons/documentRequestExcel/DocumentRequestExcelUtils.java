@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.commons.documentRequestExcel;
 
 import java.io.IOException;
@@ -10,6 +28,8 @@ import java.util.TreeSet;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.fenixedu.commons.i18n.I18N;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -24,7 +44,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class DocumentRequestExcelUtils {
 
@@ -88,7 +108,7 @@ public class DocumentRequestExcelUtils {
             @Override
             protected void makeLine(AcademicServiceRequest request) {
                 IDocumentRequest document = (IDocumentRequest) request;
-                ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+                ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
                 addCell("Código", document.getRegistryCode().getCode());
                 addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
                 CycleType cycle = null;

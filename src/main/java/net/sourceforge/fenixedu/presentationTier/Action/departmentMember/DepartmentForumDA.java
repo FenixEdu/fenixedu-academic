@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
 
 import java.util.ArrayList;
@@ -11,17 +29,21 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.DepartmentForum;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberDepartmentApp;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.ForunsManagement;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = DepartmentMemberDepartmentApp.class, path = "forum", titleKey = "link.foruns")
 @Mapping(path = "/departmentForum", module = "departmentMember")
 @Forwards({ @Forward(name = "viewDepartmentForum", path = "/departmentMember/forum/viewDepartmentForum.jsp"),
         @Forward(name = "viewForum", path = "/commons/forums/viewForum.jsp"),
@@ -37,6 +59,7 @@ public class DepartmentForumDA extends ForunsManagement {
         return super.execute(mapping, actionForm, request, response);
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixServiceException {
         List<DepartmentForum> foruns = new ArrayList<DepartmentForum>();
@@ -68,7 +91,7 @@ public class DepartmentForumDA extends ForunsManagement {
     private boolean belongsPersonWithDepartment(Person person, Department department) {
         DepartmentForum departmentForum = department.getDepartmentForum();
         if (departmentForum != null) {
-            return departmentForum.getDepartmentForumGroup().isMember(person);
+            return departmentForum.getDepartmentForumGroup().isMember(person.getUser());
         }
         return false;
     }

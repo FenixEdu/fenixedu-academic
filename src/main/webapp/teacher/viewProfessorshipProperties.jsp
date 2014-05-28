@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -24,10 +44,10 @@ function selectNone(){
 
 <bean:define id="teacherOID" name="professorship" property="externalId"/>
 <ul>
-<li><html:link page="<%= "/teacherManagerDA.do?method=viewTeachersByProfessorship&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+<li><html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship&executionCourseID=${executionCourseID}">
 <bean:message key="button.back" bundle="APPLICATION_RESOURCES"/>
 </html:link></li>
-<li><html:link page="<%= "/teachersManagerDA.do?method=removeTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherOID=" + teacherOID %>">
+<li><html:link page="/teachersManagerDA.do?method=removeTeacher&executionCourseID=${executionCourseID}&teacherOID=${teacherOID}">
 		<bean:message key="link.removeTeacher"/>
 </html:link></li>
 </ul>
@@ -35,7 +55,7 @@ function selectNone(){
 
 <html:link href="#" onclick="selectAll()"><bean:message bundle="APPLICATION_RESOURCES" key="form.select.all"/></html:link> | <html:link href="#" onclick="selectNone()"><bean:message bundle="APPLICATION_RESOURCES" key="form.select.none"/></html:link> | <html:link href="#" onclick="inverSelection()"><bean:message bundle="APPLICATION_RESOURCES" key="form.select.invert"/></html:link>
  
-<fr:form action="<%= "/teacherManagerDA.do?method=viewTeachersByProfessorship&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+<fr:form action="/teachersManagerDA.do?method=viewTeachersByProfessorship&executionCourseID=${executionCourseID}">
 	<fr:edit id="permissions" name="professorship" property="permissions" schema="professorship.view.properties">
    	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft tdleft thlight"/>

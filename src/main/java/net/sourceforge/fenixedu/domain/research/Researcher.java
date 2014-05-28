@@ -1,97 +1,43 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.research;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.StringNormalizer;
 
 public class Researcher extends Researcher_Base {
-
-    public static Comparator<Researcher> PUBLICATION_VOLUME_COMPARATOR = new ReverseComparator(new Comparator<Researcher>() {
-
-        @Override
-        public int compare(Researcher r1, Researcher r2) {
-            Integer resultParticipationsCount = r1.getPerson().getResultParticipationsSet().size();
-            Integer resultParticipationsCount2 = r2.getPerson().getResultParticipationsSet().size();
-            return resultParticipationsCount.compareTo(resultParticipationsCount2);
-        }
-
-    });
-
     public Researcher(Person person) {
         super();
         setPerson(person);
         setAllowsToBeSearched(Boolean.FALSE);
-        setAllowsContactByStudents(Boolean.FALSE);
-        setAllowsContactByMedia(Boolean.FALSE);
-        setAllowsContactByOtherResearchers(Boolean.FALSE);
         setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
-        for (; hasAnyAvailableContacts(); getAvailableContacts().iterator().next().delete()) {
-            ;
-        }
         setPerson(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
-    }
-
-    public boolean hasAtLeastOneKeyword(String... keywords) {
-        for (String keyword : keywords) {
-            if (hasKeyword(keyword)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasKeyword(String keyword) {
-        String trimmedKeyword = StringNormalizer.normalize(keyword.trim());
-
-        for (String reseacherKeyword : getKeywordsPt().split(",")) {
-            // Instead of equalsIgoneCase we'll use indexOf
-            if (StringNormalizer.normalize(reseacherKeyword.trim()).indexOf(trimmedKeyword) >= 0) {
-                return true;
-            }
-        }
-
-        for (String reseacherKeyword : getKeywordsEn().split(",")) {
-            // Instead of equalsIgoneCase we'll use indexOf
-            if (StringNormalizer.normalize(reseacherKeyword.trim()).indexOf(trimmedKeyword) >= 0) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public List<ResearchInterest> getResearchInterests() {
-        List<ResearchInterest> orderedInterests = new ArrayList<ResearchInterest>(getPerson().getResearchInterests());
-        Collections.sort(orderedInterests, new Comparator<ResearchInterest>() {
-            @Override
-            public int compare(ResearchInterest researchInterest1, ResearchInterest researchInterest2) {
-                return researchInterest1.getInterestOrder().compareTo(researchInterest2.getInterestOrder());
-            }
-        });
-
-        return orderedInterests;
-    }
-
-    public void setAvailableContacts(List<PartyContact> contacts) {
-        getAvailableContacts().clear();
-        for (PartyContact contact : contacts) {
-            addAvailableContacts(contact);
-        }
     }
 
     private String normalizeKeywords(String keywordList) {
@@ -113,16 +59,6 @@ public class Researcher extends Researcher_Base {
         return sb.substring(0, sb.length() - 1);
     }
 
-    @Override
-    public void setKeywordsEn(String keywordsEn) {
-        super.setKeywordsEn(normalizeKeywords(keywordsEn));
-    }
-
-    @Override
-    public void setKeywordsPt(String keywordsPt) {
-        super.setKeywordsPt(normalizeKeywords(keywordsPt));
-    }
-
     public boolean isActiveContractedResearcher() {
         PersonContractSituation currentResearcherContractSituation = getCurrentContractedResearcherContractSituation();
         return currentResearcherContractSituation != null;
@@ -134,48 +70,13 @@ public class Researcher extends Researcher_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.contacts.PartyContact> getAvailableContacts() {
-        return getAvailableContactsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAvailableContacts() {
-        return !getAvailableContactsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasAllowsContactByMedia() {
-        return getAllowsContactByMedia() != null;
-    }
-
-    @Deprecated
-    public boolean hasAllowsContactByStudents() {
-        return getAllowsContactByStudents() != null;
-    }
-
-    @Deprecated
     public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
     @Deprecated
-    public boolean hasKeywordsEn() {
-        return getKeywordsEn() != null;
-    }
-
-    @Deprecated
-    public boolean hasAllowsContactByOtherResearchers() {
-        return getAllowsContactByOtherResearchers() != null;
-    }
-
-    @Deprecated
     public boolean hasPerson() {
         return getPerson() != null;
-    }
-
-    @Deprecated
-    public boolean hasKeywordsPt() {
-        return getKeywordsPt() != null;
     }
 
     @Deprecated

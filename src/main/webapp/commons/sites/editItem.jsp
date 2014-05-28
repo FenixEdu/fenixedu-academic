@@ -1,10 +1,30 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
@@ -38,34 +58,6 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
     </fr:edit>
-    
-    <logic:notEmpty name="item" property="fileItems">
-        <h3 class="mbottom05">
-            <bean:message key="title.item.files" bundle="SITE_RESOURCES"/>
-        </h3>
-        
-        <div class="infoop2 mtop05 mbottom1">
-        	<bean:message key="label.item.edit.add.file.instructions" bundle="SITE_RESOURCES"/>
-        </div>
-    
-        <fr:edit id="edit-files" name="item" property="sortedAttachmentNodes" schema="site.item.files.visible">
-            <fr:layout name="tabular-editable">
-	            <fr:property name="classes" value="tstyle5 thlight mvert0"/>
-	            <fr:property name="columnClasses" value="acenter"/>
-                <fr:property name="customLink(add)">
-                    <span class="switchInline">
-                        (<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#" onclick="insertLink('${child.file.downloadUrl}', '${child.file.displayName}');"><bean:message key="link.item.edit.add.file" bundle="SITE_RESOURCES"/></a>)
-                    </span>
-                </fr:property>
-            </fr:layout>
-        </fr:edit>
-        
-		
-		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
-        <script type="text/javascript" src='<%= request.getContextPath() + "/javaScript/tinyMCEHook.js"%>'></script>
-        <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
- 
-    </logic:notEmpty>
 
     <p class="mtop15">
 	    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.editItemButton" property="editItemButton">

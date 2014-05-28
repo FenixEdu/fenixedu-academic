@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 2003/12/04
  *  
@@ -22,6 +40,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RoleOperationLog;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPersonManagementApp;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.lang.StringUtils;
@@ -33,17 +52,27 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
  * @author Luis Cruz
  */
+@StrutsFunctionality(app = ManagerPersonManagementApp.class, path = "manage-roles",
+        titleKey = "label.manager.privilegesManagement")
+@Mapping(module = "manager", path = "/manageRoles", formBean = "rolesForm")
+@Forwards({ @Forward(name = "SelectUserPage", path = "/manager/manageRoles_bd.jsp"),
+        @Forward(name = "ShowRoleOperationLogs", path = "/manager/showRoleOperationLogs.jsp"),
+        @Forward(name = "Manage", path = "/manager/manageRoles_bd.jsp") })
 public class ManageRolesDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         return mapping.findForward("SelectUserPage");
@@ -102,10 +131,6 @@ public class ManageRolesDA extends FenixDispatchAction {
         return prepareAddRoleToPerson(mapping, form, request, response);
     }
 
-    private Person getPerson(final String username) throws FenixServiceException {
-        return getPerson(username, "");
-    }
-
     private Person getPerson(final DynaActionForm dynaActionForm) throws FenixServiceException {
         return getPerson(dynaActionForm.getString("username"), dynaActionForm.getString("documentIdNumber"));
     }
@@ -151,8 +176,6 @@ public class ManageRolesDA extends FenixDispatchAction {
         for (final String roleId : roleOIDsAsStrings) {
             roles.add(FenixFramework.<Role> getDomainObject(roleId));
         }
-
-        User userView = Authenticate.getUser();
 
         try {
             SetPersonRoles.run(person, roles);

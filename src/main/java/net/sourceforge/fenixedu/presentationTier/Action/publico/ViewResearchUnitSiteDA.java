@@ -1,20 +1,35 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
-
-import java.net.MalformedURLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.util.RequestUtils;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -25,7 +40,6 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards(value = { @Forward(name = "announcementsAction", path = "/researchSite/manageResearchUnitAnnouncements.do"),
         @Forward(name = "frontPage-INTRO_BANNER", path = "research-site-front-page-intro-banner"),
         @Forward(name = "eventsAction", path = "/researchSite/manageResearchUnitAnnouncements.do"),
-        @Forward(name = "showPublications", path = "show-research-unit-publications"),
         @Forward(name = "showBoardAnnouncements", path = "show-research-unit-board-announcements"),
         @Forward(name = "unit-subunits", path = "show-research-unit-subunits"),
         @Forward(name = "frontPage-BANNER_INTRO", path = "research-site-front-page-banner-intro"),
@@ -72,25 +86,14 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
     }
 
     private ResearchUnitSite getSite(HttpServletRequest request) {
-        Container container = AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
+        Site container = SiteMapper.getSite(request);
         if (container == null) {
             String siteID = request.getParameter(getContextParamName(request));
-            return (ResearchUnitSite) FenixFramework.getDomainObject(siteID);
+            ResearchUnitSite site = FenixFramework.getDomainObject(siteID);
+            OldCmsSemanticURLHandler.selectSite(request, site);
+            return site;
         } else {
             return (ResearchUnitSite) container;
-        }
-    }
-
-    @Override
-    protected String getDirectLinkContext(HttpServletRequest request) {
-        ResearchUnitSite site = getSite(request);
-
-        try {
-            MetaDomainObjectPortal portal = MetaDomainObjectPortal.getPortal(ResearchUnitSite.class);
-            String path = portal.getNormalizedName().getContent() + "/" + site.getUnit().getUnitPath("/");
-            return RequestUtils.absoluteURL(request, path).toString();
-        } catch (MalformedURLException e) {
-            return null;
         }
     }
 

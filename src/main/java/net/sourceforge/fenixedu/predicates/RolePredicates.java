@@ -1,10 +1,28 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -32,8 +50,7 @@ public class RolePredicates {
 
             if (contactPerson.hasStudent() && !contactPerson.hasRole(RoleType.GRANT_OWNER)
                     && !contactPerson.hasRole(RoleType.EMPLOYEE)) {
-                return new AcademicAuthorizationGroup(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(AccessControl
-                        .getPerson());
+                return AcademicAuthorizationGroup.get(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(Authenticate.getUser());
             }
 
             return false;
@@ -200,24 +217,10 @@ public class RolePredicates {
                 };
             };
 
-    public static final AccessControlPredicate<Object> MASTER_DEGREE_CANDIDATE_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.MASTER_DEGREE_CANDIDATE);
-        };
-    };
-
     public static final AccessControlPredicate<Object> OPERATOR_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
             return hasRole(RoleType.OPERATOR);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> PARKING_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.PARKING_MANAGER);
         };
     };
 
@@ -264,13 +267,6 @@ public class RolePredicates {
         };
     };
 
-    public static final AccessControlPredicate<Object> SEMINARIES_COORDINATOR_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.SEMINARIES_COORDINATOR);
-        };
-    };
-
     public static final AccessControlPredicate<Object> SPACE_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
@@ -296,13 +292,6 @@ public class RolePredicates {
         @Override
         public boolean evaluate(Object domainObject) {
             return isTeacher() || hasRole(RoleType.STUDENT);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> TREASURY_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.TREASURY);
         };
     };
 

@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -25,13 +45,13 @@
 	<p>
 		<div class="gen-button">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<html:link page="/createBibliographicReference.do?method=prepareCreateBibliographicReference" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+			<html:link page="/manageBibliographicReference.do?method=prepareCreateBibliographicReference" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 				<bean:message key="label.insertBibliographicReference"/>                   		     
 			</html:link>
 		</div>
 		<div class="gen-button">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<html:link page="/manageExecutionCourse.do?method=prepareImportBibliographicReferences&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+			<html:link page="/manageBibliographicReference.do?method=prepareImportBibliographicReferences&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 				<bean:message key="link.import.bibliographicReferences"/>
 			</html:link>
 		</div>
@@ -87,10 +107,10 @@
 	        				<bean:write name="bibliographicReference" property="reference"  filter="false"/><br/>
 	        				<bean:write name="bibliographicReference" property="year" filter="false" /><br/>
 	        				<bean:define id="url" type="java.lang.String">bibliographicReferenceID=<bean:write name="bibliographicReference" property="externalId"/></bean:define>
-	        				<html:link page="<%= "/editBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+	        				<html:link page="<%= "/manageBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 	        					<bean:message key="button.edit"/>
 	        				</html:link>, 
-	        				<html:link page="<%= "/manageExecutionCourse.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+	        				<html:link page="<%= "/manageBibliographicReference.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 	        					<bean:message key="button.delete"/>
 	        				</html:link>
         				</li>
@@ -102,7 +122,7 @@
             <logic:greaterThan name="referencesSize" value="1">
                 <p>
                     <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-                    <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+                    <html:link page="/manageBibliographicReference .do?method=prepareSortBibliography" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
                         <bean:message key="message.sortRecommendedBibliography"/>
                     </html:link>
                 </p>
@@ -160,10 +180,10 @@
 		        				<bean:write name="bibliographicReference" property="reference"  filter="false" /><br/>
 		        				<bean:write name="bibliographicReference" property="year" filter="false" /><br/>
 		        				<bean:define id="url" type="java.lang.String">bibliographicReferenceID=<bean:write name="bibliographicReference" property="externalId"/></bean:define>
-		        				<html:link page="<%= "/editBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+		        				<html:link page="<%= "/manageBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 		        					<bean:message key="button.edit"/>
 		        				</html:link>, 
-		        				<html:link page="<%= "/manageExecutionCourse.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+		        				<html:link page="<%= "/manageBibliographicReference.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 		        					<bean:message key="button.delete"/>
 		        				</html:link>
 		       				</li>
@@ -175,7 +195,7 @@
             <logic:greaterThan name="referencesSize" value="1">
                 <p>
                     <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-                    <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography&amp;optional=true" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+                    <html:link page="/manageBibliographicReference.do?method=prepareSortBibliography&amp;optional=true" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
                         <bean:message key="message.sortOptionalBibliography"/>
                     </html:link>
                 </p>

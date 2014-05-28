@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests;
 
 import java.io.IOException;
@@ -21,7 +39,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -34,11 +52,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.AcademicServiceRequestsManagementDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -47,7 +63,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/documentRequestsManagement", module = "academicAdministration",
-        formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class)
+        formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class,
+        functionality = AcademicServiceRequestsManagementDispatchAction.class)
 @Forwards({
         @Forward(name = "printDocument", path = "/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"),
         @Forward(name = "createDocumentRequests",
@@ -58,9 +75,7 @@ import pt.ist.fenixframework.FenixFramework;
                 path = "/academicAdminOffice/serviceRequests/documentRequests/chooseExamsToCreateExamDateCertificateRequest.jsp"),
         @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
         @Forward(name = "processNewAcademicServiceRequest",
-                path = "/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest")
-
-})
+                path = "/academicAdministration/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest") })
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
     protected IDocumentRequest getDocumentRequest(HttpServletRequest request) {
@@ -83,7 +98,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
                 response.setContentLength(doc.getSize().intValue());
                 response.setContentType("application/pdf");
                 response.addHeader("Content-Disposition", "attachment; filename=" + doc.getFilename());
-                writer.write(doc.getContents());
+                writer.write(doc.getContent());
                 writer.flush();
             } finally {
                 writer.close();
@@ -121,34 +136,6 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
             request.setAttribute("academicServiceRequest", getAndSetAcademicServiceRequest(request));
         }
         return mapping.findForward("printDocument");
-    }
-
-    private StringBuilder buildUrl(ActionForm actionForm, HttpServletRequest request) {
-        final DynaActionForm form = (DynaActionForm) actionForm;
-
-        final StringBuilder result = new StringBuilder();
-
-        if (!StringUtils.isEmpty(request.getParameter("back"))) {
-            result.append("method=").append(request.getParameter("back"));
-        }
-
-        if (!StringUtils.isEmpty(form.getString("documentRequestType"))) {
-            result.append("&documentRequestType=").append(form.get("documentRequestType"));
-        }
-
-        if (!StringUtils.isEmpty(form.getString("requestSituationType"))) {
-            result.append("&requestSituationType=").append(form.get("requestSituationType"));
-        }
-
-        if (!StringUtils.isEmpty(form.getString("isUrgent"))) {
-            result.append("&isUrgent=").append(form.get("isUrgent"));
-        }
-
-        if (!StringUtils.isEmpty(form.getString("studentNumber"))) {
-            result.append("&studentNumber=").append(form.get("studentNumber"));
-        }
-
-        return result;
     }
 
     private Registration getRegistration(final HttpServletRequest request) {
@@ -343,18 +330,8 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
             return mapping.findForward("processNewAcademicServiceRequest");
         } else {
             addActionMessage(request, "document.request.created.with.success");
-            return buildActionForward(mapping.findForward("viewRegistrationDetails"), registration);
+            return mapping.findForward("viewRegistrationDetails");
         }
-    }
-
-    private ActionForward buildActionForward(ActionForward forward, Registration registration) {
-        ActionForward forwardBuilded = new ActionForward();
-        forwardBuilded.setName(forward.getName());
-        forwardBuilded.setRedirect(true);
-        StringBuilder path = new StringBuilder(forward.getPath());
-        // path.append("&registrationID=").append(registration.getExternalId());
-        forwardBuilded.setPath(path.toString());
-        return forwardBuilded;
     }
 
     public ActionForward useAllPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

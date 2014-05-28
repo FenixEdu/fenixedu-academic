@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.coordinator.feedbackRequest;
 
 import java.io.IOException;
@@ -24,6 +42,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidac
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.PhdIndividualProgramProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,18 +55,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/phdCandidacyFeedbackRequest", module = "coordinator")
-@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
-
-        @Forward(name = "manageFeedbackRequest", path = "/phd/candidacy/coordinator/feedbackRequest/manageFeedbackRequest.jsp",
-                tileProperties = @Tile(title = "private.coordinator.phdprocess")),
-
+@Mapping(path = "/phdCandidacyFeedbackRequest", module = "coordinator", functionality = PhdIndividualProgramProcessDA.class)
+@Forwards({
+        @Forward(name = "manageFeedbackRequest", path = "/phd/candidacy/coordinator/feedbackRequest/manageFeedbackRequest.jsp"),
         @Forward(name = "uploadCandidacyFeedback",
-                path = "/phd/candidacy/coordinator/feedbackRequest/uploadCandidacyFeedback.jsp")
-
-})
+                path = "/phd/candidacy/coordinator/feedbackRequest/uploadCandidacyFeedback.jsp") })
 public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
 
     public ActionForward manageFeedbackRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

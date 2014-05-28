@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 10/Jan/2004
  *
@@ -10,7 +28,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 /**
  * @author Tânia Pousão
@@ -47,7 +64,7 @@ public class InfoGratuitySituation extends InfoObject {
 
     // calculations
 
-    private String insurancePayed = PresentationConstants.NOT_PAYED_INSURANCE; // attributes
+    private String insurancePayed = "label.notPayed"; // attributes
 
     // auxiliaries
     // for

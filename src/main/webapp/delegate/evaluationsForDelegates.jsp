@@ -1,9 +1,31 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.delegate.two-column" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.delegate.DelegateApplication$EvaluationsForDelegatesAction" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/DelegateResources" var="delegatesBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundleApplication"/>
@@ -29,7 +51,6 @@
 						onchange="this.form.submit();">
 					<f:selectItems value="#{evaluationsForDelegates.degreeCurricularPlanSelectItems}"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 
 			<h:outputText value="<p>#{delegatesBundle['label.delegates.evaluations.execution.period']}: " escape="false"/>
@@ -37,7 +58,6 @@
 						onchange="this.form.submit();">
 					<f:selectItems value="#{evaluationsForDelegates.executionPeriodSelectItems}"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 	
 			<h:outputText value="<p>#{delegatesBundle['label.delegates.evaluations.curricular.year']}: " escape="false"/>
@@ -46,7 +66,6 @@
 					<f:selectItem itemLabel="#{delegatesBundle['label.delegates.evaluations.allCurricularYears']}" itemValue=""/>
 					<f:selectItems value="#{evaluationsForDelegates.curricularYearSelectItems}"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 	
 			<h:outputText value="<br/>" escape="false"/>
@@ -58,4 +77,4 @@
 			 		editLinkParameters="#{evaluationsForDelegates.calendarLinks}"/>
 		</h:panelGroup> 
 	</h:form>
-</ft:tilesView>
+</f:view>

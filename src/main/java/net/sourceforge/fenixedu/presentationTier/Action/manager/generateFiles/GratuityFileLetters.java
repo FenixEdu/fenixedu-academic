@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 28/Jan/2004
  *  
@@ -12,7 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -162,7 +179,7 @@ public class GratuityFileLetters extends GratuityFile {
         // and if the student not payed add to the total value
         // after the insurance value is appended to the line
 
-        if (infoGratuitySituation.getInsurancePayed().equals(PresentationConstants.NOT_PAYED_INSURANCE)) {
+        if (infoGratuitySituation.getInsurancePayed().equals("label.notPayed")) {
             // insurance not payed
             line.append(INSURANCE);
 

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.institution;
 
 import java.io.IOException;
@@ -60,6 +78,7 @@ import net.sourceforge.fenixedu.util.phd.InstitutionPhdCandidacyProcessPropertie
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
@@ -68,7 +87,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @Mapping(path = "/applications/phd/phdProgramApplicationProcess", module = "publico")
 @Forwards(tileProperties = @Tile(extend = "definition.candidacy.process"), value = {
@@ -198,7 +217,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
         String url =
                 String.format("%s?hash=%s",
-                        InstitutionPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(Language.getLocale()),
+                        InstitutionPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(I18N.getLocale()),
                         hashCode.getValue());
 
         request.setAttribute("processLink", url);
@@ -207,7 +226,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     }
 
     private void sendSubmissionEmailForCandidacy(final PublicCandidacyHashCode hashCode, final HttpServletRequest request) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         final String subject =
                 MessageFormat.format(
                         bundle.getString("message.phd.institution.application.email.subject.send.link.to.submission"),
@@ -218,7 +237,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         hashCode.sendEmail(
                 subject,
                 String.format(body,
-                        InstitutionPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(Language.getLocale()),
+                        InstitutionPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(I18N.getLocale()),
                         hashCode.getValue()));
     }
 
@@ -256,14 +275,14 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     }
 
     private void sendRecoveryEmailForCandidate(PhdProgramPublicCandidacyHashCode candidacyHashCode, HttpServletRequest request) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         final String subject =
                 MessageFormat.format(bundle.getString("message.phd.email.subject.recovery.access"), Unit.getInstitutionAcronym());
         final String body =
                 MessageFormat.format(bundle.getString("message.phd.institution.email.body.recovery.access"),
                         Unit.getInstitutionAcronym());
         candidacyHashCode.sendEmail(subject, String.format(body,
-                InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(Language.getLocale()),
+                InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(I18N.getLocale()),
                 candidacyHashCode.getValue()));
     }
 
@@ -365,7 +384,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         PhdProgramPublicCandidacyHashCode candidacyProcessHashCode = process.getCandidacyProcessHashCode();
         String processLink =
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(candidacyProcessHashCode,
-                        Language.getLocale());
+                        I18N.getLocale());
 
         request.setAttribute("processLink", processLink);
 
@@ -378,7 +397,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         // TODO: if candidacy period exists, then change body message to send
         // candidacy limit end date
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         final String subject =
                 MessageFormat.format(bundle.getString("message.phd.institution.email.subject.application.submited"),
                         Unit.getInstitutionAcronym());
@@ -386,7 +405,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
                 MessageFormat.format(bundle.getString("message.phd.institution.email.body.application.submited"),
                         Unit.getInstitutionAcronym());
         hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
-                InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(Language.getLocale()), hashCode.getValue()));
+                InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(I18N.getLocale()), hashCode.getValue()));
     }
 
     /*

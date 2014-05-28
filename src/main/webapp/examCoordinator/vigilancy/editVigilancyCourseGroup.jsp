@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -6,7 +26,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.editVigilancyCourseGroup"/></h2>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/checkall.js"></script>
 
@@ -36,10 +55,9 @@
 <fr:form id="removeExecutionCourseForm" action="/vigilancy/vigilancyCourseGroupManagement.do">
 <html:hidden property="method" value="removeExecutionCoursesFromGroup"/>
 <p class="mtop0">
-	<span class="switchInline"><a href="javascript:document.getElementById('removeExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.removeCourse"/></a>, </span>
-	<span class="switchInline"><a href="javascript:checkall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
-	<span class="switchInline"><a class="switchInline" href="javascript:uncheckall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<a href="javascript:document.getElementById('removeExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.removeCourse"/></a>,
+	<a href="javascript:checkall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>,
+	<a href="javascript:uncheckall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a>
 </p>
 <fr:edit name="bean" id="removeExecutionCourses" schema="removeExecutionCourses" 
 action="vigilancy/vigilancyCourseGroupManagement.do"
@@ -53,10 +71,9 @@ nested="true">
 </fr:edit>
 
 <p class="mtop0">
-	<span class="switchInline"><a href="javascript:document.getElementById('removeExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.removeCourse"/></a>, </span>
-	<span class="switchInline"><a href="javascript:checkall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
-	<span class="switchInline"><a class="switchInline" href="javascript:uncheckall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<a href="javascript:document.getElementById('removeExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.removeCourse"/></a>,
+	<a href="javascript:checkall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>,
+	<a href="javascript:uncheckall('removeExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a>
 </p>
 </fr:form>
 </div>
@@ -74,16 +91,14 @@ nested="true">
 			<fr:property name="columnClasses" value=",,tdclear"/>
 		</fr:layout>
 </fr:edit>
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
 <fr:form id="addExecutionCourseForm" action="/vigilancy/vigilancyCourseGroupManagement.do">
 <html:hidden property="method" value="addExecutionCourseToGroup"/>
 <p class="mtop0">
-	<span class="switchInline"><a href="javascript:document.getElementById('addExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addCourse"/></a>, </span>
-	<span class="switchInline"><a href="javascript:checkall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
-	<span class="switchInline"><a href="javascript:uncheckall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<a href="javascript:document.getElementById('addExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addCourse"/></a>,
+	<a href="javascript:checkall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>,
+	<a href="javascript:uncheckall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a>
 </p>
 <fr:edit name="bean" id="addExecutionCourses" schema="addExecutionCourses" 
 			action="vigilancy/vigilancyCourseGroupManagement.do?method=addExecutionCourseToGroup">
@@ -94,17 +109,15 @@ nested="true">
 			</fr:layout>
 </fr:edit>
 <p class="mtop0">
-	<span class="switchInline"><a href="javascript:document.getElementById('addExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addCourse"/></a>, </span>
-	<span class="switchInline"><a href="javascript:checkall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
-	<span class="switchInline"><a href="javascript:uncheckall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a></span>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
+	<a href="javascript:document.getElementById('addExecutionCourseForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addCourse"/></a>,
+	<a href="javascript:checkall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>,
+	<a href="javascript:uncheckall('addExecutionCourseForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/></a>
 </p>
 </fr:form>
 </div>
 
 <p class="mtop2 mbottom05"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addExternalCourse"/></strong></p>
 
-<div class="switchInline">
 <fr:form id="addExternalExecutionCourse" action="/vigilancy/vigilancyCourseGroupManagement.do">
 <html:hidden property="method" value="addExternalCourse"/>
 <fr:edit name="bean" id="addExternalCourse" schema="addExternalCourse">
@@ -116,30 +129,7 @@ nested="true">
 	<fr:destination name="invalid" path="/vigilancy/vigilancyCourseGroupManagement.do?method=addExternalCourse"/>
 </fr:edit>
 <p class="mtop0">
-	<a href="javascript:document.getElementById('addExternalExecutionCourse').submit()"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></a>
-</p>
-</fr:form>
-</div>
-
- 
-<div class="switchNone">
-<fr:form id="addExternalExecutionCourse" action="/vigilancy/vigilancyCourseGroupManagement.do">
-<html:hidden property="method" value="addExternalCourse"/>
-
-<fr:edit name="bean" id="addExternalCourse-withoutjs" schema="addExternalCourse-withoutjs">
-	<fr:layout>
-		<fr:property name="displayLabel" value="false"/>
-		<fr:property name="classes" value="tstyle5 mvert05"/>
-		<fr:property name="columnClasses" value="thclear,,tdclear"/>
-	</fr:layout>
-	<fr:destination name="invalid" path="/vigilancy/vigilancyCourseGroupManagement.do?method=addExternalCourse"/>
-</fr:edit>
-<p class="mtop0">
 	<html:submit><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
-</div>
 
-<script type="text/javascript" language="javascript">
-switchGlobal();
-</script>

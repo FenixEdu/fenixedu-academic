@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -18,9 +38,9 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
 
@@ -77,7 +97,7 @@
 
 	<%--
 	<b>
-		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %>
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %>
 		<a href="<%= f("%s/candidacies/erasmus/nationalCardSubmission", request.getContextPath()) %>">Fill the application form »</a>
 	</b>
 	--%>
@@ -118,14 +138,14 @@
 
 <p>
 	If you submitted the application authenticating your national citizen card you can 
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoveraccess", request.getContextPath()) %>"><b>access it by authenticating using the identification platform</b></a>.
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoveraccess", request.getContextPath()) %>"><b>access it by authenticating using the identification platform</b></a>.
 </p>
 
 <p>
 	If you submitted the application authenticating with your email you received an email message with a link which gives you access to your application form.
 </p>
 <p>	
-	If you lost the email message you can recover the application link here: <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoveraccess", request.getContextPath()) %>"><b>recover access link</b></a> 
+	If you lost the email message you can recover the application link here: <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoveraccess", request.getContextPath()) %>"><b>recover access link</b></a> 
 </p>
 
 
@@ -139,7 +159,7 @@
 </p>
 
 <p>
-	To access your application form please follow this link: <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/nationalCardApplicationAccess", request.getContextPath()) %>"><b>Access to application form</b></a>
+	To access your application form please follow this link: <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= f("%s/candidacies/erasmus/nationalCardApplicationAccess", request.getContextPath()) %>"><b>Access to application form</b></a>
 </p>
 
 
@@ -152,7 +172,7 @@
 
 <p>
 	<img src="<%= request.getContextPath() %>/images/stork/icon_info.gif" />
-	If you lost you can recover by following the link: <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoverLinkAccess", request.getContextPath()) %>"><b>Recover access link</b></a>
+	If you lost you can recover by following the link: <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoverLinkAccess", request.getContextPath()) %>"><b>Recover access link</b></a>
 </p>
 
 --%>

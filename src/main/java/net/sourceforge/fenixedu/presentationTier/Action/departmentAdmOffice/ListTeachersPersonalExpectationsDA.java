@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
 import java.io.IOException;
@@ -11,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearBean;
+import net.sourceforge.fenixedu.dataTransferObject.commons.ExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -19,11 +37,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeExpectationsApp;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
@@ -35,15 +56,14 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
-@Mapping(module = "departmentAdmOffice", path = "/listTeachersPersonalExpectations", scope = "request", parameter = "method")
-@Forwards(
-        value = {
-                @Forward(
-                        name = "seeTeacherPersonalExpectationsByYear",
-                        path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/seeTeacherPersonalExpectations.jsp"),
-                @Forward(
-                        name = "listTeacherPersonalExpectations",
-                        path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/listTeacherPersonalExpectations.jsp") })
+@StrutsFunctionality(app = DepartmentAdmOfficeExpectationsApp.class, path = "list-teachers-personal-expectations",
+        titleKey = "link.see.teachers.personal.expectations")
+@Mapping(module = "departmentAdmOffice", path = "/listTeachersPersonalExpectations")
+@Forwards({
+        @Forward(name = "seeTeacherPersonalExpectationsByYear",
+                path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/seeTeacherPersonalExpectations.jsp"),
+        @Forward(name = "listTeacherPersonalExpectations",
+                path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/listTeacherPersonalExpectations.jsp") })
 public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 
     public ActionForward listTeachersPersonalExpectationsForSelectedExecutionYear(ActionMapping mapping, ActionForm form,
@@ -61,6 +81,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
         return readAndSetList(mapping, request, executionYear);
     }
 
+    @EntryPoint
     public ActionForward listTeachersPersonalExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

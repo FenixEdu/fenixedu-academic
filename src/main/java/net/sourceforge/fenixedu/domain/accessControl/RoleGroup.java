@@ -1,160 +1,127 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.fenixedu.bennu.core.annotation.GroupArgument;
+import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
+import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.joda.time.DateTime;
 
-/**
- * 
- * @author cfgi
- */
-public class RoleGroup extends LeafGroup {
+import com.google.common.base.Function;
+import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 
-    private static final long serialVersionUID = 1L;
+@GroupOperator("role")
+public class RoleGroup extends FenixGroup {
+    private static final long serialVersionUID = -2312726475879576571L;
 
-    private final RoleType roleType;
+    @GroupArgument("")
+    private RoleType role;
 
-    public RoleGroup(RoleType roleType) {
+    private RoleGroup() {
         super();
-
-        if (roleType == null) {
-            throw new DomainException("accessControl.group.domainBacked.null");
-        }
-
-        this.roleType = roleType;
     }
 
-    public RoleGroup(Role role) {
-        this(role == null ? null : role.getRoleType());
+    private RoleGroup(RoleType role) {
+        this();
+        this.role = role;
     }
 
-    public Role getRole() {
-        return Role.getRoleByRoleType(roleType);
+    public static RoleGroup get(Role role) {
+        return get(role.getRoleType());
+    }
+
+    public static RoleGroup get(RoleType role) {
+        return new RoleGroup(role);
+    }
+
+    private Role getRole() {
+        return Role.getRoleByRoleType(role);
     }
 
     @Override
-    public int getElementsCount() {
-        return getRole().getAssociatedPersons().size();
+    public String getPresentationName() {
+        return getRole().getRoleType().getLocalizedName();
     }
 
     @Override
-    public Set<Person> getElements() {
-        Set<Person> elements = new HashSet<Person>();
-        elements.addAll(getRole().getAssociatedPersons());
-        return elements;
+    public Set<User> getMembers() {
+        return FluentIterable.from(getRole().getAssociatedPersonsSet()).filter(new Predicate<Person>() {
+            @Override
+            public boolean apply(Person person) {
+                return person.getUser() != null;
+            }
+        }).transform(new Function<Person, User>() {
+            @Override
+            public User apply(Person person) {
+                return person.getUser();
+            }
+        }).toSet();
     }
 
-    /**
-     * The host may have restriction on the roles available so checking if a <tt>UserView</tt> is allowed or checking directly is
-     * a person is member
-     * of this groups has different behaviours. The <tt>UserView</tt> as all the
-     * person roles that are allowed in the current host while the person has
-     * all the roles assigned to it.
-     * 
-     * <p>
-     * This method checks if the <tt>UserView</tt> contains the same role as this group.
+    /*
+     * Time Machine method not available
      */
     @Override
-    public boolean allows(User userView) {
-        return userView != null && userView.getPerson().hasRole(roleType);
+    public Set<User> getMembers(DateTime when) {
+        return getMembers();
     }
 
     @Override
-    public boolean isMember(Person person) {
-        return person != null && person.hasRole(roleType);
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-        return new Argument[] { new StaticArgument(roleType.getName()) };
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        boolean result = other != null;
-
-        if (result) {
-            result = this.getClass().equals(other.getClass());
+    public boolean isMember(User user) {
+        if (user == null) {
+            return false;
         }
+        return user.getPerson().hasRole(role);
+    }
 
-        if (result) {
-            final RoleGroup otherGroup = (RoleGroup) other;
-            result = this.roleType.equals(otherGroup.roleType);
+    /*
+     * Time Machine method not available
+     */
+    @Override
+    public boolean isMember(User user, DateTime when) {
+        return isMember(user);
+    }
+
+    @Override
+    public PersistentGroup toPersistentGroup() {
+        return PersistentRoleGroup.getInstance(role);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof RoleGroup) {
+            return Objects.equal(role, ((RoleGroup) object).role);
         }
-
-        return result;
+        return false;
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode() + this.roleType.hashCode();
-    }
-
-    @Override
-    public String getPresentationNameKey() {
-        return "label.name." + RoleTypeGroup.class.getSimpleName() + "." + roleType;
-    }
-
-    /**
-     * Builder used to create a RoleGroup from a group expression.
-     * 
-     * @author cfgi
-     */
-    public static class Builder implements GroupBuilder {
-
-        @Override
-        public Group build(Object[] arguments) {
-            if (arguments.length != 1) {
-                throw new WrongNumberOfArgumentsException(arguments.length, getMinArguments(), getMaxArguments());
-            }
-
-            try {
-                String roleName = (String) arguments[0];
-                RoleType roleType = RoleType.valueOf(roleName);
-
-                if (roleType == null) {
-                    throw new GroupDynamicExpressionException("accessControl.group.builder.role.type.notAvailable", roleName);
-                }
-
-                return new RoleGroup(roleType);
-            } catch (ClassCastException e) {
-                throw new WrongTypeOfArgumentException(1, String.class, arguments[0].getClass());
-            } catch (IllegalArgumentException e) {
-                throw new GroupDynamicExpressionException("accessControl.group.builder.role.type.doesNotExist",
-                        String.valueOf(arguments[0]));
-            }
-        }
-
-        @Override
-        public int getMinArguments() {
-            return 1;
-        }
-
-        @Override
-        public int getMaxArguments() {
-            return 1;
-        }
-
-    }
-
-    @Override
-    public org.fenixedu.bennu.core.domain.groups.Group convert() {
-        if (getRole() != null) {
-            return RoleCustomGroup.getInstance(getRole());
-        }
-        return NobodyGroup.getInstance();
+        return Objects.hashCode(role);
     }
 }

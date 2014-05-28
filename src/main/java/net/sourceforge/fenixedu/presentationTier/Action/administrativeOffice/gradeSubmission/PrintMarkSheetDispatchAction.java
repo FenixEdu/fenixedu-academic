@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
 
 import java.util.ArrayList;
@@ -21,7 +39,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -38,13 +56,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/printMarkSheet", module = "academicAdministration", formBean = "printMarkSheetForm",
-        input = "/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0")
+        input = "/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0",
+        functionality = MarkSheetSearchDispatchAction.class)
 @Forwards({
-        @Forward(name = "choosePrinterMarkSheet", path = "/academicAdminOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"),
+        @Forward(name = "choosePrinterMarkSheet", path = "/academicAdministration/gradeSubmission/choosePrinterMarkSheet_bd.jsp"),
         @Forward(name = "choosePrinterMarkSheetsWeb",
-                path = "/academicAdminOffice/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"),
-        @Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-        @Forward(name = "searchMarkSheet", path = "/markSheetManagement.do?method=prepareSearchMarkSheet") })
+                path = "/academicAdministration/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"),
+        @Forward(name = "searchMarkSheetFilled",
+                path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "searchMarkSheet", path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheet") })
 public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward searchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -110,8 +130,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
         final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         Set<Degree> degreesForMarksheets =
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.MANAGE_MARKSHEETS);
+                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_MARKSHEETS);
 
         for (final DegreeCurricularPlan dcp : dcps) {
             if (degreesForMarksheets.contains(dcp.getDegree())) {

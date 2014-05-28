@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.HashSet;
@@ -7,145 +25,105 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixframework.FenixFramework;
 
-public class DelegateStudentsGroup extends LeafGroup {
+import org.fenixedu.bennu.core.annotation.GroupArgument;
+import org.fenixedu.bennu.core.annotation.GroupOperator;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.joda.time.DateTime;
 
-    private static final long serialVersionUID = 1L;
+import com.google.common.base.Objects;
 
-    private final FunctionType functionType;
+@GroupOperator("delegateStudents")
+public class DelegateStudentsGroup extends FenixGroup {
+    private static final long serialVersionUID = -922683188265327080L;
 
-    private final String personFunctionId;
+    @GroupArgument
+    private PersonFunction delegateFunction;
 
-    public DelegateStudentsGroup(final PersonFunction delegateFunction, final FunctionType functionType) {
-        personFunctionId = delegateFunction.getExternalId();
-        this.functionType = functionType;
+    @GroupArgument
+    private FunctionType type;
+
+    private DelegateStudentsGroup() {
+        super();
     }
 
-    public DelegateStudentsGroup(PersonFunction delegateFunction) {
-        this(delegateFunction, delegateFunction.getFunction().getFunctionType());
+    private DelegateStudentsGroup(PersonFunction delegateFunction, FunctionType type) {
+        this();
+        this.delegateFunction = delegateFunction;
+        this.type = type;
+    }
+
+    public static DelegateStudentsGroup get(PersonFunction delegateFunction, FunctionType type) {
+        return new DelegateStudentsGroup(delegateFunction, type);
     }
 
     @Override
-    public Set<Person> getElements() {
-        Set<Person> people = new HashSet<Person>();
+    public Set<User> getMembers() {
+        Set<User> users = new HashSet<>();
 
-        if (getSender().hasStudent()) {
-            for (Student student : getStudent().getStudentsResponsibleForGivenFunctionType(getFunctionType(), getExecutionYear())) {
-                people.add(student.getPerson());
+        Person delegate = delegateFunction.getPerson();
+        if (delegate.getStudent() != null) {
+            for (Student student : delegate.getStudent().getStudentsResponsibleForGivenFunctionType(type, getExecutionYear())) {
+                User user = student.getPerson().getUser();
+                if (user != null) {
+                    users.add(user);
+                }
             }
         } else {
-            if (getSender().hasAnyCoordinators()) {
-                for (Coordinator coordinator : getSender().getCoordinators()) {
-                    final Degree degree = coordinator.getExecutionDegree().getDegree();
-                    for (Student student : degree.getAllStudents()) {
-                        people.add(student.getPerson());
+            for (Coordinator coordinator : delegate.getCoordinatorsSet()) {
+                final Degree degree = coordinator.getExecutionDegree().getDegree();
+                for (Student student : degree.getAllStudents()) {
+                    User user = student.getPerson().getUser();
+                    if (user != null) {
+                        users.add(user);
                     }
                 }
             }
         }
 
-        return people;
+        return users;
     }
 
     @Override
-    protected Argument[] getExpressionArguments() {
-        if (functionType == null) {
-            return new Argument[] { new OidOperator(getPersonFunction()) };
-        } else {
-            return new Argument[] { new OidOperator(getPersonFunction()), new StaticArgument(functionType.getName()) };
-        }
-    }
-
-    public static class Builder implements GroupBuilder {
-
-        @Override
-        public Group build(Object[] arguments) {
-            try {
-                if (arguments.length > 1 && arguments[1] != null) {
-                    final String functionTypeName = (String) arguments[1];
-                    final FunctionType functionType = FunctionType.valueOf(functionTypeName);
-                    return new DelegateStudentsGroup((PersonFunction) arguments[0], functionType);
-                } else {
-                    return new DelegateStudentsGroup((PersonFunction) arguments[0]);
-                }
-            } catch (ClassCastException e) {
-                throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
-                        arguments[0].toString());
-            }
-        }
-
-        @Override
-        public int getMinArguments() {
-            return 1;
-        }
-
-        @Override
-        public int getMaxArguments() {
-            return 2;
-        }
-
+    public Set<User> getMembers(DateTime when) {
+        return getMembers();
     }
 
     @Override
-    public boolean isMember(Person person) {
-        if (person != null && person.hasStudent()) {
-            if (getElements().contains(person.getStudent())) {
-                return true;
-            }
+    public boolean isMember(User user) {
+        return user != null && getMembers().contains(user);
+    }
+
+    @Override
+    public boolean isMember(User user, DateTime when) {
+        return isMember(user);
+    }
+
+    public ExecutionYear getExecutionYear() {
+        return ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate());
+    }
+
+    @Override
+    public PersistentGroup toPersistentGroup() {
+        return PersistentDelegateStudentsGroup.getInstance(delegateFunction, type);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof DelegateStudentsGroup) {
+            DelegateStudentsGroup other = (DelegateStudentsGroup) object;
+            return Objects.equal(delegateFunction, other.delegateFunction) && Objects.equal(type, other.type);
         }
         return false;
     }
 
     @Override
-    public String getPresentationNameBundle() {
-        return "resources.DelegateResources";
+    public int hashCode() {
+        return Objects.hashCode(delegateFunction, type);
     }
 
-    @Override
-    public String getPresentationNameKey() {
-        return "label." + getClass().getSimpleName() + "." + getFunctionType().getName()
-                + (getSender().hasStudent() ? "" : ".coordinator");
-    }
-
-    public FunctionType getFunctionType() {
-        return functionType;
-    }
-
-    public PersonFunction getPersonFunction() {
-        return personFunctionId != null ? (PersonFunction) FenixFramework.getDomainObject(personFunctionId) : null;
-    }
-
-    public Student getStudent() {
-        final PersonFunction personFunction = getPersonFunction();
-        final Person person = personFunction.getPerson();
-        return person.hasStudent() ? person.getStudent() : null;
-    }
-
-    public ExecutionYear getExecutionYear() {
-        final PersonFunction personFunction = getPersonFunction();
-        return ExecutionYear.getExecutionYearByDate(personFunction.getBeginDate());
-    }
-
-    public Person getPerson() {
-        final PersonFunction personFunction = getPersonFunction();
-        return personFunction.getPerson();
-    }
-
-    private Person getSender() {
-        return getPerson();
-    }
-
-    @Override
-    public org.fenixedu.bennu.core.domain.groups.Group convert() {
-        return PersistentDelegateStudentsGroup.getInstance(getPersonFunction(), getFunctionType());
-    }
 }

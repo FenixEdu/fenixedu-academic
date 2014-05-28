@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.io.Serializable;
@@ -13,9 +31,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Strings;
@@ -157,21 +174,25 @@ public class SearchDSpaceCoursesBean implements Serializable {
         }
     }
 
-    protected void search(Container container) {
-        for (Content child : container.getChildrenAsContent()) {
-            if (child.isContainer()) {
-                search((Container) child);
-            } else if (child instanceof Attachment) {
-                FileContent file = ((Attachment) child).getFile();
-                if (!educationalResourceTypes.isEmpty() && !educationalResourceTypes.contains(file.getResourceType())) {
-                    continue;
-                }
-                if (!Strings.isNullOrEmpty(searchText) && !file.getFilename().contains(searchText)
-                        && !file.getDisplayName().contains(searchText)) {
-                    continue;
-                }
-                results.add(file);
+    protected void search(Site site) {
+        for (Section section : site.getAssociatedSectionSet()) {
+            search(section);
+        }
+    }
+
+    protected void search(Section container) {
+        for (Section child : container.getChildrenSections()) {
+            search(child);
+        }
+        for (FileContent file : container.getFileContentSet()) {
+            if (!educationalResourceTypes.isEmpty() && !educationalResourceTypes.contains(file.getResourceType())) {
+                continue;
             }
+            if (!Strings.isNullOrEmpty(searchText) && !file.getFilename().contains(searchText)
+                    && !file.getDisplayName().contains(searchText)) {
+                continue;
+            }
+            results.add(file);
         }
     }
 

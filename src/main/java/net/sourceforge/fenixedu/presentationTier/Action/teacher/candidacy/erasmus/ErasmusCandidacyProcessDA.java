@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.candidacy.erasmus;
 
 import java.util.ArrayList;
@@ -15,7 +33,8 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplica
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherMobilityApp;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -23,6 +42,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -32,6 +52,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = TeacherMobilityApp.class, path = "mobility-process", titleKey = "label.applications")
 @Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "teacher",
         formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
 @Forwards({ @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp") })
@@ -41,6 +62,9 @@ public class ErasmusCandidacyProcessDA extends
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        if (!AccessControl.getPerson().getTeacher().isErasmusCoordinator()) {
+            return new ActionForward("unauthorized", "/unauthorized.jsp", false, "");
+        }
         setChooseDegreeBean(request);
         ActionForward forward = super.execute(mapping, actionForm, request, response);
         setChooseDegreeBean(request);
@@ -74,7 +98,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        final String degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+        final String degreeCurricularPlanOID = DegreeCoordinatorIndex.findDegreeCurricularPlanID(request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {

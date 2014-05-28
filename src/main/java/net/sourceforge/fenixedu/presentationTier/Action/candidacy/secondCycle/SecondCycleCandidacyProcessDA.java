@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle;
 
 import java.io.IOException;
@@ -22,12 +40,15 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleC
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -35,12 +56,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 
+@StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "second-cycle", titleKey = "label.candidacy.secondCycle",
+        accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))",
+        bundle = "ApplicationResources")
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdministration",
         formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class)
 @Forwards({
@@ -282,7 +306,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
             row.setCell(process.getCandidacyInterviewGrade() != null ? process.getCandidacyInterviewGrade() : " ");
             row.setCell(process.getCandidacySeriesGrade());
             if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
-                row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(
+                row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(
                         process.getCandidacyState().getQualifiedName()));
             } else {
                 row.setCell(" ");
@@ -293,7 +317,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private List<Object> getHeader() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         final List<Object> result = new ArrayList<Object>();
         result.add(bundle.getString("label.name"));
         result.add(bundle.getString("label.candidacy.mfc"));
@@ -341,7 +365,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
     protected List<Object> getCandidacyHeader() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", I18N.getLocale());
         final List<Object> result = new ArrayList<Object>(super.getCandidacyHeader());
         result.add(bundle.getString("label.spreadsheet.notes"));
         return result;
@@ -352,8 +376,8 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
             final IndividualCandidacyProcess individualCandidacyProcess) {
         SecondCycleIndividualCandidacyProcess secondCycleIndividualCandidacyProcess =
                 (SecondCycleIndividualCandidacyProcess) individualCandidacyProcess;
-        ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
-        ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+        ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale());
+        ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", I18N.getLocale());
 
         final Row row = spreadsheet.addRow();
         row.setCell(secondCycleIndividualCandidacyProcess.getProcessCode());

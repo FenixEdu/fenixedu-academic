@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.net.MalformedURLException;
@@ -9,20 +27,15 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -30,18 +43,36 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+import com.google.common.base.Strings;
+
+@Mapping(module = "publico", path = "/units/viewSite")
+@Forwards({ @Forward(path = "basicUnit-site-front-page-banner-intro", name = "frontPage-BANNER_INTRO"),
+        @Forward(path = "basicUnit-site-front-page-intro-banner", name = "frontPage-INTRO_BANNER"),
+        @Forward(path = "basicUnit-site-front-page-intro-float", name = "frontPage-BANNER_INTRO_COLLAPSED"),
+        @Forward(path = "basicUnit-section", name = "site-section"),
+        @Forward(path = "basicUnit-section-deny", name = "site-section-deny"),
+        @Forward(path = "basicUnit-section-adviseLogin", name = "site-section-adviseLogin"),
+        @Forward(path = "basicUnit-item", name = "site-item"), @Forward(path = "basicUnit-item-deny", name = "site-item-deny"),
+        @Forward(path = "basicUnit-item-adviseLogin", name = "site-item-adviseLogin"),
+        @Forward(path = "basicUnit-organization", name = "unit-organization"),
+        @Forward(path = "/units/announcements.do", name = "announcementsAction"),
+        @Forward(path = "/units/events.do", name = "eventsAction"),
+        @Forward(path = "/units/announcementsRSS.do", name = "announcementsRSSAction"),
+        @Forward(path = "/units/eventsRSS.do", name = "eventsRSSAction") })
 public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
     public static final int ANNOUNCEMENTS_NUMBER = 3;
 
-    public static final MultiLanguageString ANNOUNCEMENTS_NAME = new MultiLanguageString().with(Language.pt, "Anúncios");
+    public static final MultiLanguageString ANNOUNCEMENTS_NAME = new MultiLanguageString().with(MultiLanguageString.pt,
+            "Anúncios");
 
-    public static final MultiLanguageString EVENTS_NAME = new MultiLanguageString().with(Language.pt, "Eventos");
+    public static final MultiLanguageString EVENTS_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Eventos");
 
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -121,19 +152,23 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     }
 
     protected UnitSite getUnitSite(HttpServletRequest request) {
-        FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-        Container container = (Container) context.getLastContentInPath(UnitSite.class);
-        return (UnitSite) container;
+        return SiteMapper.getSite(request);
     }
 
     protected Unit getUnit(HttpServletRequest request) {
         Unit unit = (Unit) request.getAttribute("unit");
 
         if (unit == null) {
-            FilterFunctionalityContext context =
-                    (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-            UnitSite site = (UnitSite) context.getSelectedContainer();
+            UnitSite site = SiteMapper.getSite(request);
+            if (site == null) {
+                String siteId = FenixContextDispatchAction.getFromRequest("siteID", request);
+                if (!Strings.isNullOrEmpty(siteId)) {
+                    site = FenixFramework.getDomainObject(siteId);
+                    OldCmsSemanticURLHandler.selectSite(request, site);
+                }
+            }
             unit = site.getUnit();
+            request.setAttribute("unit", unit);
         }
 
         return unit;
@@ -171,114 +206,4 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
         return String.format(forward.getPath(), sub.getExternalId(), sub.getSite().getExternalId());
     }
-
-    public ActionForward showPublications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        Unit unit = getUnit(request);
-
-        IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
-
-        ExecutionYearIntervalBean bean;
-        if (viewState != null) {
-            bean = (ExecutionYearIntervalBean) viewState.getMetaObject().getObject();
-        } else {
-            bean = generateSearchBean();
-        }
-
-        request.setAttribute("executionYearIntervalBean", bean);
-
-        preparePublicationsForResponse(request, unit, bean);
-
-        return mapping.findForward("showPublications");
-    }
-
-    protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit, ExecutionYearIntervalBean bean) {
-        putPublicationsOnRequest(request, unit, bean, Boolean.FALSE);
-    }
-
-    protected void putPublicationsOnRequest(HttpServletRequest request, Unit unit, ExecutionYearIntervalBean bean,
-            Boolean checkSubunits) {
-
-        ExecutionYear firstExecutionYear = bean.getFirstExecutionYear();
-        ExecutionYear finalExecutionYear = bean.getFinalExecutionYear();
-        ResultPublicationType resultPublicationType = bean.getPublicationType();
-
-        // String[] publicationTypes = new String[] {"articles", "books",
-        // "inbooks", "inproceedings", "proceedings", "theses", "manuals",
-        // "technical-reports", "other-publications", "unstructureds"};
-
-        if (resultPublicationType == null) {
-            request.setAttribute("international-articles", ResearchResultPublication.sort(unit.getArticles(
-                    ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("national-articles",
-                    ResearchResultPublication.sort(unit.getArticles(ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
-            List<ResearchResultPublication> articles =
-                    ResearchResultPublication.sort(unit.getArticles(firstExecutionYear, finalExecutionYear, checkSubunits));
-            request.setAttribute("hasArticles", !articles.isEmpty());
-            request.setAttribute("articles", articles);
-
-            request.setAttribute("books",
-                    ResearchResultPublication.sort(unit.getBooks(firstExecutionYear, finalExecutionYear, checkSubunits)));
-            request.setAttribute("inbooks",
-                    ResearchResultPublication.sort(unit.getInbooks(firstExecutionYear, finalExecutionYear, checkSubunits)));
-            request.setAttribute("international-inproceedings", ResearchResultPublication.sort(unit.getInproceedings(
-                    ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("national-inproceedings", ResearchResultPublication.sort(unit.getInproceedings(
-                    ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("inproceedings",
-                    ResearchResultPublication.sort(unit.getInproceedings(firstExecutionYear, finalExecutionYear, checkSubunits)));
-            request.setAttribute("proceedings",
-                    ResearchResultPublication.sort(unit.getProceedings(firstExecutionYear, finalExecutionYear, checkSubunits)));
-            request.setAttribute("theses",
-                    ResearchResultPublication.sort(unit.getTheses(firstExecutionYear, finalExecutionYear, checkSubunits)));
-            request.setAttribute("manuals",
-                    ResearchResultPublication.sort(unit.getManuals(firstExecutionYear, finalExecutionYear, checkSubunits)));
-            request.setAttribute("technicalReports", ResearchResultPublication.sort(unit.getTechnicalReports(firstExecutionYear,
-                    finalExecutionYear, checkSubunits)));
-            request.setAttribute("otherPublications", ResearchResultPublication.sort(unit.getOtherPublications(
-                    firstExecutionYear, finalExecutionYear, checkSubunits)));
-            request.setAttribute("unstructureds",
-                    ResearchResultPublication.sort(unit.getUnstructureds(firstExecutionYear, finalExecutionYear, checkSubunits)));
-        } else {
-            switch (resultPublicationType) {
-            case Article:
-                request.setAttribute("articles",
-                        ResearchResultPublication.sort(unit.getArticles(firstExecutionYear, finalExecutionYear, checkSubunits)));
-                break;
-            case Book:
-                request.setAttribute("books",
-                        ResearchResultPublication.sort(unit.getBooks(firstExecutionYear, finalExecutionYear, checkSubunits)));
-                break;
-            case BookPart:
-                request.setAttribute("inbooks",
-                        ResearchResultPublication.sort(unit.getInbooks(firstExecutionYear, finalExecutionYear, checkSubunits)));
-                break;
-            case Inproceedings:
-                request.setAttribute("inproceedings", ResearchResultPublication.sort(unit.getInproceedings(firstExecutionYear,
-                        finalExecutionYear, checkSubunits)));
-                break;
-            case Manual:
-                request.setAttribute("manuals",
-                        ResearchResultPublication.sort(unit.getManuals(firstExecutionYear, finalExecutionYear, checkSubunits)));
-                break;
-            case OtherPublication:
-                request.setAttribute("other-publications", ResearchResultPublication.sort(unit.getOtherPublications(
-                        firstExecutionYear, finalExecutionYear, checkSubunits)));
-                break;
-            case Proceedings:
-                request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(firstExecutionYear,
-                        finalExecutionYear, checkSubunits)));
-                break;
-            case TechnicalReport:
-                request.setAttribute("technical-reports", ResearchResultPublication.sort(unit.getTechnicalReports(
-                        firstExecutionYear, finalExecutionYear, checkSubunits)));
-                break;
-            case Thesis:
-                request.setAttribute("theses",
-                        ResearchResultPublication.sort(unit.getTheses(firstExecutionYear, finalExecutionYear, checkSubunits)));
-                break;
-            }
-        }
-    }
-
 }

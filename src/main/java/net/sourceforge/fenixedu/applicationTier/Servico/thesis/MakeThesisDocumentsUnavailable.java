@@ -1,13 +1,31 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ScientificCommissionGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 
 public class MakeThesisDocumentsUnavailable {
@@ -15,20 +33,12 @@ public class MakeThesisDocumentsUnavailable {
     @Atomic
     public static void run(Thesis thesis) {
         final ThesisFile thesisFile = thesis.getDissertation();
+        RoleType roleType = RoleType.SCIENTIFIC_COUNCIL;
 
-        RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
-        CurrentDegreeScientificCommissionMembersGroup commissionMembers =
-                new CurrentDegreeScientificCommissionMembersGroup(thesis.getDegree());
-        PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
+        Group scientificCouncil = RoleGroup.get(roleType);
+        ScientificCommissionGroup commissionMembers = ScientificCommissionGroup.get(thesis.getDegree());
+        Group student = thesis.getStudent().getPerson().getPersonGroup();
 
-        thesisFile.setPermittedGroup(new GroupUnion(scientificCouncil, commissionMembers, student));
-
-        final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
-        if (publication != null) {
-            for (final ResearchResultDocumentFile researchResultDocumentFile : publication.getResultDocumentFilesSet()) {
-                researchResultDocumentFile.setPermittedGroup(thesisFile.getPermittedGroup());
-            }
-        }
+        thesisFile.setPermittedGroup(scientificCouncil.or(commissionMembers).or(student));
     }
-
 }

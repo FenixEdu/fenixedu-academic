@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on Feb 18, 2004
  */
@@ -32,6 +50,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNum
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.ReadFinalDegreeWorkProposalHeadersByTeacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.SubmitFinalWorkProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork.GroupAlreadyAttributed;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear.ProposalAlreadyTransposed;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear.ProposalPeriodNotDefined;
@@ -64,7 +83,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherFinalWorkApp;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -85,14 +106,41 @@ import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-
+@StrutsFunctionality(app = TeacherFinalWorkApp.class, path = "proposals", titleKey = "link.manage.finalWork.proposals")
+@Mapping(path = "/finalWorkManagement", module = "teacher", formBean = "finalWorkInformationForm",
+        input = "/finalWorkManagement.do?method=prepareFinalWorkInformation")
+@Forwards({
+        @Forward(name = "sucess", path = "/finalWorkManagement.do?method=chooseDegree", contextRelative = false),
+        @Forward(name = "submitFinalWorkProposal", path = "/teacher/submitFinalWorkProposal_bd.jsp"),
+        @Forward(name = "showTeacherName", path = "/teacher/submitFinalWorkProposal_bd.jsp"),
+        @Forward(name = "coorientatorVisibility", path = "/teacher/submitFinalWorkProposal_bd.jsp"),
+        @Forward(name = "chooseDegreeForFinalWorkProposal", path = "/teacher/chooseDegreeForFinalWorkProposal_bd.jsp"),
+        @Forward(name = "OutOfSubmisionPeriod", path = "/finalWorkManagement.do?method=chooseDegree", contextRelative = false),
+        @Forward(name = "SubmitionOfFinalDegreeWorkProposalSucessful", path = "/finalWorkManagement.do?method=chooseDegree",
+                contextRelative = false),
+        @Forward(name = "viewFinalDegreeWorkProposal", path = "/teacher/viewFinalDegreeWorkProposal_bd.jsp"),
+        @Forward(name = "ShowStudentCurricularPlans", path = "/student/curriculum/viewCurricularPlans_bd.jsp"),
+        @Forward(name = "ShowStudentCurriculum", path = "/student/curriculum/displayStudentCurriculum_bd.jsp"),
+        @Forward(name = "transposeFinalDegreeWorkProposal", path = "/teacher/transposeFinalDegreeWorkProposal.jsp"),
+        @Forward(name = "NotAuthorized", path = "/student/notAuthorized_bd.jsp"),
+        @Forward(name = "print", path = "/teacher/printFinalDegreeWorkProposal_bd.jsp"),
+        @Forward(name = "listProposals", path = "/teacher/listProposals_bd.jsp") })
+@Exceptions(@ExceptionHandling(handler = FenixErrorExceptionHandler.class, key = "error.message.GroupAlreadyAttributed",
+        type = GroupAlreadyAttributed.class, scope = "request"))
 public class FinalWorkManagementAction extends FenixDispatchAction {
 
     public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -233,6 +281,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         return chooseDegree(mapping, form, request, response);
     }
 
+    @EntryPoint
     public ActionForward chooseDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, IllegalAccessException,
             InstantiationException {

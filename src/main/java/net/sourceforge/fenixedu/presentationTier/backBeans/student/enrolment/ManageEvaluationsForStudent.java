@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on Nov 14, 2005
  *  by jdnf
@@ -20,11 +38,11 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.spaces.domain.Space;
 
 public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToEnrol {
 
@@ -81,13 +99,15 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
                             this.evaluationsWithEnrolmentPeriodOpened.add(writtenEvaluation);
                         } else {
                             this.evaluationsWithEnrolmentPeriodClosed.add(writtenEvaluation);
-                            final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
-                            getStudentRooms().put(writtenEvaluation.getExternalId(), room != null ? room.getNome() : "-");
+                            final Space room = registration.getRoomFor(writtenEvaluation);
+                            String roomName = room != null ? room.getName() : "-";
+                            getStudentRooms().put(writtenEvaluation.getExternalId(), roomName);
                         }
                     } catch (final DomainException e) {
                         getEvaluationsWithoutEnrolmentPeriod().add(writtenEvaluation);
-                        final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
-                        getStudentRooms().put(writtenEvaluation.getExternalId(), room != null ? room.getNome() : "-");
+                        final Space room = registration.getRoomFor(writtenEvaluation);
+                        String value = room != null ? room.getName() : "-";
+                        getStudentRooms().put(writtenEvaluation.getExternalId(), value);
                     } finally {
                         getEnroledEvaluationsForStudent().put(writtenEvaluation.getExternalId(),
                                 Boolean.valueOf(registration.isEnroledIn(writtenEvaluation)));

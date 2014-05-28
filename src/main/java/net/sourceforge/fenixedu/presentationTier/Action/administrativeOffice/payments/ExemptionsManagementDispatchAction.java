@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments;
 
 import java.util.ArrayList;
@@ -43,6 +61,7 @@ import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityFineExemption;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionBean;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -56,7 +75,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/exemptionsManagement", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/exemptionsManagement", module = "academicAdministration", formBeanClass = FenixActionForm.class,
+        functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showEventsToApplyExemption",
                 path = "/academicAdminOffice/payments/exemptions/showEventsToApplyExemption.jsp"),
@@ -92,9 +112,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
                 path = "/academicAdminOffice/payments/exemptions/createAcademicEventExemption.jsp"),
         @Forward(name = "createPhdEventExemption",
                 path = "/phd/academicAdminOffice/payments/exemptions/createPhdEventExemption.jsp"),
-        @Forward(name = "createFCTExemption", path = "/phd/academicAdminOffice/payments/exemptions/createFCTExemption.jsp")
-
-})
+        @Forward(name = "createFCTExemption", path = "/phd/academicAdminOffice/payments/exemptions/createFCTExemption.jsp") })
 public class ExemptionsManagementDispatchAction extends PaymentsManagementDispatchAction {
 
     public ActionForward showEventsToApplyExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,

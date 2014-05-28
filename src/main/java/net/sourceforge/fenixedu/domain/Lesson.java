@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
@@ -19,22 +37,22 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.icalendar.ClassEventBean;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -67,7 +85,7 @@ public class Lesson extends Lesson_Base {
     };
 
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
-            ExecutionSemester executionSemester, OccupationPeriod period, AllocatableSpace room) {
+            ExecutionSemester executionSemester, OccupationPeriod period, Space room) {
 
         super();
 
@@ -97,7 +115,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
-            ExecutionSemester executionSemester, YearMonthDay beginDate, YearMonthDay endDate, AllocatableSpace room) {
+            ExecutionSemester executionSemester, YearMonthDay beginDate, YearMonthDay endDate, Space room) {
 
         super();
 
@@ -130,7 +148,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim,
-            FrequencyType frequency, Boolean createLessonInstances, AllocatableSpace newRoom) {
+            FrequencyType frequency, Boolean createLessonInstances, Space newRoom) {
         AccessControl.check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessons);
 
         if (newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
@@ -161,7 +179,7 @@ public class Lesson extends Lesson_Base {
         lessonSpaceOccupationManagement(newRoom);
     }
 
-    public void edit(final AllocatableSpace newRoom) {
+    public void edit(final Space newRoom) {
         AccessControl.check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessons);
         lessonSpaceOccupationManagement(newRoom);
     }
@@ -223,7 +241,7 @@ public class Lesson extends Lesson_Base {
         return start != null && end != null && start.isBefore(end);
     }
 
-    private void lessonSpaceOccupationManagement(AllocatableSpace newRoom) {
+    private void lessonSpaceOccupationManagement(Space newRoom) {
         LessonSpaceOccupation lessonSpaceOccupation = getLessonSpaceOccupation();
         if (newRoom != null) {
             if (!wasFinished()) {
@@ -244,8 +262,8 @@ public class Lesson extends Lesson_Base {
                     lessonInstance.setLessonInstanceSpaceOccupation(null);
                 } else {
                     LessonInstanceSpaceOccupation allocation =
-                            (LessonInstanceSpaceOccupation) newRoom
-                                    .getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
+                            (LessonInstanceSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(newRoom,
+                                    LessonInstanceSpaceOccupation.class);
                     allocation.edit(lessonInstance);
                 }
             }
@@ -288,7 +306,7 @@ public class Lesson extends Lesson_Base {
         return getShift().getExecutionPeriod();
     }
 
-    public AllocatableSpace getSala() {
+    public Space getSala() {
         if (hasLessonSpaceOccupation()) {
             return getLessonSpaceOccupation().getRoom();
         } else if (hasAnyLessonInstances() && wasFinished()) {
@@ -625,7 +643,7 @@ public class Lesson extends Lesson_Base {
     private YearMonthDay getValidBeginDate(YearMonthDay startDate) {
         YearMonthDay lessonBegin =
                 startDate.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat())
-                        .toYearMonthDay();
+                .toYearMonthDay();
         if (lessonBegin.isBefore(startDate)) {
             lessonBegin = lessonBegin.plusDays(NUMBER_OF_DAYS_IN_WEEK);
         }
@@ -641,13 +659,16 @@ public class Lesson extends Lesson_Base {
         return lessonEnd;
     }
 
-    public Campus getLessonCampus() {
+    public Space getLessonCampus() {
         if (!wasFinished()) {
-            return hasSala() ? getSala().getSpaceCampus() : null;
+            return hasSala() ? SpaceUtils.getSpaceCampus(getSala()) : null;
         } else {
             LessonInstance lastLessonInstance = getLastLessonInstance();
-            return lastLessonInstance != null && lastLessonInstance.getRoom() != null ? lastLessonInstance.getRoom()
-                    .getSpaceCampus() : null;
+            if (lastLessonInstance != null && lastLessonInstance.getRoom() != null) {
+                return SpaceUtils.getSpaceCampus(lastLessonInstance.getRoom());
+            } else {
+                return null;
+            }
         }
     }
 
@@ -808,35 +829,35 @@ public class Lesson extends Lesson_Base {
         startDateToSearch = startDateToSearch != null ? getValidBeginDate(startDateToSearch) : null;
 
         if (!wasFinished() && startDateToSearch != null && endDateToSearch != null && !startDateToSearch.isAfter(endDateToSearch)) {
-            Campus lessonCampus = getLessonCampus();
+            Space lessonCampus = getLessonCampus();
             final int dayIncrement =
                     getFrequency() == FrequencyType.BIWEEKLY ? FrequencyType.WEEKLY.getNumberOfDays() : getFrequency()
                             .getNumberOfDays();
-            boolean shouldAdd = true;
-            while (true) {
-                if (isDayValid(startDateToSearch, lessonCampus)) {
-                    if (getFrequency() != FrequencyType.BIWEEKLY || shouldAdd) {
-                        if (!isHoliday(startDateToSearch, lessonCampus)) {
-                            result.add(startDateToSearch);
+                    boolean shouldAdd = true;
+                    while (true) {
+                        if (isDayValid(startDateToSearch, lessonCampus)) {
+                            if (getFrequency() != FrequencyType.BIWEEKLY || shouldAdd) {
+                                if (!isHoliday(startDateToSearch, lessonCampus)) {
+                                    result.add(startDateToSearch);
+                                }
+                            }
+                            shouldAdd = !shouldAdd;
+                        }
+                        startDateToSearch = startDateToSearch.plusDays(dayIncrement);
+                        if (startDateToSearch.isAfter(endDateToSearch)) {
+                            break;
                         }
                     }
-                    shouldAdd = !shouldAdd;
-                }
-                startDateToSearch = startDateToSearch.plusDays(dayIncrement);
-                if (startDateToSearch.isAfter(endDateToSearch)) {
-                    break;
-                }
-            }
         }
         return result;
     }
 
-    private boolean isHoliday(YearMonthDay day, Campus lessonCampus) {
+    private boolean isHoliday(YearMonthDay day, Space lessonCampus) {
         return Holiday.isHoliday(day.toLocalDate(), lessonCampus);
     }
 
-    private boolean isDayValid(YearMonthDay day, Campus lessonCampus) {
-        return /* !Holiday.isHoliday(day.toLocalDate(), lessonCampus) && */ getPeriod().nestedOccupationPeriodsContainsDay(day);
+    private boolean isDayValid(YearMonthDay day, Space lessonCampus) {
+        return /* !Holiday.isHoliday(day.toLocalDate(), lessonCampus) && */getPeriod().nestedOccupationPeriodsContainsDay(day);
     }
 
     public YearMonthDay getNextPossibleLessonInstanceDate() {
@@ -1068,9 +1089,9 @@ public class Lesson extends Lesson_Base {
 
             LessonInstance lessonInstance = hashmap.get(beginDate);
             EventBean bean;
-            Set<AllocatableSpace> location = new HashSet<>();
+            Set<Space> location = new HashSet<>();
 
-            String url = FenixConfigurationManager.getFenixUrl() + getExecutionCourse().getSite().getReversePath();
+            String url = CoreConfiguration.getConfiguration().applicationUrl() + getExecutionCourse().getSite().getReversePath();
 
             if (lessonInstance != null) {
 
@@ -1157,8 +1178,8 @@ public class Lesson extends Lesson_Base {
                 intervals.add(new Interval(day.toLocalDate().toDateTime(
                         new LocalTime(getBeginHourMinuteSecond().getHour(), getBeginHourMinuteSecond().getMinuteOfHour(),
                                 getBeginHourMinuteSecond().getSecondOfMinute())), day.toLocalDate().toDateTime(
-                        new LocalTime(getEndHourMinuteSecond().getHour(), getEndHourMinuteSecond().getMinuteOfHour(),
-                                getEndHourMinuteSecond().getSecondOfMinute()))));
+                                        new LocalTime(getEndHourMinuteSecond().getHour(), getEndHourMinuteSecond().getMinuteOfHour(),
+                                                getEndHourMinuteSecond().getSecondOfMinute()))));
             }
         }
         return intervals;

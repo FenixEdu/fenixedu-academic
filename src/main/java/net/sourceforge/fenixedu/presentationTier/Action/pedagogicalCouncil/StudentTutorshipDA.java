@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
 
 import java.util.ArrayList;
@@ -16,29 +34,29 @@ import net.sourceforge.fenixedu.domain.TutorshipSummary;
 import net.sourceforge.fenixedu.domain.TutorshipSummaryRelation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.CurriculumDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship.StudentsPerformanceGridDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = TutorshipApp.class, path = "student-tutorship", titleKey = "link.teacher.tutorship.history",
+        bundle = "ApplicationResources")
 @Mapping(path = "/studentTutorship", module = "pedagogicalCouncil")
-@Forwards({
-        @Forward(name = "searchStudentTutorship", path = "/pedagogicalCouncil/tutorship/showStudentPerformanceGrid.jsp",
-                tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.viewperformancegrids")),
-        @Forward(name = "showStudentPerformanceGrid", path = "/pedagogicalCouncil/tutorship/showStudentPerformanceGrid.jsp"),
-        @Forward(name = "showStudentCurriculum", path = "/pedagogicalCouncil/tutorship/showStudentCurriculum.jsp",
-                tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.studentcurriculum")),
-        @Forward(name = "chooseRegistration", path = "/pedagogicalCouncil/tutorship/chooseRegistration.jsp") })
+@Forwards({ @Forward(name = "searchStudentTutorship", path = "/pedagogicalCouncil/tutorship/showStudentPerformanceGrid.jsp"),
+        @Forward(name = "showStudentPerformanceGrid", path = "/pedagogicalCouncil/tutorship/showStudentPerformanceGrid.jsp") })
 public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareStudentSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -93,7 +111,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 
             List<TutorshipSummary> pastSummaries = new ArrayList<TutorshipSummary>();
             for (Tutorship t : student.getTutorships()) {
-                for (TutorshipSummaryRelation tsr : t.getTutorshipSummaryRelations()) {
+                for (TutorshipSummaryRelation tsr : t.getTutorshipSummaryRelationsSet()) {
                     if (!tsr.getTutorshipSummary().isActive()) {
                         pastSummaries.add(tsr.getTutorshipSummary());
                     }
@@ -156,8 +174,8 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
             registration = FenixFramework.getDomainObject(registrationOID);
         } else {
             final Student student = Student.readStudentByNumber(bean.getNumber());
-            if (student.getRegistrations().size() == 1) {
-                registration = student.getRegistrations().iterator().next();
+            if (student.getRegistrationsSet().size() == 1) {
+                registration = student.getRegistrationsSet().iterator().next();
             } else {
                 request.setAttribute("student", student);
                 return mapping.findForward("chooseRegistration");

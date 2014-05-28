@@ -1,3 +1,23 @@
+<!--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
 <schema name="site.section.name" type="net.sourceforge.fenixedu.domain.Section">
     <slot name="name" layout="link">
         <property name="useParent" value="true"/>
@@ -12,15 +32,15 @@
     </slot>
 </schema>
 
-<schema name="site.functionality.name" type="net.sourceforge.fenixedu.domain.functionalities.Functionality">
+<schema name="site.section.name.plain" type="net.sourceforge.fenixedu.domain.Section">
+    <slot name="name"/>
+</schema>
+
+<schema name="site.template.name" type="net.sourceforge.fenixedu.domain.cms.TemplatedSectionInstance">
     <slot name="name" layout="link">
         <property name="useParent" value="true"/>
         <property name="destination" value="functionality.view"/>
     </slot>
-</schema>
-
-<schema name="site.section.name.plain" type="net.sourceforge.fenixedu.domain.Section">
-    <slot name="name"/>
 </schema>
 
 <!--  
@@ -148,7 +168,7 @@
     <slot name="url" key="label.site.link.url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
     </slot>
-    <slot name="label" key="label.site.link.label"  validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+    <slot name="label" key="label.site.link.label"  validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
         <property name="size" value="40"/>
     </slot>
 </schema>
@@ -284,12 +304,6 @@
 	</slot>
 </schema>
 
-<schema name="unitSite.institution.section.functionalities" 
-        type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
-        bundle="FUNCTIONALITY_RESOURCES">
-    <slot name="name"/>
-</schema>
- 
 <schema name="site.functions.tree.unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="SITE_RESOURCES">
 	<slot name="nameI18n"/>
 </schema>
@@ -304,7 +318,7 @@
 </schema>
 
 <schema name="site.functions.create.function" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="SITE_RESOURCES">
-	<slot name="MLString" key="label.function.name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="MLString" key="label.function.name" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="60"/>
 	</slot>
 </schema>

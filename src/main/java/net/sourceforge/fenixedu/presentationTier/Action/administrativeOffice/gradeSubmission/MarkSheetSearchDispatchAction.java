@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
 
 import java.text.ParseException;
@@ -21,12 +39,15 @@ import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminMarksheetApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -35,18 +56,22 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
+@StrutsFunctionality(app = AcademicAdminMarksheetApp.class, path = "search", titleKey = "link.markSheet.management")
 @Mapping(path = "/markSheetManagement", module = "academicAdministration", formBean = "markSheetManagementForm",
-        input = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp")
-@Forwards({ @Forward(name = "searchMarkSheet", path = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp"),
-        @Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp"),
-        @Forward(name = "removeMarkSheet", path = "/academicAdminOffice/gradeSubmission/removeMarkSheet.jsp"),
-        @Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-        @Forward(name = "confirmMarkSheet", path = "/academicAdminOffice/gradeSubmission/confirmMarkSheet.jsp"),
-        @Forward(name = "choosePrinter", path = "/printMarkSheet.do?method=choosePrinterMarkSheet"),
+        input = "/gradeSubmission/markSheetManagement.jsp")
+@Forwards({
+        @Forward(name = "searchMarkSheet", path = "/academicAdministration/gradeSubmission/markSheetManagement.jsp"),
+        @Forward(name = "viewMarkSheet", path = "/academicAdministration/gradeSubmission/viewMarkSheet.jsp"),
+        @Forward(name = "removeMarkSheet", path = "/academicAdministration/gradeSubmission/removeMarkSheet.jsp"),
+        @Forward(name = "searchMarkSheetFilled",
+                path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "confirmMarkSheet", path = "/academicAdministration/gradeSubmission/confirmMarkSheet.jsp"),
+        @Forward(name = "choosePrinter", path = "/academicAdministration/printMarkSheet.do?method=choosePrinterMarkSheet"),
         @Forward(name = "listMarkSheet", path = "/manager/markSheet/viewMarkSheet.jsp"),
         @Forward(name = "searchMarkSheet", path = "/manager/markSheet/markSheetManagement.jsp") })
 public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareSearchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

@@ -1,5 +1,25 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
+<%@page import="org.fenixedu.bennu.portal.domain.PortalConfiguration"%>
 <%@page
 	import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -7,7 +27,7 @@
 <html:html xhtml="true">
 
 <head>
-<title><%=Instalation.getInstance().getInstalationName()%> - <bean:message
+<title><%=PortalConfiguration.getInstance().getApplicationTitle().getContent()%> - <bean:message
 		key="title.login" bundle="GLOBAL_RESOURCES" /></title>
 
 <link href="<%=request.getContextPath()%>/CSS/login.css"
@@ -18,20 +38,10 @@
 
 <body>
 	<div id="container">
-
-		<div id="header">
-			<div id="dotist_id_container">
-				<img id="logo_image"
-					alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
-					src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%=request.getContextPath()%>"/>" />
-			</div>
+		<div id="logo">
+			<img src="<%=request.getContextPath()%>/images/newImage2012/logo.png" />
 		</div>
-
 		<div id="content">
-			<h1>
-				<bean:message key="title.login" bundle="GLOBAL_RESOURCES" />
-			</h1>
-
 			<div class="institutionName"><%=Unit.getInstitutionName()%>
 			</div>
 				<div id="alert">
@@ -42,39 +52,18 @@
 	                </center>
 				</div>
 			<html:form action="/login">
-				<table align="center" border="0">
-
-					<tr>
-						<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" styleId="username" /></td>
-					</tr>
-
-					<html:hidden property="pendingRequest" value="<%=request.getParameter("pendingRequest")%>" />
-
-					<tr>
-						<td><html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false" styleId="password" /></td>
-					</tr>
-				</table>
-
+			
+			<div class="inputContainer">
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" styleId="username" />		
+				<html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false" styleId="password" /></td>
+			</div>
+			
 				<div id="footer">
-					<table>
-						<tr>
-							<td>
-								<div id="support">
-									<a href="<bean:message key="institution.email.support" bundle="GLOBAL_RESOURCES" />">
-										<bean:message key="message.footer.help"	bundle="GLOBAL_RESOURCES" />
-									</a>
-								</div>
-							</td>
-							<td>
 								<div id="login_button">
 									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button" property="ok">
-										<bean:message key="title.login" bundle="GLOBAL_RESOURCES" />
+										&#10003;
 									</html:submit>
 								</div>
-							</td>
-
-						</tr>
-					</table>
 				</div>
 
 			</html:form>

@@ -1,33 +1,47 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.accessControl.CurricularCourseStudentsByExecutionPeriodGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesByExecutionYearGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DepartmentStudentsByExecutionYearGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DepartmentTeachersByExecutionYearGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -126,7 +140,7 @@ public class GroupCheckService {
      */
     private static Boolean checkRoleGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
         if (groupCheckQuery.roleType == RoleType.TEACHER || groupCheckQuery.roleType == RoleType.EMPLOYEE) {
-            return new RoleGroup(Role.getRoleByRoleType(groupCheckQuery.roleType)).isMember(person);
+            return RoleGroup.get(groupCheckQuery.roleType).isMember(person.getUser());
         } else {
             throw new NonExistingServiceException();
         }
@@ -169,12 +183,12 @@ public class GroupCheckService {
                     Group group;
 
                     if (groupCheckQuery.roleType == RoleType.TEACHER) {
-                        group = new ExecutionCourseTeachersGroup(executionCourse);
+                        group = TeacherGroup.get(executionCourse);
                     } else {
-                        group = new ExecutionCourseStudentsGroup(executionCourse);
+                        group = StudentGroup.get(executionCourse);
                     }
 
-                    if (group.isMember(person)) {
+                    if (group.isMember(person.getUser())) {
                         return true;
                     }
                 }
@@ -211,12 +225,13 @@ public class GroupCheckService {
             final CurricularCourse curricularCourse = degreeCurricularPlan.getCurricularCourseByAcronym(unitAcronyms[4]);
 
             if (curricularCourse != null) {
-                final Group group =
-                        new CurricularCourseStudentsByExecutionPeriodGroup(curricularCourse, getExecutionPeriod(
-                                groupCheckQuery.year, groupCheckQuery.semester));
-
-                if (group.isMember(person)) {
-                    return true;
+                List<Enrolment> enrolments =
+                        curricularCourse.getEnrolmentsByExecutionPeriod(getExecutionPeriod(groupCheckQuery.year,
+                                groupCheckQuery.semester));
+                for (Enrolment enrolment : enrolments) {
+                    if (enrolment.getStudentCurricularPlan().getRegistration().getPerson().equals(person)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -248,12 +263,12 @@ public class GroupCheckService {
 
         Group group;
         if (groupCheckQuery.roleType == RoleType.STUDENT) {
-            group = new DegreeStudentsGroup(degree);
+            group = StudentGroup.get(degree, null);
         } else {
-            group = new DegreeTeachersGroup(degree);
+            group = TeacherGroup.get(degree);
         }
 
-        return group.isMember(person);
+        return group.isMember(person.getUser());
 
     }
 
@@ -315,14 +330,39 @@ public class GroupCheckService {
         }
 
         if (groupCheckQuery.roleType == RoleType.TEACHER) {
-            return new DepartmentTeachersByExecutionYearGroup(getExecutionYear(groupCheckQuery.year), getDepartment(unitAcronyms))
-                    .isMember(person);
+            return TeacherGroup.get(getDepartment(unitAcronyms), getExecutionYear(groupCheckQuery.year)).isMember(
+                    person.getUser());
         } else if (groupCheckQuery.roleType == RoleType.EMPLOYEE) {
-            return new DepartmentEmployeesByExecutionYearGroup(getExecutionYear(groupCheckQuery.year),
-                    getDepartment(unitAcronyms)).isMember(person);
+            if (person != null && person.hasEmployee()) {
+                final Department lastDepartmentWorkingPlace =
+                        person.getEmployee().getLastDepartmentWorkingPlace(
+                                getExecutionYear(groupCheckQuery.year).getBeginDateYearMonthDay(),
+                                getExecutionYear(groupCheckQuery.year).getEndDateYearMonthDay());
+                return (lastDepartmentWorkingPlace != null && lastDepartmentWorkingPlace.equals(getDepartment(unitAcronyms)));
+            }
+            return false;
         } else {
-            return new DepartmentStudentsByExecutionYearGroup(getExecutionYear(groupCheckQuery.year), getDepartment(unitAcronyms))
-                    .isMember(person);
+            if (person != null && person.hasStudent()) {
+                for (final Registration registration : person.getStudent().getRegistrationsSet()) {
+                    for (final Enrolment enrolment : registration.getLastStudentCurricularPlan().getEnrolmentsByExecutionYear(
+                            getExecutionYear(groupCheckQuery.year))) {
+                        if (enrolment.getCurricularCourse().hasCompetenceCourse()) {
+                            final CompetenceCourse competenceCourse = enrolment.getCurricularCourse().getCompetenceCourse();
+                            if (competenceCourse.getDepartmentsSet().contains(getDepartment(unitAcronyms))) {
+                                return true;
+
+                            }
+
+                            if (competenceCourse.hasDepartmentUnit()
+                                    && competenceCourse.getDepartmentUnit().getDepartment() == getDepartment(unitAcronyms)) {
+                                return true;
+                            }
+                        }
+                    }
+
+                }
+            }
+            return false;
         }
 
     }

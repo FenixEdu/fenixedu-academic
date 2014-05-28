@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.webServices.jersey.services;
 
 import java.io.IOException;
@@ -9,8 +27,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -39,14 +55,10 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.photograph.PictureMode;
-import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication.PreferredComparator;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.util.ContentType;
-import net.sourceforge.fenixedu.webServices.ExportPublications;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -56,13 +68,10 @@ import org.json.simple.JSONObject;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 @Path("/fenix/jersey/services")
 public class JerseyServices {
@@ -171,37 +180,6 @@ public class JerseyServices {
     }
 
     @GET
-    @Path("preferred")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String readPreferred() {
-        JsonArray array = new JsonArray();
-        for (Party party : Bennu.getInstance().getPartysSet()) {
-            if (party instanceof Person) {
-                Person person = (Person) party;
-                if (person.getUsername() != null && !person.getPreferredPublicationSet().isEmpty()) {
-                    SortedSet<ResearchResultPublication> results = new TreeSet<>(new PreferredComparator(person));
-                    for (PreferredPublication preferred : person.getPreferredPublicationSet()) {
-                        results.add(preferred.getPreferredPublication());
-                    }
-                    JsonObject researcher = new JsonObject();
-                    researcher.addProperty("istID", person.getUsername());
-                    JsonArray preferences = new JsonArray();
-                    int count = 5;
-                    for (ResearchResultPublication publication : results) {
-                        if (count-- == 0) {
-                            break;
-                        }
-                        preferences.add(new JsonPrimitive(publication.getExternalId()));
-                    }
-                    researcher.add("preference", preferences);
-                    array.add(researcher);
-                }
-            }
-        }
-        return array.toString();
-    }
-
-    @GET
     @Path("researchers")
     @Produces(MediaType.APPLICATION_JSON)
     public String readResearchers() {
@@ -264,13 +242,6 @@ public class JerseyServices {
             }
             researchUnitMap.get(user).add(unit);
         }
-    }
-
-    @GET
-    @Path("publications")
-    @Produces(MediaType.APPLICATION_XML)
-    public byte[] readPublications() {
-        return new ExportPublications().harverst();
     }
 
     @GET
@@ -363,9 +334,9 @@ public class JerseyServices {
                 JSONObject mscInfo = new JSONObject();
                 mscInfo.put("id", t.getExternalId());
                 mscInfo.put("author", t.getStudent().getPerson().getIstUsername());
-                String title = t.getFinalFullTitle().getContent(Language.en);
+                String title = t.getFinalFullTitle().getContent(MultiLanguageString.en);
                 if (title == null) {
-                    title = t.getFinalFullTitle().getContent(Language.pt);
+                    title = t.getFinalFullTitle().getContent(MultiLanguageString.pt);
                 }
                 mscInfo.put("title", title);
                 mscInfo.put("year", t.getDiscussed().year().getAsShortText());

@@ -1,61 +1,50 @@
-<%@page import="java.net.URLEncoder"%>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@page import="java.util.Map.Entry"%>
-<%@page import="java.util.Enumeration"%>
-<%@page import="pt.ist.fenixWebFramework.servlets.filters.RequestReconstructor"%>
+<%--
 
-<%@page import="pt.utl.ist.fenix.tools.util.Pair"%><html:xhtml/>
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="org.fenixedu.bennu.core.util.CoreConfiguration" %>
 
 <div id="version">
-<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
 <table>
 	<tr>
-		<td>
-			<%
-				final RequestReconstructor requestReconstructor = (RequestReconstructor) request.getAttribute("requestReconstructor");
-			%>
-			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><form method="post" action="<%= requestReconstructor.getUrlSwitch("pt_PT").replace('<', '_').replace('>', '_').replace('"', '_') %>">
-			<%
-				for (Pair entry : requestReconstructor.getAttributes()) {
-    				String key = (String) entry.getKey();
-    				String value = (String) entry.getValue();
-    				%>
-		    			<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= (String) value %>"/>
-    				<%
-				}
-			%>
-
-				<input 
-						type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif"
-						alt="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
-						title="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
-						value="PT"
-						onclick="this.form.submit();"/>
-			</form>
-		</td>
-		<td>
-			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><form method="post" action="<%= requestReconstructor.getUrlSwitch("en_EN").replace('<', '_').replace('>', '_').replace('"', '_') %>">
-			<%
-				for (Pair entry : requestReconstructor.getAttributes()) {
-    				String key = (String) entry.getKey();
-    				String value = (String) entry.getValue();
-    				%>
-		    			<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= (String) value %>"/>
-    				<%
-				}
-			%>
-
-				<input 
-						type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"
-						alt="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
-						title="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
-						value="EN"
-						onclick="this.form.submit();"/>
-			</form>
-		</td>
+		<c:forEach var="lang" items="<%= CoreConfiguration.supportedLocales() %>">
+			<td>
+			<!-- NO_CHECKSUM --><img src="${pageContext.request.contextPath}/images/flags/${lang.language}.gif" 
+									 alt="${lang}" lang="${lang.toLanguageTag()}"
+									 title="${lang}" class="locale-change-flag" style="cursor: pointer" />
+			</td>
+		</c:forEach>
 	</tr>
 </table>
-<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
 </div>
+
+<script>
+
+$(".locale-change-flag").on("click", function (event) {
+	$.ajax({
+		type: 'POST',
+		url: '${pageContext.request.contextPath}/api/bennu-core/profile/locale/' + $(event.currentTarget).attr('lang'),
+		success: function () {
+			location.reload();
+		}
+	});
+});
+
+</script>

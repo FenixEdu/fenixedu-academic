@@ -1,25 +1,35 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.messaging;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
-import net.sourceforge.fenixedu.domain.contents.IDateContent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class ConversationMessage extends ConversationMessage_Base implements IDateContent {
-
-    public ConversationMessage() {
-        super();
-        setRootDomainObject(Bennu.getInstance());
-        setCreationDate(new DateTime());
-    }
+public class ConversationMessage extends ConversationMessage_Base implements Comparable<ConversationMessage> {
 
     public ConversationMessage(ConversationThread conversationThread, Person creator, MultiLanguageString body) {
-        this();
+        super();
+        setCreationDate(new DateTime());
         init(conversationThread, creator, body);
     }
 
@@ -27,10 +37,6 @@ public class ConversationMessage extends ConversationMessage_Base implements IDa
         setConversationThread(conversationThread);
         setBody(body);
         setCreator(creator);
-    }
-
-    public void removeCreator() {
-        super.setCreator(null);
     }
 
     @Override
@@ -51,25 +57,23 @@ public class ConversationMessage extends ConversationMessage_Base implements IDa
         super.setBody(body);
     }
 
+    @Override
     public void setConversationThread(ConversationThread conversationThread) {
         if (conversationThread == null) {
             throw new DomainException("conversationMessage.conversationThread.cannot.be.null");
         }
-
-        if (!hasAnyParents()) {
-            new DateOrderedNode(conversationThread, this, Boolean.TRUE);
-        } else {
-            getUniqueParentNode().setParent(conversationThread);
-        }
+        super.setConversationThread(conversationThread);
     }
 
-    public ConversationThread getConversationThread() {
-        return (ConversationThread) getUniqueParentContainer();
+    public void delete() {
+        setCreator(null);
+        setConversationThread(null);
+        deleteDomainObject();
     }
 
     @Override
-    public DateTime getContentDate() {
-        return getCreationDate();
+    public int compareTo(ConversationMessage o) {
+        return this.getCreationDate().compareTo(o.getCreationDate());
     }
 
 }

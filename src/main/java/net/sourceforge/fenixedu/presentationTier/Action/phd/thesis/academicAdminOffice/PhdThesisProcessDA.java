@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.academicAdminOffice;
 
 import java.io.IOException;
@@ -46,6 +64,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.thesis.PhdThesisJuryElementsDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -65,60 +84,35 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.Pair;
 
-@Mapping(path = "/phdThesisProcess", module = "academicAdministration")
+@Mapping(path = "/phdThesisProcess", module = "academicAdministration", functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({
-
-@Forward(name = "requestJuryElements", path = "/phd/thesis/academicAdminOffice/requestJuryElements.jsp"),
-
-@Forward(name = "submitJuryElementsDocument", path = "/phd/thesis/academicAdminOffice/submitJuryElementsDocument.jsp"),
-
-@Forward(name = "manageThesisJuryElements", path = "/phd/thesis/academicAdminOffice/manageThesisJuryElements.jsp"),
-
-@Forward(name = "rejectJuryElements", path = "/phd/thesis/academicAdminOffice/rejectJuryElements.jsp"),
-
-@Forward(name = "addJuryElement", path = "/phd/thesis/academicAdminOffice/addJuryElement.jsp"),
-
-@Forward(name = "editJuryElement", path = "/phd/thesis/academicAdminOffice/editJuryElement.jsp"),
-
-@Forward(name = "validateJury", path = "/phd/thesis/academicAdminOffice/validateJury.jsp"),
-
-@Forward(name = "submitThesis", path = "/phd/thesis/academicAdminOffice/submitThesis.jsp"),
-
-@Forward(name = "requestJuryReviews", path = "/phd/thesis/academicAdminOffice/requestJuryReviews.jsp"),
-
-@Forward(name = "remindJuryReviews", path = "/phd/thesis/academicAdminOffice/remindJuryReviews.jsp"),
-
-@Forward(name = "addPresidentJuryElement", path = "/phd/thesis/academicAdminOffice/addPresidentJuryElement.jsp"),
-
-@Forward(name = "manageThesisDocuments", path = "/phd/thesis/academicAdminOffice/manageThesisDocuments.jsp"),
-
-@Forward(name = "scheduleThesisDiscussion", path = "/phd/thesis/academicAdminOffice/scheduleThesisDiscussion.jsp"),
-
-@Forward(name = "ratifyFinalThesis", path = "/phd/thesis/academicAdminOffice/ratifyFinalThesis.jsp"),
-
-@Forward(name = "setFinalGrade", path = "/phd/thesis/academicAdminOffice/setFinalGrade.jsp"),
-
-@Forward(name = "rejectJuryElementsDocuments", path = "/phd/thesis/academicAdminOffice/rejectJuryElementsDocuments.jsp"),
-
-@Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp"),
-
-@Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/academicAdminOffice/juryReporterFeedbackUpload.jsp"),
-
-@Forward(name = "replaceDocument", path = "/phd/thesis/academicAdminOffice/replaceDocument.jsp"),
-
-@Forward(name = "manageStates", path = "/phd/thesis/academicAdminOffice/manageStates.jsp"),
-
-@Forward(name = "editPhdThesisProcessInformation", path = "/phd/thesis/academicAdminOffice/editPhdThesisProcessInformation.jsp"),
-
-@Forward(name = "listConclusionProcess", path = "/phd/thesis/academicAdminOffice/conclusion/listConclusionProcess.jsp"),
-
-@Forward(name = "createConclusionProcess", path = "/phd/thesis/academicAdminOffice/conclusion/createConclusionProcess.jsp"),
-
-@Forward(name = "editPhdProcessState", path = "/phd/thesis/academicAdminOffice/editState.jsp"),
-
-@Forward(name = "viewLogs", path = "/phd/thesis/academicAdminOffice/logs/viewLogs.jsp")
-
-})
+        @Forward(name = "requestJuryElements", path = "/phd/thesis/academicAdminOffice/requestJuryElements.jsp"),
+        @Forward(name = "submitJuryElementsDocument", path = "/phd/thesis/academicAdminOffice/submitJuryElementsDocument.jsp"),
+        @Forward(name = "manageThesisJuryElements", path = "/phd/thesis/academicAdminOffice/manageThesisJuryElements.jsp"),
+        @Forward(name = "rejectJuryElements", path = "/phd/thesis/academicAdminOffice/rejectJuryElements.jsp"),
+        @Forward(name = "addJuryElement", path = "/phd/thesis/academicAdminOffice/addJuryElement.jsp"),
+        @Forward(name = "editJuryElement", path = "/phd/thesis/academicAdminOffice/editJuryElement.jsp"),
+        @Forward(name = "validateJury", path = "/phd/thesis/academicAdminOffice/validateJury.jsp"),
+        @Forward(name = "submitThesis", path = "/phd/thesis/academicAdminOffice/submitThesis.jsp"),
+        @Forward(name = "requestJuryReviews", path = "/phd/thesis/academicAdminOffice/requestJuryReviews.jsp"),
+        @Forward(name = "remindJuryReviews", path = "/phd/thesis/academicAdminOffice/remindJuryReviews.jsp"),
+        @Forward(name = "addPresidentJuryElement", path = "/phd/thesis/academicAdminOffice/addPresidentJuryElement.jsp"),
+        @Forward(name = "manageThesisDocuments", path = "/phd/thesis/academicAdminOffice/manageThesisDocuments.jsp"),
+        @Forward(name = "scheduleThesisDiscussion", path = "/phd/thesis/academicAdminOffice/scheduleThesisDiscussion.jsp"),
+        @Forward(name = "ratifyFinalThesis", path = "/phd/thesis/academicAdminOffice/ratifyFinalThesis.jsp"),
+        @Forward(name = "setFinalGrade", path = "/phd/thesis/academicAdminOffice/setFinalGrade.jsp"),
+        @Forward(name = "rejectJuryElementsDocuments", path = "/phd/thesis/academicAdminOffice/rejectJuryElementsDocuments.jsp"),
+        @Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp"),
+        @Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/academicAdminOffice/juryReporterFeedbackUpload.jsp"),
+        @Forward(name = "replaceDocument", path = "/phd/thesis/academicAdminOffice/replaceDocument.jsp"),
+        @Forward(name = "manageStates", path = "/phd/thesis/academicAdminOffice/manageStates.jsp"),
+        @Forward(name = "editPhdThesisProcessInformation",
+                path = "/phd/thesis/academicAdminOffice/editPhdThesisProcessInformation.jsp"),
+        @Forward(name = "listConclusionProcess", path = "/phd/thesis/academicAdminOffice/conclusion/listConclusionProcess.jsp"),
+        @Forward(name = "createConclusionProcess",
+                path = "/phd/thesis/academicAdminOffice/conclusion/createConclusionProcess.jsp"),
+        @Forward(name = "editPhdProcessState", path = "/phd/thesis/academicAdminOffice/editState.jsp"),
+        @Forward(name = "viewLogs", path = "/phd/thesis/academicAdminOffice/logs/viewLogs.jsp") })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // Begin thesis jury elements management

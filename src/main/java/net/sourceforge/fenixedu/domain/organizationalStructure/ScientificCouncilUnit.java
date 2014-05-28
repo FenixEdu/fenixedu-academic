@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Collection;
@@ -7,14 +25,14 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.ScientificCouncilSite;
+import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -35,15 +53,15 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     }
 
     @Override
-    protected List<IGroup> getDefaultGroups() {
-        List<IGroup> groups = super.getDefaultGroups();
+    protected List<Group> getDefaultGroups() {
+        List<Group> groups = super.getDefaultGroups();
 
-        groups.add(new ScientificCouncilMembersGroup());
-        groups.add(new WebSiteManagersGroup(getSite()));
+        groups.add(RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL));
+        groups.add(ManagersOfUnitSiteGroup.get(getSite()));
 
         Function function = getCoordinationCommitteeMembersFunction();
         if (function != null) {
-            groups.add(new PersonsInFunctionGroup(function));
+            groups.add(PersonsInFunctionGroup.get(function));
         }
 
         return groups;
@@ -97,7 +115,7 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     public static ScientificCouncilUnit createScientificCouncilUnit(MultiLanguageString name, String unitNameCard,
             Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces, Campus campus) {
+            Boolean canBeResponsibleOfSpaces, Space campus) {
         ScientificCouncilUnit scu = new ScientificCouncilUnit();
         scu.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
                 canBeResponsibleOfSpaces, campus);

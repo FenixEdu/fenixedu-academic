@@ -1,7 +1,27 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
+
+import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
@@ -14,6 +34,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
@@ -44,9 +65,7 @@ public class InquiryDelegateCoursesResumeRenderer extends InquiryBlocksResumeRen
         String resultsParameters = buildParametersForResults(courseResumeResult);
 
         HtmlLink link = new HtmlLink();
-        link.setUrl("/delegateInquiry.do?" + resultsParameters + "&method=viewCourseInquiryResults&"
-                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                + "=/delegado/delegado");
+        link.setUrl("/delegateInquiry.do?" + resultsParameters + "&method=viewCourseInquiryResults");
         link.setEscapeAmpersand(false);
 
         HtmlMenu menu = new HtmlMenu();
@@ -55,27 +74,24 @@ public class InquiryDelegateCoursesResumeRenderer extends InquiryBlocksResumeRen
         HtmlMenuOption optionEmpty = menu.createOption("-- Ver resultados --");
         HtmlMenuOption optionUC = menu.createOption("Resultados UC");
         String calculatedUrl = link.calculateUrl();
-        optionUC.setValue(calculatedUrl
-                + "&_request_checksum_="
-                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                        .calculateChecksum(calculatedUrl));
+
+        HttpSession session = getContext().getViewState().getRequest().getSession();
+
+        optionUC.setValue(calculatedUrl + "&_request_checksum_="
+                + GenericChecksumRewriter.calculateChecksum(calculatedUrl, session));
 
         for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : courseResumeResult.getTeachersResults()) {
             String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
             HtmlLink teacherLink = new HtmlLink();
             teacherLink.setEscapeAmpersand(false);
-            teacherLink.setUrl("/delegateInquiry.do?" + teacherResultsParameters + "&method=viewTeacherShiftTypeInquiryResults&"
-                    + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                    + "=/delegado/delegado");
+            teacherLink.setUrl("/delegateInquiry.do?" + teacherResultsParameters + "&method=viewTeacherShiftTypeInquiryResults");
             calculatedUrl = teacherLink.calculateUrl();
 
             HtmlMenuOption optionTeacher =
                     menu.createOption(teacherShiftTypeResultsBean.getShiftType().getFullNameTipoAula() + " - "
                             + teacherShiftTypeResultsBean.getProfessorship().getPerson().getName());
-            optionTeacher.setValue(calculatedUrl
-                    + "&_request_checksum_="
-                    + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                            .calculateChecksum(calculatedUrl));
+            optionTeacher.setValue(calculatedUrl + "&_request_checksum_="
+                    + GenericChecksumRewriter.calculateChecksum(calculatedUrl, session));
         }
 
         container.addChild(menu);

@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -9,7 +29,6 @@
 
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.student.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.student.enrolments" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -79,7 +98,7 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cuj
 </p>
 
 <p class="mtop05">
-<strong>10.</strong> Quando terminar o processo de inscrição deve efectuar a reserva de turmas em  <a href="<%="/student/studentShiftEnrollmentManager.do?method=prepare&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/student")%>" title="Reserva de Turmas">Turmas</a>
+<strong>10.</strong> Quando terminar o processo de inscrição deve efectuar a reserva de turmas em  <a href="/student/studentShiftEnrollmentManager.do?method=prepare" title="Reserva de Turmas">Turmas</a>
 </p>
 
 </div>

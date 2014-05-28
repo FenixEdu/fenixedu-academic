@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.space;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -10,27 +28,30 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
+import com.google.common.collect.Lists;
+
 public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation_Base {
 
-    public LessonInstanceSpaceOccupation(AllocatableSpace allocatableSpace) {
+    public LessonInstanceSpaceOccupation(Space allocatableSpace) {
 //        check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck);
 
         super();
 
-        ResourceAllocation allocation =
-                allocatableSpace.getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
+        Occupation allocation =
+                SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(allocatableSpace, LessonInstanceSpaceOccupation.class);
         if (allocation != null) {
             throw new DomainException("error.LessonInstanceSpaceOccupation.occupation.for.this.space.already.exists");
         }
@@ -45,16 +66,17 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
             removeLessonInstances(lessonInstance);
         }
 
-        AllocatableSpace space = (AllocatableSpace) getResource();
+        Space space = getSpace();
         //final ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
         if (/*!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(),
                 lessonInstance.getEndDateTime())
                 &&*//*!space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(),
                     lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)*/
-        !space.isFree(new Interval[] { new Interval(lessonInstance.getBeginDateTime(), lessonInstance.getEndDateTime()) })) {
+        !space.isFree(Lists.newArrayList(new Interval[] { new Interval(lessonInstance.getBeginDateTime(), lessonInstance
+                .getEndDateTime()) }))) {
 
-            throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getIdentification(),
-                    lessonInstance.getDay().toString("dd-MM-yy"));
+            throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getName(), lessonInstance
+                    .getDay().toString("dd-MM-yy"));
         }
 
         addLessonInstances(lessonInstance);
@@ -70,11 +92,6 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
     private boolean canBeDeleted() {
         return !hasAnyLessonInstances();
-    }
-
-    @Override
-    public boolean isLessonInstanceSpaceOccupation() {
-        return true;
     }
 
     @Override

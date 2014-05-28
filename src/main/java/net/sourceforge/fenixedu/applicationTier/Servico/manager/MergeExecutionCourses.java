@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 29/Nov/2003
  *  
@@ -5,7 +23,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,24 +43,20 @@ import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.LessonInstance;
+import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
-import net.sourceforge.fenixedu.domain.contents.Node;
-import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
@@ -56,10 +69,12 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UnionGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -184,10 +199,9 @@ public class MergeExecutionCourses {
             executionCourseAnnouncementBoardTo.addBookmarkOwner(bookmarkOwner);
         }
 
-        for (final Announcement announcement : executionCourseAnnouncementBoardFrom.getAnnouncements()) {
-            executionCourseAnnouncementBoardTo.addAnnouncements(announcement);
+        for (final Announcement announcement : executionCourseAnnouncementBoardFrom.getAnnouncementSet()) {
+            executionCourseAnnouncementBoardTo.addAnnouncement(announcement);
         }
-        executionCourseAnnouncementBoardTo.getChildrenSet().addAll(executionCourseAnnouncementBoardFrom.getChildrenSet());
 
         executionCourseAnnouncementBoardFrom.delete();
     }
@@ -295,8 +309,7 @@ public class MergeExecutionCourses {
 
     private void copyAttends(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
-        while (!executionCourseFrom.getAttends().isEmpty()) {
-            final Attends attends = executionCourseFrom.getAttends().iterator().next();
+        for (Attends attends : executionCourseFrom.getAttendsSet()) {
             final Attends otherAttends = executionCourseTo.getAttendsByStudent(attends.getRegistration());
             if (otherAttends == null) {
                 attends.setDisciplinaExecucao(executionCourseTo);
@@ -309,13 +322,11 @@ public class MergeExecutionCourses {
                     throw new FenixServiceException("Unable to merge execution courses. Registration "
                             + attends.getRegistration().getNumber() + " has an enrolment in both.");
                 }
-                for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks()
-                        .iterator().next())) {
-                    ;
+                for (Mark mark : attends.getAssociatedMarksSet()) {
+                    otherAttends.addAssociatedMarks(mark);
                 }
-                for (; !attends.getAllStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getAllStudentGroups()
-                        .iterator().next())) {
-                    ;
+                for (StudentGroup group : attends.getAllStudentGroups()) {
+                    otherAttends.addStudentGroups(group);
                 }
                 attends.delete();
             }
@@ -348,67 +359,50 @@ public class MergeExecutionCourses {
         final Site siteTo = executionCourseTo.getSite();
 
         if (siteFrom != null) {
-            copyContents(executionCourseTo, siteTo, siteFrom.getOrderedDirectChildren());
+            copyContents(executionCourseTo, siteTo, siteFrom);
             siteFrom.delete();
         }
     }
 
-    private void copyContents(final ExecutionCourse executionCourseTo, final Container parentTo, final Collection<Node> nodes) {
-        final Set<Content> transferedContents = new HashSet<Content>();
+    private void copyContents(final ExecutionCourse executionCourseTo, final Site siteTo, Site siteFrom) {
+        final Set<CmsContent> transferedContents = new HashSet<>();
 
-        for (final Node node : nodes) {
-            final Content content = node.getChild();
-            final ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(parentTo, content);
-            if (node instanceof ExplicitOrderNode) {
-                explicitOrderNode.setNodeOrder(((ExplicitOrderNode) node).getNodeOrder());
-            }
-            explicitOrderNode.setVisible(node.getVisible());
-            node.delete();
-
-            changeGroups(executionCourseTo, content, transferedContents);
+        for (final Section section : siteFrom.getAssociatedSectionSet()) {
+            section.setSite(siteTo);
+            changeGroups(executionCourseTo, section, transferedContents);
         }
 
         if (transferedContents.size() > 0) {
             final Set<String> bccs = createListOfEmailAddresses(executionCourseTo);
             final StringBuilder message = new StringBuilder();
-            message.append(BundleUtil
-                    .getStringFromResourceBundle("resources.GlobalResources", "mergeExecutionCourses.email.body"));
+            message.append(BundleUtil.getString("resources.GlobalResources", "mergeExecutionCourses.email.body"));
 
-            for (final Content content : transferedContents) {
+            for (final CmsContent content : transferedContents) {
                 message.append("\n\t");
                 message.append(content.getName());
             }
 
-            message.append(BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
-                    "mergeExecutionCourses.email.greetings"));
+            message.append(BundleUtil.getString("resources.GlobalResources", "mergeExecutionCourses.email.greetings"));
             SystemSender systemSender = Bennu.getInstance().getSystemSender();
-            new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST,
-                    BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExecutionCourses.email.subject",
-                            new String[] { executionCourseTo.getNome() }), message.toString(), bccs);
+            new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, BundleUtil.getString(
+                    "resources.GlobalResources", "mergeExecutionCourses.email.subject",
+                    new String[] { executionCourseTo.getNome() }), message.toString(), bccs);
         }
     }
 
-    private void changeGroups(final ExecutionCourse executionCourseTo, final Content content,
-            final Set<Content> transferedContents) {
-        if (content.getAvailabilityPolicy() != null) {
-            content.getAvailabilityPolicy().delete();
-            final Group group = createExecutionCourseResponsibleTeachersGroup(executionCourseTo);
-            if (group != null) {
-                new GroupAvailability(content, group);
-            }
-            transferedContents.add(content);
-        }
-        if (content.isContainer()) {
-            final Container container = (Container) content;
-            for (final Node node : container.getOrderedDirectChildren()) {
-                changeGroups(executionCourseTo, node.getChild(), transferedContents);
+    private void changeGroups(final ExecutionCourse executionCourseTo, final CmsContent content,
+            final Set<CmsContent> transferedContents) {
+        content.setPermittedGroup(createExecutionCourseResponsibleTeachersGroup(executionCourseTo));
+        transferedContents.add(content);
+        if (content instanceof Section) {
+            final Section container = (Section) content;
+            for (final CmsContent node : container.getChildSet()) {
+                changeGroups(executionCourseTo, node, transferedContents);
             }
         }
-        if (content instanceof Attachment) {
-            Attachment attachment = (Attachment) content;
 
-            FileContent file = attachment.getFile();
-            if (file.getPermittedGroup() != null && !file.getPermittedGroup().isMember(null)) {
+        for (FileContent file : content.getFileContentSet()) {
+            if (file.isPrivate()) {
                 file.setPermittedGroup(createExecutionCourseResponsibleTeachersGroup(executionCourseTo));
             }
         }
@@ -423,13 +417,13 @@ public class MergeExecutionCourses {
     }
 
     private Group createExecutionCourseResponsibleTeachersGroup(final ExecutionCourse executionCourseTo) {
-        final Set<IGroup> groups = new HashSet<IGroup>();
+        final Set<Group> groups = new HashSet<Group>();
         for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
             if (professorship.isResponsibleFor()) {
-                groups.add(new PersonGroup(professorship.getPerson()));
+                groups.add(UserGroup.of(professorship.getPerson().getUser()));
             }
         }
-        return groups.isEmpty() ? null : new GroupUnion(groups);
+        return groups.isEmpty() ? null : UnionGroup.of(groups);
     }
 
     private void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
@@ -476,22 +470,17 @@ public class MergeExecutionCourses {
     private void copyForuns(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
 
-        if (!executionCourseTo.hasSite()) {
-            throw new FenixServiceException("Unable to copy forums, destination doesn't have site");
-        }
-
         while (!executionCourseFrom.getForuns().isEmpty()) {
             ExecutionCourseForum sourceForum = executionCourseFrom.getForuns().iterator().next();
             MultiLanguageString forumName = sourceForum.getName();
 
             ExecutionCourseForum targetForum = executionCourseTo.getForumByName(forumName);
             if (targetForum == null) {
-                Node childNode = executionCourseFrom.getSite().getChildNode(sourceForum);
-                childNode.setParent(executionCourseTo.getSite());
+                sourceForum.setExecutionCourse(executionCourseTo);
             } else {
                 copyForumSubscriptions(sourceForum, targetForum);
                 copyThreads(sourceForum, targetForum);
-                executionCourseFrom.getSite().removeForum(sourceForum);
+                executionCourseFrom.removeForum(sourceForum);
                 sourceForum.delete();
             }
 
@@ -500,8 +489,8 @@ public class MergeExecutionCourses {
 
     private void copyForumSubscriptions(ExecutionCourseForum sourceForum, ExecutionCourseForum targetForum) {
 
-        while (!sourceForum.getForumSubscriptions().isEmpty()) {
-            ForumSubscription sourceForumSubscription = sourceForum.getForumSubscriptions().iterator().next();
+        while (!sourceForum.getForumSubscriptionsSet().isEmpty()) {
+            ForumSubscription sourceForumSubscription = sourceForum.getForumSubscriptionsSet().iterator().next();
             Person sourceForumSubscriber = sourceForumSubscription.getPerson();
             ForumSubscription targetForumSubscription = targetForum.getPersonSubscription(sourceForumSubscriber);
 
@@ -524,18 +513,18 @@ public class MergeExecutionCourses {
 
     private void copyThreads(ExecutionCourseForum sourceForum, ExecutionCourseForum targetForum) {
 
-        while (!sourceForum.getConversationThreads().isEmpty()) {
-            ConversationThread sourceConversationThread = sourceForum.getConversationThreads().iterator().next();
+        while (!sourceForum.getConversationThreadSet().isEmpty()) {
+            ConversationThread sourceConversationThread = sourceForum.getConversationThreadSet().iterator().next();
 
             if (!targetForum.hasConversationThreadWithSubject(sourceConversationThread.getTitle())) {
                 sourceConversationThread.setForum(targetForum);
             } else {
                 ConversationThread targetConversionThread =
                         targetForum.getConversationThreadBySubject(sourceConversationThread.getTitle());
-                for (Node child : sourceConversationThread.getChildren()) {
-                    child.setParent(targetConversionThread);
+                for (ConversationMessage message : sourceConversationThread.getMessageSet()) {
+                    message.setConversationThread(targetConversionThread);
                 }
-                sourceForum.removeConversationThreads(sourceConversationThread);
+                sourceForum.removeConversationThread(sourceConversationThread);
                 sourceConversationThread.delete();
             }
         }

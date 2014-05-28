@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests;
 
 import java.util.Locale;
@@ -30,7 +48,7 @@ import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffi
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
         IRectorateSubmissionBatchDocumentEntry {
@@ -174,7 +192,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public String getPrevailingScientificArea(final Locale locale) {
-        return getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(Language.valueOf(locale.getLanguage()));
+        return getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(locale);
     }
 
     @Override

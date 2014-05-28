@@ -1,22 +1,36 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.ScientificCouncilOrStudentThesisAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 
-import org.apache.commons.io.FileUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateThesisDissertationFile extends CreateThesisFile {
 
@@ -33,8 +47,8 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
     }
 
     @Override
-    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
-            String fileName, File fileToUpload) throws FenixServiceException, IOException {
+    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Locale language, String fileName,
+            byte[] bytes) throws FenixServiceException, IOException {
         if (title == null) {
             throw new DomainException("thesis.files.dissertation.title.required");
         }
@@ -44,22 +58,6 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
         file.setLanguage(language);
 
         thesis.setDissertation(file);
-
-        final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
-        if (publication != null) {
-            final ResearchResultDocumentFile researchResultDocumentFile =
-                    publication.getResultDocumentFilesSet().iterator().next();
-
-            final FileResultPermittedGroupType permittedGroupType = researchResultDocumentFile.getFileResultPermittedGroupType();
-
-            researchResultDocumentFile.delete();
-
-            byte[] content = FileUtils.readFileToByteArray(fileToUpload);
-
-            publication.addDocumentFile(content, fileName, file.getDisplayName(), permittedGroupType);
-            publication.setThesis(thesis);
-
-        }
     }
 
     // Service Invokers migrated from Berserk
@@ -67,10 +65,10 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
     private static final CreateThesisDissertationFile serviceInstance = new CreateThesisDissertationFile();
 
     @Atomic
-    public static ThesisFile runCreateThesisDissertationFile(Thesis thesis, File fileToUpload, String fileName, String title,
-            String subTitle, Language language) throws FenixServiceException, IOException {
+    public static ThesisFile runCreateThesisDissertationFile(Thesis thesis, byte[] bytes, String fileName, String title,
+            String subTitle, Locale language) throws FenixServiceException, IOException {
         ScientificCouncilOrStudentThesisAuthorizationFilter.instance.execute(thesis);
-        return serviceInstance.run(thesis, fileToUpload, fileName, title, subTitle, language);
+        return serviceInstance.run(thesis, bytes, fileName, title, subTitle, language);
     }
 
 }

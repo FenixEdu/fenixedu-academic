@@ -1,6 +1,23 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -22,37 +39,39 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentSubmitApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.util.FileUtils;
+
+import com.google.common.io.ByteStreams;
 
 /**
  * 
  * @author naat
  * 
  */
-@Mapping(module = "student", path = "/projectSubmission", scope = "request", parameter = "method")
+@StrutsFunctionality(app = StudentSubmitApp.class, path = "projects", titleKey = "projects")
+@Mapping(module = "student", path = "/projectSubmission")
 @Forwards(value = {
-        @Forward(name = "viewProjectSubmissions", path = "/student/projectSubmissions/viewProjectSubmissions.jsp",
-                tileProperties = @Tile(title = "private.student.submit.projects")),
+        @Forward(name = "viewProjectSubmissions", path = "/student/projectSubmissions/viewProjectSubmissions.jsp"),
         @Forward(name = "viewProjectsWithOnlineSubmission",
-                path = "/student/projectSubmissions/viewProjectsWithOnlineSubmission.jsp", tileProperties = @Tile(
-                        title = "private.student.submit.projects")),
-        @Forward(name = "submitProject", path = "/student/projectSubmissions/submitProject.jsp", tileProperties = @Tile(
-                title = "private.student.submit.projects")) })
+                path = "/student/projectSubmissions/viewProjectsWithOnlineSubmission.jsp"),
+        @Forward(name = "submitProject", path = "/student/projectSubmissions/submitProject.jsp") })
 public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward viewProjectsWithOnlineSubmission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
@@ -150,24 +169,17 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
         final CreateProjectSubmissionBean createProjectSubmissionBean =
                 (CreateProjectSubmissionBean) viewState.getMetaObject().getObject();
 
-        InputStream is = createProjectSubmissionBean.getInputStream();
-        File file = null;
-        try {
-            file = FileUtils.copyToTemporaryFile(is);
-            CreateProjectSubmission.run(file, createProjectSubmissionBean.getFilename(),
-                    createProjectSubmissionBean.getAttends(), createProjectSubmissionBean.getProject(),
-                    createProjectSubmissionBean.getStudentGroup(), createProjectSubmissionBean.getPerson());
+        try (InputStream is = createProjectSubmissionBean.getInputStream()) {
+            byte[] bytes = ByteStreams.toByteArray(is);
+            try {
+                CreateProjectSubmission.run(bytes, createProjectSubmissionBean.getFilename(),
+                        createProjectSubmissionBean.getAttends(), createProjectSubmissionBean.getProject(),
+                        createProjectSubmissionBean.getStudentGroup(), createProjectSubmissionBean.getPerson());
 
-        } catch (DomainException ex) {
-            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
+            } catch (DomainException ex) {
+                saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
 
-            return prepareProjectSubmission(mapping, form, request, response);
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-            if (file != null) {
-                file.delete();
+                return prepareProjectSubmission(mapping, form, request, response);
             }
         }
 

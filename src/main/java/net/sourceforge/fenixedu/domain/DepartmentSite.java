@@ -1,16 +1,34 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesGroup;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DepartmentSite extends DepartmentSite_Base {
@@ -34,16 +52,15 @@ public class DepartmentSite extends DepartmentSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new GroupUnion(new RoleGroup(Role.getRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)),
-                new FixedSetGroup(getManagers()));
+    public Group getOwner() {
+        return RoleGroup.get(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE).or(UserGroup.of(Person.convertToUsers(getManagers())));
     }
 
     @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> groups = super.getContextualPermissionGroups();
 
-        groups.add(new DepartmentEmployeesGroup(getDepartment()));
+        groups.add(UnitGroup.recursiveWorkers(getDepartment().getDepartmentUnit()));
 
         return groups;
     }
@@ -60,13 +77,12 @@ public class DepartmentSite extends DepartmentSite_Base {
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString().with(Language.pt, getUnit().getAcronym());
+        return new MultiLanguageString().with(MultiLanguageString.pt, getUnit().getAcronym());
     }
 
     @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
+    public String getReversePath() {
+        return super.getReversePath() + "/" + getUnit().getAcronym().toLowerCase();
     }
 
 }

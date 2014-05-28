@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 23/Set/2003
  *  
@@ -28,16 +46,12 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class CreateExercise {
 
-    protected Boolean run(String executionCourseId, String metadataId, String author, String description,
+    protected Boolean run(ExecutionCourse executionCourse, String metadataId, String author, String description,
             QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
             String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
             String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
-            Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path) throws FenixServiceException {
+            Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
-        if (executionCourse == null) {
-            throw new InvalidArgumentsServiceException();
-        }
         Metadata metadata = null;
         if (metadataId == null) {
             metadata =
@@ -68,7 +82,7 @@ public class CreateExercise {
         question.setMetadata(metadata);
         ParseSubQuestion parse = new ParseSubQuestion();
         try {
-            question = parse.parseSubQuestion(question, path);
+            question = parse.parseSubQuestion(question);
         } catch (Exception e) {
             throw new FenixServiceException(e);
         }
@@ -92,16 +106,16 @@ public class CreateExercise {
     private static final CreateExercise serviceInstance = new CreateExercise();
 
     @Atomic
-    public static Boolean runCreateExercise(String executionCourseId, String metadataId, String author, String description,
-            QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
-            String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
-            String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
-            Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
+    public static Boolean runCreateExercise(ExecutionCourse executionCourse, String metadataId, String author,
+            String description, QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject,
+            Calendar learningTime, String level, SubQuestion subQuestion, String questionText, String secondQuestionText,
+            String[] options, String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
+            Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox) throws FenixServiceException,
             NotAuthorizedException {
-        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, metadataId, author, description, questionDifficultyType, mainSubject,
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourse);
+        return serviceInstance.run(executionCourse, metadataId, author, description, questionDifficultyType, mainSubject,
                 secondarySubject, learningTime, level, subQuestion, questionText, secondQuestionText, options, correctOptions,
-                shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox, path);
+                shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox);
     }
 
 }

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils;
 
 public abstract class PresentationConstants {
@@ -129,8 +147,6 @@ public abstract class PresentationConstants {
     // -----
     public static final String INDEX = "index";
 
-    public static final String INFO_SITE = "info_site";
-
     public static final String EXECUTION_COURSE_CURRICULUM = "execution_course_curriculum";
 
     public static final String INFO_SITE_ANNOUNCEMENT = "info_site_announcement";
@@ -239,8 +255,6 @@ public abstract class PresentationConstants {
     public static final String MASTER_DEGREE_LIST = "master_degree_list";
 
     public static final String MASTER_DEGREE_CANDIDATES_AMMOUNT = "master_degree_candidates_ammount";
-
-    public static final String MASTER_DEGREE_CANDIDATE_AMMOUNT = "master_degree_candidate_ammount";
 
     public static final String DECLARATION_LIST = "declaration_list";
 
@@ -558,8 +572,6 @@ public abstract class PresentationConstants {
     public static final String ORIGINAL_MAPPING_KEY = "original_mapping_key";
 
     public static final String EXCEPTION_STACK_TRACE = "exception_stack_trace";
-
-    public static final String REQUEST_CONTEXT = "request_context";
 
     public static final String ACADEMIC_INTERVAL = "academicInterval";
 

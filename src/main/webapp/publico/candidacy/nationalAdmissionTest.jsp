@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -8,18 +28,18 @@
 <html:xhtml/>
 
 <div class="breadcumbs">
-	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>">Licenciaturas</a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>">Licenciaturas</a> &gt;
 	Concurso Nacional de Acesso
 </div>
 
 <div id="contextual_nav">
 <h2 class="brown">Nesta p&aacute;gina</h2>
 	<ul>
-    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#con">Ingresso pelo Concurso Nacional de Acesso</a></li>
-    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#rec">Recursos</a></li>
-		<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#doc">Documentos</a></li>
+    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#con">Ingresso pelo Concurso Nacional de Acesso</a></li>
+    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#rec">Recursos</a></li>
+		<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#doc">Documentos</a></li>
    </ul>
 </div>
 <h1>Candidato: Licenciatura (1º Ciclo)</h1>
@@ -226,7 +246,7 @@
 <h2 id="rec">Recursos</h2>
 <ul> 
 	<li><a href="http://nape.ist.utl.pt/acesso/notas.php">Vagas e notas m&iacute;nimas de seria&ccedil;&atilde;o dos &uacute;ltimos 5 anos lectivos</a></li> 
-	<li><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/campus/tagus/sat/">Servi&ccedil;os Administrativos do IST-Taguspark (SAT)</a></li> 
+	<li><a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>html/campus/tagus/sat/">Servi&ccedil;os Administrativos do IST-Taguspark (SAT)</a></li> 
 	<li><a href="http://guiatecnico.aeist.pt/">Guia do T&eacute;cnico </a> &nbsp;(Publica&ccedil;&atilde;o da responsabilidade da <a href="http://ae.ist.utl.pt/">Associa&ccedil;&atilde;o de Estudantes do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>) </li> 
 	<li><a href="http://guialisboa.aeist.pt/">Guia de Lisboa</a>&nbsp;(Publica&ccedil;&atilde;o da responsabilidade da <a href="http://ae.ist.utl.pt/">Associa&ccedil;&atilde;o de Estudantes do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>) </li> 
 
@@ -234,6 +254,6 @@
 </div>
 <h2 id="doc">Documentos</h2>
 <ul class="material">
-	<li class="pdf"><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/ensino/reg_1e2ciclo_20082009.pdf">Regulamento do 1º e 2º ciclo para 2008/2009</a> (PDF, 826KB)</li>
-	<li class="pdf"><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/ensino/propinas_20082009.pdf">Propinas do 1º e 2º ciclo para 2008/2009</a> (PDF, 28KB)</li>
+	<li class="pdf"><a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>files/ensino/reg_1e2ciclo_20082009.pdf">Regulamento do 1º e 2º ciclo para 2008/2009</a> (PDF, 826KB)</li>
+	<li class="pdf"><a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>files/ensino/propinas_20082009.pdf">Propinas do 1º e 2º ciclo para 2008/2009</a> (PDF, 28KB)</li>
 </ul>

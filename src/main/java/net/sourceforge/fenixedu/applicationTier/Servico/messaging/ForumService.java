@@ -1,4 +1,22 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
@@ -10,7 +28,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
@@ -21,6 +38,8 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
@@ -40,15 +59,15 @@ public abstract class ForumService {
     }
 
     private void notifyEmailSubscribers(ConversationMessage conversationMessage) {
-        final Set<Person> readers = conversationMessage.getConversationThread().getForum().getReadersGroup().getElements();
+        final Set<User> readers = conversationMessage.getConversationThread().getForum().getReadersGroup().getMembers();
         final Set<Person> teachers = new HashSet<Person>();
         final Set<Person> students = new HashSet<Person>();
         final Set<ForumSubscription> subscriptionsToRemove = new HashSet<ForumSubscription>();
 
         for (final ForumSubscription subscription : conversationMessage.getConversationThread().getForum()
-                .getForumSubscriptions()) {
+                .getForumSubscriptionsSet()) {
             Person subscriber = subscription.getPerson();
-            if (!readers.contains(subscriber)) {
+            if (!readers.contains(subscriber.getUser())) {
                 subscriptionsToRemove.add(subscription);
             }
 
@@ -98,7 +117,8 @@ public abstract class ForumService {
 
     private void sendEmailToPersons(Set<Person> persons, String personsName, String subject, String body) {
         if (!persons.isEmpty()) {
-            final Recipient recipient = new Recipient(GLOBAL_RESOURCES.getString("label.teachers"), new FixedSetGroup(persons));
+            final Recipient recipient =
+                    new Recipient(GLOBAL_RESOURCES.getString("label.teachers"), UserGroup.of(Person.convertToUsers(persons)));
             SystemSender systemSender = Bennu.getInstance().getSystemSender();
             new Message(systemSender, systemSender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
         }

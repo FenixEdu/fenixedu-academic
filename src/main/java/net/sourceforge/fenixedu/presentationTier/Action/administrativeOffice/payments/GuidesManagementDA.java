@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments;
 
 import java.io.IOException;
@@ -7,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.docs.accounting.GuideDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -20,9 +39,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/guides", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/guides", module = "academicAdministration", formBeanClass = FenixActionForm.class,
+        functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "showGuide", path = "/academicAdminOffice/payments/guides/showGuide.jsp"),
-        @Forward(name = "showEvents", path = "/payments.do?method=showEvents") })
+        @Forward(name = "showEvents", path = "/academicAdministration/payments.do?method=showEvents") })
 public class GuidesManagementDA extends PaymentsManagementDispatchAction {
 
     @Override

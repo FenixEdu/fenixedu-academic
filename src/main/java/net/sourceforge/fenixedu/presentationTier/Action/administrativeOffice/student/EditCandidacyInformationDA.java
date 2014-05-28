@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
 import java.io.Serializable;
@@ -19,19 +37,19 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/editCandidacyInformation", module = "academicAdministration")
+@Mapping(path = "/editCandidacyInformation", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "editCandidacyInformation",
                 path = "/academicAdminOffice/student/registration/editCandidacyInformation.jsp"),
-        @Forward(name = "visualizeStudent", path = "/student.do?method=visualizeStudent") })
+        @Forward(name = "visualizeStudent", path = "/academicAdministration/student.do?method=visualizeStudent") })
 public class EditCandidacyInformationDA extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -147,11 +165,10 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
             if (isRegistration()) {
                 return getRegistration().getDegreeCurricularPlanName();
             } else {
-                Locale locale = Language.getLocale();
+                Locale locale = I18N.getLocale();
                 ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
                 StringBuilder stringBuilder = new StringBuilder(bundle.getString("label.phd")).append(" ");
-                stringBuilder.append(getPhdIndividualProgramProcess().getPhdProgram().getName()
-                        .getContent(Language.valueOf(locale.getLanguage())));
+                stringBuilder.append(getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(locale));
                 return stringBuilder.toString();
             }
         }

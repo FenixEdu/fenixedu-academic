@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.IOException;
@@ -10,15 +28,10 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ProtectedItem;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.SimpleFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -57,9 +70,8 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         }
 
         User userView = prepareUserView(request);
-        FunctionalityContext context = prepareSectionContext(request);
 
-        if (item.isAvailable(context)) {
+        if (item.isAvailable()) {
             return mapping.findForward("site-item");
         } else {
             if (isAuthenticated(userView)) {
@@ -79,10 +91,9 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         }
 
         User userView = prepareUserView(request);
-        FunctionalityContext context = prepareSectionContext(request);
 
-        if (section.isAvailable(context)) {
-            prepareProtectedItems(request, userView, section.getOrderedItems(), context);
+        if (section.isAvailable()) {
+            prepareProtectedItems(request, userView, section.getChildrenItems());
             return mapping.findForward("site-section");
         } else {
             if (isAuthenticated(userView)) {
@@ -117,9 +128,8 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         }
     }
 
-    private void prepareProtectedItems(HttpServletRequest request, User userView, Collection<Item> items,
-            FunctionalityContext context) {
-        List<ProtectedItem> protectedItems = setupItems(request, context, items);
+    private void prepareProtectedItems(HttpServletRequest request, User userView, Collection<Item> items) {
+        List<ProtectedItem> protectedItems = setupItems(request, items);
 
         if (!isAuthenticated(userView) && hasRestrictedItems(protectedItems)) {
             request.setAttribute("hasRestrictedItems", true);
@@ -136,11 +146,11 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         return false;
     }
 
-    private List<ProtectedItem> setupItems(HttpServletRequest request, FunctionalityContext context, Collection<Item> items) {
+    private List<ProtectedItem> setupItems(HttpServletRequest request, Collection<Item> items) {
         List<ProtectedItem> protectedItems = new ArrayList<ProtectedItem>();
         for (Item item : items) {
             if (item.getVisible()) {
-                protectedItems.add(new ProtectedItem(context, item));
+                protectedItems.add(new ProtectedItem(item));
             }
         }
 
@@ -153,12 +163,6 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         request.setAttribute("logged", isAuthenticated(userView));
 
         return userView;
-    }
-
-    private FunctionalityContext prepareSectionContext(HttpServletRequest request) {
-        FunctionalityContext context = new SimpleFunctionalityContext(request);
-        request.setAttribute("context", context);
-        return context;
     }
 
     private boolean isAuthenticated(User userView) {
@@ -212,8 +216,8 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
             return null;
         }
 
-        final Content content = FenixFramework.getDomainObject(parameter);
-        return content instanceof Section ? (Section) content : null;
+        final Section content = FenixFramework.getDomainObject(parameter);
+        return content instanceof Section ? content : null;
     }
 
     protected void setSectionBreadCrumbs(HttpServletRequest request) {
@@ -240,10 +244,5 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
 
     protected String getDirectLinkContext(HttpServletRequest request) {
         return null;
-    }
-
-    protected ExecutionYearIntervalBean generateSearchBean() {
-        return new ExecutionYearIntervalBean(ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear(3),
-                ExecutionYear.readCurrentExecutionYear());
     }
 }

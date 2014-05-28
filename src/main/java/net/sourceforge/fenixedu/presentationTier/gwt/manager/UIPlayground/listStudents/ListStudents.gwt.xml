@@ -1,8 +1,0 @@
-<module rename-to='listStudents'>
-    <!-- Inherit the core Web Toolkit stuff. -->
-    <inherits name="com.google.gwt.user.User" />
-
-    <!-- Specify the app entry point class.  -->
-    <entry-point class="net.sourceforge.fenixedu.presentationTier.gwt.manager.UIPlayground.listStudents.client.ListStudents" />
-    
-</module>

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive;
 
 import java.util.ArrayList;
@@ -7,72 +25,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.ResourceRule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.Rule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.SimpleTransformRule;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "teacher", path = "/generateArchive", scope = "session", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "fallback", path = "manage-execution-course-instructions", tileProperties = @Tile(title = "bolacha")),
-        @Forward(name = "options", path = "execution-course-archive-options", tileProperties = @Tile(title = "bolacha2")) })
-public class GenerateSiteArchive extends FenixDispatchAction {
-
-    public ExecutionCourse getExecutionCourse(HttpServletRequest request) {
-        String parameter = request.getParameter("executionCourseID");
-
-        if (parameter == null) {
-            return null;
-        }
-
-        try {
-            return FenixFramework.getDomainObject(parameter);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        ExecutionCourse executionCourse = getExecutionCourse(request);
-        if (executionCourse != null) {
-            request.setAttribute("executionCourse", executionCourse);
-        }
-
-        return super.execute(mapping, actionForm, request, response);
-    }
+@Mapping(module = "teacher", path = "/generateArchive", functionality = ManageExecutionCourseDA.class)
+public class GenerateSiteArchive extends ExecutionCourseBaseAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("options", new ArchiveOptions());
-        return mapping.findForward("options");
+        return forward(request, "/teacher/executionCourse/archiveOptions.jsp");
     }
 
     public ActionForward generate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ExecutionCourse executionCourse = getExecutionCourse(request);
-        if (executionCourse == null) {
-            return mapping.findForward("fallback");
-        }
 
         ArchiveOptions options = getOptions(request);
         if (options == null) {
@@ -91,12 +70,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
 
         queueResources(request, executionCourse, options, fetcher);
 
-        List<Content> contents = new ArrayList<Content>();
-        contents.add(MetaDomainObjectPortal.getPortal(ExecutionCourseSite.class));
-        contents.add(executionCourse.getSite());
-        FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
-
-        fetcher.process(context);
+        fetcher.process();
         archive.finish();
 
         return null;
@@ -266,7 +240,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
             fetcher.queue(resource);
         }
 
-        for (Section section : executionCourse.getSite().getAssociatedSections()) {
+        for (Section section : executionCourse.getSite().getAssociatedSectionSet()) {
             addSectionToFetcher(executionCourse, options, fetcher, contextPath, globalRules, section);
         }
 
@@ -286,7 +260,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
             getFilesFromSection(fetcher, resource, section, globalRules, contextPath);
         }
 
-        for (Section subsection : section.getAssociatedSections()) {
+        for (Section subsection : section.getChildrenSections()) {
             addSectionToFetcher(executionCourse, options, fetcher, contextPath, globalRules, subsection);
         }
         fetcher.queue(resource);
@@ -294,9 +268,8 @@ public class GenerateSiteArchive extends FenixDispatchAction {
 
     private void getFilesFromSection(Fetcher fetcher, Resource sectionResource, Section section, List<Rule> globalRules,
             String contextPath) {
-        for (Item item : section.getChildren(Item.class)) {
-            for (Attachment att : item.getChildren(Attachment.class)) {
-                FileContent file = att.getFile();
+        for (Item item : section.getChildrenItems()) {
+            for (FileContent file : item.getFileContentSet()) {
                 sectionResource.addRule(new ResourceRule(file.getDownloadUrl(), "files/" + file.getFilename()));
                 sectionResource.addRule(new ResourceRule(file.getFileDownloadPrefix() + file.getExternalId(), "files/"
                         + file.getFilename()));
@@ -305,13 +278,12 @@ public class GenerateSiteArchive extends FenixDispatchAction {
             }
 
         }
-        for (Attachment att : section.getChildren(Attachment.class)) {
-            FileContent file = att.getFile();
-            sectionResource.addRule(new ResourceRule(contextPath + att.getReversePath(), "files/" + file.getFilename()));
+        for (FileContent file : section.getFileContentSet()) {
+            sectionResource
+                    .addRule(new ResourceRule(contextPath + "" /* att.getReversePath() */, "files/" + file.getFilename()));
             Resource fileResource = new Resource("files/" + file.getFilename(), file.getDownloadUrl());
             fetcher.queue(fileResource);
         }
-
     }
 
     private ArchiveOptions getOptions(HttpServletRequest request) {

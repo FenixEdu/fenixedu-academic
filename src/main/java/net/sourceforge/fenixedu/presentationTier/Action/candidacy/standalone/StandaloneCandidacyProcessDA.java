@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone;
 
 import java.io.IOException;
@@ -20,33 +38,35 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneCan
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
+@StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "standalone", titleKey = "label.candidacy.standalone",
+        accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))",
+        bundle = "ApplicationResources")
 @Mapping(path = "/caseHandlingStandaloneCandidacyProcess", module = "academicAdministration",
         formBeanClass = StandaloneCandidacyProcessDA.StandaloneCandidacyProcessForm.class)
-@Forwards({
-
-@Forward(name = "intro", path = "/candidacy/standalone/mainCandidacyProcess.jsp"),
+@Forwards({ @Forward(name = "intro", path = "/candidacy/standalone/mainCandidacyProcess.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
         @Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
         @Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
         @Forward(name = "view-candidacy-results", path = "/candidacy/standalone/viewCandidacyResults.jsp"),
         @Forward(name = "insert-candidacy-results", path = "/candidacy/standalone/introduceCandidacyResults.jsp"),
-        @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
-
-})
+        @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp") })
 public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class StandaloneCandidacyProcessForm extends CandidacyProcessForm {
@@ -233,7 +253,7 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private Spreadsheet createSpreadSheet() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         final Spreadsheet spreadsheet = new Spreadsheet("Candidacies");
 
         spreadsheet.setHeaders(new String[] {

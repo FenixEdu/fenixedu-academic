@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.backBeans.manager.degree;
 
 import java.util.ArrayList;
@@ -17,11 +35,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Data;
+
+import org.fenixedu.spaces.domain.Space;
+
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -246,7 +266,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 
     public List getAllCampus() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final Campus campus : Campus.getAllCampus()) {
+        for (final Space campus : Space.getAllCampus()) {
             result.add(new SelectItem(campus.getName(), campus.getName()));
         }
         return result;

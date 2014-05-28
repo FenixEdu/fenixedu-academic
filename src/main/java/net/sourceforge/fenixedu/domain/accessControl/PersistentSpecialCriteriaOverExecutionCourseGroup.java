@@ -1,13 +1,27 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+import java.util.function.Supplier;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-
-import org.fenixedu.bennu.core.annotation.CustomGroupArgument;
-
-import pt.ist.fenixframework.FenixFramework;
-
-import com.google.common.base.Strings;
-import com.google.common.collect.FluentIterable;
 
 public abstract class PersistentSpecialCriteriaOverExecutionCourseGroup extends
         PersistentSpecialCriteriaOverExecutionCourseGroup_Base {
@@ -19,39 +33,16 @@ public abstract class PersistentSpecialCriteriaOverExecutionCourseGroup extends
         setExecutionCourse(executionCourse);
     }
 
-    @CustomGroupArgument
-    public static Argument<ExecutionCourse> executionCourseArgument() {
-        return new SimpleArgument<ExecutionCourse, PersistentSpecialCriteriaOverExecutionCourseGroup>() {
-            @Override
-            public ExecutionCourse parse(String argument) {
-                return Strings.isNullOrEmpty(argument) ? null : FenixFramework.<ExecutionCourse> getDomainObject(argument);
-            }
-
-            @Override
-            public Class<? extends ExecutionCourse> getType() {
-                return ExecutionCourse.class;
-            }
-
-            @Override
-            public String extract(PersistentSpecialCriteriaOverExecutionCourseGroup group) {
-                return group.getExecutionCourse() != null ? group.getExecutionCourse().getExternalId() : "";
-            }
-        };
-    }
-
-    @Override
-    public String[] getPresentationNameKeyArgs() {
-        return new String[] { getExecutionCourse().getNome() };
-    }
-
     @Override
     protected void gc() {
         setExecutionCourse(null);
         super.gc();
     }
 
-    protected static <T extends PersistentSpecialCriteriaOverExecutionCourseGroup> T select(Class<T> type,
-            ExecutionCourse executionCourse) {
-        return FluentIterable.from(executionCourse.getSpecialCriteriaOverExecutionCourseGroupSet()).filter(type).first().orNull();
+    protected static <T extends PersistentSpecialCriteriaOverExecutionCourseGroup> T singleton(Class<T> type,
+            ExecutionCourse executionCourse, Supplier<T> creator) {
+        return singleton(
+                () -> (Optional<T>) executionCourse.getSpecialCriteriaOverExecutionCourseGroupSet().stream()
+                        .filter(group -> group.getClass() == type).findAny(), creator);
     }
 }

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha;
 
 import java.util.Collection;
@@ -18,6 +36,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.C
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -28,7 +47,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/specialSeasonBolonhaStudentEnrollment", module = "academicAdministration",
-        formBean = "bolonhaStudentEnrollmentForm")
+        formBean = "bolonhaStudentEnrollmentForm", functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showDegreeModulesToEnrol",
                 path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
@@ -68,7 +87,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
     }
 
     protected boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student, final ExecutionYear executionYear) {
-        for (final Event event : student.getPerson().getEvents()) {
+        for (final Event event : student.getPerson().getEventsSet()) {
 
             if (event instanceof AnnualEvent) {
                 final AnnualEvent annualEvent = (AnnualEvent) event;
@@ -86,9 +105,9 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
     }
 
     protected boolean hasAnyGratuityDebt(final Student student, final ExecutionYear executionYear) {
-        for (final Registration registration : student.getRegistrations()) {
+        for (final Registration registration : student.getRegistrationsSet()) {
             for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-                for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEvents()) {
+                for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEventsSet()) {
                     if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
                         return true;
                     }
@@ -131,7 +150,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
     }
 
     protected boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
-        Collection<StudentStatute> statutes = student.getStudentStatutes();
+        Collection<StudentStatute> statutes = student.getStudentStatutesSet();
         for (StudentStatute statute : statutes) {
             if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration)) {
                 continue;

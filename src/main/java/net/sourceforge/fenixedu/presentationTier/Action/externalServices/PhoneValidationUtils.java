@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
 import java.io.IOException;
@@ -14,10 +32,16 @@ import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.rest.Healthcheck;
+import org.fenixedu.bennu.core.rest.SystemResource;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.resource.factory.CallFactory;
@@ -26,9 +50,10 @@ import com.twilio.sdk.resource.instance.Account;
 public class PhoneValidationUtils {
     private static final Logger logger = LoggerFactory.getLogger(PhoneValidationUtils.class);
 
+    public final String HOST = CoreConfiguration.getConfiguration().applicationUrl();
+
     private String TWILIO_FROM_NUMBER;
     private TwilioRestClient TWILIO_CLIENT;
-    public String HOST;
     private String CIIST_SMS_GATEWAY_URL;
     private HttpClient CIIST_CLIENT;
 
@@ -56,35 +81,32 @@ public class PhoneValidationUtils {
         }
     }
 
-    private void initHostname() {
-        final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        final String httpPort = FenixConfigurationManager.getConfiguration().getHTTPPort();
-        final String httpProtocol = FenixConfigurationManager.getConfiguration().getHTTPProtocol();
-
-        if (StringUtils.isEmpty(httpPort)) {
-            HOST = String.format("%s://%s/", httpProtocol, appName);
-        } else {
-            HOST = String.format("%s://%s:%s/", httpProtocol, appName, httpPort);
-        }
-        if (!StringUtils.isEmpty(appContext)) {
-            HOST += appContext;
-        }
-        HOST = StringUtils.removeEnd(HOST, "/");
-    }
-
     private void initTwilio() {
         final String TWILIO_SID = FenixConfigurationManager.getConfiguration().getTwilioSid();
         final String TWILIO_STOKEN = FenixConfigurationManager.getConfiguration().getTwilioStoken();
+        final String URL = "/" + TwilioRestClient.DEFAULT_VERSION + "/Accounts/" + TWILIO_SID + ".json";
         TWILIO_FROM_NUMBER = FenixConfigurationManager.getConfiguration().getTwilioFromNumber();
         if (!StringUtils.isEmpty(TWILIO_SID) && !StringUtils.isEmpty(TWILIO_STOKEN) && !StringUtils.isEmpty(TWILIO_FROM_NUMBER)) {
             TWILIO_CLIENT = new TwilioRestClient(TWILIO_SID, TWILIO_STOKEN);
+            SystemResource.registerHealthcheck(new Healthcheck() {
+                private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+                @Override
+                public String getName() {
+                    return "Twilio";
+                }
+
+                @Override
+                protected Result check() throws Exception {
+                    JsonElement json = new JsonParser().parse(TWILIO_CLIENT.get(URL).getResponseText());
+                    return Result.healthy(gson.toJson(json));
+                }
+            });
         }
     }
 
     private PhoneValidationUtils() {
         initTwilio();
-        initHostname();
         initCIISTSMSGateway();
         if (canRun()) {
             logger.info("Twilio Initialized:\n\tfrom number {} \n\thost: {} \n", TWILIO_FROM_NUMBER, HOST);

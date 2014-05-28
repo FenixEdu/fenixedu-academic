@@ -1,3 +1,24 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
@@ -5,11 +26,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-
 <%@page import="net.sourceforge.fenixedu.domain.messaging.Announcement"%>
 
-<em>Gest�o de Canais</em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
 
 <bean:define id="contextPrefix" name="contextPrefix" />
@@ -30,7 +48,7 @@
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
 		</th>
 		<td>
-			<fr:edit id="announcement-subject-validated" name="announcement" slot="subject" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+			<fr:edit id="announcement-subject-validated" name="announcement" slot="subject" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 				<fr:layout>
 					<fr:property name="size" value="30"/>
 				</fr:layout>
@@ -46,7 +64,7 @@
 		</th>
 		<td>
 			<fr:edit id="announcement-body-validated" name="announcement" slot="body" layout="area" 
-					validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+					validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 				<fr:layout name="rich-text">
 					<fr:property name="safe" value="false" />
 			   		<fr:property name="columns" value="70"/>
@@ -270,7 +288,7 @@
 			<logic:present name="announcement" property="photoUrl">
 			<logic:notEmpty name="announcement" property="photoUrl">
 				<bean:define id="announcementPhotoUrl" name="announcement" property="photoUrl"/>
-				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= announcementPhotoUrl %>" />
+				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><img src="<%= announcementPhotoUrl %>" />
 			</logic:notEmpty>
 			<logic:empty name="announcement" property="photoUrl">
 				<img src="http://bogus/bogus.jpg"/>
@@ -297,7 +315,7 @@
 	</tr>
 
 
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="label.define.image" bundle="MESSAGING_RESOURCES"/>:
@@ -314,13 +332,13 @@
 				%>
 				
 				<div style="display: inline">
-					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %>
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %>
 					
 					<div class="announcement_gallery" onclick="<%= "document.getElementById('remove-paragraph').setAttribute('style', 'display:block'); document.getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value','" + downloadUrl + "'); document.getElementById('photo').childNodes[1].setAttribute('src', '" + downloadUrl + "'); new_image = new Image(); new_image.src='" + downloadUrl + "'; set_image_size(document.getElementById('photo').childNodes[1], new_image); "%>" style="border-style:none;">
 						<table>
 							<tr>
 							<td>
-								<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= downloadUrl %>" style="width:40px; height:30px"/>
+								<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><img src="<%= downloadUrl %>" style="width:40px; height:30px"/>
 							</td>
 							</tr>
 						</table>

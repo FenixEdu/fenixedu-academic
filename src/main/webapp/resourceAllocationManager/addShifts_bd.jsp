@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -7,15 +27,13 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 <%@ page import="java.util.List"%>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<jsp:include page="/commons/contextExecutionDegreeAndCurricularYear.jsp"/>
+
 <h2><bean:message key="link.manage.turnos"/></h2>
 
-
-<p class="mbottom05">O curso seleccionado &eacute;:</p>
-<strong><jsp:include page="context.jsp"/></strong>
-
-
 <h3>Adicionar Turnos</h3>
+
+<bean:define id="schoolClass" name="context.classView" />
 
 <logic:present name="<%= PresentationConstants.SHIFTS %>" scope="request">
 	<html:form action="/addShifts" focus="selectedItems">
@@ -29,7 +47,7 @@
 		<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
 					 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 		<html:hidden alt="<%= PresentationConstants.CLASS_VIEW_OID %>" property="<%= PresentationConstants.CLASS_VIEW_OID %>"
-					 value="<%= pageContext.findAttribute("classOID").toString() %>"/>
+					 value="${schoolClass.externalId}"/>
 
 	<table class="tstyle4 thlight tdcenter mtop05">
 		<tr>

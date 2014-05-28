@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 18:52:01,20/Out/2004
  *
@@ -12,10 +30,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
+
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * @author gedl@rnl.ist.utl.pt
@@ -42,12 +62,8 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
             final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-            if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
@@ -55,9 +71,9 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 
-            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
-                strBuffer.append(allocatableSpace.getNome());
+                strBuffer.append(allocatableSpace.getName());
             }
 
             return strBuffer;
@@ -68,12 +84,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
             final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-            if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(infoExecutionCourse.getExecutionCourse().getSite().getReversePath());
             strBuffer.append("\">");
@@ -92,12 +103,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             final ExecutionCourse executionCourse = aggregation.getShift().getExecutionCourse();
             final Site site = executionCourse.getSite();
 
-            if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
@@ -105,9 +111,9 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             strBuffer.append("&nbsp;").append("&nbsp;(").append(aggregation.getShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 
-            final AllocatableSpace allocatableSpace = aggregation.getAllocatableSpace();
+            final Space allocatableSpace = aggregation.getAllocatableSpace();
             if (allocatableSpace != null) {
-                strBuffer.append(allocatableSpace.getNome());
+                strBuffer.append(allocatableSpace.getName());
             }
 
             return strBuffer;

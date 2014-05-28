@@ -1,9 +1,35 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="coordinatorCompetenceCourses" attributeName="body-inline">
+<%
+	net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex.setCoordinatorContext(request);
+%>
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex" />
+<jsp:include page="/coordinator/context.jsp" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -30,7 +56,7 @@
 		<h:outputText value="<ul class='mtop0 mbottom3'>" escape="false"/>
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">			
 			<h:outputText value="<li>" escape="false"/>
-			<h:outputLink value="../degreeCurricularPlan/viewCurricularPlan.faces" target="_blank">
+			<h:outputLink value="#{CompetenceCourseManagement.request.contextPath}/coordinator/degreeCurricularPlan/viewCurricularPlan.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}" escape="false"/>
 				<f:param name="action" value="close"/>
 				<f:param name="organizeBy" value="groups"/>
@@ -39,7 +65,7 @@
 				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 			</h:outputLink>
 			<h:outputText value=" > "/>
-			<h:outputLink value="../degreeCurricularPlan/viewCurricularCourse.faces" target="_blank">
+			<h:outputLink value="#{CompetenceCourseManagement.request.contextPath}/coordinator/degreeCurricularPlan/viewCurricularCourse.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.name}" escape="false"/>
 				<f:param name="action" value="close"/>
 				<f:param name="curricularCourseID" value="#{curricularCourse.externalId}"/>
@@ -216,4 +242,4 @@
 			<h:commandButton alt="#{htmlAltBundle['commandButton.close']}" immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{bolonhaBundle['close']}" />
 		</h:panelGroup>
 	</h:form>
-</ft:tilesView>
+</f:view>

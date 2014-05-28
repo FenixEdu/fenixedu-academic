@@ -1,3 +1,24 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ page isELIgnored="true"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
@@ -10,7 +31,6 @@
 	<span class="error"><!-- Error messages go here --> <bean:write name="message" /> </span>
 </html:messages>
 
-<em><bean:message key="message.evaluationElements"  bundle="APPLICATION_RESOURCES" /></em>
 <h2><bean:message key="label.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.title" bundle="APPLICATION_RESOURCES"/></h2>
 
 <fr:view name="project" schema="evaluation.project.view-with-name-description-and-grouping">
@@ -75,7 +95,7 @@
 			<fr:property name="key(groupComment)" value="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.groupComment"/>
 			<fr:property name="visibleIfNot(groupComment)" value="project.submissionPeriodOpen"/>
 	    </fr:layout>
-		<fr:destination name="groupNumberLink" path="<%= "/viewStudentGroupInformation.do?method=viewDeletedStudentGroupInformation&amp;studentGroupId=${studentGroup.externalId}&amp;executionCourseID=" + executionCourseID + "&amp;projectOID=${project.externalId}"  %>"/>
+		<fr:destination name="groupNumberLink" path="<%= "/studentGroupManagement.do?method=viewDeletedStudentGroupInformation&amp;studentGroupId=${studentGroup.externalId}&amp;executionCourseID=" + executionCourseID + "&amp;projectOID=${project.externalId}"  %>"/>
 	</fr:view>
 
 </logic:notEmpty>

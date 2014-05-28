@@ -1,98 +1,38 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Optional;
 
-import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 
-import org.fenixedu.bennu.core.annotation.CustomGroupArgument;
-import org.fenixedu.bennu.core.annotation.CustomGroupOperator;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.groups.Group;
-import org.joda.time.DateTime;
+import org.fenixedu.bennu.core.groups.Group;
 
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-import pt.ist.fenixframework.FenixFramework;
-
-import com.google.common.base.Strings;
-
-@CustomGroupOperator("guidingsAndAssistants")
 public class PersistentGuidingsAndAssistantsOfPhdGroup extends PersistentGuidingsAndAssistantsOfPhdGroup_Base {
     protected PersistentGuidingsAndAssistantsOfPhdGroup(PhdIndividualProgramProcess phdIndividualProgramProcess) {
         super();
         setPhdIndividualProgramProcess(phdIndividualProgramProcess);
     }
 
-    @CustomGroupArgument
-    public static Argument<PhdIndividualProgramProcess> phdIndividualProgramProcessArgument() {
-        return new SimpleArgument<PhdIndividualProgramProcess, PersistentGuidingsAndAssistantsOfPhdGroup>() {
-            @Override
-            public PhdIndividualProgramProcess parse(String argument) {
-                return Strings.isNullOrEmpty(argument) ? null : FenixFramework
-                        .<PhdIndividualProgramProcess> getDomainObject(argument);
-            }
-
-            @Override
-            public Class<? extends PhdIndividualProgramProcess> getType() {
-                return PhdIndividualProgramProcess.class;
-            }
-
-            @Override
-            public String extract(PersistentGuidingsAndAssistantsOfPhdGroup group) {
-                return group.getPhdIndividualProgramProcess() != null ? group.getPhdIndividualProgramProcess().getExternalId() : "";
-            }
-        };
-    }
-
     @Override
-    public String[] getPresentationNameKeyArgs() {
-        return new String[] { getPhdIndividualProgramProcess().getProcessNumber() };
-    }
-
-    @Override
-    public Set<User> getMembers() {
-        Set<User> users = new HashSet<>();
-
-        for (PhdParticipant participant : getPhdIndividualProgramProcess().getGuidingsAndAssistantGuidings()) {
-            if (participant.isInternal()) {
-                User user = ((InternalPhdParticipant) participant).getPerson().getUser();
-                if (user != null) {
-                    users.add(user);
-                }
-            }
-        }
-        return users;
-    }
-
-    @Override
-    public Set<User> getMembers(DateTime when) {
-        return getMembers();
-    }
-
-    @Override
-    public boolean isMember(User user) {
-        if (user == null) {
-            return false;
-        }
-        for (InternalPhdParticipant participant : user.getPerson().getInternalParticipantsSet()) {
-            if (participant.getIndividualProcess().equals(getPhdIndividualProgramProcess())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean isMember(User user, DateTime when) {
-        return isMember(user);
-    }
-
-    public static Set<Group> groupsForUser(User user) {
-        return Collections.emptySet();
+    public Group toGroup() {
+        return GuidingsAndAssistantsOfPhdGroup.get(getPhdIndividualProgramProcess());
     }
 
     @Override
@@ -103,13 +43,7 @@ public class PersistentGuidingsAndAssistantsOfPhdGroup extends PersistentGuiding
 
     public static PersistentGuidingsAndAssistantsOfPhdGroup getInstance(
             final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-        PersistentGuidingsAndAssistantsOfPhdGroup instance = phdIndividualProgramProcess.getGuidingsAndAssistantsGroup();
-        return instance != null ? instance : create(phdIndividualProgramProcess);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentGuidingsAndAssistantsOfPhdGroup create(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-        PersistentGuidingsAndAssistantsOfPhdGroup instance = phdIndividualProgramProcess.getGuidingsAndAssistantsGroup();
-        return instance != null ? instance : new PersistentGuidingsAndAssistantsOfPhdGroup(phdIndividualProgramProcess);
+        return singleton(() -> Optional.ofNullable(phdIndividualProgramProcess.getGuidingsAndAssistantsGroup()),
+                () -> new PersistentGuidingsAndAssistantsOfPhdGroup(phdIndividualProgramProcess));
     }
 }

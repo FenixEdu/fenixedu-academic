@@ -1,28 +1,50 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.writtenEvaluations;
 
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.space.Room;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMEvaluationsApp;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
@@ -30,19 +52,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "resourceAllocationManager", path = "/searchWrittenEvaluationsByDate",
-        input = "/searchWrittenEvaluationsByDate.do?method=prepare&page=0", attribute = "examSearchByDateForm",
-        formBean = "examSearchByDateForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "show", path = "df.page.showWrittenEvaluationsByDate") })
-public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
+@StrutsFunctionality(app = RAMEvaluationsApp.class, path = "search-by-date", titleKey = "link.written.evaluations.search.by.date")
+@Mapping(module = "resourceAllocationManager", path = "/searchWrittenEvaluationsByDate", formBean = "examSearchByDateForm")
+@Forwards(@Forward(name = "show", path = "/resourceAllocationManager/writtenEvaluations/showWrittenEvaluationsByDate.jsp"))
+public class SearchWrittenEvaluationsByDate extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        final AcademicInterval academicInterval =
-                AcademicInterval.getAcademicIntervalFromResumedString((String) request
-                        .getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
-        DynaActionForm dynaActionForm = (DynaActionForm) form;
-        dynaActionForm.set(PresentationConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
         return mapping.findForward("show");
     }
 
@@ -113,10 +130,9 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
     public ActionForward search(ActionMapping mapping, HttpServletRequest request, final LocalDate day, final LocalTime begin,
             final LocalTime end, DynaActionForm dynaActionForm) throws Exception {
         Integer totalOfStudents = 0;
-        AcademicInterval academicInterval = getAcademicInterval(dynaActionForm, request);
         final Set<WrittenEvaluation> writtenEvaluations = new HashSet<WrittenEvaluation>();
-        for (final ExecutionCourse executionCourse : ExecutionCourse.filterByAcademicInterval(academicInterval)) {
-            for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+        for (final ExecutionCourse executionCourse : getExecutionCoursesActiveIn(day)) {
+            for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
                 if (evaluation instanceof WrittenEvaluation) {
                     final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
                     final LocalDate evaluationDate = writtenEvaluation.getDayDateYearMonthDay().toLocalDate();
@@ -131,15 +147,21 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
         }
         request.setAttribute("availableRoomIndicationMsg", BundleUtil.getStringFromResourceBundle(
                 "resources.ResourceAllocationManagerResources", "info.total.students.vs.available.seats",
-                totalOfStudents.toString(), Room.countAllAvailableSeatsForExams().toString()));
+                totalOfStudents.toString(), SpaceUtils.countAllAvailableSeatsForExams().toString()));
         request.setAttribute("writtenEvaluations", writtenEvaluations);
         return mapping.findForward("show");
     }
 
-    private AcademicInterval getAcademicInterval(DynaActionForm dynaActionForm, HttpServletRequest request)
-            throws FenixServiceException {
-        return AcademicInterval.getAcademicIntervalFromResumedString(dynaActionForm
-                .getString(PresentationConstants.ACADEMIC_INTERVAL));
+    private Collection<ExecutionCourse> getExecutionCoursesActiveIn(LocalDate day) {
+        DateTime date = day.toDateTimeAtStartOfDay();
+        Set<ExecutionCourse> courses = new HashSet<>();
+        for (ExecutionInterval interval : Bennu.getInstance().getExecutionIntervalsSet()) {
+            if (interval instanceof ExecutionSemester && interval.getAcademicInterval().contains(date)) {
+                ExecutionSemester semester = (ExecutionSemester) interval;
+                courses.addAll(semester.getAssociatedExecutionCoursesSet());
+            }
+        }
+        return courses;
     }
 
     private LocalDate getDate(final DynaActionForm dynaActionForm) throws ParseException {
@@ -159,10 +181,6 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 
     private LocalTime getTimeDateFromForm(final String hourString, final String minuteString) throws ParseException {
         return new LocalTime(Integer.parseInt(hourString), Integer.parseInt(minuteString), 0);
-    }
-
-    private boolean valid(final String integerString) {
-        return integerString != null && integerString.length() > 0 && StringUtils.isNumeric(integerString);
     }
 
 }

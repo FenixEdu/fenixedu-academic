@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on Feb 10, 2006
  *	by mrsp
@@ -11,13 +29,10 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
@@ -32,44 +47,13 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.Prize;
-import net.sourceforge.fenixedu.domain.research.ResearchInterest;
-import net.sourceforge.fenixedu.domain.research.ResearchInterest.ResearchInterestComparator;
-import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
-import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
-import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
-import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation;
-import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
-import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
-import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation;
-import net.sourceforge.fenixedu.domain.research.activity.Participation;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
-import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
-import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
-import net.sourceforge.fenixedu.domain.research.result.publication.Article;
-import net.sourceforge.fenixedu.domain.research.result.publication.Book;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
-import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
-import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
-import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
-import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
-import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class Party extends Party_Base implements Comparable<Party> {
@@ -464,7 +448,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyResourceResponsibility() && !hasAnyVehicleAllocations() && !hasAnyPayedReceipts();
+        return !hasAnyPayedReceipts();
     }
 
     public static Party readByContributorNumber(String contributorNumber) {
@@ -608,201 +592,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             }
         }
         return false;
-    }
-
-    private List<? extends Participation> filterParticipationsByYear(List<? extends Participation> participations,
-            ExecutionYear begin, ExecutionYear end) {
-        List<Participation> participationsForInterval = new ArrayList<Participation>();
-        for (Participation participation : participations) {
-            Integer year = participation.getCivilYear();
-            if (year == null || (begin == null || begin.isBeforeCivilYear(year) || begin.belongsToCivilYear(year))
-                    && (end == null || end.isAfterCivilYear(year) || end.belongsToCivilYear(year))) {
-                participationsForInterval.add(participation);
-            }
-        }
-        return participationsForInterval;
-    }
-
-    private List<? extends Participation> filterParticipationsByType(Class<? extends Participation> clazz, ScopeType scopeType) {
-        List<Participation> participations = new ArrayList<Participation>();
-        for (Participation participation : getParticipations()) {
-            if (participation.getClass().equals(clazz) && (scopeType == null || participation.scopeMatches(scopeType))) {
-                participations.add(participation);
-            }
-        }
-        return participations;
-    }
-
-    public List<EventEditionParticipation> getEventEditionParticipations(ScopeType type, ExecutionYear begin, ExecutionYear end) {
-        return (List<EventEditionParticipation>) filterParticipationsByYear(getEventEditionParticipations(type), begin, end);
-    }
-
-    public List<EventEditionParticipation> getEventEditionParticipations(ExecutionYear begin, ExecutionYear end) {
-        return (List<EventEditionParticipation>) filterParticipationsByYear(getEventEditionParticipations(), begin, end);
-    }
-
-    public List<EventEditionParticipation> getEventEditionParticipations(ScopeType type) {
-        return (List<EventEditionParticipation>) filterParticipationsByType(EventEditionParticipation.class, type);
-    }
-
-    public List<EventEditionParticipation> getEventEditionParticipations() {
-        return getEventEditionParticipations(null);
-    }
-
-    public List<EventParticipation> getEventParticipations(ScopeType type) {
-        return (List<EventParticipation>) filterParticipationsByType(EventParticipation.class, type);
-    }
-
-    public Set<EventEdition> getAssociatedEventEditions(ScopeType type, ExecutionYear begin, ExecutionYear end) {
-        Set<EventEdition> eventEditions = new HashSet<EventEdition>();
-        for (EventEditionParticipation participation : getEventEditionParticipations(type, begin, end)) {
-            eventEditions.add(participation.getEventEdition());
-        }
-        return eventEditions;
-    }
-
-    public Set<EventEdition> getAssociatedEventEditions(ExecutionYear begin, ExecutionYear end) {
-        return getAssociatedEventEditions(null, begin, end);
-    }
-
-    public Set<EventEdition> getAssociatedEventEditions() {
-        return getAssociatedEventEditions(null);
-    }
-
-    public Set<EventEdition> getAssociatedEventEditions(ScopeType type) {
-        return getAssociatedEventEditions(type, null, null);
-    }
-
-    public List<EventParticipation> getEventParticipations(ScopeType type, ExecutionYear begin, ExecutionYear end) {
-        return (List<EventParticipation>) filterParticipationsByYear(getEventParticipations(type), begin, end);
-    }
-
-    public List<EventParticipation> getEventParticipation(ExecutionYear begin, ExecutionYear end) {
-        return (List<EventParticipation>) filterParticipationsByYear(getEventParticipations(), begin, end);
-    }
-
-    public List<EventParticipation> getEventParticipations() {
-        return getEventParticipations(null);
-    }
-
-    public Set<ResearchEvent> getAssociatedEvents(ScopeType type, ExecutionYear begin, ExecutionYear end) {
-        Set<ResearchEvent> events = new HashSet<ResearchEvent>();
-        for (EventParticipation participation : getEventParticipations(type, begin, end)) {
-            events.add(participation.getEvent());
-        }
-        return events;
-    }
-
-    public Set<ResearchEvent> getAssociatedEvents(ExecutionYear begin, ExecutionYear end) {
-        return getAssociatedEvents(null, begin, end);
-    }
-
-    public Set<ResearchEvent> getAssociatedEvents(ScopeType type) {
-        return getAssociatedEvents(type, null, null);
-    }
-
-    public Set<ResearchEvent> getAssociatedEvents() {
-        return getAssociatedEvents(null);
-    }
-
-    public List<ScientificJournalParticipation> getScientificJournalParticipations(ScopeType type, ExecutionYear begin,
-            ExecutionYear end) {
-        return (List<ScientificJournalParticipation>) filterParticipationsByYear(getScientificJournalParticipations(type), begin,
-                end);
-    }
-
-    public List<ScientificJournalParticipation> getScientificJournalParticipations(ExecutionYear begin, ExecutionYear end) {
-        return (List<ScientificJournalParticipation>) filterParticipationsByYear(getScientificJournalParticipations(), begin, end);
-    }
-
-    public List<ScientificJournalParticipation> getScientificJournalParticipations(ScopeType type) {
-        return (List<ScientificJournalParticipation>) filterParticipationsByType(ScientificJournalParticipation.class, type);
-    }
-
-    public List<ScientificJournalParticipation> getScientificJournalParticipations() {
-        return getScientificJournalParticipations(null);
-    }
-
-    public Set<ScientificJournal> getAssociatedScientificJournals(ScopeType type, ExecutionYear begin, ExecutionYear end) {
-        Set<ScientificJournal> journals = new HashSet<ScientificJournal>();
-        for (ScientificJournalParticipation participation : getScientificJournalParticipations(type, begin, end)) {
-            journals.add(participation.getScientificJournal());
-        }
-        return journals;
-    }
-
-    public Set<ScientificJournal> getAssociatedScientificJournals(ExecutionYear begin, ExecutionYear end) {
-        return getAssociatedScientificJournals(null, begin, end);
-    }
-
-    public Set<ScientificJournal> getAssociatedScientificJournals(ScopeType type) {
-        return getAssociatedScientificJournals(type, null, null);
-    }
-
-    public Set<ScientificJournal> getAssociatedScientificJournals() {
-        return getAssociatedScientificJournals(null);
-    }
-
-    public List<JournalIssueParticipation> getJournalIssueParticipations(ScopeType type, ExecutionYear begin, ExecutionYear end) {
-        return (List<JournalIssueParticipation>) filterParticipationsByYear(getJournalIssueParticipations(type), begin, end);
-    }
-
-    public List<JournalIssueParticipation> getJournalIssueParticipations(ExecutionYear begin, ExecutionYear end) {
-        return (List<JournalIssueParticipation>) filterParticipationsByYear(getJournalIssueParticipations(), begin, end);
-    }
-
-    public List<JournalIssueParticipation> getJournalIssueParticipations(ScopeType type) {
-        return (List<JournalIssueParticipation>) filterParticipationsByType(JournalIssueParticipation.class, type);
-    }
-
-    public List<JournalIssueParticipation> getJournalIssueParticipations() {
-        return getJournalIssueParticipations(null);
-    }
-
-    public Set<JournalIssue> getAssociatedJournalIssues(ScopeType type, ExecutionYear begin, ExecutionYear end) {
-        Set<JournalIssue> issues = new HashSet<JournalIssue>();
-        for (JournalIssueParticipation participation : this.getJournalIssueParticipations(type, begin, end)) {
-            issues.add(participation.getJournalIssue());
-        }
-        return issues;
-    }
-
-    public Set<JournalIssue> getAssociatedJournalIssues(ExecutionYear begin, ExecutionYear end) {
-        return getAssociatedJournalIssues(null, begin, end);
-    }
-
-    public Set<JournalIssue> getAssociatedJournalIssues(ScopeType locationType) {
-        return getAssociatedJournalIssues(locationType, null, null);
-    }
-
-    public Set<JournalIssue> getAssociatedJournalIssues() {
-        return getAssociatedJournalIssues(null);
-    }
-
-    public List<CooperationParticipation> getCooperationParticipations(ExecutionYear begin, ExecutionYear end) {
-        return (List<CooperationParticipation>) filterParticipationsByYear(getCooperationParticipations(), begin, end);
-    }
-
-    public List<CooperationParticipation> getCooperationParticipations() {
-        List<CooperationParticipation> cooperationParticipations = new ArrayList<CooperationParticipation>();
-        for (Participation participation : this.getParticipations()) {
-            if (participation.isCooperationParticipation()) {
-                cooperationParticipations.add((CooperationParticipation) participation);
-            }
-        }
-        return cooperationParticipations;
-    }
-
-    public Set<Cooperation> getAssociatedCooperations(ExecutionYear begin, ExecutionYear end) {
-        Set<Cooperation> cooperations = new HashSet<Cooperation>();
-        for (CooperationParticipation participation : getCooperationParticipations(begin, end)) {
-            cooperations.add(participation.getCooperation());
-        }
-        return cooperations;
-    }
-
-    public Set<Cooperation> getAssociatedCooperations() {
-        return getAssociatedCooperations(null, null);
     }
 
     public boolean hasPartyContact(final Class<? extends PartyContact> clazz, final PartyContactType type, final String value) {
@@ -1343,281 +1132,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         getOrCreateDefaultPhysicalAddress().setCountryOfResidence(countryOfResidence);
     }
 
-    protected List<ResearchResultPublication> filterArticlesWithType(List<ResearchResultPublication> publications,
-            ScopeType locationType) {
-        List<ResearchResultPublication> publicationsOfType = new ArrayList<ResearchResultPublication>();
-        for (ResearchResultPublication publication : publications) {
-            Article article = (Article) publication;
-            if (article.getScope().equals(locationType)) {
-                publicationsOfType.add(publication);
-            }
-        }
-        return publicationsOfType;
-    }
-
-    protected List<ResearchResultPublication> filterInproceedingsWithType(List<ResearchResultPublication> publications,
-            ScopeType locationType) {
-        List<ResearchResultPublication> publicationsOfType = new ArrayList<ResearchResultPublication>();
-        for (ResearchResultPublication publication : publications) {
-            Inproceedings inproceedings = (Inproceedings) publication;
-            if (inproceedings.getScope().equals(locationType)) {
-                publicationsOfType.add(publication);
-            }
-        }
-        return publicationsOfType;
-    }
-
-    protected List<ResearchResultPublication> filterResultPublicationsByType(
-            final Class<? extends ResearchResultPublication> clazz, List<ResearchResultPublication> publications) {
-        return (List<ResearchResultPublication>) CollectionUtils.select(publications, new Predicate() {
-            @Override
-            public boolean evaluate(Object arg0) {
-                return clazz.equals(arg0.getClass());
-            }
-        });
-    }
-
-    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
-            final Class<? extends ResearchResultPublication> clazz) {
-        return filterResultPublicationsByType(clazz, getResearchResultPublications());
-    }
-
-    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
-            final Class<? extends ResearchResultPublication> clazz, ExecutionYear executionYear) {
-        return filterResultPublicationsByType(clazz, getResearchResultPublicationsByExecutionYear(executionYear));
-    }
-
-    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
-            final Class<? extends ResearchResultPublication> clazz, ExecutionYear firstExecutionYear,
-            ExecutionYear lastExecutionYear) {
-        return filterResultPublicationsByType(clazz,
-                getResearchResultPublicationsByExecutionYear(firstExecutionYear, lastExecutionYear));
-    }
-
-    public List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(ExecutionYear executionYear) {
-
-        List<ResearchResultPublication> publicationsForExecutionYear = new ArrayList<ResearchResultPublication>();
-        for (ResearchResultPublication publication : getResearchResultPublications()) {
-            if (publication.getYear() == null || executionYear.belongsToCivilYear(publication.getYear())) {
-                publicationsForExecutionYear.add(publication);
-            }
-        }
-        return publicationsForExecutionYear;
-    }
-
-    protected List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(ExecutionYear firstExecutionYear,
-            ExecutionYear lastExecutionYear) {
-
-        List<ResearchResultPublication> publicationsForExecutionYear = new ArrayList<ResearchResultPublication>();
-
-        if (firstExecutionYear == null) {
-            firstExecutionYear = ExecutionYear.readFirstExecutionYear();
-        }
-        if (lastExecutionYear == null || lastExecutionYear.isBefore(firstExecutionYear)) {
-            lastExecutionYear = ExecutionYear.readLastExecutionYear();
-        }
-
-        for (ResearchResultPublication publication : getResearchResultPublications()) {
-            if (publication.getYear() == null
-                    || ((firstExecutionYear.isBeforeCivilYear(publication.getYear()) || firstExecutionYear
-                            .belongsToCivilYear(publication.getYear())) && (lastExecutionYear.isAfterCivilYear(publication
-                            .getYear()) || lastExecutionYear.belongsToCivilYear(publication.getYear())))) {
-                publicationsForExecutionYear.add(publication);
-            }
-
-        }
-
-        return publicationsForExecutionYear;
-    }
-
-    public List<Prize> getPrizes(ExecutionYear executionYear) {
-        List<Prize> prizes = new ArrayList<Prize>();
-        for (Prize prize : this.getPrizes()) {
-            if (executionYear.belongsToCivilYear(prize.getYear())) {
-                prizes.add(prize);
-            }
-        }
-        return prizes;
-    }
-
-    public abstract List<ResearchResultPublication> getResearchResultPublications();
-
-    public List<ResearchResultPublication> getBooks() {
-        return this.getResearchResultPublicationsByType(Book.class);
-    }
-
-    public List<ResearchResultPublication> getBooks(ExecutionYear executionYear) {
-        return this.getResearchResultPublicationsByType(Book.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getBooks(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
-        return this.getResearchResultPublicationsByType(Book.class, firstExecutionYear, lastExecutionYear);
-    }
-
-    public List<ResearchResultPublication> getInbooks() {
-        return this.getResearchResultPublicationsByType(BookPart.class);
-    }
-
-    public List<ResearchResultPublication> getInbooks(ExecutionYear executionYear) {
-        return this.getResearchResultPublicationsByType(BookPart.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getInbooks(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
-        return this.getResearchResultPublicationsByType(BookPart.class, firstExecutionYear, lastExecutionYear);
-    }
-
-    public List<ResearchResultPublication> getArticles(ScopeType locationType) {
-        return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class), locationType);
-    }
-
-    public List<ResearchResultPublication> getArticles(ScopeType locationType, ExecutionYear executionYear) {
-        return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class, executionYear), locationType);
-    }
-
-    public List<ResearchResultPublication> getArticles(ScopeType locationType, ExecutionYear firstExecutionYear,
-            ExecutionYear lastExecutionYear) {
-        return filterArticlesWithType(
-                this.getResearchResultPublicationsByType(Article.class, firstExecutionYear, lastExecutionYear), locationType);
-    }
-
-    public List<ResearchResultPublication> getArticles() {
-        return this.getResearchResultPublicationsByType(Article.class);
-    }
-
-    public List<ResearchResultPublication> getArticles(ExecutionYear executionYear) {
-        return this.getResearchResultPublicationsByType(Article.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getArticles(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
-        return this.getResearchResultPublicationsByType(Article.class, firstExecutionYear, lastExecutionYear);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ScopeType locationType) {
-        return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class), locationType);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ScopeType locationType, ExecutionYear executionYear) {
-        return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class, executionYear),
-                locationType);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ScopeType locationType, ExecutionYear firstExecutionYear,
-            ExecutionYear lastExecutionYear) {
-        return filterInproceedingsWithType(
-                this.getResearchResultPublicationsByType(Inproceedings.class, firstExecutionYear, lastExecutionYear),
-                locationType);
-    }
-
-    public List<ResearchResultPublication> getInproceedings() {
-        return this.getResearchResultPublicationsByType(Inproceedings.class);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ExecutionYear executionYear) {
-        return this.getResearchResultPublicationsByType(Inproceedings.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
-        return this.getResearchResultPublicationsByType(Inproceedings.class, firstExecutionYear, lastExecutionYear);
-    }
-
-    public List<ResearchResultPublication> getProceedings() {
-        return this.getResearchResultPublicationsByType(Proceedings.class);
-    }
-
-    public List<ResearchResultPublication> getProceedings(ExecutionYear executionYear) {
-        return this.getResearchResultPublicationsByType(Proceedings.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getProceedings(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
-        return this.getResearchResultPublicationsByType(Proceedings.class, firstExecutionYear, lastExecutionYear);
-    }
-
-    public List<ResearchResultPublication> getTheses() {
-        return this.getResearchResultPublicationsByType(Thesis.class);
-    }
-
-    public List<ResearchResultPublication> getTheses(ExecutionYear executionYear) {
-        return this.getResearchResultPublicationsByType(Thesis.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getTheses(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
-        return this.getResearchResultPublicationsByType(Thesis.class, firstExecutionYear, lastExecutionYear);
-    }
-
-    public List<ResearchResultPublication> getManuals() {
-        return this.getResearchResultPublicationsByType(Manual.class);
-    }
-
-    public List<ResearchResultPublication> getManuals(ExecutionYear executionYear) {
-        return this.getResearchResultPublicationsByType(Manual.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getManuals(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
-        return this.getResearchResultPublicationsByType(Manual.class, firstExecutionYear, lastExecutionYear);
-    }
-
-    public List<ResearchResultPublication> getTechnicalReports() {
-        return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(TechnicalReport.class));
-    }
-
-    public List<ResearchResultPublication> getTechnicalReports(ExecutionYear executionYear) {
-        return this.getResearchResultPublicationsByType(TechnicalReport.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getTechnicalReports(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
-        return this.getResearchResultPublicationsByType(TechnicalReport.class, firstExecutionYear, lastExecutionYear);
-    }
-
-    public List<ResearchResultPublication> getOtherPublications() {
-        return this.getResearchResultPublicationsByType(OtherPublication.class);
-    }
-
-    public List<ResearchResultPublication> getOtherPublications(ExecutionYear executionYear) {
-        return this.getResearchResultPublicationsByType(OtherPublication.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getOtherPublications(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
-        return this.getResearchResultPublicationsByType(OtherPublication.class, firstExecutionYear, lastExecutionYear);
-    }
-
-    public List<ResearchResultPublication> getUnstructureds() {
-        return this.getResearchResultPublicationsByType(Unstructured.class);
-    }
-
-    public List<ResearchResultPublication> getUnstructureds(ExecutionYear executionYear) {
-        return this.getResearchResultPublicationsByType(Unstructured.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getUnstructureds(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
-        return this.getResearchResultPublicationsByType(Unstructured.class, firstExecutionYear, lastExecutionYear);
-    }
-
-    public static String readAllResearchInterests() {
-        JSONArray result = new JSONArray();
-        for (Party party : Bennu.getInstance().getPartysSet()) {
-            if (party instanceof Person && ((Person) party).getUsername() != null) {
-                Person person = (Person) party;
-                if (person.hasAnyResearchInterests()) {
-                    JSONObject jsonPerson = new JSONObject();
-                    jsonPerson.put("istId", person.getUsername());
-                    SortedSet<ResearchInterest> sorted = new TreeSet<ResearchInterest>(new ResearchInterestComparator());
-                    sorted.addAll(party.getResearchInterestsSet());
-                    JSONArray interestsArray = new JSONArray();
-                    for (ResearchInterest interest : sorted) {
-                        JSONObject jsonInterest = new JSONObject();
-                        for (Language langage : interest.getInterest().getAllLanguages()) {
-                            jsonInterest.put(langage.toString(), interest.getInterest().getContent(langage));
-                        }
-                        interestsArray.add(jsonInterest);
-                    }
-                    jsonPerson.put("interests", interestsArray);
-                    result.add(jsonPerson);
-                }
-            }
-        }
-        return result.toJSONString();
-    }
-
     //
     // Site
     //
@@ -1675,16 +1189,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.resource.VehicleAllocation> getVehicleAllocations() {
-        return getVehicleAllocationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyVehicleAllocations() {
-        return !getVehicleAllocationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.documents.GeneratedDocument> getAddressedDocument() {
         return getAddressedDocumentSet();
     }
@@ -1692,16 +1196,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public boolean hasAnyAddressedDocument() {
         return !getAddressedDocumentSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.project.ProjectParticipation> getProjectParticipations() {
-        return getProjectParticipationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyProjectParticipations() {
-        return !getProjectParticipationsSet().isEmpty();
     }
 
     @Deprecated
@@ -1715,16 +1209,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.resource.ResourceResponsibility> getResourceResponsibility() {
-        return getResourceResponsibilitySet();
-    }
-
-    @Deprecated
-    public boolean hasAnyResourceResponsibility() {
-        return !getResourceResponsibilitySet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Account> getAccounts() {
         return getAccountsSet();
     }
@@ -1732,16 +1216,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public boolean hasAnyAccounts() {
         return !getAccountsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard> getBoards() {
-        return getBoardsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyBoards() {
-        return !getBoardsSet().isEmpty();
     }
 
     @Deprecated
@@ -1765,16 +1239,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.Participation> getParticipations() {
-        return getParticipationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyParticipations() {
-        return !getParticipationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption> getPhdGratuityExternalScholarshipExemption() {
         return getPhdGratuityExternalScholarshipExemptionSet();
     }
@@ -1792,36 +1256,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public boolean hasAnyInvitationAccountabilities() {
         return !getInvitationAccountabilitiesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPermissionUnit> getPermissionUnits() {
-        return getPermissionUnitsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPermissionUnits() {
-        return !getPermissionUnitsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.ResearchInterest> getResearchInterests() {
-        return getResearchInterestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyResearchInterests() {
-        return !getResearchInterestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.Prize> getPrizes() {
-        return getPrizesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPrizes() {
-        return !getPrizesSet().isEmpty();
     }
 
     @Deprecated
@@ -1855,21 +1289,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.parking.ParkingPartyHistory> getParkingPartyHistories() {
-        return getParkingPartyHistoriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyParkingPartyHistories() {
-        return !getParkingPartyHistoriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasParkingParty() {
-        return getParkingParty() != null;
-    }
-
-    @Deprecated
     public boolean hasPartyType() {
         return getPartyType() != null;
     }
@@ -1882,11 +1301,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public boolean hasPartySocialSecurityNumber() {
         return getPartySocialSecurityNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasQuestionBank() {
-        return getQuestionBank() != null;
     }
 
     @Deprecated

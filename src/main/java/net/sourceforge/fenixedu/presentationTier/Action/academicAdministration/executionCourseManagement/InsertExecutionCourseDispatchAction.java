@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
 
 import java.util.ArrayList;
@@ -15,6 +33,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExecutionsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -33,14 +52,18 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "academicAdministration", path = "/insertExecutionCourse", attribute = "insertExecutionCourseForm",
-        formBean = "insertExecutionCourseForm", scope = "request", parameter = "method")
+@StrutsFunctionality(app = AcademicAdminExecutionsApp.class, path = "insert-execution-course",
+        titleKey = "label.manager.executionCourseManagement.insert.executionCourse",
+        accessGroup = "academic(MANAGE_EXECUTION_COURSES)")
+@Mapping(module = "academicAdministration", path = "/insertExecutionCourse", formBean = "insertExecutionCourseForm")
 @Forwards({
         @Forward(name = "firstPage", path = "/academicAdministration/executionCourseManagement/welcomeScreen.jsp"),
         @Forward(name = "insertExecutionCourse",
@@ -51,6 +74,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
         return prepareInsertExecutionCourse(mapping, form, request, response);
     }
 
+    @EntryPoint
     public ActionForward prepareInsertExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

@@ -1,5 +1,26 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
@@ -8,12 +29,8 @@
 <%@ page import="java.util.Map" %>
 
 
-<logic:present name="siteView" property="component">
-	<bean:define id="component" name="siteView" property="component" />
-
 	<h2><bean:message key="title.attendsSetInformation"/></h2>
 
-	<bean:define id="infoGrouping" name="component" property="infoGrouping"/>
 	<bean:define id="attends" name="infoGrouping" property="infoAttends"/>
 	<bean:define id="groupPropertiesCode" name="infoGrouping" property="externalId"/>
 	<bean:define id="groupingOID" name="infoGrouping" property="externalId"/>
@@ -40,7 +57,7 @@
 
 	<ul>
 		<li>
-			<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+			<html:link page="<%="/studentGroupManagement.do?method=viewShiftsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
 		    <bean:message key="link.backToShiftsAndGroups"/>
 		    </html:link>
 	    </li>
@@ -55,7 +72,7 @@
 	</p>
 
 	<p class="mtop05">
-		<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+		<html:link page="<%="/studentGroupManagement.do?method=prepareEditAttendsSetMembers&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
 	    	<bean:message key="link.editAttendsSetMembers"/>
 	    </html:link>
     </p>
@@ -67,12 +84,12 @@
 <logic:notEmpty name="attends">
 	<ul>
 		<li>
-			<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+			<html:link page="<%="/studentGroupManagement.do?method=viewShiftsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
 			<bean:message key="link.backToShiftsAndGroups"/>
 			</html:link>
 		</li>
 
-		<bean:define id="sendMailLink">/sendMailToWorkGroupStudents.do?method=sendGroupingEmail&amp;groupingCode=<bean:write name="groupingOID"/>&amp;objectCode=<bean:write name="objectCode"/></bean:define>
+		<bean:define id="sendMailLink">/sendMailToWorkGroupStudents.do?method=sendGroupingEmail&amp;groupingCode=<bean:write name="groupingOID"/>&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>
 		<li>
 			<html:link page="<%= sendMailLink %>">
 				<bean:message key="link.sendEmailToAllStudents"/><br/><br/>
@@ -84,13 +101,13 @@
 		<b><bean:message key="label.attendsSetManagement"/></b>
 	</p>
 	<p class="mtop05">
-		<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+		<html:link page="<%="/studentGroupManagement.do?method=prepareEditAttendsSetMembers&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
 	    	<bean:message key="link.editAttendsSetMembers"/>
 	    </html:link> , 
-		<html:link page="<%="/deleteAttendsSetMembersByExecutionCourse.do?method=deleteAttendsSetMembersByExecutionCourse&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+		<html:link page="<%="/studentGroupManagement.do?method=deleteAttendsSetMembersByExecutionCourse&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
 	    	<bean:message key="link.deleteAttendsSetMembersByExecutionCourse"/>
 	    </html:link> , 
-	    <html:link page="<%="/deleteAllAttendsSetMembers.do?method=deleteAllAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+	    <html:link page="<%="/studentGroupManagement.do?method=deleteAllAttendsSetMembers&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
 	    	<bean:message key="link.deleteAllAttendsSetMembers"/>
 	    </html:link>
     </p>
@@ -104,12 +121,12 @@
 	</p>
 	
 	<logic:present name="showPhotos">
-		<html:link page="<%="/viewAttendsSet.do?method=viewAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+		<html:link page="<%="/studentGroupManagement.do?method=viewAttendsSet&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
 		    	<bean:message key="label.viewPhoto"/>
 		</html:link>
 	</logic:present>
 	<logic:notPresent name="showPhotos">
-		<html:link page="<%="/viewAttendsSet.do?method=viewAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+		<html:link page="<%="/studentGroupManagement.do?method=viewAttendsSet&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
 		    	<bean:message key="label.notViewPhoto"/>
 		</html:link>
 	</logic:notPresent>
@@ -167,12 +184,3 @@
 
 
 </logic:notEmpty>
-
-	 
-</logic:present>
-
-<logic:notPresent name="siteView" property="component">
-	<p>
-		<em><bean:message key="message.infoAttendsSet.not.available" /></em>
-	</p>
-</logic:notPresent>

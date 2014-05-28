@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
 
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
 <form-validation>
   <formset>
-    
-   <form name="studentCurricularPlanAndEnrollmentsSelectionForm">
-		<field property="studentNumber" depends="required">
-			<arg0 key="message.studentNumber" resource="true"/>
-		</field>
-   </form>
 
-    <!-- validation for upload Form -->
-<!--    	<form name="fileForm">
-   		<field property="theFile" depends="required" >
-   		
-   		<arg0 key="errors.fileRequired" resource="true"/>
-   		
-  	 </field>
-  	</form>
--->
-   
-   
-   
    <!-- validation for testsForm -->
    <form name="testForm">
    	<field property="title" depends="required" page="1">
@@ -439,77 +443,6 @@
    	</field>
 	     	
    </form>
-   
-    <!-- validation for the examEnrollment form -->
-   <form name="examEnrollmentForm">
-   	<field property="enrollmentBeginDayFormatted" depends="required,mask,date" page="1" >
-   		<msg name="date" key="errors.invalid.date"/>
-   		<msg name="mask" key="errors.invalid.date"/>
-   		<arg0 key="message.enrollmentBeginDay" resource="true"/>
-   		<var>
-           <var-name>datePattern</var-name>
-           <var-value>dd/MM/yyyy</var-value>
-        </var>
-        <var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)$</var-value>
-        </var>
-   	</field>
-   	<field property="enrollmentBeginTimeFormatted" depends="required,date" page="1" >
-   		<msg name="date" key="error.invalid.hour"/>
-   		<arg0 key="message.enrollmentBeginHour" resource="true"/>
-   		<var>
-           <var-name>datePattern</var-name>
-           <var-value>HH:mm</var-value>
-        </var>
-   	</field>
-   	<field property="enrollmentEndDayFormatted" depends="required,mask,date" page="1" >
-   		<msg name="date" key="errors.invalid.date"/>
-   		<msg name="mask" key="errors.invalid.date"/>
-   		<arg0 key="message.enrollmentEndDay" resource="true"/>
-   		 <var>
-           <var-name>datePattern</var-name>
-           <var-value>dd/MM/yyyy</var-value>
-        </var>
-         <var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)$</var-value>
-        </var>
-   	</field>
-   	<field property="enrollmentEndTimeFormatted" depends="required,date" page="1" >
-   		<msg name="date" key="error.invalid.hour"/>
-   		<arg0 key="message.enrollmentEndHour" resource="true"/>
-   		<var>
-           <var-name>datePattern</var-name>
-           <var-value>HH:mm</var-value>
-        </var>
-   	</field>
-
-   	
-   </form>
-   
-   <!-- validation for the evaluation form -->
-   <form name="evaluationForm">
-   	<field property="evaluationElements" depends="required" page="1" >
-   		<arg0 key="message.evaluation" resource="true"/>
-   	</field>
-   	
-   </form>
-   <!-- Validacao para o formulario de executionCourseCurriculumForm -->
-    <form name="executionCourseCurriculumForm">
-      <field property="generalObjectives" depends="required" page="1">
-        <arg0 key="message.generalObjectives" resource="true"/>
-      </field>
-
-      <field property="operacionalObjectives" depends="required" page="1" >
-        <arg0 key="message.operacionalObjectives" resource="true"/>
-      </field>
-
-	  <field property="program" depends="required" page="1">
-        <arg0 key="message.program" resource="true"/>
-      </field>
-    </form>
-
 
 	<form name="executionCourseObjectivesForm">
       <field property="generalObjectives" depends="required" page="1">
@@ -527,14 +460,6 @@
       </field>
     </form>
    
-   <!-- Validation for the teacher number form -->
-   <!-- <form name="teacherForm">
-      <field property="teacherNumber" depends="required, integer" page="1">
-        <arg0 key="message.teacherNumber" resource="true"/>
-      </field>
-    </form>-->
-
-                
 	<!-- Validation for bibliographicReferenceForm -->
     <form name="bibliographicReferenceForm">
       <field property="title" depends="required" page="1">
@@ -614,67 +539,12 @@
 		   </field>		   
    </form>
    
-    <!-- validation for marks Submission -->
-   <!--	validator threeArgsDate is only valid when used in year field and fields have to be named year, month an day  -->
-   <form name="marksForm">
-	  <field property="day" depends="required, integer, intRange" page="1">
-        <arg0 key="label.day" />
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>1</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>31</var-value>
-        </var>
-      </field>
-	  <field property="month" depends="required, integer, intRange" page="1">
-        <arg0 key="label.month" />
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>1</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>12</var-value>
-        </var>
-      </field>
-	  <field property="year" depends="required, integer, intRange, threeArgsDate" page="1">
-	  	<msg key="message.min" name="intRange"/>
-      	<arg0 key="label.exam.enrollment.year" />
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>month</var-name>
-          <var-value>month</var-value>
-        </var>
-        <var>
-          <var-name>day</var-name>
-          <var-value>day</var-value>
-        </var>
-
-        <var>
-          <var-name>min</var-name>
-          <var-value>1900</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>2100</var-value>
-        </var> 
-      </field>
-    </form>       
-    
-    
 	<!--GROUPS FORMS-->    
     
     
     <!-- validation for the insertGroupPropertiesForm -->
     
-   	<form name="groupPropertiesForm">   	
+   	<form name="studentGroupsForm">   	
    	<field property="name" depends="required" page="1">
 		<arg0 key="message.groupPropertiesName" resource="true"/>
 	</field>
@@ -745,7 +615,7 @@
     <!-- validation for the editGroupPropertiesForm -->
     
     
-    <form name="groupPropertiesForm1">
+    <form name="studentGroupsForm">
    	
    	<field property="name" depends="required" page="1">
 		<arg0 key="message.groupPropertiesName" resource="true"/>
@@ -832,182 +702,12 @@
       </field>
     </form>
     
-    <form name="teacherInformationForm">
-    	<field property="serviceProviderRegimeTypeName" depends="required" page="1" >
-    		<arg0 key="label.teacherInformation.providerRegimeType" />
-		</field>
-    	<field property="research" depends="required,integer" page="1" >
-    		<arg0 key="label.teacherInformation.research" />
-		</field>    	
-    	<field property="management" depends="required,integer" page="1" >
-    		<arg0 key="label.teacherInformation.management" />
-		</field>
-    	<field property="lecture" depends="required,integer" page="1" >
-    		<arg0 key="label.teacherInformation.lecture" />
-		</field>
-    	<field property="support" depends="required,integer" page="1" >
-    		<arg0 key="label.teacherInformation.support" />
-		</field>
-    	<field property="other" depends="required,integer" page="1" >
-    		<arg0 key="label.teacherInformation.other" />
-		</field>
-		<field property="degreeStudentsNumber" depends="integer" page="1">
-			<arg0 key="label.teacherInformation.studentsNumber"/>
-		</field>
-		<field property="degreeDescription" depends="requiredif" page="1">
-			<arg0 key="label.teacherInformation.description"/>
-			<var>
-				<var-name>field[0]</var-name>
-				<var-value>degreeStudentsNumber</var-value>
-			</var>
-			<var>
-				<var-name>fieldTest[0]</var-name>
-				<var-value>NOTNULL</var-value>
-			</var>
-		</field>
-		<field property="masterStudentsNumber" depends="integer" page="1">
-			<arg0 key="label.teacherInformation.studentsNumber"/>
-		</field>
-		<field property="masterDescription" depends="requiredif" page="1">
-			<arg0 key="label.teacherInformation.description"/>
-			<var>
-				<var-name>field[0]</var-name>
-				<var-value>masterStudentsNumber</var-value>
-			</var>
-			<var>
-				<var-name>fieldTest[0]</var-name>
-				<var-value>NOTNULL</var-value>
-			</var>
-		</field>
-		<field property="phdStudentsNumber" depends="integer" page="1">
-			<arg0 key="label.teacherInformation.studentsNumber"/>
-		</field>
-		<field property="phdDescription" depends="requiredif" page="1">
-			<arg0 key="label.teacherInformation.description"/>
-			<var>
-				<var-name>field[0]</var-name>
-				<var-value>phdStudentsNumber</var-value>
-			</var>
-			<var>
-				<var-name>fieldTest[0]</var-name>
-				<var-value>NOTNULL</var-value>
-			</var>			
-		</field>
-		<field property="comunicationNational" depends="required,integer" page="1">
-		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
-	 	</field>
- 		<field property="comunicationInternational" depends="required,integer" page="1">
-		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
-	 	</field>	 	
- 		<field property="magArticleNational" depends="required,integer" page="1">
-		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
-	 	</field>
- 		<field property="magArticleInternational" depends="required,integer" page="1">
-		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
-	 	</field>
- 		<field property="authorBookNational" depends="required,integer" page="1">
-		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
-	 	</field>
- 		<field property="authorBookInternational" depends="required,integer" page="1">
-		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
-	 	</field>
- 		<field property="editorBookNational" depends="required,integer" page="1">
-		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
-	 	</field>
- 		<field property="editorBookInternational" depends="required,integer" page="1">
-		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
-	 	</field>
- 		<field property="articlesChaptersNational" depends="required,integer" page="1">
-		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
-	 	</field>
- 		<field property="articlesChaptersInternational" depends="required,integer" page="1">
-		 	<arg0 key="label.teacherInformation.publicationsNumber"/>
-	 	</field>
-	</form>
-	
-	<form name="teachingCareerForm">
-		<field property="beginYear" depends="required,integer" page="1">
-			<arg0 key="label.career.beginYear"/>
-		</field>
-		<field property="endYear" depends="required,integer,greaterThanOrEqual" page="1">
-			<arg0 key="label.career.beginYear"/>
-			<arg1 key="label.career.endYear"/>
-			<var>
-            	<var-name>secondProperty</var-name>
-                <var-value>beginYear</var-value>
-            </var>
-		</field>		
-		<field property="courseOrPosition" depends="required" page="1">
-			<arg0 key="label.teachingCareer.courseOrPosition"/>
-		</field>
-	</form>
-	
-	<form name="professionalCareerForm">
-		<field property="beginYear" depends="required,integer" page="1">
-			<arg0 key="label.career.year"/>
-		</field>
-		<field property="endYear" depends="required,integer,greaterThanOrEqual" page="1">
-			<arg0 key="label.career.beginYear"/>
-			<arg1 key="label.career.endYear"/>
-			<var>
-            	<var-name>secondProperty</var-name>
-                <var-value>beginYear</var-value>
-            </var>
-		</field>		
-		<field property="entity" depends="required" page="1">
-			<arg0 key="label.professionalCareer.entity"/>
-		</field>
-		<field property="function" depends="required" page="1">
-			<arg0 key="label.professionalCareer.function"/>
-		</field>
-	</form>
-	
-	<form name="externalActivityForm">
-		<field property="activity" depends="required" page="1">
-			<arg0 key="label.externalActivity.activity"/>
-		</field>
-	</form>
-	
 	<form name="oldPublicationForm">
 		<field property="publication" depends="required" page="1">
 			<arg0 key="label.oldPublication.publication"/>
 		</field>
 	</form>
 
-	<form name="curricularCoursesEnrollmentForm">
-		<field property="studentNumber" depends="required,integer" page="1">
-			<arg0 key="label.student.number" resource="true"/>
-		</field>
-		<field property="specializationArea" depends="requiredif" page="2">
-			<arg0 key="label.student.enrollment.specializationArea" />
-			<var>
-				<var-name>field[0]</var-name>
-				<var-value>secondaryArea</var-value>
-			</var>
-			<var>
-				<var-name>fieldTest[0]</var-name>
-				<var-value>NOTNULL</var-value>
-			</var>        			
-		</field>
-		<field property="secondaryArea" depends="requiredif" page="2">
-	        <arg0 key="label.student.enrollment.secondaryArea" />
-			<var>
-				<var-name>field[0]</var-name>
-				<var-value>specializationArea</var-value>
-			</var>
-			<var>
-				<var-name>fieldTest[0]</var-name>
-				<var-value>NOTNULL</var-value>
-			</var>        			
-		</field>
-	</form>
-
-	<form name="curriculumForm">
-		<field property="studentNumber" depends="required,integer" page="1">
-			<arg0 key="label.student.number" resource="true"/>
-		</field>
-	</form>	
-	
 	<form name="finalWorkInformationForm">
 		<field property="degree" depends="required,string" page="1">
 			<arg0 key="finalWorkInformationForm.degree" resource="true"/>

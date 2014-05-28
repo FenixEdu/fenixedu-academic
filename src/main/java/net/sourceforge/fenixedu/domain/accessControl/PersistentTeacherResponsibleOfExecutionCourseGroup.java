@@ -1,23 +1,27 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Professorship;
 
-import org.fenixedu.bennu.core.annotation.CustomGroupOperator;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.groups.Group;
-import org.joda.time.DateTime;
+import org.fenixedu.bennu.core.groups.Group;
 
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-
-import com.google.common.collect.Sets;
-
-@CustomGroupOperator("teacherResponsibleOfExecutionCourse")
 public class PersistentTeacherResponsibleOfExecutionCourseGroup extends PersistentTeacherResponsibleOfExecutionCourseGroup_Base {
     protected PersistentTeacherResponsibleOfExecutionCourseGroup(ExecutionCourse executionCourse) {
         super();
@@ -25,50 +29,12 @@ public class PersistentTeacherResponsibleOfExecutionCourseGroup extends Persiste
     }
 
     @Override
-    public Set<User> getMembers() {
-        Set<User> users = new HashSet<>();
-        for (Professorship professorship : getExecutionCourse().responsibleFors()) {
-            users.add(professorship.getPerson().getUser());
-        }
-        return users;
-    }
-
-    @Override
-    public Set<User> getMembers(DateTime when) {
-        return getMembers();
-    }
-
-    @Override
-    public boolean isMember(User user) {
-        if (user == null) {
-            return false;
-        }
-        if (!Sets.intersection(user.getPerson().getProfessorshipsSet(), new HashSet<>(getExecutionCourse().responsibleFors()))
-                .isEmpty()) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean isMember(User user, DateTime when) {
-        return isMember(user);
-    }
-
-    public static Set<Group> groupsForUser(User user) {
-        return Collections.emptySet();
+    public Group toGroup() {
+        return TeacherResponsibleOfExecutionCourseGroup.get(getExecutionCourse());
     }
 
     public static PersistentTeacherResponsibleOfExecutionCourseGroup getInstance(ExecutionCourse executionCourse) {
-        PersistentTeacherResponsibleOfExecutionCourseGroup instance =
-                select(PersistentTeacherResponsibleOfExecutionCourseGroup.class, executionCourse);
-        return instance != null ? instance : create(executionCourse);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentTeacherResponsibleOfExecutionCourseGroup create(ExecutionCourse executionCourse) {
-        PersistentTeacherResponsibleOfExecutionCourseGroup instance =
-                select(PersistentTeacherResponsibleOfExecutionCourseGroup.class, executionCourse);
-        return instance != null ? instance : new PersistentTeacherResponsibleOfExecutionCourseGroup(executionCourse);
+        return singleton(PersistentTeacherResponsibleOfExecutionCourseGroup.class, executionCourse,
+                () -> new PersistentTeacherResponsibleOfExecutionCourseGroup(executionCourse));
     }
 }

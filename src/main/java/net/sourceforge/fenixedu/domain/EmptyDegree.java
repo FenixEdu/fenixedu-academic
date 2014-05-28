@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
@@ -19,7 +37,6 @@ import net.sourceforge.fenixedu.util.MarkType;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EmptyDegree extends EmptyDegree_Base {
@@ -213,13 +230,18 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
+    public String getNameEn() {
+        return getPresentationName();
+    }
+
+    @Override
     final public String getPresentationName(ExecutionYear executionYear) {
-        return getNameFor((ExecutionYear) null).getContent(Language.pt);
+        return getNameFor((ExecutionYear) null).getContent(MultiLanguageString.pt);
     }
 
     @Override
     final public String getFilteredName(final ExecutionYear executionYear, final Locale locale) {
-        return getNameFor(executionYear).getContent(Language.valueOf(locale.getLanguage()));
+        return getNameFor(executionYear).getContent(locale);
     }
 
     @Override

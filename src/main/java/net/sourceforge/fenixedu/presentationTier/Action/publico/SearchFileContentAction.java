@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import javax.servlet.http.HttpServletRequest;
@@ -6,8 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -30,9 +49,9 @@ public class SearchFileContentAction extends FenixDispatchAction {
 
         ExecutionCourse course = null;
 
-        FunctionalityContext context = AbstractFunctionalityContext.getCurrentContext(request);
-        if (context != null && context.getSelectedContainer() instanceof ExecutionCourseSite) {
-            course = ((ExecutionCourseSite) context.getSelectedContainer()).getSiteExecutionCourse();
+        Site site = SiteMapper.getSite(request);
+        if (site != null && site instanceof ExecutionCourseSite) {
+            course = ((ExecutionCourseSite) site).getSiteExecutionCourse();
         }
 
         String executionCourseId = request.getParameter("executionCourseID");
@@ -92,6 +111,15 @@ public class SearchFileContentAction extends FenixDispatchAction {
         request.setAttribute("numberOfPages", bean.getNumberOfPages());
         request.setAttribute("pageNumber", bean.getPage());
         return mapping.findForward("search");
+    }
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        ExecutionCourse course = (ExecutionCourse) request.getAttribute("executionCourse");
+        OldCmsSemanticURLHandler.selectSite(request, course.getSite());
+        return forward;
     }
 
 }

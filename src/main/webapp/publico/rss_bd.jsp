@@ -1,10 +1,29 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <logic:present name="siteView"> 
 	<br/>
@@ -24,11 +43,8 @@
 	<h2><bean:message key="message.rss.7"/></h2>
 	
 	<p>Copie os URL's para o leitor RSS.</p>
-	
-		<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-		<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
-		<bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%></bean:define>
+		<bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%></bean:define>
 	<table>
 		<tr>
 			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">

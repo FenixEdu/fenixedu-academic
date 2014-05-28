@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 8/Set/2003
  */
@@ -21,7 +39,7 @@ import pt.ist.fenixframework.FenixFramework;
  * @author Susana Fernandes
  */
 public class ReadStudentDistributedTest {
-    public List<StudentTestQuestion> run(String executionCourseId, String distributedTestId, String studentId, String path)
+    public List<StudentTestQuestion> run(String executionCourseId, String distributedTestId, String studentId)
             throws FenixServiceException {
 
         List<StudentTestQuestion> studentTestQuestionList = new ArrayList<StudentTestQuestion>();
@@ -40,7 +58,7 @@ public class ReadStudentDistributedTest {
         for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
             ParseSubQuestion parse = new ParseSubQuestion();
             try {
-                parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
+                parse.parseStudentTestQuestion(studentTestQuestion);
             } catch (Exception e) {
                 throw new FenixServiceException(e);
             }
@@ -59,9 +77,9 @@ public class ReadStudentDistributedTest {
 
     @Atomic
     public static List<StudentTestQuestion> runReadStudentDistributedTest(String executionCourseId, String distributedTestId,
-            String studentId, String path) throws FenixServiceException, NotAuthorizedException {
+            String studentId) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, distributedTestId, studentId, path);
+        return serviceInstance.run(executionCourseId, distributedTestId, studentId);
     }
 
 }

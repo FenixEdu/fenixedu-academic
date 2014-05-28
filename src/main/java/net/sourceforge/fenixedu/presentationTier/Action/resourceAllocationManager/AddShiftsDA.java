@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
 import java.util.Arrays;
@@ -22,8 +40,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "resourceAllocationManager", path = "/addShifts", input = "/manageClass.do?method=prepare&page=0",
-        attribute = "selectMultipleItemsForm", formBean = "selectMultipleItemsForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "EditClass", path = "/manageClass.do?method=prepare&page=0") })
+        formBean = "selectMultipleItemsForm", functionality = ExecutionPeriodDA.class)
+@Forwards(@Forward(name = "EditClass", path = "/resourceAllocationManager/manageClass.do?method=prepare&page=0"))
 public class AddShiftsDA extends FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

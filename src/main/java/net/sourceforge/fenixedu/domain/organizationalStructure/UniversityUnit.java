@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Collection;
@@ -8,9 +26,9 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -43,7 +61,7 @@ public class UniversityUnit extends UniversityUnit_Base {
 
     public static UniversityUnit createNewUniversityUnit(MultiLanguageString universityName, String universityNameCard,
             Integer costCenterCode, String universityAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
-            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 
         UniversityUnit universityUnit = new UniversityUnit();
         universityUnit.init(universityName, universityNameCard, costCenterCode, universityAcronym, beginDate, endDate,
@@ -68,7 +86,7 @@ public class UniversityUnit extends UniversityUnit_Base {
     public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
-            Campus campus) {
+            Space campus) {
 
         super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
                 degree, administrativeOffice, canBeResponsibleOfSpaces, campus);

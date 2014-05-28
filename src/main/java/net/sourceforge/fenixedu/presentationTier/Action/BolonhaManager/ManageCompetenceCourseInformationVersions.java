@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -28,6 +46,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.BolonhaManagerApplication.CompetenceCourseManagementApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
@@ -35,6 +54,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -46,6 +67,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
+@StrutsFunctionality(app = CompetenceCourseManagementApp.class, path = "versions", titleKey = "label.manage.versions")
 @Mapping(module = "bolonhaManager", path = "/competenceCourses/manageVersions")
 @Forwards({
         @Forward(name = "showCourses", path = "/bolonhaManager/competenceCourseVersions/listCompetenceCourses.jsp",
@@ -58,6 +80,7 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
                 path = "/bolonhaManager/competenceCourseVersions/viewCompetenceCourseInformation.jsp") })
 public class ManageCompetenceCourseInformationVersions extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         Person loggedPerson = getLoggedPerson(request);
         CompetenceCourseInformationRequestBean requestBean = getOrCreateRequestBean(request);

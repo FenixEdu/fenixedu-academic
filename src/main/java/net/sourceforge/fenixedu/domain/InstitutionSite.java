@@ -1,13 +1,30 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 public class InstitutionSite extends InstitutionSite_Base {
 
@@ -22,8 +39,9 @@ public class InstitutionSite extends InstitutionSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new GroupUnion(new FixedSetGroup(getManagers()), new RoleTypeGroup(RoleType.MANAGER));
+    public Group getOwner() {
+        RoleType roleType = RoleType.MANAGER;
+        return UserGroup.of(Person.convertToUsers(getManagers())).or(RoleGroup.get(roleType));
     }
 
     /**

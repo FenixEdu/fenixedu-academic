@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Author : Goncalo Luiz
  * Creation Date: Jul 20, 2006,8:42:24 AM
@@ -17,10 +35,10 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.rss.RSSAction;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
@@ -103,13 +121,11 @@ public class AnnouncementRSS extends RSSAction {
         String scheme = request.getScheme();
         int serverPort = request.getServerPort();
         String serverName = request.getServerName();
-        String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        String context = appContext != null && appContext.length() > 0 ? "/" + appContext : "";
         String module = ModuleUtils.getInstance().getModuleName(request, getServlet().getServletContext());
         String actionPath = "/announcementsRSS.do";
 
         StringBuilder file = new StringBuilder();
-        file.append(context).append(module).append(actionPath);
+        file.append(request.getContextPath()).append(module).append(actionPath);
         try {
             URL url = new URL(scheme, serverName, serverPort, file.toString());
             result = url.toString();
@@ -130,18 +146,11 @@ public class AnnouncementRSS extends RSSAction {
 
         StringBuilder actionPath = new StringBuilder(getDirectAnnouncementBaseUrl(request, announcement));
 
-        String scheme = request.getScheme();
-        int serverPort = request.getServerPort();
-        String serverName = request.getServerName();
-        String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        String context = appContext != null && appContext.length() > 0 ? "/" + appContext : "";
-
         if (actionPath.indexOf("?") == -1) {
             actionPath.append("?");
         }
 
-        return scheme + "://" + serverName + (serverPort == 80 || serverPort == 443 ? "" : ":" + serverPort) + context
-                + actionPath.toString();
+        return CoreConfiguration.getConfiguration().applicationUrl() + actionPath.toString();
     }
 
     protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {
@@ -172,7 +181,7 @@ public class AnnouncementRSS extends RSSAction {
     protected final AnnouncementBoard getSelectedBoard(HttpServletRequest request) {
         final String id = request.getParameter("announcementBoardId");
         final DomainObject object = FenixFramework.getDomainObject(id);
-        return object instanceof AnnouncementBoard ? (AnnouncementBoard) object : null;
+        return object instanceof AnnouncementBoard && FenixFramework.isDomainObjectValid(object) ? (AnnouncementBoard) object : null;
     }
 
     @Override

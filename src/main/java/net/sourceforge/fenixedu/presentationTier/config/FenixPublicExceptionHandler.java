@@ -1,11 +1,27 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 25/Fev/2003
  *
  * 
  */
 package net.sourceforge.fenixedu.presentationTier.config;
-
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -61,8 +77,6 @@ public class FenixPublicExceptionHandler extends FenixExceptionHandler {
 
         request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
 
-        request.setAttribute(PresentationConstants.REQUEST_CONTEXT, requestContextGetter(request));
-
         if (ae.getScope() != "request") {
             ae.setScope("request");
         }
@@ -83,19 +97,6 @@ public class FenixPublicExceptionHandler extends FenixExceptionHandler {
         super.storeException(request, property, error, forward, ae.getScope());
 
         return super.execute(ex, ae, mapping, formInstance, request, response);
-    }
-
-    private String requestContextGetter(HttpServletRequest request) {
-
-        Enumeration requestContents = request.getAttributeNames();
-        String context = "";
-        while (requestContents.hasMoreElements()) {
-            String requestElement = requestContents.nextElement().toString();
-            context += "RequestElement:" + requestElement + "\n";
-            context += "RequestElement Value:" + request.getAttribute(requestElement) + "\n";
-        }
-
-        return context;
     }
 
 }

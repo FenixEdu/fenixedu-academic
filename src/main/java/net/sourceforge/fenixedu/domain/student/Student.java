@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.student;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -63,7 +81,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -78,6 +95,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -1618,7 +1636,7 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public boolean learnsAt(final Campus campus) {
+    public boolean learnsAt(final Space campus) {
         for (final Registration registration : getActiveRegistrations()) {
             if (registration.getCampus() == campus) {
                 return true;
@@ -1820,17 +1838,6 @@ public class Student extends Student_Base {
     public void acceptRegistrationsFromOtherStudent(java.util.Collection<Registration> otherRegistrations) {
         Collection<Registration> registrations = super.getRegistrationsSet();
         registrations.addAll(otherRegistrations);
-    }
-
-    public boolean isEligibleForCareerWorkshopApplication() {
-        /*
-         * RULE TO FILTER 2nd CYCLE STUDENTS ONLY - Prior to Sep2012 for (Registration registration : getActiveRegistrations()) {
-         * 
-         * if (isMasterDegreeOnly(registration)) return true;
-         * 
-         * if (isIntegratedMasterDegree(registration)) { if (isEnroledOnSecondCycle(registration)) { return true; } } } return false;
-         */
-        return true;
     }
 
     private boolean isEnroledOnSecondCycle(Registration registration) {

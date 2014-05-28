@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 
 import java.io.BufferedReader;
@@ -24,8 +42,10 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
@@ -59,22 +79,18 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.myfaces.component.html.util.MultipartRequestWrapper;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -676,6 +692,12 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return FenixFramework.getDomainObject(getExecutionCourseID());
     }
 
+    public String getHackToStoreExecutionCourse() {
+        ExecutionCourse course = getExecutionCourse();
+        setRequestAttribute("executionCourse", course);
+        return "";
+    }
+
     public Map<String, String> getMarks() throws FenixServiceException {
         final Evaluation evaluation = getEvaluation();
         final ExecutionCourse executionCourse = getExecutionCourse();
@@ -694,13 +716,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.marks = marks;
     }
 
-    public String loadMarks() throws FenixServiceException, FileUploadException {
+    public String loadMarks() throws FenixServiceException, ServletException, IOException {
         final HttpServletRequest httpServletRequest =
                 (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        final MultipartRequestWrapper multipartRequestWrapper =
-                (MultipartRequestWrapper) httpServletRequest.getAttribute("multipartRequestWrapper");
 
-        final FileItem fileItem = multipartRequestWrapper.getFileItem("theFile");
+        final Part fileItem = httpServletRequest.getPart("theFile");
         InputStream inputStream = null;
         try {
             inputStream = fileItem.getInputStream();
@@ -846,8 +866,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     protected String getApplicationContext() {
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+        return getRequest().getContextPath();
     }
 
     public String deleteWrittenTest() throws FenixServiceException {
@@ -864,16 +883,16 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return WrittenTest.class.getSimpleName();
     }
 
-    public List<AllocatableSpace> getEvaluationRooms() throws FenixServiceException {
-        final AllocatableSpace[] result = new AllocatableSpace[getEvaluationRoomsPositions().size()];
+    public List<Space> getEvaluationRooms() throws FenixServiceException {
+        final Space[] result = new Space[getEvaluationRoomsPositions().size()];
         for (final Entry<String, Integer> entry : getEvaluationRoomsPositions().entrySet()) {
-            final AllocatableSpace room = getRoom(entry.getKey());
+            final Space room = getRoom(entry.getKey());
             result[entry.getValue() - 1] = room;
         }
         return Arrays.asList(result);
     }
 
-    private AllocatableSpace getRoom(final String roomID) throws FenixServiceException {
+    private Space getRoom(final String roomID) throws FenixServiceException {
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
                 .getWrittenEvaluationSpaceOccupations()) {
             if (roomOccupation.getRoom().getExternalId().equals(roomID)) {
@@ -931,7 +950,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                 new ArrayList<SelectItem>(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsSet().size());
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
                 .getWrittenEvaluationSpaceOccupations()) {
-            result.add(new SelectItem(roomOccupation.getRoom().getExternalId(), (roomOccupation.getRoom()).getIdentification()));
+            result.add(new SelectItem(roomOccupation.getRoom().getExternalId(), (roomOccupation.getRoom()).getName()));
         }
         return result;
     }
@@ -960,9 +979,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     private List<String> getRoomIDs() throws FenixServiceException {
-        final List<AllocatableSpace> rooms = getEvaluationRooms();
+        final List<Space> rooms = getEvaluationRooms();
         final List<String> result = new ArrayList(rooms.size());
-        for (final AllocatableSpace room : rooms) {
+        for (final Space room : rooms) {
             result.add(room.getExternalId());
         }
         return result;
@@ -1206,8 +1225,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         List<SelectItem> result = new ArrayList<SelectItem>();
         WrittenTest writtenTest = (WrittenTest) getEvaluation();
         Teacher teacher = AccessControl.getPerson().getTeacher();
-        for (AllocatableSpace room : writtenTest.getAvailableRooms()) {
-            SelectItem selectItem = new SelectItem(room.getExternalId(), room.getIdentification());
+        for (Space room : writtenTest.getAvailableRooms()) {
+            SelectItem selectItem;
+            selectItem = new SelectItem(room.getExternalId(), room.getName());
             selectItem.setDisabled(!writtenTest.canTeacherRemoveRoom(getExecutionCourse().getExecutionPeriod(), teacher, room));
             result.add(selectItem);
         }
@@ -1217,7 +1237,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public String[] getRoomsToAssociate() {
         if (roomsToAssociate == null) {
             List<String> roomIds = new ArrayList<String>();
-            for (AllocatableSpace room : ((WrittenTest) getEvaluation()).getAssociatedRooms()) {
+            for (Space room : ((WrittenTest) getEvaluation()).getAssociatedRooms()) {
                 roomIds.add(room.getExternalId());
             }
             roomsToAssociate = roomIds.toArray(new String[] {});
@@ -1238,10 +1258,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    private List<AllocatableSpace> getRooms(String[] roomsToAssociate) {
-        List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+    private List<Space> getRooms(String[] roomsToAssociate) {
+        List<Space> rooms = new ArrayList<Space>();
         for (String roomId : roomsToAssociate) {
-            AllocatableSpace space = (AllocatableSpace) FenixFramework.getDomainObject(roomId);
+            Space space = (Space) FenixFramework.getDomainObject(roomId);
             if (space == null) {
                 throw new IllegalArgumentException();
             }
@@ -1351,7 +1371,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             final Row newRow = spreadsheet.addRow();
             newRow.setCell(enrolment.getStudent().getNumber().toString());
             newRow.setCell(enrolment.getStudent().getPerson().getName());
-            newRow.setCell(enrolment.hasRoom() ? enrolment.getRoom().getIdentification() : "-");
+            newRow.setCell(enrolment.hasRoom() ? enrolment.getRoom().getName() : "-");
             newRow.setCell(enrolment.getStudent().getDegree().getNameI18N().getContent());
         }
     }

@@ -1,15 +1,34 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.commons.student.researcher;
 
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.CurriculumDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.research.FinalWorkManagementActionForResearcher;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "researcher", path = "/viewStudentCurriculum", attribute = "studentCurricularPlanAndEnrollmentsSelectionForm",
-        formBean = "studentCurricularPlanAndEnrollmentsSelectionForm", scope = "session", parameter = "method")
+@Mapping(module = "researcher", path = "/viewStudentCurriculum", formBean = "studentCurricularPlanAndEnrollmentsSelectionForm",
+        functionality = FinalWorkManagementActionForResearcher.class)
 @Forwards(value = { @Forward(name = "ShowStudentCurriculumForCoordinator", path = "df.page.showStudentCurriculumForCoordinator"),
         @Forward(name = "ShowStudentCurriculum", path = "/student/curriculum/displayStudentCurriculum_bd.jsp"),
         @Forward(name = "ShowStudentCurricularPlans", path = "/student/curriculum/viewCurricularPlans_bd.jsp"),
         @Forward(name = "NotAuthorized", path = "/student/notAuthorized_bd.jsp") })
-public class CurriculumDispatchActionForResearcher extends
-        net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction {
+public class CurriculumDispatchActionForResearcher extends CurriculumDispatchAction {
 }

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,21 +27,34 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPersonManagementApp;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.bennu.user.management.UserLoginPeriod;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
+@StrutsFunctionality(app = ManagerPersonManagementApp.class, path = "logins", titleKey = "logins.management.title")
+@Mapping(module = "manager", path = "/loginsManagement")
+@Forwards({ @Forward(name = "prepareManageLoginTimeIntervals", path = "/manager/loginsManagement/manageLoginTimeIntervals.jsp"),
+        @Forward(name = "prepareCreateNewLoginTimeInterval", path = "/manager/loginsManagement/createNewLoginPeriod.jsp"),
+        @Forward(name = "prepareSearchPerson", path = "/manager/loginsManagement/searchPersonToManageLogins.jsp"),
+        @Forward(name = "prepareEditLoginTimeInterval", path = "/manager/loginsManagement/editLoginPeriod.jsp") })
 public class LoginsManagementDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

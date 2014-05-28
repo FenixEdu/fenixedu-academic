@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.gep.student.candidacy.personal.ingression.data;
 
 import java.util.Set;
@@ -11,20 +29,23 @@ import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepRAIDESApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = GepRAIDESApp.class, path = "personal-ingression-data",
+        titleKey = "link.personal.ingression.data.viewer")
 @Mapping(path = "/personalIngressionDataViewer", module = "gep")
 @Forwards({
-        @Forward(name = "chooseStudent", path = "/gep/student/candidacy/personal/ingression/data/chooseStudent.jsp",
-                tileProperties = @Tile(title = "private.gep.raidesdata.raidesdatabystudent")),
+        @Forward(name = "chooseStudent", path = "/gep/student/candidacy/personal/ingression/data/chooseStudent.jsp"),
         @Forward(name = "viewStudent", path = "/gep/student/candidacy/personal/ingression/data/viewStudent.jsp"),
         @Forward(name = "viewStudentCandidacy", path = "/gep/student/candidacy/personal/ingression/data/viewStudentCandidacy.jsp"),
         @Forward(name = "viewPersonalIngressionData",
@@ -34,6 +55,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         @Forward(name = "viewRegistration", path = "/gep/student/candidacy/personal/ingression/data/viewRegistration.jsp") })
 public class PersonalIngressionDataViewer extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward chooseStudent(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) {
         request.setAttribute("chooseStudentBean", new ChooseStudentBean());

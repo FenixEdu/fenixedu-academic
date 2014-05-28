@@ -1,6 +1,23 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.student.thesis;
 
-import java.io.File;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +33,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentSubmitApp;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ThesisJuryReportDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -23,45 +41,36 @@ import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 
+import com.google.common.io.ByteStreams;
+
+@StrutsFunctionality(app = StudentSubmitApp.class, path = "thesis", titleKey = "label.student.thesis.submission")
 @Mapping(path = "/thesisSubmission", module = "student")
-@Forwards({
-        @Forward(name = "thesis-notFound", path = "/student/thesis/notFound.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "thesis-showState", path = "/student/thesis/showState.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "thesis-showUnavailable", path = "/student/thesis/showUnavailable.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "thesis-submit", path = "/student/thesis/submit.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "thesis-edit-abstract", path = "/student/thesis/editAbstract.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "thesis-edit-keywords", path = "/student/thesis/editKeywords.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "thesis-declaration", path = "/student/thesis/declaration.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "thesis-declaration-view", path = "/student/thesis/viewDeclaration.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "thesis-upload-dissertation", path = "/student/thesis/uploadDissertation.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "thesis-upload-abstract", path = "/student/thesis/uploadAbstract.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "thesis-list-enrolments", path = "/student/thesis/listEnrolments.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")),
-        @Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp", tileProperties = @Tile(
-                title = "private.student.submit.dissertation")) })
+@Forwards({ @Forward(name = "thesis-notFound", path = "/student/thesis/notFound.jsp"),
+        @Forward(name = "thesis-showState", path = "/student/thesis/showState.jsp"),
+        @Forward(name = "thesis-showUnavailable", path = "/student/thesis/showUnavailable.jsp"),
+        @Forward(name = "thesis-submit", path = "/student/thesis/submit.jsp"),
+        @Forward(name = "thesis-edit-abstract", path = "/student/thesis/editAbstract.jsp"),
+        @Forward(name = "thesis-edit-keywords", path = "/student/thesis/editKeywords.jsp"),
+        @Forward(name = "thesis-declaration", path = "/student/thesis/declaration.jsp"),
+        @Forward(name = "thesis-declaration-view", path = "/student/thesis/viewDeclaration.jsp"),
+        @Forward(name = "thesis-upload-dissertation", path = "/student/thesis/uploadDissertation.jsp"),
+        @Forward(name = "thesis-upload-abstract", path = "/student/thesis/uploadAbstract.jsp"),
+        @Forward(name = "thesis-list-enrolments", path = "/student/thesis/listEnrolments.jsp"),
+        @Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp") })
 public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
-    public Student getStudent(HttpServletRequest request) {
-        return getUserView(request).getPerson().getStudent();
+    public Student getStudent() {
+        return Authenticate.getUser().getPerson().getStudent();
     }
 
     @Override
@@ -81,7 +90,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
             thesis = (Thesis) request.getAttribute("thesis");
 
             if (thesis == null) {
-                Student student = getStudent(request);
+                Student student = getStudent();
 
                 Enrolment enrolment = student.getDissertationEnrolment();
                 if (enrolment != null) {
@@ -95,9 +104,10 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
         return thesis;
     }
 
+    @EntryPoint
     public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Student student = getStudent(request);
+        final Student student = getStudent();
         final TreeSet<Enrolment> enrolments = student.getDissertationEnrolments(null);
         request.setAttribute("enrolments", enrolments);
         return mapping.findForward("thesis-list-enrolments");
@@ -236,20 +246,13 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
         }
 
         if (bean != null && bean.getFile() != null) {
-            File temporaryFile = null;
-
+            byte[] bytes = ByteStreams.toByteArray(bean.getFile());
             try {
-                temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                CreateThesisDissertationFile.runCreateThesisDissertationFile(getThesis(request), temporaryFile,
-                        bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-
+                CreateThesisDissertationFile.runCreateThesisDissertationFile(getThesis(request), bytes, bean.getSimpleFileName(),
+                        bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
             } catch (DomainException e) {
                 addActionMessage("error", request, e.getKey(), e.getArgs());
                 return prepareUploadDissertation(mapping, actionForm, request, response);
-            } finally {
-                if (temporaryFile != null) {
-                    temporaryFile.delete();
-                }
             }
         }
 
@@ -284,20 +287,13 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
         RenderUtils.invalidateViewState();
 
         if (bean != null && bean.getFile() != null) {
-            File temporaryFile = null;
-
+            byte[] bytes = ByteStreams.toByteArray(bean.getFile());
             try {
-                temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), temporaryFile, bean.getSimpleFileName(),
-                        null, null, null);
+                CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), bytes, bean.getSimpleFileName(), null,
+                        null, null);
             } catch (DomainException e) {
                 addActionMessage("error", request, e.getKey(), e.getArgs());
                 return prepareUploadAbstract(mapping, actionForm, request, response);
-
-            } finally {
-                if (temporaryFile != null) {
-                    temporaryFile.delete();
-                }
             }
         }
 

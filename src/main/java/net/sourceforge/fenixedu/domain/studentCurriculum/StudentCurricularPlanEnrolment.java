@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.ArrayList;
@@ -13,7 +31,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -143,16 +161,14 @@ abstract public class StudentCurricularPlanEnrolment {
 
     protected void checkEnrolmentWithoutRules() {
         if (isEnrolmentWithoutRules()
-                && !AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
-                        AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree())
+                && !AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(), AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree())
                 && !isResponsibleInternationalRelationOffice()) {
             throw new DomainException("error.permissions.cannot.enrol.without.rules");
         }
     }
 
     protected void checkUpdateRegistrationAfterConclusion() {
-        if (!AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
-                AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(getStudentCurricularPlan().getDegree())) {
+        if (!AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(), AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(getStudentCurricularPlan().getDegree())) {
             throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
         }
     }
@@ -316,8 +332,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
     // Old AcademicAdminOffice role check
     protected boolean isResponsiblePersonAllowedToEnrolStudents() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
-                AcademicOperationType.STUDENT_ENROLMENTS).contains(getStudentCurricularPlan().getDegree());
+        return AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(getStudentCurricularPlan().getDegree());
     }
 
     protected boolean isResponsibleInternationalRelationOffice() {

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.util.ArrayList;
@@ -8,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
-import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
+import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
@@ -18,15 +36,34 @@ import org.apache.struts.action.ActionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+
+@Forwards({ @Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
+        @Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
+        @Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
+        @Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
+        @Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
+        @Forward(name = "noBoards", path = "/webSiteManager/commons/noBoards.jsp"),
+        @Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp"),
+        @Forward(name = "listAnnouncementBoards", path = "/webSiteManager/commons/listAnnouncementBoards.jsp") })
 public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagement {
 
     private static final Logger logger = LoggerFactory.getLogger(UnitSiteAnnouncementManagement.class);
+
+    private static final ActionForward FORWARD = new ActionForward("/websiteFrame.jsp");
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("site", getSite(request));
-        return super.execute(mapping, actionForm, request, response);
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        if (forward.getPath().endsWith(".jsp")) {
+            request.setAttribute("actual$page", forward.getPath());
+            return FORWARD;
+        } else {
+            return forward;
+        }
     }
 
     private Integer getId(String id) {
@@ -63,7 +100,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
         if (unit == null || unit.getBoards().isEmpty()) {
             return mapping.findForward("noBoards");
         } else {
-            Collection<PartyAnnouncementBoard> boards = unit.getBoards();
+            Collection<UnitAnnouncementBoard> boards = unit.getBoards();
             if (boards.size() > 1) {
                 return start(mapping, actionForm, request, response);
             } else {
@@ -71,8 +108,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
 
                 ActionForward forward = new ActionForward(mapping.findForward("viewAnnouncementsRedirect"));
                 forward.setPath(forward.getPath()
-                        + String.format("&announcementBoardId=%s&oid=", board.getExternalId(), site.getExternalId()));
-                forward.setRedirect(true);
+                        + String.format("&announcementBoardId=%s&oid=%s", board.getExternalId(), site.getExternalId()));
 
                 return forward;
             }
@@ -108,8 +144,8 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
         if (unit != null) {
             for (AnnouncementBoard board : unit.getBoards()) {
                 if (board.getWriters() == null || board.getReaders() == null || board.getManagers() == null
-                        || board.getWriters().allows(getUserView(request)) || board.getReaders().allows(getUserView(request))
-                        || board.getManagers().allows(getUserView(request))) {
+                        || board.getWriters().isMember(getUserView(request)) || board.getReaders().isMember(getUserView(request))
+                        || board.getManagers().isMember(getUserView(request))) {
                     boards.add(board);
                 }
             }

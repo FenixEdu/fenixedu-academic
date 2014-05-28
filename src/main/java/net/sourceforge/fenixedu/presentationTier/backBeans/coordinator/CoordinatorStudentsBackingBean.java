@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator;
 
 import java.io.IOException;
@@ -10,13 +28,14 @@ import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.SearchDegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -25,7 +44,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
@@ -62,10 +81,6 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     private Integer maxIndex = null;
 
     private Boolean showPhoto = null;
-
-    private final Group filteredStudents = null;
-
-    private final String label = "";
 
     public String getDegreeCurricularPlanID() {
         return (degreeCurricularPlanID == null) ? degreeCurricularPlanID = getAndHoldStringParameter("degreeCurricularPlanID") : degreeCurricularPlanID;
@@ -302,12 +317,12 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(name);
+        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
     }
 
     public String getSerializedFilteredStudents() {
         SearchDegreeStudentsGroup searchGroup = getSearchCriteriaGroup();
-        return searchGroup.getExpressionInHex();
+        return searchGroup.serialize();
     }
 
     public StudentCurricularPlanState getStudentCurricularPlanState() {
@@ -400,7 +415,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     private String getFilename() {
-        return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+        return ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
                 "label.students.lowercase");
     }
 
@@ -420,7 +435,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     private Spreadsheet createSpreadSheet() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
         final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("list.students"));
 
         spreadsheet.setHeaders(new String[] {

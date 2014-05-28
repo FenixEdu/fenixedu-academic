@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.ArrayList;
@@ -23,7 +41,7 @@ import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
@@ -118,7 +136,6 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
 
@@ -200,8 +217,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public boolean isAllowedToManageProcess(User userView) {
         if (userView != null) {
             Set<AcademicProgram> programs =
-                    AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                            AcademicOperationType.MANAGE_PHD_PROCESSES);
+                    AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES);
 
             return programs.contains(this.getPhdProgram());
         } else {
@@ -223,8 +239,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         }
 
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.MANAGE_PHD_PROCESS_STATE);
+                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESS_STATE);
 
         return programs.contains(this.getPhdProgram());
     }
@@ -759,8 +774,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean isRegistrationAvailable() {
         return hasRegistration()
-                && AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.MANAGE_REGISTRATIONS).contains(getRegistration().getDegree());
+                && AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_REGISTRATIONS).contains(getRegistration().getDegree());
     }
 
     @Override
@@ -781,7 +795,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             getCandidacyProcess().cancelDebt(person);
         }
 
-        if (hasRegistrationFee() && !getRegistrationFee().hasAnyPayments()) {
+        if (hasRegistrationFee() && !getRegistrationFee().hasAnyPayments() && getRegistrationFee().isOpen()) {
             getRegistrationFee().cancel(person);
         }
     }
@@ -1308,7 +1322,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public String getGraduateTitle(Locale locale) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
         StringBuilder stringBuilder = new StringBuilder(bundle.getString("label.phd.graduated.title.in")).append(" ");
-        stringBuilder.append(getPhdProgram().getName().getContent(Language.valueOf(locale.getLanguage())));
+        stringBuilder.append(getPhdProgram().getName().getContent(locale));
 
         return stringBuilder.toString();
     }

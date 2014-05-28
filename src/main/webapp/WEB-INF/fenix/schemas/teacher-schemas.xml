@@ -1,35 +1,23 @@
-<schema name="CreateRoomsPunctualOccupationRequest" type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean" bundle="APPLICATION_RESOURCES">	
-	<slot name="campus" key="label.find.spaces.campus" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="size" value="30"/>
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
-		<property name="format"	value="${spaceInformation.presentationName}" />
-	</slot>
-	<slot name="subject"  key="label.subject" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" >
-		<property name="rows" value="1" />
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="description" key="label.description" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
-		<property name="rows" value="10" />
-		<property name="columns" value="60"/>
-	</slot>	
-</schema>
+<!--
 
-<schema name="EditRoomsPunctualOccupationRequestFirstComment" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment" bundle="APPLICATION_RESOURCES">	
-	<slot name="request.campus" key="label.find.spaces.campus" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="size" value="30"/>
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
-		<property name="format"	value="${spaceInformation.presentationName}" />
-	</slot>
-	<slot name="subject"  key="label.subject" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator" >
-		<property name="rows" value="1" />
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="description" key="label.description" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
-		<property name="rows" value="10" />
-		<property name="columns" value="60"/>
-	</slot>	
-	<setter signature="edit(subject, description)" />
-</schema>
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
 
 <!-- SCHEMAS FOR TUTORSHIP MANAGEMENT  -->
 <schema name="teacher.tutor.name" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party">	
@@ -74,7 +62,7 @@
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="blankTarget" value="true"/>
-		<property name="linkFormat" value="/viewCurriculum.do?method=prepare&amp;registrationOID=${externalId}"/>	
+		<property name="linkFormat" value="/viewStudentCurriculum.do?method=prepare&amp;registrationOID=${externalId}"/>	
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="registration.number"/>
 	</slot>
@@ -108,7 +96,7 @@
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="blankTarget" value="true"/>
-		<property name="linkFormat" value="/viewCurriculum.do?method=prepare&amp;registrationOID=${externalId}"/>	
+		<property name="linkFormat" value="/viewStudentCurriculum.do?method=prepare&amp;registrationOID=${externalId}"/>	
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="registration.number"/>
 	</slot>

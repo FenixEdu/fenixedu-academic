@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.backBeans.student;
 
 import java.text.DateFormat;
@@ -31,13 +49,10 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.commons.i18n.I18N;
 
 public class StudentCalendarBackingBean extends FenixBackingBean {
 
@@ -269,8 +284,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
                         final String evaluationTypeClassname = getEvaluationTypeClassname();
                         if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
                                 || evaluationTypeClassname.equals(writtenEvaluation.getClass().getName())) {
-                            CalendarLink calendarLink =
-                                    new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
+                            CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
                             calendarLinks.add(calendarLink);
                             calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
                         }
@@ -332,7 +346,6 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         linkParameters.put("objectCode", (site != null) ? site.getExternalId().toString() : null);
         linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getExternalId().toString());
         linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
-        linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, executionCourse.getSite().getReversePath());
         return linkParameters;
     }
 
@@ -365,8 +378,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     }
 
     public String getApplicationContext() {
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+        return getRequest().getContextPath();
     }
 
     public String getExecutionPeriodID() {

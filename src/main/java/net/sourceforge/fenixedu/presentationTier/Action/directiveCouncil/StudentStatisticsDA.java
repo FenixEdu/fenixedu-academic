@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 
 import java.io.Serializable;
@@ -18,16 +36,17 @@ import net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeD
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = DirectiveCouncilApplication.class, path = "student-statistics", titleKey = "link.statistics.students")
 @Mapping(path = "/studentStatistics", module = "directiveCouncil")
-@Forwards({ @Forward(name = "show.student.statistics", path = "/directiveCouncil/showStudentStatistics.jsp",
-        tileProperties = @Tile(title = "private.steeringcouncil.studentstatistics")) })
+@Forwards(@Forward(name = "show.student.statistics", path = "/directiveCouncil/showStudentStatistics.jsp"))
 public class StudentStatisticsDA extends FenixDispatchAction {
 
     public static class ContextBean implements Serializable, HasExecutionYear, HasDegreeType {
@@ -109,6 +128,7 @@ public class StudentStatisticsDA extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward showStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ContextBean contextBean = getRenderedObject();

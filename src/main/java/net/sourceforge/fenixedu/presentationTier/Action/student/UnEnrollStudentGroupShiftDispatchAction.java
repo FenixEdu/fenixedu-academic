@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 13/Nov/2004
  *
@@ -33,12 +51,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author joaosa and rmalo
  * 
  */
-@Mapping(module = "student", path = "/unEnrollStudentGroupShift", attribute = "groupEnrolmentForm",
-        formBean = "groupEnrolmentForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-        @Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
-        @Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
-        @Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
+@Mapping(module = "student", path = "/unEnrollStudentGroupShift", formBean = "groupEnrolmentForm",
+        functionality = ViewEnroledExecutionCoursesAction.class)
+@Forwards(value = { @Forward(name = "insucess", path = "/student/viewEnroledExecutionCourses.do?method=prepare"),
+        @Forward(name = "viewStudentGroupInformation", path = "/student/viewStudentGroupInformation.do"),
+        @Forward(name = "viewShiftsAndGroups", path = "/student/viewShiftsAndGroups.do"),
+        @Forward(name = "viewExecutionCourseProjects", path = "/student/viewExecutionCourseProjects.do") })
 public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
     public ActionForward unEnrollStudentGroupShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -46,7 +64,6 @@ public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
 
         User userView = getUserView(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
-        String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
         try {
             UnEnrollGroupShift.run(studentGroupCodeString, studentGroupCodeString, userView.getUsername());

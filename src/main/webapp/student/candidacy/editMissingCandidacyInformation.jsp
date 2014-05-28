@@ -1,18 +1,56 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean"%>
 <%@page import="org.joda.time.LocalDate"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<html:xhtml />
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="enum" %>
+<html:html xhtml="true">
+<head>
+
+	<link href="<%= request.getContextPath() %>/themes/default/css/style.css" rel="stylesheet" type="text/css" />
+	<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js"></script>
+	<style type="text/css">
+		body {
+			background-color: #F6F4ED;
+		}
+		#content {
+			margin: 0 auto 0 auto;
+			padding-top: 35px;
+			width: 90%;
+		}	
+	</style>
+</head>
+<body>
+	<div id="header">
+		<jsp:include page="/commons/fenixEduBar.jsp" />
+	</div>
+	<div id="content">
 
 <div style="float: right;">
 	<jsp:include page="../../i18n.jsp"/>
 </div>
-<script type="text/javascript">
-hideButtons();
-</script>
 
 <logic:present name="LOGGED_USER_ATTRIBUTE" property="person.student">
 
@@ -251,3 +289,7 @@ hideButtons();
 
 </logic:present>
 
+
+</div>
+</body>
+</html:html>

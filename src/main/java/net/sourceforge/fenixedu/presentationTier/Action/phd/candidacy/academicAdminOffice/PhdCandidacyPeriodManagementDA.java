@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,16 +27,21 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPhdApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = AcademicAdminPhdApp.class, path = "candidacy-period-management",
+        titleKey = "label.phd.candidacy.periods.management", accessGroup = "academic(MANAGE_PHD_PROCESSES)")
 @Mapping(path = "/phdCandidacyPeriodManagement", module = "academicAdministration")
 @Forwards({
         @Forward(name = "list", path = "/phd/candidacy/academicAdminOffice/periods/list.jsp"),
@@ -28,6 +51,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "view", path = "/phd/candidacy/academicAdminOffice/periods/view.jsp") })
 public class PhdCandidacyPeriodManagementDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("phdCandidacyPeriods", PhdCandidacyPeriod.readPhdCandidacyPeriods());
 

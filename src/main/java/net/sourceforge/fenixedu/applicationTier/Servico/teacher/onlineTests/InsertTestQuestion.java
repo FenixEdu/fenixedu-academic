@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
@@ -25,11 +43,8 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class InsertTestQuestion {
 
-    private String path = new String();
-
     protected void run(String executionCourseId, String testId, String[] metadataId, Integer questionOrder, Double questionValue,
-            CorrectionFormula formula, String path) throws FenixServiceException {
-        this.path = path.replace('\\', '/');
+            CorrectionFormula formula) throws FenixServiceException {
 
         for (String element : metadataId) {
             Metadata metadata = FenixFramework.getDomainObject(element);
@@ -72,7 +87,7 @@ public class InsertTestQuestion {
                 }
                 try {
                     InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
-                    question = parseQuestion.parseSubQuestion(question, this.path);
+                    question = parseQuestion.parseSubQuestion(question);
                     if (infoQuestion.getQuestionValue() != null) {
                         thisQuestionValue = infoQuestion.getQuestionValue();
                     } else {
@@ -105,9 +120,9 @@ public class InsertTestQuestion {
 
     @Atomic
     public static void runInsertTestQuestion(String executionCourseId, String testId, String[] metadataId, Integer questionOrder,
-            Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException, NotAuthorizedException {
+            Double questionValue, CorrectionFormula formula) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        serviceInstance.run(executionCourseId, testId, metadataId, questionOrder, questionValue, formula, path);
+        serviceInstance.run(executionCourseId, testId, metadataId, questionOrder, questionValue, formula);
     }
 
 }

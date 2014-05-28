@@ -1,4 +1,22 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
@@ -32,6 +50,7 @@ import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentParticipateApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -39,36 +58,32 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
  * 
  */
+@StrutsFunctionality(app = StudentParticipateApp.class, path = "inquiry", titleKey = "link.inquiries",
+        bundle = "InquiriesResources")
 @Mapping(path = "/studentInquiry", module = "student", formBean = "inquiryNotAnsweredForm")
-@Forwards({
-        @Forward(name = "chooseCourse", path = "/student/inquiries/chooseCourse.jsp", tileProperties = @Tile(
-                title = "private.student.participate.qucsurveys")),
-        @Forward(name = "inquiriesClosed", path = "/student/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(
-                title = "private.student.participate.qucsurveys")),
-        @Forward(name = "showInquiry", path = "/student/inquiries/fillInInquiry.jsp", tileProperties = @Tile(
-                title = "private.student.participate.qucsurveys")),
-        @Forward(name = "showTeachersToAnswer", path = "/student/inquiries/showTeachersToAnswer.jsp", tileProperties = @Tile(
-                title = "private.student.participate.qucsurveys")),
-        @Forward(name = "chooseTeacher", path = "/student/inquiries/chooseTeacher.jsp", tileProperties = @Tile(
-                title = "private.student.participate.qucsurveys")),
-        @Forward(name = "showTeacherInquiry", path = "/student/inquiries/teacherInquiry.jsp", tileProperties = @Tile(
-                title = "private.student.participate.qucsurveys")),
-        @Forward(name = "showDontRespond", path = "/student/inquiries/dontRespond.jsp", tileProperties = @Tile(
-                title = "private.student.participate.qucsurveys")) })
+@Forwards({ @Forward(name = "chooseCourse", path = "/student/inquiries/chooseCourse.jsp"),
+        @Forward(name = "inquiriesClosed", path = "/student/inquiries/inquiriesClosed.jsp"),
+        @Forward(name = "showInquiry", path = "/student/inquiries/fillInInquiry.jsp"),
+        @Forward(name = "showTeachersToAnswer", path = "/student/inquiries/showTeachersToAnswer.jsp"),
+        @Forward(name = "chooseTeacher", path = "/student/inquiries/chooseTeacher.jsp"),
+        @Forward(name = "showTeacherInquiry", path = "/student/inquiries/teacherInquiry.jsp"),
+        @Forward(name = "showDontRespond", path = "/student/inquiries/dontRespond.jsp") })
 public class StudentInquiryDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward showCoursesToAnswer(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

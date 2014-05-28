@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 23/Set/2003
  *  
@@ -34,14 +52,9 @@ public class InsertExerciseVariation {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    protected List run(String executionCourseId, String metadataId, UploadedFile xmlZipFile, String path)
-            throws FenixServiceException, NotExecuteException {
+    protected List run(ExecutionCourse executionCourse, String metadataId, UploadedFile xmlZipFile) throws FenixServiceException,
+            NotExecuteException {
         List<String> badXmls = new ArrayList<String>();
-        String replacedPath = path.replace('\\', '/');
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
-        if (executionCourse == null) {
-            throw new InvalidArgumentsServiceException();
-        }
 
         Metadata metadata = FenixFramework.getDomainObject(metadataId);
         if (metadata == null) {
@@ -59,7 +72,7 @@ public class InsertExerciseVariation {
             try {
                 ParseSubQuestion parseQuestion = new ParseSubQuestion();
 
-                parseQuestion.parseSubQuestion(xmlFile, replacedPath);
+                parseQuestion.parseSubQuestion(xmlFile);
                 Question question = new Question();
                 question.setMetadata(metadata);
                 question.setXmlFile(xmlFile);
@@ -109,10 +122,10 @@ public class InsertExerciseVariation {
     private static final InsertExerciseVariation serviceInstance = new InsertExerciseVariation();
 
     @Atomic
-    public static List runInsertExerciseVariation(String executionCourseId, String metadataId, UploadedFile xmlZipFile,
-            String path) throws FenixServiceException, NotExecuteException, NotAuthorizedException {
-        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, metadataId, xmlZipFile, path);
+    public static List runInsertExerciseVariation(ExecutionCourse executionCourse, String metadataId, UploadedFile xmlZipFile)
+            throws FenixServiceException, NotExecuteException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourse);
+        return serviceInstance.run(executionCourse, metadataId, xmlZipFile);
     }
 
 }

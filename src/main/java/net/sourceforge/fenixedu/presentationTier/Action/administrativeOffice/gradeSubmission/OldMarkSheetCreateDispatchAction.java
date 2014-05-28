@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
 
 import java.util.ArrayList;
@@ -32,16 +50,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/oldCreateMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
-        input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp")
+        input = "/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp", functionality = OldMarkSheetSearchDispatchAction.class)
 @Forwards({
         @Forward(name = "createMarkSheetStep1",
-                path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp"),
+                path = "/academicAdministration/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp"),
         @Forward(name = "createMarkSheetStep2",
-                path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep2.jsp"),
-        @Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-        @Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"),
-        @Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"),
-        @Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp") })
+                path = "/academicAdministration/gradeSubmission/oldMarkSheets/createMarkSheetStep2.jsp"),
+        @Forward(name = "searchMarkSheetFilled",
+                path = "/academicAdministration/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "rectifyMarkSheetStep1", path = "/academicAdministration/gradeSubmission/rectifyMarkSheetStep1.jsp"),
+        @Forward(name = "rectifyMarkSheetStep2", path = "/academicAdministration/gradeSubmission/rectifyMarkSheetStep2.jsp"),
+        @Forward(name = "viewMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp") })
 public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAction {
 
     @Override

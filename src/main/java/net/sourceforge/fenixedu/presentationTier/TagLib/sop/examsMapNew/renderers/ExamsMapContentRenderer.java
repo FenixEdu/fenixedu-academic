@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 2003/10/28  
  */
@@ -21,6 +39,8 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.util.RequestUtils;
+
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * @author Ana e Ricardo
@@ -116,13 +136,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                 } else if (typeUser.equals("public")) {
 
                     final Site site = infoExecutionCourse.getExecutionCourse().getSite();
-                    if (site.isPublic()) {
-                        strBuffer
-                                .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-                    } else {
-                        strBuffer
-                                .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-                    }
+                    strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
                     strBuffer.append("<a href=\"").append(((HttpServletRequest) pageContext.getRequest()).getContextPath());
                     strBuffer.append(site.getReversePath());
                     strBuffer.append("\">");

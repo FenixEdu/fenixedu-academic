@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.Serializable;
@@ -8,23 +26,24 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.IrsDeclarationLink;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication.PersonalAreaApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+@StrutsFunctionality(app = PersonalAreaApp.class, descriptionKey = "label.irs.information", path = "irs-declaration",
+        titleKey = "label.irs.information")
 @Mapping(module = "person", path = "/irsDeclaration", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "edit.IRSDeclaration.link", path = "/person/editIRSDeclarationLink.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.irs")),
-        @Forward(name = "view.irsDocument.information", path = "/person/irs/irsDocumentInformation.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.irs")) })
+@Forwards(value = { @Forward(name = "edit.IRSDeclaration.link", path = "/person/editIRSDeclarationLink.jsp"),
+        @Forward(name = "view.irsDocument.information", path = "/person/irs/irsDocumentInformation.jsp") })
 public class IRSDeclarationAction extends FenixDispatchAction {
 
     public static class IRSDeclarationBean implements Serializable {
@@ -76,6 +95,7 @@ public class IRSDeclarationAction extends FenixDispatchAction {
         return mapping.findForward("edit.IRSDeclaration.link");
     }
 
+    @EntryPoint
     public ActionForward viewIrsDocumentInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("loggedPerson", AccessControl.getPerson());

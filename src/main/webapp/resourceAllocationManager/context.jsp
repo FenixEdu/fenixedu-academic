@@ -1,33 +1,21 @@
-<%@ page language="java"%>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
+<%--
 
-<%@page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
+    Copyright © 2002 Instituto Superior Técnico
 
-<html:xhtml />
+    This file is part of FenixEdu Core.
 
-<fr:form action="/chooseContext.do">
-	<fr:edit name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>" schema="degreeContext.choose">
-		<fr:destination name="degreePostBack" path="/chooseContext.do?method=choosePostBackToContext" />
-		<fr:destination name="yearPostBack" path="/chooseContext.do?method=choosePostBackToContext" />
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop05 mbottom0 thmiddle" />
-			<fr:property name="columnClasses" value="width12em,width800px,tdclear tderror1" />
-		</fr:layout>
-	</fr:edit>
-</fr:form>
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-<fr:form action="/chooseExecutionPeriod.do">
-	<fr:edit schema="academicIntervalSelectionBean.choosePostBack"
-		name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>">
-		<fr:destination name="intervalPostBack" path="/chooseExecutionPeriod.do?method=choose" />
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop0 thmiddle" />
-			<fr:property name="columnClasses" value="width12em,width800px,tdclear tderror1" />
-		</fr:layout>
-	</fr:edit>
-</fr:form>
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<a href="${pageContext.request.contextPath}/resourceAllocationManager/chooseContext.do?method=choose&academicInterval=${academicInterval}&execution_degree_oid=${execution_degree_oid}&curricular_year_oid=${curricular_year_oid}">« Voltar à selecção de curso/ano</a>

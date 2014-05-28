@@ -1,15 +1,31 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadClassTimeTableByStudent;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.WriteStudentAttendingCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -20,8 +36,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalLookupDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -30,55 +47,40 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(module = "student", path = "/studentShiftEnrollmentManagerLoockup",
-        input = "/studentShiftEnrollmentManager.do?method=prepare", attribute = "studentShiftEnrollmentForm",
-        formBean = "studentShiftEnrollmentForm", scope = "request", validate = false, parameter = "method")
+@Mapping(module = "student", path = "/studentShiftEnrollmentManagerLookup",
+        input = "/studentShiftEnrollmentManager.do?method=prepare", formBean = "studentShiftEnrollmentForm", validate = false,
+        functionality = ShiftStudentEnrollmentManagerDispatchAction.class)
 @Forwards(value = {
-        @Forward(name = "prepareShiftEnrollment", path = "/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment",
-                tileProperties = @Tile(title = "private.student.subscribe.groups")),
+        @Forward(name = "prepareShiftEnrollment",
+                path = "/student/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment"),
         @Forward(name = "prepareEnrollmentViewWarning",
-                path = "/studentShiftEnrollmentManager.do?method=prepareStartViewWarning", tileProperties = @Tile(
-                        title = "private.student.subscribe.groups")),
-        @Forward(name = "showShiftsToEnroll", path = "/student/enrollment/showShiftsToEnroll.jsp", tileProperties = @Tile(
-                navLocal = "/student/enrollment/listClasses.jsp", title = "private.student.subscribe.groups")),
-        @Forward(name = "studentFirstPage", path = "/dotIstPortal.do?prefix=/student&page=/index.do", contextRelative = true,
-                tileProperties = @Tile(title = "private.student.subscribe.groups")),
-        @Forward(name = "beginTransaction", path = "/studentShiftEnrollmentManager.do?method=start&firstTime=true",
-                tileProperties = @Tile(title = "private.student.subscribe.groups")) })
-@Exceptions(
-        value = {
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException.class,
-                        key = "error.transaction.enrolment",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        scope = "request"),
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class,
-                        key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        scope = "request"),
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan.class,
-                        key = "error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        scope = "request"),
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan.class,
-                        key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        scope = "request") })
-public class ShiftStudentEnrollmentManagerLookupDispatchAction extends TransactionalLookupDispatchAction {
+                path = "/student/studentShiftEnrollmentManager.do?method=prepareStartViewWarning"),
+        @Forward(name = "showShiftsToEnroll", path = "/student/enrollment/showShiftsToEnroll.jsp"),
+        @Forward(name = "studentFirstPage", path = "/student/index.do"),
+        @Forward(name = "beginTransaction", path = "/student/studentShiftEnrollmentManager.do?method=start&firstTime=true") })
+@Exceptions(value = {
+        @ExceptionHandling(type = FenixTransactionException.class, key = "error.transaction.enrolment",
+                handler = FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(type = NotAuthorizedException.class,
+                key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
+                handler = FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(
+                type = ClassEnrollmentAuthorizationFilter.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan.class,
+                key = "error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan",
+                handler = FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(
+                type = ClassEnrollmentAuthorizationFilter.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan.class,
+                key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
+                handler = FenixErrorExceptionHandler.class, scope = "request") })
+public class ShiftStudentEnrollmentManagerLookupDispatchAction extends FenixDispatchAction {
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
         final Registration registration = FenixFramework.getDomainObject(request.getParameter("registrationOID"));
@@ -94,7 +96,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     public ActionForward addCourses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixTransactionException {
 
-        super.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
+        this.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
 
         final Registration registration = getAndSetRegistration(request);
         if (registration == null) {
@@ -104,7 +106,6 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         checkParameter(request);
 
-        final User userView = getUserView(request);
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String executionCourseId = (String) form.get("wantedCourse");
 
@@ -130,7 +131,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     public ActionForward removeCourses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixTransactionException {
 
-        super.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
+        this.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
 
         final Registration registration = getAndSetRegistration(request);
         if (registration == null) {
@@ -282,37 +283,16 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         }
     }
 
-    @Override
-    protected String getLookupMapName(HttpServletRequest request, String keyName, ActionMapping mapping) throws ServletException {
-        // some mapping forwards are made with this method name (in portuguese)
-        // through annotations in actions, the problem is that if the language
-        // is not portuguese
-        // the system will not find the associated key in the correspondent
-        // properties file of that language, naturally, hence this hack
-        if (keyName.equals("Escolher Turnos") && !Language.getUserLanguage().equals(Language.pt)) {
-            return getKeyMethodMap().get("link.shift.enrolement.edit").toString();
-        }
-        String key = super.getLookupMapName(request, keyName, mapping);
-        if (key == null) {
-            if (request.getParameter("method").equals("Escolher Turma")) {
-                key = "link.shift.enrolement.edit";
-            }
-        }
-        return key;
-    }
+    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping, String errorMessageKey)
+            throws FenixTransactionException {
 
-    @Override
-    protected Map getKeyMethodMap() {
-        Map map = new HashMap();
-        map.put("button.addCourse", "addCourses");
-        map.put("button.removeCourse", "removeCourses");
-        map.put("button.continue.enrolment", "prepareStartViewWarning");
-        map.put("button.exit.shift.enrollment", "exitEnrollment");
-        map.put("label.class", "proceedToShiftEnrolment");
-        map.put("link.shift.enrolement.edit", "proceedToShiftEnrolment");
-        map.put("button.clean", "proceedToShiftEnrolment");
-        map.put("Escolher Turma", "exitEnrollment");
-        return map;
+        if (!isTokenValid(request)) {
+            form.reset(mapping, request);
+            throw new FenixTransactionException(errorMessageKey);
+        }
+        generateToken(request);
+        saveToken(request);
+
     }
 
 }

@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
@@ -5,27 +25,30 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
+
+<jsp:include page="/coordinator/context.jsp" />
+
   <span class="error"><!-- Error messages go here --><html:errors /></span>
   <bean:define id="curriculum" name="<%= PresentationConstants.CURRICULUM %>" scope="request" />
   <bean:size id="enrolmentNumber" name="<%= PresentationConstants.CURRICULUM %>" scope="request" />
   <bean:define id="student" name="<%= PresentationConstants.STUDENT_CURRICULAR_PLAN %>" scope="request" />
   
   
-  <bean:message key="label.person.name" />
-  <bean:write name="student" property="infoStudent.infoPerson.nome"/>
-  <br/>
-  
-  <bean:message key="label.degree.name" />:
-  <bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-  <br/>
+  <div class="alert alert-warning">
+	  <bean:message key="label.person.name" />
+	  <bean:write name="student" property="infoStudent.infoPerson.nome"/>
+	  <br/>
+	  
+	  <bean:message key="label.degree.name" />:
+	  <bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+	  <br/>
 
-  <bean:message key="label.number" />
-  <bean:write name="student" property="infoStudent.number"/>
-  <br/>
-  <br/>  
+	  <bean:message key="label.number" />
+	  <bean:write name="student" property="infoStudent.number"/>
+  </div>
   
   <logic:notEqual name="enrolmentNumber" value="0">
-	  <table>
+	  <table class="table">
 	  	<tr>
 		  	<th class="listClasses-header">
 		  		<bean:message key="label.executionYear" />

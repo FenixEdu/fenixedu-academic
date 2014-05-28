@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -13,9 +31,10 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -36,7 +55,7 @@ public class CreateExecutionDegreesForExecutionYear {
         check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
-        final Campus campus = readCampusByName(campusName);
+        final Space campus = readCampusByName(campusName);
 
         final OccupationPeriod lessonSeason1 = getOccupationPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
         final OccupationPeriod lessonSeason2 =
@@ -77,9 +96,12 @@ public class CreateExecutionDegreesForExecutionYear {
         return created;
     }
 
-    private static Campus readCampusByName(String campusName) {
-        for (Campus campus : Campus.getAllActiveCampus()) {
-            if (campus.getName().equalsIgnoreCase(campusName)) {
+    private static Space readCampusByName(String campusName) {
+        if (campusName == null) {
+            return null;
+        }
+        for (Space campus : Space.getAllCampus()) {
+            if (campusName.equalsIgnoreCase(campus.getName())) {
                 return campus;
             }
         }

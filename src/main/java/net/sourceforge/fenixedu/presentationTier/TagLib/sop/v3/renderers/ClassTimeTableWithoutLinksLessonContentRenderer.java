@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
@@ -7,10 +25,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.spaces.domain.Space;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -38,9 +57,9 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer extends LessonSlotC
 
                 strBuffer.append("(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
-                final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+                final Space allocatableSpace = lesson.getAllocatableSpace();
                 if (allocatableSpace != null) {
-                    strBuffer.append(allocatableSpace.getNome());
+                    strBuffer.append(allocatableSpace.getName());
                 }
 
                 if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {

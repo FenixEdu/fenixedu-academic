@@ -1,11 +1,29 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
+<%@page import="org.fenixedu.bennu.portal.domain.PortalConfiguration"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 
 <html:html xhtml="true">
 <head>
@@ -28,16 +46,13 @@
 
 </head>
 <body>
-<jsp:include page="deployWarning.jsp" flush="true"/>
-
 
 <p class="skipnav"><a href="#main">Saltar men&uacute; de navega&ccedil;&atilde;o</a></p>
 <!-- START HEADER -->
 	<div id="logoist">
-		<h1><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %></a></h1>
-		<!-- <img alt="[Logo] Instituto Superior Técnico" height="51" src="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>img/wwwist.gif" width="234" /> -->
+		<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><img src="${pageContext.request.contextPath}/api/bennu-portal/configuration/logo" /></a>
 	</div>
-	<div id="header_links"><a href="https://fenix.ist.utl.pt/loginPage.jsp">Login <%=Instalation.getInstance().getInstalationName() %></a> | <a href="#">Contactos</a></div>
+	<div id="header_links"><a href="https://fenix.ist.utl.pt/loginPage.jsp">Login <%=PortalConfiguration.getInstance().getApplicationTitle().getContent() %></a> | <a href="#">Contactos</a></div>
 <!-- END HEADER -->
 <!--START MAIN CONTENT -->
 

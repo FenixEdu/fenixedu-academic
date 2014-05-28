@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java"%>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -7,32 +27,14 @@
 
 <html:xhtml />
 
-
-
-<script language="JavaScript">	
-function check(e,v){
-	if (e.className == "dnone")
-  	{
-	  e.className = "dblock";
-	  v.value = "-";
-	}
-	else {
-	  e.className = "dnone";
-  	  v.value = "+";
-	}
-}
-</script>
-
-
-<span class="dnone" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">
-	<span class="helpicon">
-		<a href="" class="hlink"></a>
-	</span>
+<span class="helpicon" data-toggle="collapse" data-target="#instructions">
+	<a href="#" class="hlink"></a>
 </span>
+
 
 <h2 class="mbottom0"><bean:message key="thesis.validation.title.list" /></h2>
 
-<div id="instructions" class="dblock">
+<div id="instructions" class="collapse">
 	<div class="help">
 		<div class="htop"></div>
 		<div class="hcontent">
@@ -40,15 +42,6 @@ function check(e,v){
 		</div>
 	</div>
 </div>
-
-
-
-<script>
-	check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
-	document.getElementById('instructionsButton').className="dblock";
-</script>
-
-
 
 <fr:form action="/theses/search.do?method=search">
 	<fr:edit id="search" name="searchFilter" schema="library.thesis.search">

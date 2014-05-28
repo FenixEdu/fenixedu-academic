@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
@@ -52,15 +72,15 @@
 				<tr><td><hr/></td></tr>
 		<%}%>		
 		<tr><td><div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")%>">
+			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestion&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")%>">
 				<bean:message key="label.changeQuestion" />
 			</html:link>
 		</div><div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestionValue&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")+"&amp;questionValue="+testQuestionValue%>">
+			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestionValue&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")+"&amp;questionValue="+testQuestionValue%>">
 				<bean:message key="label.changeQuestionValue" />
 			</html:link>
 		</div><div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestionMark&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")+"&amp;questionValue="+mark%>">
+			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestionMark&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")+"&amp;questionValue="+mark%>">
 				<bean:message key="label.changeQuestionMark" />
 			</html:link>
 		</div></td></tr>

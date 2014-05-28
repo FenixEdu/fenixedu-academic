@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -16,7 +34,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -33,6 +50,7 @@ import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.joda.time.Duration;
 
 import pt.ist.fenixframework.Atomic;
@@ -491,18 +509,9 @@ public class Shift extends Shift_Base {
     }
 
     public int getCapacityBasedOnSmallestRoom() {
-        int capacity = 0;
-
-        for (final Lesson lesson : getAssociatedLessonsSet()) {
-            if (lesson.hasSala()) {
-                if (capacity == 0) {
-                    capacity = (lesson.getSala()).getNormalCapacity();
-                } else {
-                    capacity = Math.min(capacity, (lesson.getSala()).getNormalCapacity());
-                }
-            }
-        }
-
+        int capacity =
+                getAssociatedLessonsSet().stream().filter(Lesson::hasSala)
+                        .mapToInt(lesson -> lesson.getSala().getAllocatableCapacity()).min().orElse(0);
         return capacity + (capacity / 10);
     }
 
@@ -533,7 +542,8 @@ public class Shift extends Shift_Base {
         registration.removeShifts(this);
 
         ExecutionCourseSender sender = ExecutionCourseSender.newInstance(executionCourse);
-        Collection<Recipient> recipients = Collections.singletonList(new Recipient(new PersonGroup(registration.getPerson())));
+        Collection<Recipient> recipients =
+                Collections.singletonList(new Recipient(UserGroup.of(registration.getPerson().getUser())));
         final String subject =
                 BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.remove.subject");
         final String body =
@@ -565,7 +575,7 @@ public class Shift extends Shift_Base {
                 stringBuilder.append(lesson.getEndHourMinuteSecond().toString("HH:mm"));
                 if (lesson.hasSala()) {
                     stringBuilder.append(" - ");
-                    stringBuilder.append(lesson.getSala().getIdentification());
+                    stringBuilder.append(lesson.getSala().getName());
                 }
                 if (iterator.hasNext()) {
                     stringBuilder.append(" ; ");
@@ -589,7 +599,7 @@ public class Shift extends Shift_Base {
                 stringBuilder.append(lesson.getEndHourMinuteSecond().toString("HH:mm"));
                 if (lesson.hasSala()) {
                     stringBuilder.append(" - ");
-                    stringBuilder.append(lesson.getSala().getIdentification());
+                    stringBuilder.append(lesson.getSala().getName());
                 }
                 if (iterator.hasNext()) {
                     stringBuilder.append(" ; ");

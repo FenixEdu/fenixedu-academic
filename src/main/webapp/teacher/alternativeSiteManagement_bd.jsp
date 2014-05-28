@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -5,36 +25,36 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction"%>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <p>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 </p>
 
-<h2><bean:message key="title.personalizationOptions"/></h2>
-<logic:present name="siteView"> 
+<h2>
+	<bean:message key="title.personalizationOptions"/>
+
+	<span class="small pull-right">
+		<html:link page="/alternativeSite.do?method=prepareImportCustomizationOptions&amp;page=0" paramId="executionCourseID" paramName="executionCourseID">
+			<bean:message key="link.import.customizationOptions"/>
+		</html:link>
+	</span>
+</h2>
 <html:form action="/alternativeSite" method="post">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editCustomizationOptions"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<bean:define id="bodyComponent" name="siteView" property="component"/>
-<bean:define id="objectCode"><%= pageContext.findAttribute("objectCode").toString() %></bean:define>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="executionCourseID" value="${executionCourseID}" />
 
-<p class="mvert15">
-	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-	<html:link page="/alternativeSite.do?method=prepareImportCustomizationOptions&amp;page=0" paramId="objectCode" paramName="objectCode">
-		<bean:message key="link.import.customizationOptions"/>
-	</html:link>
-</p>
 
-<table width="98%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_1.gif" alt="<bean:message key="number_1" bundle="IMAGE_RESOURCES" />" />
-		</td>
-		<td class="infoop"><bean:message key="message.siteandmail.information" />
-		</td>
-	</tr>
-</table>
+
+<div class="clearfix alert alert-warning">
+	<div class="col-lg-1 text-right">
+		<img src="${pageContext.request.contextPath}/images/number_1.gif">
+	</div>
+	<div class="col-lg-11">
+		<bean:message key="message.siteandmail.information" />
+	</div>
+</div>
 
 
 <table class="tstyle2 thlight thleft" style="width: 100%;">
@@ -61,7 +81,7 @@
 		</p>
 		<p>
 			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dynamicMailDistribution" property="dynamicMailDistribution" value="true"/>
-			<%=ExecutionCourseAliasExpandingAction.emailAddressPrefix%><%=request.getParameter("objectCode")%>&#64;<%=TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration() %>	
+			<%=ExecutionCourseAliasExpandingAction.emailAddressPrefix%>${executionCourseID}&#64;<%=FenixConfigurationManager.getConfiguration().getMailingListHostName() %>	
 	
 			<span class="error" ><!-- Error messages go here -->
 			<html:errors property="dynamicMailDistribution"/></span>
@@ -71,19 +91,14 @@
 </table>
 
 
-
-<table class="mtop2" width="98%" cellpadding="0" cellspacing="0">
-<tr>
-	<td class="infoop">
-		<img src="<%= request.getContextPath() %>/images/number_2.gif" alt="<bean:message key="number_2" bundle="IMAGE_RESOURCES" />" />
-	</td>
-	<td class="infoop">
+<div class="clearfix alert alert-warning">
+	<div class="col-lg-1 text-right">
+		<img src="${pageContext.request.contextPath}/images/number_2.gif">
+	</div>
+	<div class="col-lg-11">
 		<bean:message key="message.initialStatement.explanation" />
-	</td>
-</tr>
-</table>
-
-
+	</div>
+</div>
 
 <table class="tstyle2 thlight thleft" style="width: 100%;">
 <tr>
@@ -91,21 +106,20 @@
 		<bean:message key="message.initialStatement"/>
 	</td>	
 	<td>
-		<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.initialStatement" name="bodyComponent" property="initialStatement" rows="10" cols="56"/> 
+		<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.initialStatement" property="initialStatement" rows="5" cols="110"/> 
 	</td>
 </tr>
 </table>
 
 
-<table class="mtop2" width="98%" cellpadding="0" cellspacing="0">
-<tr>
-	<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_3.gif" alt="<bean:message key="number_3" bundle="IMAGE_RESOURCES" />" />
-	</td>
-	<td class="infoop">
-	  <bean:message key="message.introduction.explanation" />
-	</td>
-</tr>
-</table>
+<div class="clearfix alert alert-warning">
+	<div class="col-lg-1 text-right">
+		<img src="${pageContext.request.contextPath}/images/number_3.gif">
+	</div>
+	<div class="col-lg-11">
+		<bean:message key="message.introduction.explanation" />
+	</div>
+</div>
 
 
 <table class="tstyle2 thlight thleft" style="width: 100%;">
@@ -114,7 +128,7 @@
 		<bean:message key="message.introduction"/>:
 	</td>	
 	<td>
-		<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.introduction" name="bodyComponent" property="introduction" rows="10" cols="56"/>
+		<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.introduction" property="introduction" rows="5" cols="110"/>
 	</td> 
 </tr>
 </table>
@@ -124,11 +138,6 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
 		<bean:message key="button.save"/>
 	</html:submit>
-
-	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
-		<bean:message key="label.clear"/>
-	</html:reset>
 </p>
 
 </html:form>
-</logic:present>

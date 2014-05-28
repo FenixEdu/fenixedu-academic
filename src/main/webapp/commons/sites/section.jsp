@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -6,7 +26,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
@@ -20,6 +39,7 @@
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 <bean:define id="sectionId" name="section" property="externalId"/>
 
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp"/>
 <jsp:include page="siteQuota.jsp"/>
 
 <h2>
@@ -82,7 +102,7 @@
 	   		</ul>
 	</div>
 
-<logic:notEmpty name="site" property="directChildrenAsContent">
+<logic:notEmpty name="site" property="associatedSectionSet">
     <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context + "&amp;sectionID=" + sectionId %>">
         <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
@@ -90,30 +110,31 @@
     <% String treeId = "subSectionTree" + site.getExternalId(); %>
             
     <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
-        <fr:view name="site" property="directChildrenAsContent">
+        <fr:view name="site" property="orderedAssociatedSections">
             <fr:layout name="tree">
                 <fr:property name="treeId" value="<%= treeId %>"/>
                 <fr:property name="fieldId" value="sections-order"/>
                 
 	             <fr:property name="eachLayout" value="values"/>
-                <fr:property name="childrenFor(Section)" value="childrenAsContent"/>
+                <fr:property name="childrenFor(Section)" value="everythingForTree"/>
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
 
-				<fr:property name="schemaFor(Functionality)" value="site.functionality.name"/>
+				<fr:property name="schemaFor(TemplatedSectionInstance)" value="site.template.name"/>
+				<fr:property name="imageFor(TemplatedSectionInstance)" value="/images/icon-institutional.gif"/>
 
 				<fr:property name="schemaFor(Item)" value="site.item.name"/>
-                <fr:property name="childrenFor(Item)" value="childrenAsContent"/>
+                <fr:property name="childrenFor(Item)" value="fileContentSet"/>
 
-				<fr:property name="schemaFor(Attachment)" value="content.in.tree"/>
-				
-				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>
+				<fr:property name="schemaFor(FileContent)" value="item.file.filename"/>
+				<fr:property name="imageFor(FileConten)" value="/images/icon-attachment.gif"/>
+
                 <fr:property name="current" value="<%= sectionId.toString() %>"/>
                 <fr:property name="currentClasses" value="highlight1"/>
                 <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
             <fr:destination name="section.view" path="<%= actionName + "?method=section&sectionID=${externalId}&" + context %>"/>
             <fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.externalId}&" + context  + "#item-${externalId}"%>"/>
-        	<fr:destination name="functionality.view" path="<%= actionName + "?method=functionality&siteID=" + siteId + "&functionalityID=${externalId}&" + context  + "#content-${externalId}"%>"/>
+        	<fr:destination name="functionality.view" path="<%= actionName + "?method=section&siteID=" + siteId + "&sectionID=${section.externalId}&" + context  + "#content-${externalId}"%>"/>
         </fr:view>
 
 		<p class="mtop15">
@@ -143,13 +164,13 @@
 		
 		<span style="color: rgb(136, 136, 136); padding-left: 0.75em;">
             <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
-            <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+            <fr:view name="section" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
                 <fr:layout>
-                    <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+                    <fr:property name="label" value="label.public"/>
                     <fr:property name="key" value="true"/>
                     <fr:property name="bundle" value="SITE_RESOURCES"/>
                     <fr:property name="subLayout" value="values"/>
-                    <fr:property name="subSchema" value="permittedGroup.class.text"/>
+                    <fr:property name="subSchema" value="permittedGroup.name"/>
                 </fr:layout>
             </fr:view>    
         </span>
@@ -213,10 +234,8 @@
     		</html:link>
     	</span>
 		|
-		
-		<app:defineContentPath id="url" name="section"/>
-		<bean:define id="url" name="url" type="java.lang.String"/>
-		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
+
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a  target="_blank" href="${section.fullPath}">
 			<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
 		</a>
         
@@ -275,7 +294,7 @@
 	</ul>
 </logic:equal>
 
-<logic:empty name="section" property="associatedItems">
+<logic:empty name="section" property="childrenItems">
     <p>
         <em>
             <bean:message key="message.section.items.empty" bundle="SITE_RESOURCES"/>
@@ -283,8 +302,8 @@
     </p>
 </logic:empty>
 
-<logic:notEmpty name="section" property="associatedItems">
-	<logic:iterate id="item" name="section" property="orderedItems" type="net.sourceforge.fenixedu.domain.Item">
+<logic:notEmpty name="section" property="childrenItems">
+	<logic:iterate id="item" name="section" property="orderedChildItems" type="net.sourceforge.fenixedu.domain.Item">
 
         <bean:define id="itemId" name="item" property="externalId"/>
 		
@@ -293,18 +312,18 @@
 		
 			<p class="mtop0 mbottom05">
 				<%--<span style="color: #888;"><bean:message key="label.item"/></span><br/>--%>
-				<span style="float: right;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
+				<span style="float: right;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
 				<strong><fr:view name="item" property="name"/></strong>
 	            
 	            <span style="color: #888; padding-left: 0.75em;">
 	                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
-	                <fr:view name="item" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                <fr:view name="item" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                    <fr:layout>
-	                        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                        <fr:property name="label" value="label.public"/>
 	                        <fr:property name="key" value="true"/>
 	                        <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                        <fr:property name="subLayout" value="values"/>
-	                        <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                        <fr:property name="subSchema" value="permittedGroup.name"/>
 	                    </fr:layout>
 	                </fr:view>
 	            </span>
@@ -352,7 +371,9 @@
 							
 			|
 	        		<span>
-		               <app:contentLink name="item"><bean:message key="link.view" bundle="SITE_RESOURCES"/> »</app:contentLink>
+		               <a href="${item.fullPath}" target="_blank">
+		               	<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
+		               </a>
 	               </span>
 				
        		        
@@ -392,7 +413,7 @@
                	</fr:view>
             </div>
     
-            <logic:notEmpty name="item" property="fileItems">
+            <logic:notEmpty name="item" property="fileContentSet">
                 <div class="mtop2">
                 
                     <strong><bean:message key="label.files" bundle="SITE_RESOURCES"/>:</strong>
@@ -404,7 +425,7 @@
 	                    		<th><bean:message key="label.section.item.file.availability" bundle="SITE_RESOURCES"/></th>
 	                    		<th><bean:message key="label.section.item.file.options" bundle="SITE_RESOURCES"/></th>
                     		</tr>
-                        	<logic:iterate id="fileItem" name="item" property="sortedFileItems" type="net.sourceforge.fenixedu.domain.FileContent">
+                        	<logic:iterate id="fileItem" name="item" property="fileContentSet" type="net.sourceforge.fenixedu.domain.FileContent">
 							<tr>
 								<td>
 	                        		<bean:define id="downloadUrl">
@@ -423,13 +444,13 @@
             					<td>
 	                                <span class="pleft1" style="color: #888;">
 	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
-	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                                        <fr:layout>
-	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="label" value="label.public"/>
 	                                            <fr:property name="key" value="true"/>
 	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                                            <fr:property name="subLayout" value="values"/>
-	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.name"/>
 	                                        </fr:layout>
 	                                    </fr:view>
 	                                </span>
@@ -465,7 +486,6 @@
 <!-- Functionalities -->
 
 <logic:equal name="site" property="templateAvailable" value="true">
-<logic:equal name="site" property="template.contentPoolAvailable" value="true">
 <h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
 
 	<ul class="mbottom2 list5" style="list-style: none;">
@@ -477,50 +497,47 @@
 		</li>
 	</ul>
 
-<logic:empty name="section" property="associatedFunctionalities">
+<logic:empty name="section" property="childrenTemplatedSections">
 	<p><em><bean:message key="label.noInstitutionalContents" bundle="SITE_RESOURCES"/>.</em></p>
 </logic:empty>
 
-<logic:notEmpty name="section" property="associatedFunctionalities">
+<logic:notEmpty name="section" property="childrenTemplatedSections">
 	<bean:define id="containerID" name="section" property="externalId"/>
-	<logic:iterate id="functionality" name="section" property="associatedFunctionalities">
+	<logic:iterate id="functionality" name="section" property="childrenTemplatedSections">
 			<bean:define id="contentID" name="functionality" property="externalId"/>
 
 			<div id="content-<%= contentID%>" class="mtop15 mbottom0" style="background: #f5f5f5; padding: 0.5em;">
-			<span style="float: right;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
+			<span style="float: right;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
 			<strong><fr:view name="functionality" property="name"/></strong>
 					
 				<span style="color: #888; padding-left: 0.75em;">
 	                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
-	                <fr:view name="functionality" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                <fr:view name="functionality" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                    <fr:layout>
-	                        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                        <fr:property name="label" value="label.public"/>
 	                        <fr:property name="key" value="true"/>
 	                        <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                        <fr:property name="subLayout" value="values"/>
-	                        <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                        <fr:property name="subSchema" value="permittedGroup.name"/>
 	                    </fr:layout>
 	                </fr:view>
 	            </span>
 				<p>
 				<span>
-    					<html:link action="<%=  actionName + "?method=removeFunctionalityFromContainer&amp;" + context + "&amp;contentID=" + contentID + "&amp;containerID=" + containerID + "&amp;sectionID=" + containerID%>">
+    					<html:link action="<%=  actionName + "?method=deleteSection&amp;" + context + "&amp;sectionID=" + contentID + "&amp;containerID=" + containerID + "&amp;sectionID=" + containerID%>">
 								<bean:message key="link.delete" bundle="SITE_RESOURCES"/>
 			 			</html:link>
 				</span>
 				| 
-			
-				<app:defineContentPath id="url" name="functionality"/>
-					<bean:define id="url" name="url" type="java.lang.String"/>
-					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
-					<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
+		
+					<a target="_blank" href="${functionality.fullPath}">
+						<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
 					</a>
 				</p>
 			 </div>
 			
 	</logic:iterate>
 </logic:notEmpty>
-</logic:equal>
 </logic:equal>
 
 
@@ -539,7 +556,7 @@
 		</li>
 	</ul>
 
-<logic:notEmpty name="section" property="associatedFiles">
+<logic:notEmpty name="section" property="fileContentSet">
 
                     <strong><bean:message key="label.files" bundle="SITE_RESOURCES"/>:</strong>
                     
@@ -550,7 +567,7 @@
 	                    		<th><bean:message key="label.section.item.file.availability" bundle="SITE_RESOURCES"/></th>
 	                    		<th><bean:message key="label.section.item.file.options" bundle="SITE_RESOURCES"/></th>
                     		</tr>
-                        	<logic:iterate id="fileItem" name="section" property="orderedAssociatedFiles" type="net.sourceforge.fenixedu.domain.FileContent">
+                        	<logic:iterate id="fileItem" name="section" property="fileContentSet" type="net.sourceforge.fenixedu.domain.FileContent">
 							<tr>
 								<td>
 	                        		<bean:define id="downloadUrl">
@@ -569,13 +586,13 @@
             					<td>
 	                                <span class="pleft1" style="color: #888;">
 	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
-	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                                        <fr:layout>
-	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="label" value="label.public"/>
 	                                            <fr:property name="key" value="true"/>
 	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                                            <fr:property name="subLayout" value="values"/>
-	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.name"/>
 	                                        </fr:layout>
 	                                    </fr:view>
 	                                </span>

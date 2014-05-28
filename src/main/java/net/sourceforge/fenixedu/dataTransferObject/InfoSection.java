@@ -1,10 +1,28 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.Section;
 
-import org.joda.time.YearMonthDay;
+import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * This is the view class that contains information about the seccao domain
@@ -19,7 +37,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
 
     protected Integer sectionOrder;
 
-    protected YearMonthDay lastModifiedDate;
+    protected DateTime lastModifiedDate;
 
     protected InfoSite infoSite;
 
@@ -99,7 +117,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
     /**
      * @return Date
      */
-    public YearMonthDay getLastModifiedDate() {
+    public DateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
@@ -109,7 +127,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      * @param lastModifiedDate
      *            The lastModifiedDate to set
      */
-    public void setLastModifiedDate(YearMonthDay lastModifiedDate) {
+    public void setLastModifiedDate(DateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
         setSectionDepth(calculateDepth());
     }
@@ -253,8 +271,8 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
     public void copyFromDomain(Section section) {
         super.copyFromDomain(section);
         if (section != null) {
-            setName(section.getName().getContent(Language.pt));
-            setSectionOrder(section.getSectionOrder());
+            setName(section.getName().getContent(MultiLanguageString.pt));
+            setSectionOrder(section.getOrder());
             setLastModifiedDate(section.getModificationDate());
             setSectionDepth(calculateDepth());
         }

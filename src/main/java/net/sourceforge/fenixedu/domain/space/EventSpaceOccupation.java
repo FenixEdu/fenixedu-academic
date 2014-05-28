@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.space;
 
 import java.util.ArrayList;
@@ -12,19 +30,18 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
@@ -36,7 +53,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
     private static int SATURDAY_IN_JODA_TIME = 6, SUNDAY_IN_JODA_TIME = 7;
 
-    private static transient Locale locale = Language.getLocale();
+    private static transient Locale locale = I18N.getLocale();
 
     public abstract Boolean getDailyFrequencyMarkSaturday();
 
@@ -58,21 +75,15 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         super();
     }
 
-    @Override
-    public void setResource(Resource resource) {
-        super.setResource(resource);
-        if (!resource.isAllocatableSpace()) {
+    public void setResource(Space resource) {
+        if (!(SpaceUtils.isRoom(resource) || SpaceUtils.isRoomSubdivision(resource))) {
             throw new DomainException("error.EventSpaceOccupation.invalid.resource");
         }
+        super.addSpace(resource);
     }
 
-    @Override
-    public boolean isEventSpaceOccupation() {
-        return true;
-    }
-
-    public AllocatableSpace getRoom() {
-        return (AllocatableSpace) getResource();
+    public Space getRoom() {
+        return getSpace();
     }
 
     public Calendar getStartTime() {
@@ -130,6 +141,14 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         return false;
     }
 
+    private boolean isWrittenEvaluationSpaceOccupation() {
+        return this instanceof WrittenEvaluationSpaceOccupation;
+    }
+
+    private boolean isLessonInstanceSpaceOccupation() {
+        return this instanceof LessonInstanceSpaceOccupation;
+    }
+
     public boolean alreadyWasOccupiedIn(final YearMonthDay startDate, final YearMonthDay endDate,
             final HourMinuteSecond startTime, final HourMinuteSecond endTime, final DiaSemana dayOfWeek,
             final FrequencyType frequency, final Boolean dailyFrequencyMarkSaturday, final Boolean dailyFrequencyMarkSunday) {
@@ -156,6 +175,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         return false;
     }
 
+    @Override
     public boolean overlaps(final Interval[] intervals) {
         for (final Interval interval : intervals) {
             if (overlaps(interval)) {
@@ -183,6 +203,11 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
             }
         }
         return intervals;
+    }
+
+    @Override
+    public List<Interval> getIntervals() {
+        return getEventSpaceOccupationIntervals((YearMonthDay) null, (YearMonthDay) null);
     }
 
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
@@ -335,4 +360,9 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     public abstract boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start,
             final DateTime end);
 
+    public void delete() {
+        setBennu(null);
+        getSpaceSet().clear();
+        super.deleteDomainObject();
+    }
 }

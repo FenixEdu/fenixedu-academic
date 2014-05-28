@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams;
 
 import java.util.ArrayList;
@@ -9,10 +27,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMEvaluationsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -25,33 +43,34 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ana & Ricardo
  */
-@Mapping(module = "resourceAllocationManager", path = "/roomSearch", input = "/roomSearch.do?method=prepare&page=0",
-        attribute = "roomSearchForm", formBean = "roomSearchForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showRooms", path = "df.page.showRooms"),
-        @Forward(name = "roomSearch", path = "df.page.roomSearch") })
-public class RoomSearchDA extends FenixContextDispatchAction {
+@StrutsFunctionality(app = RAMEvaluationsApp.class, path = "room-search", titleKey = "link.exams.searchAvailableRooms")
+@Mapping(module = "resourceAllocationManager", path = "/roomSearch", formBean = "roomSearchForm")
+@Forwards({ @Forward(name = "showRooms", path = "/resourceAllocationManager/exams/showRooms.jsp"),
+    @Forward(name = "roomSearch", path = "/resourceAllocationManager/exams/roomSearch.jsp") })
+public class RoomSearchDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
         return mapping.findForward("roomSearch");
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        User userView = Authenticate.getUser();
         DynaValidatorForm roomSearchForm = (DynaValidatorForm) form;
 
         // date
@@ -106,9 +125,9 @@ public class RoomSearchDA extends FenixContextDispatchAction {
 
         List<InfoRoom> availableInfoRoom = null;
         availableInfoRoom =
-                ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(searchDate),
+                SpaceUtils.allocatableSpace(YearMonthDay.fromCalendarFields(searchDate),
                         YearMonthDay.fromCalendarFields(searchDate), HourMinuteSecond.fromCalendarFields(searchStartTime),
-                        HourMinuteSecond.fromCalendarFields(searchEndTime), dayOfWeek, null, null, Boolean.FALSE);
+                        HourMinuteSecond.fromCalendarFields(searchEndTime), dayOfWeek, null, null, false);
         String sdate = roomSearchForm.get("day") + "/" + roomSearchForm.get("month") + "/" + roomSearchForm.get("year");
         String startTime = roomSearchForm.get("beginningHour") + ":" + roomSearchForm.get("beginningMinute");
         String endTime = roomSearchForm.get("endHour") + ":" + roomSearchForm.get("endMinute");
@@ -163,15 +182,13 @@ public class RoomSearchDA extends FenixContextDispatchAction {
     public ActionForward sort(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         DynaValidatorForm roomSearchForm = (DynaValidatorForm) form;
-        User userView = Authenticate.getUser();
 
         String[] availableRoomsId = (String[]) roomSearchForm.get("availableRoomsId");
         String sortParameter = request.getParameter("sortParameter");
         List<InfoRoom> availableRooms = new ArrayList<InfoRoom>();
         for (String element : availableRoomsId) {
-
-            InfoRoom infoRoom = ReadRoomByOID.run(element);
-            availableRooms.add(infoRoom);
+            final Space room = FenixFramework.getDomainObject(element);
+            availableRooms.add(InfoRoom.newInfoFromDomain(room));
         }
         if ((sortParameter != null) && (sortParameter.length() != 0)) {
             if (sortParameter.equals("name")) {

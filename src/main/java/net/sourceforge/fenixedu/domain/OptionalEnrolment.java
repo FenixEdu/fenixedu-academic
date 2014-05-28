@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Collections;
@@ -16,7 +34,6 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class OptionalEnrolment extends OptionalEnrolment_Base {
@@ -90,8 +107,8 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     @Override
     public MultiLanguageString getName() {
         final ExecutionSemester executionSemester = getExecutionPeriod();
-        return new MultiLanguageString().with(Language.pt, this.getOptionalCurricularCourse().getName(executionSemester)).with(
-                Language.en, this.getOptionalCurricularCourse().getNameEn(executionSemester));
+        return new MultiLanguageString().with(MultiLanguageString.pt, this.getOptionalCurricularCourse().getName(executionSemester)).with(
+                MultiLanguageString.en, this.getOptionalCurricularCourse().getNameEn(executionSemester));
     }
 
     @Override
@@ -105,7 +122,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
                 String.format("%s (%s)", getOptionalCurricularCourse().getNameEn(getExecutionPeriod()), getCurricularCourse()
                         .getNameEn(getExecutionPeriod()));
 
-        return new MultiLanguageString().with(Language.pt, namePt).with(Language.en, nameEn);
+        return new MultiLanguageString().with(MultiLanguageString.pt, namePt).with(MultiLanguageString.en, nameEn);
     }
 
     @Override

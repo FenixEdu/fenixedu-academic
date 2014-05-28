@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments;
 
 import java.text.ParseException;
@@ -21,6 +39,7 @@ import net.sourceforge.fenixedu.domain.student.AffinityCyclesManagement;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -28,6 +47,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -37,6 +58,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "manage", titleKey = "label.manage")
 @Mapping(path = "/bolonhaStudentEnrolment", module = "manager", formBean = "bolonhaStudentEnrolmentForm")
 @Forwards({
         @Forward(name = "viewStudentCurriculum", path = "/manager/bolonha/enrolments/displayStudentCurriculum.jsp"),
@@ -47,11 +69,10 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
                 path = "/manager/bolonha/enrolments/chooseOptionalCurricularCourseToEnrol.jsp"),
         @Forward(name = "chooseCycleCourseGroupToEnrol", path = "/manager/bolonha/enrolments/chooseCycleCourseGroupToEnrol.jsp"),
         @Forward(name = "transitToBolonha", path = "/manager/bolonha/enrolments/transitToBolonha.jsp"),
-        @Forward(name = "showRegistrationStatesLog", path = "/manager/bolonha/enrolments/showRegistrationStatesLog.jsp")
-
-})
+        @Forward(name = "showRegistrationStatesLog", path = "/manager/bolonha/enrolments/showRegistrationStatesLog.jsp") })
 public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollmentDA {
 
+    @EntryPoint
     public ActionForward prepareSearchStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,16 +25,21 @@ import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.accounting.events.export.SIBSOutgoingPaymentFile;
 import net.sourceforge.fenixedu.domain.accounting.events.export.SIBSOutgoingPaymentQueueJob;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPaymentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = ManagerPaymentsApp.class, path = "export-sibs-payments",
+        titleKey = "label.manager.SIBS.export.payments")
 @Mapping(path = "/exportSIBSPayments", module = "manager")
 @Forwards({
         @Forward(name = "list-outgoing-payment-files", path = "/manager/payments/exportSIBS/listOutgoingPaymentFiles.jsp"),
@@ -48,6 +71,7 @@ public class ExportSIBSPaymentsDA extends FenixDispatchAction {
         return mapping.findForward("prepare-create-outgoing-payments-file");
     }
 
+    @EntryPoint
     public ActionForward listOutgoingPaymentsFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

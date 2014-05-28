@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.coordinator;
 
 import java.io.IOException;
@@ -18,6 +36,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.PhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -30,25 +49,14 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/phdThesisProcess", module = "coordinator")
-@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
-
-        @Forward(name = "submitJuryElementsDocument", path = "/phd/thesis/coordinator/submitJuryElementsDocument.jsp"),
-
+@Mapping(path = "/phdThesisProcess", module = "coordinator", functionality = PhdIndividualProgramProcessDA.class)
+@Forwards({ @Forward(name = "submitJuryElementsDocument", path = "/phd/thesis/coordinator/submitJuryElementsDocument.jsp"),
         @Forward(name = "manageThesisJuryElements", path = "/phd/thesis/coordinator/manageThesisJuryElements.jsp"),
-
         @Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/coordinator/juryReporterFeedbackUpload.jsp"),
-
-        @Forward(name = "manageThesisDocuments", path = "/phd/thesis/coordinator/manageThesisDocuments.jsp",
-                tileProperties = @Tile(title = "private.coordinator.phdprocess")),
-
+        @Forward(name = "manageThesisDocuments", path = "/phd/thesis/coordinator/manageThesisDocuments.jsp"),
         @Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/coordinator/scheduleThesisMeeting.jsp"),
-
-        @Forward(name = "editPhdProcessState", path = "/phd/thesis/academicAdminOffice/editState.jsp")
-
-})
+        @Forward(name = "editPhdProcessState", path = "/phd/thesis/academicAdminOffice/editState.jsp") })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // Begin thesis jury elements management

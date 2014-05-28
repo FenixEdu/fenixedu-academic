@@ -1,9 +1,31 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.BolonhaManagerApplication$CompetenceCoursesManagement"/>
+
+<f:view>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
@@ -52,7 +74,7 @@
 								<h:outputText value="<table style='width: 100%; background-color: #fff;'><tr>" escape="false"/>
 								<h:outputText value="<td>#{competenceCourseGroupUnit.name}</td> " escape="false"/>
 								<h:outputText value="<td class='aright'>" escape="false"/>
-									<h:outputLink value="createCompetenceCourse.faces">
+									<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/createCompetenceCourse.faces">
 										<h:outputFormat value="#{bolonhaBundle['create.param']}" escape="false">
 											<f:param value=" #{bolonhaBundle['course']}"/>
 										</h:outputFormat>								
@@ -74,25 +96,25 @@
 									</h:column>
 
 									<h:column>
-										<h:outputLink value="showCompetenceCourse.faces">
+										<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/showCompetenceCourse.faces">
 											<h:outputText value="#{bolonhaBundle['show']}"/>
 											<f:param name="action" value="ccm"/>
 											<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 										</h:outputLink>
 										<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}">
 											<h:outputText value=", "/>
-												<h:outputLink value="editCompetenceCourseMainPage.faces">
+												<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.faces">
 													<h:outputText value="#{bolonhaBundle['edit']}" />
 													<f:param name="action" value="ccm"/>
 													<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 												</h:outputLink>
 												<h:outputText value=", "/>
-														<h:outputLink rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}" value="deleteCompetenceCourse.faces">
+														<h:outputLink rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}" value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/deleteCompetenceCourse.faces">
 												<h:outputText value="#{bolonhaBundle['delete']}" />
 												<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 											</h:outputLink>
 											<h:outputText value=", "/>
-											<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
+											<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseBibliographicReference.faces">
 												<h:outputText value="#{bolonhaBundle['bibliographicReference']}" />
 												<f:param name="action" value="add"/>
 												<f:param name="bibliographicReferenceID" value="-1"/>
@@ -127,4 +149,4 @@
 	
 
 		
-</ft:tilesView>
+</f:view>

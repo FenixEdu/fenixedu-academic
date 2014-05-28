@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.text.MessageFormat;
@@ -6,6 +24,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Locality;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest;
@@ -108,7 +127,8 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
         Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
         String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
         String institutionName = getInstitutionName();
-        String location = loggedEmployee.getCurrentCampus().getLocation();
+        final Locality locality = loggedEmployee.getCurrentCampus().getLocality();
+        String location = locality != null ? locality.getName() : null;
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());
         String dateYYYY = new LocalDate().toString("yyyy", getLocale());

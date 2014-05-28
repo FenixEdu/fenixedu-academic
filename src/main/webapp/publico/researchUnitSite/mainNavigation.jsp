@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -7,16 +27,15 @@
 <html:xhtml/>
 
 
-<logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
-	<fr:view name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" 
-		layout="unit-side-menu">
-            <fr:layout>
-                <fr:property name="sectionUrl" value="/researchSite/viewResearchUnitSite.do?method=section"/>
-                <fr:property name="contextParam" value="siteID"/>
-            </fr:layout>
-        </fr:view>
-    </logic:present>
+<logic:present name="actual$site">
+   <fr:view name="actual$site" layout="unit-side-menu">
+        <fr:layout>
+            <fr:property name="sectionUrl" value="/units/viewSite.do?method=section"/>
+            <fr:property name="contextParam" value="unitID"/>
+        </fr:layout>
+    </fr:view>
+</logic:present>
     
 <div class="usitebannerlat">
-	<fr:view name="site" property="sideBanner" layout="html" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
+	${site.sideBanner}
 </div>

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on Oct 14, 2003
  *  
@@ -33,8 +51,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadDistributedTestMarks {
 
-    protected InfoSiteStudentsTestMarks run(String executionCourseId, String distributedTestId, String path)
-            throws FenixServiceException {
+    protected InfoSiteStudentsTestMarks run(String executionCourseId, String distributedTestId) throws FenixServiceException {
 
         InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
 
@@ -55,7 +72,7 @@ public class ReadDistributedTestMarks {
                 ParseSubQuestion parse = new ParseSubQuestion();
                 Question question = studentTestQuestion.getQuestion();
                 try {
-                    question = parse.parseSubQuestion(studentTestQuestion.getQuestion(), path.replace('\\', '/'));
+                    question = parse.parseSubQuestion(studentTestQuestion.getQuestion());
                 } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }
@@ -90,10 +107,10 @@ public class ReadDistributedTestMarks {
     private static final ReadDistributedTestMarks serviceInstance = new ReadDistributedTestMarks();
 
     @Atomic
-    public static InfoSiteStudentsTestMarks runReadDistributedTestMarks(String executionCourseId, String distributedTestId,
-            String path) throws FenixServiceException, NotAuthorizedException {
+    public static InfoSiteStudentsTestMarks runReadDistributedTestMarks(String executionCourseId, String distributedTestId)
+            throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, distributedTestId, path);
+        return serviceInstance.run(executionCourseId, distributedTestId);
     }
 
 }

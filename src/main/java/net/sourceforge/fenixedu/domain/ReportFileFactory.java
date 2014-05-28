@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -13,7 +31,6 @@ import net.sourceforge.fenixedu.domain.reports.EurAceReportFile;
 import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
 import net.sourceforge.fenixedu.domain.reports.GepReportFile;
 import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
-import net.sourceforge.fenixedu.domain.reports.PublicationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesDfaReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesGraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
@@ -109,13 +126,6 @@ public class ReportFileFactory {
         graduationReportFile.setDegreeType(degreeType);
         graduationReportFile.setExecutionYear(executionYear);
         return graduationReportFile;
-    }
-
-    @Atomic
-    public static PublicationReportFile createPublicationsReportFile(String type) {
-        final PublicationReportFile publicationReportFile = new PublicationReportFile();
-        publicationReportFile.setType(type);
-        return publicationReportFile;
     }
 
     @Atomic

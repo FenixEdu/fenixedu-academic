@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation;
 
 import java.io.IOException;
@@ -25,7 +43,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.CreateWrittenEvaluation;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.EditWrittenEvaluation;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
@@ -46,15 +63,12 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.Season;
@@ -64,12 +78,14 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 
@@ -89,7 +105,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     protected Integer calendarPeriod;
     protected HtmlInputHidden calendarPeriodHidden;
     private Integer[] curricularYearIDs;
-    private final String chooseMessage = messages.getMessage(Language.getLocale(), "label.choose.message");
+    private final String chooseMessage = messages.getMessage(I18N.getLocale(), "label.choose.message");
     private HtmlInputHidden dayHidden;
     private HtmlInputHidden monthHidden;
     private HtmlInputHidden yearHidden;
@@ -98,7 +114,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     private HtmlInputHidden endHourHidden;
     private HtmlInputHidden endMinuteHidden;
     private Integer orderCriteria;
-    private final String labelVacancies = messages.getMessage(Language.getLocale(), "label.vacancies");
+    private final String labelVacancies = messages.getMessage(I18N.getLocale(), "label.vacancies");
     private List<String> associatedExecutionCourses;
 
     private Map<String, String> associatedExecutionCoursesNames = new HashMap<String, String>();
@@ -243,7 +259,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         ExecutionDegree executionDegreeSelected = getExecutionDegree();
 
         StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append(enumerations.getMessage(Language.getLocale(), executionDegreeSelected.getDegreeCurricularPlan()
+        stringBuffer.append(enumerations.getMessage(I18N.getLocale(), executionDegreeSelected.getDegreeCurricularPlan()
                 .getDegree().getDegreeType().toString()));
         stringBuffer.append(" em ");
         stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree()
@@ -496,7 +512,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         result.add(new SelectItem(0, this.chooseMessage));
         for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegrees) {
             StringBuilder label = new StringBuilder();
-            label.append(enumerations.getMessage(Language.getLocale(), infoExecutionDegree.getInfoDegreeCurricularPlan()
+            label.append(enumerations.getMessage(I18N.getLocale(), infoExecutionDegree.getInfoDegreeCurricularPlan()
                     .getInfoDegree().getDegreeType().toString()));
             label.append(" em ");
             label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
@@ -535,11 +551,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
 
         List<SelectItem> curricularYearItems = new ArrayList<SelectItem>(6);
-        curricularYearItems.add(new SelectItem(1, messages.getMessage(Language.getLocale(), "label.year.first")));
-        curricularYearItems.add(new SelectItem(2, messages.getMessage(Language.getLocale(), "label.year.second")));
-        curricularYearItems.add(new SelectItem(3, messages.getMessage(Language.getLocale(), "label.year.third")));
-        curricularYearItems.add(new SelectItem(4, messages.getMessage(Language.getLocale(), "label.year.fourth")));
-        curricularYearItems.add(new SelectItem(5, messages.getMessage(Language.getLocale(), "label.year.fifth")));
+        curricularYearItems.add(new SelectItem(1, messages.getMessage(I18N.getLocale(), "label.year.first")));
+        curricularYearItems.add(new SelectItem(2, messages.getMessage(I18N.getLocale(), "label.year.second")));
+        curricularYearItems.add(new SelectItem(3, messages.getMessage(I18N.getLocale(), "label.year.third")));
+        curricularYearItems.add(new SelectItem(4, messages.getMessage(I18N.getLocale(), "label.year.fourth")));
+        curricularYearItems.add(new SelectItem(5, messages.getMessage(I18N.getLocale(), "label.year.fifth")));
 
         return curricularYearItems;
     }
@@ -551,11 +567,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         List<SelectItem> calendarPeriodItems = new ArrayList<SelectItem>(7);
 
-        calendarPeriodItems.add(new SelectItem(0, messages.getMessage(Language.getLocale(), "label.calendarPeriodItem.all")));
-        calendarPeriodItems.add(new SelectItem(1, messages.getMessage(Language.getLocale(),
-                "label.calendarPeriodItem.lesson.period")));
-        calendarPeriodItems.add(new SelectItem(2, messages.getMessage(Language.getLocale(),
-                "label.calendarPeriodItem.exam.period")));
+        calendarPeriodItems.add(new SelectItem(0, messages.getMessage(I18N.getLocale(), "label.calendarPeriodItem.all")));
+        calendarPeriodItems
+                .add(new SelectItem(1, messages.getMessage(I18N.getLocale(), "label.calendarPeriodItem.lesson.period")));
+        calendarPeriodItems.add(new SelectItem(2, messages.getMessage(I18N.getLocale(), "label.calendarPeriodItem.exam.period")));
 
         return calendarPeriodItems;
     }
@@ -726,7 +741,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
                         if (writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
                             final CalendarLink calendarLink =
-                                    new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
+                                    new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
                             calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
                             result.add(calendarLink);
                         }
@@ -754,9 +769,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             final ExecutionCourse executionCourse) {
         final StringBuilder stringBuilder = new StringBuilder();
         if (writtenEvaluation instanceof WrittenTest) {
-            stringBuilder.append(messages.getMessage(Language.getLocale(), "label.evaluation.shortname.test"));
+            stringBuilder.append(messages.getMessage(I18N.getLocale(), "label.evaluation.shortname.test"));
         } else if (writtenEvaluation instanceof Exam) {
-            stringBuilder.append(messages.getMessage(Language.getLocale(), "label.evaluation.shortname.exam"));
+            stringBuilder.append(messages.getMessage(I18N.getLocale(), "label.evaluation.shortname.exam"));
         }
         stringBuilder.append(" ");
         stringBuilder.append(executionCourse.getSigla());
@@ -880,9 +895,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         for (final WrittenEvaluation writtenTest : associatedWrittenEvaluations) {
             int totalCapacity = 0;
             final StringBuilder buffer = new StringBuilder(20);
-            for (final AllocatableSpace room : writtenTest.getAssociatedRooms()) {
-                buffer.append(room.getIdentification()).append("; ");
-                totalCapacity += room.getCapacidadeExame();
+            for (final Space room : writtenTest.getAssociatedRooms()) {
+                buffer.append(room.getName()).append("; ");
+                totalCapacity += room.<Integer> getMetadata("examCapacity").orElse(0);
             }
             if (buffer.length() > 0) {
                 buffer.delete(buffer.length() - 2, buffer.length() - 1);
@@ -948,17 +963,17 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public List<SelectItem> getEvaluationTypeClassnameLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem("noSelection", this.chooseMessage));
-        result.add(new SelectItem(WrittenTest.class.getName(), messages.getMessage(Language.getLocale(), "label.test")));
-        result.add(new SelectItem(Exam.class.getName(), messages.getMessage(Language.getLocale(), "label.exam")));
+        result.add(new SelectItem(WrittenTest.class.getName(), messages.getMessage(I18N.getLocale(), "label.test")));
+        result.add(new SelectItem(Exam.class.getName(), messages.getMessage(I18N.getLocale(), "label.exam")));
         return result;
     }
 
     public List<SelectItem> getSeasonLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem("noSelection", this.chooseMessage));
-        result.add(new SelectItem(Season.SEASON1_STRING, messages.getMessage(Language.getLocale(), "property.exam.1stExam")));
-        result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage(Language.getLocale(), "property.exam.2stExam")));
-        result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage(Language.getLocale(),
+        result.add(new SelectItem(Season.SEASON1_STRING, messages.getMessage(I18N.getLocale(), "property.exam.1stExam")));
+        result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage(I18N.getLocale(), "property.exam.2stExam")));
+        result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage(I18N.getLocale(),
                 "property.exam.specialSeasonExam")));
         return result;
     }
@@ -992,8 +1007,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getViewState().getAttribute("chosenRoomsIDs") == null && this.getEvaluationID() != null) {
             List<String> associatedRooms = new ArrayList<String>();
 
-            for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
-                associatedRooms.add(room.getExternalId() + "-" + room.getExamCapacity());
+            for (Space room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+                associatedRooms.add(room.getExternalId() + "-" + room.<Integer> getMetadata("examCapacity").orElse(0));
             }
 
             String[] selectedRooms = {};
@@ -1031,12 +1046,12 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         examEndTime.set(Calendar.MILLISECOND, 0);
 
         List<InfoRoom> availableInfoRoom =
-                ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate),
-                        YearMonthDay.fromCalendarFields(examDate), HourMinuteSecond.fromCalendarFields(examStartTime),
-                        HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek, null, null, Boolean.FALSE);
+                SpaceUtils.allocatableSpace(YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
+                        HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime),
+                        dayOfWeek, null, null, false);
 
         if (this.getEvaluationID() != null) {
-            for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+            for (Space room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
                 InfoRoom associatedRoom = InfoRoom.newInfoFromDomain(room);
                 if (!availableInfoRoom.contains(associatedRoom)) {
                     availableInfoRoom.add(associatedRoom);
@@ -1094,8 +1109,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return infoRoom.getExternalId() + "-" + infoRoom.getCapacidadeExame();
     }
 
-    private String getRoomWithExamCapacityString(Room room) {
-        return room.getExternalId() + "-" + room.getCapacidadeExame();
+    private String getRoomWithExamCapacityString(Space room) {
+        return room.getExternalId() + "-" + room.<Integer> getMetadata("examCapacity").orElse(0);
     }
 
     public String getAssociatedRooms() throws FenixServiceException {
@@ -1104,8 +1119,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (String chosenRoomString : this.getChosenRoomsIDs()) {
                 String chosenRoomID = getRoomID(chosenRoomString);
-                AllocatableSpace room = (AllocatableSpace) FenixFramework.getDomainObject(chosenRoomID);
-                result.append(room.getIdentification());
+                Space room = (Space) FenixFramework.getDomainObject(chosenRoomID);
+                result.append(room.getName());
                 result.append("; ");
             }
 
@@ -1115,7 +1130,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
             return result.toString();
         } else {
-            return messages.getMessage(Language.getLocale(), "label.no.associated.rooms");
+            return messages.getMessage(I18N.getLocale(), "label.no.associated.rooms");
         }
     }
 
@@ -1238,17 +1253,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 stringBuilder.append(DateFormatUtil.format("HH:mm", this.getEnd().getTime()));
             }
             stringBuilder.append("&academicInterval=").append(academicInterval);
-            stringBuilder.append("&");
-            stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-            stringBuilder.append("=");
-            stringBuilder.append(FilterFunctionalityContext.getCurrentContext(getRequest()).getCurrentContextPath());
             String url = stringBuilder.toString();
 
-            String checksum =
-                    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(url);
+            String checksum = GenericChecksumRewriter.calculateChecksum(url, getRequest().getSession());
             stringBuilder.append("&");
-            stringBuilder
-                    .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
+            stringBuilder.append(GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
             stringBuilder.append("=");
             stringBuilder.append(checksum);
 
@@ -1531,6 +1540,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public void setSelectedCurricularYearID(Integer selectedCurricularYearID) {
         this.getViewState().setAttribute("selectedCurricularYearID", selectedCurricularYearID);
+        curricularYearID = selectedCurricularYearID;
     }
 
     public String getSelectedExecutionCourseID() {

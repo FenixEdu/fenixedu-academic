@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.student.delegate;
 
 import java.util.ArrayList;
@@ -20,22 +38,24 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "student", path = "/delegatesInfo", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showDegreeDelegates", path = "/student/delegates/showDelegates.jsp", tileProperties = @Tile(
-        title = "private.student.view.delegates")) })
+@StrutsFunctionality(app = StudentViewApp.class, path = "delegates-info", titleKey = "link.student.delegatesInfo")
+@Mapping(module = "student", path = "/delegatesInfo")
+@Forwards(@Forward(name = "showDegreeDelegates", path = "/student/delegates/showDelegates.jsp"))
 public class DelegatesInfoDispatchAction extends FenixDispatchAction {
-
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -76,7 +96,7 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
         boolean updated = false;
         Degree first = null;
 
-        for (ExecutionDegree executionDegree : bean.getExecutionYear().getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : bean.getExecutionYear().getExecutionDegreesSet()) {
             if (executionDegree.getDegreeType().equals(bean.getDegreeType())) {
                 if (!updated) {
                     first = executionDegree.getDegree();
@@ -94,9 +114,9 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
 
     private void updateBeanDegreeType(DelegateSearchBean bean) {
         boolean updated = false;
-        DegreeType first = bean.getExecutionYear().getExecutionDegrees().iterator().next().getDegreeType();
+        DegreeType first = bean.getExecutionYear().getExecutionDegreesSet().iterator().next().getDegreeType();
 
-        for (ExecutionDegree executionDegree : bean.getExecutionYear().getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : bean.getExecutionYear().getExecutionDegreesSet()) {
             if (executionDegree.getDegreeType().getGraduateTitle().split(" ")[0].equals(bean.getDegreeType().getGraduateTitle()
                     .split(" ")[0])) {
                 bean.setDegreeType(executionDegree.getDegreeType());
@@ -137,11 +157,6 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
     /*
      * AUXILIARY METHODS
      */
-
-    private Degree getDefaultDegreeGivenDegreeType(DegreeType degreeType) {
-        List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
-        return degrees.iterator().next();
-    }
 
     /* Delegates from given degree (not year delegates) */
     private DelegateSearchBean getDelegateSearchBean(DelegateSearchBean bean, FunctionType functionType) {

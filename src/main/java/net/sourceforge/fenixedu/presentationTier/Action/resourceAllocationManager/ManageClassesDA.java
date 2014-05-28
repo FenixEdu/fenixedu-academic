@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
 import java.util.ArrayList;
@@ -22,6 +40,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -31,15 +50,24 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
+@Mapping(path = "/manageClasses", module = "resourceAllocationManager", formBean = "classForm",
+        input = "/manageClasses.do?method=listClasses", functionality = ExecutionPeriodDA.class)
+@Forwards({ @Forward(name = "ShowClassList", path = "/resourceAllocationManager/manageClasses_bd.jsp"),
+        @Forward(name = "ShowShiftList", path = "/resourceAllocationManager/manageClasses.do?method=listClasses") })
+@Exceptions(@ExceptionHandling(handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class,
+        key = "resources.Action.exceptions.ExistingActionException", scope = "request"))
 public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -84,7 +112,6 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
         DynaValidatorForm classForm = (DynaValidatorForm) form;
         String className = (String) classForm.get("className");
-        User userView = Authenticate.getUser();
 
         InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
         InfoExecutionDegree infoExecutionDegree =
@@ -114,8 +141,6 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
         ContextUtils.setClassContext(request);
 
         InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
-
-        User userView = Authenticate.getUser();
 
         ApagarTurma.run(infoClass);
 

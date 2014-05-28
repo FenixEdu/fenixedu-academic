@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.text.Collator;
@@ -9,8 +27,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Country extends Country_Base {
@@ -85,7 +103,7 @@ public class Country extends Country_Base {
             if (!country.getName().equalsIgnoreCase(PORTUGAL)) {
                 result.add(country);
             } else {
-                if (country.getCountryNationality().getContent(Language.pt).equalsIgnoreCase(NATIONALITY_PORTUGUESE)) {
+                if (country.getCountryNationality().getContent(MultiLanguageString.pt).equalsIgnoreCase(NATIONALITY_PORTUGUESE)) {
                     result.add(country);
                 }
             }
@@ -101,13 +119,13 @@ public class Country extends Country_Base {
      */
     @Deprecated
     public String getFilteredNationality(final Locale locale) {
-        final String nationality = getCountryNationality().getContent(Language.valueOf(locale.getLanguage()));
+        final String nationality = getCountryNationality().getContent(locale);
         if (this != readDefault()) {
             return nationality;
         }
 
         final String specialCase =
-                ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale())
+                ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale())
                         .getString("label.person.portugueseNationality").toUpperCase();
         return nationality.trim().contains(specialCase) ? specialCase : nationality;
     }
@@ -165,7 +183,7 @@ public class Country extends Country_Base {
 
     @Deprecated
     public void setNationality(final String nationality) {
-        setCountryNationality(getCountryNationality().with(Language.getDefaultLanguage(), nationality));
+        setCountryNationality(getCountryNationality().with(Locale.getDefault(), nationality));
     }
 
     public synchronized static Set<Country> getCPLPCountries() {
@@ -391,16 +409,6 @@ public class Country extends Country_Base {
     @Deprecated
     public boolean hasAnySecondInternshipDestination() {
         return !getSecondInternshipDestinationSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResearchResult> getResults() {
-        return getResultsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyResults() {
-        return !getResultsSet().isEmpty();
     }
 
     @Deprecated

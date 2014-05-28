@@ -1,19 +1,33 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/messaging" prefix="messaging" %>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <html:xhtml/>
-
-<%
-net.sourceforge.fenixedu.domain.Person person = (net.sourceforge.fenixedu.domain.Person) request.getAttribute("person");
-String contextPrefix = (String) request.getAttribute("contextPrefix");
-String extraParameters = (String) request.getAttribute("extraParameters");
-%>
 
 <bean:define id="hasYear" value="<%= Boolean.valueOf(request.getParameter("selectedYear") != null).toString() %>" type="java.lang.String"/>
 <bean:define id="hasMonth" value="<%= Boolean.valueOf(request.getParameter("selectedMonth") != null).toString()%>" type="java.lang.String"/>
@@ -59,7 +73,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 		<%-- Title --%>
 			<logic:equal name="announcement" property="visible" value="true">
 				<h3 class="mtop0 mbottom025">
-				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getExternalId()%>">
+				<html:link page="/announcementManagement.do?executionCourseID=${executionCourse.externalId}&method=viewAnnouncement&announcementId=${announcement.externalId}">
 					<span><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
@@ -68,7 +82,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 			<logic:equal name="announcement" property="visible" value="false">
 				<p class="mvert025">
 				<h3 class="mvert0 dinline">
-				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getExternalId()%>">
+				<html:link page="/announcementManagement.do?executionCourseID=${executionCourse.externalId}&method=viewAnnouncement&announcementId=${announcement.externalId}">
 					<span><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
@@ -81,7 +95,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 				 <div class="ann_body mvert025">
 				 <logic:equal name="announcement" property="excerptEmpty" value="false">
 				 	<fr:view name="announcement" property="excerpt" layout="html"/>
-				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&amp;announcementId=" + announcement.getExternalId()%>">
+				 	 <html:link action="/announcementManagement.do?executionCourseID=${executionCourse.externalId}&method=viewAnnouncement&announcementId=${announcement.externalId}">
 						 Continuar a ler...
 					 </html:link> 
 				</logic:equal>
@@ -100,24 +114,17 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 		<p class="mtop05 mbottom025">
 			<em class="smalltxt greytxt2">
 
-		<%-- Board e RSS --%>
-				Canal: 
-				<html:link action="<%=contextPrefix + extraParameters +"&amp;method=viewAnnouncements&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getExternalId() + "#" + announcement.getExternalId()%>">
-					<fr:view name="announcement" property="announcementBoard.name" type="java.lang.String"/>
-				</html:link>
-				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
-
 		<%-- Editar, Apagar --%>
 			<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
 				<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>:
 				<bean:define id="announcementId" name="announcement" property="externalId" />
-				<html:link action="<%= contextPrefix + "method=editAnnouncement&amp;announcementId="+announcementId+"&amp;"+extraParameters%>">
+				<html:link action="/announcementManagement.do?executionCourseID=${executionCourse.externalId}&method=editAnnouncement&announcementId=${announcement.externalId}">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.edit.link"/>
 				</html:link>
 				
 				<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.comma" />
 				
-				<html:link action="<%= contextPrefix + "method=deleteAnnouncement&amp;announcementId="+announcementId+"&amp;"+extraParameters%>">
+				<html:link action="/announcementManagement.do?executionCourseID=${executionCourse.externalId}&method=deleteAnnouncement&announcementId=${announcement.externalId}">
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.delete.link"/>
 				</html:link>
 				
@@ -125,7 +132,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 					<logic:equal name="announcement" property="approved" value="false">
 						<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.comma" />
 							
-						<html:link action="<%= contextPrefix + "method=aproveAction&amp;announcementId="+announcementId+"&amp;action=true&amp;"+extraParameters%>">
+						<html:link action="/announcementManagement.do?executionCourseID=${executionCourse.externalId}&method=aproveAction&announcementId=${announcement.externalId}&action=true">
 					  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.approve.link"/>
 						</html:link>				 
 					</logic:equal>
@@ -134,7 +141,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 					<logic:equal name="announcement" property="approved" value="true">
 						<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.comma" />
 							
-						<html:link action="<%= contextPrefix + "method=aproveAction&amp;announcementId="+announcementId+"&amp;action=false&amp;"+extraParameters%>">
+						<html:link action="/announcementManagement.do?executionCourseID=${executionCourse.externalId}&method=aproveAction&announcementId=${announcement.externalId}&action=false">
 					  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.not.approve.link"/>
 						</html:link>				 
 					</logic:equal>
@@ -216,14 +223,8 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 <logic:present name="archive">
 	<logic:present name="announcementBoard">
 		<bean:define id="board" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
-		<%
-		final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-		final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
-	    final String module = org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).getPrefix();
-		%>
-
 		<div class="aarchives">
-			<messaging:archive name="archive" targetUrl="<%=context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getExternalId() + "&amp;" + extraParameters + "&amp;" %>"/>	
+			<messaging:archive name="archive" targetUrl="${pageContext.request.contextPath}/teacher/announcementManagement.do?method=viewArchive&announcementBoardId=${board.externalId}&executionCourseID=${executionCourse.externalId}&"/>	
 		</div>
 
 	</logic:present>

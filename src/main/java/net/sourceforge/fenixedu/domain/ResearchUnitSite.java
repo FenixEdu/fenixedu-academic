@@ -1,18 +1,35 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ResearchUnitSite extends ResearchUnitSite_Base {
@@ -34,8 +51,9 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
             throw new DomainException("unit.acronym.cannot.be.null");
         }
         this.setUnit(unit);
-        new Section(this, new MultiLanguageString().with(Language.pt, "Lateral").with(Language.en, "Side"));
-        new Section(this, new MultiLanguageString().with(Language.pt, "Topo").with(Language.en, "Top"));
+        addAssociatedSections(new MultiLanguageString().with(MultiLanguageString.pt, "Lateral").with(MultiLanguageString.en,
+                "Side"));
+        addAssociatedSections(new MultiLanguageString().with(MultiLanguageString.pt, "Topo").with(MultiLanguageString.en, "Top"));
     }
 
     @Override
@@ -44,8 +62,8 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new FixedSetGroup(getManagers());
+    public Group getOwner() {
+        return UserGroup.of(Person.convertToUsers(getManagers()));
     }
 
     @Override
@@ -64,32 +82,20 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
             }
         }
 
-        return new MultiLanguageString().with(Language.pt, buffer.toString());
+        return new MultiLanguageString().with(MultiLanguageString.pt, buffer.toString());
     }
 
     @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
-    }
-
-    @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
-        final ResearchUnit researchUnit = getUnit();
-        appendReversePathPart(stringBuilder, researchUnit);
-    }
-
-    public void appendReversePathPart(final StringBuilder stringBuilder, final Unit unit) {
-        if (stringBuilder.length() > 0) {
-            stringBuilder.append('/');
-        }
-        for (final Unit parentUnit : unit.getParentUnitsPath()) {
+    public String getReversePath() {
+        StringBuilder stringBuilder = new StringBuilder(super.getReversePath()).append('/');
+        for (final Unit parentUnit : getUnit().getParentUnitsPath()) {
             if (parentUnit.isResearchUnit()) {
-                stringBuilder.append(Content.normalize(parentUnit.getAcronym()));
+                stringBuilder.append(CmsContent.normalize(parentUnit.getAcronym()));
                 stringBuilder.append('/');
             }
         }
-        stringBuilder.append(unit.getAcronym());
+        stringBuilder.append(getUnit().getAcronym());
+        return stringBuilder.toString();
     }
 
 }

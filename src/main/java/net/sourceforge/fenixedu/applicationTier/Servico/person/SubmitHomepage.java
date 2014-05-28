@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -13,9 +31,7 @@ public class SubmitHomepage {
     public static void run(final Person person, final Boolean activated, final Boolean showUnit, final Boolean showCategory,
             final Boolean showPhoto, final Boolean showResearchUnitHomepage, final Boolean showCurrentExecutionCourses,
             final Boolean showActiveStudentCurricularPlans, final Boolean showAlumniDegrees, final String researchUnitHomepage,
-            final MultiLanguageString researchUnit, final Boolean showCurrentAttendingExecutionCourses,
-            final Boolean showPublications, final Boolean showPatents, final Boolean showInterests,
-            final Boolean showParticipations, final Boolean showPrizes) {
+            final MultiLanguageString researchUnit, final Boolean showCurrentAttendingExecutionCourses) {
         check(RolePredicates.PERSON_PREDICATE);
 
         Homepage homepage = person.initializeSite();
@@ -31,11 +47,6 @@ public class SubmitHomepage {
         homepage.setResearchUnitHomepage(researchUnitHomepage);
         homepage.setResearchUnit(researchUnit);
         homepage.setShowCurrentAttendingExecutionCourses(showCurrentAttendingExecutionCourses);
-        homepage.setShowPublications(showPublications);
-        homepage.setShowPatents(showPatents);
-        homepage.setShowInterests(showInterests);
-        homepage.setShowParticipations(showParticipations);
-        homepage.setShowPrizes(showPrizes);
     }
 
 }

@@ -1,26 +1,39 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@page import="org.fenixedu.bennu.core.util.CoreConfiguration"%>
 <%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
-<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
+<%@page import="net.sourceforge.fenixedu.domain.Installation"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="str"%>
 <html:xhtml />
 
 <bean:define id="institutionUrl" type="java.lang.String">
-	<%=Instalation.getInstance().getInstituitionURL()%>
+	<%=Installation.getInstance().getInstituitionURL()%>
 </bean:define>
 <bean:define id="institutionName" type="java.lang.String">
 	<%=Unit.getInstitutionName()%>
 </bean:define>
-<bean:define id="centralApplicationsUrl" type="java.lang.String">
-	<bean:message key="centralApplications.url" bundle="GLOBAL_RESOURCES" />
-</bean:define>
-	<bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES" />
-</bean:define>
-<%-- <bean:define id="contextId" name="<%=net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY%>" property="selectedTopLevelContainer.externalId" /> --%>
 
 <head>
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/fenixEduBar.css" media="screen" />
@@ -34,7 +47,7 @@
 	<div id="authentication">
 		<logic:notPresent name="LOGGED_USER_ATTRIBUTE">
 			<h1 id="logout">
-				<html:link styleClass="button" href="loginPage.jsp">Login</html:link>
+				<!-- NO_CHECKSUM --><html:link styleClass="button" href="loginPage.jsp">Login</html:link>
 			</h1>
 		</logic:notPresent>
 		

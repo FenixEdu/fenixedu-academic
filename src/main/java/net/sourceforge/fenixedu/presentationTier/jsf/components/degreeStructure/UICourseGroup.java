@@ -1,7 +1,24 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.faces.context.FacesContext;
 
@@ -67,51 +84,6 @@ public class UICourseGroup extends UIDegreeModule {
         } else {
             encodeSelf();
             encodeChildCourseGroups();
-        }
-    }
-
-    private void encodeRoot() throws IOException {
-        if (reportsAvailable) {
-            writer.startElement("p", this);
-            writer.startElement("a", this);
-            this.encodeLinkHref(module + "/curricularPlans/courseGroupReport.faces",
-                    "&courseGroupID=" + this.courseGroup.getExternalId(), true);
-            writer.write("Relatórios de Plano Curricular");
-            writer.endElement("a");
-            writer.endElement("p");
-        }
-        if (this.onlyStructure) {
-            if (this.toEdit) {
-                if (!this.toOrder) {
-                    writer.startElement("p", this);
-                    writer.writeAttribute("style", "mtop05", null);
-                    if (loggedPersonCanManageDegreeCurricularPlans()) {
-                        encodeLink("createCourseGroup.faces", "&parentCourseGroupID=" + this.courseGroup.getExternalId()
-                                + "&toOrder=false", false, "create.course.group.root");
-                    }
-                    writer.endElement("p");
-                }
-            }
-
-            writer.startElement("table", this);
-            writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
-            encodeChildCourseGroups();
-            writer.endElement("table");
-        } else {
-            if (this.courseGroup.hasAnyChildContexts()) {
-                encodeChildCourseGroups();
-            } else {
-                writer.startElement("table", this);
-                writer.startElement("tr", this);
-                writer.startElement("td", this);
-                writer.writeAttribute("align", "center", null);
-                writer.startElement("i", this);
-                writer.append(this.getBundleValue("BolonhaManagerResources", "empty.curricularPlan"));
-                writer.endElement("i");
-                writer.endElement("td");
-                writer.endElement("tr");
-                writer.endElement("table");
-            }
         }
     }
 
@@ -267,7 +239,7 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeOrderOption(Integer posToTest, String label, boolean lastOption) throws IOException {
-        encodeLink("orderCourseGroup.faces", "&courseGroupID=" + this.courseGroup.getExternalId() + "&contextID="
+        encodeLink(module + "/orderCourseGroup.faces", "&courseGroupID=" + this.courseGroup.getExternalId() + "&contextID="
                 + this.previousContext.getExternalId() + "&pos=" + posToTest + "&toOrder=true", false, label);
         if (!lastOption) {
             writer.append(" , ");
@@ -287,29 +259,32 @@ public class UICourseGroup extends UIDegreeModule {
         if (loggedPersonCanManageDegreeCurricularPlans()) {
             writer.append("(");
 
-            encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
+            encodeLink(module + "/createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
 
             if (!this.courseGroup.isRoot() && !this.courseGroup.isBranchCourseGroup()) {
                 writer.append(" , ");
-                encodeLink("createBranchCourseGroup.faces", createAssociateAditionalParameters, false, "create.branch.group");
+                encodeLink(module + "/createBranchCourseGroup.faces", createAssociateAditionalParameters, false,
+                        "create.branch.group");
             }
 
             writer.append(" , ");
-            encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");
+            encodeLink(module + "/associateCourseGroup.faces", createAssociateAditionalParameters, false,
+                    "associate.course.group");
 
             if (!this.courseGroup.isRoot()) {
                 writer.append(" , ");
-                encodeLink("editCourseGroup.faces", editAndDeleteAditionalParameters, false, "edit");
+                encodeLink(module + "/editCourseGroup.faces", editAndDeleteAditionalParameters, false, "edit");
             }
 
             if (!this.courseGroup.isRoot() /* && this.executionYear == null */) {
                 writer.append(" , ");
-                encodeLink("deleteCourseGroup.faces", editAndDeleteAditionalParameters, false, "delete");
+                encodeLink(module + "/deleteCourseGroup.faces", editAndDeleteAditionalParameters, false, "delete");
             }
 
             if (this.courseGroup.isCycleCourseGroup()) {
                 writer.append(" , ");
-                encodeLink("editCycleCourseGroupInformation.faces", editAndDeleteAditionalParameters, false, "editInformation");
+                encodeLink(module + "/editCycleCourseGroupInformation.faces", editAndDeleteAditionalParameters, false,
+                        "editInformation");
             }
             writer.append(") ");
         }
@@ -326,10 +301,10 @@ public class UICourseGroup extends UIDegreeModule {
                         "&degreeModuleID=" + this.courseGroup.getExternalId(), false, "setCurricularRule");
             }
         } else {
-            encodeLink("createCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getExternalId(), false,
+            encodeLink(module + "/createCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getExternalId(), false,
                     "create.curricular.course");
             writer.append(" , ");
-            encodeLink("associateCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getExternalId(), false,
+            encodeLink(module + "/associateCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getExternalId(), false,
                     "associate.curricular.course");
         }
         writer.endElement("th");
@@ -349,45 +324,6 @@ public class UICourseGroup extends UIDegreeModule {
 
         writer.endElement("table");
         writer.endElement("div");
-    }
-
-    private void encodeSumsFooter(List<Double> sums) throws IOException {
-        writer.startElement("tr", this);
-
-        writer.startElement("td", this);
-        writer.writeAttribute("colspan", 3, null);
-        writer.endElement("td");
-
-        writer.startElement("td", this);
-        writer.writeAttribute("class", "highlight2 smalltxt", null);
-        writer.writeAttribute("align", "right", null);
-
-        encodeSumsLoadFooterElement(sums, "contactLessonHoursAcronym", 0);
-        encodeSumsLoadFooterElement(sums, "autonomousWorkAcronym", 1);
-        encodeSumsLoadFooterElement(sums, "totalLoadAcronym", 2);
-        writer.endElement("td");
-
-        writer.startElement("td", this);
-        writer.writeAttribute("class", "aright highlight2", null);
-        writer.append(this.getBundleValue("BolonhaManagerResources", "credits")).append(" ");
-        writer.append(String.valueOf(sums.get(3)));
-        writer.endElement("td");
-
-        if (this.toEdit) {
-            writer.startElement("td", this);
-            writer.append("&nbsp;");
-            writer.endElement("td");
-        }
-
-        writer.endElement("tr");
-    }
-
-    private void encodeSumsLoadFooterElement(List<Double> sums, String acronym, int order) throws IOException {
-        writer.startElement("span", this);
-        writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("BolonhaManagerResources", acronym)).append("-");
-        writer.endElement("span");
-        writer.append(String.valueOf(sums.get(order))).append(" ");
     }
 
 }

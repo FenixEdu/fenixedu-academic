@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -5,6 +23,7 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -19,7 +38,6 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class InquiryDefinitionPeriodBean implements Serializable {
@@ -30,15 +48,15 @@ public class InquiryDefinitionPeriodBean implements Serializable {
     private DateTime begin;
     private DateTime end;
     private MultiLanguageString message;
-    private Language selectedLanguage;
-    private Language previousLanguage;
+    private Locale selectedLanguage;
+    private Locale previousLanguage;
     private ExecutionSemester executionPeriod;
     private InquiryResponsePeriodType responsePeriodType;
     private boolean changedLanguage = false;
 
     public InquiryDefinitionPeriodBean() {
         setMessage(new MultiLanguageString());
-        setSelectedLanguage(Language.pt);
+        setSelectedLanguage(MultiLanguageString.pt);
         setResponsePeriodType(InquiryResponsePeriodType.STUDENT);
     }
 
@@ -100,7 +118,7 @@ public class InquiryDefinitionPeriodBean implements Serializable {
         this.responsePeriodType = responsePeriodType;
     }
 
-    public void setSelectedLanguage(Language selectedLanguage) {
+    public void setSelectedLanguage(Locale selectedLanguage) {
         setChangedLanguage(false);
         this.previousLanguage = this.selectedLanguage;
         if (this.selectedLanguage != null && this.selectedLanguage != selectedLanguage) {
@@ -109,7 +127,7 @@ public class InquiryDefinitionPeriodBean implements Serializable {
         this.selectedLanguage = selectedLanguage;
     }
 
-    public Language getSelectedLanguage() {
+    public Locale getSelectedLanguage() {
         return selectedLanguage;
     }
 
@@ -121,7 +139,7 @@ public class InquiryDefinitionPeriodBean implements Serializable {
         return changedLanguage;
     }
 
-    public Language getPreviousLanguage() {
+    public Locale getPreviousLanguage() {
         return previousLanguage;
     }
 
@@ -137,9 +155,9 @@ public class InquiryDefinitionPeriodBean implements Serializable {
 
         @Override
         public Object provide(Object source, Object currentValue) {
-            List<Language> languages = new ArrayList<Language>();
-            languages.add(Language.pt);
-            languages.add(Language.en);
+            List<Locale> languages = new ArrayList<Locale>();
+            languages.add(MultiLanguageString.pt);
+            languages.add(MultiLanguageString.en);
             return languages;
         }
 
@@ -148,7 +166,7 @@ public class InquiryDefinitionPeriodBean implements Serializable {
             return new Converter() {
                 @Override
                 public Object convert(Class type, Object value) {
-                    return Language.valueOf((String) value);
+                    return new Locale.Builder().setLanguageTag((String) value).build();
 
                 }
             };

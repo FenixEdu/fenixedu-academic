@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 23/Set/2003
  *  
@@ -36,7 +54,6 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 import com.sun.faces.el.impl.parser.ParseException;
 
@@ -49,12 +66,10 @@ public class InsertExercise {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List<String> run(String executionCourseId, UploadedFile xmlZipFile, String path) throws FenixServiceException {
+    public List<String> run(ExecutionCourse executionCourse, UploadedFile xmlZipFile) throws FenixServiceException {
 
         List<String> badXmls = new ArrayList<String>();
-        String replacedPath = path.replace('\\', '/');
         boolean createAny = false;
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -71,7 +86,7 @@ public class InsertExercise {
                 String xmlFileName = labelValueBean.getLabel();
                 try {
                     ParseSubQuestion parseQuestion = new ParseSubQuestion();
-                    parseQuestion.parseSubQuestion(xmlFile, replacedPath);
+                    parseQuestion.parseSubQuestion(xmlFile);
                     Question question = new Question();
                     question.setXmlFile(xmlFile);
                     question.setXmlFileName(xmlFileName);
@@ -91,7 +106,7 @@ public class InsertExercise {
                     String xmlFileName = labelValueBean.getLabel();
                     ParseMetadata parse = new ParseMetadata();
                     try {
-                        Vector<Element> vector = parse.parseMetadata(xmlFile, path);
+                        Vector<Element> vector = parse.parseMetadata(xmlFile);
                         List<Question> listToThisMetadata = getListToThisMetadata(questionMap, parse.getMembers());
                         if (listToThisMetadata.size() != 0) {
                             metadata = new Metadata(executionCourse, xmlFile, vector);
@@ -246,10 +261,10 @@ public class InsertExercise {
     private static final InsertExercise serviceInstance = new InsertExercise();
 
     @Atomic
-    public static List<String> runInsertExercise(String executionCourseId, UploadedFile xmlZipFile, String path)
+    public static List<String> runInsertExercise(ExecutionCourse executionCourseId, UploadedFile xmlZipFile)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, xmlZipFile, path);
+        return serviceInstance.run(executionCourseId, xmlZipFile);
     }
 
 }

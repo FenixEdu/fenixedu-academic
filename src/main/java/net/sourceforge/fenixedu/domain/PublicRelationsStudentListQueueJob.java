@@ -1,12 +1,33 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Locale;
+
+import org.fenixedu.commons.i18n.I18N;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport.StudentReportPredicate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class PublicRelationsStudentListQueueJob extends PublicRelationsStudentListQueueJob_Base {
 
@@ -31,7 +52,7 @@ public class PublicRelationsStudentListQueueJob extends PublicRelationsStudentLi
 
     @Override
     public QueueJobResult execute() throws Exception {
-        Language.setLocale(Language.getDefaultLocale());
+        I18N.setLocale(Locale.getDefault());
         final ExecutionYear executionYear = getExecutionYear();
         final DegreeType degreeType = getDegreeType();
         final boolean concluded = getConcluded();

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram;
 
 import java.io.Serializable;
@@ -20,6 +38,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
@@ -29,33 +48,28 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+@StrutsFunctionality(app = CoordinatorPhdApp.class, path = "ist-epfl", titleKey = "label.phd.ist.epfl.collaboration.type",
+        accessGroup = "nobody")
 @Mapping(path = "/candidacies/phdProgramCandidacyProcess", module = "coordinator")
-@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
-
-@Forward(name = "listProcesses", path = "/phd/coordinator/publicProgram/listProcesses.jsp"),
-
-@Forward(name = "viewProcess", path = "/phd/coordinator/publicProgram/viewProcess.jsp"),
-
-@Forward(name = "viewCandidacyRefereeLetter", path = "/phd/coordinator/publicProgram/viewCandidacyRefereeLetter.jsp"),
-
-@Forward(name = "manageFocusAreas", path = "/phd/coordinator/publicProgram/manageFocusAreas.jsp"),
-
-@Forward(name = "manageThesisSubjects", path = "/phd/coordinator/publicProgram/manageThesisSubjects.jsp"),
-
-@Forward(name = "editThesisSubject", path = "/phd/coordinator/publicProgram/editThesisSubject.jsp")
-
-})
+@Forwards({ @Forward(name = "listProcesses", path = "/phd/coordinator/publicProgram/listProcesses.jsp"),
+        @Forward(name = "viewProcess", path = "/phd/coordinator/publicProgram/viewProcess.jsp"),
+        @Forward(name = "viewCandidacyRefereeLetter", path = "/phd/coordinator/publicProgram/viewCandidacyRefereeLetter.jsp"),
+        @Forward(name = "manageFocusAreas", path = "/phd/coordinator/publicProgram/manageFocusAreas.jsp"),
+        @Forward(name = "manageThesisSubjects", path = "/phd/coordinator/publicProgram/manageThesisSubjects.jsp"),
+        @Forward(name = "editThesisSubject", path = "/phd/coordinator/publicProgram/editThesisSubject.jsp") })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
 
+    @EntryPoint
     public ActionForward listProcesses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

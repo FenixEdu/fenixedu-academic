@@ -1,24 +1,27 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Optional;
 
-import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
-import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
-import org.fenixedu.bennu.core.annotation.CustomGroupOperator;
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.groups.Group;
-import org.joda.time.DateTime;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-
-@CustomGroupOperator("alumni")
 public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     protected PersistentAlumniGroup(Degree degree) {
         super();
@@ -29,54 +32,8 @@ public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     }
 
     @Override
-    public String[] getPresentationNameKeyArgs() {
-        return new String[] { getDegree().getNameI18N().getContent() };
-    }
-
-    @Override
-    public Set<User> getMembers() {
-        return getMembers(DateTime.now());
-    }
-
-    @Override
-    public Set<User> getMembers(DateTime when) {
-        //TODO: time specific is just using Alumni.getRegisteredWhen() date?
-        Set<User> users = new HashSet<>();
-        for (final Alumni alumni : Bennu.getInstance().getAlumnisSet()) {
-            User user = alumni.getStudent().getPerson().getUser();
-            if (user != null) {
-                if (getDegree() != null && !isMember(user, when)) {
-                    continue;
-                }
-                users.add(user);
-            }
-        }
-        return users;
-    }
-
-    @Override
-    public boolean isMember(User user) {
-        return isMember(user, DateTime.now());
-    }
-
-    @Override
-    public boolean isMember(User user, DateTime when) {
-        if (user == null || user.getPerson().getStudent() == null || user.getPerson().getStudent().getAlumni() == null) {
-            return false;
-        }
-        if (getDegree() != null) {
-            for (Registration registration : user.getPerson().getStudent().getRegistrationsFor(getDegree())) {
-                if (new RegistrationConclusionBean(registration).isConcluded()) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        return true;
-    }
-
-    public static Set<Group> groupsForUser(User user) {
-        return Collections.emptySet();
+    public org.fenixedu.bennu.core.groups.Group toGroup() {
+        return AlumniGroup.get(getDegree());
     }
 
     @Override
@@ -90,13 +47,8 @@ public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     }
 
     public static PersistentAlumniGroup getInstance(Degree degree) {
-        PersistentAlumniGroup instance = degree == null ? find(PersistentAlumniGroup.class).orNull() : degree.getAlumniGroup();
-        return instance != null ? instance : create(degree);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentAlumniGroup create(Degree degree) {
-        PersistentAlumniGroup instance = degree == null ? find(PersistentAlumniGroup.class).orNull() : degree.getAlumniGroup();
-        return instance != null ? instance : new PersistentAlumniGroup(degree);
+        return singleton(
+                () -> degree == null ? find(PersistentAlumniGroup.class) : Optional.ofNullable(degree.getAlumniGroup()),
+                        () -> new PersistentAlumniGroup(degree));
     }
 }

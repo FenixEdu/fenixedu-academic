@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.department;
 
 import java.util.ArrayList;
@@ -14,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
@@ -29,6 +48,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForExecutionCourseAssociation;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -42,6 +62,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.action.ExceptionHandler;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
@@ -50,19 +71,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorshipsForManagement",
-        input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities",
-        formBean = "teacherExecutionCourseResponsabilities", scope = "request")
-@Forwards(value = { @Forward(name = "list-professorships",
-        path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagement.jsp", tileProperties = @Tile(
-                title = "private.administrationofcreditsofdepartmentteachers.teachers.courses")) })
-@Exceptions(value = { @ExceptionHandling(
-        type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class,
-        key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class,
-        path = "/teacherSearchForExecutionCourseAssociation.do?method=searchForm&page=0", scope = "request") })
+        formBean = "teacherExecutionCourseResponsabilities", functionality = TeacherSearchForExecutionCourseAssociation.class)
+@Forwards({ @Forward(name = "list-professorships",
+        path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagement.jsp") })
+@Exceptions(value = { @ExceptionHandling(type = NotAuthorizedException.class, key = "message.teacher-not-belong-to-department",
+        handler = ExceptionHandler.class, path = "/teacherSearchForExecutionCourseAssociation.do", scope = "request") })
 public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     private final class Professorships2DetailProfessorship implements Transformer {
         private Professorships2DetailProfessorship() {

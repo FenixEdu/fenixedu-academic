@@ -1,9 +1,31 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
+
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
 
 <bean:define id="executionCourseId" name="executionCourse" property="externalId"/>
 <bean:define id="optional" name="optional" type="java.lang.Boolean"/>
@@ -28,7 +50,7 @@
 </p>
 
 
-	<fr:form action="<%= "/manageExecutionCourse.do?method=sortBibliographyReferences&amp;executionCourseID=" + executionCourseId + (optional ? "&amp;optional=true" : "") %>">
+	<fr:form action="<%= "/manageBibliographicReference.do?method=sortBibliographyReferences&amp;executionCourseID=" + executionCourseId + (optional ? "&amp;optional=true" : "") %>">
 	    <input id="referencesOrder" type="hidden" name="referencesOrder" value=""/>
 	</fr:form>
 
@@ -44,7 +66,7 @@
 
 
 <p class="mtop15">
-    <fr:form action="<%="/manageExecutionCourse.do?method=bibliographicReference&amp;executionCourseID=" + executionCourseId %>">
+    <fr:form action="<%="/manageBibliographicReference.do?method=bibliographicReference&amp;executionCourseID=" + executionCourseId %>">
        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('referencesOrderTree');" %>">
            <bean:message key="button.items.order.save" bundle="SITE_RESOURCES"/>
        </html:button>

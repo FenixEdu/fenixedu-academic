@@ -1,4 +1,22 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.inquiries;
@@ -39,47 +57,22 @@ import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/teachingInquiry", module = "teacher")
-@Forwards({
-        @Forward(name = "inquiryPrePage", path = "/teacher/inquiries/inquiryPrePage.jsp", tileProperties = @Tile(
-                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-                title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "inquiryResultsResume", path = "/teacher/inquiries/inquiryResultsResume.jsp", tileProperties = @Tile(
-                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-                title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "inquiriesClosed", path = "/teacher/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(
-                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-                title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/inquiryUnavailable.jsp", tileProperties = @Tile(
-                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-                title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "teacherInquiry", path = "/teacher/inquiries/teacherInquiry.jsp", tileProperties = @Tile(
-                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-                title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false,
-                tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "showCourseInquiryResult_v2", path = "/inquiries/showCourseInquiryResult_v2.jsp", useTile = false,
-                tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false,
-                tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "showTeachingInquiryResult_v2", path = "/inquiries/showTeachingInquiryResult_v2.jsp", useTile = false,
-                tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")) })
-public class TeachingInquiryDA extends FenixDispatchAction {
+@Mapping(path = "/teachingInquiry", module = "teacher", functionality = ManageExecutionCourseDA.class)
+public class TeachingInquiryDA extends ExecutionCourseBaseAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
@@ -90,18 +83,18 @@ public class TeachingInquiryDA extends FenixDispatchAction {
         ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
         if (!executionCourse.getExecutionPeriod().isAfter(oldQucExecutionSemester)) {
             if (executionCourse.getExecutionPeriod().getTeachingInquiryResponsePeriod() == null) {
-                return actionMapping.findForward("inquiriesClosed");
+                return forward(request, "/teacher/inquiries/inquiriesClosed.jsp");
             }
 
             if (!executionCourse.isAvailableForInquiry()) {
-                return actionMapping.findForward("inquiryUnavailable");
+                return forward(request, "/teacher/inquiries/inquiryUnavailable.jsp");
             }
 
             request.setAttribute("professorship", professorship);
             request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(professorship));
             request.setAttribute("executionSemester", executionCourse.getExecutionPeriod());
 
-            return actionMapping.findForward("inquiryPrePage");
+            return forward(request, "/teacher/inquiries/inquiryPrePage.jsp");
         }
 
         TeacherInquiryTemplate inquiryTemplate =
@@ -112,13 +105,13 @@ public class TeachingInquiryDA extends FenixDispatchAction {
         if (inquiryTemplate == null
                 || (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && !inquiryTemplate
                         .getExecutionPeriod().hasAnyInquiryResults())) {
-            return actionMapping.findForward("inquiriesClosed");
+            return forward(request, "/teacher/inquiries/inquiriesClosed.jsp");
         } else if (!inquiryTemplate.isOpen()) {
             request.setAttribute("readMode", "readMode");
         }
 
         if (!professorship.getPerson().hasToAnswerTeacherInquiry(professorship)) {
-            return actionMapping.findForward("inquiryUnavailable");
+            return forward(request, "/teacher/inquiries/inquiryUnavailable.jsp");
         }
 
         List<TeacherShiftTypeGroupsResumeResult> teacherResults = new ArrayList<TeacherShiftTypeGroupsResumeResult>();
@@ -154,7 +147,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
         request.setAttribute("coursesResultResume", coursesResultResume);
 
         ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionCourse.getExecutionPeriod(), request);
-        return actionMapping.findForward("inquiryResultsResume");
+        return forward(request, "/teacher/inquiries/inquiryResultsResume.jsp");
     }
 
     static InquiryResponseState getFilledState(Professorship professorship, TeacherInquiryTemplate inquiryTemplate,
@@ -205,7 +198,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
         request.setAttribute("executionCourse", professorship.getExecutionCourse());
         request.setAttribute("teacherInquiryBean", teacherInquiryBean);
 
-        return actionMapping.findForward("teacherInquiry");
+        return forward(request, "/teacher/inquiries/teacherInquiry.jsp");
     }
 
     public ActionForward showDelegateInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -250,7 +243,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
         request.setAttribute("teacherInquiryBean", teacherInquiryBean);
 
         RenderUtils.invalidateViewState();
-        return actionMapping.findForward("teacherInquiry");
+        return forward(request, "/teacher/inquiries/teacherInquiry.jsp");
     }
 
     public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -266,7 +259,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
             request.setAttribute("executionPeriod", teacherInquiryBean.getProfessorship().getExecutionCourse()
                     .getExecutionPeriod());
             request.setAttribute("executionCourse", teacherInquiryBean.getProfessorship().getExecutionCourse());
-            return actionMapping.findForward("teacherInquiry");
+            return forward(request, "/teacher/inquiries/teacherInquiry.jsp");
         }
 
         RenderUtils.invalidateViewState("teacherInquiryBean");
@@ -302,6 +295,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
             return null;
         }
         request.setAttribute("inquiryResult", courseResult);
+        PortalLayoutInjector.skipLayoutOn(request);
         return actionMapping.findForward(getCourseInquiryResultTemplate(courseResult));
     }
 
@@ -326,6 +320,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
             return null;
         }
         request.setAttribute("inquiryResult", teachingResult);
+        PortalLayoutInjector.skipLayoutOn(request);
         return actionMapping.findForward(getTeachingInquiryResultTemplate(teachingResult));
     }
 

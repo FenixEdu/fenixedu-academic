@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
@@ -9,15 +27,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -42,9 +61,10 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
         Degree degree = getDegree(request);
         if (degree != null) {
             request.setAttribute("degree", degree);
+            OldCmsSemanticURLHandler.selectSite(request, degree.getSite());
         }
 
-        Collection<Campus> campus = degree.getCurrentCampus();
+        Collection<Space> campus = degree.getCurrentCampus();
         if (campus.isEmpty()) {
             campus = degree.getCurrentCampus();
         }
@@ -126,7 +146,7 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
                 boards.add(board);
             }
 
-            if (board.getReaders().allows(userView)) {
+            if (board.getReaders().isMember(userView)) {
                 boards.add(board);
             }
         }

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.docs.phd.notification;
 
 import java.text.MessageFormat;
@@ -20,7 +38,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdNotificationDocument extends FenixReport {
 
@@ -30,9 +48,9 @@ public class PhdNotificationDocument extends FenixReport {
 
     private PhdNotification notification;
 
-    private Language language;
+    private Locale language;
 
-    public PhdNotificationDocument(PhdNotification notification, Language language) {
+    public PhdNotificationDocument(PhdNotification notification, Locale language) {
         setNotification(notification);
         setLanguage(language);
         fillReport();
@@ -47,11 +65,11 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     @Override
-    public Language getLanguage() {
+    public Locale getLanguage() {
         return language;
     }
 
-    public void setLanguage(Language language) {
+    public void setLanguage(Locale language) {
         this.language = language;
     }
 
@@ -128,11 +146,11 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     private String getMessageFromResource(String key) {
-        return ResourceBundle.getBundle("resources.PhdResources", new Locale(getLanguage().name())).getString(key);
+        return ResourceBundle.getBundle("resources.PhdResources", getLanguage()).getString(key);
     }
 
     private String getDateFormat() {
-        return getLanguage() == Language.pt ? DATE_FORMAT_PT : DATE_FORMAT_EN;
+        return getLanguage() == MultiLanguageString.pt ? DATE_FORMAT_PT : DATE_FORMAT_EN;
     }
 
     private String getRegistrationFee(final PhdIndividualProgramProcess individualProgramProcess, final LocalDate whenRatified) {
@@ -160,7 +178,7 @@ public class PhdNotificationDocument extends FenixReport {
 
     @Override
     public String getReportTemplateKey() {
-        return getClass().getName() + "." + getNotification().getType().name() + "." + getLanguage().name();
+        return getClass().getName() + "." + getNotification().getType().name() + "." + getLanguage();
     }
 
 }

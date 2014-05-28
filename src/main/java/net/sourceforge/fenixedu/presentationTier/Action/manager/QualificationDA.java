@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.util.Collection;
@@ -9,6 +27,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.FindPersonAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -20,7 +39,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/qualification", module = "manager")
+@Mapping(path = "/qualification", module = "manager", functionality = FindPersonAction.class)
 @Forwards({ @Forward(name = "showQualifications", path = "/manager/qualifications/showQualifications.jsp"),
         @Forward(name = "qualification", path = "/manager/qualifications/qualification.jsp"),
         @Forward(name = "viewPerson", path = "/manager/personManagement/viewPerson.jsp"),

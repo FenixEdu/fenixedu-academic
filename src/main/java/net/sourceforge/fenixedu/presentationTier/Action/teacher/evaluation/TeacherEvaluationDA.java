@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation;
 
 import java.io.ByteArrayOutputStream;
@@ -35,10 +53,13 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileT
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherTeachingApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,10 +67,11 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "researcher", path = "/teacherEvaluation")
-@Forwards({
+@StrutsFunctionality(app = TeacherTeachingApp.class, path = "teacher-evaluation", titleKey = "label.teacher.evaluation.title",
+        bundle = "ResearcherResources")
+@Mapping(module = "teacher", path = "/teacherEvaluation")
+@Forwards({ @Forward(name = "entryPoint", path = "/teacher/evaluation/entryPoint.jsp"),
         @Forward(name = "viewAutoEvaluation", path = "/teacher/evaluation/viewAutoEvaluation.jsp"),
         @Forward(name = "changeEvaluationType", path = "/teacher/evaluation/changeEvaluationType.jsp"),
         @Forward(name = "insertEvaluationMark", path = "/teacher/evaluation/insertEvaluationMark.jsp"),
@@ -57,12 +79,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         @Forward(name = "viewEvaluation", path = "/teacher/evaluation/viewEvaluation.jsp"),
         @Forward(name = "viewEvaluationByCCAD", path = "/teacher/evaluation/viewEvaluationByCCAD.jsp"),
         @Forward(name = "uploadEvaluationFile", path = "/teacher/evaluation/uploadEvaluationFile.jsp"),
-        @Forward(name = "viewManagementInterface", path = "/teacher/evaluation/viewManagementInterface.jsp",
-                tileProperties = @Tile(bundle = "TITLES_RESOURCES",
-                        title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation")) })
+        @Forward(name = "viewManagementInterface", path = "/teacher/evaluation/viewManagementInterface.jsp") })
 public class TeacherEvaluationDA extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(TeacherEvaluationDA.class);
+
+    @EntryPoint
+    public ActionForward entryPoint(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return mapping.findForward("entryPoint");
+    }
 
     public ActionForward viewAutoEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {

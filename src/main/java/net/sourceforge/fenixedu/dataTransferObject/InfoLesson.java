@@ -1,10 +1,32 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -30,7 +52,7 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
 
     };
 
-    private Lesson lesson;
+    private final Lesson lesson;
     private InfoRoom infoSala;
     private InfoShift infoShift;
     private InfoRoomOccupation infoRoomOccupation;
@@ -109,6 +131,20 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
         return (lesson != null) ? new InfoLesson(lesson) : null;
     }
 
+    /*
+     * This is a convenience method, until RenderTimeTableTag support proper domain classes...
+     */
+    @Deprecated
+    public static List<InfoLesson> newInfosForSchoolClass(SchoolClass schoolClass) {
+        List<InfoLesson> lessons = new ArrayList<>();
+        for (Shift shift : schoolClass.getAssociatedShiftsSet()) {
+            for (Lesson lesson : shift.getAssociatedLessonsSet()) {
+                lessons.add(new InfoLesson(lesson));
+            }
+        }
+        return lessons;
+    }
+
     @Override
     public int compareTo(InfoLesson arg0) {
         return INFO_LESSON_COMPARATOR_CHAIN.compare(this, arg0);
@@ -126,14 +162,14 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
             InfoLesson infoAula = (InfoLesson) obj;
             resultado =
                     (getDiaSemana().equals(infoAula.getDiaSemana()))
-                            && (getInicio().get(Calendar.HOUR_OF_DAY) == infoAula.getInicio().get(Calendar.HOUR_OF_DAY))
-                            && (getInicio().get(Calendar.MINUTE) == infoAula.getInicio().get(Calendar.MINUTE))
-                            && (getFim().get(Calendar.HOUR_OF_DAY) == infoAula.getFim().get(Calendar.HOUR_OF_DAY))
-                            && (getFim().get(Calendar.MINUTE) == infoAula.getFim().get(Calendar.MINUTE))
-                            && ((getInfoSala() == null && infoAula.getInfoSala() == null) || (getInfoSala() != null && getInfoSala()
-                                    .equals(infoAula.getInfoSala())))
-                            && ((getInfoRoomOccupation() == null && infoAula.getInfoRoomOccupation() == null) || (getInfoRoomOccupation() != null && getInfoRoomOccupation()
-                                    .equals(infoAula.getInfoRoomOccupation())));
+                    && (getInicio().get(Calendar.HOUR_OF_DAY) == infoAula.getInicio().get(Calendar.HOUR_OF_DAY))
+                    && (getInicio().get(Calendar.MINUTE) == infoAula.getInicio().get(Calendar.MINUTE))
+                    && (getFim().get(Calendar.HOUR_OF_DAY) == infoAula.getFim().get(Calendar.HOUR_OF_DAY))
+                    && (getFim().get(Calendar.MINUTE) == infoAula.getFim().get(Calendar.MINUTE))
+                    && ((getInfoSala() == null && infoAula.getInfoSala() == null) || (getInfoSala() != null && getInfoSala()
+                    .equals(infoAula.getInfoSala())))
+                    && ((getInfoRoomOccupation() == null && infoAula.getInfoRoomOccupation() == null) || (getInfoRoomOccupation() != null && getInfoRoomOccupation()
+                    .equals(infoAula.getInfoRoomOccupation())));
         }
         return resultado;
     }

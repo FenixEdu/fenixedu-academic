@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -9,10 +29,10 @@
 <logic:present name="executionCourse">
 
 	<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>	
-	<bean:define id="submitUrl">/manageExecutionCourse.do?method=listExecutionCoursesToImportEvaluationMethod&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>
-	<bean:define id="showEvaluationMethod">/manageExecutionCourse.do?method=evaluationMethod&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportEvaluationMethodPostBack&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareImportBiliographicReferencesInvalid&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="submitUrl">/manageEvaluationMethod.do?method=listExecutionCoursesToImportEvaluationMethod&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>
+	<bean:define id="showEvaluationMethod">/manageEvaluationMethod.do?method=evaluationMethod&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="postBackLink">/manageEvaluationMethod.do?method=prepareImportEvaluationMethodPostBack&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="invalidLink">/manageEvaluationMethod.do?method=prepareImportBiliographicReferencesInvalid&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 
 	<h2><bean:message key="link.import.evaluationMethod"/></h2>
 	
@@ -31,7 +51,7 @@
 	<logic:notEmpty name="importContentBean" property="curricularYear">	
 	 	<logic:notEmpty name="importContentBean" property="executionPeriod">	
 	 		<logic:notEmpty name="importContentBean" property="executionDegree">	
-				<bean:define id="importEvaluationMethodUrl">/manageExecutionCourse.do?method=importEvaluationMethod&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
+				<bean:define id="importEvaluationMethodUrl">/manageEvaluationMethod.do?method=importEvaluationMethod&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
 				<p class="mtop2 mbottom05"><strong><bean:message key="label.choose.course"/></strong></p>
 				<fr:edit id="importContentBeanWithExecutionCourse" name="importContentBean" schema="ListExecutionCoursesToImportContent" 
 					action="<%= importEvaluationMethodUrl %>" >

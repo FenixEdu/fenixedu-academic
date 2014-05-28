@@ -1,10 +1,31 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.space;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.resource.Resource;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.spaces.domain.Space;
 
 public abstract class SpaceOccupation extends SpaceOccupation_Base {
 
@@ -15,14 +36,16 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
     public abstract Group getAccessGroup();
 
     public void checkPermissionsToManageSpaceOccupations() {
-
-        Person loggedPerson = AccessControl.getPerson();
-        if (getSpace().personHasPermissionsToManageSpace(loggedPerson)) {
+        User user = Authenticate.getUser();
+        Space r = getSpace();
+        if (SpaceUtils.personIsSpacesAdministrator(user.getPerson())
+                || r.getManagementGroupWithChainOfResponsability() != null
+                && r.getManagementGroupWithChainOfResponsability().isMember(user)) {
             return;
         }
 
         final Group group = getAccessGroup();
-        if (group != null && group.isMember(loggedPerson)) {
+        if (group != null && group.isMember(user)) {
             return;
         }
 
@@ -30,10 +53,9 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
     }
 
     public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManager() {
-
-        Person loggedPerson = AccessControl.getPerson();
+        User user = Authenticate.getUser();
         final Group group = getAccessGroup();
-        if (group != null && group.isMember(loggedPerson)) {
+        if (group != null && group.isMember(user)) {
             return;
         }
 
@@ -41,19 +63,7 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
     }
 
     public Space getSpace() {
-        return (Space) getResource();
-    }
-
-    @Override
-    public void setResource(Resource resource) {
-        super.setResource(resource);
-        if (!resource.isSpace()) {
-            throw new DomainException("error.allocation.invalid.resource.type");
-        }
-    }
-
-    @Override
-    public boolean isSpaceOccupation() {
-        return true;
+        Set<Space> spaces = getSpaces();
+        return spaces.isEmpty() ? null : spaces.iterator().next();
     }
 }

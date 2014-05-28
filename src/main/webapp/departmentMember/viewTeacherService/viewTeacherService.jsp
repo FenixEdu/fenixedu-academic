@@ -1,12 +1,31 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core"  prefix="c" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
 
-<ft:tilesView definition="departmentMember.masterPage"
-	attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/DepartmentMemberResources"
@@ -14,7 +33,6 @@
 	<f:loadBundle basename="resources/EnumerationResources"
 		var="bundleEnumeration" />
 
-	<h:outputText value="<em>#{bundle['label.departmentMember']}</em>" escape="false" />
 	<h:outputText value="<h2>#{bundle['label.teacherService.title']}</h2>" escape="false"/>
 	<h:outputText value="<h3>#{viewTeacherService.departmentName}</h3>" escape="false"/>
 	
@@ -53,7 +71,7 @@
 
 	<h:outputText value="<p class='mtop15'>Visualizar por: <b>#{bundle['label.teacherService.navigateByTeacher']}</b>" escape="false"/>
 	<h:outputText value=" #{bundle['label.teacherService.separator']} " escape="false"/>
-	<h:outputText value="<a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
+	<h:outputText value="#{facesContext.externalContext.requestContextPath}/departmentMember/viewTeacherService/<a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
 	<h:outputText value="#{bundle['label.teacherService.navigateByCourse']}" escape="false"/>
 	<h:outputText value="</a></p>" escape="false"/>
 	
@@ -87,7 +105,7 @@
 					<h:outputText value="<td colspan=8 class='backwhite' style='background-color: #fff; padding-bottom: 1em;'>" escape="false" />
 						<h:outputText value="<ul class='smalltxt mbottom2'>" escape="false" />
 							<fc:dataRepeater value="#{teacher.executionCourseTeacherServiceList}" var="coursesList">
-								<h:outputText value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseExternalId}'>" escape="false"/>
+								<h:outputText value="#{facesContext.externalContext.requestContextPath}/departmentMember/viewTeacherService/<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseExternalId}'>" escape="false"/>
 								<h:outputText value="#{coursesList.description} " escape="false" />	
 							 	<h:outputText value="#{bundle['label.teacherService.hours']}" escape="false" />
 							 	<h:outputText value="</a></li>" escape="false"/>
@@ -111,4 +129,4 @@
 	<h:outputText value="</table>" escape="false" />
 --%>
 	
-</ft:tilesView>
+</f:view>

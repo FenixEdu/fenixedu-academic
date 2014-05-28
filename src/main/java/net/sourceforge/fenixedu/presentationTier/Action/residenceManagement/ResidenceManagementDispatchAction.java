@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.residenceManagement;
 
 import java.io.IOException;
@@ -36,21 +54,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/residenceManagement", module = "residenceManagement")
-@Forwards({
-        @Forward(name = "importData", path = "/residenceManagement/importData.jsp", tileProperties = @Tile(
-                title = "private.housingmanagement.debtmanagement")),
+@Mapping(path = "/residenceManagement", module = "residenceManagement",
+        functionality = ResidenceEventManagementDispatchAction.class)
+@Forwards({ @Forward(name = "importData", path = "/residenceManagement/importData.jsp"),
         @Forward(name = "yearConfiguration", path = "residenceManagement-yearConfiguration"),
-        @Forward(name = "editPaymentLimitDay", path = "/residenceManagement/editPaymentLimitDay.jsp", tileProperties = @Tile(
-                title = "private.housingmanagement.debtmanagement")),
-        @Forward(name = "importCurrentDebt", path = "/residenceManagement/importCurrentDebts.jsp", tileProperties = @Tile(
-                title = "private.housingmanagement.debtmanagement")),
-        @Forward(name = "editRoomValues", path = "/residenceManagement/editRoomValues.jsp", tileProperties = @Tile(
-                title = "private.housingmanagement.debtmanagement")),
+        @Forward(name = "editPaymentLimitDay", path = "/residenceManagement/editPaymentLimitDay.jsp"),
+        @Forward(name = "importCurrentDebt", path = "/residenceManagement/importCurrentDebts.jsp"),
+        @Forward(name = "editRoomValues", path = "/residenceManagement/editRoomValues.jsp"),
         @Forward(name = "missingPayments", path = "/residenceManagement/missingPayment.jsp") })
 public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
@@ -58,7 +71,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         List<ResidenceEvent> results = new ArrayList<ResidenceEvent>();
         for (ResidenceMonth month : rootDomainObject.getResidenceMonths0Set()) {
-            for (ResidenceEvent residenceEvent : month.getEvents()) {
+            for (ResidenceEvent residenceEvent : month.getEventsSet()) {
                 if (residenceEvent.isInDebt()) {
                     results.add(residenceEvent);
                 }

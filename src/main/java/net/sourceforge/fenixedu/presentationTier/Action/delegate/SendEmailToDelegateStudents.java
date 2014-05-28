@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.delegate;
 
 import java.util.ArrayList;
@@ -11,43 +29,44 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.commons.ExecutionYearBean;
 import net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.DelegateCurricularCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DelegateStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.delegate.DelegateApplication.DelegateMessagingApp;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = DelegateMessagingApp.class, path = "send-email-to-students", titleKey = "link.sendEmailToStudents")
 @Mapping(path = "/sendEmailToDelegateStudents", module = "delegate")
-@Forwards({
-        @Forward(name = "choose-receivers", path = "/delegate/chooseReceivers.jsp", tileProperties = @Tile(
-                title = "private.delegate.communication.sendemailtostudents")),
-        @Forward(name = "choose-student-receivers", path = "/delegate/chooseStudentReceivers.jsp", tileProperties = @Tile(
-                title = "private.delegate.communication.sendemailtostudents")) })
+@Forwards({ @Forward(name = "choose-receivers", path = "/delegate/chooseReceivers.jsp"),
+        @Forward(name = "choose-student-receivers", path = "/delegate/chooseStudentReceivers.jsp") })
 public class SendEmailToDelegateStudents extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")
@@ -62,17 +81,20 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 
                 List<CurricularCourse> curricularCourses = (List<CurricularCourse>) request.getAttribute("curricularCoursesList");
                 for (CurricularCourse curricularCourse : curricularCourses) {
-                    groups.add(new DelegateCurricularCourseStudentsGroup(curricularCourse, executionYear));
+                    List<ExecutionCourse> executions = curricularCourse.getExecutionCoursesByExecutionYear(executionYear);
+                    for (ExecutionCourse executionCourse : executions) {
+                        groups.add(StudentGroup.get(executionCourse));
+                    }
                 }
             } else {
                 if (delegateFunction != null && delegateFunction.getFunction().isOfFunctionType(FunctionType.DELEGATE_OF_GGAE)) {
-                    groups.add(new DelegateStudentsGroup(delegateFunction));
+                    groups.add(DelegateStudentsGroup.get(delegateFunction, delegateFunction.getFunction().getFunctionType()));
                 } else if (delegateFunction != null
                         && delegateFunction.getFunction().isOfFunctionType(FunctionType.DELEGATE_OF_YEAR)) {
-                    groups.add(new DelegateStudentsGroup(delegateFunction));
+                    groups.add(DelegateStudentsGroup.get(delegateFunction, delegateFunction.getFunction().getFunctionType()));
                 } else {
-                    groups.add(new DelegateStudentsGroup(delegateFunction, FunctionType.DELEGATE_OF_YEAR));
-                    groups.add(new DelegateStudentsGroup(delegateFunction));
+                    groups.add(DelegateStudentsGroup.get(delegateFunction, FunctionType.DELEGATE_OF_YEAR));
+                    groups.add(DelegateStudentsGroup.get(delegateFunction, delegateFunction.getFunction().getFunctionType()));
                 }
             }
         }
@@ -97,6 +119,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
         return EmailsDA.sendEmail(request, null, recipients.toArray(new Recipient[] {}));
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         RenderUtils.invalidateViewState();

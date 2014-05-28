@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
@@ -8,8 +26,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public enum GradeScale {
 
@@ -53,7 +72,7 @@ public enum GradeScale {
             try {
                 final int intValue = Integer.parseInt(grade.getValue());
                 final ResourceBundle applicationResources =
-                        ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+                        ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
 
                 if (18 <= intValue && intValue <= 20) {
                     return applicationResources.getString("label.grade.a");
@@ -162,7 +181,7 @@ public enum GradeScale {
             try {
                 final int intValue = Integer.parseInt(grade.getValue());
                 final ResourceBundle applicationResources =
-                        ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+                        ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
 
                 if (intValue == 5) {
                     return applicationResources.getString("label.grade.a");
@@ -247,7 +266,7 @@ public enum GradeScale {
             }
 
             final ResourceBundle applicationResources =
-                    ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+                    ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
 
             final String value = grade.getValue();
             if (value.equals(AP)) {
@@ -306,7 +325,7 @@ public enum GradeScale {
             }
 
             final ResourceBundle applicationResources =
-                    ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+                    ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
 
             final String value = grade.getValue();
             if (value.equals(APT)) {
@@ -469,15 +488,15 @@ public enum GradeScale {
     }
 
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(name());
+        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(name());
     }
 
     public String getPossibleValueDescription(boolean isFinal) {
         if (isFinal) {
-            return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString("TYPE.final");
+            return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString("TYPE.final");
         }
 
-        return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale())
+        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale())
                 .getString(name() + ".description");
     }
 

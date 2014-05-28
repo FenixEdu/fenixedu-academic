@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
 
 import java.util.ArrayList;
@@ -16,11 +34,13 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorManagementDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -29,16 +49,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * Class CreateTutorshipsDA.java
- * 
+ *
  * @author jaime created on Aug 3, 2010
  */
 
+@StrutsFunctionality(app = TutorshipApp.class, path = "create-tutorships", titleKey = "link.tutorship.create",
+        bundle = "ApplicationResources")
 @Mapping(path = "/createTutorships", module = "pedagogicalCouncil")
-@Forwards({ @Forward(name = "prepareCreate", path = "/pedagogicalCouncil/tutorship/createTutorships.jsp") })
+@Forwards(@Forward(name = "prepareCreate", path = "/pedagogicalCouncil/tutorship/createTutorships.jsp"))
 public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 
     private static int TUTORSHIP_DURATION = 2;
 
+    @EntryPoint
     public ActionForward prepareCreation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("tutorateBean", new ContextTutorshipCreationBean());
@@ -56,7 +79,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
             List<Person> students = new ArrayList<Person>();
 
             Shift shift = bean.getShift();
-            for (Registration registration : shift.getStudents()) {
+            for (Registration registration : shift.getStudentsSet()) {
                 if (validForListing(registration, bean.getExecutionDegree())) {
                     students.add(registration.getPerson());
                 }
@@ -74,7 +97,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
     /**
      * Select people which have registrations in the choosen Degree and have
      * never had a Tutor assigned
-     * 
+     *
      * @param registration
      * @param executionDegree
      * @return
@@ -84,7 +107,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 
         if (student.hasActiveRegistrationFor(executionDegree.getDegree())) {
             if (registration.getActiveTutorship() == null) {
-                for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+                for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                     if (studentCurricularPlan.getTutorshipsSet().size() == 0) {
                         return true;
                     }

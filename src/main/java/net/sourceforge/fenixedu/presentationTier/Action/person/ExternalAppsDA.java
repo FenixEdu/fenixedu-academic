@@ -1,7 +1,26 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -15,18 +34,18 @@ import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication.ExternalApplicationsApp;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2Filter;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
-import org.apache.commons.codec.Charsets;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.fileupload.util.Streams;
-import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -35,12 +54,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.hash.Hashing;
+import com.google.common.io.ByteStreams;
 
+@StrutsFunctionality(app = ExternalApplicationsApp.class, path = "manage-applications",
+        titleKey = "oauthapps.label.manage.applications")
 @Mapping(module = "person", path = "/externalApps")
 @Forwards(value = { @Forward(name = "createApplication", path = "/auth/createApplication.jsp"),
         @Forward(name = "editApplication", path = "/auth/editApplication.jsp"),
@@ -54,6 +77,32 @@ import com.google.common.hash.Hashing;
         @Forward(name = "viewAllAuthorizations", path = "/auth/viewAllAuthorizations.jsp"),
         @Forward(name = "viewAllSessions", path = "/auth/viewAllSessions.jsp") })
 public class ExternalAppsDA extends FenixDispatchAction {
+
+    @StrutsFunctionality(app = ExternalApplicationsApp.class, path = "manage-authorizations", bundle = "ApplicationResources",
+            titleKey = "oauthapps.label.manage.authorizations")
+    @Mapping(path = "/externalAppAuthorizations", module = "person")
+    public static final class ExternalAppAuthorizationDA extends ExternalAppsDA {
+
+        @Override
+        @EntryPoint
+        public ActionForward manageAuthorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.manageAuthorizations(mapping, actionForm, request, response);
+        }
+    }
+
+    @StrutsFunctionality(app = ExternalApplicationsApp.class, path = "manage-all-authorizations",
+            bundle = "ApplicationResources", titleKey = "oauthapps.label.manage.all.applications", accessGroup = "#managers")
+    @Mapping(path = "/externalAppAuthorizations", module = "person")
+    public static final class ManageAllExternalAppsDA extends ExternalAppsDA {
+
+        @Override
+        @EntryPoint
+        public ActionForward viewAllApplications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.viewAllApplications(mapping, actionForm, request, response);
+        }
+    }
 
     private User getUser() {
         return getLoggedPerson(null).getUser();
@@ -70,7 +119,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
         Person person = getLoggedPerson(request);
         if (person.hasRole(RoleType.MANAGER)) {
             JerseyOAuth2Filter.toggleAllowIstIds();
-            return redirect("/externalApps.do?method=manageApplications", request, true);
+            return redirect("/externalApps.do?method=manageApplications", request);
         } else {
             throw new ServletException("no.permissions");
         }
@@ -179,7 +228,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
 
         application.setDeleted();
 
-        return redirect("/externalApps.do?method=viewAllApplications", request, true);
+        return redirect("/externalApps.do?method=viewAllApplications", request);
 
     }
 
@@ -190,7 +239,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
 
         application.setBanned();
 
-        return redirect("/externalApps.do?method=viewAllApplications", request, true);
+        return redirect("/externalApps.do?method=viewAllApplications", request);
 
     }
 
@@ -201,7 +250,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
 
         application.setActive();
 
-        return redirect("/externalApps.do?method=viewAllApplications", request, true);
+        return redirect("/externalApps.do?method=viewAllApplications", request);
 
     }
 
@@ -220,13 +269,14 @@ public class ExternalAppsDA extends FenixDispatchAction {
                     .getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.default.service.agreement");
         }
         try {
-            return Streams.asString(resourceAsStream);
+            return new String(ByteStreams.toByteArray(resourceAsStream));
         } catch (IOException e) {
             return BundleUtil
                     .getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.default.service.agreement");
         }
     }
 
+    @EntryPoint
     public ActionForward manageApplications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -281,9 +331,9 @@ public class ExternalAppsDA extends FenixDispatchAction {
         }
 
         if (authSessions == null) {
-            return redirect("/externalApps.do?method=manageAuthorizations", request, true);
+            return redirect("/externalApps.do?method=manageAuthorizations", request);
         } else {
-            request.setAttribute("logo", Base64.encodeBase64String(app.getLogo()));
+            request.setAttribute("logo", Base64.getEncoder().encodeToString(app.getLogo()));
             request.setAttribute("authorizations", authSessions);
             request.setAttribute("application", app);
             return mapping.findForward("viewAuthorizations");
@@ -305,7 +355,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
     public ActionForward createApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         RenderUtils.invalidateViewState();
-        return redirect("/externalApps.do?method=manageApplications", request, true);
+        return redirect("/externalApps.do?method=manageApplications", request);
     }
 
     public ActionForward prepareCreateApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -339,7 +389,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
             outputStream.write(logo);
         } else {
             InputStream placeholder = getClass().getResourceAsStream("/externalAppPlaceholder.jpg");
-            IOUtils.copy(placeholder, outputStream);
+            ByteStreams.copy(placeholder, outputStream);
         }
         outputStream.flush();
         response.flushBuffer();
@@ -352,7 +402,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
         if ("on".equals(agreedServiceAgreement)) {
             addDeveloperRole(getUser());
         }
-        return redirect("/externalApps.do?method=manageApplications", request, true);
+        return redirect("/externalApps.do?method=manageApplications", request);
     }
 
     @Atomic(mode = TxMode.WRITE)
@@ -370,6 +420,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
         request.setAttribute("serviceAgreement", serviceAgreementHtml);
         request.setAttribute("serviceAgreementChecksum", Hashing.md5().newHasher()
                 .putString(serviceAgreementHtml, Charsets.UTF_8).hash().toString());
+        PortalLayoutInjector.skipLayoutOn(request);
         return new ActionForward(null, "/auth/showServiceAgreement.jsp", false, "");
     }
 

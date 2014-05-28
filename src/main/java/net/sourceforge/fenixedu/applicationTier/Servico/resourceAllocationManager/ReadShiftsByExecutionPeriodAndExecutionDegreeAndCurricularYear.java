@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * ReadShiftsByExecutionDegreeAndCurricularYear.java
  * 
@@ -21,22 +39,10 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
-
-    private static final Logger logger = LoggerFactory
-            .getLogger(ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.class);
-
-    private static String logExternalId(DomainObject obj) {
-        return obj == null ? "null" : obj.getExternalId();
-    }
 
     @Atomic
     public static List<InfoShift> run(AcademicInterval academicInterval, InfoExecutionDegree infoExecutionDegree,
@@ -46,13 +52,10 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         final CurricularYear curricularYear = FenixFramework.getDomainObject(infoCurricularYear.getExternalId());
-        logger.warn(String.format("executionDegree %s degreeCurricularPlan %s curricularYear %s", logExternalId(executionDegree),
-                logExternalId(degreeCurricularPlan), logExternalId(curricularYear)));
         final List<InfoShift> infoShifts = new ArrayList<InfoShift>();
         final List<ExecutionCourse> executionCourses =
                 ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(academicInterval,
                         degreeCurricularPlan, curricularYear, "%");
-        logger.warn(String.format("filtering execution courses size : %s", executionCourses.size()));
         for (final ExecutionCourse executionCourse : executionCourses) {
             for (final Shift shift : executionCourse.getAssociatedShifts()) {
                 final InfoShift infoShift = new InfoShift(shift);
@@ -60,7 +63,6 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
             }
         }
 
-        logger.warn(String.format("infoShits size : %s", infoShifts.size()));
         return infoShifts;
     }
 }

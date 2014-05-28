@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 25/Jul/2003
  */
@@ -60,10 +78,10 @@ public class ParseSubQuestion extends DefaultHandler {
 
     private static final Element SLASH_NOT_ELEMENT = new Element(null, "/not", "/not", null);
 
-    public Question parseSubQuestion(Question question, String path) throws ParseQuestionException {
+    public Question parseSubQuestion(Question question) throws ParseQuestionException {
         if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {
             try {
-                parseFile(question.getXmlFile(), path);
+                parseFile(question.getXmlFile());
             } catch (Exception e) {
                 throw new ParseQuestionException(e);
             }
@@ -75,20 +93,20 @@ public class ParseSubQuestion extends DefaultHandler {
     }
 
     // for the preview, only has 1 item
-    public SubQuestion parseSubQuestion(String fileString, String path) throws ParseQuestionException {
+    public SubQuestion parseSubQuestion(String fileString) throws ParseQuestionException {
         try {
-            parseFile(fileString, path);
+            parseFile(fileString);
         } catch (Exception e) {
             throw new ParseQuestionException(e);
         }
         return createSubQuestion(questionElementList.iterator().next());
     }
 
-    public StudentTestQuestion parseStudentTestQuestion(StudentTestQuestion studentTestQuestion, String path) throws Exception,
+    public StudentTestQuestion parseStudentTestQuestion(StudentTestQuestion studentTestQuestion) throws Exception,
             ParseQuestionException {
         if (studentTestQuestion.getStudentSubQuestions() == null || studentTestQuestion.getStudentSubQuestions().size() == 0) {
             try {
-                parseFile(studentTestQuestion.getQuestion().getXmlFile(), path);
+                parseFile(studentTestQuestion.getQuestion().getXmlFile());
             } catch (Exception e) {
                 throw new ParseQuestionException(e);
             }
@@ -126,7 +144,7 @@ public class ParseSubQuestion extends DefaultHandler {
         return null;
     }
 
-    public void parseFile(String file, String path) throws ParserConfigurationException, IOException, SAXException {
+    public void parseFile(String file) throws ParserConfigurationException, IOException, SAXException {
         questionElementList = new ArrayList<QuestionElement>();
         questionPresentation = false;
         question = false;
@@ -141,7 +159,7 @@ public class ParseSubQuestion extends DefaultHandler {
         reader.setErrorHandler(this);
         StringReader sr = new StringReader(file);
         InputSource input = new InputSource(sr);
-        QuestionResolver resolver = new QuestionResolver(path);
+        QuestionResolver resolver = new QuestionResolver();
         reader.setEntityResolver(resolver);
         reader.parse(input);
     }

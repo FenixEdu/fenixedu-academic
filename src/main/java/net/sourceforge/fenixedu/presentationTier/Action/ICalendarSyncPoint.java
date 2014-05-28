@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action;
 
 import java.io.IOException;
@@ -24,13 +42,13 @@ import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.student.ICalStudentTimeTable;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -43,7 +61,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
     private Calendar getClassCalendar(User user, DateTime validity, HttpServletRequest request) {
 
         List<EventBean> allEvents = getClasses(user);
-        String url = FenixConfigurationManager.getFenixUrl() + "/privado";
+        String url = CoreConfiguration.getConfiguration().applicationUrl() + "/privado";
         EventBean event =
                 new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false, null,
                         url, "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Fénix para gerar nova chave");
@@ -92,7 +110,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
         List<EventBean> allEvents = getExams(user);
 
-        String url = FenixConfigurationManager.getFenixUrl() + "/privado";
+        String url = CoreConfiguration.getConfiguration().applicationUrl() + "/privado";
         EventBean event =
                 new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false, null,
                         url, "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Fénix para gerar nova chave");

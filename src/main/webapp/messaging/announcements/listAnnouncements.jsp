@@ -1,3 +1,24 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ page isELIgnored="true"%>
 <%@ page language="java"%>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -7,7 +28,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/messaging" prefix="messaging"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
 <html:xhtml />
 
 
@@ -134,10 +154,8 @@
 
 							<%-- Manage --%> 
 							
-							<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY%>"/>
 							<bean:define id="showWritePermission" value="true"/>
 									
-							<logic:equal name="contentContext" property="selectedContainer.publicAvailable" value="false">
 								<logic:equal name="announcement" property="announcementBoard.currentUserManager" value="true">
 									<bean:define id="urlManage" type="java.lang.String">/announcements/manage<%= announcementBoardClass %>.do?method=prepareEditAnnouncementBoard&amp;announcementBoardId=<%= announcementBoardId %>&amp;tabularVersion=true&amp;<%= extraParameters %></bean:define>
 									<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES" />:
@@ -147,10 +165,8 @@
 								    <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
 									<bean:define id="showWritePermission" value="false"/>
 							    </logic:equal>
-						    </logic:equal>
 						   
 							<logic:equal name="showWritePermission" value="true">
-			                	<logic:equal name="contentContext" property="selectedContainer.publicAvailable" value="false">
 				                	<logic:equal name="announcement" property="announcementBoard.currentUserWriter" value="true">
 					                	<bean:define id="urlManageView" type="java.lang.String">/announcements/manage<%= announcementBoardClass %>.do?method=viewAnnouncements&amp;announcementBoardId=<%= announcementBoardId %>&amp;tabularVersion=true&amp;<%= extraParameters %></bean:define>
 				                		<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES" />:
@@ -159,7 +175,6 @@
 										</html:link> 
 							 			<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />
 							 		</logic:equal> 
-						 		</logic:equal>
 						 	</logic:equal>
 			 
 			 				<%-- ReferedSubject Date --%>

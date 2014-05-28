@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.IOException;
@@ -37,22 +55,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "person", path = "/partyContacts", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")),
-        @Forward(name = "editPartyContact", path = "/person/contacts/editPartyContact.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")),
-        @Forward(name = "createPartyContact", path = "/person/contacts/createPartyContact.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")),
-        @Forward(name = "inputValidationCode", path = "/person/contacts/inputValidationCode.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")),
-        @Forward(name = "viewStudentLogChanges", path = "/person/contacts/viewStudentLogChanges.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")) })
+@Mapping(module = "person", path = "/partyContacts", functionality = VisualizePersonalInfo.class)
+@Forwards({ @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp"),
+        @Forward(name = "editPartyContact", path = "/person/contacts/editPartyContact.jsp"),
+        @Forward(name = "createPartyContact", path = "/person/contacts/createPartyContact.jsp"),
+        @Forward(name = "inputValidationCode", path = "/person/contacts/inputValidationCode.jsp"),
+        @Forward(name = "viewStudentLogChanges", path = "/person/contacts/viewStudentLogChanges.jsp") })
 public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
+
     public ActionForward postbackSetPublic(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         PartyContactBean contact = getRenderedObject("edit-contact");

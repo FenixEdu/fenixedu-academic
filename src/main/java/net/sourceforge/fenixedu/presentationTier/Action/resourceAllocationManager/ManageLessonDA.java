@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
 import java.util.ArrayList;
@@ -16,7 +34,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManage
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessonInstance;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessons;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditLesson;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
@@ -28,10 +45,14 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -43,16 +64,47 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
-public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+
+@Mapping(path = "/manageLesson", module = "resourceAllocationManager", input = "/manageLesson.do?method=findInput&page=0",
+formBean = "manageLessonForm", functionality = ExecutionPeriodDA.class)
+@Forwards({ @Forward(name = "ShowLessonForm", path = "/resourceAllocationManager/manageLesson_bd.jsp"),
+    @Forward(name = "ShowChooseRoomForm", path = "/resourceAllocationManager/chooseRoomForLesson_bd.jsp"),
+    @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
+    @Forward(name = "LessonDeleted", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
+    @Forward(name = "ViewAllLessonDates", path = "/resourceAllocationManager/showAllLessonDates.jsp"),
+    @Forward(name = "ChangeRoom", path = "/resourceAllocationManager/changeRoom_bd.jsp") })
+@Exceptions({
+    @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
+            handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class),
+            @ExceptionHandling(key = "resources.Action.exceptions.InterceptingActionException",
+            handler = FenixErrorExceptionHandler.class, type = InterceptingActionException.class),
+            @ExceptionHandling(key = "resources.Action.exceptions.InvalidTimeIntervalActionException",
+            handler = FenixErrorExceptionHandler.class, type = InvalidTimeIntervalActionException.class) })
+public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ContextUtils.setLessonContext(request);
+        ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+        return actionForward;
+    }
 
     public static String INVALID_TIME_INTERVAL = "errors.lesson.invalid.time.interval";
 
@@ -198,9 +250,9 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
         manageLessonForm.set("horaFim", "" + infoLesson.getFim().get(Calendar.HOUR_OF_DAY));
         manageLessonForm.set("minutosFim", "" + infoLesson.getFim().get(Calendar.MINUTE));
 
-        final AllocatableSpace allocatableSpace = infoLesson.getAllocatableSpace();
+        final Space allocatableSpace = infoLesson.getAllocatableSpace();
         if (allocatableSpace != null) {
-            manageLessonForm.set("nomeSala", "" + allocatableSpace.getNome());
+            manageLessonForm.set("nomeSala", "" + allocatableSpace.getName());
         }
 
         if (infoLesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
@@ -233,8 +285,8 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
         final InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
         final Interval[] intervals = infoLesson.getLesson().getAllLessonIntervals().toArray(new Interval[0]);
-        final List<AllocatableSpace> emptySpaces = ReadAvailableRoomsForExam.findAllocatableSpace(null, Boolean.TRUE, intervals);
-        Collections.sort(emptySpaces, AllocatableSpace.COMPARATOR_BY_PRESENTATION_NAME);
+        final List<Space> emptySpaces = SpaceUtils.allocatableSpace(null, true, intervals);
+        Collections.sort(emptySpaces, SpaceUtils.COMPARATOR_BY_PRESENTATION_NAME);
         request.setAttribute("emptySpaces", emptySpaces);
 
         return mapping.findForward("ChangeRoom");
@@ -243,7 +295,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
     public ActionForward changeRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
-        final AllocatableSpace space = getDomainObject(request, "spaceOID");
+        final Space space = getDomainObject(request, "spaceOID");
 
         try {
             EditLesson.run(infoLesson.getLesson(), space);
@@ -330,9 +382,9 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
                 }
 
                 emptyRoomsList =
-                        ReadAvailableRoomsForExam.run(lessonNewBeginDate, lessonEndDate,
+                        SpaceUtils.allocatableSpace(lessonNewBeginDate, lessonEndDate,
                                 HourMinuteSecond.fromCalendarFields(inicio), HourMinuteSecond.fromCalendarFields(fim), weekDay,
-                                null, frequency, Boolean.TRUE);
+                                null, frequency, true);
 
             } else if (action != null && action.equals("edit")) {
                 actionErrors.add("error.Lesson.already.finished", new ActionError("error.Lesson.already.finished"));
@@ -354,7 +406,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
             if (action != null && action.equals("edit")) {
                 final InfoLesson il = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
-                final AllocatableSpace allocatableSpace = il.getAllocatableSpace();
+                final Space allocatableSpace = il.getAllocatableSpace();
                 if (allocatableSpace != null) {
                     emptyRoomsList.add(infoLesson.getInfoRoomOccupation().getInfoRoom());
                     manageLessonForm.set("nomeSala", infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
@@ -414,9 +466,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
         InfoRoom infoSala = null;
         if (!StringUtils.isEmpty((String) manageLessonForm.get("nomeSala"))) {
-            infoSala =
-                    new InfoRoom(AllocatableSpace.findAllocatableSpaceForEducationByName((String) manageLessonForm
-                            .get("nomeSala")));
+            infoSala = new InfoRoom(SpaceUtils.findAllocatableSpaceForEducationByName((String) manageLessonForm.get("nomeSala")));
         }
 
         ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);

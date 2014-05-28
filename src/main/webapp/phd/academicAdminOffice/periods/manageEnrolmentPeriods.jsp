@@ -1,3 +1,24 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -21,7 +42,7 @@
 <%--  ### End of Error Messages  ### --%>
 
 
-<fr:form action="/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods">
+<fr:form action="/managePhdEnrolmentPeriods.do?method=manageEnrolmentPeriods">
 
 	<fr:edit id="manageEnrolmentsBean" name="manageEnrolmentsBean">
 		
@@ -37,11 +58,11 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 		
-		<fr:destination name="postback" path="/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods" />
+		<fr:destination name="postback" path="/managePhdEnrolmentPeriods.do?method=manageEnrolmentPeriods" />
 	</fr:edit>
 </fr:form>
 
-<html:link action="/phdIndividualProgramProcess.do?method=prepareCreateEnrolmentPeriod" paramId="executionIntervalId" paramName="manageEnrolmentsBean" paramProperty="semester.externalId">
+<html:link action="/managePhdEnrolmentPeriods.do?method=prepareCreateEnrolmentPeriod" paramId="executionIntervalId" paramName="manageEnrolmentsBean" paramProperty="semester.externalId">
 	<bean:message bundle="PHD_RESOURCES" key="label.phd.create.enrolment.period"/>
 </html:link>
 
@@ -63,9 +84,9 @@
 		<fr:property name="classes" value="tstyle2 thlight mtop10" />
 		<fr:property name="sortBy" value="degreeCurricularPlan.presentationName,startDate" />
 	
-		<fr:link name="edit" label="label.edit,PHD_RESOURCES" order="1" link="/phdIndividualProgramProcess.do?method=prepareEditEnrolmentPeriod&periodId=${externalId}" />
+		<fr:link name="edit" label="label.edit,PHD_RESOURCES" order="1" link="/managePhdEnrolmentPeriods.do?method=prepareEditEnrolmentPeriod&periodId=${externalId}" />
 		<fr:link name="delete" label="label.delete,PHD_RESOURCES" order="2" confirmation="label.phd.delete.enrolment.period.confirmation,PHD_RESOURCES" 
-				 link="/phdIndividualProgramProcess.do?method=deleteEnrolmentPeriod&periodId=${externalId}" />
+				 link="/managePhdEnrolmentPeriods.do?method=deleteEnrolmentPeriod&periodId=${externalId}" />
 	
 	</fr:layout>
 </fr:view>

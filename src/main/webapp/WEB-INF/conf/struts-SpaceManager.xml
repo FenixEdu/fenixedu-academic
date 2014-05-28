@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE struts-config PUBLIC
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
       <!-- ========== Data Source Configuration =============================== -->
       <!-- ========== Form Bean Definitions ================================== -->
@@ -27,7 +50,7 @@
             <action forward="show-create-space-form" scope="request" name="spaceContextForm" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" path="/showCreateSpaceForm"></action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="SPACE_RESOURCES" parameter="resources.SpaceResources"></message-resources>
@@ -36,14 +59,7 @@
       <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-spaceManager.xml" property="pathnames"></set-property>
-      </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
-            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/spaceManager/tiles-spaceManager-definitions.xml,/WEB-INF/tiles/spaceManager/tiles-spaceManager-pages-definitions.xml" property="definitions-config"></set-property>
-            <set-property value="true" property="moduleAware"></set-property>
-            <set-property value="true" property="definitions-parser-validate"></set-property>
-            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
-            <set-property value="spaceManager.masterPage" property="defaultTileDefinition"></set-property>
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml" property="pathnames"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

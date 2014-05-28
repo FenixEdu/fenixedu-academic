@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.Map"%>
 <%@page import="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean"%>
@@ -8,7 +28,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp" %>
 <html:xhtml/>
 
-
 <logic:present name="searchBean">
 	<h2> <bean:message key="message.attendingStudentsOf"/> 
 	<bean:write name="searchBean" property="executionCourse.nome" /></h2>
@@ -18,7 +37,7 @@
 		<bean:message key="message.students.explanation"/>
 	</div>
 	
-	<fr:form action="<%="/searchECAttends.do?method=search&amp;objectCode=" + request.getParameter("objectCode") %>">
+	<fr:form action="/searchECAttends.do?method=search&amp;executionCourseID=${executionCourseID}">
 		<%  if (request.getAttribute("degreeCurricularPlanID") != null) { %>
 			    <html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 		<%  } %>
@@ -33,9 +52,9 @@
 		<h3> <bean:write name="size"/>
 			<bean:message key="message.attendingStudents"/> </h3>
 	
-		<fr:form id="sendMailForm" action="<%="/searchECAttends.do?method=sendEmail&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging")%>">
+		<fr:form id="sendMailForm" action="/searchECAttends.do?method=sendEmail">
 			<fr:edit name="searchBean" id="mailViewState" visible="false"/>
-			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="javascript:document.getElementById('sendMailForm').submit()"><bean:message key="link.sendEmailToAllStudents"/></a>
+			<a href="javascript:document.getElementById('sendMailForm').submit()"><bean:message key="link.sendEmailToAllStudents"/></a>
 		</fr:form>
 		
 		<fr:form id="downloadStudentListForm" action="/getTabSeparatedStudentList.do">
@@ -52,7 +71,7 @@
 
 		<bean:define id="bean" name="searchBean" property="searchElementsAsParameters"/>
 		<cp:collectionPages
-			url="<%="/teacher/searchECAttends.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
+			url="/teacher/searchECAttends.do?method=prepare&executionCourseID=${executionCourseID}" 
 			pageNumberAttributeName="pageNumber"
 			numberOfPagesAttributeName="numberOfPages"/>
 		<fr:view name="attendsPagesBean">
@@ -62,7 +81,7 @@
 			</fr:layout>
 		</fr:view>
 		<cp:collectionPages
-			url="<%="/teacher/searchECAttends.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
+			url="/teacher/searchECAttends.do?method=prepare&executionCourseID=${executionCourseID}"
 			pageNumberAttributeName="pageNumber"
 			numberOfPagesAttributeName="numberOfPages"/>
 		<br/>

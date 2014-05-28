@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.student.curriculum;
 
 import javax.servlet.http.HttpServletRequest;
@@ -6,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -18,21 +36,18 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "coordinator", path = "/viewStudentCurriculumSearch", attribute = "viewStudentCurriculumForm",
-        formBean = "viewStudentCurriculumForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "chooseStudent", path = "/coordinator/student/curriculum/chooseStudent.jsp", tileProperties = @Tile(
-                title = "private.coordinator.management.courses.students.curriculum")),
+@Mapping(module = "coordinator", path = "/viewStudentCurriculumSearch", formBean = "viewStudentCurriculumForm",
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards({ @Forward(name = "chooseStudent", path = "/coordinator/student/curriculum/chooseStudent.jsp"),
         @Forward(name = "chooseCurriculumType", path = "/coordinator/student/curriculum/chooseCurriculumType.jsp") })
 public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -68,22 +83,12 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     }
 
-    private ActionForward getBolonhaTransitionRedirect(final ActionForm actionForm, final Student student) {
-        final ActionForward actionForward = new ActionForward();
-        actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId=" + student.getExternalId());
-
-        return actionForward;
-
-    }
-
     private ActionForward getOldCurriculumRedirect(final ActionForm actionForm, final Student student) {
         final ActionForward actionForward = new ActionForward();
-        actionForward.setPath("/viewCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + student.getNumber()
+        actionForward.setPath("/viewStudentCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + student.getNumber()
                 + "&executionDegreeId=" + getExecutionDegreeId(actionForm) + "&degreeCurricularPlanID="
                 + getDegreeCurricularPlanId(actionForm));
-
         return actionForward;
-
     }
 
     private String getExecutionDegreeId(final HttpServletRequest request) {

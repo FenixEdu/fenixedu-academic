@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Comparator;
@@ -32,8 +50,6 @@ public class InfoFileContent extends InfoObject {
 
     private Integer size;
 
-    private String externalStorageIdentification;
-
     public InfoFileContent() {
 
     }
@@ -47,8 +63,6 @@ public class InfoFileContent extends InfoObject {
             setChecksum(fileItem.getChecksum());
             setChecksumAlgorithm(fileItem.getChecksumAlgorithm());
             setSize(fileItem.getSize().intValue());
-            setExternalStorageIdentification(fileItem.getExternalStorageIdentification());
-
         }
     }
 
@@ -87,14 +101,6 @@ public class InfoFileContent extends InfoObject {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
-    }
-
-    public String getExternalStorageIdentification() {
-        return externalStorageIdentification;
-    }
-
-    public void setExternalStorageIdentification(String externalStorageIdentification) {
-        this.externalStorageIdentification = externalStorageIdentification;
     }
 
     public String getFilename() {

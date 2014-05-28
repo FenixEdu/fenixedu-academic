@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -20,9 +40,6 @@
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" onchange="this.form.method.value='readDegreeCurricularPlans';this.form.submit();" >
 			<html:options collection="degreeTypes" property="value" labelProperty="label" /> 
 		</html:select>
-		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.submit"/>
-		</html:submit>
 	</p>
 	
 	<logic:notEmpty name="degreeCurricularPlans">
@@ -30,9 +47,6 @@
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanID" property="degreeCurricularPlanID" onchange="this.form.method.value='readExecutionDegrees';this.form.submit();">
 			<html:options collection="degreeCurricularPlans" property="value" labelProperty="label" /> 
 		</html:select>
-		<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.submit"/>
-		</html:submit>
 		</p>
 	</logic:notEmpty>
 	
@@ -43,7 +57,7 @@
 <br/>
 <logic:notEmpty name="executionDegrees">
 
-		<table cellpadding='0' border='0'>
+		<table cellpadding='0' border='0' class="table table-bordered">
 			<tr>
 				<td class="listClasses-header"></td>
 				<th class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear"/> </th>
@@ -200,7 +214,7 @@
 						<html:link module="/manager" action="/executionDegreesManagement.do?method=prepareEditExecutionDegree" paramId="executionDegreeID" paramName="executionDegree" paramProperty="externalId">
 							<bean:message bundle="MANAGER_RESOURCES" key="link.edit"/>
 						</html:link>
-						, <br/>
+						<br/>
 						<html:link module="/manager" action="/executionDegreesManagement.do?method=readCoordinators" paramId="executionDegreeID" paramName="executionDegree" paramProperty="externalId">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.executionDegree.coordinators" />
 						</html:link>

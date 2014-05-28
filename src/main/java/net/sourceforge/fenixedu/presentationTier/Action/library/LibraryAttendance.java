@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.library;
 
 import java.io.Serializable;
@@ -14,21 +32,23 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -43,8 +63,8 @@ public class LibraryAttendance implements Serializable {
         public Object provide(Object source, Object currentValue) {
             LibraryAttendance attendance = (LibraryAttendance) source;
             Set<Space> availableSpaces = new HashSet<Space>();
-            for (Space space : attendance.getLibrary().getActiveContainedSpaces()) {
-                if (space.canAddAttendance()) {
+            for (Space space : attendance.getLibrary().getChildren()) {
+                if (SpaceUtils.currentAttendaceCount(space) < space.getAllocatableCapacity()) {
                     availableSpaces.add(space);
                 }
             }
@@ -83,8 +103,6 @@ public class LibraryAttendance implements Serializable {
     private Collection<Person> matches;
 
     private int numberOfPages;
-
-    private String personLibraryCardNumber;
 
     private Space selectedSpace;
 
@@ -179,14 +197,14 @@ public class LibraryAttendance implements Serializable {
         alumniRegistration = null;
         phdProcess = null;
         invitation = null;
-        setPersonLibraryCardNumber(null);
         setSelectedSpace(null);
         setPersonAttendance(null);
         if (person != null) {
-            setPersonLibraryCardNumber(person.getLibraryCardNumber());
             Set<Space> spaces = new HashSet<Space>();
             spaces.add(library);
-            spaces.addAll(library.getActiveContainedSpaces());
+            for (Space newSpace : library.getChildren()) {
+                spaces.add(newSpace);
+            }
             for (Space space : spaces) {
                 for (SpaceAttendances attendance : space.getCurrentAttendanceSet()) {
                     if (person.equals(attendance.getPerson())) {
@@ -285,14 +303,6 @@ public class LibraryAttendance implements Serializable {
         return alumniRegistration;
     }
 
-    public String getPersonLibraryCardNumber() {
-        return personLibraryCardNumber;
-    }
-
-    public void setPersonLibraryCardNumber(String personLibraryCardNumber) {
-        this.personLibraryCardNumber = personLibraryCardNumber;
-    }
-
     public Space getSelectedSpace() {
         return selectedSpace;
     }
@@ -311,25 +321,22 @@ public class LibraryAttendance implements Serializable {
 
     public Set<SpaceAttendances> getLibraryAttendances() {
         Set<SpaceAttendances> attendances = new HashSet<SpaceAttendances>();
-        attendances.addAll(library.getCurrentAttendance());
-        for (Space space : library.getActiveContainedSpaces()) {
-            attendances.addAll(space.getCurrentAttendance());
+        attendances.addAll(library.getCurrentAttendanceSet());
+        for (org.fenixedu.spaces.domain.Space space : library.getChildren()) {
+            Space newSpace = space;
+            attendances.addAll(newSpace.getCurrentAttendanceSet());
         }
         return attendances;
     }
 
     public boolean isFull() {
-        return !getLibrary().canAddAttendance();
+        return SpaceUtils.currentAttendaceCount(getLibrary()) >= getLibrary().getAllocatableCapacity();
     }
 
     public void search() {
         this.matches = null;
         if (!StringUtils.isEmpty(getPersonId())) {
-            if (getPersonId().startsWith("ist")) {
-                setPerson(Person.readPersonByUsername(getPersonId()));
-            } else {
-                setPerson(Person.readPersonByLibraryCardNumber(getPersonId()));
-            }
+            setPerson(Person.readPersonByUsername(getPersonId()));
         } else {
             setPerson(null);
         }
@@ -357,15 +364,9 @@ public class LibraryAttendance implements Serializable {
     }
 
     @Atomic
-    public void generateCardNumber() {
-        getPerson().setLibraryCardNumber(Bennu.getInstance().getLibraryCardSystem().generateNewMilleniumCode());
-        setPersonLibraryCardNumber(getPerson().getLibraryCardNumber());
-    }
-
-    @Atomic
     public void enterSpace() {
         Space space = getSelectedSpace() != null ? getSelectedSpace() : library;
-        setPersonAttendance(space.addAttendance(getPerson(), AccessControl.getPerson().getIstUsername()));
+        setPersonAttendance(addAttendance(space, getPerson(), AccessControl.getPerson().getIstUsername()));
     }
 
     @Atomic
@@ -377,4 +378,16 @@ public class LibraryAttendance implements Serializable {
         }
     }
 
+    private static SpaceAttendances addAttendance(Space space, Person person, String responsibleUsername) {
+        if (person == null) {
+            return null;
+        }
+        if (!(SpaceUtils.currentAttendaceCount(space) < space.getAllocatableCapacity())) {
+            throw new DomainException("error.space.maximumAttendanceExceeded");
+        }
+        SpaceAttendances attendance = new SpaceAttendances(person.getIstUsername(), responsibleUsername, new DateTime());
+        space.addCurrentAttendance(attendance);
+        space.addPastAttendances(attendance);
+        return attendance;
+    }
 }

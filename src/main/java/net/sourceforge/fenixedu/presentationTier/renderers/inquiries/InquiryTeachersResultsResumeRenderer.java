@@ -1,9 +1,29 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
 import java.util.ResourceBundle;
+
+import org.fenixedu.commons.i18n.I18N;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean;
@@ -16,7 +36,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
@@ -31,7 +51,7 @@ public class InquiryTeachersResultsResumeRenderer extends OutputRenderer {
 
     private class InquiryGeneralGroupLayout extends Layout {
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
 
         public InquiryGeneralGroupLayout(Object object) {
         }

@@ -1,10 +1,29 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+
+import org.fenixedu.spaces.domain.Space;
 
 public class CellInfo {
 
@@ -52,9 +71,9 @@ public class CellInfo {
                 buffer = buffer.append(infoLesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
                 buffer = buffer.append(" (").append(infoLesson.getInfoShift().getShiftTypesCodePrettyPrint());
                 buffer = buffer.append(") ");
-                final AllocatableSpace allocatableSpace = infoLesson.getAllocatableSpace();
+                final Space allocatableSpace = infoLesson.getAllocatableSpace();
                 if (allocatableSpace != null) {
-                    buffer = buffer.append(allocatableSpace.getNome());
+                    buffer = buffer.append(allocatableSpace.getName());
                 }
                 if (iterator.hasNext()) {
                     buffer.append("<br/>");

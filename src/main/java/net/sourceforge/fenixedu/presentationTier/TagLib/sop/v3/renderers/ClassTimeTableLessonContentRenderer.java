@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
@@ -6,9 +24,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
+
+import org.fenixedu.spaces.domain.Space;
 
 /**
  * @author jpvl
@@ -34,13 +53,13 @@ public class ClassTimeTableLessonContentRenderer extends LessonSlotContentRender
             strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla())
                     .append("</abbr>").append("</a>");
             strBuffer.append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
-            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
                 strBuffer.append(" <a href='").append(context).append("/publico/");
-                strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=").append(allocatableSpace.getNome())
+                strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=").append(allocatableSpace.getName())
                         .append("&amp;objectCode=").append(infoExecutionCourse.getInfoExecutionPeriod().getExternalId())
                         .append("&amp;executionPeriodOID=").append(infoExecutionCourse.getInfoExecutionPeriod().getExternalId())
-                        .append("&amp;shift=true").append("'>").append(allocatableSpace.getNome()).append("</a>");
+                        .append("&amp;shift=true").append("'>").append(allocatableSpace.getName()).append("</a>");
             }
 
 //            if (allocatableSpace != null && lesson.getInfoRoomOccupation().getFrequency() != null

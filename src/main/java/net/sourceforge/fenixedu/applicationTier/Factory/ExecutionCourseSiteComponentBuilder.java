@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 5/Mai/2003
  * 
@@ -47,7 +65,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author Jo�o Mota
@@ -115,14 +133,14 @@ public class ExecutionCourseSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteCommon(InfoSiteCommon component, ExecutionCourseSite site) throws FenixServiceException {
 
-        List allSections = null;
+        Set allSections = null;
         List<InfoSection> infoSectionsList = null;
 
         List<InfoCurricularCourse> infoCurricularCourseList = null;
         List<InfoCurricularCourse> infoCurricularCourseListByDegree = null;
         // read sections
 
-        allSections = site.getAssociatedSections();
+        allSections = site.getAssociatedSectionSet();
 
         // build the result of this service
         Iterator iterator = allSections.iterator();
@@ -159,8 +177,8 @@ public class ExecutionCourseSiteComponentBuilder {
 
         final Section section = (Section) FenixFramework.getDomainObject(infoSection.getExternalId());
 
-        final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getAssociatedItemsCount());
-        for (final Item item : section.getAssociatedItems()) {
+        final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getChildrenItemsCount());
+        for (final Item item : section.getChildrenItems()) {
             final InfoItem infoItem = InfoItem.newInfoFromDomain(item);
             infoItemsList.add(infoItem);
         }
@@ -418,10 +436,10 @@ public class ExecutionCourseSiteComponentBuilder {
         if (section != null) {
             infoSection = new InfoSection();
             infoSection.setExternalId(section.getExternalId());
-            infoSection.setName(section.getName().getContent(Language.pt));
-            infoSection.setSectionOrder(section.getSectionOrder());
+            infoSection.setName(section.getName().getContent(MultiLanguageString.pt));
+            infoSection.setSectionOrder(section.getOrder());
             infoSection.setSuperiorInfoSection(copyISection2InfoSection(section.getSuperiorSection()));
-            infoSection.setInfoSite(copyISite2InfoSite((ExecutionCourseSite) section.getSite()));
+            infoSection.setInfoSite(copyISite2InfoSite((ExecutionCourseSite) section.getOwnerSite()));
         }
         return infoSection;
     }

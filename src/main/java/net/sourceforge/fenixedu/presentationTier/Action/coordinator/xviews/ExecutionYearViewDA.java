@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews;
 
 import java.math.BigDecimal;
@@ -22,7 +40,7 @@ import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,21 +52,19 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-@Mapping(path = "/analytics", module = "coordinator")
-@Forwards({ @Forward(name = "showHome", path = "/coordinator/analytics/home.jsp", tileProperties = @Tile(
-        title = "private.coordinator.management.courses.analytictools.executionyear")) })
+@Mapping(path = "/analytics", module = "coordinator", functionality = DegreeCoordinatorIndex.class)
+@Forwards({ @Forward(name = "showHome", path = "/coordinator/analytics/home.jsp") })
 public class ExecutionYearViewDA extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 

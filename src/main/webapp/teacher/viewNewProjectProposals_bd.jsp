@@ -1,29 +1,32 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 
 <%@ page import="java.lang.String" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 
-<logic:present name="siteView" property="component">
-	<bean:define id="component" name="siteView" property="component" />
-
-
-<logic:empty name="component" property="infoGroupPropertiesList">
-	<br/>
-	<br/>
-	<h2><bean:message key="message.infoNewProjectsProposalsList.not.available" /></h2>
-	<br/>
-	<br/>	
-	<html:link page="<%="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
-    	<bean:message key="link.backToProjectsAndLink"/></html:link><br/>
-	<br/>
-</logic:empty>
-
-	
-<logic:notEmpty name="component" property="infoGroupPropertiesList"> 
- 
 	<h2><bean:message key="title.NewProjectProposals"/></h2>
 	
 	<table width="98%" cellpadding="0" cellspacing="0">
@@ -38,7 +41,7 @@
 	<span class="error"><!-- Error messages go here --><html:errors /></span> 	
 	
 <br/>
-	<html:link page="<%="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
+	<html:link page="<%="/studentGroupManagement.do?method=prepareViewExecutionCourseProjects&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")%>">
     	<bean:message key="link.backToProjectsAndLink"/></html:link>
 <br/>
 <br/>
@@ -52,10 +55,10 @@
 			<th class="listClasses-header" width="30%" ><bean:message key="label.newProjectProposalExecutionCourses" />
 			</th>
 		</tr>
-            <logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
+            <logic:iterate id="infoGroupProperties" name="newProposals" >
                 <tr>
                     <td class="listClasses" align="left">
-                        <b><html:link page="<%= "/importGroupProperties.do?method=prepareImportGroupProperties&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="externalId">
+                        <b><html:link page="<%= "/studentGroupManagement.do?method=prepareImportGroupProperties&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")%>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="externalId">
 							<bean:write name="infoGroupProperties" property="name"/></html:link></b>
                     </td>
                                         
@@ -71,8 +74,8 @@
                 	
                 	 
                 	<td class="listClasses" align="left">
-            		    <logic:iterate id="infoExportGrouping" name="infoGroupProperties" property="infoExportGroupings" >
-	                		<bean:define id="infoExecutionCourse" name="infoExportGrouping" property="infoExecutionCourse" />
+            		    <logic:iterate id="infoExportGrouping" name="infoGroupProperties" property="exportGroupings" >
+	                		<bean:define id="infoExecutionCourse" name="infoExportGrouping" property="executionCourse" />
 							<bean:write name="infoExecutionCourse" property="nome"/><br/>
                     	 </logic:iterate>
                     </td>
@@ -82,11 +85,3 @@
             
             </tbody>
 </table>
-</logic:notEmpty>     
-</logic:present>
-
-<logic:notPresent name="siteView" property="component">
-<h2>
-<bean:message key="message.infoGroupPropertiesList.not.available" />
-</h2>
-</logic:notPresent>

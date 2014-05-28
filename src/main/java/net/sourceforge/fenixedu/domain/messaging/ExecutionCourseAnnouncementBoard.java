@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.messaging;
 
 import java.util.Comparator;
@@ -7,12 +25,13 @@ import net.sourceforge.fenixedu.domain.ContentManagementLog;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncementBoard_Base {
@@ -94,9 +113,9 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setExecutionCourse(null);
-        super.disconnect();
+        super.delete();
     }
 
     @Override
@@ -132,10 +151,6 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
         ExecutionCourse executionCourse = this.getExecutionCourse();
 
         actionPath.append("&executionCourseID=" + executionCourse.getExternalId());
-        actionPath.append("&");
-        actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-        actionPath.append("=");
-        actionPath.append(executionCourse.getSite().getReversePath());
         return base + actionPath.toString();
     }
 
@@ -161,9 +176,9 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
     }
 
     @Override
-    public void logAddFile(Attachment attachment) {
+    public void logAddFile(FileContent attachment) {
         ContentManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
-                "log.executionCourse.content.file.added", attachment.getName().getContent(), getExecutionCourse().getNome(),
+                "log.executionCourse.content.file.added", attachment.getDisplayName(), getExecutionCourse().getNome(),
                 getExecutionCourse().getDegreePresentationString());
     }
 

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.student;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -51,7 +69,7 @@ import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
@@ -85,8 +103,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PastDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
@@ -105,7 +121,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -119,6 +134,8 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
@@ -129,7 +146,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Registration extends Registration_Base {
 
@@ -516,7 +532,7 @@ public class Registration extends Registration_Base {
         return false;
     }
 
-    final public AllocatableSpace getRoomFor(final WrittenEvaluation writtenEvaluation) {
+    final public Space getRoomFor(final WrittenEvaluation writtenEvaluation) {
         for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == writtenEvaluation) {
                 return writtenEvaluationEnrolment.getRoom();
@@ -850,7 +866,7 @@ public class Registration extends Registration_Base {
                 final CurricularCourse enrolmentCurricularCourse = enrolment.getCurricularCourse();
                 if (enrolmentCurricularCourse == curricularCourse
                         || (enrolmentCurricularCourse.getCompetenceCourse() != null && enrolmentCurricularCourse
-                                .getCompetenceCourse() == curricularCourse.getCompetenceCourse())
+                        .getCompetenceCourse() == curricularCourse.getCompetenceCourse())
                         || hasGlobalEquivalence(curricularCourse, enrolmentCurricularCourse)) {
                     enrolments.add(enrolment);
                 }
@@ -2000,11 +2016,11 @@ public class Registration extends Registration_Base {
         final StudentCurricularPlan toAsk =
                 getStudentCurricularPlan(getStartExecutionYear()) == null ? getFirstStudentCurricularPlan() : getStudentCurricularPlan(getStartExecutionYear());
 
-        if (toAsk == null) {
-            return StringUtils.EMPTY;
-        }
+                if (toAsk == null) {
+                    return StringUtils.EMPTY;
+                }
 
-        return toAsk.getPresentationName(getStartExecutionYear());
+                return toAsk.getPresentationName(getStartExecutionYear());
     }
 
     public String getDegreeNameWithDescription() {
@@ -2021,11 +2037,11 @@ public class Registration extends Registration_Base {
     }
 
     final public String getDegreeDescription(final CycleType cycleType) {
-        return getDegreeDescription(cycleType, Language.getLocale());
+        return getDegreeDescription(cycleType, I18N.getLocale());
     }
 
     final public String getDegreeDescription(ExecutionYear executionYear, final CycleType cycleType) {
-        return getDegreeDescription(executionYear, cycleType, Language.getLocale());
+        return getDegreeDescription(executionYear, cycleType, I18N.getLocale());
     }
 
     final public String getDegreeDescription(final CycleType cycleType, final Locale locale) {
@@ -2096,26 +2112,6 @@ public class Registration extends Registration_Base {
                 AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree())
                 || AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
                         AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).contains(getDegree());
-    }
-
-    final public List<NewTestGroup> getPublishedTestGroups() {
-        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
-
-        for (ExecutionCourse executionCourse : this.getAttendingExecutionCoursesForCurrentExecutionPeriod()) {
-            testGroups.addAll(executionCourse.getPublishedTestGroups());
-        }
-
-        return testGroups;
-    }
-
-    final public List<NewTestGroup> getFinishedTestGroups() {
-        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
-
-        for (ExecutionCourse executionCourse : this.getAttendingExecutionCoursesForCurrentExecutionPeriod()) {
-            testGroups.addAll(executionCourse.getFinishedTestGroups());
-        }
-
-        return testGroups;
     }
 
     public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {
@@ -2653,7 +2649,7 @@ public class Registration extends Registration_Base {
     }
 
     final public String getGraduateTitle() {
-        return getGraduateTitle((CycleType) null, Language.getLocale());
+        return getGraduateTitle((CycleType) null, I18N.getLocale());
     }
 
     final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
@@ -3324,11 +3320,11 @@ public class Registration extends Registration_Base {
         return getActiveStateType().isInactive();
     }
 
-    public Campus getCampus() {
+    public Space getCampus() {
         return getLastStudentCurricularPlan().getLastCampus();
     }
 
-    public Campus getCampus(final ExecutionYear executionYear) {
+    public Space getCampus(final ExecutionYear executionYear) {
         final StudentCurricularPlan scp = getStudentCurricularPlan(executionYear);
         return scp == null ? getLastStudentCurricularPlan().getCampus(executionYear) : scp.getCampus(executionYear);
     }
@@ -3880,7 +3876,7 @@ public class Registration extends Registration_Base {
                 if (registrationState.getExecutionYear() == executionYear
                         && (registrationState.isActive() || registrationState.getStateType() == RegistrationStateType.TRANSITED)
                         && (previous.getStateType() == RegistrationStateType.EXTERNAL_ABANDON
-                                || previous.getStateType() == RegistrationStateType.INTERRUPTED || previous.getStateType() == RegistrationStateType.FLUNKED)) {
+                        || previous.getStateType() == RegistrationStateType.INTERRUPTED || previous.getStateType() == RegistrationStateType.FLUNKED)) {
                     return true;
                 }
             }
@@ -3973,7 +3969,7 @@ public class Registration extends Registration_Base {
     }
 
     public void exportValues(StringBuilder result) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
 
         Formatter formatter = new Formatter(result);
         final Student student = getStudent();
@@ -4327,16 +4323,6 @@ public class Registration extends Registration_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy> getAssociatedCandidancies() {
-        return getAssociatedCandidanciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedCandidancies() {
-        return !getAssociatedCandidanciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction> getInsuranceTransactions() {
         return getInsuranceTransactionsSet();
     }
@@ -4474,11 +4460,6 @@ public class Registration extends Registration_Base {
     @Deprecated
     public boolean hasExternalRegistrationData() {
         return getExternalRegistrationData() != null;
-    }
-
-    @Deprecated
-    public boolean hasAssociatedGaugingTestResult() {
-        return getAssociatedGaugingTestResult() != null;
     }
 
     @Deprecated

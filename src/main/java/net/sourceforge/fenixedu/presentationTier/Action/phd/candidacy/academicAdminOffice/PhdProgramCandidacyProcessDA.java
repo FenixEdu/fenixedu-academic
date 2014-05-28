@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice;
 
 import java.io.IOException;
@@ -5,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +52,7 @@ import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdCandidacyDeclarationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdNotificationDocument;
@@ -49,48 +69,28 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/phdProgramCandidacyProcess", module = "academicAdministration")
+@Mapping(path = "/phdProgramCandidacyProcess", module = "academicAdministration",
+        functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({
-
-@Forward(name = "searchPerson", path = "/phd/candidacy/academicAdminOffice/searchPerson.jsp"),
-
-@Forward(name = "createCandidacy", path = "/phd/candidacy/academicAdminOffice/createCandidacy.jsp"),
-
-@Forward(name = "manageProcesses", path = "/phdIndividualProgramProcess.do?method=manageProcesses"),
-
-@Forward(name = "editCandidacyInformation", path = "/phd/candidacy/academicAdminOffice/editCandidacyInformation.jsp"),
-
-@Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp"),
-
-@Forward(name = "requestCandidacyReview", path = "/phd/candidacy/academicAdminOffice/requestCandidacyReview.jsp"),
-
-@Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp"),
-
-@Forward(name = "rejectCandidacyProcess", path = "/phd/candidacy/academicAdminOffice/rejectCandidacyProcess.jsp"),
-
-@Forward(name = "ratifyCandidacy", path = "/phd/candidacy/academicAdminOffice/ratifyCandidacy.jsp"),
-
-@Forward(name = "viewProcess", path = "/phdIndividualProgramProcess.do?method=viewProcess"),
-
-@Forward(name = "manageNotifications", path = "/phd/candidacy/academicAdminOffice/manageNotifications.jsp"),
-
-@Forward(name = "createNotification", path = "/phd/candidacy/academicAdminOffice/createNotification.jsp"),
-
-@Forward(name = "registrationFormalization", path = "/phd/candidacy/academicAdminOffice/registrationFormalization.jsp"),
-
-@Forward(name = "associateRegistration", path = "/phd/candidacy/academicAdminOffice/associateRegistration.jsp"),
-
-@Forward(name = "manageStates", path = "/phd/candidacy/academicAdminOffice/manageStates.jsp"),
-
-@Forward(name = "editProcessAttributes", path = "/phd/candidacy/academicAdminOffice/editProcessAttributes.jsp"),
-
-@Forward(name = "editPhdProcessState", path = "/phd/candidacy/academicAdminOffice/editState.jsp"),
-
-@Forward(name = "viewLogs", path = "/phd/candidacy/academicAdminOffice/logs/viewLogs.jsp")
-
-})
+        @Forward(name = "searchPerson", path = "/phd/candidacy/academicAdminOffice/searchPerson.jsp"),
+        @Forward(name = "createCandidacy", path = "/phd/candidacy/academicAdminOffice/createCandidacy.jsp"),
+        @Forward(name = "manageProcesses", path = "/academicAdministration/phdIndividualProgramProcess.do?method=manageProcesses"),
+        @Forward(name = "editCandidacyInformation", path = "/phd/candidacy/academicAdminOffice/editCandidacyInformation.jsp"),
+        @Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp"),
+        @Forward(name = "requestCandidacyReview", path = "/phd/candidacy/academicAdminOffice/requestCandidacyReview.jsp"),
+        @Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp"),
+        @Forward(name = "rejectCandidacyProcess", path = "/phd/candidacy/academicAdminOffice/rejectCandidacyProcess.jsp"),
+        @Forward(name = "ratifyCandidacy", path = "/phd/candidacy/academicAdminOffice/ratifyCandidacy.jsp"),
+        @Forward(name = "viewProcess", path = "/academicAdministration/phdIndividualProgramProcess.do?method=viewProcess"),
+        @Forward(name = "manageNotifications", path = "/phd/candidacy/academicAdminOffice/manageNotifications.jsp"),
+        @Forward(name = "createNotification", path = "/phd/candidacy/academicAdminOffice/createNotification.jsp"),
+        @Forward(name = "registrationFormalization", path = "/phd/candidacy/academicAdminOffice/registrationFormalization.jsp"),
+        @Forward(name = "associateRegistration", path = "/phd/candidacy/academicAdminOffice/associateRegistration.jsp"),
+        @Forward(name = "manageStates", path = "/phd/candidacy/academicAdminOffice/manageStates.jsp"),
+        @Forward(name = "editProcessAttributes", path = "/phd/candidacy/academicAdminOffice/editProcessAttributes.jsp"),
+        @Forward(name = "editPhdProcessState", path = "/phd/candidacy/academicAdminOffice/editState.jsp"),
+        @Forward(name = "viewLogs", path = "/phd/candidacy/academicAdminOffice/logs/viewLogs.jsp") })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
     @Override
@@ -411,8 +411,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
     }
 
-    private Language getLanguage(HttpServletRequest request) {
-        return Language.valueOf(request.getParameter("language"));
+    private Locale getLanguage(HttpServletRequest request) {
+        return new Locale.Builder().setLanguageTag(request.getParameter("language")).build();
     }
 
     public ActionForward markNotificationAsSent(ActionMapping mapping, ActionForm form, HttpServletRequest request,

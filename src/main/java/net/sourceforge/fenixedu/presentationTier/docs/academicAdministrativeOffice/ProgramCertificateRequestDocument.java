@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.io.Serializable;
@@ -26,7 +44,6 @@ import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.utl.fenix.utils.NumberToWordsConverter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocument {
 
@@ -131,7 +148,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         return false;
     }
 
-    private void createProgramsList(Language language) {
+    private void createProgramsList(Locale language) {
         final List<ProgramInformation> bolonha = new ArrayList<ProgramInformation>();
         final List<ProgramInformation> preBolonha = new ArrayList<ProgramInformation>();
 
@@ -229,7 +246,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         private final String evaluationMethod;
         private final List<BibliographicInformation> bibliographics;
 
-        public BolonhaProgramInformation(final Enrolment enrolment, Language language) {
+        public BolonhaProgramInformation(final Enrolment enrolment, Locale language) {
             super(enrolment);
 
             final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
@@ -325,7 +342,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         private final String name;
         private final String period;
 
-        public ContextInformation(final Context context, final Language language, final Locale locale) {
+        public ContextInformation(final Context context, final Locale language, final Locale locale) {
             this.name = context.getParentCourseGroup().getOneFullNameI18N(language);
             this.period = context.getCurricularPeriod().getFullLabel(locale);
 

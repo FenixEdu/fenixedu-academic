@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha;
 
 import java.util.ArrayList;
@@ -32,6 +50,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -47,7 +66,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/curriculumValidation", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/curriculumValidation", module = "academicAdministration", formBeanClass = FenixActionForm.class,
+        functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "show-curriculum-validation-options",
                 path = "/academicAdminOffice/student/curriculumValidation/curriculumValidationOperations.jsp"),
@@ -60,9 +80,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "show-set-end-stage-date-form",
                 path = "/academicAdminOffice/student/curriculumValidation/setStageDate.jsp"),
         @Forward(name = "registrationConclusion",
-                path = "/academicAdminOffice/student/curriculumValidation/registrationConclusion.jsp")
-
-})
+                path = "/academicAdminOffice/student/curriculumValidation/registrationConclusion.jsp") })
 public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(AcademicAdminOfficeCurriculumValidationDA.class);

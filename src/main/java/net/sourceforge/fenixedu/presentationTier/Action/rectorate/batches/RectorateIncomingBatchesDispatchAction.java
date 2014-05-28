@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.rectorate.batches;
 
 import java.io.IOException;
@@ -20,17 +38,21 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.zip.ZipUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = RectorateApplication.class, path = "incoming-batches", titleKey = "title.rectorateSubmission.received")
 @Mapping(path = "/rectorateIncomingBatches", module = "rectorate")
 @Forwards({ @Forward(name = "index", path = "/rectorate/incomingBatches.jsp"),
         @Forward(name = "viewBatch", path = "/rectorate/showBatch.jsp") })
 public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Set<RectorateSubmissionBatch> batches = new HashSet<RectorateSubmissionBatch>();

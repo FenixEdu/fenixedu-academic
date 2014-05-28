@@ -1,79 +1,86 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.collect.Sets;
 
 public class UpdateDepartmentsCompetenceCourseManagementGroup {
 
     @Atomic
     public static void run(Department department, String[] add, String[] remove) {
         check(RolePredicates.DEPARTMENT_ADMINISTRATIVE_OFFICE_PREDICATE);
-        List<Person> toAdd = materializePersons(add);
-        List<Person> toRemove = materializePersons(remove);
-        List<Person> finalList = new ArrayList<Person>();
 
-        Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER);
+        Group original = department.getCompetenceCourseMembersGroup();
 
-        Group group = department.getCompetenceCourseMembersGroup();
-        if (group == null) {
-            group = new FixedSetGroup();
+        Group changed = original;
+        if (add != null) {
+            for (String personID : add) {
+                Person person = FenixFramework.getDomainObject(personID);
+                changed = changed.grant(person.getUser());
+            }
+        }
+        if (remove != null) {
+            for (String personID : remove) {
+                Person person = FenixFramework.getDomainObject(personID);
+                changed = changed.revoke(person.getUser());
+            }
         }
 
-        for (Person person : group.getElements()) {
+        updateBolonhaManagerRoleToGroupDelta(department, original, changed);
+        department.setCompetenceCourseMembersGroup(changed);
+    }
 
-            if (!toRemove.contains(person)) {
-                finalList.add(person);
-                addBolonhaRole(person, bolonhaRole);
-            } else if (person.hasRole(RoleType.BOLONHA_MANAGER) && !belongsToOtherGroupsWithSameRole(department, person)) {
+    private static void updateBolonhaManagerRoleToGroupDelta(Department department, Group original, Group changed) {
+        Set<User> originalMembers = original.getMembers();
+        Set<User> newMembers = changed.getMembers();
+        for (User user : Sets.difference(originalMembers, newMembers)) {
+            Person person = user.getPerson();
+            if (person.hasRole(RoleType.BOLONHA_MANAGER) && !belongsToOtherGroupsWithSameRole(department, person)) {
                 person.removeRoleByType(RoleType.BOLONHA_MANAGER);
             }
         }
-
-        for (Person person : toAdd) {
-            if (!finalList.contains(person)) {
-                finalList.add(person);
-                addBolonhaRole(person, bolonhaRole);
+        Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER);
+        for (User user : Sets.difference(newMembers, originalMembers)) {
+            Person person = user.getPerson();
+            if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
+                person.addPersonRoles(bolonhaRole);
             }
-        }
-
-        department.setCompetenceCourseMembersGroup(new FixedSetGroup(finalList));
-    }
-
-    private static List<Person> materializePersons(String[] personsIDs) {
-        if (personsIDs != null) {
-            List<Person> result = new ArrayList<Person>();
-
-            for (String personID : personsIDs) {
-                result.add((Person) FenixFramework.getDomainObject(personID));
-            }
-
-            return result;
-        } else {
-            return new ArrayList<Person>();
-        }
-    }
-
-    private static void addBolonhaRole(Person person, Role bolonhaRole) {
-        if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
-            person.addPersonRoles(bolonhaRole);
         }
     }
 
@@ -82,7 +89,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup {
         for (Department department : departments) {
             if (department != departmentWhoAsks) {
                 Group group = department.getCompetenceCourseMembersGroup();
-                if (group != null && group.isMember(person)) {
+                if (group != null && group.isMember(person.getUser())) {
                     return true;
                 }
             }
@@ -90,8 +97,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup {
 
         for (Degree degree : Degree.readBolonhaDegrees()) {
             for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-                Group group = dcp.getCurricularPlanMembersGroup();
-                if (group != null && group.isMember(person)) {
+                if (dcp.getCurricularPlanMembersGroup().isMember(person.getUser())) {
                     return true;
                 }
             }

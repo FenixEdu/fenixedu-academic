@@ -1,14 +1,32 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <html:xhtml/>
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="title.manage.homepage" bundle="HOMEPAGE_RESOURCES"/></h2>
 
 <div class="infoop2">
@@ -45,39 +63,34 @@
         <bean:message key="label.homepage.activated" bundle="HOMEPAGE_RESOURCES"/>
         <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="true" ondblclick="this.form.submit();" onclick="this.form.submit();"/><bean:message key="label.homepage.activated.yes" bundle="HOMEPAGE_RESOURCES"/>
         <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="false" ondblclick="this.form.submit();" onclick="this.form.submit();"/><bean:message key="label.homepage.activated.no" bundle="HOMEPAGE_RESOURCES"/>
-        <html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-            <bean:message key="button.submit"/>
-        </html:submit>
     </p>
     
 
-    <% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-    <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
-    <bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="LOGGED_USER_ATTRIBUTE" property="person.user.username"/></bean:define>
     <p>
     <bean:message key="person.homepage.adress" bundle="HOMEPAGE_RESOURCES"/>:
-    <logic:notPresent name="LOGGED_USER_ATTRIBUTE" property="person.homepage">
-        <bean:write name="homepageURL"/>
-    </logic:notPresent>
+
     <logic:present name="LOGGED_USER_ATTRIBUTE" property="person.homepage">
         <logic:notPresent name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated">
-                <bean:write name="homepageURL"/>
+                ${LOGGED_USER_ATTRIBUTE.person.homepage.fullPath}
         </logic:notPresent>
         <logic:present name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated">
             <logic:equal name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated" value="true">
-                <html:link href="<%= homepageURL %>"><bean:write name="homepageURL"/></html:link>
+                <a href="${LOGGED_USER_ATTRIBUTE.person.homepage.fullPath}">${LOGGED_USER_ATTRIBUTE.person.homepage.fullPath}</a>
             </logic:equal>
             <logic:equal name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated" value="false">
-                <bean:write name="homepageURL"/>
+                ${LOGGED_USER_ATTRIBUTE.person.homepage.fullPath}
             </logic:equal>
         </logic:present>
     </logic:present>
     </p>
 
+    <p>
+		<a href="${pageContext.request.contextPath}/person/manageHomepage.do?method=sections" class="btn btn-primary"><bean:message key="label.manage.content" bundle="CONTENT_RESOURCES" /></a>
+	</p>
 
 	<p>
-        <h3 class="mtop2"><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/></h3>
+        <h3><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/></h3>
     </p>
 
     <div class="infoop2">

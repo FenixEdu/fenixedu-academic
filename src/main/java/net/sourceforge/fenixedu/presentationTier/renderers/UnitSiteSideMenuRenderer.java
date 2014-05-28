@@ -1,18 +1,23 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.Node;
-import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -40,62 +45,4 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
         return i18n("Lateral", "Side");
     }
 
-    @Override
-    protected List<Section> getBaseSections(Site site) {
-        UnitSite unitSite = (UnitSite) site;
-
-        TreeSet<Section> treeSet = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
-        // treeSet.addAll(unitSite.getIntroductionSections());
-
-        List<Section> sections = new ArrayList<Section>();
-
-        sections.addAll(treeSet);
-        // sections.addAll(site.getOrderedTemplateSections());
-
-        return sections;
-    }
-
-    @Override
-    protected SortedSet<Section> getTargetSubSections(Section section) {
-        // UnitSite unitSite = (UnitSite) section.getSite();
-        TreeSet<Section> treeSet = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
-
-        for (Section subSection : section.getAssociatedSections()) {
-            // if (unitSite.hasIntroductionSections(subSection)) {
-            // continue;
-            // }
-
-            treeSet.add(subSection);
-        }
-
-        return treeSet;
-    }
-
-    @Override
-    protected String getPath(FilterFunctionalityContext context, Content content) {
-        Site site = (Site) context.getLastContentInPath(Site.class);
-        Section sideSection = getSideSection(site);
-        List<Content> contents = null;
-        if (sideSection != null) {
-            contents = sideSection.getPathTo(content);
-        }
-        List<String> subPaths = new ArrayList<String>();
-        if (contents != null && !contents.isEmpty()) {
-            for (Content contentPath : contents.subList(0, contents.size() - 1)) {
-                subPaths.add(contentPath.getNormalizedName().getContent());
-            }
-        }
-        return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context,
-                isTemplatedContent((Site) context.getSelectedContainer(), content) ? Collections.EMPTY_LIST : subPaths);
-    }
-
-    private Section getSideSection(Site site) {
-        for (Node node : site.getChildren()) {
-            Content child = node.getChild();
-            if (child instanceof Section && child.getName().equals(getTargetSectionName())) {
-                return (Section) child;
-            }
-        }
-        return null;
-    }
 }

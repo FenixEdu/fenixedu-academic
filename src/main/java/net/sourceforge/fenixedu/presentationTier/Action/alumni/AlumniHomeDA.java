@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.alumni;
 
 import java.util.Collection;
@@ -13,20 +31,23 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsApplication;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "alumni", path = "/index", scope = "session")
+@StrutsApplication(bundle = "AlumniResources", path = "alumni-section", titleKey = "label.alumni.main.title", hint = "Alumni",
+        accessGroup = "role(ALUMNI)")
+@Mapping(module = "alumni", path = "/index")
 @Forwards(value = { @Forward(name = "Success", path = "/alumni/index.jsp") })
-public class AlumniHomeDA extends FenixDispatchAction {
+public class AlumniHomeDA extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -34,7 +55,7 @@ public class AlumniHomeDA extends FenixDispatchAction {
 
         Person person = getLoggedPerson(request);
         double formationsPercentage = getFormationsPercentage(person.getFormations());
-        double jobsPercentage = getJobsPercentage(person.getJobs());
+        double jobsPercentage = getJobsPercentage(person.getJobsSet());
 
         if (!areContactsUpToDate(person)) {
             request.setAttribute("showContactsMessage", true);

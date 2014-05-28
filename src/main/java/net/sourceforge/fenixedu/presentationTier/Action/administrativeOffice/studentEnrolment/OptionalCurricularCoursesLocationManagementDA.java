@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment;
 
 import java.util.ArrayList;
@@ -15,6 +33,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.OptionalCurricularCoursesLocationManagementDA.OptionalCurricularCoursesLocationForm;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -29,14 +48,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/optionalCurricularCoursesLocation", module = "academicAdministration",
-        formBeanClass = OptionalCurricularCoursesLocationForm.class)
+        formBeanClass = OptionalCurricularCoursesLocationForm.class, functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showEnrolments", path = "/academicAdminOffice/curriculum/enrolments/location/showEnrolments.jsp"),
         @Forward(name = "chooseNewDestination",
                 path = "/academicAdminOffice/curriculum/enrolments/location/chooseNewDestination.jsp"),
-        @Forward(name = "backToStudentEnrolments", path = "/studentEnrolments.do?method=prepare")
-
-})
+        @Forward(name = "backToStudentEnrolments", path = "/academicAdministration/studentEnrolments.do?method=prepare") })
 public class OptionalCurricularCoursesLocationManagementDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

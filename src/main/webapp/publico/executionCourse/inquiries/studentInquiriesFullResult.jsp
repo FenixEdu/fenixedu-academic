@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@page import="java.util.HashMap"%>
@@ -25,7 +45,7 @@
 		<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiriesCourseResultBean" >
 			<p class="mtop2">
 				<b><bean:message key="link.teachingInquiries.cuResults" bundle="INQUIRIES_RESOURCES"/></b> - 
-				<html:link page="<%= "/executionCourse.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getExternalId() %>" target="_blank">
+				<html:link page="/executionCourse.do?method=showInquiryCourseResult&resultId=${courseResult.studentInquiriesCourseResult.externalId}&executionCourseID=${executionCourse.externalId}" target="_blank">
 					<bean:write name="courseResult" property="studentInquiriesCourseResult.executionCourse.nome" /> - 				
 					<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.degreeCurricularPlan.name" />
 				</html:link>
@@ -35,7 +55,7 @@
 				<ul>
 					<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult">
 						<li>
-							<html:link page="<%= "/executionCourse.do?method=showInquiryTeachingResult&resultId=" + teachingResult.getExternalId() %>" target="_blank">
+							<html:link page="/executionCourse.do?method=showInquiryTeachingResult&resultId=${teachingResult.externalId}&executionCourseID=${executionCourse.externalId}" target="_blank">
 								<bean:write name="teachingResult" property="professorship.person.name" />
 								&nbsp;(<bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/>)<br/>
 							</html:link>
@@ -53,7 +73,7 @@
 				<logic:equal name="professorship" property="teachingInquiry.reportDisclosureToAcademicComunity" value="true">
 					<li>
 						<bean:define id="teachingInquiryID" name="professorship" property="teachingInquiry.externalId" />
-						<html:link page="<%= "/executionCourse.do?method=showInquiryTeachingReport&teachingInquiry=" + teachingInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
+						<html:link page="/executionCourse.do?method=showInquiryTeachingReport&teachingInquiry=${teachingInquiryID}&degreeCurricularPlanID=${degreeCurricularPlanID}&executionCourseID=${executionCourse.externalId}" target="_blank">
 							<bean:write name="professorship" property="person.name"/>
 						</html:link>
 					</li>
@@ -68,7 +88,7 @@
 	    	<logic:equal name="delegateInquiry" property="reportDisclosureAuthorization" value="YES">
 		        <li>
 		            <bean:define id="delegateInquiryID" name="delegateInquiry" property="externalId" />
-		            <html:link page="<%= "/executionCourse.do?method=showYearDelegateInquiryReport&yearDelegateInquiryId=" + delegateInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
+		            <html:link page="/executionCourse.do?method=showYearDelegateInquiryReport&yearDelegateInquiryId=${delegateInquiryID}&degreeCurricularPlanID=${degreeCurricularPlanID}&executionCourseID=${executionCourse.externalId}" target="_blank">
 		                <bean:write name="delegateInquiry" property="delegate.registration.student.person.name"/>
 		            </html:link>
 		        </li>

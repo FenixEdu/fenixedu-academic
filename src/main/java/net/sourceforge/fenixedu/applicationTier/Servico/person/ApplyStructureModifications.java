@@ -1,12 +1,26 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
-import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
-import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.presentationTier.Action.person.ModifiedContentBean;
 import pt.ist.fenixframework.Atomic;
 
@@ -14,41 +28,10 @@ public class ApplyStructureModifications {
 
     @Atomic
     public static void run(List<ModifiedContentBean> modifications) {
-
         ServiceMonitoring.logService(ApplyStructureModifications.class, modifications);
-
         for (ModifiedContentBean bean : modifications) {
-            Container parentContainer = bean.getCurrentParent();
-            Container newContainer = bean.getNewParent();
-            Node node = bean.getContent().getParentNode(bean.getCurrentParent());
-
-            if (!parentContainer.equals(newContainer)) {
-                node = changeParent(node, newContainer);
-            }
-
-            if (node instanceof ExplicitOrderNode) {
-                ExplicitOrderNode explicitOrderNode = (ExplicitOrderNode) node;
-                if (!explicitOrderNode.getNodeOrder().equals(bean.getOrder())) {
-                    explicitOrderNode.setNodeOrder(bean.getOrder());
-                }
-            }
+            bean.getContent().applyStructureModifications(bean.getNewParent(), bean.getOrder());
         }
-    }
-
-    private static Node changeParent(Node node, Container parent) {
-        if (node instanceof ExplicitOrderNode) {
-            ExplicitOrderNode oldNode = (ExplicitOrderNode) node;
-            ExplicitOrderNode explicitOrderNode =
-                    new ExplicitOrderNode(parent, oldNode.getChild(), oldNode.isAscending(), oldNode.getNodeOrder());
-            oldNode.deleteWithoutReOrdering();
-            return explicitOrderNode;
-        } else if (node instanceof DateOrderedNode) {
-            DateOrderedNode oldNode = (DateOrderedNode) node;
-            DateOrderedNode dateOrderedNode = new DateOrderedNode(parent, oldNode.getChild(), oldNode.getAscending());
-            oldNode.delete();
-            return dateOrderedNode;
-        }
-        return null;
     }
 
 }

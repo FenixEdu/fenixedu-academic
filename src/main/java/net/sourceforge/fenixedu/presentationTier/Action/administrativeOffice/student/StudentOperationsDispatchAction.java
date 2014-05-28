@@ -1,4 +1,22 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
@@ -21,11 +39,14 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminStudentsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -38,6 +59,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author - Ângela Almeida (argelina@ist.utl.pt)
  * 
  */
+@StrutsFunctionality(app = AcademicAdminStudentsApp.class, path = "create-student",
+        titleKey = "link.studentOperations.createStudent", accessGroup = "academic(CREATE_REGISTRATION)")
 @Mapping(path = "/createStudent", module = "academicAdministration")
 @Forwards({
         @Forward(name = "chooseNewStudentExecutionDegreeAndIdentification",
@@ -47,10 +70,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "fillOriginInformation", path = "/academicAdminOffice/fillOriginInformation.jsp"),
         @Forward(name = "createStudentSuccess", path = "/academicAdminOffice/createStudentSuccess.jsp"),
         @Forward(name = "showCreateStudentConfirmation", path = "/academicAdminOffice/showCreateStudentConfirmation.jsp") })
-// @Forward(name = "printRegistrationDeclarationTemplate", path =
-// "/printRegistrationDeclarationTemplate.jsp", useTile = false) })
 public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareCreateStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

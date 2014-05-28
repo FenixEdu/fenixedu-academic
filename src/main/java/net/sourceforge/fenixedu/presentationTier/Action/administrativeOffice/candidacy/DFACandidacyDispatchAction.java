@@ -1,19 +1,33 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.candidacy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.CreateCandidacy;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.EditPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.RegisterCandidate;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.RegisterCandidacyBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
@@ -21,32 +35,47 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInfo
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
-import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.MasterDegreeOfficeApplication.MasterDegreeDfaApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = MasterDegreeDfaApp.class, path = "view-candidacy",
+        titleKey = "link.masterDegree.administrativeOffice.dfaCandidacy.viewCandidacy")
+@Mapping(path = "/dfaCandidacy", module = "masterDegreeAdministrativeOffice",
+        input = "/candidacy/chooseDFACandidacyExecutionDegree.jsp", formBean = "dfaCandidacyForm")
+@Forwards({
+        @Forward(name = "fillCandidateData", path = "/masterDegreeAdministrativeOffice/candidacy/fillCandidateData.jsp"),
+        @Forward(name = "prepareValidateCandidacyData",
+                path = "/masterDegreeAdministrativeOffice/candidacy/prepareValidateCandidacyData.jsp"),
+        @Forward(name = "showCandidacyValidateData",
+                path = "/masterDegreeAdministrativeOffice/candidacy/showCandidacyValidateData.jsp"),
+        @Forward(name = "showCandidacyAlterData", path = "/masterDegreeAdministrativeOffice/candidacy/showCandidacyAlterData.jsp"),
+        @Forward(name = "viewCandidacyDetails", path = "/masterDegreeAdministrativeOffice/candidacy/viewCandidacyDetails.jsp"),
+        @Forward(name = "chooseCandidacy", path = "/masterDegreeAdministrativeOffice/candidacy/chooseCandidacy.jsp"),
+        @Forward(name = "alterSuccess", path = "/masterDegreeAdministrativeOffice/candidacy/alterSuccessPersonalData.jsp"),
+        @Forward(name = "candidacyRegistration", path = "/masterDegreeAdministrativeOffice/candidacy/candidacyRegistration.jsp"),
+        @Forward(name = "candidacyRegistrationSuccess",
+                path = "/masterDegreeAdministrativeOffice/candidacy/candidacyRegistrationSuccess.jsp"),
+        @Forward(name = "printRegistrationInformation",
+                path = "/masterDegreeAdministrativeOffice/candidacy/candidacyRegistrationTemplate.jsp") })
 public class DFACandidacyDispatchAction extends FenixDispatchAction {
-
-    public ActionForward prepareCreateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        CreateDFACandidacyBean createDFACandidacyBean = new CreateDFACandidacyBean();
-        request.setAttribute("candidacyBean", createDFACandidacyBean);
-        return mapping.findForward("chooseExecutionDegree");
-    }
 
     public ActionForward chooseDegreeTypePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
@@ -112,37 +141,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
     }
 
-    public ActionForward createCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
-        CreateDFACandidacyBean createDFACandidacyBean =
-                (CreateDFACandidacyBean) RenderUtils.getViewState().getMetaObject().getObject();
-        Candidacy candidacy = null;
-        try {
-            candidacy =
-                    CreateCandidacy.run(createDFACandidacyBean.getExecutionDegree(), createDFACandidacyBean.getDegreeType(),
-                            createDFACandidacyBean.getName(), createDFACandidacyBean.getIdentificationNumber(),
-                            createDFACandidacyBean.getIdDocumentType(), createDFACandidacyBean.getContributorNumber(),
-                            createDFACandidacyBean.getCandidacyDate());
-        } catch (DomainException e) {
-            addActionMessage(request, e.getMessage());
-            RenderUtils.invalidateViewState();
-            return prepareCreateCandidacy(mapping, actionForm, request, response);
-        } catch (IllegalDataAccessException e) {
-            addActionMessage(request, "error.not.authorized");
-            RenderUtils.invalidateViewState();
-            return prepareCreateCandidacy(mapping, actionForm, request, response);
-        }
-
-        storeCandidacyDataInRequest(request, candidacy);
-        return mapping.findForward("viewCandidacyDetails");
-    }
-
-    public ActionForward prepareGenPass(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
-        return mapping.findForward("prepareGenPass");
-
-    }
-
+    @EntryPoint
     public ActionForward prepareChooseCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         return mapping.findForward("chooseCandidacy");
@@ -165,55 +164,14 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
     }
 
-    private void storeCandidacyDataInRequest(HttpServletRequest request, Candidacy candidacy) {
+    protected void storeCandidacyDataInRequest(HttpServletRequest request, Candidacy candidacy) {
         List<CandidacyDocumentUploadBean> candidacyDocuments = new ArrayList<CandidacyDocumentUploadBean>();
-        for (CandidacyDocument candidacyDocument : candidacy.getCandidacyDocuments()) {
+        for (CandidacyDocument candidacyDocument : candidacy.getCandidacyDocumentsSet()) {
             candidacyDocuments.add(new CandidacyDocumentUploadBean(candidacyDocument));
         }
-
         request.setAttribute("candidacyDocuments", candidacyDocuments);
         request.setAttribute("candidacy", candidacy);
 
-    }
-
-    public ActionForward showCandidacyGeneratePass(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
-        DynaActionForm form = (DynaActionForm) actionForm;
-        Integer candidacyNumber = (Integer) form.get("candidacyNumber");
-        Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
-        if (candidacy == null) {
-            addActionMessage(request, "error.no.candidacy", candidacyNumber.toString());
-            return prepareGenPass(mapping, actionForm, request, response);
-        }
-        if (!candidacy.getActiveCandidacySituation().getCanGeneratePass()) {
-            addActionMessage(request, "error.enrolmentFee.to.pay");
-            request.setAttribute("payed", "false");
-        } else {
-            request.setAttribute("payed", "true");
-        }
-
-        request.setAttribute("candidacy", candidacy);
-        return mapping.findForward("showCandidacyGeneratePass");
-
-    }
-
-    public ActionForward generatePass(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixActionException {
-        DynaActionForm form = (DynaActionForm) actionForm;
-        Integer candidacyNumber = (Integer) form.get("candidacyNumber");
-        Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
-        if (candidacy == null) {
-            throw new FenixActionException("error.invalid.candidacy.number");
-        }
-        if (!candidacy.getActiveCandidacySituation().getCanGeneratePass()) {
-            throw new FenixActionException("error.enrolmentFee.to.pay");
-        }
-
-        String pass = GenerateNewPasswordService.run(candidacy.getPerson());
-        request.setAttribute("password", pass);
-
-        request.setAttribute("candidacy", candidacy);
-        return mapping.findForward("generatePassword");
     }
 
     public ActionForward prepareValidateCandidacyData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -268,8 +226,6 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
     public ActionForward alterCandidacyData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        User userView = Authenticate.getUser();
-
         PrecedentDegreeInformationBean precedentDegreeInformation =
                 (PrecedentDegreeInformationBean) RenderUtils.getViewState("precedentDegreeInformation").getMetaObject()
                         .getObject();
@@ -310,22 +266,6 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
         }
         request.setAttribute("candidacyID", candidacy.getExternalId().toString());
         return viewCandidacy(mapping, actionForm, request, response);
-    }
-
-    public ActionForward prepareListCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        DFACandidacyBean candidacyBean = new DFACandidacyBean();
-        request.setAttribute("candidacyBean", candidacyBean);
-        return mapping.findForward("listCandidacies");
-    }
-
-    public ActionForward listCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) RenderUtils.getViewState().getMetaObject().getObject();
-        Set<DFACandidacy> candidacies = dfaCandidacyBean.getExecutionDegree().getDfaCandidacies();
-        request.setAttribute("candidacies", candidacies);
-        request.setAttribute("candidacyBean", dfaCandidacyBean);
-        return mapping.findForward("listCandidacies");
     }
 
     public ActionForward viewCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -394,6 +334,8 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
         Integer candidacyNumber = (Integer) candidacyForm.get("candidacyNumber");
 
         request.setAttribute("candidacy", Candidacy.readByCandidacyNumber(candidacyNumber));
+
+        PortalLayoutInjector.skipLayoutOn(request);
         return mapping.findForward("printRegistrationInformation");
     }
 

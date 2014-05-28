@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 24/Jul/2003
  *  
@@ -38,14 +56,14 @@ public class ParseMetadata extends DefaultHandler {
 
     private Element current = null;
 
-    private List<String> members = new ArrayList<String>();
+    private final List<String> members = new ArrayList<String>();
 
     public Metadata parseMetadata(Vector<Element> vector, Metadata metadata) {
         this.vector = vector;
         return vector2Metadata(vector, metadata);
     }
 
-    public Vector<Element> parseMetadata(String metadataFile, String path) throws ParseException {
+    public Vector<Element> parseMetadata(String metadataFile) throws ParseException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setValidating(true);
         try {
@@ -55,7 +73,7 @@ public class ParseMetadata extends DefaultHandler {
             reader.setErrorHandler(this);
             StringReader sr = new StringReader(metadataFile);
             InputSource input = new InputSource(sr);
-            MetadataResolver resolver = new MetadataResolver(path);
+            MetadataResolver resolver = new MetadataResolver();
             reader.setEntityResolver(resolver);
             reader.parse(input);
         } catch (Exception e) {

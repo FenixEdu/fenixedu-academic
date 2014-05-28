@@ -1,22 +1,35 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.MenuEntry;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.domain.messaging.Forum;
-import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
+import net.sourceforge.fenixedu.domain.cms.TemplatedSection;
+import net.sourceforge.fenixedu.domain.cms.TemplatedSectionInstance;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.Face;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -26,6 +39,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlList;
 import pt.ist.fenixWebFramework.renderers.components.HtmlListItem;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -169,58 +183,70 @@ public class SiteMenuRenderer extends OutputRenderer {
 
                 HtmlList list = new HtmlList();
                 HttpServletRequest request = getContext().getViewState().getRequest();
-                FilterFunctionalityContext context =
-                        (FilterFunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
 
-                if (context == null) {
-                    context = new FilterFunctionalityContext(request, Charset.defaultCharset().name());
-                }
+                List<CmsContent> selectedPath = getSelectedPath(request);
 
-                Collection<MenuEntry> entries = getEntries(object);
+                Site site = (Site) object;
+
+                Collection<? extends CmsContent> entries = getInitialEntries(site);
 
                 if (entries.isEmpty()) {
                     return generateEmpty();
                 }
 
-                createList(list, context, entries, 0);
+                createList(site, list, entries, selectedPath, 0);
                 return list;
             }
 
-            public void createList(HtmlList list, FilterFunctionalityContext context, Collection<MenuEntry> entries, Integer depth) {
-                for (MenuEntry entry : entries) {
-                    if (!entry.isNodeVisible()) {
+            private List<CmsContent> getSelectedPath(HttpServletRequest request) {
+                List<CmsContent> contents = new ArrayList<>();
+                CmsContent current = OldCmsSemanticURLHandler.getContent(request);
+                while (current != null) {
+                    contents.add(0, current);
+                    current = current.getParent();
+                }
+                return contents;
+            }
+
+            public void createList(Site site, HtmlList list, Collection<? extends CmsContent> entries,
+                    List<CmsContent> selectedPath, Integer depth) {
+                for (CmsContent entry : entries) {
+                    if (!entry.getVisible()) {
                         continue;
                     }
 
-                    Content content = entry.getReferingContent();
-                    if (!(content instanceof Item || content instanceof Forum || content instanceof Attachment)) {
+                    if (entry instanceof Section) {
+                        Section section = (Section) entry;
                         HtmlListItem item = list.createItem();
-                        item.addChild(generateComponent(context, content, true, depth));
+                        item.addChild(generateComponent(site, entry, true, selectedPath, depth));
                         if (depth > 0) {
                             item.setStyle(getDepthStyle());
                         }
 
-                        if (allowsSubMenus() && isSelectedContent(content, context) && !entry.getChildren().isEmpty()) {
+                        if (allowsSubMenus() && selectedPath.contains(section) && !section.getChildSet().isEmpty()) {
                             HtmlList subMenu = new HtmlList();
                             item.addChild(subMenu);
-                            createList(subMenu, context, entry.getChildren(), depth + 1);
+                            createList(site, subMenu, section.getOrderedSubSections(), selectedPath, depth + 1);
                         }
                     }
                 }
             }
 
-            private HtmlLink generateLink(FilterFunctionalityContext context, Content content, final HtmlComponent body,
-                    final boolean isPublic, Integer depth) {
-                final String url = getPath(context, content);
-                final String preapendedComment =
-                        isPublic ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
-                HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
+            private HtmlLink generateLink(Site site, CmsContent content, final HtmlComponent body, List<CmsContent> selectedPath,
+                    Integer depth) {
+
+                final String url =
+                        content instanceof TemplatedSection ? site.getFullPath() + "/" + content.getNormalizedName().getContent() : content
+                                .getFullPath();
+                HtmlLink link = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
 
                 link.setContextRelative(false);
                 link.setUrl(url);
                 link.setBody(body);
 
-                if (context.getSelectedContents().contains(content)) {
+                if (selectedPath.contains(content)
+                        || (content instanceof TemplatedSectionInstance && selectedPath
+                                .contains(((TemplatedSectionInstance) content).getSectionTemplate()))) {
                     if (depth == 0) {
                         link.addClass(getSelectedTopItemClass());
                     } else if (depth > 0) {
@@ -234,21 +260,16 @@ public class SiteMenuRenderer extends OutputRenderer {
                 }
 
                 return link;
-
             }
 
-            public HtmlComponent generateComponent(FilterFunctionalityContext context, Content content, boolean canMakeLink,
-                    Integer depth) {
+            public HtmlComponent generateComponent(Site site, CmsContent content, boolean canMakeLink,
+                    List<CmsContent> selectedPath, Integer depth) {
 
                 HtmlText text = new HtmlText(content.getName().getContent());
                 text.setFace(Face.STANDARD);
-                HtmlComponent component = text;
+                HtmlComponent component = generateLink(site, content, text, selectedPath, depth);
 
-                if (content.isAvailable()) {
-                    component = generateLink(context, content, component, content.isPublic(), depth);
-                }
-
-                MultiLanguageString title = content.getTitle();
+                MultiLanguageString title = content.getName();
                 if (title != null && !title.isEmpty()) {
                     component.setTitle(title.getContent());
                 }
@@ -258,12 +279,6 @@ public class SiteMenuRenderer extends OutputRenderer {
 
             private HtmlComponent generateEmpty() {
                 return new HtmlText(getEmpty(), false);
-            }
-
-            private boolean isSelectedContent(Content current, FunctionalityContext context) {
-                FilterFunctionalityContext filterContext = (FilterFunctionalityContext) context;
-                Container selectedContainer = filterContext.getSelectedContainer();
-                return !filterContext.getPathBetween(selectedContainer, current).isEmpty();
             }
 
             private String getContextParamValue() {
@@ -280,31 +295,16 @@ public class SiteMenuRenderer extends OutputRenderer {
         };
     }
 
-    protected Collection<MenuEntry> getEntries(Object object) {
-        return getSite(object).getMenu();
-    }
-
     protected Site getSite(Object object) {
         return (Site) object;
-    }
-
-    protected String getPath(FilterFunctionalityContext context, Content content) {
-        return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context,
-                subPath(context.getSelectedContainer(), content));
     }
 
     protected boolean allowsSubMenus() {
         return true;
     }
 
-    private List<String> subPath(Container start, Content end) {
-        List<Content> contents = start.getPathTo(end);
-        List<String> subPaths = new ArrayList<String>();
-        if (contents.size() > 2) {
-            for (Content content : contents.subList(1, contents.size() - 1)) {
-                subPaths.add(content.getNormalizedName().getContent());
-            }
-        }
-        return subPaths;
+    protected Collection<? extends CmsContent> getInitialEntries(Site site) {
+        return site.getOrderedSections();
     }
+
 }

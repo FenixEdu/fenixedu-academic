@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.base;
 
 import java.io.IOException;
@@ -18,14 +36,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResultMessage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -371,22 +385,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     public ActionForward redirect(String url, HttpServletRequest request) {
-        return redirect(url, request, true);
-    }
-
-    public ActionForward redirect(String url, HttpServletRequest request, boolean withContextPath) {
-        StringBuilder stringBuilder = new StringBuilder(url);
-
-        if (withContextPath) {
-            stringBuilder.append("&");
-            stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-            stringBuilder.append("=");
-            final FunctionalityContext functionalityContext = AbstractFunctionalityContext.getCurrentContext(request);
-            String currentContextPath = functionalityContext == null ? null : functionalityContext.getCurrentContextPath();
-            stringBuilder.append(currentContextPath);
-        }
-
-        return new FenixActionForward(request, new ActionForward(stringBuilder.toString(), true));
+        return new FenixActionForward(request, new ActionForward(url, true));
     }
 
     public List<IViewState> getViewStatesWithPrefixId(final String prefixId) {
@@ -415,14 +414,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         response.setContentType(contentType);
         response.addHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 
-        ServletOutputStream outputStream = null;
-        try {
-            outputStream = response.getOutputStream();
+        try (ServletOutputStream outputStream = response.getOutputStream()) {
             outputStream.write(content);
             outputStream.flush();
             response.flushBuffer();
-        } finally {
-            IOUtils.closeQuietly(outputStream);
         }
     }
 

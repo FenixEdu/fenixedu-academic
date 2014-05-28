@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -10,7 +30,7 @@
 
 <div class="breadcumbs mvert0">
     <bean:define id="institutionUrl">
-        <%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>
+        <%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>
     </bean:define>
     <bean:define id="structureUrl">
         <bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
@@ -65,12 +85,12 @@
 					<ul class="nobullet">
 						<logic:iterate id="area" name="areas" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 							<li>
-								<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= "#" + area.getExternalId()%>"><fr:view name="area" property="nameI18n"/></a><br/>
+								<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= "#" + area.getExternalId()%>"><fr:view name="area" property="nameI18n"/></a><br/>
 							</li>
 						</logic:iterate>
 					<logic:notEmpty name="teachersNoArea">
 			 				<li>
-			 				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#noarea"><bean:message key="link.teacher.area.noArea" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></a>
+			 				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#noarea"><bean:message key="link.teacher.area.noArea" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></a>
 		 					</li>
 					 </logic:notEmpty>
 					</td>
@@ -82,7 +102,7 @@
 		
 	<h2 id="<%= area.getExternalId() %>" class="greytxt mtop2 separator1">
 		<fr:view name="area" property="nameI18n"/>
-		<logic:notEqual name="index" value="0"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#logoist" style="<%= "padding-left: 1em; background: url(" + request.getContextPath() + "/images/cross_up.gif) left center no-repeat;" %>"><bean:message key="link.top" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></a></logic:notEqual>
+		<logic:notEqual name="index" value="0"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#logoist" style="<%= "padding-left: 1em; background: url(" + request.getContextPath() + "/images/cross_up.gif) left center no-repeat;" %>"><bean:message key="link.top" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></a></logic:notEqual>
 	</h2>
 
 	<bean:define id="byArea" value="true" toScope="request"/>
@@ -97,7 +117,7 @@
 		<logic:notPresent name="ignoreAreas">
 			<h2 id="noarea" class="greytxt mtop2 separator1">
 				<bean:message key="link.teacher.area.noArea" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>
-				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#logoist" style="<%= "padding-left: 1em; background: url(" + request.getContextPath() + "/images/cross_up.gif) left center no-repeat;" %>"><bean:message key="link.top" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></a>
+				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#logoist" style="<%= "padding-left: 1em; background: url(" + request.getContextPath() + "/images/cross_up.gif) left center no-repeat;" %>"><bean:message key="link.top" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></a>
 			</h2>
 		</logic:notPresent>	
 		

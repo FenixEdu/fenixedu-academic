@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -5,7 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp" %>
 
-<h2><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></h2>
+<h2><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/> <span class="small">${unit.name}</span></h2>
 
 <bean:define id="unitID" name="unit" property="externalId"/>
 <bean:define id="actionName" name="functionalityAction"/>
@@ -17,12 +37,17 @@
 			<html:link page="<%= "/" + actionName + ".do?method=prepareFileUpload&unitId=" + unitID %>"><bean:message key="label.addFile" bundle="RESEARCHER_RESOURCES"/></html:link>
 		</li>
 	</logic:equal>
+	<logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
+		<li>
+			<html:link page="<%= "/" + actionName + ".do?method=configureGroups&unitId=" + unitID %>"><bean:message key="label.manageAccessGroups" bundle="RESEARCHER_RESOURCES"/></html:link>
+		</li>
+	</logic:equal>
 	<li>
-		<a href="#" onclick="switchDisplay('instructions');"><bean:message key="label.instructions" bundle="RESEARCHER_RESOURCES"/></a>
+		<a href="#" data-toggle="collapse" data-target="#instructions"><bean:message key="label.instructions" bundle="RESEARCHER_RESOURCES"/></a>
 	</li>
 </ul>
 
-<div id="instructions" class="switchNone">
+<div id="instructions" class="collapse">
 <div class="infoop2 mbottom1 mtop05">
 <p class="mtop0"><strong><bean:message key="label.tagCloud" bundle="RESEARCHER_RESOURCES"/>:</strong> <bean:message key="label.tagCloud.explanation" bundle="RESEARCHER_RESOURCES"/></p>
 <table>
@@ -74,7 +99,7 @@
 		<fr:view name="files" schema="show.unit.files">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle2 thlight thnowrap"/>
-				<fr:property name="columnClasses" value="bold nowrap,smalltxt,smalltxt width100px acenter nowrap,,smalltxt,smalltxt color888 nowrap,nowrap"/>				
+				<fr:property name="columnClasses" value="bold,smalltxt,smalltxt width100px acenter nowrap,,smalltxt,smalltxt color888 nowrap,nowrap"/>				
 				<fr:property name="visibleIf(delete)" value="editableByCurrentUser"/>
 				<fr:property name="order(delete)" value="2"/>
 				<fr:property name="key(delete)" value="label.delete" />
@@ -118,7 +143,3 @@ pageNumberAttributeName="filePage" numberOfPagesAttributeName="numberOfPages"/>
 	</p>
 </logic:empty>
 
-
-<script type="text/javascript" language="javascript">
-switchGlobal();
-</script>

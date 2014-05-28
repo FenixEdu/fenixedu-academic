@@ -1,9 +1,29 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html:xhtml/>
 
 <h2><bean:message key="link.reports" bundle="GEP_RESOURCES" /></h2>
@@ -654,7 +674,6 @@
 </logic:present>
 
 <bean:define id="urlGraduations" type="java.lang.String">/reportsByDegreeType.do?method=downloadGraduations&amp;<bean:write name="args" filter="false"/></bean:define>
-<bean:define id="urlPublications" type="java.lang.String">/reportsByDegreeType.do?method=downloadPublications&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="viewReports" type="java.lang.String">/reportsByDegreeType.do?method=viewReports&amp;<bean:write name="args" filter="false"/></bean:define>
 <table class="tstyle1 thleft thlight mtop05">
 	<tr>
@@ -675,27 +694,6 @@
 		<td>
 			<html:link page="<%= viewReports + "&type=10" %>">
 				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType10"/>)
-			</html:link>
-		</td>
-	</tr>
-	<tr>
-		<td style="width: 350px;">
-			<bean:message key="link.publications.report" bundle="GEP_RESOURCES"/>
-		</td>
-		<td>
-			<bean:define id="urlPublicationsCsv" type="java.lang.String"><bean:write name="urlPublications" filter="false"/>&amp;format=csv&amp;type=25</bean:define>
-			<html:link page="<%= urlPublicationsCsv %>">
-				<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
-			</html:link>
-			|
-			<bean:define id="urlPublicationsXls" type="java.lang.String"><bean:write name="urlPublications" filter="false"/>&amp;format=xls&amp;type=25</bean:define>
-			<html:link page="<%= urlPublicationsXls %>">
-				<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
-			</html:link>
-		</td>
-		<td>
-			<html:link page="<%= viewReports + "&type=25" %>">
-				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType25"/>)
 			</html:link>
 		</td>
 	</tr>

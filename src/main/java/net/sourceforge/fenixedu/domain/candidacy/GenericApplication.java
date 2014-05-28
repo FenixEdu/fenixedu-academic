@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Comparator;
@@ -10,8 +28,10 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 
 public class GenericApplication extends GenericApplication_Base {
 
@@ -62,8 +82,10 @@ public class GenericApplication extends GenericApplication_Base {
 
     private String generateConfirmationLink() {
         final String confirmationCode =
-                DigestUtils.sha512Hex(getEmail() + System.currentTimeMillis() + hashCode()
-                        + new Random(System.currentTimeMillis()).nextGaussian());
+                Hashing.sha512()
+                        .hashString(
+                                getEmail() + System.currentTimeMillis() + hashCode()
+                                        + new Random(System.currentTimeMillis()).nextGaussian(), Charsets.UTF_8).toString();
         setConfirmationCode(confirmationCode);
         return FenixConfigurationManager.getConfiguration().getGenericApplicationEmailConfirmationLink() + confirmationCode
                 + "&applicationExternalId=" + getExternalId();

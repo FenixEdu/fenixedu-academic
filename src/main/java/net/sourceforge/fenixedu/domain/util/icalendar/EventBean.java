@@ -1,9 +1,26 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.util.icalendar;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Function;
@@ -15,12 +32,11 @@ public class EventBean {
     private DateTime end;
     private boolean allDay;
     private String title;
-    private Set<AllocatableSpace> rooms;
+    private Set<Space> rooms;
     private String url;
     private String note;
 
-    public EventBean(String title, DateTime begin, DateTime end, boolean allDay, Set<AllocatableSpace> rooms, String url,
-            String note) {
+    public EventBean(String title, DateTime begin, DateTime end, boolean allDay, Set<Space> rooms, String url, String note) {
         this.allDay = allDay;
         this.begin = begin;
         this.end = end;
@@ -63,14 +79,13 @@ public class EventBean {
     }
 
     public String getLocation() {
-        return rooms == null ? "Fenix" : Joiner.on("; ").join(
-                FluentIterable.from(rooms).transform(new Function<AllocatableSpace, String>() {
+        return rooms == null ? "Fenix" : Joiner.on("; ").join(FluentIterable.from(rooms).transform(new Function<Space, String>() {
 
-                    @Override
-                    public String apply(AllocatableSpace input) {
-                        return input.getIdentification();
-                    }
-                }).toSet());
+            @Override
+            public String apply(Space input) {
+                return input.getName();
+            }
+        }).toSet());
     }
 
     public String getUrl() {
@@ -89,11 +104,11 @@ public class EventBean {
         this.note = note;
     }
 
-    public Set<AllocatableSpace> getRooms() {
+    public Set<Space> getRooms() {
         return rooms;
     }
 
-    public void setRoom(Set<AllocatableSpace> room) {
+    public void setRoom(Set<Space> room) {
         this.rooms = room;
     }
 

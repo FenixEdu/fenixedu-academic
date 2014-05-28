@@ -1,9 +1,24 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -12,36 +27,24 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
-import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
-import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
-import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
-import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -50,11 +53,26 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.util.RequestUtils;
 
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.image.TextPngCreator;
 
+@Mapping(module = "publico", path = "/viewHomepage")
+@Forwards({ @Forward(name = "view-homepage", path = "view-homepage"), @Forward(path = "view-homepage", name = "view-homepage"),
+        @Forward(path = "list-homepages-teachers", name = "list-homepages-teachers"),
+        @Forward(path = "list-homepages-employees", name = "list-homepages-employees"),
+        @Forward(path = "list-homepages-students", name = "list-homepages-students"),
+        @Forward(path = "list-homepages-alumni", name = "list-homepages-alumni"),
+        @Forward(path = "view-homepage-section", name = "site-section"),
+        @Forward(path = "view-homepage-section-deny", name = "site-section-deny"),
+        @Forward(path = "view-homepage-section-adviseLogin", name = "site-section-adviseLogin"),
+        @Forward(path = "view-homepage-item", name = "site-item"),
+        @Forward(path = "view-homepage-item-deny", name = "site-item-deny"),
+        @Forward(path = "view-homepage-item-adviseLogin", name = "site-item-adviseLogin"),
+        @Forward(path = "homepage-stats", name = "homepage-stats"),
+        @Forward(path = "not-found-homepage", name = "not-found-homepage") })
 public class ViewHomepageDA extends SiteVisualizationDA {
 
     @Override
@@ -250,187 +268,12 @@ public class ViewHomepageDA extends SiteVisualizationDA {
             response.getOutputStream().close();
         }
         return null;
-        // final String email = getEmailString(request);
-        // if (StringUtils.isNotEmpty(email)) {
-        // final byte[] pngFile = TextPngCreator.createPng("arial", 12,
-        // "000000", email);
-        // response.setContentType("image/png");
-        // response.getOutputStream().write(pngFile);
-        // response.getOutputStream().close();
-        // }
-        // return null;
     }
 
     public ActionForward stats(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("homepages", Homepage.getAllHomepages());
         return mapping.findForward("homepage-stats");
-    }
-
-    private String getEmailString(final HttpServletRequest request) {
-
-        Homepage homepage = getHomepage(request);
-        final Person person = homepage.getPerson();
-        if (person != null && person.getHomepage() != null && person.getHomepage().getActivated().booleanValue()) {
-            EmailAddress email = person.getInstitutionalOrDefaultEmailAddress();
-            if (email.getVisibleToPublic()) {
-                return email.getValue();
-            }
-        }
-        return "";
-    }
-
-    public ActionForward showPublications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        Homepage homepage = getHomepage(request);
-        IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
-
-        ExecutionYearIntervalBean bean;
-        if (viewState != null) {
-            bean = (ExecutionYearIntervalBean) viewState.getMetaObject().getObject();
-        } else {
-            bean = generateSearchBean();
-        }
-
-        request.setAttribute("executionYearIntervalBean", bean);
-
-        setPublicationsInRequest(request, bean, homepage.getPerson());
-
-        return mapping.findForward("showPublications");
-    }
-
-    public ActionForward showPatents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        Homepage homepage = getHomepage(request);
-
-        List<ResearchResultPatent> patents = homepage.getPerson().getResearchResultPatents();
-        Collections.sort(patents, new BeanComparator("approvalYear"));
-        request.setAttribute("patents", patents);
-        return mapping.findForward("showPatents");
-    }
-
-    public ActionForward showInterests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        Homepage homepage = getHomepage(request);
-
-        request.setAttribute("interests", homepage.getPerson().getResearchInterests());
-        return mapping.findForward("showInterests");
-    }
-
-    public ActionForward showParticipations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        Homepage homepage = getHomepage(request);
-        setParticipationsInRequest(request, homepage.getPerson());
-
-        return mapping.findForward("showParticipations");
-
-    }
-
-    public ActionForward showPrizes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        Homepage homepage = getHomepage(request);
-
-        request.setAttribute("prizes", homepage.getPerson().getPrizes());
-
-        return mapping.findForward("showPrizes");
-    }
-
-    private void setPublicationsInRequest(HttpServletRequest request, ExecutionYearIntervalBean bean, Person person) {
-
-        ExecutionYear firstExecutionYear = bean.getFirstExecutionYear();
-        ExecutionYear finalExecutionYear = bean.getFinalExecutionYear();
-        ResultPublicationType resultPublicationType = bean.getPublicationType();
-
-        if (resultPublicationType == null) {
-            request.setAttribute("books", ResearchResultPublication.sort(person.getBooks(firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("national-articles", ResearchResultPublication.sort(person.getArticles(ScopeType.NATIONAL,
-                    firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("international-articles", ResearchResultPublication.sort(person.getArticles(
-                    ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("national-inproceedings", ResearchResultPublication.sort(person.getInproceedings(
-                    ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("international-inproceedings", ResearchResultPublication.sort(person.getInproceedings(
-                    ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("proceedings",
-                    ResearchResultPublication.sort(person.getProceedings(firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("theses",
-                    ResearchResultPublication.sort(person.getTheses(firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("manuals",
-                    ResearchResultPublication.sort(person.getManuals(firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("technicalReports",
-                    ResearchResultPublication.sort(person.getTechnicalReports(firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("otherPublications",
-                    ResearchResultPublication.sort(person.getOtherPublications(firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("unstructureds",
-                    ResearchResultPublication.sort(person.getUnstructureds(firstExecutionYear, finalExecutionYear)));
-            request.setAttribute("inbooks",
-                    ResearchResultPublication.sort(person.getInbooks(firstExecutionYear, finalExecutionYear)));
-        } else {
-            switch (resultPublicationType) {
-            case Article:
-                request.setAttribute("articles",
-                        ResearchResultPublication.sort(person.getArticles(firstExecutionYear, finalExecutionYear)));
-                break;
-            case Book:
-                request.setAttribute("books",
-                        ResearchResultPublication.sort(person.getBooks(firstExecutionYear, finalExecutionYear)));
-                break;
-            case BookPart:
-                request.setAttribute("inbooks",
-                        ResearchResultPublication.sort(person.getInbooks(firstExecutionYear, finalExecutionYear)));
-                break;
-            case Inproceedings:
-                request.setAttribute("inproceedings",
-                        ResearchResultPublication.sort(person.getInproceedings(firstExecutionYear, finalExecutionYear)));
-                break;
-            case Manual:
-                request.setAttribute("manuals",
-                        ResearchResultPublication.sort(person.getManuals(firstExecutionYear, finalExecutionYear)));
-                break;
-            case OtherPublication:
-                request.setAttribute("otherPublications",
-                        ResearchResultPublication.sort(person.getOtherPublications(firstExecutionYear, finalExecutionYear)));
-                break;
-            case Proceedings:
-                request.setAttribute("proceedings",
-                        ResearchResultPublication.sort(person.getProceedings(firstExecutionYear, finalExecutionYear)));
-                break;
-            case TechnicalReport:
-                request.setAttribute("technicalReports",
-                        ResearchResultPublication.sort(person.getTechnicalReports(firstExecutionYear, finalExecutionYear)));
-                break;
-            case Thesis:
-                request.setAttribute("theses",
-                        ResearchResultPublication.sort(person.getTheses(firstExecutionYear, finalExecutionYear)));
-                break;
-            }
-        }
-
-        request.setAttribute("person", getLoggedPerson(request));
-    }
-
-    private void setParticipationsInRequest(HttpServletRequest request, Person person) {
-        request.setAttribute("national-events", new ArrayList<ResearchEvent>(person.getAssociatedEvents(ScopeType.NATIONAL)));
-        request.setAttribute("international-events",
-                new ArrayList<ResearchEvent>(person.getAssociatedEvents(ScopeType.INTERNATIONAL)));
-        request.setAttribute("international-eventEditions",
-                new ArrayList<EventEdition>(person.getAssociatedEventEditions(ScopeType.INTERNATIONAL)));
-        request.setAttribute("national-eventEditions",
-                new ArrayList<EventEdition>(person.getAssociatedEventEditions(ScopeType.NATIONAL)));
-        request.setAttribute("national-journals",
-                new ArrayList<ScientificJournal>(person.getAssociatedScientificJournals(ScopeType.NATIONAL)));
-        request.setAttribute("international-journals",
-                new ArrayList<ScientificJournal>(person.getAssociatedScientificJournals(ScopeType.INTERNATIONAL)));
-        request.setAttribute("cooperations", new ArrayList<Cooperation>(person.getAssociatedCooperations()));
-        request.setAttribute("national-issues",
-                new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(ScopeType.NATIONAL)));
-        request.setAttribute("international-issues",
-                new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(ScopeType.INTERNATIONAL)));
     }
 
     @Override
@@ -440,16 +283,18 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     }
 
     protected Homepage getHomepage(HttpServletRequest request) {
-        FunctionalityContext context = AbstractFunctionalityContext.getCurrentContext(request);
-        Container container = null;
-        if (context != null) {
-            container = (Container) context.getLastContentInPath(Homepage.class);
-        }
-        if (container instanceof Homepage) {
-            return (Homepage) container;
+        Site site = SiteMapper.getSite(request);
+        if (site instanceof Homepage) {
+            return (Homepage) site;
         } else {
             String homepageID = request.getParameter("homepageID");
-            return (Homepage) FenixFramework.getDomainObject(homepageID);
+            if (homepageID != null) {
+                site = FenixFramework.getDomainObject(homepageID);
+            } else {
+                site = getDomainObject(request, "siteID");
+            }
+            OldCmsSemanticURLHandler.selectSite(request, site);
+            return (Homepage) site;
         }
 
     }

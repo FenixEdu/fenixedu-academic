@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -96,7 +116,7 @@
 </style>
 
 
-<div class="col_right_photo"><img src="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>img/perfil/candidato_photo.jpg" alt="[Foto] Inscrições na secretaria" width="150" height="100" /></div>
+<div class="col_right_photo"><img src="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>img/perfil/candidato_photo.jpg" alt="[Foto] Inscrições na secretaria" width="150" height="100" /></div>
 <h1>Candidato</h1> 
 <p class="greytxt">Bem-vindo &agrave; p&aacute;gina informativa destinada aos  Candidatos a ingressar no <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>. O objectivo &eacute; fornecer aqui os links que pensamos serem mais &uacute;teis para o seu processo de candidatura.</p>
 <h2>Com o <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>, entra no melhor ensino superior europeu</h2>
@@ -118,10 +138,10 @@
 	<img class="bolonha_diagram" src="../images/candidacy/quadro_pt_01.gif" alt="Diagrama dos diferentes ciclos de estudo" />
 	<p>Mais informa&ccedil;&otilde;es sobre candidatura podem ser encontradas em:</p>
 	<ul class="cycles">
-		<li class="btt_one"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>">Licenciaturas (1&ordm; Ciclo)</a></li>
-		<li class="btt_two"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/mestrados" %>">Mestrados (2&ordm; Ciclo)</a></li>
-		<li class="btt_three"><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/perfil/candidato/pd/">Forma&ccedil;&atilde;o Avan&ccedil;ada</a></li>
-		<li class="btt_four"><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/perfil/candidato/fa/">Programas Doutorais (3&ordm; Ciclo)</a></li>
+		<li class="btt_one"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>">Licenciaturas (1&ordm; Ciclo)</a></li>
+		<li class="btt_two"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/mestrados" %>">Mestrados (2&ordm; Ciclo)</a></li>
+		<li class="btt_three"><a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>html/perfil/candidato/pd/">Forma&ccedil;&atilde;o Avan&ccedil;ada</a></li>
+		<li class="btt_four"><a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>html/perfil/candidato/fa/">Programas Doutorais (3&ordm; Ciclo)</a></li>
 	</ul>
 
 	<div style="clear: both;"></div>

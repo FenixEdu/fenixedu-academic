@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -29,14 +49,14 @@
 </html:link>
 </li>
 <li>
-	<a href="#" onclick="javascript:showElement('insertFile')">
+	<a data-toggle="collapse" data-target="#insertFile" href="#">
 		<bean:message key="title.item.file.upload" bundle="SITE_RESOURCES"/>
 	</a>
 </li>
 </ul>
 
 
-<div id="insertFile" class="switchNone">
+<div id="insertFile" class="collapse">
 		<logic:messagesPresent message="true">
 			<html:messages id="messages" message="true">
 				<p>
@@ -103,23 +123,12 @@
 		            <bean:message key="button.save"/>
 		        </html:submit>
 			</fr:form>
-			
-			<div class="switchInline">
-				<fr:form>
-					<html:submit onclick="javascript:hideElement('insertFile')">
-					    	<bean:message key="button.cancel"/>
-					</html:submit>
-				</fr:form>
-			</div>
+
 		</div>
 </div>
 
-<script type="text/javascript" language="javascript">
-switchGlobal();
-</script>
-
 <p>
-<fr:view name="announcementBoard" property="files" schema="site.item.file.advanced" layout="tabular">
+<fr:view name="announcementBoard" property="fileContentSet" schema="site.item.file.advanced" layout="tabular">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2"/>
 		<fr:property name="order(edit)" value="1"/>

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package pt.utl.ist.scripts.process.updateData.student.statutes;
 
 import java.util.ArrayList;
@@ -18,9 +36,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @Task(englishTitle = "CronSeniorStatuteGrantor", readOnly = true)
 public class CronSeniorStatuteGrantor extends CronTask {
@@ -34,7 +53,7 @@ public class CronSeniorStatuteGrantor extends CronTask {
 
     @Override
     public void runTask() {
-        Language.setLocale(new Locale("pt", "PT"));
+        I18N.setLocale(new Locale("pt", "PT"));
         getLogger().info(".: Checking if a special season enrolment period is coming soon... :.");
         ExecutionYear subjectYear = specialSeasonEnrolmentPeriodOpeningSoonForThisYear(HOW_MANY_WEEKS_SOONER);
 

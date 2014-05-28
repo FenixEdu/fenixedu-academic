@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 26/Ago/2003
  *
@@ -16,7 +34,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExecutionCou
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionError;
@@ -29,20 +47,16 @@ import org.fenixedu.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author asnr & scpo
  * 
  */
-@Mapping(module = "student", path = "/viewExecutionCourseProjects", attribute = "enroledExecutionCoursesForm",
-        formBean = "enroledExecutionCoursesForm", scope = "request")
-@Forwards(value = {
-        @Forward(name = "sucess", path = "/student/viewExecutionCourseProjects_bd.jsp", tileProperties = @Tile(
-                title = "private.student.subscribe.groups")),
-        @Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-        @Forward(name = "noprojects", path = "/viewEnroledExecutionCourses.do?method=prepare") })
-public class ViewExecutionCourseProjectsAction extends FenixContextAction {
+@Mapping(module = "student", path = "/viewExecutionCourseProjects", functionality = ViewEnroledExecutionCoursesAction.class)
+@Forwards(value = { @Forward(name = "sucess", path = "/student/viewExecutionCourseProjects_bd.jsp"),
+        @Forward(name = "insucess", path = "/student/viewEnroledExecutionCourses.do?method=prepare"),
+        @Forward(name = "noprojects", path = "/student/viewEnroledExecutionCourses.do?method=prepare") })
+public class ViewExecutionCourseProjectsAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

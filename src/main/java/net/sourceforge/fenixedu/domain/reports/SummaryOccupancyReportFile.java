@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.reports;
 
 import net.sourceforge.fenixedu.domain.CourseLoad;
@@ -9,8 +27,8 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -62,8 +80,8 @@ public class SummaryOccupancyReportFile extends SummaryOccupancyReportFile_Base 
                     row.setCell(getTeacherId(summary));
                     row.setCell(getTeacherName(summary));
                     row.setCell(getSchedule(summary));
-                    final AllocatableSpace room = summary.getRoom();
-                    row.setCell(room == null ? "" : room.getIdentification());
+                    final Space room = summary.getRoom();
+                    row.setCell(room == null ? "" : room.getName());
                     row.setCell(summary.getStudentsNumber());
                 }
             }

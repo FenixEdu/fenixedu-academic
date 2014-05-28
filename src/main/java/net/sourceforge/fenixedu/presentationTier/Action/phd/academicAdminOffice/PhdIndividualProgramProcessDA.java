@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
 
 import java.io.IOException;
@@ -26,7 +44,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
@@ -100,6 +118,7 @@ import net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcesses
 import net.sourceforge.fenixedu.domain.phd.reports.RecommendationLetterReport;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPhdApp;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
@@ -115,6 +134,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -124,6 +145,8 @@ import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
+@StrutsFunctionality(app = AcademicAdminPhdApp.class, path = "phd-processes", titleKey = "label.phd.manageProcesses",
+        accessGroup = "academic(MANAGE_PHD_PROCESSES)")
 @Mapping(path = "/phdIndividualProgramProcess", module = "academicAdministration")
 @Forwards({
         @Forward(name = "manageProcesses", path = "/phd/academicAdminOffice/manageProcesses.jsp"),
@@ -183,9 +206,7 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
         @Forward(name = "editPhdProcessState", path = "/phd/academicAdminOffice/editState.jsp"),
         @Forward(name = "viewAllAlertMessages", path = "/phd/academicAdminOffice/alerts/viewAllAlertMessages.jsp"),
         @Forward(name = "viewAlertMessageFromAllAlertMessages", path = "/phd/academicAdminOffice/alerts/viewAlertMessage.jsp"),
-        @Forward(name = "viewLogs", path = "/phd/academicAdminOffice/logs/viewLogs.jsp")
-
-})
+        @Forward(name = "viewLogs", path = "/phd/academicAdminOffice/logs/viewLogs.jsp") })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
     // These methods will not be needed while we're using the old interface that
@@ -221,6 +242,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     @Override
+    @EntryPoint
     public ActionForward manageProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -1373,8 +1395,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         predicate.add(new Predicate<PhdMigrationIndividualProcessData>() {
             @Override
             public boolean eval(PhdMigrationIndividualProcessData process) {
-                return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.MANAGE_PHD_PROCESSES).contains(process.getProcessBean().getPhdProgram());
+                return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES).contains(process.getProcessBean().getPhdProgram());
 
             }
         });

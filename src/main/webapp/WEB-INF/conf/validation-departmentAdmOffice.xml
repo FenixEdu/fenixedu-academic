@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
 
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
 <form-validation>
     <formset>
         <constant>
@@ -319,229 +341,6 @@
 	     	
    </form>
 
-
-<!-- Teacher Service Distribution -->
-    	<form name="tsdProcessForm">
-			<field property="name" depends="required" page="1">
-				<arg0 key="label.teacherServiceDistribution.name"/>
-			</field>
-    	</form>
-    	
-    	<form name="tsdProcessPhasesManagementForm">
-			<field property="name" depends="required" page="1">
-				<arg0 key="label.teacherServiceDistribution.name"/>
-			</field>
-    	</form>
-    	
-    	<form name="tsdSupportForm">
-			<field property="name" depends="required" page="1">
-				<arg0 key="label.teacherServiceDistribution.subGroupingName"/>
-			</field>
-    	</form>
-    	
-    	<form name="tsdTeachersGroupForm">
-			<field property="name" depends="validwhen" page="1">
-				<msg name="validwhen" key="errors.required"/>
-				<arg0 key="label.teacherServiceDistribution.name"/>
-				<var>
-          			<var-name>test</var-name>
-          			<var-value>((*this* != null) or (page > 2))</var-value>
-        		</var>
-			</field>
-			<field property="shiftTypesArray" depends="validateMultiBox" page="2">
-				<arg0 key="tipo de aula"/>
-				<var>
-		        	<var-name>arrayProperty</var-name>
-		            <var-value>shiftTypesArray</var-value>
-		        </var>
-			</field>			
-    	</form>
-    	
-    	<form name="tsdCourseForm">
-			<field property="tsdCurricularCourseArray" depends="stringArray" page="2">
-				<msg name="stringArray" key="errors.teacherServiceDistribution.selectOneElement"/>
-				<arg0 key="label.teacherServiceDistribution.course"/>
-			</field>
-		</form>
-		
-		<form name="tsdCourseValuationForm">
-			<field property="firstTimeEnrolledStudentsManual" depends="required,integer,validwhen" page="1">
-				<arg0 key="label.teacherServiceDistribution.firstTimeEnrolledStudents"/>
-				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
-				<var>
-	       			<var-name>test</var-name>
-	       			<var-value>${greaterThanZero}</var-value>
-	       		</var>			
-			</field>
-			<field property="secondTimeEnrolledStudentsManual" depends="required,integer,validwhen" page="1">
-				<arg0 key="label.teacherServiceDistribution.secondTimeEnrolledStudents"/>
-				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
-				<var>
-	       			<var-name>test</var-name>
-	       			<var-value>${greaterThanZero}</var-value>
-	       		</var>			
-			</field>
-			<field property="studentsPerShiftManual" depends="required,integer,validwhen" page="2">
-				<arg0 key="label.teacherServiceDistribution.studentsPerShift"/>
-				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
-				<var>
-	       			<var-name>test</var-name>
-	       			<var-value>${greaterThanZero}</var-value>
-	       		</var>			
-			</field>
-			<field property="shiftFrequency" depends="required,double,doubleRange" page="2">
-				<arg0 key="label.teacherServiceDistribution.shiftFrequency"/>
-				<arg1 name="doubleRange" key="${var:min}" resource="false"/>
-				<arg2 name="doubleRange" key="${var:max}" resource="false"/>
-				<var>
-					<var-name>min</var-name>
-					<var-value>${minWeigth}</var-value>
-				</var>
-				<var>
-					<var-name>max</var-name>
-					<var-value>${maxWeigth}</var-value>
-				</var>	
-			</field>
-			<field property="weightFirstTimeEnrolledStudentsPerShiftManual" depends="required,double,doubleRange" page="3">
-				<arg0 key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerShift"/>
-				<arg1 name="doubleRange" key="${var:min}" resource="false"/>
-				<arg2 name="doubleRange" key="${var:max}" resource="false"/>
-				<var>
-					<var-name>min</var-name>
-					<var-value>${minWeigth}</var-value>
-				</var>
-				<var>
-					<var-name>max</var-name>
-					<var-value>${maxWeigth}</var-value>
-				</var>	
-			</field>
-			<field property="weightSecondTimeEnrolledStudentsPerShiftManual" depends="required,double,doubleRange" page="3">
-				<arg0 key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerShift"/>
-				<arg1 name="doubleRange" key="${var:min}" resource="false"/>
-				<arg2 name="doubleRange" key="${var:max}" resource="false"/>
-				<var>
-					<var-name>min</var-name>
-					<var-value>${minWeigth}</var-value>
-				</var>
-				<var>
-					<var-name>max</var-name>
-					<var-value>${maxWeigth}</var-value>
-				</var>	
-			</field>
-			<field property="hoursManual" depends="required,double,validwhen" page="4">
-				<arg0 key="label.teacherServiceDistribution.weeklyHours"/>
-				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
-				<var>
-          			<var-name>test</var-name>
-          			<var-value>${greaterThanZero}</var-value>
-        		</var>			
-			</field>
-			<field property="hoursPerShift" depends="required,double,validwhen" page="4">
-				<arg0 key="label.teacherServiceDistribution.shiftDuration"/>
-				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
-				<var>
-          			<var-name>test</var-name>
-          			<var-value>${greaterThanZero}</var-value>
-        		</var>			
-			</field>
-			<field property="hoursPerShift" depends="required,double,validwhen" page="4">
-				<arg0 key="label.teacherServiceDistribution.timeTableSlots"/>
-				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
-				<var>
-          			<var-name>test</var-name>
-          			<var-value>${greaterThanZero}</var-value>
-        		</var>			
-			</field>
-			
-		</form>
-			
-		
-		<form name="tsdProfessorshipForm">
-			<field property="hoursManual" depends="required,double,validwhen" page="1">
-				<arg0 key="label.teacherServiceDistribution.weeklyHours"/>
-				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
-				<var>
-          			<var-name>test</var-name>
-          			<var-value>${greaterThanZero}</var-value>
-        		</var>			
-			</field>
-			<field property="extraCreditsName" depends="required" page="3">
-				<arg0 key="label.teacherServiceDistribution.extraCreditsName"/>
-			</field>			
-			<field property="extraCreditsValue" depends="required,double,validwhen" page="3">
-				<arg0 key="label.teacherServiceDistribution.extraCreditsValue"/>
-				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
-				<var>
-          			<var-name>test</var-name>
-          			<var-value>${greaterThanZero}</var-value>
-        		</var>			
-			</field>
-		</form>    	
-		
-<!-- End Teacher Service Distribution -->    	
-
-	<form name="finalDegreeWorkScheduleing">
-		<field property="startOfProposalPeriodDate" depends="required,date" page="1">
-	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.start" resource="true"/>
-    	    <var>
-    	    	<var-name>datePattern</var-name>
-    	    	<var-value>dd/MM/yyyy</var-value>
-    	    </var>
-		</field>
-		<field property="startOfProposalPeriodHour" depends="required,date" page="1">
-	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.start" resource="true"/>
-    	    <var>
-    	    	<var-name>datePattern</var-name>
-    	    	<var-value>HH:mm</var-value>
-    	    </var>
-		</field>
-		<field property="endOfProposalPeriodDate" depends="required,date" page="1">
-	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.end" resource="true"/>
-    	    <var>
-    	    	<var-name>datePattern</var-name>
-    	    	<var-value>dd/MM/yyyy</var-value>
-    	    </var>
-		</field>
-		<field property="endOfProposalPeriodHour" depends="required,date" page="1">
-	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.end" resource="true"/>
-    	    <var>
-    	    	<var-name>datePattern</var-name>
-    	    	<var-value>HH:mm</var-value>
-    	    </var>
-		</field>
-	</form>
-	
-	<form name="finalDegreeWorkCandidacyPeriod">
-		<field property="startOfCandidacyPeriodDate" depends="required,date" page="1">
-	        <arg0 key="finalDegreeWorkCandidacy.setCandidacyPeriod.validator.start" resource="true"/>
-    	    <var>
-    	    	<var-name>datePattern</var-name>
-    	    	<var-value>dd/MM/yyyy</var-value>
-    	    </var>
-		</field>
-		<field property="startOfCandidacyPeriodHour" depends="required,date" page="1">
-	        <arg0 key="finalDegreeWorkCandidacy.setCandidacyPeriod.validator.start" resource="true"/>
-    	    <var>
-    	    	<var-name>datePattern</var-name>
-    	    	<var-value>HH:mm</var-value>
-    	    </var>
-		</field>
-		<field property="endOfCandidacyPeriodDate" depends="required,date" page="1">
-	        <arg0 key="finalDegreeWorkCandidacy.setCandidacyPeriod.validator.end" resource="true"/>
-    	    <var>
-    	    	<var-name>datePattern</var-name>
-    	    	<var-value>dd/MM/yyyy</var-value>
-    	    </var>
-		</field>
-		<field property="endOfCandidacyPeriodHour" depends="required,date" page="1">
-	        <arg0 key="finalDegreeWorkCandidacy.setCandidacyPeriod.validator.end" resource="true"/>
-    	    <var>
-    	    	<var-name>datePattern</var-name>
-    	    	<var-value>HH:mm</var-value>
-    	    </var>
-		</field>
-	</form>
-
 	<form name="finalDegreeWorkProposal">
 <!--		<field property="degree" depends="required,integer" page="1">-->
 <!--			<arg0 key="finalWorkInformationForm.degree" resource="true"/>-->
@@ -581,32 +380,6 @@
 			<arg0 key="finalWorkInformationForm.status" resource="true"/>
 		</field>
 	</form>
-
-	<form name="finalDegreeWorkCandidacyRequirements">
-		<field property="minimumNumberOfCompletedCourses" depends="integer" page="1">
-			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumNumberOfCompletedCourses" resource="true"/>
-		</field>
-		<field property="maximumCurricularYearToCountCompletedCourses" depends="integer" page="1">
-			<arg0 key="finalDegreeWorkCandidacy.requirements.maximumCurricularYearToCountCompletedCourses" resource="true"/>
-		</field>
-		<field property="minimumCompletedCurricularYear" depends="integer" page="1">
-			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumCompletedCurricularYear" resource="true"/>
-		</field>
-		<field property="minimumNumberOfStudents" depends="integer" page="1">
-			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumNumberOfStudents" resource="true"/>
-		</field>
-		<field property="maximumNumberOfStudents" depends="integer" page="1">
-			<arg0 key="finalDegreeWorkCandidacy.requirements.maximumNumberOfStudents" resource="true"/>
-		</field>
-		<field property="maximumNumberOfProposalCandidaciesPerGroup" depends="integer" page="1">
-			<arg0 key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalCandidaciesPerGroup" resource="true"/>
-		</field>
-		<field property="minimumCompletedCreditsSecondCycle" depends="integer" page="1">
-			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsSecondCycle" resource="true"/>
-		</field>
-	</form>
-
-
     </formset>
 </form-validation>
 

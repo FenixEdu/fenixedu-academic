@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -16,16 +36,15 @@
 	<body>
 		<logic:present name="LOGGED_USER_ATTRIBUTE">
 			<div class="mbottom2" style="font-size: 0.85em; margin-left: 3em;">
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: <bean:write name="person" property="name"/> </p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="person" property="student.number"/> </p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername"  bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="person" property="istUsername"/> </p>
-			</div>	
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: ${LOGGED_USER_ATTRIBUTE.person.name}</p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: ${LOGGED_USER_ATTRIBUTE.person.student.number} </p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername"  bundle="APPLICATION_RESOURCES"/> </strong>: ${LOGGED_USER_ATTRIBUTE.username} </p>
+			</div>
 
 		</logic:present>
 		
-		<bean:define id="infoLessons" name="infoLessons"/>
 		<div align="center">
-			<app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE %>" application="<%= request.getContextPath() %>"/>
+			<app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE %>" application="${pageContext.request.contextPath}"/>
 		</div> 
 		<logic:present name="tutor">
 			<div style="text-align: left">

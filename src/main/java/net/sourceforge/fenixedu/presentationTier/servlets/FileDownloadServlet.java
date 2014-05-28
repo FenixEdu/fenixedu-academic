@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.servlets;
 
 import java.io.IOException;
@@ -13,10 +31,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.servlets.startup.FenixInitializer.FenixCustomExceptionHandler;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
-import org.apache.commons.httpclient.HttpStatus;
+import org.fenixedu.bennu.core.filters.CasAuthenticationFilter;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.ist.fenixframework.DomainObject;
@@ -31,22 +48,11 @@ public class FileDownloadServlet extends HttpServlet {
 
     static final String SERVLET_PATH = "/downloadFile/";
 
-    private final FenixCustomExceptionHandler exceptionHandler = new FenixCustomExceptionHandler();
-
-    @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            super.service(request, response);
-        } catch (Throwable t) {
-            exceptionHandler.handle(request, response, t);
-        }
-    }
-
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
         final File file = getFileFromURL(request.getRequestURI());
         if (file == null) {
-            sendBadRequest(response);
+            request.getRequestDispatcher("/notFound.jsp").forward(request, response);
         } else {
             // Translate old paths (/downloadFile/<oid>) to the new ones (/downloadFile/<oid>/<filename>)
             if (request.getPathInfo().equals("/" + file.getExternalId())) {
@@ -62,29 +68,22 @@ public class FileDownloadServlet extends HttpServlet {
                     stream.write(content);
                     stream.flush();
                 }
-            } else if (file.isPrivate() && person == null) {
+            } else if (file.isPrivate() && person == null
+                    && request.getAttribute(CasAuthenticationFilter.AUTHENTICATION_EXCEPTION_KEY) == null) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.sendRedirect(sendLoginRedirect(request, file));
             } else {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_FORBIDDEN));
-                response.getWriter().close();
+                request.getRequestDispatcher("/unauthorized.jsp").forward(request, response);
             }
         }
     }
 
     private String sendLoginRedirect(final HttpServletRequest request, final File file) throws IOException {
-        final boolean isCasEnabled = CoreConfiguration.casConfig().isCasEnabled();
-        if (isCasEnabled) {
+        if (CoreConfiguration.casConfig().isCasEnabled()) {
             return CoreConfiguration.casConfig().getCasLoginUrl(URLEncoder.encode(file.getDownloadUrl(), Charsets.UTF_8.name()));
         }
         return FenixConfigurationManager.getConfiguration().getLoginPage() + "?service=" + request.getRequestURI();
-    }
-
-    private void sendBadRequest(final HttpServletResponse response) throws IOException {
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_BAD_REQUEST));
-        response.getWriter().close();
     }
 
     public final static File getFileFromURL(String url) {

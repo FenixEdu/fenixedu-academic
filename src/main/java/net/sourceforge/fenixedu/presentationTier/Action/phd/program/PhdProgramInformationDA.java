@@ -1,9 +1,27 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.program;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramInformation;
@@ -11,6 +29,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramInformationBean;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -20,7 +39,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdProgramInformation", module = "academicAdministration")
+@Mapping(path = "/phdProgramInformation", module = "academicAdministration", functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({
         @Forward(name = "listPhdPrograms", path = "/phd/academicAdminOffice/program/information/listPhdPrograms.jsp"),
         @Forward(name = "listPhdProgramInformations",
@@ -33,8 +52,7 @@ public class PhdProgramInformationDA extends FenixDispatchAction {
     public ActionForward listPhdPrograms(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        request.setAttribute("phdPrograms", AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_PHD_PROCESSES));
+        request.setAttribute("phdPrograms", AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES));
         return mapping.findForward("listPhdPrograms");
     }
 

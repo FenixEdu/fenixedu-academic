@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Author : Goncalo Luiz
  * Creation Date: Jul 4, 2006,3:26:38 PM
@@ -14,7 +32,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard.AnnouncementPresentationBean;
@@ -22,18 +39,22 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessLevel;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessType;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication.MessagingAnnouncementsApp;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -42,19 +63,17 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  *         Created on Jul 4, 2006,3:26:38 PM
  * 
  */
-@Mapping(module = "messaging", path = "/announcements/announcementsStartPageHandler", attribute = "announcementsStartPageForm",
-        formBean = "announcementsStartPageForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
+@StrutsFunctionality(app = MessagingAnnouncementsApp.class, path = "news", titleKey = "messaging.menu.news.link")
+@Mapping(module = "messaging", path = "/announcements/announcementsStartPageHandler",
+        formBeanClass = AnnouncementsStartPageForm.class)
+@Forwards({ @Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
         @Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
         @Forward(name = "boardListingWithCriteria", path = "/messaging/announcements/boardListingWithCriteria.jsp"),
-        @Forward(name = "news", path = "/messaging/announcements/news.jsp", tileProperties = @Tile(
-                title = "private.messaging.announcements.news")),
+        @Forward(name = "news", path = "/messaging/announcements/news.jsp"),
         @Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
         @Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
         @Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
-        @Forward(name = "startPage", path = "/messaging/announcements/startPage.jsp", tileProperties = @Tile(
-                title = "private.messaging.announcements.bookmarks")),
+        @Forward(name = "startPage", path = "/messaging/announcements/startPage.jsp"),
         @Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp"),
         @Forward(name = "listAnnouncementBoards", path = "/messaging/announcements/listAnnouncementBoards.jsp") })
 public class AnnouncementsStartPageHandler extends AnnouncementManagement {
@@ -62,6 +81,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
     private static final int RECENT_BOARDS_TO_SHOW = 40;
     private static final int PAGE_SIZE = 20;
 
+    @EntryPoint
     public ActionForward news(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -83,8 +103,20 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         return mapping.findForward("startPage");
     }
 
+    @StrutsFunctionality(app = MessagingAnnouncementsApp.class, path = "favourites", titleKey = "messaging.menu.favourites.link")
+    @Mapping(path = "/manageFavoriteBoards", module = "messaging")
+    public static class ManageFavoriteBoardsDA extends AnnouncementsStartPageHandler {
+        @Override
+        @EntryPoint
+        public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.start(mapping, actionForm, request, response);
+        }
+    }
+
     private List<AnnouncementBoard> getSortedBookmarkedBoards(final HttpServletRequest request) {
-        final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>(getLoggedPerson(request).getBookmarkedBoards());
+        final List<AnnouncementBoard> result =
+                new ArrayList<AnnouncementBoard>(getLoggedPerson(request).getBookmarkedBoardsSet());
         Collections.sort(result, AnnouncementBoard.BY_NAME);
         return result;
     }
@@ -103,16 +135,13 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         final DateTime startDate = getStartDate(request);
         int toShowCount = AnnouncementsStartPageHandler.RECENT_BOARDS_TO_SHOW;
 
-        for (final Content content : rootDomainObject.getContentsSet()) {
-            if (content.isAnAnnouncementBoard()) {
-                final AnnouncementBoard board = (AnnouncementBoard) content;
-                if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
-                    if (toShowCount == 0 || (startDate != null && board.getCreationDate().isBefore(startDate))) {
-                        break;
-                    }
-                    result.add(board);
-                    toShowCount--;
+        for (final AnnouncementBoard board : Bennu.getInstance().getAnnouncementBoardSet()) {
+            if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
+                if (toShowCount == 0 || (startDate != null && board.getCreationDate().isBefore(startDate))) {
+                    break;
                 }
+                result.add(board);
+                toShowCount--;
             }
         }
 
@@ -188,7 +217,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
     private void getBookmarkedAnnouncements(HttpServletRequest request,
             final AnnouncementPresentationBean announcementPresentationBean) {
-        for (final AnnouncementBoard board : getLoggedPerson(request).getBookmarkedBoards()) {
+        for (final AnnouncementBoard board : getLoggedPerson(request).getBookmarkedBoardsSet()) {
             addBoardAnnouncements(request, board, announcementPresentationBean);
         }
     }
@@ -247,20 +276,17 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
                 new TreeSet<ExecutionCourseAnnouncementBoard>(
                         ExecutionCourseAnnouncementBoard.COMPARE_BY_EXECUTION_PERIOD_AND_NAME);
 
-        for (final Content content : rootDomainObject.getContentsSet()) {
-            if (content.isAnAnnouncementBoard()) {
-                final AnnouncementBoard board = (AnnouncementBoard) content;
-                if (board.hasReaderOrWriter(getLoggedPerson(request))) {
-                    if (board instanceof UnitAnnouncementBoard) {
-                        unitAnnouncementBoards.add((UnitAnnouncementBoard) board);
+        for (final AnnouncementBoard board : Bennu.getInstance().getAnnouncementBoardSet()) {
+            if (board.hasReaderOrWriter(getLoggedPerson(request))) {
+                if (board instanceof UnitAnnouncementBoard) {
+                    unitAnnouncementBoards.add((UnitAnnouncementBoard) board);
 
-                    } else if (board instanceof ExecutionCourseAnnouncementBoard) {
-                        ExecutionCourseAnnouncementBoard executionCourseBoard = (ExecutionCourseAnnouncementBoard) board;
-                        if (executionCourseBoard.hasExecutionCourse()
-                                && executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState()
-                                        .equals(PeriodState.CURRENT)) {
-                            executionCourseAnnouncementBoards.add(executionCourseBoard);
-                        }
+                } else if (board instanceof ExecutionCourseAnnouncementBoard) {
+                    ExecutionCourseAnnouncementBoard executionCourseBoard = (ExecutionCourseAnnouncementBoard) board;
+                    if (executionCourseBoard.hasExecutionCourse()
+                            && executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState()
+                                    .equals(PeriodState.CURRENT)) {
+                        executionCourseAnnouncementBoards.add(executionCourseBoard);
                     }
                 }
             }
@@ -288,8 +314,8 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
             Collection<? extends AnnouncementBoard> announcementBoards, final AnnouncementBoardAccessLevel level,
             final AnnouncementBoardAccessType type) {
         announcementBoards =
-                CollectionUtils.select(announcementBoards, new AnnouncementBoard.AcessLevelPredicate(level,
-                        getLoggedPerson(request)));
+                CollectionUtils.select(announcementBoards,
+                        new AnnouncementBoard.AcessLevelPredicate(level, Authenticate.getUser()));
         announcementBoards =
                 CollectionUtils.select(announcementBoards, new AnnouncementBoard.AcessTypePredicate(type,
                         getLoggedPerson(request)));

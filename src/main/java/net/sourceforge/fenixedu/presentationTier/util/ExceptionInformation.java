@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.util;
 
 import java.io.PrintWriter;
@@ -19,7 +37,6 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -28,6 +45,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.domain.MenuFunctionality;
+import org.fenixedu.bennu.portal.servlet.BennuPortalDispatcher;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -189,7 +208,8 @@ public class ExceptionInformation {
         }
 
         private boolean isExternalClass(String className) {
-            return StringUtils.startsWith(className, "net.sourceforge.fenixedu") || StringUtils.startsWith(className, "pt.ist");
+            return StringUtils.startsWith(className, "net.sourceforge.fenixedu") || StringUtils.startsWith(className, "pt.ist")
+                    || StringUtils.startsWith(className, "org.fenixedu");
         }
 
         private String getSimpleClassName(String className) {
@@ -370,9 +390,9 @@ public class ExceptionInformation {
             user = userView.getUsername();
             exceptionInfo.append(userView.getUsername()).append("\n");
             requestBean = SupportRequestBean.generateExceptionBean(userView.getPerson());
-            if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
-                requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
-                        .getSelectedTopLevelContainer());
+            MenuFunctionality selectedFunctionality = BennuPortalDispatcher.getSelectedFunctionality(request);
+            if (selectedFunctionality != null) {
+                requestBean.setSelectedFunctionality(selectedFunctionality);
             }
             setUserName(user);
             Set<RoleType> roles = new HashSet<RoleType>();

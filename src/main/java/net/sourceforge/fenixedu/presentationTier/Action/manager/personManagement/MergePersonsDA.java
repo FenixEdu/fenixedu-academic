@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,6 +38,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPeopleApp;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -28,6 +47,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -38,6 +59,8 @@ import pt.ist.fenixframework.dml.DomainClass;
 import pt.ist.fenixframework.dml.Role;
 import pt.ist.fenixframework.dml.Slot;
 
+@StrutsFunctionality(app = ManagerPeopleApp.class, path = "merge-person", titleKey = "title.personManagement.merge",
+        accessGroup = "#managers")
 @Mapping(path = "/mergePersons", module = "manager")
 @Forwards({
         @Forward(name = "chooseObjectsToMerge", path = "/manager/personManagement/merge/chooseObjectsToMerge.jsp"),
@@ -49,6 +72,8 @@ import pt.ist.fenixframework.dml.Slot;
         @Forward(name = "transfer-registrations", path = "/manager/personManagement/merge/transferRegistrations.jsp"),
         @Forward(name = "transfer-events-and-accounts", path = "/manager/personManagement/merge/transferEventsAndAccounts.jsp") })
 public class MergePersonsDA extends FenixDispatchAction {
+
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         Person person = checkUser();
 

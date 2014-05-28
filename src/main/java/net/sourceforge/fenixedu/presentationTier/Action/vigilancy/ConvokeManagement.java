@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.text.MessageFormat;
@@ -26,11 +44,15 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategySugestion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.examCoordination.ExamCoordinationApplication;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -39,17 +61,18 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = ExamCoordinationApplication.class, path = "convoke-management",
+        titleKey = "label.vigilancy.convokeManagement")
 @Mapping(module = "examCoordination", path = "/vigilancy/convokeManagement",
-        input = "/vigilancy/convokeManagement?method=prepareEditConvoke", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "export-table", path = "export-table"),
-        @Forward(name = "prepareGenerateConvokes", path = "prepare-generate-convokes"),
-        @Forward(name = "sugestedConvokes", path = "list-sugested-Convokes"),
-        @Forward(name = "showReport", path = "show-Report"), @Forward(name = "confirmConvokes", path = "confirm-convokes"),
-        @Forward(name = "prepareEditConvoke", path = "prepare-attended-to-convoke"),
-        @Forward(name = "displayWhyUnavailable", path = "display-why-unavailable") })
+        input = "/vigilancy/convokeManagement?method=prepareEditConvoke")
+@Forwards(value = { @Forward(name = "export-table", path = "/examCoordinator/vigilancy/export-table.jsp"),
+        @Forward(name = "prepareGenerateConvokes", path = "/examCoordinator/vigilancy/generateConvokes.jsp"),
+        @Forward(name = "showReport", path = "/examCoordinator/vigilancy/showWrittenEvaluationReport.jsp"),
+        @Forward(name = "confirmConvokes", path = "/examCoordinator/vigilancy/confirmConvokes.jsp"),
+        @Forward(name = "prepareEditConvoke", path = "/examCoordinator/vigilancy/manageConvokes.jsp"),
+        @Forward(name = "displayWhyUnavailable", path = "/examCoordinator/vigilancy/displayWhyUnavailable.jsp") })
 public class ConvokeManagement extends FenixDispatchAction {
 
-    @SuppressWarnings("deprecation")
     public ActionForward showReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         RenderUtils.invalidateViewState();
@@ -61,6 +84,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         return mapping.findForward("showReport");
     }
 
+    @EntryPoint
     public ActionForward prepareEditConvoke(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         recoverBeanFromRequest(request);
@@ -340,7 +364,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 
     public ActionForward exportVigilancyTable(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
+        PortalLayoutInjector.skipLayoutOn(request);
         recoverBeanFromRequest(request);
         return mapping.findForward("export-table");
     }

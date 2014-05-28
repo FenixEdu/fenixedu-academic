@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on Nov 21, 2005
  *	by mrsp
@@ -15,6 +33,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
@@ -47,16 +66,15 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
@@ -503,8 +521,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getCampuss() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-        List<Campus> activeCampus = Campus.getAllActiveCampus();
-        for (Campus campus : activeCampus) {
+        Set<Space> activeCampus = Space.getAllCampus();
+        for (Space campus : activeCampus) {
             SelectItem selectItem = new SelectItem();
             selectItem.setLabel(campus.getName());
             selectItem.setValue(campus.getExternalId().toString());
@@ -593,7 +611,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         MultiLanguageString unitName =
-                new MultiLanguageString(Language.pt, this.getUnitName()).with(Language.en, this.getUnitNameEn());
+                new MultiLanguageString(MultiLanguageString.pt, this.getUnitName()).with(MultiLanguageString.en,
+                        this.getUnitNameEn());
 
         try {
             CreateUnit.run(null, unitName, this.getUnitNameCard(), this.getUnitCostCenter(), this.getUnitAcronym(),
@@ -627,8 +646,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         MultiLanguageString unitName = new MultiLanguageString();
-        unitName = unitName.with(Language.pt, this.getUnitName());
-        unitName = unitName.with(Language.en, this.getUnitNameEn());
+        unitName = unitName.with(MultiLanguageString.pt, this.getUnitName());
+        unitName = unitName.with(MultiLanguageString.en, this.getUnitNameEn());
 
         try {
             CreateUnit.run(this.getUnit(), unitName, this.getUnitNameCard(), this.getUnitCostCenter(), this.getUnitAcronym(),
@@ -653,8 +672,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         MultiLanguageString unitName = new MultiLanguageString();
-        unitName = unitName.with(Language.pt, this.getUnitName());
-        unitName = unitName.with(Language.en, this.getUnitNameEn());
+        unitName = unitName.with(MultiLanguageString.pt, this.getUnitName());
+        unitName = unitName.with(MultiLanguageString.en, this.getUnitNameEn());
 
         try {
             EditUnit.run(this.getChooseUnit().getExternalId(), unitName, this.getUnitNameCard(), this.getUnitCostCenter(),
@@ -734,8 +753,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         FunctionType type = getFunctionType();
 
         MultiLanguageString functionName = new MultiLanguageString();
-        functionName = functionName.with(Language.pt, this.getFunctionName());
-        functionName = functionName.with(Language.en, this.getFunctionNameEn());
+        functionName = functionName.with(MultiLanguageString.pt, this.getFunctionName());
+        functionName = functionName.with(MultiLanguageString.en, this.getFunctionNameEn());
 
         try {
             CreateFunction.run(functionName, datesResult.getBeginDate(), datesResult.getEndDate(), type, this.getUnit()
@@ -759,8 +778,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         FunctionType type = getFunctionType();
 
         MultiLanguageString functionName = new MultiLanguageString();
-        functionName = functionName.with(Language.pt, this.getFunctionName());
-        functionName = functionName.with(Language.en, this.getFunctionNameEn());
+        functionName = functionName.with(MultiLanguageString.pt, this.getFunctionName());
+        functionName = functionName.with(MultiLanguageString.en, this.getFunctionNameEn());
 
         try {
             EditFunction.run(this.getFunction().getExternalId(), functionName, datesResult.getBeginDate(),
@@ -1100,7 +1119,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getFunctionName() throws FenixServiceException {
         if (this.functionName == null && this.getFunction() != null) {
-            this.functionName = this.getFunction().getTypeName().getContent(Language.pt);
+            this.functionName = this.getFunction().getTypeName().getContent(MultiLanguageString.pt);
         }
         return functionName;
     }
@@ -1464,7 +1483,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getFunctionNameEn() throws FenixServiceException {
         if (this.functionNameEn == null && this.getFunction() != null) {
-            this.functionNameEn = this.getFunction().getTypeName().getContent(Language.en);
+            this.functionNameEn = this.getFunction().getTypeName().getContent(MultiLanguageString.en);
         }
         return functionNameEn;
     }
@@ -1475,7 +1494,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getUnitNameEn() throws FenixServiceException {
         if (this.unitNameEn == null && this.getChooseUnit() != null) {
-            this.unitNameEn = this.getChooseUnit().getPartyName().getContent(Language.en);
+            this.unitNameEn = this.getChooseUnit().getPartyName().getContent(MultiLanguageString.en);
         }
         return unitNameEn;
     }

@@ -1,5 +1,25 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
@@ -9,13 +29,13 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication$ScientificCurricularPlansManagement" />
 
-<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
-	<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['edit.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
@@ -36,7 +56,6 @@
 		<h:selectOneMenu id="curricularStage" disabled="#{DegreeCurricularPlanManagement.dcp.curricularStage == 'APPROVED' && !DegreeCurricularPlanManagement.dcp.canModify}" value="#{DegreeCurricularPlanManagement.curricularStage}" onchange="this.form.submit();">
 			<f:selectItems value="#{DegreeCurricularPlanManagement.curricularStages}" />
 		</h:selectOneMenu>
-		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		<h:message for="curricularStage" errorClass="error" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
 		
@@ -70,7 +89,7 @@
 		</h:panelGroup>
 		
 		<h:outputText value="<p class='mtop15'>" escape="false" />
-		<h:outputLink value="editCurricularPlanMembersGroup.faces">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/curricularPlans/editCurricularPlanMembersGroup.faces">
 			<h:outputText value="#{scouncilBundle['accessGroupManagement']}" />
 			<f:param name="dcpId" value="#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.externalId}"/>
 		</h:outputLink>
@@ -92,6 +111,6 @@
 		<h:outputText value="</p>" escape="false" />
 	</h:form>
 	
-</ft:tilesView>
+</f:view>
 
 

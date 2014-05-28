@@ -1,9 +1,28 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="com.google.common.base.Joiner"%>
 <%@page import="net.sourceforge.fenixedu.domain.Employee"%>
 <%@page import="net.sourceforge.fenixedu.domain.student.Student"%>
 <%@page import="org.fenixedu.bennu.core.domain.User"%>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -58,9 +77,9 @@ function check(e,v){
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.findPerson" /></h2>
 
-<logic:notPresent name="personListFinded">
+<logic:empty name="personListFinded">
 	<p><span class="errors"><bean:message bundle="MANAGER_RESOURCES" key="error.manager.implossible.findPerson" /></span></p>
-</logic:notPresent>
+</logic:empty>
 
 <logic:notEmpty name="personListFinded">
 	
@@ -175,7 +194,7 @@ function check(e,v){
 						</logic:present>					
 					</logic:present>									
 					   
-					<bean:define id="personSpaces" name="personalInfo" property="activePersonSpaces"></bean:define>
+					<%-- <bean:define id="personSpaces" name="personalInfo" property="activePersonSpaces"></bean:define>
 					<logic:notEmpty name="personSpaces">
 						<tr>
 							<td class="ppleft2"><bean:message key="label.person.rooms" bundle="APPLICATION_RESOURCES"/>:</td>	   						
@@ -189,7 +208,7 @@ function check(e,v){
 								</fr:view>
 							</td>																		
 						</tr>			
-					</logic:notEmpty>
+					</logic:notEmpty> --%>
 					
 					<logic:notEmpty name="personalInfo" property="teacher" >
 						<logic:notEmpty  name="personalInfo" property="teacher.currentCategory" >
@@ -222,13 +241,10 @@ function check(e,v){
                     </fr:view>
                     
 					<logic:equal name="personalInfo" property="homePageAvailable" value="true">
-						<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-						<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>				
-						<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="personalInfo" property="istUsername"/></bean:define>						
 						<tr>
 							<td class="ppleft2"><bean:message key="label.homepage" bundle="APPLICATION_RESOURCES"/></td>		            
 							<td class="ppright">	            	
-								<html:link href="<%= homepageURL %>" target="_blank"><bean:write name="homepageURL"/></html:link>
+								<html:link href="${personalInfo.homepage.fullPath}" target="_blank">${personalInfo.homepage.fullPath}</html:link>
 							</td>
 						</tr>
 					</logic:equal>					

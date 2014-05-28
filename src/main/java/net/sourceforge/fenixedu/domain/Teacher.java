@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
@@ -34,9 +52,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
-import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
@@ -52,7 +67,6 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.PublicationType;
 import net.sourceforge.fenixedu.util.State;
 
@@ -61,6 +75,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -120,34 +135,6 @@ public class Teacher extends Teacher_Base {
     /***************************************************************************
      * BUSINESS SERVICES *
      **************************************************************************/
-
-    public void addToTeacherInformationSheet(ResearchResult result, PublicationArea publicationArea) {
-        new ResultTeacher(result, this, publicationArea);
-    }
-
-    public void removeFromTeacherInformationSheet(ResearchResult result) {
-        for (ResultTeacher resultTeacher : getTeacherResults()) {
-            if (resultTeacher.getResult().equals(result)) {
-                resultTeacher.delete();
-                return;
-            }
-        }
-    }
-
-    public boolean canAddResultToTeacherInformationSheet(PublicationArea area) {
-        /* method based on canAddPublicationToTeacherInformationSheet */
-        int count = 0;
-        for (ResultTeacher resultTeacher : getTeacherResults()) {
-            if (resultTeacher.getPublicationArea().equals(area)) {
-                count++;
-            }
-        }
-        if (count < 5) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public List<Professorship> responsibleFors() {
         final List<Professorship> result = new ArrayList<Professorship>();
@@ -1286,7 +1273,7 @@ public class Teacher extends Teacher_Base {
         return RoleType.TEACHER;
     }
 
-    public boolean teachesAt(final Campus campus) {
+    public boolean teachesAt(final Space campus) {
         for (final Professorship professorship : getProfessorshipsSet()) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
             if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
@@ -1442,16 +1429,6 @@ public class Teacher extends Teacher_Base {
     @Deprecated
     public boolean hasAnyDegreeFinalProjectStudents() {
         return !getDegreeFinalProjectStudentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestGroup> getTestGroups() {
-        return getTestGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTestGroups() {
-        return !getTestGroupsSet().isEmpty();
     }
 
     @Deprecated
@@ -1625,16 +1602,6 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestModel> getTestModels() {
-        return getTestModelsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTestModels() {
-        return !getTestModelsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.OldPublication> getAssociatedOldPublications() {
         return getAssociatedOldPublicationsSet();
     }
@@ -1652,26 +1619,6 @@ public class Teacher extends Teacher_Base {
     @Deprecated
     public boolean hasAnyAppraiserExpectationEvaluationGroups() {
         return !getAppraiserExpectationEvaluationGroupsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher> getTSDRealTeachers() {
-        return getTSDRealTeachersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDRealTeachers() {
-        return !getTSDRealTeachersSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultTeacher> getTeacherResults() {
-        return getTeacherResultsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTeacherResults() {
-        return !getTeacherResultsSet().isEmpty();
     }
 
     @Deprecated

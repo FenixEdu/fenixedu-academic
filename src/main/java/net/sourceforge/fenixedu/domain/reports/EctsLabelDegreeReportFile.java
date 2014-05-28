@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.reports;
 
 import java.util.Iterator;
@@ -10,7 +28,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 
@@ -101,8 +119,8 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
         final Row row = spreadsheet.addRow();
         final Degree degree = degreeCurricularPlan.getDegree();
 
-        row.setCell(normalize(degree.getNameFor(executionYear).getContent(Language.pt)));
-        row.setCell(normalize(degree.getNameFor(executionYear).getContent(Language.en)));
+        row.setCell(normalize(degree.getNameFor(executionYear).getContent(MultiLanguageString.pt)));
+        row.setCell(normalize(degree.getNameFor(executionYear).getContent(MultiLanguageString.en)));
 
         row.setCell(degree.getDegreeType().getLocalizedName());
         row.setCell(degree.getDegreeType().getYears());
@@ -111,17 +129,17 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 
         final DegreeInfo degreeInfo = degree.getMostRecentDegreeInfo(executionYear);
         if (degreeInfo != null) {
-            row.setCell(normalize(degreeInfo.getDesignedFor(Language.pt)));
-            row.setCell(normalize(degreeInfo.getDesignedFor(Language.en)));
-            row.setCell(normalize(degreeInfo.getObjectives(Language.pt)));
-            row.setCell(normalize(degreeInfo.getObjectives(Language.en)));
-            row.setCell(normalize(degreeInfo.getProfessionalExits(Language.pt)));
-            row.setCell(normalize(degreeInfo.getProfessionalExits(Language.en)));
-            row.setCell(normalize(degreeInfo.getOperationalRegime(Language.pt)));
-            row.setCell(normalize(degreeInfo.getOperationalRegime(Language.en)));
+            row.setCell(normalize(degreeInfo.getDesignedFor(MultiLanguageString.pt)));
+            row.setCell(normalize(degreeInfo.getDesignedFor(MultiLanguageString.en)));
+            row.setCell(normalize(degreeInfo.getObjectives(MultiLanguageString.pt)));
+            row.setCell(normalize(degreeInfo.getObjectives(MultiLanguageString.en)));
+            row.setCell(normalize(degreeInfo.getProfessionalExits(MultiLanguageString.pt)));
+            row.setCell(normalize(degreeInfo.getProfessionalExits(MultiLanguageString.en)));
+            row.setCell(normalize(degreeInfo.getOperationalRegime(MultiLanguageString.pt)));
+            row.setCell(normalize(degreeInfo.getOperationalRegime(MultiLanguageString.en)));
             row.setCell(normalize(getResponsibleCoordinatorNames(degreeCurricularPlan, executionYear)));
-            row.setCell(normalize(degreeInfo.getAdditionalInfo(Language.pt)));
-            row.setCell(normalize(degreeInfo.getAdditionalInfo(Language.en)));
+            row.setCell(normalize(degreeInfo.getAdditionalInfo(MultiLanguageString.pt)));
+            row.setCell(normalize(degreeInfo.getAdditionalInfo(MultiLanguageString.en)));
         }
     }
 

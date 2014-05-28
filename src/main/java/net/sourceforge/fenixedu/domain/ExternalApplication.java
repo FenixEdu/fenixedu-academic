@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.io.ByteArrayInputStream;
@@ -9,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -21,6 +38,7 @@ import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
+import com.google.common.io.ByteStreams;
 
 public class ExternalApplication extends ExternalApplication_Base {
 
@@ -88,19 +106,18 @@ public class ExternalApplication extends ExternalApplication_Base {
     public InputStream getLogoStream() {
         return null;
     }
-    
+
     public String getAuthorNameForUserDialog() {
-    	String name = getAuthorName();
+        String name = getAuthorName();
         if (!StringUtils.isBlank(name)) {
             return name;
         } else {
             return getAuthor().getPerson().getNickname();
         }
     }
-    
-    
+
     public String getAuthorAppName() {
-    	String name = getAuthorName();
+        String name = getAuthorName();
         if (!StringUtils.isBlank(name)) {
             return name;
         } else {
@@ -111,7 +128,7 @@ public class ExternalApplication extends ExternalApplication_Base {
     public void setLogoStream(InputStream stream) {
         try {
             if (stream != null) {
-                byte[] byteArray = IOUtils.toByteArray(stream);
+                byte[] byteArray = ByteStreams.toByteArray(stream);
                 if (byteArray.length > 0) {
                     setLogo(byteArray);
                 }

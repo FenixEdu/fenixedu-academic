@@ -1,4 +1,22 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
@@ -25,6 +43,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer {
 
@@ -148,9 +167,7 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
         }
         inlineContainer.addChild(new HtmlText(")</span> ", false));
 
-        HtmlLink ucPublicPageLink =
-                new HtmlLinkWithPreprendedComment(
-                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+        HtmlLink ucPublicPageLink = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
         ucPublicPageLink.setUrl(executionCourse.getSite().getReversePath());
         ucPublicPageLink.setText("Site");
         ucPublicPageLink.setModule("");

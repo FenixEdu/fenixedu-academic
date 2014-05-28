@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * @(#)RequestUtils.java Created on Oct 24, 2004
  * 
@@ -20,7 +38,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
@@ -28,8 +45,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
-
-import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -39,8 +54,6 @@ import pt.ist.fenixframework.Atomic;
  * 
  */
 public class RequestUtils {
-
-    private static final boolean STORE_PENDING_REQUEST = FenixConfigurationManager.getConfiguration().getStorePendingRequest();
 
     public static String getAndSetStringToRequest(HttpServletRequest request, String name) {
         String parameter = request.getParameter(name);
@@ -117,51 +130,9 @@ public class RequestUtils {
         return curricularYears;
     }
 
-    /**
-     * Redirects the user to the login page saving the request state. This can
-     * be used to force the user to login before a certain request is fulfilled.
-     * 
-     * @param request
-     *            the current request
-     * @param response
-     *            the reponse were the redirect will be sent
-     * 
-     * @throws IOException
-     *             when it's not possible to send the redirect to the client
-     */
     public static void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         request.getSession(true);
-
-        final PendingRequest pendingRequest = STORE_PENDING_REQUEST ? storeRequest(request) : null;
-        response.sendRedirect(generateRedirectLink(FenixConfigurationManager.getConfiguration().getLoginPage(), pendingRequest));
-    }
-
-    public static String generateRedirectLink(String url, PendingRequest pendingRequest) {
-        return generateRedirectLink(url, pendingRequest == null ? null : pendingRequest.getExternalId());
-    }
-
-    public static String generateRedirectLink(String url, String externalId) {
-        if (externalId == null || externalId.length() == 0 || externalId.equals("null")) {
-            return url;
-        }
-        String param = "pendingRequest=" + externalId;
-        if (url.contains("?")) {
-            if (url.contains("&")) {
-                return url + "&" + param;
-            } else if (url.charAt(url.length() - 1) != '?') {
-                return url + "&" + param;
-            } else {
-                return url + param;
-            }
-        } else {
-            return url + "?" + param;
-        }
-    }
-
-    @Atomic
-    public static PendingRequest storeRequest(HttpServletRequest request) {
-        return new PendingRequest(request);
+        response.sendRedirect(FenixConfigurationManager.getConfiguration().getLoginPage());
     }
 
 }

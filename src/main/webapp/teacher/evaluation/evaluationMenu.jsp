@@ -1,53 +1,93 @@
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
-<%@page import="pt.ist.fenixframework.FenixFramework"%>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<html:xhtml/>
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 
-<ul>
-	<logic:present name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>
-	</logic:present>
-	<logic:notPresent name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourseID" type="java.lang.String"/>
-		<%
-			final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
-			request.setAttribute("executionCourse", executionCourse);
-		%>
-	</logic:notPresent>
-	
-	<bean:define id="professorship" name="executionCourse" property="professorshipForCurrentUser"/>
-	<bean:define id="professorshipPermissions" name="professorship" property="permissions"/>
-	
-	
-	<li><html:link action="/teacherAdministrationViewer.do?method=instructions" paramId="objectCode" paramName="executionCourseID"><bean:message key="label.back"/></html:link></li>
+<c:set var="base" value="${pageContext.request.contextPath}/teacher" />
+<c:set var="professorship" value="${executionCourse.professorshipForCurrentUser}" />
 
-	<li class="navheader"><bean:message key="link.evaluation"/></li>
-	
-	<logic:equal name="professorshipPermissions" property="evaluationSpecific" value="true">
-	<li><html:link page="/evaluation/adHocEvaluationIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.adHocEvaluations"/></html:link></li>
-	</logic:equal>
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA" />
 
-	<logic:equal name="professorshipPermissions" property="evaluationWorksheets" value="true">	
-	<li><html:link page="/evaluation/onlineTestsIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.onlineTests"/></html:link></li>
-	</logic:equal>
-	
-	<logic:equal name="professorshipPermissions" property="evaluationProject" value="true">
-	<li><html:link page="/evaluation/projectsIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.projects"/></html:link></li>
-	</logic:equal>
-	
-	<logic:equal name="professorshipPermissions" property="evaluationTests" value="true">
-	<li><html:link page="/evaluation/writtenTestsIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.writtenTests"/></html:link></li>
-	</logic:equal>
-	
-	<logic:equal name="professorshipPermissions" property="evaluationExams" value="true">
-	<li><html:link page="/evaluation/examsIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.exams"/></html:link></li>
-	</logic:equal>
-	
-	<logic:present role="role(TEACHER)">
-		<logic:equal name="professorshipPermissions" property="evaluationFinal" value="true">
-		<li><html:link page="/evaluation/finalEvaluationIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.finalEvaluation"/></html:link><br/></li>
-		</logic:equal>
-	</logic:present>
-</ul>
+<div class="row">
+	<nav class="col-lg-2" id="context">
+		<ul class="nav nav-pills nav-stacked">
+			<li>
+				<a href="${base}/manageExecutionCourse.do?method=instructions&executionCourseID=${executionCourse.externalId}">
+					<bean:message key="label.back"/>
+				</a>
+			</li>
+		</ul>
+		<ul class="nav nav-pills nav-stacked">
+			<li class="navheader">
+				<strong><bean:message key="link.evaluation"/></strong>
+			</li>
+			<c:if test="${professorship.permissions.evaluationSpecific}">
+				<li>
+					<a href="${base}/evaluation/adHocEvaluationIndex.faces?executionCourseID=${executionCourse.externalId}">
+						<bean:message key="link.adHocEvaluations"/>
+					</a>
+				</li>
+			</c:if>
+			<c:if test="${professorship.permissions.evaluationWorksheets}">
+				<li>
+					<a href="${base}/evaluation/onlineTestsIndex.faces?executionCourseID=${executionCourse.externalId}">
+						<bean:message key="link.onlineTests"/>
+					</a>
+				</li>
+			</c:if>
+			<c:if test="${professorship.permissions.evaluationProject}">
+				<li>
+					<a href="${base}/evaluation/projectsIndex.faces?executionCourseID=${executionCourse.externalId}">
+						<bean:message key="link.projects"/>
+					</a>
+				</li>
+			</c:if>
+			<c:if test="${professorship.permissions.evaluationTests}">
+				<li>
+					<a href="${base}/evaluation/writtenTestsIndex.faces?executionCourseID=${executionCourse.externalId}">
+						<bean:message key="link.writtenTests"/>
+					</a>
+				</li>
+			</c:if>
+			<c:if test="${professorship.permissions.evaluationExams}">
+				<li>
+					<a href="${base}/evaluation/examsIndex.faces?executionCourseID=${executionCourse.externalId}">
+						<bean:message key="link.exams"/>
+					</a>
+				</li>
+			</c:if>
+
+			<c:if test="${professorship.permissions.evaluationFinal}">
+				<li>
+					<a href="${base}/evaluation/finalEvaluationIndex.faces?executionCourseID=${executionCourse.externalId}">
+						<bean:message key="link.finalEvaluation"/>
+					</a>
+				</li>
+			</c:if>
+		</ul>
+	</nav>
+	<main class="col-lg-10">
+		<ol class="breadcrumb">
+			<em>${executionCourse.name} - ${executionCourse.executionPeriod.qualifiedName}
+				(<c:forEach var="degree" items="${executionCourse.degreesSortedByDegreeName}"> ${degree.sigla} </c:forEach>)
+			</em>
+		</ol>

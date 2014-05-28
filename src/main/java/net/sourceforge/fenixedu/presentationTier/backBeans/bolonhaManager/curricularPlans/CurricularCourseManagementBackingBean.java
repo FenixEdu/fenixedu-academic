@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on Dec 7, 2005
  */
@@ -31,6 +49,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -43,8 +62,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
@@ -106,7 +125,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getDegreeCurricularPlanID() {
-        CoordinatedDegreeInfo.setCoordinatorContext(getRequest());
+        DegreeCoordinatorIndex.setCoordinatorContext(getRequest());
         return getAndHoldStringParameter("degreeCurricularPlanID");
     }
 
@@ -688,7 +707,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
             if (department.getCompetenceCourseMembersGroup() != null
-                    && department.getCompetenceCourseMembersGroup().isMember(getUserView().getPerson())) {
+                    && department.getCompetenceCourseMembersGroup().isMember(getUserView())) {
                 DepartmentUnit departmentUnit = department.getDepartmentUnit();
                 result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
             }
@@ -776,6 +795,25 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return getDegreeCurricularPlan().getDegree();
     }
 
+    public Degree getDegreeAndSelectSite() {
+        Degree degree = getDegreeCurricularPlan().getDegree();
+        if (degree != null) {
+            OldCmsSemanticURLHandler.selectSite(getRequest(), degree.getSite());
+        }
+        return degree;
+    }
+
+    public DepartmentUnit getDepartmentAndSelectSite() {
+        DepartmentUnit department = getDepartmentUnit();
+        if (department == null) {
+            department = FenixFramework.getDomainObject(getAndHoldStringParameter("selectedDepartmentUnitID"));
+        }
+        if (department != null) {
+            OldCmsSemanticURLHandler.selectSite(getRequest(), department.getSite());
+        }
+        return department;
+    }
+
     public String getDegreePresentationName() {
         return getDegree().getPresentationName(getExecutionYear());
     }
@@ -792,4 +830,5 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return getEndExecutionPeriodID() == null ? null : FenixFramework
                 .<ExecutionSemester> getDomainObject(getEndExecutionPeriodID());
     }
+
 }

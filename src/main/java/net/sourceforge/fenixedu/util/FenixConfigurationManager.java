@@ -1,8 +1,25 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.util;
 
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.configuration.ConfigurationInvocationHandler;
 import org.fenixedu.commons.configuration.ConfigurationManager;
 import org.fenixedu.commons.configuration.ConfigurationProperty;
@@ -10,11 +27,6 @@ import org.fenixedu.commons.configuration.ConfigurationProperty;
 public class FenixConfigurationManager {
     @ConfigurationManager(description = "General Fenix Configuration")
     public interface ConfigurationProperties {
-        @ConfigurationProperty(
-                key = "app.context",
-                description = "Must be changed to match tomcat context. If you're app is running in http://localhost:8080/xpto, app.context must be xpto.",
-                defaultValue = "fenix")
-        public String appContext();
 
         @ConfigurationProperty(key = "app.institution.AES128.secretKey",
                 description = "Secret for Institution ID card generation", defaultValue = "aa0bbfaf79654df4")
@@ -51,18 +63,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "consult.roles.admin.password", defaultValue = "xPtO")
         public String getConsultRolesAdminPassword();
 
-        @ConfigurationProperty(key = "context.filter.exceptions", defaultValue = "/bennu,/bankai,/theme")
-        public String getContextFilterExceptions();
-
-        @ConfigurationProperty(key = "dspace.password")
-        public String getDspacePassword();
-
-        @ConfigurationProperty(key = "dspace.serverUrl", defaultValue = "https://localhost:8443/dspace")
-        public String getDspaceServerUrl();
-
-        @ConfigurationProperty(key = "dspace.username")
-        public String getDspaceUsername();
-
         @ConfigurationProperty(
                 key = "email.admin.allowed.hosts",
                 description = "comma seperated values of hosts and/or ip addresses that are allowed to call external email administration",
@@ -72,12 +72,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "email.admin.password",
                 description = "password required to call external email administration", defaultValue = "xPtO!)&#.")
         public String getEmailAdminPassword();
-
-        @ConfigurationProperty(key = "exportParkingData.password")
-        public String getExportParkingDataPassword();
-
-        @ConfigurationProperty(key = "exportParkingData.username")
-        public String getExportParkingDataUsername();
 
         @ConfigurationProperty(key = "externalServices.AEIST.password")
         public String getExternalServicesAEISTPassword();
@@ -112,22 +106,17 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "fenix.api.canteen.secret", defaultValue = "")
         public String getFenixApiCanteenSecret();
 
-        @ConfigurationProperty(key = "file.download.url.local.content",
-                defaultValue = "http://localhost:8080/fenix/downloadFile/")
-        public String getFileDownloadUrlLocalContent();
-
-        @ConfigurationProperty(
-                key = "generic.application.email.confirmation.link",
-                defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=confirmEmail&contentContextPath_PATH=/candidaturas&confirmationCode=")
+        @ConfigurationProperty(key = "generic.application.email.confirmation.link",
+                defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=confirmEmail&confirmationCode=")
         public String getGenericApplicationEmailConfirmationLink();
 
         @ConfigurationProperty(
                 key = "generic.application.email.recommendation.link",
-                defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=uploadRecommendation&contentContextPath_PATH=/candidaturas&confirmationCode=")
+                defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=uploadRecommendation&confirmationCode=")
         public String getGenericApplicationEmailRecommendationLink();
 
         @ConfigurationProperty(key = "google.analytics.snippet",
-                description = "Google Analytics snippet configuration (without <script> tags)")
+                description = "Google Analytics snippet configuration (without <script> tags)", defaultValue = "")
         public String getGoogleAnalyticsSnippet();
 
         @ConfigurationProperty(
@@ -141,45 +130,16 @@ public class FenixConfigurationManager {
                 description = "Comma separated hostname values that are allowed to access the url host.control.name. See HostAccessControl.isAllowed(name, request)")
         public Map<String, String> getHostControlName();
 
-        @ConfigurationProperty(
-                key = "http.host",
-                description = "Twillio host where the application will run. This is used by twilio so it can connect back to fenix",
-                defaultValue = "localhost")
-        public String getHTTPHost();
-
-        @ConfigurationProperty(key = "http.port", description = "Twillio port on which the application will be available",
-                defaultValue = "8080")
-        public String getHTTPPort();
-
-        @ConfigurationProperty(key = "http.protocol",
-                description = "Twillio http or https protocol where the application will run", defaultValue = "http")
-        public String getHTTPProtocol();
-
         @ConfigurationProperty(key = "index.page.redirect",
                 description = "host specific initial page to be displayed from applications root",
                 defaultValue = "fenixEduIndex.do")
         public String getIndexPageRedirect();
-
-        @ConfigurationProperty(key = "jersey.password")
-        public String getJerseyPassword();
-
-        @ConfigurationProperty(key = "jersey.username")
-        public String getJerseyUsername();
 
         @ConfigurationProperty(key = "lastSemesterForCredits")
         public String getLastSemesterForCredits();
 
         @ConfigurationProperty(key = "lastYearForCredits", defaultValue = "2010/2011")
         public String getLastYearForCredits();
-
-        @ConfigurationProperty(key = "ldap.user.importation.service.password")
-        public String getLdapUserImportationServicePassword();
-
-        @ConfigurationProperty(key = "ldap.user.importation.service.url")
-        public String getLdapUserImportationServiceUrl();
-
-        @ConfigurationProperty(key = "ldap.user.importation.service.username")
-        public String getLdapUserImportationServiceUsername();
 
         @ConfigurationProperty(key = "login.page", description = "absolute path to the login page",
                 defaultValue = "http://localhost:8080/fenix/privado")
@@ -191,10 +151,10 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "mailSender.max.recipients", defaultValue = "50")
         public String getMailSenderMaxRecipients();
 
-        @ConfigurationProperty(key = "mail.smtp.host", description = "Cms Configuration")
+        @ConfigurationProperty(key = "mail.smtp.host", description = "The host of the SMTP server used to send Emails")
         public String getMailSmtpHost();
 
-        @ConfigurationProperty(key = "mail.smtp.name", description = "Cms Configuration")
+        @ConfigurationProperty(key = "mail.smtp.name", description = "The name of the SMTP server used to send Emails")
         public String getMailSmtpName();
 
         @ConfigurationProperty(key = "markSheet.printers.*")
@@ -209,9 +169,6 @@ public class FenixConfigurationManager {
 
         @ConfigurationProperty(key = "nameresolution.password")
         public String getNameResolutionPassword();
-
-        @ConfigurationProperty(key = "parkingCardId.admin.password")
-        public String getParkingCardIdAdminPassword();
 
         @ConfigurationProperty(key = "phd.public.candidacy.submission.link")
         public String getPhdPublicCandidacySubmissionLink();
@@ -270,18 +227,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "startYearForCredits", defaultValue = "2002/2003")
         public String getStartYearForCredits();
 
-        @ConfigurationProperty(
-                key = "store.pending.request",
-                description = "indicates if pending request should be stored in database to recover current session after new login",
-                defaultValue = "true")
-        public Boolean getStorePendingRequest();
-
-        @ConfigurationProperty(key = "tsdProcess.chart.height", defaultValue = "480")
-        public String getTSDProcessChartHeight();
-
-        @ConfigurationProperty(key = "tsdProcess.chart.width", defaultValue = "640")
-        public String getTSDProcessChartWidth();
-
         @ConfigurationProperty(key = "twilio.from.number")
         public String getTwilioFromNumber();
 
@@ -290,36 +235,6 @@ public class FenixConfigurationManager {
 
         @ConfigurationProperty(key = "twilio.stoken")
         public String getTwilioStoken();
-
-        @ConfigurationProperty(key = "webServices.LibraryManagement.password")
-        public String getWebServicesLibraryManagementPassword();
-
-        @ConfigurationProperty(key = "webServices.LibraryManagement.username")
-        public String getWebServicesLibraryManagementUsername();
-
-        @ConfigurationProperty(key = "webServices.PaymentManagement.password")
-        public String getWebServicesPaymentManagementPassword();
-
-        @ConfigurationProperty(key = "webServices.PaymentManagement.username")
-        public String getWebServicesPaymentManagementUsername();
-
-        @ConfigurationProperty(key = "webServices.PersonInformation.getPersonInformation.password")
-        public String getWebServicesPersonInformationGetPersonInformationPassword();
-
-        @ConfigurationProperty(key = "webServices.PersonInformation.getPersonInformation.username")
-        public String getWebServicesPersonInformationGetPersonInformationUsername();
-
-        @ConfigurationProperty(key = "webServices.PersonManagement.getPersonInformation.password")
-        public String getWebServicesPersonManagementgetPersonInformationPassword();
-
-        @ConfigurationProperty(key = "webServices.PersonManagement.getPersonInformation.password")
-        public String getWebServicesPersonManagementGetPersonInformationPassword();
-
-        @ConfigurationProperty(key = "webServices.PersonManagement.getPersonInformation.username")
-        public String getWebServicesPersonManagementgetPersonInformationUsername();
-
-        @ConfigurationProperty(key = "webServices.PersonManagement.getPersonInformation.username")
-        public String getWebServicesPersonManagementGetPersonInformationUsername();
 
         @ConfigurationProperty(key = "webServices.internationalRegistration.username")
         public String getWebServicesInternationalRegistrationUsername();
@@ -338,23 +253,6 @@ public class FenixConfigurationManager {
                 defaultValue = "2005/2006")
         public String getYearForFromMarkSheetManagment();
 
-        @ConfigurationProperty(key = "scaleRatio", defaultValue = "1200")
-        public String scaleRatio();
-
-        @ConfigurationProperty(key = "fontSize", defaultValue = "0.007")
-        public String fontSize();
-
-        @ConfigurationProperty(key = "padding", defaultValue = "0.025")
-        public String padding();
-
-        @ConfigurationProperty(key = "xAxisOffset", defaultValue = "0.075")
-        public String xAxisOffset();
-
-        @ConfigurationProperty(key = "yAxisOffset", defaultValue = "0.3")
-        public String yAxisOffset();
-
-        @ConfigurationProperty(key = "sotisURL", defaultValue = "../../sotis")
-        public String sotisURL();
     }
 
     private static HostAccessControl hostAccessControl = new HostAccessControl(getConfiguration().getHostControlName());
@@ -385,26 +283,4 @@ public class FenixConfigurationManager {
         barraAsAuthenticationBroker = state;
     }
 
-    /**
-     * The absolute URL for the Fenix instalation.
-     * It ends with the defined appContext without slash at the end.
-     * 
-     */
-    public static String getFenixUrl() {
-        final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        final String httpPort = FenixConfigurationManager.getConfiguration().getHTTPPort();
-        final String httpProtocol = FenixConfigurationManager.getConfiguration().getHTTPProtocol();
-        String HOST = null;
-        if (StringUtils.isEmpty(httpPort)) {
-            HOST = String.format("%s://%s/", httpProtocol, appName);
-        } else {
-            HOST = String.format("%s://%s:%s/", httpProtocol, appName, httpPort);
-        }
-        if (!StringUtils.isEmpty(appContext)) {
-            HOST += appContext;
-        }
-        HOST = StringUtils.removeEnd(HOST, "/");
-        return HOST;
-    }
 }

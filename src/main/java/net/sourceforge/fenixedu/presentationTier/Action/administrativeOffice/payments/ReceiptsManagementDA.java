@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments;
 
 import java.io.IOException;
@@ -15,7 +33,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.accounting.EditReceipt;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.RegisterReceiptPrint;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
@@ -25,6 +43,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.docs.accounting.ReceiptDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -40,14 +59,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/receipts", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/receipts", module = "academicAdministration", formBeanClass = FenixActionForm.class,
+        functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showReceipts", path = "/academicAdminOffice/payments/receipts/showReceipts.jsp"),
         @Forward(name = "showReceipt", path = "/academicAdminOffice/payments/receipts/showReceipt.jsp"),
         @Forward(name = "showPaymentsWithoutReceipt",
                 path = "/academicAdminOffice/payments/receipts/showPaymentsWithoutReceipt.jsp"),
         @Forward(name = "confirmCreateReceipt", path = "/academicAdminOffice/payments/receipts/confirmCreateReceipt.jsp"),
-        @Forward(name = "showOperations", path = "/payments.do?method=showOperations"),
+        @Forward(name = "showOperations", path = "/academicAdministration/payments.do?method=showOperations"),
         @Forward(name = "editReceipt", path = "/academicAdminOffice/payments/receipts/editReceipt.jsp") })
 public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
 
@@ -354,8 +374,7 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
     }
 
     protected Set<AdministrativeOffice> getAdministrativeOffices() {
-        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_STUDENT_PAYMENTS);
+        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_STUDENT_PAYMENTS);
     }
 
 }

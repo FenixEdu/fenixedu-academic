@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -61,9 +81,9 @@
 	<logic:iterate id="memberRules" name="groups">
 		<bean:define id="partyOid" name="memberRules" property="key.externalId" />
 		<div class="edit-authorizations">
-			<div id="period" class="authorization period  ui-droppable">
+			<div id="period" class="authorization period  ui-droppable ${memberRules.key.unit ? 'unit' : 'person'}">
 				<header id="header">
-					<h2>
+					<h4>
 						<logic:equal name="memberRules" property="key.person" value="true">
 							<bean:message bundle="APPLICATION_RESOURCES" key="person" />:
 							<bean:write name="memberRules" property="key.name" /> -
@@ -73,14 +93,14 @@
 							<bean:message bundle="APPLICATION_RESOURCES" key="label.party" />:
 							<bean:write name="memberRules" property="key.name" />
 						</logic:equal>
-					</h2>
+					</h4>
 					<html:link action="/authorizations.do?method=managePartyAuthorization" paramId="partyId" paramName="memberRules"
 							paramProperty="key.externalId" styleClass="edit-auth">
-						<img src="../images/iconEditOff.png" />
+						<img src="${pageContext.request.contextPath}/images/iconEditOff.png" />
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.academicAdministration.authorizations.manage" />
 					</html:link>
 				</header>
-				<ul style="display: none">
+				<ul style="display: none" class="small">
 					<logic:iterate id="rule" name="memberRules" property="value">
 						<li>Pode <strong><bean:write name="rule" property="operation.localizedName" /></strong>
 							<logic:notEmpty	name="rule" property="office"> para os cursos geridos pelas secretarias:

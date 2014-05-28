@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on Nov 7, 2005
  *  by jdnf
@@ -18,8 +36,8 @@ import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -326,7 +344,7 @@ public class Project extends Project_Base {
                 .getProjectBeginDateTime(), this.getProjectBeginDateTime().plusHours(1), false, null, null,
                 this.getDescription(), Collections.singleton(executionCourse)));
         if (this.getOnlineSubmissionsAllowed()) {
-            String url = FenixConfigurationManager.getFenixUrl() + "/privado";
+            String url = CoreConfiguration.getConfiguration().applicationUrl() + "/privado";
             result.add(new EvaluationEventBean("Fim " + this.getName() + " : " + executionCourse.getNome(), this
                     .getProjectEndDateTime().minusHours(1), this.getProjectEndDateTime(), false, null, url,
                     this.getDescription(), Collections.singleton(executionCourse)));

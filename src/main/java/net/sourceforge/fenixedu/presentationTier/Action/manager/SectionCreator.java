@@ -1,11 +1,31 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class SectionCreator implements Serializable {
@@ -18,7 +38,7 @@ public class SectionCreator implements Serializable {
 
     private Section nextSection;
 
-    private Site site;
+    private final Site site;
 
     private Section superiorSection;
 
@@ -31,11 +51,11 @@ public class SectionCreator implements Serializable {
         this.superiorSection = null;
         this.nextSection = null;
         this.visible = true;
-        this.permittedGroup = new EveryoneGroup();
+        this.permittedGroup = AnyoneGroup.get();
     }
 
     public SectionCreator(Section section) {
-        this(section.getSite());
+        this(section.getOwnerSite());
 
         setSuperiorSection(section);
     }
@@ -85,10 +105,9 @@ public class SectionCreator implements Serializable {
     }
 
     public void createSection() {
-        Section section = new Section((getSuperiorSection() == null) ? getSite() : getSuperiorSection(), getName());
+        Section section = superiorSection == null ? new Section(site, getName()) : new Section(getSuperiorSection(), getName());
         section.setNextSection(getNextSection());
         section.setPermittedGroup(getPermittedGroup());
         section.setVisible(getVisible());
-        site.logCreateSection(section);
     }
 }

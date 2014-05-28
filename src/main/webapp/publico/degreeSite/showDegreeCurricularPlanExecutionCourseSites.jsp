@@ -1,14 +1,34 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
-<bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %></bean:define>
+<bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %></bean:define>
 <div class="breadcumbs mvert0">
 	<a href="<%= institutionUrl %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>
-	<bean:define id="institutionUrlTeaching" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
+	<bean:define id="institutionUrlTeaching" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
 	&nbsp;&gt;&nbsp;
 	<a href="<%=institutionUrlTeaching%>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/></a>
 	<logic:present name="infoDegree">
@@ -63,13 +83,13 @@
 	<!-- TOP LINKS -->
 	<logic:equal value="true" name="renderCurrentExecutionPeriod">
 		<logic:equal value="true" name="renderPreviousExecutionPeriod">
-			<li><!-- NO_CHECKSUM --><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="#currentSem">
+			<li><!-- NO_CHECKSUM --><a href="#currentSem">
 					<bean:write name="execution_period" property="infoExecutionYear.year" />,
 					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr" />
 					<bean:write name="execution_period" property="semester"/>
 				</a>
 			</li>
-			<li><!-- NO_CHECKSUM --><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="#otherSem">
+			<li><!-- NO_CHECKSUM --><a href="#otherSem">
 					<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />,
 					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr" />
 					<bean:write name="previousInfoExecutionPeriod" property="semester"/>
@@ -100,9 +120,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTableCurrent1_2" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">										
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>				
+						</a>				
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -124,9 +144,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTableCurrent3_4" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
+						</a>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -146,9 +166,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTableCurrent5" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" colspan="2">
 					<logic:notEmpty name="executionCourseView">
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
+						</a>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -181,9 +201,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTablePrevious1_2" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
+						</a>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -204,9 +224,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTablePrevious3_4" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
+						</a>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -226,9 +246,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTablePrevious5" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" colspan="2">
 					<logic:notEmpty name="executionCourseView">
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
+						</a>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>

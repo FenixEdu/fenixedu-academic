@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Collections;
@@ -60,13 +78,13 @@ public abstract class QueueJob extends QueueJob_Base {
 
     public static List<QueueJob> getAllJobsForClassOrSubClass(final Class<? extends QueueJob> type, int maxSize,
             Comparator<QueueJob> comparator) {
-        List<QueueJob> jobs = Lists.newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobSet(), type));
+        List<QueueJob> jobs = Lists.<QueueJob> newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobSet(), type));
         Collections.sort(jobs, comparator);
         return jobs.size() > maxSize ? jobs.subList(0, maxSize) : jobs;
     }
 
     public static List<QueueJob> getUndoneJobsForClass(final Class<? extends QueueJob> type) {
-        return Lists.newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobUndoneSet(), type));
+        return Lists.<QueueJob> newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobUndoneSet(), type));
     }
 
     public Priority getPriority() {

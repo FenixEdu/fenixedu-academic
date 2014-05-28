@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
 import java.util.ArrayList;
@@ -34,16 +52,21 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRo
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.consult.ShowStudentTimeTable;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMSchedulesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.student.ViewStudentTimeTable;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -51,8 +74,12 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  * @author Luis Cruz & Sara Ribeiro
  */
 
-@Forward(name = "studentShiftEnrollmentManager",
-        path = "/resourceAllocationManager/studentShiftEnrollmentManager.do?method=prepare")
+@StrutsFunctionality(app = RAMSchedulesApp.class, path = "manage", titleKey = "link.schedules.chooseContext")
+@Mapping(path = "/chooseExecutionPeriod", module = "resourceAllocationManager")
+@Forwards({
+        @Forward(name = "toggleFirstYearShiftsCapacity", path = "/resourceAllocationManager/toggleFirstYearShiftsCapacity_bd.jsp"),
+        @Forward(name = "showForm", path = "/resourceAllocationManager/chooseExecutionPeriod_bd.jsp"),
+        @Forward(name = "showTimeTable", path = "/resourceAllocationManager/showTimetable.jsp") })
 public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
     static private final Integer FIRST_CURRICULAR_YEAR = Integer.valueOf(1);
@@ -73,6 +100,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         return prepare(mapping, form, request, response);
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ContextSelectionBean contextSelectionBean =
@@ -156,7 +184,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
 
         request.setAttribute("registration", registration);
-        return ViewStudentTimeTable.forwardToShowTimeTable(registration, mapping, request, executionSemester);
+        return new ShowStudentTimeTable().forwardToShowTimeTable(registration, mapping, request, executionSemester);
     }
 
     public ActionForward toggleFirstYearShiftsCapacity(ActionMapping mapping, ActionForm form, HttpServletRequest request,

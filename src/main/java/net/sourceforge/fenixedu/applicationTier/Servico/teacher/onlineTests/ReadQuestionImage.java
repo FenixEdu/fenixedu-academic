@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 4/Ago/2003
  *  
@@ -28,14 +46,14 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadQuestionImage {
 
     @Atomic
-    public static String run(String exerciseId, Integer imageId, Integer feedbackId, Integer itemIndex, String path)
+    public static String run(String exerciseId, Integer imageId, Integer feedbackId, Integer itemIndex)
             throws FenixServiceException {
         Question question = FenixFramework.getDomainObject(exerciseId);
         if (question != null) {
             if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {
                 ParseSubQuestion parse = new ParseSubQuestion();
                 try {
-                    question = parse.parseSubQuestion(question, path);
+                    question = parse.parseSubQuestion(question);
                 } catch (ParseQuestionException e) {
                     throw new FenixServiceException();
                 }
@@ -50,7 +68,7 @@ public class ReadQuestionImage {
 
     @Atomic
     public static String run(String distributedTestId, String questionId, String optionShuffle, Integer imageId,
-            Integer feedbackId, String path) throws FenixServiceException {
+            Integer feedbackId) throws FenixServiceException {
 
         Question question = null;
         Test test = FenixFramework.getDomainObject(distributedTestId);

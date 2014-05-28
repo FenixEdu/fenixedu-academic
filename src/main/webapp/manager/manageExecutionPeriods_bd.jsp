@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml />
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -51,8 +71,8 @@
 	</html:form>
  --%>
 
-<logic:present name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>" scope="request">
- 
+<logic:notEmpty name="periods">
+<div class="col-lg-6"> 
 	<bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.periods" />
 	<br />
 	<logic:messagesPresent message="true" property="success">
@@ -73,23 +93,23 @@
 			</span>
 		</p>
 	</logic:messagesPresent>
-	<table>
-		<tr>
-			<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.semester" /></th>
-			<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.executionYear" /></th>
-			<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.state" /></th>
-			<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.operations" /></th>			
-			<th class="listClasses-header"></th>			
-		</tr>
-		<logic:iterate id="infoExecutionPeriod"	name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>">
-			<bean:define id="year" name="infoExecutionPeriod" property="infoExecutionYear.year" />
+	<table class="table table-bordered table-striped text-center">
+		<thead>
+			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.semester" /></th>
+			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.executionYear" /></th>
+			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.state" /></th>
+			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.operations" /></th>			
+			<th></th>			
+		</thead>
+		<logic:iterate id="infoExecutionPeriod"	name="periods">
+			<bean:define id="year" name="infoExecutionPeriod" property="executionYear.year" />
 			<bean:define id="semester" name="infoExecutionPeriod" property="semester" />
 			<bean:define id="periodState" name="infoExecutionPeriod" property="state.stateCode" />
 			<tr>
-				<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name" /></td>
-				<td class="listClasses"><bean:write name="infoExecutionPeriod" property="infoExecutionYear.year" /></td>
-				<td class="listClasses"><bean:write name="infoExecutionPeriod" property="state" /></td>
-				<td class="listClasses">
+				<td><bean:write name="infoExecutionPeriod" property="name" /></td>
+				<td><bean:write name="infoExecutionPeriod" property="executionYear.year" /></td>
+				<td><bean:write name="infoExecutionPeriod" property="state" /></td>
+				<td>
 					<logic:equal name="infoExecutionPeriod" property="state.stateCode" value="NO">
 						<html:link module="/manager"
 							page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
@@ -131,7 +151,7 @@
 					</logic:equal>
 				</td>
 				
-				<td class="listClasses"> 
+				<td> 
 					<bean:define id="editURL">
 						/manageExecutionPeriods.do?method=edit&amp;executionPeriodID=<bean:write name="infoExecutionPeriod" property="externalId"/>
 					</bean:define>
@@ -142,10 +162,11 @@
 			</tr>
 		</logic:iterate>
 	</table>
-</logic:present>
+</div>
+</logic:notEmpty>
 
-<logic:notPresent name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>" scope="request">
+<logic:empty name="periods">
 	<span class="error"><!-- Error messages go here --> <html:errors />
 		<bean:message bundle="MANAGER_RESOURCES" key="errors.execution.period.none" />
 	</span>
-</logic:notPresent>
+</logic:empty>

@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
@@ -6,7 +26,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ page import="org.apache.struts.util.RequestUtils" %>
-<%@ page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@ page import="pt.ist.fenixframework.FenixFramework" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
@@ -124,9 +143,7 @@
 						</logic:notPresent>
 						<logic:present name="person" property="homepage.activated">
 							<logic:equal name="person" property="homepage.activated" value="true">
-								<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-								<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-								<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="person" property="user.username"/></bean:define>
+								<bean:define id="homepageURL" type="java.lang.String" value="${person.homepage.fullPath}"></bean:define>
 								<html:link href="<%= homepageURL %>"><bean:write name="person" property="name"/></html:link>
 							</logic:equal>
 							<logic:equal name="person" property="homepage.activated" value="false">
@@ -158,9 +175,7 @@
 						</logic:notPresent>
 						<logic:present name="person" property="homepage.activated">
 							<logic:equal name="person" property="homepage.activated" value="true">
-								<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-								<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-								<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="person" property="user.username"/></bean:define>
+								<bean:define id="homepageURL" type="java.lang.String" value="${person.homepage.fullPath}"></bean:define>
 								<html:link href="<%= homepageURL %>"><bean:write name="person" property="name"/></html:link>
 							</logic:equal>
 							<logic:equal name="person" property="homepage.activated" value="false">

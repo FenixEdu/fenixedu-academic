@@ -43,7 +43,6 @@ enum net.sourceforge.fenixedu.domain.Option                                     
 enum net.sourceforge.fenixedu.domain.PartyClassification                                                                  as PartyClassification;
 enum net.sourceforge.fenixedu.domain.PhotoState                                                                           as PhotoState;
 enum net.sourceforge.fenixedu.domain.PhotoType                                                                            as PhotoType;
-enum net.sourceforge.fenixedu.domain.PhotographContentSize                                                                as PhotographContentSize;
 enum net.sourceforge.fenixedu.domain.photograph.AspectRatio																  as AspectRatio;
 enum net.sourceforge.fenixedu.domain.photograph.PictureMode																  as PictureMode;
 enum net.sourceforge.fenixedu.domain.photograph.PictureSize																  as PictureSize;
@@ -115,30 +114,10 @@ enum net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeE
 enum net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                                                 as FunctionType;
 enum net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum                                                as PartyTypeEnum;
 enum net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification                                           as UnitClassification;
-enum net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType                                                         as DocumentDeliveryType;
-enum net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType                                                       as NewParkingDocumentType;
-enum net.sourceforge.fenixedu.domain.parking.ParkingDocumentState                                                         as ParkingDocumentState;
-enum net.sourceforge.fenixedu.domain.parking.ParkingDocumentType                                                          as ParkingDocumentType;
-enum net.sourceforge.fenixedu.domain.parking.ParkingRequestState                                                          as ParkingRequestState;
-enum net.sourceforge.fenixedu.domain.parking.ParkingRequestType                                                           as ParkingRequestType;
 enum net.sourceforge.fenixedu.domain.person.Gender                                                                        as Gender;
 enum net.sourceforge.fenixedu.domain.person.IDDocumentType                                                                as IDDocumentType;
 enum net.sourceforge.fenixedu.domain.person.MaritalStatus                                                                 as MaritalStatus;
 enum net.sourceforge.fenixedu.domain.person.RoleType                                                                      as RoleType;
-enum net.sourceforge.fenixedu.domain.research.activity.CooperationType                                                    as CooperationType;
-enum net.sourceforge.fenixedu.domain.research.activity.EventType                                                          as activity.EventType;
-enum net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole                    as ResearchActivityParticipationRole;
-enum net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage                                              as ResearchActivityStage;
-enum net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole                 as ProjectEventAssociationRole;
-enum net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType                       as ProjectParticipationType;
-enum net.sourceforge.fenixedu.domain.research.project.ProjectType                                                         as ProjectType;
-enum net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType              as FileResultPermittedGroupType;
-enum net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole                          as ResultParticipationRole;
-enum net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole                      as ResultUnitAssociationRole;
-enum net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent.ResultPatentStatus                       as ResultPatentStatus;
-enum net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent.ResultPatentType                         as ResultPatentType;
-enum net.sourceforge.fenixedu.domain.research.result.publication.ScopeType                                                as ScopeType;
-enum net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType                                        as ThesisType;
 enum net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType                                  as AcademicServiceRequestSituationType;
 enum net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType                                 as DocumentPurposeType;
 enum net.sourceforge.fenixedu.domain.student.EnrolmentModel                                                               as EnrolmentModel;
@@ -148,17 +127,9 @@ enum net.sourceforge.fenixedu.domain.student.RegistrationRegimeType             
 enum net.sourceforge.fenixedu.domain.student.StudentStatuteType                                                           as StudentStatuteType;
 enum net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                                                 as Specialization;
 enum net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState                                     as StudentCurricularPlanState;
-enum net.sourceforge.fenixedu.domain.support.SupportRequestPriority                                                       as SupportRequestPriority;
-enum net.sourceforge.fenixedu.domain.support.SupportRequestType                                                           as SupportRequestType;
-enum net.sourceforge.fenixedu.domain.system.WhenToSendEmail                                                               as WhenToSendEmail;
 enum net.sourceforge.fenixedu.domain.teacher.AdviseType                                                                   as AdviseType;
 enum net.sourceforge.fenixedu.domain.teacher.CategoryType                                                                 as CategoryType;
 enum net.sourceforge.fenixedu.domain.teacher.WishesTutor                                                                  as WishesTutor;
-enum net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad.SchoolClassCalculationMethod            as SchoolClassCalculationMethod;
-enum net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhaseStatus                                     as TSDProcessPhaseStatus;
-enum net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType                                              as TSDValueType;
-enum net.sourceforge.fenixedu.domain.tests.NewPermission                                                                  as NewPermission;
-enum net.sourceforge.fenixedu.domain.tests.TestGroupStatus                                                                as TestGroupStatus;
 enum net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType                                                       as ThesisParticipationType;
 enum net.sourceforge.fenixedu.domain.thesis.ThesisState                                                                   as ThesisState;
 enum net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType                                                          as ThesisVisibilityType;
@@ -171,7 +142,6 @@ enum net.sourceforge.fenixedu.util.Month                                        
 enum net.sourceforge.fenixedu.util.RegimeType                                                                             as RegimeType;
 enum net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice                                                 as StudentPersonalDataAuthorizationChoice;
 enum net.sourceforge.fenixedu.util.WeekDay                                                                                as WeekDay;
-enum pt.utl.ist.fenix.tools.util.i18n.Language                                                                            as Language;
 enum net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType                                                   as AnnouncementCategoryType;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState                                                 as PhdIndividualProgramProcessState;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType                                            as PhdIndividualProgramCollaborationType;
@@ -192,7 +162,6 @@ enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumen
 enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType                     as AcademicEventJustificationType;
 enum net.sourceforge.fenixedu.domain.EntryPhase                                                                           as EntryPhase;
-enum net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublicationPriority                             as PreferredPublicationPriority;
 enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
 enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase                                       as CurriculumValidationEvaluationPhase;
 enum net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
@@ -258,14 +227,6 @@ valueType net.sourceforge.fenixedu.domain.Grade as Grade {
     internalizeWith importFromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.accessControl.Group as Group {
-    externalizeWith {
-        String getExpression();
-    }
-
-    internalizeWith fromString();
-}
-
 valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences as BibliographicReferences {
     externalizeWith {
         String net.sourceforge.fenixedu.domain.degreeStructure.Externalization.externalizeBibliographicReferences();
@@ -288,30 +249,6 @@ valueType net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPerce
     }
 
     internalizeWith fromString();
-}
-
-valueType net.sourceforge.fenixedu.domain.tests.TestsGrade as TestsGrade {
-    externalizeWith {
-        bytearray pt.ist.fenixframework.core.Externalization.externalizeSerializableGZiped();
-    }
-
-    internalizeWith pt.ist.fenixframework.core.Externalization.internalizeSerializableGZiped();
-}
-
-valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer as ConcreteAnswer {
-    externalizeWith {
-        bytearray pt.ist.fenixframework.core.Externalization.externalizeSerializableGZiped();
-    }
-
-    internalizeWith pt.ist.fenixframework.core.Externalization.internalizeSerializableGZiped();
-}
-
-valueType net.sourceforge.fenixedu.domain.tests.predicates.Predicate as Predicate {
-    externalizeWith {
-        bytearray pt.ist.fenixframework.core.Externalization.externalizeSerializableGZiped();
-    }
-
-    internalizeWith pt.ist.fenixframework.core.Externalization.internalizeSerializableGZiped();
 }
 
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval as AcademicInterval {
@@ -435,14 +372,6 @@ valueType net.sourceforge.fenixedu.util.PeriodState as PeriodState {
     internalizeWith valueOf();
 }
 
-valueType net.sourceforge.fenixedu.util.PeriodToApplyRestriction as PeriodToApplyRestriction {
-    externalizeWith {
-        int getValue();
-    }
-
-    internalizeWith getEnum();
-}
-
 valueType net.sourceforge.fenixedu.util.ProposalState as ProposalState {
     externalizeWith {
         Integer getState();
@@ -452,14 +381,6 @@ valueType net.sourceforge.fenixedu.util.ProposalState as ProposalState {
 valueType net.sourceforge.fenixedu.util.ProviderRegimeType as ProviderRegimeType {
     externalizeWith {
         int getValue();
-    }
-
-    internalizeWith getEnum();
-}
-
-valueType net.sourceforge.fenixedu.util.PublicationArea as PublicationArea {
-    externalizeWith {
-        String getName();
     }
 
     internalizeWith getEnum();
@@ -477,14 +398,6 @@ valueType net.sourceforge.fenixedu.util.Season as Season {
     externalizeWith {
         Integer getseason();
     }
-}
-
-valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason as SecretaryEnrolmentStudentReason {
-    externalizeWith {
-        int getValue();
-    }
-
-    internalizeWith getEnum();
 }
 
 valueType net.sourceforge.fenixedu.util.SituationName as SituationName {
@@ -611,6 +524,20 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     internalizeWith importFromString();
 }
 
+valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemplateController {
+    externalizeWith { 
+        Class getClass();
+    }
+    internalizeWith controllerForType();
+}
+
+valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupStrategy {
+    externalizeWith {
+        String externalize();
+    }
+    internalizeWith strategyForType();
+}
+
 /*
 *
 * Class definitions
@@ -691,72 +618,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String remarks;
         SituationName situation;
         State validation;
-    }
-
-    class cardGeneration.CardGenerationBatch  {
-        String description;
-        DateTime created;
-        DateTime updated;
-        DateTime sent;
-        String peopleForEntryCreation;
-    }
-
-    class cardGeneration.CardGenerationEntry  {
-        String line;
-        DateTime created;
-        String documentID;
-    }
-
-    class cardGeneration.CardGenerationProblem  {
-        String descriptionKey;
-        String arg;
-    }
-
-    class cardGeneration.CardGenerationRegister  {
-        LocalDate emission;
-        Boolean withAccountInformation;
-        String linePrefix;
-    }
-    
-    class cardGeneration.SantanderBatch  {
-    	DateTime created;
-    	DateTime generated;
-    	DateTime sent;
-    	Integer sequenceNumber;
-    }
-    
-    class cardGeneration.SantanderBatchRequester  {
-    }
-    
-    class cardGeneration.SantanderBatchSender  {
-    }
-    
-    class cardGeneration.SantanderSequenceNumberGenerator  {
-    	Integer sequenceNumber;
-    	Integer photoSequenceNumber;
-    }
-    
-    class cardGeneration.SantanderEntry  {
-    	String line;
-    	DateTime created;
-    }
-
-	class cardGeneration.SantanderPhotoEntry {
-		Integer sequenceNumber;
-		DateTime whenGenerated;
-	}
-    
-    class cardGeneration.SantanderProblem  {
-    	String descriptionKey;
-        String arg;
-    }
-    
-    class cardGeneration.SantanderPIN {
-    	String encryptedPIN;
-    }
-
-    class cardGeneration.SantanderCardInformation {
-        String dchpRegisteLine;
     }
 
     class CompetenceCourse  {
@@ -890,7 +751,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
     class DegreeCurricularPlan  {
         String anotation;
-        Group curricularPlanMembersGroup;
         CurricularStage curricularStage;
         Integer degreeDuration;
         String description;
@@ -951,27 +811,14 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         MultiLanguageString recognitions;
     }
 
-    class DeleteFileLog  {
-        String externalStorageIdentification;
-        DateTime requestTime;
-        String requestorIstUsername;
-    }
-
-    class DeleteFileRequest  {
-        Boolean deleteItem;
-        String externalStorageIdentification;
-        String requestorIstUsername;
-    }
-
     class Department  {
         String code;
-        Group competenceCourseMembersGroup;
         String name;
         String realName;
         String realNameEn;
         Boolean active;
     }
-    
+
     class DepartmentCreditsPool {
 	    BigDecimal originalCreditsPool;
     	BigDecimal creditsPool;
@@ -1280,11 +1127,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         DateTime stateChange;
     }
 
-    class PhotographContent  {
-        PhotographContentSize size;
-        ByteArray content;
-    }
-    
     class photograph.Picture {
     	Integer width;
     	Integer height;
@@ -1296,13 +1138,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     }
 
     class File extends .org.fenixedu.bennu.io.domain.GenericFile {
-        String checksum;
-        String checksumAlgorithm;
-        String externalStorageIdentification;
-        Group permittedGroup;
-    }
-    
-    class DSpaceFileStorage extends .org.fenixedu.bennu.io.domain.FileStorage {
     }
     
 		class teacher.evaluation.TeacherEvaluationFile extends File {
@@ -1337,12 +1172,10 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             class documents.AnnualIRSDeclarationDocument extends documents.GeneratedDocument {
                 Integer year;
             }
-    class documents.LibraryMissingCardsDocument extends documents.GeneratedDocument;
-    class documents.LibraryMissingLettersDocument extends documents.GeneratedDocument;
-    
     
         class FileContent extends File {
         	EducationalResourceType resourceType;
+        	Boolean visible;
         }
 
             class messaging.PublicBoardFileContent extends FileContent {
@@ -1367,23 +1200,8 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         class candidacy.CandidacySummaryFile extends File {
         }
 
-        class parking.ParkingFile extends File {
-        }
-
-        class research.result.ResearchResultDocumentFile extends File {
-            FileResultPermittedGroupType fileResultPermittedGroupType;
-            Boolean visible;
-        }
-
-        class space.BlueprintFile extends File {
-            ByteArray contentFile;
-        }
-
-        class tests.PictureMaterialFile extends File {
-        }
-
         class thesis.ThesisFile extends File {
-            Language language;
+            Locale language;
             String subTitle;
             String title;
         }
@@ -1394,18 +1212,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         class careerWorkshop.CareerWorkshopConfirmationSpreadsheet extends File {
         }
 
-
-    class GenericEvent  {
-        MultiLanguageString description;
-        FrequencyType frequency;
-        MultiLanguageString title;
-        YearMonthDay beginDate;
-        YearMonthDay endDate;
-        HourMinuteSecond startTimeDateHourMinuteSecond;
-        HourMinuteSecond endTimeDateHourMinuteSecond;
-        Boolean dailyFrequencyMarkSunday;
-        Boolean dailyFrequencyMarkSaturday;
-    }
 
     class GratuitySituation  {
         String exemptionDescription;
@@ -1479,10 +1285,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         Partial date;
     }
 
-    class StrikeDay  {
-        LocalDate date;
-    }
-
     class InsuranceValue  {
         BigDecimal annualValueBigDecimal;
         YearMonthDay endDateYearMonthDay;
@@ -1515,12 +1317,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
     class Locality  {
         String name;
-    }
-
-    class ManagementGroups  {
-        Group assiduousnessManagers;
-        Group assiduousnessSectionStaff;
-        Group payrollSectionStaff;
     }
 
     class Mark  {
@@ -1615,12 +1411,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         Double balance;
     }
 
-    class PersonalGroup  {
-        Group concreteGroup;
-        String description;
-        String name;
-    }
-
     class Price  {
         String description;
         DocumentType documentType;
@@ -1645,24 +1435,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         Integer fileSize;
         String filename;
         DateTime submissionDateTime;
-    }
-
-    class PunctualRoomsOccupationComment  {
-        MultiLanguageString description;
-        DateTime instant;
-        MultiLanguageString subject;
-    }
-
-    class PunctualRoomsOccupationRequest  {
-        Integer employeeReadComments;
-        Integer identification;
-        DateTime instant;
-        Integer teacherReadComments;
-    }
-
-    class PunctualRoomsOccupationStateInstant  {
-        DateTime instant;
-        RequestState requestState;
     }
 
     class Qualification  {
@@ -1699,11 +1471,8 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     }
     
     class Role  {
-        String page;
-        String pageNameProperty;
-        String portalSubApplication;
-        RoleType roleType;
-    } 
+        protected RoleType roleType;
+    }
     
     class RoleOperationLog  {
     	String istUsername;
@@ -1712,14 +1481,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     	RoleOperationType operationType;
     }  
     
-        class ResourceAllocationRole extends Role {
-            Group schedulesAccessGroup;     
-            Group spacesAccessGroup;
-            Group materialsAccessGroup;
-            Group vehiclesAccessGroup;          
-        }
-
-
     class SchoolClass  {
         Integer anoCurricular;
         String nome;
@@ -1735,48 +1496,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
     class SecretaryEnrolmentStudent  {
         String reasonDescription;
-        SecretaryEnrolmentStudentReason reasonType;
-    }
-
-    class Seminaries.CaseStudy  {
-        String code;
-        String description;
-        String name;
-    }
-
-    class Seminaries.CaseStudyChoice  {
-        Integer preferenceOrder;
-    }
-
-    class Seminaries.CourseEquivalency  {
-    }
-
-    class Seminaries.Modality  {
-        String description;
-        String name;
-    }
-
-    class Seminaries.Seminary  {
-        Integer allowedCandidaciesPerStudent;
-        String description;
-        YearMonthDay enrollmentBeginYearMonthDay;
-        YearMonthDay enrollmentEndYearMonthDay;
-        HourMinuteSecond enrollmentTimeBeginHourMinuteSecond;
-        HourMinuteSecond enrollmentTimeEndHourMinuteSecond;
-        Boolean hasCaseStudy;
-        Boolean hasTheme;
-        String name;
-    }
-
-    class Seminaries.SeminaryCandidacy  {
-        Boolean approved;
-        String motivation;
-    }
-
-    class Seminaries.Theme  {
-        String description;
-        String name;
-        String shortName;
     }
 
     class Shift  {      
@@ -1999,11 +1718,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         }
 
 
-	class LibraryCardSystem{
-		Group higherClearenceGroup;
-		Integer milleniumCodeCounter;
-	}
-
     class accounting.CreditNote  {
         Integer number;
         CreditNoteState state;
@@ -2040,20 +1754,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             String room;
         }
 
-        class accounting.events.InstitutionAffiliationEvent extends accounting.Event {
-        	DateTime acceptedTermsAndConditions;
-        }
-
-			class accounting.events.InstitutionAffiliationEventTicket  {
-				String ticket;
-				DateTime generated;
-				DateTime consumed;
-			}
-
-        class accounting.events.MicroPaymentEvent extends accounting.Event {
-        	Money amount;
-        }
-        
         class accounting.events.AnnualEvent extends accounting.AcademicEvent {
         }
 
@@ -2593,10 +2293,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             class accounting.postingRules.ResidencePR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money penaltyPerDay;
             }
-            
-            class accounting.postingRules.InstitutionAccountCreditPR extends accounting.postingRules.GenericSingleEntryTypePR;
-
-            class accounting.postingRules.MicroPaymentPR extends accounting.postingRules.GenericSingleEntryTypePR;
             
     class accounting.Receipt  {
         Integer number;
@@ -3207,54 +2903,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         HourMinuteSecond startOfCandidacyPeriodTimeHourMinuteSecond;
         YearMonthDay startOfProposalPeriodDateYearMonthDay;
         HourMinuteSecond startOfProposalPeriodTimeHourMinuteSecond;
-    }
-
-    class functionalities.AvailabilityPolicy  {
-        String contentId;
-    }
-
-        class functionalities.GroupAvailability extends functionalities.AvailabilityPolicy {
-            Group targetGroup;
-        }
-
-            class functionalities.ExpressionGroupAvailability extends functionalities.GroupAvailability {
-                String expression;
-            }
-
-    class gaugingTests.physics.GaugingTestResult  {
-        String cfString;
-        Integer correct;
-        String p1;
-        String p10;
-        String p11;
-        String p12;
-        String p13;
-        String p14;
-        String p15;
-        String p16;
-        String p17;
-        String p18;
-        String p19;
-        String p2;
-        String p20;
-        String p21;
-        String p22;
-        String p23;
-        String p24;
-        String p25;
-        String p26;
-        String p27;
-        String p28;
-        String p3;
-        String p4;
-        String p5;
-        String p6;
-        String p7;
-        String p8;
-        String p9;
-        Integer test;
-        Integer unanswered;
-        Integer wrong;
     }
 
     class gesdis.CourseHistoric  {
@@ -4039,11 +3687,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 		DateTime entryDate;
 	}
 	
-    class material.PersonExtension  {
-        YearMonthDay begin;
-        YearMonthDay end;
-    }
-
     class onlineTests.DistributedTest  {
         YearMonthDay beginDateDateYearMonthDay;
         HourMinuteSecond beginHourDateHourMinuteSecond;
@@ -4304,85 +3947,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String acronym;
     }
 
-    class parking.NewParkingDocument  {
-        NewParkingDocumentType parkingDocumentType;
-    }
-
-    class parking.ParkingGroup  {
-        String groupName;
-        MultiLanguageString groupDescription;
-    }
-
-    class parking.ParkingParty  {
-        Boolean acceptedRegulation;
-        Boolean authorized;
-        DateTime cardEndDate;
-        Long cardNumber;
-        DateTime cardStartDate;
-        DocumentDeliveryType driverLicenseDeliveryType;
-        ParkingDocumentState driverLicenseDocumentState;
-        ParkingDocumentState firstCarDeclarationDocumentState;
-        ParkingDocumentState firstCarInsuranceDocumentState;
-        ParkingDocumentState firstCarOwnerIdDocumentState;
-        ParkingDocumentState firstCarPropertyRegistryDocumentState;
-        Integer phdNumber;
-        ParkingDocumentState secondCarDeclarationDocumentState;
-        ParkingDocumentState secondCarInsuranceDocumentState;
-        ParkingDocumentState secondCarOwnerIdDocumentState;
-        ParkingDocumentState secondCarPropertyRegistryDocumentState;
-        String notes;
-        RoleType requestedAs;
-        Integer usedNumber;
-    }
-    
-    class parking.ParkingPartyHistory  {
-        DateTime cardEndDate;
-        DateTime cardStartDate;
-        Long cardNumber;
-        Integer phdNumber;
-        String notes;
-        RoleType requestedAs;
-        Integer usedNumber;
-        DateTime historyDate;
-        Boolean onlineRequest;
-    }
-
-    class parking.ParkingRequest  {
-        DateTime creationDate;
-        DocumentDeliveryType driverLicenseDeliveryType;
-        ParkingDocumentState driverLicenseDocumentState;
-        String email;
-        ParkingDocumentState firstCarDeclarationDocumentState;
-        ParkingDocumentState firstCarInsuranceDocumentState;
-        ParkingDocumentState firstCarOwnerIdDocumentState;
-        ParkingDocumentState firstCarPropertyRegistryDocumentState;
-        Boolean limitlessAccessCard;
-        String mobile;
-        String note;
-        ParkingRequestState parkingRequestState;
-        String phone;
-        RoleType requestedAs;
-        ParkingDocumentState secondCarDeclarationDocumentState;
-        ParkingDocumentState secondCarInsuranceDocumentState;
-        ParkingDocumentState secondCarOwnerIdDocumentState;
-        ParkingDocumentState secondCarPropertyRegistryDocumentState;
-        ParkingRequestType parkingRequestType;
-    }
-    
-    class parking.ParkingRequestPeriod  {
-        DateTime beginDate;
-        DateTime endDate;
-    }
-
-    class parking.Vehicle  {
-        DocumentDeliveryType authorizationDeclarationDeliveryType;
-        DocumentDeliveryType insuranceDeliveryType;
-        DocumentDeliveryType ownerIdDeliveryType;
-        String plateNumber;
-        DocumentDeliveryType propertyRegistryDeliveryType;
-        String vehicleMake;
-    }
-
     class person.IdDocument  {
         String value;
     }
@@ -4399,44 +3963,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class person.PersonNamePart  {
         String namePart;
     }
-
-    class precedences.Precedence  {
-    }
-
-    class precedences.Restriction  {
-    }
-
-        class precedences.RestrictionByCurricularCourse extends precedences.Restriction {
-        }
-
-            class precedences.RestrictionDoneCurricularCourse extends precedences.RestrictionByCurricularCourse {
-            }
-
-                class precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse extends precedences.RestrictionDoneCurricularCourse {
-                }
-
-                    class precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse extends precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse {
-                    }
-
-                    class precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse extends precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse {
-                    }
-
-            class precedences.RestrictionNotDoneCurricularCourse extends precedences.RestrictionByCurricularCourse {
-            }
-
-                class precedences.RestrictionNotEnrolledInCurricularCourse extends precedences.RestrictionNotDoneCurricularCourse {
-                }
-
-        class precedences.RestrictionByNumberOfCurricularCourses extends precedences.Restriction {
-            Integer numberOfCurricularCourses;
-        }
-
-            class precedences.RestrictionByNumberOfDoneCurricularCourses extends precedences.RestrictionByNumberOfCurricularCourses {
-            }
-
-        class precedences.RestrictionPeriodToApply extends precedences.Restriction {
-            PeriodToApplyRestriction periodToApplyRestriction;
-        }
 
     class reimbursementGuide.ReimbursementGuide  {
         YearMonthDay creationYearMonthDay;
@@ -4456,260 +3982,15 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         State state;
     }
 
-    class research.Prize  {
-        MultiLanguageString description;
-        MultiLanguageString name;
-        Integer year;
-    }
-
-    class research.ResearchInterest  {
-        MultiLanguageString interest;
-        Integer interestOrder;
-    }
-
-    class research.activity.ArticleAssociation  {
-    }
-
-    class research.activity.Cooperation  {
-        CooperationType cooperationType;
-        YearMonthDay endDate;
-        String name;
-        YearMonthDay startDate;
-    }
-
-    class research.activity.EventConferenceArticlesAssociation  {
-    }
-
-    class research.activity.EventEdition  {
-        String edition;
-        YearMonthDay endDate;
-        String eventLocation;
-        String organization;
-        YearMonthDay startDate;
-        String url;
-    }
-
-    class research.activity.JournalIssue  {
-        Month month;
-        String number;
-        Boolean specialIssue;
-        String specialIssueComment;
-        String url;
-        String volume;
-        Integer year;
-    }
-
-    class research.activity.Participation  {
-        ResearchActivityParticipationRole role;
-        MultiLanguageString roleMessage;
-    }
-
-        class research.activity.CooperationParticipation extends research.activity.Participation {
-        }
-
-        class research.activity.EventEditionParticipation extends research.activity.Participation {
-        }
-
-        class research.activity.EventParticipation extends research.activity.Participation {
-        }
-
-        class research.activity.JournalIssueParticipation extends research.activity.Participation {
-        }
-
-        class research.activity.ScientificJournalParticipation extends research.activity.Participation {
-            YearMonthDay beginDate;
-            YearMonthDay endDate;
-        }
-
-    class research.activity.ResearchEvent  {
-        activity.EventType eventType;
-        ScopeType locationType;
-        String name;
-        ResearchActivityStage stage;
-        String url;
-    }
-
-    class research.activity.ScientificJournal  {
-        String issn;
-        ScopeType locationType;
-        String name;
-        String publisher;
-        ResearchActivityStage stage;
-        String url;
-    }
-
-    class research.project.Project  {
-        String acronym;
-        Partial endDate;
-        Integer number;
-        MultiLanguageString projectAbstract;
-        ProjectType projectType;
-        Partial startDate;
-        MultiLanguageString title;
-    }
-
-    class research.project.ProjectEventAssociation  {
-        ProjectEventAssociationRole role;
-    }
-
-    class research.project.ProjectParticipation  {
-        ProjectParticipationType role;
-    }
-
     class research.Researcher  {
         Boolean allowsToBeSearched;
-        Boolean allowsContactByStudents;
-        Boolean allowsContactByMedia;
-        Boolean allowsContactByOtherResearchers;
-        String keywordsPt;
-        String keywordsEn;
     }
 
-    class research.result.ResearchResult  {
-        DateTime lastModificationDate;
-        String modifiedBy;
-        MultiLanguageString note;
-        String title;
-        String uniqueStorageId;
-        String url;
-    }
-
-        class research.result.patent.ResearchResultPatent extends research.result.ResearchResult {
-            Partial approvalDate;
-            String local;
-            String patentNumber;
-            ResultPatentStatus patentStatus;
-            ResultPatentType patentType;
-            Partial registrationDate;
-        }
-
-        class research.result.publication.ResearchResultPublication extends research.result.ResearchResult {
-            MultiLanguageString keywords;
-            Month month;
-            String organization;
-            String publisher;
-            Integer year;
-        }
-
-        class research.result.publication.PreferredPublication  {
-            PreferredPublicationPriority priority;
-        }
-        
-            class research.result.publication.Article extends research.result.publication.ResearchResultPublication {
-                Integer firstPage;
-                Integer issn;
-                String journal;
-                String language;
-                Integer lastPage;
-            }
-
-            class research.result.publication.Book extends research.result.publication.ResearchResultPublication {
-                String address;
-                String edition;
-                String isbn;
-                String language;
-                Integer numberPages;
-                ScopeType scope;
-                String series;
-                String volume;
-            }
-
-            class research.result.publication.BookPart extends research.result.publication.ResearchResultPublication {
-                String address;
-                String bookTitle;
-                String chapter;
-                String edition;
-                Integer firstPage;
-                Integer lastPage;
-                String series;
-                String volume;
-            }
-
-            class research.result.publication.ConferenceArticles extends research.result.publication.ResearchResultPublication {
-                String conference;
-                ScopeType scope;
-            }
-
-                class research.result.publication.Inproceedings extends research.result.publication.ConferenceArticles {
-                    String address;
-                    Integer firstPage;
-                    String language;
-                    Integer lastPage;
-                }
-
-                class research.result.publication.Proceedings extends research.result.publication.ConferenceArticles {
-                    String address;
-                }
-
-            class research.result.publication.Manual extends research.result.publication.ResearchResultPublication {
-                String address;
-                String edition;
-            }
-
-            class research.result.publication.OtherPublication extends research.result.publication.ResearchResultPublication {
-                String address;
-                String howPublished;
-                String language;
-                Integer numberPages;
-                String otherPublicationType;
-            }
-
-            class research.result.publication.TechnicalReport extends research.result.publication.ResearchResultPublication {
-                String address;
-                String language;
-                String number;
-                Integer numberPages;
-                String technicalReportType;
-            }
-
-            class research.result.publication.Thesis extends research.result.publication.ResearchResultPublication {
-                String address;
-                String language;
-                Month monthBegin;
-                Integer numberPages;
-                String scientificArea;
-                ThesisType thesisType;
-                Integer yearBegin;
-            }
-
-            class research.result.publication.Unstructured extends research.result.publication.ResearchResultPublication {
-            }
-
-    class research.result.ResultParticipation  {
-        Integer personOrder;
-        ResultParticipationRole role;
-    }
-
-    class research.result.ResultTeacher  {
-        PublicationArea publicationArea;
-    }
-
-    class research.result.ResultUnitAssociation  {
-        ResultUnitAssociationRole role;
-    }
-
-    class resource.Resource  {
-    }
-
-    class resource.ResourceAllocation  {
-    }
-
-        class resource.VehicleAllocation extends resource.ResourceAllocation {
-            DateTime beginDateTime;
-            DateTime endDateTime;
-            String reason;
-            BigDecimal distance;                            
-            BigDecimal amountCharged;
-        }
-
-        class space.SpaceOccupation extends resource.ResourceAllocation {
+        class space.SpaceOccupation extends .org.fenixedu.spaces.domain.occupation.Occupation {
         }
 
             class space.EventSpaceOccupation extends space.SpaceOccupation {                
             }
-
-                class space.GenericEventSpaceOccupation extends space.EventSpaceOccupation {
-                }
 
                 class space.LessonSpaceOccupation extends space.EventSpaceOccupation {
                 }
@@ -4719,91 +4000,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
                 
                 class space.WrittenEvaluationSpaceOccupation extends space.EventSpaceOccupation {
                 }
-
-            class space.MaterialSpaceOccupation extends space.SpaceOccupation {
-                YearMonthDay begin;
-                YearMonthDay end;
-            }
-
-                class space.ExtensionSpaceOccupation extends space.MaterialSpaceOccupation {
-                }
-
-            class space.PersonSpaceOccupation extends space.SpaceOccupation {
-                YearMonthDay begin;
-                YearMonthDay end;
-            }
-
-            class space.UnitSpaceOccupation extends space.SpaceOccupation {
-                YearMonthDay begin;
-                YearMonthDay end;
-            }           
-
-        class material.Material extends resource.Resource {
-            YearMonthDay acquisition;
-            String barCodeNumber;
-            YearMonthDay cease;
-            String identification;
-        }
-
-            class material.Extension extends material.Material {
-            }
-
-            class material.FireExtinguisher extends material.Material {
-                String delivererEnterprise;
-                YearMonthDay loadedDate;
-                YearMonthDay toBeInspectedDate;
-            }
-
-        class resource.Vehicle extends resource.Resource {
-            YearMonthDay acquisition;
-            YearMonthDay cease;
-            String make;
-            String model;
-            String numberPlate;
-            BigDecimal allocationCostMultiplier;            
-        }
-
-        class space.Space extends resource.Resource {
-            YearMonthDay createdOn;
-            Group extensionOccupationsAccessGroup;
-            Group genericEventOccupationsAccessGroup;
-            Group lessonOccupationsAccessGroup;
-            Group personOccupationsAccessGroup;
-            Group spaceManagementAccessGroup;
-            Group unitOccupationsAccessGroup;
-            Group writtenEvaluationOccupationsAccessGroup;
-        }
-
-            class space.AllocatableSpace extends space.Space {
-            }
-
-                class space.Room extends space.AllocatableSpace {
-                    Integer examCapacity;
-                    Integer normalCapacity;
-                }
-
-                class space.RoomSubdivision extends space.AllocatableSpace {
-                }
-
-            class space.Building extends space.Space {
-            }
-
-            class space.Campus extends space.Space {
-            }
-
-            class space.Floor extends space.Space {
-            }
-
-    class resource.ResourceResponsibility  {
-        YearMonthDay begin;
-        YearMonthDay end;
-    }
-
-        class material.MaterialResponsibility extends resource.ResourceResponsibility {
-        }
-
-        class space.SpaceResponsibility extends resource.ResourceResponsibility {
-        }
+                
 
     class serviceRequests.InstitutionRegistryCodeGenerator  {
         Integer currentFirstCycle;
@@ -4847,7 +4044,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         Boolean urgentRequest;
         Integer serviceRequestNumber;
         DateTime requestDate;
-        Language language;
+        Locale language;
     }
         
         class serviceRequests.RegistrationAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
@@ -5020,53 +4217,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 		        	}
 
     
-    class space.Blueprint  {
-        YearMonthDay validFrom;
-        YearMonthDay validUntil;
-    }
-
-    class space.RoomClassification  {
-        Integer code;
-        MultiLanguageString name;
-    }
-
-    class space.SpaceInformation  {
-    	Integer capacity;
-        String blueprintNumber;
-        YearMonthDay validFrom;
-        YearMonthDay validUntil;
-        String emails;
-    }
-
-        class space.BuildingInformation extends space.SpaceInformation {
-            String name;
-        }
-
-        class space.CampusInformation extends space.SpaceInformation {
-            String name;
-        }
-
-        class space.FloorInformation extends space.SpaceInformation {
-            Integer level;
-        }
-
-        class space.RoomInformation extends space.SpaceInformation {
-            Boolean ageQuality;
-            BigDecimal area;
-            String description;
-            Boolean distanceFromSanitaryInstalationsQuality;
-            String doorNumber;
-            Boolean heightQuality;
-            String identification;
-            Boolean illuminationQuality;
-            String observations;
-            Boolean securityQuality;
-        }
-
-        class space.RoomSubdivisionInformation extends space.SpaceInformation {
-            String identification;
-        }
-        
     class space.SpaceAttendances {
     	String personIstUsername;
     	String responsibleForEntranceIstUsername;
@@ -5342,21 +4492,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
                 class OptionalEnrolment extends Enrolment {
                 }
                 
-            class FakeEnrollment  {
-            	String stuff;
-            	DateTime creationDate;
-            }
-            
-            class FakeShift  {
-		        Integer capacity;
-		        String name;
-            }
-            
-            class FakeShiftEnrollment  {
-            	String stuff;
-            	DateTime creationDate;
-            }
-
             class studentCurriculum.Dismissal extends studentCurriculum.CurriculumLine {
             }
 
@@ -5383,68 +4518,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         YearMonthDay evaluationDate;
         Grade grade (REQUIRED);
         degreeStructure.RegimeType regime;
-    }
-
-    class support.FAQEntry  {
-        String answer;
-        String question;
-    }
-
-    class support.FAQSection  {
-        String sectionName;
-    }
-
-    class support.GlossaryEntry  {
-        String definition;
-        String term;
-    }
-
-    class support.SupportRequest  {
-        SupportRequestPriority requestPriority;
-        String responseEmail;
-        String subject;
-        String message;
-        DateTime requestTime;
-    }
-
-        class support.SupportSugestion extends support.SupportRequest {
-    }
-
-        class support.SupportDoubt extends support.SupportRequest {
-        }
-        
-        class support.SupportError extends support.SupportRequest {
-        }
-        
-        class support.SupportException extends support.SupportRequest {
-        }
-        
-        class support.SupportDemand extends support.SupportRequest {
-        }
-
-    class system.CronRegistry  {
-        DateTime buildVersion;
-    }
-
-    class system.CronScriptInvocation  {
-        DateTime endTime;
-        String log;
-        String serverID;
-        DateTime startTime;
-        Boolean successful;
-    }
-
-    class system.CronScriptState  {
-        Integer absoluteExecutionOrder;
-        Boolean active;
-        ByteArray context;
-        String cronScriptClassname;
-        String emails;
-        Period invocationPeriod;
-        Boolean isCurrentlyRunning;
-        DateTime registrationDate;
-        WhenToSendEmail whenToSendEmail;
-        Boolean runNow;
     }
 
     class teacher.Advise  {
@@ -5624,215 +4697,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         DiaSemana weekDay;
     }
 
-    class teacherServiceDistribution.TSDCourse  {
-        Integer firstTimeEnrolledStudentsManual;
-        TSDValueType firstTimeEnrolledStudentsType;
-        Integer secondTimeEnrolledStudentsManual;
-        TSDValueType secondTimeEnrolledStudentsType;
-        Boolean isActive;
-    }
-
-        class teacherServiceDistribution.TSDCompetenceCourse extends teacherServiceDistribution.TSDCourse {
-        }
-
-        class teacherServiceDistribution.TSDCurricularCourse extends teacherServiceDistribution.TSDCourse {
-    }
-
-        class teacherServiceDistribution.TSDCurricularCourseGroup extends teacherServiceDistribution.TSDCourse {
-        }
-
-        class teacherServiceDistribution.TSDVirtualCourseGroup extends teacherServiceDistribution.TSDCourse {
-            String name;
-        }
-
-    class teacherServiceDistribution.TSDCurricularLoad  {
-        ShiftType type;
-        Double frequency;
-        Double hoursManual;
-        TSDValueType hoursType;
-        Double hoursPerShiftManual;
-        Integer timeTableSlots;
-        Integer studentsPerShiftManual;
-        TSDValueType studentsPerShiftType;
-        Double weightFirstTimeEnrolledStudentsPerShiftManual;
-        TSDValueType weightFirstTimeEnrolledStudentsPerShiftType;
-        Double weightSecondTimeEnrolledStudentsPerShiftManual;
-        TSDValueType weightSecondTimeEnrolledStudentsPerShiftType;
-        SchoolClassCalculationMethod schoolClassCalculationMethod;
-        }
-
-    class teacherServiceDistribution.TSDProfessorship  {
-        Double hoursManual;
-        TSDValueType hoursType;
-        ShiftType type;
-    }
-
-    class teacherServiceDistribution.TSDProcess  {
-        Group automaticValuationGroup;
-        String name;
-        Group omissionConfigurationGroup;
-        Group phasesManagementGroup;
-        Group tsdCoursesAndTeachersManagementGroup;
-    }
-
-    class teacherServiceDistribution.TeacherServiceDistribution  {
-        Group coursesManagementGroup;
-        Group teachersManagementGroup;
-        Group coursesValuationManagers;
-        Group teachersValuationManagers;
-        String name;
-    }
-
-    class teacherServiceDistribution.TSDProcessPhase  {
-        Boolean isPublished;
-        String name;
-        TSDProcessPhaseStatus status;
-        Integer studentsPerLaboratorialShift;
-        Integer studentsPerTheoreticalShift;
-        Integer studentsPerProblemShift;
-        Integer studentsPerSeminaryShift;
-        Integer studentsPerFieldWorkShift;
-        Integer studentsPerTrainingPeriodShift;
-        Integer studentsPerTutDirectionShift;
-        
-        Double weightFirstTimeEnrolledStudentsPerLabShift;
-        Double weightFirstTimeEnrolledStudentsPerTheoShift;
-        Double weightFirstTimeEnrolledStudentsPerProblemShift;
-        Double weightFirstTimeEnrolledStudentsPerSeminaryShift;
-        Double weightFirstTimeEnrolledStudentsPerFieldWorkShift;
-        Double weightFirstTimeEnrolledStudentsPerTrainingShift;
-        Double weightFirstTimeEnrolledStudentsPerTutDirectionShift;
-        
-        Double weightSecondTimeEnrolledStudentsPerLabShift;
-        Double weightSecondTimeEnrolledStudentsPerTheoShift;
-        Double weightSecondTimeEnrolledStudentsPerProblemShift;
-        Double weightSecondTimeEnrolledStudentsPerSeminaryShift;
-        Double weightSecondTimeEnrolledStudentsPerFieldWorkShift;
-        Double weightSecondTimeEnrolledStudentsPerTrainingShift;
-        Double weightSecondTimeEnrolledStudentsPerTutDirectionShift;
-    }
-
-    class teacherServiceDistribution.TSDTeacher  {
-        String extraCreditsName;
-        Double extraCreditsValue;
-        Boolean usingExtraCredits;
-    }
-    
-        class teacherServiceDistribution.TSDRealTeacher extends teacherServiceDistribution.TSDTeacher {
-        }
-    
-        class teacherServiceDistribution.TSDVirtualTeacher extends teacherServiceDistribution.TSDTeacher {
-        String name;
-        Double requiredHours;
-    }
-
-    class tests.NewAnswer  {
-        ConcreteAnswer concreteAnswer;
-        Double percentage;
-    }
-
-    class tests.NewCorrector  {
-        Integer percentage;
-        Integer position;
-        Predicate predicate;
-    }
-
-    class tests.NewGroupElement  {
-        Integer position;
-    }
-
-    class tests.NewPermissionUnit  {
-        NewPermission permission;
-    }
-
-    class tests.NewPresentationMaterial  {
-        Boolean inline;
-        Integer position;
-    }
-
-        class tests.NewMathMlMaterial extends tests.NewPresentationMaterial {
-            String mathMl;
-        }
-
-        class tests.NewPictureMaterial extends tests.NewPresentationMaterial {
-        }
-
-        class tests.NewStringMaterial extends tests.NewPresentationMaterial {
-            String text;
-        }
-
-    class tests.NewTestElement  {
-        Integer sectionPosition;
-    }
-
-        class tests.NewChoice extends tests.NewTestElement {
-            Integer position;
-        }
-
-        class tests.NewModelRestriction extends tests.NewTestElement {
-            Integer count;
-            Integer position;
-            Double value;
-        }
-
-            class tests.NewModelGroup extends tests.NewModelRestriction {
-                String name;
-            }
-
-                class tests.NewTestModel extends tests.NewModelGroup {
-                    DateTime created;
-                    Double scale;
-                }
-
-        class tests.NewQuestion extends tests.NewTestElement {
-            TestsGrade grade;
-            Predicate preCondition;
-            Integer timesUsed;
-        }
-
-            class tests.NewAtomicQuestion extends tests.NewQuestion {
-                Predicate validator;
-            }
-
-                class tests.NewDateQuestion extends tests.NewAtomicQuestion {
-                }
-
-                class tests.NewMultipleChoiceQuestion extends tests.NewAtomicQuestion {
-                    Boolean shuffle;
-                }
-
-                class tests.NewNumericQuestion extends tests.NewAtomicQuestion {
-                }
-
-                class tests.NewStringQuestion extends tests.NewAtomicQuestion {
-                }
-
-            class tests.NewQuestionGroup extends tests.NewQuestion {
-                String name;
-            }
-
-                class tests.NewAllGroup extends tests.NewQuestionGroup {
-                }
-
-                class tests.NewQuestionBank extends tests.NewQuestionGroup {
-                }
-
-        class tests.NewSection extends tests.NewTestElement {
-            Predicate preCondition;
-        }
-
-            class tests.NewTest extends tests.NewSection {
-                Integer position;
-                Double scale;
-            }
-
-    class tests.NewTestGroup  {
-        DateTime beginDate;
-        DateTime finalDate;
-        String name;
-        TestGroupStatus status;
-    }
-
     class thesis.Thesis  {
         DateTime approval;
         String comment;
@@ -6004,7 +4868,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
     class util.email.Recipient  {
         String toName;
-        Group members;
         Integer membersSize;
     }
 
@@ -6024,7 +4887,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class util.email.Sender  {
         String fromName;
         String fromAddress;
-        Group members;
     }
 
     class util.email.UnitBasedSender extends util.email.Sender {}
@@ -6283,20 +5145,6 @@ class personnelSection.contracts.Absence  {
     Boolean isSabaticalOrEquivalent (REQUIRED);
 }
 
-class library.LibraryCard  {
-    String userName;
-    String unitName;    
-    String cardNumber;
-    PartyClassification partyClassification;
-    Integer pin;
-    YearMonthDay validUntil;
-    DateTime cardEmitionDate;
-    DateTime letterGenerationDate;
-}
-
-class library.LibraryDocument  {
-}
-
 class elections.DelegateElection  {
     Boolean sentResultsToCandidates;
 }
@@ -6320,29 +5168,10 @@ class elections.DelegateElectionCandidacyPeriod extends elections.DelegateElecti
 class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionPeriod {
 }
 
-    class contents.Content  {
-        String contentId;
-        DateTime creationDate;
-        MultiLanguageString name;
-        MultiLanguageString title;
-        MultiLanguageString body;
-        MultiLanguageString description;
-        MultiLanguageString normalizedName;
-    }
-
-        class contents.Element extends contents.Content {
-	    }
-
-	        class contents.Redirect extends contents.Element {
-	        	String url;
-		    }
-        
-        class contents.Attachment extends contents.Element {
-}
-
-            class messaging.Announcement extends contents.Element {
+            class messaging.Announcement {
                 String author;
                 String authorEmail;
+                MultiLanguageString body;
                 MultiLanguageString excerpt;
                 MultiLanguageString keywords;
                 DateTime lastModification;
@@ -6360,60 +5189,13 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
                 Boolean sticky;
                 Integer priority;
                 Boolean publication;
+                DateTime creationDate;
     }
 
-                        class functionalities.ExecutionPath  {
-                            String executionPath;
-                            String contentId;
-}
-
-            class functionalities.Functionality extends contents.Element {
-                //MultiLanguageString description;
-                //Integer orderInModule;
-                //String parameters;
-                //UUID uuid; // TODO: replace uuid by relative content ids
-                String executionPath;
-                //Boolean principal;
-                //Boolean relative;
-                Boolean visible;
-    }
-    
-            class contents.FunctionalityCall extends contents.Element {
-                
-            }
-
-    class functionalities.FunctionalityParameter  {
-        String name;
-}
-
-        class contents.Container extends contents.Content {
-            Boolean maximizable;
-            String prefix;
-    }
-
-            class contents.Portal extends contents.Container {
-            }
-
-            class contents.MetaDomainObjectPortal extends contents.Portal {
-                String type;
-            }
-
-            class contents.ContentJump extends contents.Portal {
-            }
-            
-            class functionalities.Module extends contents.Container {
-                //Boolean maximized;
-                //String prefix;
-                String executionPath;
-                Boolean visible;
-            }
-
-                class messaging.AnnouncementBoard extends contents.Container {
-                    Group managers;
+                class messaging.AnnouncementBoard {
+                    DateTime creationDate;
+                    MultiLanguageString name;
                     Boolean mandatory;
-                    Group readers;
-                    Group writers;
-                    Group approvers;
                 }
 
                     class messaging.ExecutionCourseAnnouncementBoard extends messaging.AnnouncementBoard {
@@ -6422,40 +5204,27 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
                             ExecutionCourseBoardPermittedGroupType executionCoursePermittedWriteGroupType;
                     }
 
-                    class messaging.PartyAnnouncementBoard extends messaging.AnnouncementBoard {
-                        }
-
-                        class messaging.UnitAnnouncementBoard extends messaging.PartyAnnouncementBoard {
+                        class messaging.UnitAnnouncementBoard extends messaging.AnnouncementBoard {
                                 UnitBoardPermittedGroupType unitPermittedManagementGroupType;
                                 UnitBoardPermittedGroupType unitPermittedReadGroupType;
                                 UnitBoardPermittedGroupType unitPermittedWriteGroupType;
                         }
 
 
-    class contents.Node  {
-        Boolean ascending;
-        Boolean visible;
-        String contentId;
+    class messaging.ConversationMessage {
+        DateTime creationDate;
+        MultiLanguageString body;
     }
 
-        class contents.DateOrderedNode extends contents.Node {
-        }
-
-        class contents.ExplicitOrderNode extends contents.Node {
-            Integer nodeOrder;
-        }
-        
-        class messaging.AnnouncementNode extends contents.Node {
-        }
-    
-        
-    class messaging.ConversationMessage extends contents.Element {
+    class messaging.ConversationThread {
+        DateTime creationDate;
+        MultiLanguageString title;
     }
 
-    class messaging.ConversationThread extends contents.Container {
-    }
-
-    class messaging.Forum extends contents.Container {
+    class messaging.Forum {
+        DateTime creationDate;
+        MultiLanguageString name;
+        MultiLanguageString description;
     }
 
     class messaging.ForumSubscription  {
@@ -6468,18 +5237,38 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
         class messaging.DepartmentForum extends messaging.Forum {
         }
 
-    class Item extends contents.Container {
-        Boolean enabled;
-        Boolean showName;
+    public class cms.CmsContent {
+        public MultiLanguageString name;   
+        protected MultiLanguageString normalizedName;
+        public Boolean enabled;
+        public Integer order;
+        boolean visible;
+    }
+        
+    public class Item extends cms.CmsContent {
+        public MultiLanguageString body;
+        public Boolean showName;
     }
 
-    class Section extends contents.Container {
-        Boolean enabled;
-        YearMonthDay modificationDate;
-        Boolean showSubSections;
+    public class Section extends cms.CmsContent {
+        public DateTime creationDate;
+        public DateTime modificationDate;
+        public Boolean showSubSections;
+    }
+    
+    public class cms.TemplatedSection extends Section {
+        protected String customPath;        
+    }
+    
+    public class cms.TemplatedSectionInstance extends Section {
+    }
+    
+    public class cms.SiteTemplate {
+        protected SiteTemplateController controller;
     }
 
-    class Site extends contents.Portal {
+    class Site {
+        MultiLanguageString description;
         String alternativeSite;
         String style;
     }
@@ -6559,60 +5348,13 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
             Boolean showCurrentAttendingExecutionCourses;
             Boolean showCurrentExecutionCourses;
             Boolean showEmail;
-            Boolean showInterests;
             Boolean showMobileTelephone;
-            Boolean showParticipations;
-            Boolean showPatents;
             Boolean showPhoto;
-            Boolean showPrizes;
-            Boolean showPublications;
             Boolean showResearchUnitHomepage;
             Boolean showTelephone;
             Boolean showUnit;
             Boolean showWorkTelephone;
         }
-
-        class DeployNotifier  {
-            Boolean notifyUsers;
-            DateTime timeStamp;
-        }   
-        
-        
-class log.requests.RequestMapping  {
-    String path;
-    String parameters;
-}
-
-
-class log.requests.RequestLogYear  {
-    Integer year;
-}
-
-class log.requests.RequestLogMonth  {
-    Integer monthOfYear;
-}
-
-class log.requests.RequestLogDay  {
-    Integer dayOfMonth;
-}
-    
-class log.requests.RequestLog  {
-    String queryString;
-    DateTime requestTime;
-    String requester;
-    String requestAttributes;
-    String sessionAttributes;
-    String referer;
-    Boolean post;
-}   
-    
-class log.requests.ErrorLog  {
-    String stackTrace;
-}   
-
-class log.requests.ExceptionType  {
-    String type;
-}
 
 class caseHandling.Process  {
     
@@ -7113,9 +5855,6 @@ class QueueJobWithFile extends QueueJob {
 
 class QueueJobResultFile extends documents.GeneratedDocument{}
 
-class reports.ParkingDataReportFile extends QueueJobWithFile {
-}
-
 class reports.GepReportFile extends QueueJobWithFile {
     String type;
     DegreeType degreeType;
@@ -7146,7 +5885,6 @@ class reports.RaidesPhdReportFile extends reports.GepReportFile {}
 class reports.RaidesSpecializationReportFile extends reports.GepReportFile {}
 class reports.SummaryOccupancyReportFile extends reports.GepReportFile {}
 class reports.WrittenEvaluationReportFile extends reports.GepReportFile {}
-class reports.PublicationReportFile extends reports.GepReportFile {}
 
 class PublicRelationsStudentListQueueJob extends QueueJobWithFile{
     Boolean active;
@@ -7478,7 +6216,6 @@ class phd.alert.PhdAlert extends Alert {
 }
 
     class phd.alert.PhdCustomAlert extends phd.alert.PhdAlert {
-        Group targetGroup;
         Boolean sendEmail;
         LocalDate whenToFire;
         Boolean userDefined;
@@ -7644,19 +6381,6 @@ class phd.log.PhdLogEntry  {
 }
 
 /* End of Phd Module */
-
-class PendingRequest {
-    DateTime generationDate;
-    String url;
-    Boolean post;
-    String buildVersion;
-}
-
-class PendingRequestParameter {
-    Boolean attribute;
-    String parameterKey;
-    String parameterValue;
-}
 
 class candidacy.MeasurementTest  {
     EntryPhase entryPhase;
@@ -7986,7 +6710,6 @@ class inquiries.InquiryResult  {
 
 class inquiries.InquiryResultComment  {
 	String comment;
-	Group allowedToView;
 	Integer resultOrder;
 	ResultPersonCategory personCategory;
 }
@@ -8188,18 +6911,20 @@ class AppUserSession {
 class AppUserAuthorization {
 }
 
-class Instalation {
+class Installation {
 	String instituitionURL;
 	String instituitionEmailDomain;
-	String instalationName;
-	String instalationDomain;
 }
 
-class accessControl.FenixPersistentGroup extends .org.fenixedu.bennu.core.domain.groups.CustomGroup;
+class accessControl.FenixPersistentGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.RoleCustomGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentRoleGroup extends accessControl.FenixPersistentGroup;
 
 class accessControl.FenixPredicateGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.StrategyBasedGroup extends accessControl.FenixPredicateGroup {
+    protected GroupStrategy strategy;
+}
 
 class accessControl.PersistentStudentGroup extends accessControl.FenixPredicateGroup {
     public DegreeType degreeType;
@@ -8289,26 +7014,19 @@ class accessControl.PersistentProfessorshipsGroup extends accessControl.FenixPre
 
 class accessControl.PersistentMembersLinkGroup extends accessControl.FenixPersistentGroup;
 
+
+
+
 /*
  * Relations definitions
  * 
  */
 
-relation BennuInstalation {
+relation BennuInstallation {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
 		multiplicity 1..1;
 	}
-	Instalation playsRole instalation {
-		multiplicity 0..1;
-	}
-}
-
-relation RootDomainObjectDSpaceFileStorage {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
-		multiplicity 1..1;
-	}
-	
-	DSpaceFileStorage playsRole dSpaceFileStorage {
+	Installation playsRole installation {
 		multiplicity 0..1;
 	}
 }
@@ -8860,7 +7578,7 @@ relation InquiryRoomAnswerRoom {
 	inquiries.InquiryRoomAnswer playsRole inquiryRoomAnswers {
 		multiplicity *;
 	}
-	space.AllocatableSpace playsRole room;
+	.org.fenixedu.spaces.domain.Space playsRole room;
 }
 
 relation QuestionAnswerInquiryAnswer {
@@ -9132,7 +7850,7 @@ relation MeasurementTestExecutionYear {
 }
 
 relation MeasurementTestCampus {
-    space.Campus playsRole campus;
+    .org.fenixedu.spaces.domain.Space playsRole campus;
     
     candidacy.MeasurementTest playsRole measurementTests {
         multiplicity *;
@@ -9141,7 +7859,7 @@ relation MeasurementTestCampus {
 
 
 relation RootDomainObjectDefaultCampus {
-	space.Campus playsRole defaultCampus;
+	.org.fenixedu.spaces.domain.Space playsRole defaultCampus;
 	.org.fenixedu.bennu.core.domain.Bennu playsRole defaultCampusRootDomainObject;
 }
 
@@ -10355,25 +9073,11 @@ relation AnnualEventExecutionYear {
     }
 }
 
-relation AnswerAtomicQuestion {
-    tests.NewAnswer playsRole answers {
-        multiplicity *;
-    }
-    tests.NewAtomicQuestion playsRole atomicQuestion;
-}
-
 relation AnswerExportProposal {
     ExportGrouping playsRole exportGroupingReceivers {
         multiplicity *;
     }
     Person playsRole receiverPerson;
-}
-
-relation AnswerPerson {
-    tests.NewAnswer playsRole answers {
-        multiplicity *;
-    }
-    Person playsRole person;
 }
 
 relation AnyCurricularCourseDegree {
@@ -10388,11 +9092,6 @@ relation AnyCurricularCourseDepartmentUnit {
         multiplicity *;
     }
     organizationalStructure.DepartmentUnit playsRole departmentUnit;
-}
-
-relation ArticleAssociationArticle {
-    research.activity.ArticleAssociation playsRole articleAssociation;
-    research.result.publication.Article playsRole article;
 }
 
 relation AttendsEnrolment {
@@ -10460,46 +9159,6 @@ relation DocumentRequestDocuments {
     }
 }
 
-relation LibraryMissingCardsDocuments { 
-  library.LibraryCard playsRole source {
-    multiplicity *;
-  }
-  documents.LibraryMissingCardsDocument playsRole document {
-    multiplicity *;
-  }
-}
-
-relation LibraryMissingLettersDocuments { 
-  library.LibraryCard playsRole source {
-    multiplicity *;
-  }
-  documents.LibraryMissingLettersDocument playsRole letters {
-    multiplicity *;
-  }
-}
-
-relation RootDomainObjectLibraryDocument { 
-  library.LibraryDocument playsRole libraryDocument {
-    multiplicity *;
-  }
-  .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-}
-
-relation LibraryDocumentLibraryMissingCardsDocument { 
-  library.LibraryDocument playsRole libraryDocument;
-  documents.LibraryMissingCardsDocument playsRole cardDocument;
-}
-
-relation LibraryDocumentLibraryMissingLettersDocument { 
-  library.LibraryDocument playsRole libraryDocument;
-  documents.LibraryMissingLettersDocument playsRole letterDocument;
-}
-
-relation BlueprintBlueprintFile {
-    space.Blueprint playsRole blueprint;
-    space.BlueprintFile playsRole blueprintFile;
-}
-
 relation BranchCurricularCourseScope {
     Branch playsRole branch;
     CurricularCourseScope playsRole scopes {
@@ -10508,7 +9167,7 @@ relation BranchCurricularCourseScope {
 }
 
 relation CampusInformationLocality {
-    space.CampusInformation playsRole campusInformation {
+    .org.fenixedu.spaces.domain.Space playsRole campusInformation {
         multiplicity *;
     }
     Locality playsRole locality;
@@ -10521,30 +9180,9 @@ relation CandidacyCandidacyDocument {
     }
 }
 
-relation CandidacyCaseStudyChoice {
-    Seminaries.SeminaryCandidacy playsRole candidacy;
-    Seminaries.CaseStudyChoice playsRole caseStudyChoices {
-        multiplicity *;
-    }
-}
-
-relation CandidacyCurricularCourse {
-    Seminaries.SeminaryCandidacy playsRole associatedCandidancies {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
-}
-
 relation CandidacyDocumentCandidacyDocumentFile {
     candidacy.CandidacyDocument playsRole candidacyDocument;
     candidacy.CandidacyDocumentFile playsRole file;
-}
-
-relation CandidacyModality {
-    Seminaries.SeminaryCandidacy playsRole associatedModalities {
-        multiplicity *;
-    }
-    Seminaries.Modality playsRole modality;
 }
 
 relation CandidacyRootDomainObject {
@@ -10566,13 +9204,6 @@ relation CandidacySituationPerson {
     candidacy.CandidacySituation playsRole candidacySituations {
         multiplicity *;
     }
-}
-
-relation CandidacyStudent {
-    Seminaries.SeminaryCandidacy playsRole associatedCandidancies {
-        multiplicity *;
-    }
-    student.Registration playsRole student;
 }
 
 relation CandidateEnrolmentCurricularCourse {
@@ -10612,20 +9243,6 @@ relation CareerTeacherTemp {
     Teacher playsRole teacher {
        multiplicity 0..1;
     }
-}
-
-relation CaseStudyCaseStudyChoice {
-    Seminaries.CaseStudy playsRole caseStudy;
-    Seminaries.CaseStudyChoice playsRole seminaryCandidacies {
-        multiplicity *;
-    }
-}
-
-relation ChoiceMultipleChoiceQuestion {
-    tests.NewChoice playsRole choices {
-        multiplicity *;
-    }
-    tests.NewMultipleChoiceQuestion playsRole multipleChoiceQuestion;
 }
 
 relation CompetenceCourseDepartment {
@@ -10772,11 +9389,6 @@ relation ConclusionProcessVersionIngressionYear {
     ExecutionYear playsRole ingressionYear;
 }
 
-relation ConferenceArticlesEventConferenceArticlesAssociation {
-    research.result.publication.ConferenceArticles playsRole conferenceArticle;
-    research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociation;
-}
-
 relation ConnectionRuleAccountabilityType {
     organizationalStructure.AccountabilityType playsRole accountabilityType;
     organizationalStructure.ConnectionRule playsRole connectionRules {
@@ -10831,34 +9443,11 @@ relation PersonIncompatibleVigilant {
     Person playsRole incompatibleVigilant;
 }
 
-relation CooperationUnit {
-    research.activity.Cooperation playsRole cooperation {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole unit;
-}
-
 relation CoordinatorTeacher {
     Coordinator playsRole coordinators {
         multiplicity *;
     }
     Person playsRole person;
-}
-
-relation CorrectorAtomicQuestion {
-    tests.NewCorrector playsRole correctors {
-        multiplicity *;
-    }
-    tests.NewAtomicQuestion playsRole atomicQuestion;
-}
-
-relation CourseEquivalencyTheme {
-    Seminaries.CourseEquivalency playsRole courseEquivalencies {
-        multiplicity *;
-    }
-    Seminaries.Theme playsRole themes {
-        multiplicity *;
-    }
 }
 
 relation CourseGroupContext {
@@ -10910,25 +9499,11 @@ relation CreditsDismissalNoEnrolCurricularCourses {
 
 
 
-relation CronScriptStateCronScriptInvocation {
-    system.CronScriptState playsRole cronScriptState;
-    system.CronScriptInvocation playsRole cronScriptInvocations {
-        multiplicity *;
-    }
-}
-
 relation CurricularCourseCompetenceCourse {
     CurricularCourse playsRole associatedCurricularCourses {
         multiplicity *;
     }
     CompetenceCourse playsRole competenceCourse;
-}
-
-relation CurricularCourseCourseEquivalency {
-    Seminaries.CourseEquivalency playsRole courseEquivalencies {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
 }
 
 relation CurricularCourseCurricularCourseEquivalence {
@@ -10987,20 +9562,6 @@ relation CurricularCourseNotNeedToEnrollInCurricularCourse {
         multiplicity *;
     }
     CurricularCourse playsRole curricularCourse;
-}
-
-relation CurricularCoursePrecedence {
-    precedences.Precedence playsRole precedences {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
-}
-
-relation CurricularCourseRestrictionByCurricularCourse {
-    precedences.RestrictionByCurricularCourse playsRole restrictionsByCurricularCourse {
-        multiplicity *;
-    }
-    CurricularCourse playsRole precedentCurricularCourse;
 }
 
 relation CurricularCourseScientificArea {
@@ -11269,20 +9830,6 @@ relation DegreeUnit {
     organizationalStructure.DegreeUnit playsRole unit;
 }
 
-relation DeleteFileLogRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    DeleteFileLog playsRole DeleteFileLogs {
-        multiplicity *;
-    }
-}
-
-relation DeleteFileRequestRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    DeleteFileRequest playsRole DeleteFileRequests {
-        multiplicity *;
-    }
-}
-
 relation DepartmentCreditsPoolRootDomainObject {
     DepartmentCreditsPool playsRole departmentCreditsPools {
         multiplicity *;
@@ -11418,48 +9965,6 @@ relation EmployeeHistoricWorkingPlaceCostCenter {
 relation EmployeePerson {
     Employee playsRole employee;
     Person playsRole person;
-}
-
-relation FakeEnrollmentPerson {
-	Person playsRole person;
-	FakeEnrollment playsRole fakeEnrollment {
-		multiplicity *;
-	}
-}
-
-relation FakeEnrollmentRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	FakeEnrollment playsRole fakeEnrollments {
-		multiplicity *;
-	}
-}
-
-relation FakeShiftRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	FakeShift playsRole fakeShifts {
-		multiplicity *;
-	}
-}
-
-relation FakeShiftEnrollmentRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	FakeShiftEnrollment playsRole fakeShiftEnrollments {
-		multiplicity *;
-	}
-}
-
-relation FakeShiftEnrollments {
-	FakeShift playsRole fakeShift;
-	FakeShiftEnrollment playsRole fakeShiftEnrollments {
-		multiplicity *;
-	}
-}
-
-relation FakeShiftEnrollmentPerson {
-	Person playsRole person;
-	FakeShiftEnrollment playsRole fakeShiftEnrollments {
-		multiplicity *;
-	}
 }
 
 relation EnrolmentCreditsInAnySecundaryArea {
@@ -11612,27 +10117,6 @@ relation EvaluationExecutionCourse {
     }
 }
 
-relation EventEditionEventConferenceArticlesAssociation {
-    research.activity.EventEdition playsRole eventEdition;
-    research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociations {
-        multiplicity *;
-    }
-}
-
-relation EventEventEdition {
-    research.activity.ResearchEvent playsRole event;
-    research.activity.EventEdition playsRole eventEditions {
-        multiplicity *;
-    }
-}
-
-relation EventProjectEventAssociation {
-    research.project.ProjectEventAssociation playsRole associatedProjects {
-        multiplicity *;
-    }
-    research.activity.EventEdition playsRole eventEdition;
-}
-
 relation ExamCoordinatorBelongToUnit {
     vigilancy.ExamCoordinator playsRole examCoordinators {
         multiplicity *;
@@ -11756,7 +10240,7 @@ relation ExecutionDegreeCampus {
     ExecutionDegree playsRole executionDegrees {
         multiplicity *;
     }
-    space.Campus playsRole campus;
+    .org.fenixedu.spaces.domain.Space playsRole campus;
 }
 
 relation ExecutionDegreeCoordinator {
@@ -12012,13 +10496,6 @@ relation PreviousPhotograph {
    Photograph playsRole next;
 }
 
-relation PhotographContent {
-    Photograph playsRole photograph;
-    PhotographContent playsRole content {
-        multiplicity *;
-    }
-}
-
 relation PhotographOriginal {
 	Photograph playsRole photograph;
 	photograph.PictureOriginal playsRole original;
@@ -12031,6 +10508,18 @@ relation FileTagging {
     UnitFile playsRole taggedFiles {
         multiplicity *;
     }
+}
+
+relation ExecutionCourseForumCourse {
+    messaging.ExecutionCourseForum playsRole forum {
+        multiplicity *;
+    }
+    ExecutionCourse playsRole executionCourse;
+}
+
+relation DepartmentForumDepartment {
+    messaging.DepartmentForum playsRole forum;
+    Department playsRole department;
 }
 
 relation ForumSubscriptionForum {
@@ -12047,23 +10536,46 @@ relation ForumSubscriptionPerson {
     Person playsRole person;
 }
 
+relation ForumConversationThreads {
+    public messaging.Forum playsRole forum;
+    public messaging.ConversationThread playsRole conversationThread {
+        multiplicity *;
+    }
+}
+
+relation ConversationThreadHasMessages {
+    public messaging.ConversationThread playsRole conversationThread;
+    public messaging.ConversationMessage playsRole message {
+        multiplicity *;
+    }
+}
+
+relation ConversationMessageCreator {
+    public Person playsRole creator;
+    public messaging.ConversationMessage playsRole conversationMessage {
+        multiplicity *;
+    }
+}
+
+relation ConversationThreadCreator {
+    public Person playsRole creator;
+    public messaging.ConversationThread playsRole conversationThread {
+        multiplicity *;
+    }
+}
+
+relation ForumCreator {
+    public Person playsRole creator;
+    public messaging.Forum playsRole forum {
+        multiplicity *;
+    }
+}
+
 relation FunctionParentInherentFunction {
     organizationalStructure.Function playsRole inherentFunctions {
         multiplicity *;
     }
     organizationalStructure.Function playsRole parentInherentFunction;
-}
-
-relation GaugingTestResultStudent {
-    gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
-    student.Registration playsRole student;
-}
-
-relation GenericEventGenericEventSpaceOccupation {
-    GenericEvent playsRole genericEvent;
-    space.GenericEventSpaceOccupation playsRole genericEventSpaceOccupations {
-        multiplicity *;
-    }
 }
 
 relation GoalExecutionCourse {
@@ -12132,20 +10644,6 @@ relation GratuityValuesEmployee {
 relation GratuityValuesExecutionDegree {
     GratuityValues playsRole gratuityValues;
     ExecutionDegree playsRole executionDegree;
-}
-
-relation GroupElementQuestion {
-    tests.NewGroupElement playsRole parentElements {
-        multiplicity *;
-    }
-    tests.NewQuestion playsRole child;
-}
-
-relation GroupElementQuestionGroup {
-    tests.NewGroupElement playsRole childElements {
-        multiplicity *;
-    }
-    tests.NewQuestionGroup playsRole parent;
 }
 
 relation GroupExecutionDegree {
@@ -12339,7 +10837,7 @@ relation InquiriesRoomDomainRoom {
     oldInquiries.InquiriesRoom playsRole associatedInquiriesRooms {
         multiplicity *;
     }
-    space.AllocatableSpace playsRole room;
+    .org.fenixedu.spaces.domain.Space playsRole room;
 }
 
 relation InquiriesRoomInquiriesCourse {
@@ -12441,25 +10939,6 @@ relation InsuranceValueExecutionYear {
 relation InvitationParty {
     organizationalStructure.Party playsRole responsible;
     organizationalStructure.Invitation playsRole invitationAccountabilities {
-        multiplicity *;
-    }
-}
-
-relation AttachmentFileContent {
-    contents.Attachment playsRole attachment;
-    FileContent playsRole file;
-}
-
-relation JournalIssueArticleAssociation {
-    research.activity.JournalIssue playsRole journalIssue;
-    research.activity.ArticleAssociation playsRole articleAssociations {
-        multiplicity *;
-    }
-}
-
-relation JournalIssueScientificJournal {
-    research.activity.ScientificJournal playsRole scientificJournal;
-    research.activity.JournalIssue playsRole journalIssues {
         multiplicity *;
     }
 }
@@ -12661,39 +11140,11 @@ relation MasterDegreeThesisStudentCurricularPlan {
     StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
-relation MaterialSpaceOccupationMaterial {
-    material.Material playsRole material;
-    space.MaterialSpaceOccupation playsRole materialSpaceOccupations {
-        multiplicity *;
-    }
-}
-
 relation MetadataFromExecutionCourse {
     onlineTests.Metadata playsRole metadatas {
         multiplicity *;
     }
     ExecutionCourse playsRole executionCourse;
-}
-
-relation ModalityCourseEquivalency {
-    Seminaries.CourseEquivalency playsRole courseEquivalencies {
-        multiplicity *;
-    }
-    Seminaries.Modality playsRole modality;
-}
-
-relation ModelRestrictionModelGroup {
-    tests.NewModelRestriction playsRole childRestrictions {
-        multiplicity *;
-    }
-    tests.NewModelGroup playsRole parentGroup;
-}
-
-relation ModelRestrictionQuestion {
-    tests.NewModelRestriction playsRole modelRestrictions {
-        multiplicity *;
-    }
-    tests.NewQuestion playsRole question;
 }
 
 relation NonAffiliatedTeacherExecutionCourse {
@@ -12789,112 +11240,6 @@ relation OtherTypeCreditLineExecutionPeriod {
     ExecutionSemester playsRole executionPeriod;
 }
 
-relation ParentFAQSectionChildFAQEntry {
-    support.FAQEntry playsRole childEntries {
-        multiplicity *;
-    }
-    support.FAQSection playsRole parentSection;
-}
-
-relation ParentFAQSectionChildFAQSection {
-    support.FAQSection playsRole childSections {
-        multiplicity *;
-    }
-    support.FAQSection playsRole parentSection;
-}
-
-relation ParkingFileNewParkingDocument {
-    parking.ParkingFile playsRole parkingFile;
-    parking.NewParkingDocument playsRole newParkingDocument;
-}
-
-relation ParkingPartyNewParkingDocument {
-    parking.ParkingParty playsRole parkingParty;
-    parking.NewParkingDocument playsRole driverLicenseDocument;
-}
-
-relation ParkingPartyParkingGroup {
-    parking.ParkingGroup playsRole parkingGroup;
-    parking.ParkingParty playsRole parkingParties {
-        multiplicity *;
-    }
-}
-
-relation ParkingRequestNewParkingDocument {
-    parking.ParkingRequest playsRole parkingRequest;
-    parking.NewParkingDocument playsRole driverLicenseDocument;
-    }
-
-relation ParkingRequestParkingParty {
-    parking.ParkingParty playsRole parkingParty;
-    parking.ParkingRequest playsRole parkingRequests {
-        multiplicity *;
-    }
-}
-
-relation PartyParkingHistoryParty {
-    organizationalStructure.Party playsRole party;
-    parking.ParkingPartyHistory playsRole parkingPartyHistories {
-        multiplicity *;
-    }
-}
-
-relation ParkingPartyHistoryParkingGroup {
-    parking.ParkingGroup playsRole parkingGroup;
-    parking.ParkingPartyHistory playsRole parkingPartyHistories {
-        multiplicity *;
-    }
-}
-
-relation ParticipationParty {
-    organizationalStructure.Party playsRole party;
-    research.activity.Participation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.Participation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationsInCooperation {
-    research.activity.Cooperation playsRole cooperation;
-    research.activity.CooperationParticipation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationsInEvent {
-    research.activity.ResearchEvent playsRole event;
-    research.activity.EventParticipation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationsInEventEdition {
-    research.activity.EventEdition playsRole eventEdition;
-    research.activity.EventEditionParticipation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationsInJournalIssue {
-    research.activity.JournalIssue playsRole journalIssue;
-    research.activity.JournalIssueParticipation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationsInScientificJournal {
-    research.activity.ScientificJournal playsRole scientificJournal;
-    research.activity.ScientificJournalParticipation playsRole participations {
-        multiplicity *;
-    }
-}
-
 relation PartyPartySocialSecurityNumber {
     organizationalStructure.Party playsRole party;
     organizationalStructure.PartySocialSecurityNumber playsRole partySocialSecurityNumber;
@@ -12928,11 +11273,11 @@ relation PartyAccount {
     }
 }
 
-relation PartyAnnouncementBoard {
-    messaging.PartyAnnouncementBoard playsRole boards {
+relation UnitAnnouncementBoard {
+    messaging.UnitAnnouncementBoard playsRole boards {
         multiplicity *;
     }
-    organizationalStructure.Party playsRole party;
+    organizationalStructure.Unit playsRole unit;
 }
 
 relation PartyCountry {
@@ -12940,18 +11285,6 @@ relation PartyCountry {
         multiplicity *;
     }
     Country playsRole nationality;
-}
-
-relation PartyInterest {
-    organizationalStructure.Party playsRole party;
-    research.ResearchInterest playsRole researchInterests {
-        multiplicity *;
-    }
-}
-
-relation PartyParkingParty {
-    organizationalStructure.Party playsRole party;
-    parking.ParkingParty playsRole parkingParty;
 }
 
 relation PartyPartyContact {
@@ -12981,13 +11314,6 @@ relation PartyPartyType {
     organizationalStructure.Party playsRole parties {
         multiplicity *;
     }
-}
-
-relation PartyResourceResponsibility {
-    resource.ResourceResponsibility playsRole resourceResponsibility {
-        multiplicity *;
-    }
-    organizationalStructure.Party playsRole party;
 }
 
 relation PartyTypeChildConnectionRule {
@@ -13059,20 +11385,6 @@ relation PaymentTransactionGuideEntry {
 relation PeriodNextPeriod {
     OccupationPeriod playsRole previousPeriod;
     OccupationPeriod playsRole nextPeriod;
-}
-
-relation PermissionUnitParty {
-    tests.NewPermissionUnit playsRole permissionUnits {
-        multiplicity *;
-    }
-    organizationalStructure.Party playsRole party;
-}
-
-relation PermissionUnitQuestion {
-    tests.NewPermissionUnit playsRole permissionUnits {
-        multiplicity *;
-    }
-    tests.NewQuestion playsRole question;
 }
 
 relation PersistentAccessGroupRoot {
@@ -13154,11 +11466,11 @@ relation PersistentGroupMembersUnit {
     }
 }
 
-relation RoleCustomGroupRole {
+relation PersistentRoleGroupRole {
     public Role playsRole role {
         multiplicity 1..1;
     }
-    public accessControl.RoleCustomGroup playsRole roleCustomGroup {
+    public accessControl.PersistentRoleGroup playsRole roleGroup {
         multiplicity 0..1;
     }
 }
@@ -13171,20 +11483,6 @@ relation PersonAccountPerson {
 relation PersonAccountingEvent {
     organizationalStructure.Party playsRole party;
     accounting.Event playsRole events {
-        multiplicity *;
-    }
-}
-
-relation PersonArticleAssociation {
-    Person playsRole creator;
-    research.activity.ArticleAssociation playsRole articleAssociations {
-        multiplicity *;
-    }
-}
-
-relation PersonBlueprint {
-    Person playsRole creationPerson;
-    space.Blueprint playsRole blueprints {
         multiplicity *;
     }
 }
@@ -13212,34 +11510,6 @@ relation PersonDepartment {
     }
 }
 
-relation PersonEventConferenceArticlesAssociation {
-    Person playsRole person;
-    research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociations {
-        multiplicity *;
-    }
-}
-
-relation PersonExtensionExtension {
-    material.Extension playsRole extension;
-    material.PersonExtension playsRole persons {
-        multiplicity *;
-    }
-}
-
-relation PersonExtensionPerson {
-    Person playsRole person;
-    material.PersonExtension playsRole extensions {
-        multiplicity *;
-    }
-}
-
-relation PersonHasPersonalGroups {
-    Person playsRole person;
-    PersonalGroup playsRole personalGroups {
-        multiplicity *;
-    }
-}
-
 relation PersonHomepage {
     Person playsRole person;
     homepage.Homepage playsRole homepage;
@@ -13257,13 +11527,6 @@ relation PersonNamePersonNamePart {
 relation PersonPersonName {
     Person playsRole person;
     person.PersonName playsRole personName;
-}
-
-relation PersonPersonSpaceOccupation {
-    space.PersonSpaceOccupation playsRole personSpaceOccupations {
-        multiplicity *;
-    }
-    Person playsRole person;
 }
 
 relation PersonRole {
@@ -13314,20 +11577,6 @@ relation PhysicalAddressCountryOfResidence {
         multiplicity *;
     }
     Country playsRole countryOfResidence;
-}
-
-relation PictureMaterialFilePictureMaterial {
-    tests.NewPictureMaterial playsRole pictureMaterials {
-        multiplicity *;
-    }
-    tests.PictureMaterialFile playsRole pictureMaterialFile;
-}
-
-relation PrecedenceRestriction {
-    precedences.Precedence playsRole precedence;
-    precedences.Restriction playsRole restrictions {
-        multiplicity *;
-    }
 }
 
 relation PrecedentDegreeInformationCountry {
@@ -13389,22 +11638,6 @@ relation PrecedentDegreeInformationStudentCurricularPlan {
     }
 }
 
-relation PrizeRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.Prize playsRole prizes {
-        multiplicity *;
-    }
-}
-
-relation PrizeWinners {
-    organizationalStructure.Party playsRole parties {
-        multiplicity *;
-    }
-    research.Prize playsRole prizes {
-        multiplicity *;
-    }
-}
-
 relation ProfessorshipShiftProfessorship {
     Professorship playsRole professorship;
     ShiftProfessorship playsRole associatedShiftProfessorship {
@@ -13440,28 +11673,6 @@ relation ProjectsDeparments {
 	Department playsRole deparments {
 		multiplicity *;
 	}
-}
-
-
-relation ProjectParticipationParty {
-    organizationalStructure.Party playsRole party;
-    research.project.ProjectParticipation playsRole projectParticipations {
-        multiplicity *;
-    }
-}
-
-relation ProjectParticipationProject {
-    research.project.Project playsRole project;
-    research.project.ProjectParticipation playsRole projectParticipations {
-        multiplicity *;
-    }
-}
-
-relation ProjectProjectEventAssociation {
-    research.project.ProjectEventAssociation playsRole associatedEvents {
-        multiplicity *;
-    }
-    research.project.Project playsRole project;
 }
 
 relation ProjectSubmissionAttends {
@@ -13552,65 +11763,11 @@ relation PublicationCollaborators {
     }
 }
 
-relation PublicationThesisPointsProcessThesis {
-    research.result.publication.Thesis playsRole publication;
-    thesis.Thesis playsRole thesis;
-}
-
 relation PublicationsNumberTeacher {
     teacher.PublicationsNumber playsRole associatedPublicationsNumbers {
         multiplicity *;
     }
     Teacher playsRole teacher;
-}
-
-relation PunctualRoomsOccupationCommentPerson {
-    Person playsRole owner;
-    PunctualRoomsOccupationComment playsRole punctualRoomsOccupationComments {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestGenericEvent {
-    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequest;
-    GenericEvent playsRole genericEvents {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestPerson {
-    Person playsRole requestor;
-    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestCampus {
-    space.Campus playsRole campus;
-    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestPunctualRoomsOccupationComment {
-    PunctualRoomsOccupationRequest playsRole request;
-    PunctualRoomsOccupationComment playsRole comments {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestPunctualRoomsOccupationStateInstant {
-    PunctualRoomsOccupationRequest playsRole request;
-    PunctualRoomsOccupationStateInstant playsRole stateInstants {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestToProcessPerson {
-    Person playsRole owner;
-    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequestsToProcess {
-        multiplicity *;
-    }
 }
 
 relation QualificationCountry {
@@ -13638,11 +11795,6 @@ relation QualificationModifiedByPerson {
         multiplicity *;
     }
     Person playsRole modifiedBy;
-}
-
-relation QuestionBankParty {
-    tests.NewQuestionBank playsRole questionBank;
-    organizationalStructure.Party playsRole owner;
 }
 
 relation QuestionFromTestQuestion {
@@ -13917,143 +12069,11 @@ relation ResearcherPerson {
     research.Researcher playsRole researcher;
 }
 
-relation ResearchPartyContact {
-    contacts.PartyContact playsRole availableContacts {
-        multiplicity *;
-    } 
-    research.Researcher playsRole researcher;
-}
-
-relation ResearchResultCountry {
-    Country playsRole country;
-    research.result.ResearchResult playsRole results {
-        multiplicity *;
-    }
-}
-
-relation ResearchResultCreator {
-    research.result.ResearchResult playsRole createdResults {
-        multiplicity *;
-    }
-    Person playsRole creator;
-}
-
-relation PreferredPublicationRootDomainObject {
-    research.result.publication.PreferredPublication playsRole preferredPublication {
-        multiplicity *;
-    }
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-    	multiplicity 1..1;
-    }
-}
-
-relation PreferredPublicationsOwner {
-    research.result.publication.PreferredPublication playsRole preferredPublication {
-        multiplicity *;
-    }
-    Person playsRole personThatPrefers {
-        multiplicity 1..1;
-    }
-}
-
-relation PreferredPublicationsPublication {
-    research.result.publication.ResearchResultPublication playsRole preferredPublication {
-        multiplicity 1..1;
-    }
-    research.result.publication.PreferredPublication playsRole personThatPrefers {
-        multiplicity *;
-    }
-}
-
-relation ResearchResultPrize {
-    research.result.ResearchResult playsRole researchResult;
-    research.Prize playsRole prizes {
-        multiplicity *;
-    }
-}
-
-relation ResearchResultUnitAssociationResult {
-    research.result.ResultUnitAssociation playsRole resultUnitAssociations {
-        multiplicity *;
-    }
-    research.result.ResearchResult playsRole result;
-}
-
-relation ResourceAllocationResource {
-    resource.Resource playsRole resource;
-    resource.ResourceAllocation playsRole resourceAllocations {
-        multiplicity *;
-    }
-}
-
-relation ResourceResourceResponsibility {
-    resource.ResourceResponsibility playsRole resourceResponsibility {
-        multiplicity *;
-    }
-    resource.Resource playsRole resource;
-}
-
-relation ResulUnitAssociationUnit {
-    research.result.ResultUnitAssociation playsRole resultUnitAssociations {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole unit;
-}
-
-relation ResultDocumentFileResearchResult {
-    research.result.ResearchResultDocumentFile playsRole resultDocumentFiles {
-        multiplicity *;
-    }
-    research.result.ResearchResult playsRole result;
-}
-
-relation ResultParticipationPerson {
-    Person playsRole person;
-    research.result.ResultParticipation playsRole resultParticipations {
-        multiplicity *;
-    }
-}
-
-relation ResultParticipationResearchResult {
-    research.result.ResultParticipation playsRole resultParticipations {
-        multiplicity *;
-    }
-    research.result.ResearchResult playsRole result;
-}
-
-relation ResultTeacherResearchResult {
-    research.result.ResultTeacher playsRole resultTeachers {
-        multiplicity *;
-    }
-    research.result.ResearchResult playsRole result;
-}
-
-relation ResultTeacherTeacher {
-    research.result.ResultTeacher playsRole teacherResults {
-        multiplicity *;
-    }
-    Teacher playsRole teacher;
-}
-
-relation RoomClassificationRoomClassification {
-    space.RoomClassification playsRole childRoomClassifications {
-        multiplicity *;
-    }
-    space.RoomClassification playsRole parentRoomClassification;
-}
-
-relation RoomRoomClassification {
-    space.RoomInformation playsRole roomInformations {
-        multiplicity *;
-    }
-    space.RoomClassification playsRole roomClassification;
-}
-
 relation RoomSummary {
     Summary playsRole associatedSummaries {
         multiplicity *;
     }
-    space.AllocatableSpace playsRole room;
+    .org.fenixedu.spaces.domain.Space playsRole room;
 }
 
 relation RootDomainExamCoordinator {
@@ -14166,13 +12186,6 @@ relation RootDomainObjectAdvise {
     }
 }
 
-relation RootDomainObjectArticleAssociation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.ArticleAssociation playsRole articleAssociations {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectAttends {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Attends playsRole attendss {
@@ -14187,23 +12200,9 @@ relation RootDomainObjectBibliographicReference {
     }
 }
 
-relation RootDomainObjectBlueprint {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    space.Blueprint playsRole blueprints {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectBranch {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Branch playsRole branchs {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCandidacy {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.SeminaryCandidacy playsRole candidacys {
         multiplicity *;
     }
 }
@@ -14239,20 +12238,6 @@ relation RootDomainObjectCandidateSituation {
 relation RootDomainObjectCareer {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.Career playsRole careers {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCaseStudy {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.CaseStudy playsRole caseStudys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCaseStudyChoice {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.CaseStudyChoice playsRole caseStudyChoices {
         multiplicity *;
     }
 }
@@ -14299,13 +12284,6 @@ relation RootDomainObjectContributor {
     }
 }
 
-relation RootDomainObjectCooperation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.Cooperation playsRole cooperations {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectCoordinator {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Coordinator playsRole coordinators {
@@ -14323,13 +12301,6 @@ relation RootDomainObjectCostCenter {
 relation RootDomainObjectCountry {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Country playsRole countrys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCourseEquivalency {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.CourseEquivalency playsRole courseEquivalencys {
         multiplicity *;
     }
 }
@@ -14386,27 +12357,6 @@ relation RootDomainObjectCreditsInAnySecundaryArea {
 relation RootDomainObjectCreditsInScientificArea {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CreditsInScientificArea playsRole creditsInScientificAreas {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCronRegistry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    system.CronRegistry playsRole cronRegistry {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCronScriptInvocation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    system.CronScriptInvocation playsRole cronScriptInvocations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCronScriptState {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    system.CronScriptState playsRole cronScriptStates {
         multiplicity *;
     }
 }
@@ -14647,27 +12597,6 @@ relation RootDomainObjectEvaluationMethod {
     }
 }
 
-relation RootDomainObjectEvent {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.ResearchEvent playsRole events {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectEventConferenceArticlesAssociation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectEventEdition {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.EventEdition playsRole eventEditions {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectExecutionCourse {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ExecutionCourse playsRole executionCourses {
@@ -14764,20 +12693,6 @@ relation RootDomainObjectExternalRegistrationData {
     }
 }
 
-relation RootDomainObjectFAQEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    support.FAQEntry playsRole fAQEntrys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectFAQSection {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    support.FAQSection playsRole fAQSections {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectFirstYearShiftsCapacityToggleLog {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLogs {
@@ -14813,30 +12728,9 @@ relation RootDomainObjectFunctionalityPrinters {
     }
 }
 
-relation RootDomainObjectGaugingTestResult {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    gaugingTests.physics.GaugingTestResult playsRole gaugingTestResults {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectGeneralClassProperty {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     classProperties.GeneralClassProperty playsRole generalClassPropertys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGenericEvent {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    GenericEvent playsRole genericEvents {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGlossaryEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    support.GlossaryEntry playsRole glossaryEntrys {
         multiplicity *;
     }
 }
@@ -14900,13 +12794,6 @@ relation RootDomainObjectGuideEntry {
 relation RootDomainObjectGuideSituation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     GuideSituation playsRole guideSituations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectHasAvailabilityPolicy {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    functionalities.AvailabilityPolicy playsRole availabilityPolicy {
         multiplicity *;
     }
 }
@@ -14993,13 +12880,6 @@ relation RootDomainObjectInsuranceValue {
     }
 }
 
-relation RootDomainObjectJournalIssues {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.JournalIssue playsRole journalIssues {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectLesson {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Lesson playsRole lessons {
@@ -15017,13 +12897,6 @@ relation RootDomainObjectLessonPlanning {
 relation RootDomainObjectLocality {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Locality playsRole localities {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectManagementGroups {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    ManagementGroups playsRole managementGroups {
         multiplicity *;
     }
 }
@@ -15066,69 +12939,6 @@ relation RootDomainObjectMasterDegreeThesisDataVersion {
 relation RootDomainObjectMetadata {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.Metadata playsRole metadatas {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectModality {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.Modality playsRole modalitys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewAnswer {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewAnswer playsRole answers {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewCorrector {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewCorrector playsRole correctors {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewGroupElement {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewGroupElement playsRole groupElements {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewParkingDocument {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.NewParkingDocument playsRole newParkingDocuments {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewPermissionUnit {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewPermissionUnit playsRole permissionUnits {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewPresentationMaterial {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewPresentationMaterial playsRole presentationMaterials {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewTestElement {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewTestElement playsRole newTestElements {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewTestGroup {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewTestGroup playsRole testGroups {
         multiplicity *;
     }
 }
@@ -15192,41 +13002,6 @@ relation RootDomainObjectOldPublication {
 relation RootDomainObjectOrientation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.Orientation playsRole orientations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectParkingGroup {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingGroup playsRole parkingGroups {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectParkingParty {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingParty playsRole parkingParties {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectParkingPartyHistory {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingPartyHistory playsRole parkingPartyHistories {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectParkingRequest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingRequest playsRole parkingRequests {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectParkingRequestPeriod {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingRequestPeriod playsRole parkingRequestPeriods {
         multiplicity *;
     }
 }
@@ -15308,23 +13083,9 @@ relation RootDomainObjectPersonNamePart {
     }
 }
 
-relation RootDomainObjectPersonalGroup {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PersonalGroup playsRole personalGroups {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectPostingRule {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.PostingRule playsRole postingRules {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPrecedence {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    precedences.Precedence playsRole precedences {
         multiplicity *;
     }
 }
@@ -15346,27 +13107,6 @@ relation RootDomainObjectPrice {
 relation RootDomainObjectProfessorship {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Professorship playsRole professorships {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectProject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.project.Project playsRole projects {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectProjectEventAssociation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.project.ProjectEventAssociation playsRole projectEventAssociations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectProjectParticipation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.project.ProjectParticipation playsRole projectParticipations {
         multiplicity *;
     }
 }
@@ -15395,27 +13135,6 @@ relation RootDomainObjectProposal {
 relation RootDomainObjectPublicationsNumber {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.PublicationsNumber playsRole publicationsNumbers {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPunctualRoomsOccupationComment {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PunctualRoomsOccupationComment playsRole punctualRoomsOccupationComments {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPunctualRoomsOccupationRequest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPunctualRoomsOccupationStateInstant {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PunctualRoomsOccupationStateInstant playsRole punctualRoomsOccupationStateInstants {
         multiplicity *;
     }
 }
@@ -15497,20 +13216,6 @@ relation RootDomainObjectReimbursementGuideSituation {
     }
 }
 
-relation RootDomainObjectResearchInterest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.ResearchInterest playsRole researchInterests {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectResearchResult {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.result.ResearchResult playsRole results {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectResidenceCandidacies {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.ResidenceCandidacies playsRole residenceCandidaciess {
@@ -15518,54 +13223,7 @@ relation RootDomainObjectResidenceCandidacies {
     }
 }
 
-relation RootDomainObjectResource {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    resource.Resource playsRole resources {
-        multiplicity *;
-    }
-}
 
-relation RootDomainObjectResourceAllocation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    resource.ResourceAllocation playsRole resourceAllocations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectResourceResponsibility {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    resource.ResourceResponsibility playsRole resourceResponsibility {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectRestriction {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    precedences.Restriction playsRole restrictions {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectResultParticipation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.result.ResultParticipation playsRole resultParticipations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectResultTeacher {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.result.ResultTeacher playsRole resultTeachers {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectResultUnitAssociation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.result.ResultUnitAssociation playsRole resultUnitAssociations {
-        multiplicity *;
-    }
-}
 
 relation RootDomainObjectRole {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
@@ -15574,12 +13232,6 @@ relation RootDomainObjectRole {
     }
 }
 
-relation RootDomainObjectRoomClassification {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    space.RoomClassification playsRole roomClassification {
-        multiplicity *;
-    }
-}
 
 relation RootDomainObjectScheduleing {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
@@ -15602,23 +13254,9 @@ relation RootDomainObjectScientificArea {
     }
 }
 
-relation RootDomainObjectScientificJournal {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.ScientificJournal playsRole scientificJournals {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectSecretaryEnrolmentStudent {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     SecretaryEnrolmentStudent playsRole secretaryEnrolmentStudents {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectSeminary {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.Seminary playsRole seminarys {
         multiplicity *;
     }
 }
@@ -15714,12 +13352,6 @@ relation RootDomainObjectSibsPaymentFileProcessReport {
     }
 }
 
-relation RootDomainObjectSpaceInformation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    space.SpaceInformation playsRole spaceInformations {
-        multiplicity *;
-    }
-}
 
 relation RootDomainObjectStudent {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
@@ -15889,23 +13521,9 @@ relation RootDomainObjectTestScope {
     }
 }
 
-relation RootDomainObjectTheme {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.Theme playsRole themes {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectThesis {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     thesis.Thesis playsRole theses {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectThesisPendingPublication {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectFromPendingPublication;
-    thesis.Thesis playsRole thesesPendingPublication {
         multiplicity *;
     }
 }
@@ -16022,55 +13640,6 @@ relation TutorshipTutorshipLogs {
     TutorshipLog playsRole tutorshipLog;
 }
 
-relation RootDomainObjectTeacherServiceDistribution {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    teacherServiceDistribution.TeacherServiceDistribution playsRole teacherServiceDistributions {
-        multiplicity *;
-    }
-}
-
-relation TSDCurricularLoadRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    teacherServiceDistribution.TSDCurricularLoad playsRole TSDCurricularLoads {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTSDCourse {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    teacherServiceDistribution.TSDCourse playsRole TSDCourses {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTSDProfessorship {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    teacherServiceDistribution.TSDProfessorship playsRole TSDProfessorships {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTSDProcess {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    teacherServiceDistribution.TSDProcess playsRole TSDProcesses {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTSDProcessPhase {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    teacherServiceDistribution.TSDProcessPhase playsRole TSDProcessPhases {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTSDTeacher {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    teacherServiceDistribution.TSDTeacher playsRole TSDTeachers {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectUnitName {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.UnitName playsRole unitName {
@@ -16109,13 +13678,6 @@ relation RootDomainObjectUnitSiteLink {
 relation RootDomainObjectUniversity {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     University playsRole universitys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectVehicle {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.Vehicle playsRole vehicles {
         multiplicity *;
     }
 }
@@ -16195,27 +13757,6 @@ relation ScientificCommissionRootDomainObject {
         multiplicity *;
     }
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-}
-
-relation SectionTestElement {
-    tests.NewTestElement playsRole testElements {
-        multiplicity *;
-    }
-    tests.NewSection playsRole section;
-}
-
-relation SeminaryCandidacy {
-    Seminaries.Seminary playsRole seminary;
-    Seminaries.SeminaryCandidacy playsRole candidacies {
-        multiplicity *;
-    }
-}
-
-relation SeminaryCourseEquivalency {
-    Seminaries.Seminary playsRole seminary;
-    Seminaries.CourseEquivalency playsRole equivalencies {
-        multiplicity *;
-    }
 }
 
 relation SendProposal {
@@ -16349,10 +13890,67 @@ relation SibsPaymentFileEntrySibsPaymentFile {
     gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
 }
 
-relation ContentJumpSite {
-    contents.ContentJump playsRole jumpPoint;
-    Site playsRole jumpTo;
+relation SiteBennu {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu;
+    Site playsRole site {
+        multiplicity *;
+    }
 }
+
+relation SiteHasSections {
+    Site playsRole site;
+    Section playsRole associatedSection {
+        multiplicity *;
+    }
+}
+
+relation SectionHasChildren {
+    protected Section playsRole parent;
+    cms.CmsContent playsRole child {
+        multiplicity *;
+    }
+}
+
+relation CmsContentHasFiles {
+    cms.CmsContent playsRole cmsContent;
+    FileContent playsRole fileContent {
+        multiplicity *;
+    }
+}
+
+relation BennuHasSiteTemplates {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu;
+    cms.SiteTemplate playsRole siteTemplate {
+        multiplicity *;
+    }
+}
+
+relation SiteTemplateHasSections {
+    cms.SiteTemplate playsRole template;
+    cms.TemplatedSection playsRole templatedSection {
+        multiplicity *;
+    }
+}
+
+relation SiteTemplateHasFunctionality {
+    cms.SiteTemplate playsRole siteTemplate;
+    .org.fenixedu.bennu.portal.domain.MenuFunctionality playsRole functionality;
+}
+
+relation TemplatedSectionHasTemplate {
+    cms.TemplatedSectionInstance playsRole instance {
+        multiplicity *;
+    }
+    cms.TemplatedSection playsRole sectionTemplate;
+}
+
+relation CmsContentAccessGroup {
+    cms.CmsContent playsRole content {
+        multiplicity *;
+    }
+    .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole group;
+}
+
 
 /*
 relation SitePointsTemplate {
@@ -16376,27 +13974,6 @@ relation SiteTemplatePointsContainer {
     contents.Container playsRole container;
 }
 */
-
-relation SpaceBlueprint {
-    space.Space playsRole space;
-    space.Blueprint playsRole blueprints {
-        multiplicity *;
-    }
-}
-
-relation SpaceSpace {
-    space.Space playsRole containedSpaces {
-        multiplicity *;
-    }
-    space.Space playsRole suroundingSpace;
-}
-
-relation SpaceSpaceInformation {
-    space.SpaceInformation playsRole spaceInformations {
-        multiplicity *;
-    }
-    space.Space playsRole space;
-}
 
 relation StudentCandidacyExecutionDegree {
     ExecutionDegree playsRole executionDegree;
@@ -16771,55 +14348,6 @@ relation TeacherSummary {
     Teacher playsRole teacher;
 }
 
-relation TestElementPresentationMaterial {
-    tests.NewTestElement playsRole testElement;
-    tests.NewPresentationMaterial playsRole presentationMaterials {
-        multiplicity *;
-    }
-}
-
-relation TestGroupExecutionCourse {
-    tests.NewTestGroup playsRole testGroups {
-        multiplicity *;
-    }
-    ExecutionCourse playsRole executionCourse;
-}
-
-relation TestGroupTeacher {
-    tests.NewTestGroup playsRole testGroups {
-        multiplicity *;
-    }
-    Teacher playsRole creator;
-}
-
-relation TestGroupTest {
-    tests.NewTest playsRole tests {
-        multiplicity *;
-    }
-    tests.NewTestGroup playsRole testGroup;
-}
-
-relation TestModelModelGroup {
-    tests.NewTestModel playsRole bagModel;
-    tests.NewModelGroup playsRole bag;
-}
-
-relation TestModelTeacher {
-    tests.NewTestModel playsRole testModels {
-        multiplicity *;
-    }
-    Teacher playsRole creator;
-}
-
-relation TestPerson {
-    tests.NewTest playsRole tests {
-        multiplicity *;
-    }
-    Person playsRole persons {
-        multiplicity *;
-    }
-}
-
 relation TestScope {
     onlineTests.Test playsRole tests {
         multiplicity *;
@@ -16830,20 +14358,6 @@ relation TestScope {
 relation TestScopeExecutionCourse {
     onlineTests.TestScope playsRole testScope;
     ExecutionCourse playsRole executionCourse;
-}
-
-relation ThemeCandidacy {
-    Seminaries.Theme playsRole theme;
-    Seminaries.SeminaryCandidacy playsRole associatedCandidacies {
-        multiplicity *;
-    }
-}
-
-relation ThemeCaseStudy {
-    Seminaries.Theme playsRole seminaryTheme;
-    Seminaries.CaseStudy playsRole caseStudies {
-        multiplicity *;
-    }
 }
 
 relation ThesisDegree {
@@ -16915,149 +14429,6 @@ relation TutorshipTeacher {
     Teacher playsRole teacher;
 }
 
-relation TSDCompetenceCourseCompetenceCourse {
-    teacherServiceDistribution.TSDCompetenceCourse playsRole TSDCompetenceCourses {
-        multiplicity *;
-    }
-    CompetenceCourse playsRole competenceCourse;
-}
-
-
-relation TSDCourseExecutionPeriod {
-    teacherServiceDistribution.TSDCourse playsRole TSDCourses {
-        multiplicity *;
-    }
-    ExecutionSemester playsRole executionPeriod;
-}
-
-relation TSDCourseTSDCurricularLoad {
-    teacherServiceDistribution.TSDCourse playsRole TSDCourse;
-    teacherServiceDistribution.TSDCurricularLoad playsRole TSDCurricularLoads {
-        multiplicity *;
-    }
-}
-
-relation TSDCurricularCourseTSDCurricularCourseGroup {
-    teacherServiceDistribution.TSDCurricularCourse playsRole TSDCurricularCourses {
-        multiplicity *;
-    }
-    teacherServiceDistribution.TSDCurricularCourseGroup playsRole TSDCurricularCourseGroup;
-}
-
-relation TSDProfessorshipTSDCourse {
-    teacherServiceDistribution.TSDProfessorship playsRole TSDProfessorships {
-        multiplicity *;
-    }
-    teacherServiceDistribution.TSDCourse playsRole TSDCourse;
-}
-
-relation TSDProfessorshipTSDTeacher {
-    teacherServiceDistribution.TSDProfessorship playsRole TSDProfessorships {
-        multiplicity *;
-    }
-    teacherServiceDistribution.TSDTeacher playsRole TSDTeacher;
-}
-
-
-relation TSDProcessCreator {
-    teacherServiceDistribution.TSDProcess playsRole TSDProcesses {
-        multiplicity *;
-    }
-    Person playsRole creator;
-}
-
-relation TSDProcessDepartment {
-    teacherServiceDistribution.TSDProcess playsRole TSDProcesses {
-        multiplicity *;
-    }
-    Department playsRole department;
-}
-
-relation TSDProcessExecutionPeriod {
-    teacherServiceDistribution.TSDProcess playsRole TSDProcesses {
-        multiplicity *;
-    }
-    ExecutionSemester playsRole executionPeriods {
-        multiplicity *;
-    }
-}
-
-relation TSDCourseTeacherServiceDistribution {
-    teacherServiceDistribution.TSDCourse playsRole TSDCourses {
-        multiplicity *;
-    }
-    teacherServiceDistribution.TeacherServiceDistribution playsRole teacherServiceDistributions {
-        multiplicity *;
-    }
-}
-
-relation TSDCurricularCourseCurricularCourse {
-    teacherServiceDistribution.TSDCurricularCourse playsRole TSDCurricularCourses {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
-}
-
-relation TSDVirtualCourseGroupDegreeCurricularPlan {
-    teacherServiceDistribution.TSDVirtualCourseGroup playsRole TSDVirtualCourseGroups {
-        multiplicity *;
-    }
-
-    DegreeCurricularPlan playsRole degreeCurricularPlans {
-        multiplicity *;
-    }
-}
-
-relation TeacherServiceDistributionTeacherServiceDistribution {
-    teacherServiceDistribution.TeacherServiceDistribution playsRole childs {
-        multiplicity *;
-    }
-    teacherServiceDistribution.TeacherServiceDistribution playsRole parent;
-}
-
-relation TeacherServiceDistributionTSDProcessPhase {
-    teacherServiceDistribution.TeacherServiceDistribution playsRole groupings {
-        multiplicity *;
-    }
-    teacherServiceDistribution.TSDProcessPhase playsRole TSDProcessPhase;
-}
-
-relation TSDProcessPhaseTSDProcess {
-    teacherServiceDistribution.TSDProcessPhase playsRole TSDProcessPhases {
-        multiplicity *;
-}
-    teacherServiceDistribution.TSDProcess playsRole TSDProcess;
-}
-
-relation TSDProcessPhaseTSDProcessPhase {
-    teacherServiceDistribution.TSDProcessPhase playsRole previousTSDProcessPhase;
-    teacherServiceDistribution.TSDProcessPhase playsRole nextTSDProcessPhase;
-    }
-
-relation TSDTeacherProfessionalCategory {
-    teacherServiceDistribution.TSDTeacher playsRole TSDTeachers {
-        multiplicity *;
-    }
-    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
-}
-
-relation TSDRealTeacherTeacher {
-    teacherServiceDistribution.TSDRealTeacher playsRole TSDRealTeachers {
-        multiplicity *;
-    }
-    Teacher playsRole teacher;
-}
-
-relation TSDTeacherTeacherServiceDistribution {
-    teacherServiceDistribution.TSDTeacher playsRole TSDTeachers {
-        multiplicity *;
-    }
-    teacherServiceDistribution.TeacherServiceDistribution playsRole teacherServiceDistributions {
-        multiplicity *;
-    }
-}
-
-
 relation InstitutionUnitDegreeDesignation {
 	organizationalStructure.Unit playsRole institutionUnit {
 		multiplicity *;
@@ -17068,7 +14439,7 @@ relation InstitutionUnitDegreeDesignation {
 }
 
 relation UnitCampus {
-    space.Campus playsRole campus;
+    .org.fenixedu.spaces.domain.Space playsRole campus;
     organizationalStructure.Unit playsRole units {
         multiplicity *;
     }
@@ -17201,13 +14572,6 @@ relation UnitUnitName {
     organizationalStructure.UnitName playsRole unitName;
 }
 
-relation UnitUnitSpaceOccupation {
-    organizationalStructure.Unit playsRole unit;
-    space.UnitSpaceOccupation playsRole unitSpaceOccupations {
-        multiplicity *;
-    }
-}
-
 relation UserPerson {
     Person playsRole person;
     .org.fenixedu.bennu.core.domain.User playsRole user;
@@ -17216,34 +14580,6 @@ relation UserPerson {
 relation UserPrivateKeyUser {
     UserPrivateKey playsRole privateKey;
     .org.fenixedu.bennu.core.domain.User playsRole;
-}
-
-relation VehicleAllocationRequestor {
-    organizationalStructure.Party playsRole requestor;
-    resource.VehicleAllocation playsRole vehicleAllocations {
-        multiplicity *;
-    }
-}
-
-relation VehicleNewParkingDocument {
-    parking.Vehicle playsRole vehicle;
-    parking.NewParkingDocument playsRole newParkingDocuments {
-        multiplicity *;
-    }
-}
-
-relation VehicleParkingParty {
-    parking.ParkingParty playsRole parkingParty;
-    parking.Vehicle playsRole vehicles {
-        multiplicity *;
-    }
-}
-
-relation VehicleParkingRequest {
-    parking.ParkingRequest playsRole parkingRequest;
-    parking.Vehicle playsRole vehicles {
-        multiplicity *;
-    }
 }
 
 relation VigilantGroupBelongsToUnit {
@@ -17294,7 +14630,7 @@ relation WrittenEvaluationEnrolmentRoom {
     WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
         multiplicity *;
     }
-    space.AllocatableSpace playsRole room;
+    .org.fenixedu.spaces.domain.Space playsRole room;
 }
 
 relation WrittenEvaluationEnrolmentStudent {
@@ -17431,7 +14767,7 @@ relation PersonProfessionalDataPerson {
 }
 
 relation GiafProfessionalDataPersonCampus {
-    space.Campus playsRole campus;
+    .org.fenixedu.spaces.domain.Space playsRole campus;
     personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalDatas {
         multiplicity *;
     }
@@ -17635,20 +14971,6 @@ relation PersonGrantOwnerEquivalentCountry {
 }
 
 
-relation LibraryCardRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    library.LibraryCard playsRole libraryCards{
-        multiplicity *;
-    }
-}
-
-relation LibraryCardPerson {
-    Person playsRole person {
-        multiplicity 1..1;
-    }
-    library.LibraryCard playsRole libraryCard;
-}
-
 relation DelegateElectionDegree {
     elections.DelegateElection playsRole delegateElections {
         multiplicity *;
@@ -17769,414 +15091,6 @@ relation RootDomainObjectDelegateElectionVote {
 relation RootDomainObjectDelegateElectionPeriod {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     elections.DelegateElectionPeriod playsRole delegateElectionsPeriods {
-        multiplicity *;
-    }
-}
-
-
-relation RootDomainObjectCardGenerationBatch {
-        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-        cardGeneration.CardGenerationBatch playsRole cardGenerationBatches {
-                multiplicity *;
-        }
-}
-
-relation RootDomainObjectCardGenerationEntry {
-        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-        cardGeneration.CardGenerationEntry playsRole cardGenerationEntries {
-                multiplicity *;
-        }
-}
-
-relation RootDomainObjectCardGenerationRegister {
-        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-        cardGeneration.CardGenerationRegister playsRole cardGenerationRegister {
-                multiplicity *;
-        }
-}
-
-relation RootDomainObjectCardGenerationProblem {
-        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-        cardGeneration.CardGenerationProblem playsRole cardGenerationProblem {
-                multiplicity *;
-        }
-}
-
-relation ExecutionYearCardGenerationBatch {
-        ExecutionYear playsRole executionYear;
-        cardGeneration.CardGenerationBatch playsRole cardGenerationBatches {
-                multiplicity *;
-        }
-}
-
-relation CardGenerationBatchCardGenerationEntry {
-        cardGeneration.CardGenerationBatch playsRole cardGenerationBatch;
-        cardGeneration.CardGenerationEntry playsRole cardGenerationEntries {
-                multiplicity *;
-        }
-}
-
-relation CardGenerationBatchCardGenerationProblem {
-        cardGeneration.CardGenerationBatch playsRole cardGenerationBatch;
-        cardGeneration.CardGenerationProblem playsRole cardGenerationProblems {
-                multiplicity *;
-        }
-}
-
-relation PersonCardGenerationEntry {
-        Person playsRole person;
-        cardGeneration.CardGenerationEntry playsRole cardGenerationEntries {
-        multiplicity *;
-    }
-}
-
-relation PersonCardGenerationRegister {
-        Person playsRole person;
-        cardGeneration.CardGenerationRegister playsRole cardGenerationRegister {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectSantanderBatch {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	cardGeneration.SantanderBatch playsRole santanderBatches {
-		multiplicity *;
-	}
-}
-    
-relation RootDomainObjectSantanderBatchRequester {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	cardGeneration.SantanderBatchRequester playsRole santanderBatchRequesters {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectSantanderBatchSender {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	cardGeneration.SantanderBatchSender playsRole santanderBatchSenders {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectSantanderSequenceNumberGenerator {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	cardGeneration.SantanderSequenceNumberGenerator playsRole santanderSequenceNumberGenerators {
-		multiplicity *;
-	}
-}	
-
-relation RootDomainObjectSantanderEntry {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	cardGeneration.SantanderEntry playsRole santanderEntries {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectSantanderCardInformation {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	cardGeneration.SantanderCardInformation playsRole santanderCardsInformation {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectSantanderProblem {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	cardGeneration.SantanderProblem playsRole santanderProblem {
-		multiplicity *;
-	}
-}
-
-relation ExecutionYearSantanderBatch {
-	ExecutionYear playsRole executionYear;
-	cardGeneration.SantanderBatch playsRole santanderBatches {
-		multiplicity *;
-	}
-}
-
-relation SantanderBatchSantanderEntry {
-	cardGeneration.SantanderBatch playsRole santanderBatch;
-	cardGeneration.SantanderEntry playsRole santanderEntries {
-		multiplicity *;
-	}
-}
-
-relation SantanderBatchSantanderSequenceNumberGenerator {
-	cardGeneration.SantanderBatch playsRole santanderBatches {
-		multiplicity *;
-	}
-	cardGeneration.SantanderSequenceNumberGenerator playsRole santanderSequenceNumberGenerator;
-}
-
-relation SantanderBatchSantanderBatchRequester {
-	cardGeneration.SantanderBatch playsRole santanderBatch;
-	cardGeneration.SantanderBatchRequester playsRole santanderBatchRequester;
-}
-
-relation SantanderBatchSantanderBatchSender {
-	cardGeneration.SantanderBatch playsRole santanderBatch;
-	cardGeneration.SantanderBatchSender playsRole santanderBatchSender;
-}
-
-relation SantanderBatchSantanderProblem {
-	cardGeneration.SantanderBatch playsRole santanderBatch;
-    cardGeneration.SantanderProblem playsRole santanderProblems {
-		multiplicity *;
-	}
-}
-
-relation PersonSantanderBatchRequester {
-	Person playsRole person;
-	cardGeneration.SantanderBatchRequester playsRole santanderBatchRequesters {
-		multiplicity *;
-	}
-}
-
-relation PersonSantanderBatchSender {
-	Person playsRole person;
-	cardGeneration.SantanderBatchSender playsRole santanderBatchSenders {
-		multiplicity *;
-	}
-}
-
-relation PersonSantanderEntry {
-	Person playsRole person;
-	cardGeneration.SantanderEntry playsRole santanderEntries {
-		multiplicity *;
-	}
-}
-
-relation PersonSantanderCardInformation {
-	Person playsRole person;
-	cardGeneration.SantanderCardInformation playsRole santanderCardsInformation {
-		multiplicity *;
-	}
-}
-
-relation SantanderPhotoEntrySantanderEntry {
-	cardGeneration.SantanderEntry playsRole santanderEntry;
-	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry;
-}
-
-relation PersonSantanderPIN {
-	Person playsRole person;
-	cardGeneration.SantanderPIN playsRole santanderPIN;
-}
-
-relation ContentHasCreator {
-    Person playsRole creator;
-    contents.Content playsRole createdContents {
-        multiplicity *;
-    }
-}
-
-relation ContentHasAvailabilityPolicy {
-    contents.Content playsRole content;
-    functionalities.AvailabilityPolicy playsRole availabilityPolicy;
-}
-
-relation ContentRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    contents.Content playsRole contents {
-        multiplicity *;
-    }
-}
-
-
-relation FunctionalityFunctionalityCall {
-    functionalities.Functionality playsRole functionality;
-    contents.FunctionalityCall playsRole functionalityCalls {
-        multiplicity *;
-    }
-}
-
-relation ContainerNode {
-    contents.Container playsRole parent;
-    contents.Node playsRole children {
-        multiplicity *;
-    }
-}
-
-relation ContentNode {
-    contents.Content playsRole child;
-    contents.Node playsRole parents {
-        multiplicity *;
-    }
-}
-
-relation NodeRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-        contents.Node playsRole nodes {
-        multiplicity *;
-    }
-}
-
-relation FunctionalityExecutionPath {
-    functionalities.Functionality playsRole functionality;
-    functionalities.ExecutionPath playsRole executionPathValue;
-}
-
-relation FunctionalityHasParameters {
-    functionalities.Functionality playsRole functionality;
-    functionalities.FunctionalityParameter playsRole parameters {
-        multiplicity *;
-    }
-}
-
-relation RootModule {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole moduleRootDomainObject;
-    functionalities.Module playsRole rootModule;
-        }
-
-relation RootPortal {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole portalRootDomainObject;
-    contents.Portal playsRole rootPortal;
-}
-
-relation ContainerPointsContent {
-    contents.Container playsRole initialContainer {
-                multiplicity *;
-        }
-    contents.Content playsRole initialContent;
-}
-
-relation RootDomainObjectFunctionalityParameter {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    functionalities.FunctionalityParameter playsRole functionalityParameters {
-                multiplicity *;
-        }
-}
-
-relation ExecutionPathRootDomainObject {
-        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-        functionalities.ExecutionPath playsRole executionPaths {
-                multiplicity *;
-        }
-}
-
-relation MetaDomainObjectPortalBennu {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu;
-    contents.MetaDomainObjectPortal playsRole metaDomainObjectPortal {
-        multiplicity *;
-    }
-}
-
-relation PortalPool {
-    contents.MetaDomainObjectPortal playsRole portal;
-    contents.Content playsRole pool {
-                multiplicity *;
-        }
-}
-
-relation PersonCardGenerationProblem {
-        Person playsRole person;
-        cardGeneration.CardGenerationProblem playsRole cardGenerationProblems {
-                multiplicity *;
-        }
-}
-
-relation DeployNotifierRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    DeployNotifier playsRole deployNotifier; 
-}
-
-relation RequestLogDayRequestLog {
-    log.requests.RequestLogDay playsRole day;
-    log.requests.RequestLog playsRole logs {
-        multiplicity *;
-    }
-}
-
-relation RequestLogMonthRequestLogDay {
-    log.requests.RequestLogMonth playsRole month;
-    log.requests.RequestLogDay playsRole days {
-        multiplicity *;
-    }
-}
-
-relation RequestLogYearRequestLogDay {
-    log.requests.RequestLogYear playsRole year;
-    log.requests.RequestLogMonth playsRole months {
-        multiplicity *;
-    }
-}
-
-relation RequestLogDayRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.RequestLogDay playsRole requestLogDays {
-        multiplicity *;
-    }
-}
-
-relation MostRecentRequestLogDay {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectRequestLogDay;
-    log.requests.RequestLogDay playsRole mostRecentRequestLogDay;
-}
-
-relation RequestLogDayRequestLogDay {
-    log.requests.RequestLogDay playsRole next;
-    log.requests.RequestLogDay playsRole previous;
-}
-
-relation RequestLogMonthRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.RequestLogMonth playsRole requestLogMonths {
-        multiplicity *;
-    }
-}
-
-relation RequestLogYearRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.RequestLogYear playsRole requestLogYears {
-        multiplicity *;
-    }
-}
-
-
-relation RequestMappingRequestLog {
-    log.requests.RequestMapping playsRole mapping;
-    log.requests.RequestLog playsRole logs {
-        multiplicity *;
-    }
-}
-
-relation RequestLogErrorLog {
-    log.requests.RequestLog playsRole requestLogs {
-        multiplicity *;
-    }
-    log.requests.ErrorLog playsRole errorLog;
-}
-
-relation ErrorLogExceptionType {
-    log.requests.ErrorLog playsRole errorLogs {
-        multiplicity *;
-    }
-    log.requests.ExceptionType playsRole exception;
-}
-
-relation RequestMappingRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.RequestMapping playsRole requestMappings {
-        multiplicity *;
-    }
-}
-
-relation ErrorLogRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.ErrorLog playsRole errorLogs {
-        multiplicity *;
-    }
-}
-
-relation RequestLogRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.RequestLog playsRole requestLogs {
-        multiplicity *;
-    }
-}
-
-relation ExceptionTypeRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.ExceptionType playsRole exceptionTypes {
         multiplicity *;
     }
 }
@@ -18482,34 +15396,6 @@ relation ResidenceManagementUnitResidenceEvent {
     residence.ResidenceYear playsRole residenceYears {
         multiplicity *;
     }
-}
-
-relation RootDomainObjectSupportRequest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    support.SupportRequest playsRole supportRequests {
-        multiplicity *;
-    }
-}
-
-relation SupportRequestPerson {
-    Person playsRole requester;
-    support.SupportRequest playsRole supportRequests {
-        multiplicity *;
-    }
-}
-
-relation SupportRequestContent {
-    contents.Content playsRole requestContext;
-    support.SupportRequest playsRole supportRequests {
-        multiplicity *;
-    }
-}
-
-relation SupportExceptionErrorLog {
-    support.SupportException playsRole supportExceptions {
-        multiplicity *;
-    }
-    log.requests.ErrorLog playsRole errorLog;
 }
 
 relation AlumniStudent {
@@ -19088,8 +15974,36 @@ relation AnnouncementCategoryAnnouncement {
 }
 
 relation AnnouncementCampus {
-    space.Campus playsRole campus;
+    .org.fenixedu.spaces.domain.Space playsRole campus;
     messaging.Announcement playsRole announcements {
+        multiplicity *;
+    }
+}
+
+relation AnnouncementCreator {
+    Person playsRole creator;
+    messaging.Announcement playsRole createAnnouncements {
+        multiplicity *;
+    }
+}
+
+relation AnnouncementBoardAnnouncement {
+    messaging.AnnouncementBoard playsRole announcementBoard;
+    messaging.Announcement playsRole announcement {
+        multiplicity *;
+    }
+}
+
+relation AnnnouncementBoardFileContent {
+    messaging.AnnouncementBoard playsRole announcementBoard;
+    FileContent playsRole fileContent {
+        multiplicity *;
+    }
+}
+
+relation AnnouncementBoardBennu {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu;
+    messaging.AnnouncementBoard playsRole announcementBoard {
         multiplicity *;
     }
 }
@@ -19340,27 +16254,6 @@ relation ExtraCurricularActivityType {
     }
     student.curriculum.ExtraCurricularActivityType playsRole type {
         multiplicity 1..1;
-    }
-}
-
-relation PendingRequestRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PendingRequest playsRole pendingRequest {
-        multiplicity *;
-    }
-}
-
-relation PendingRequestParameterRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PendingRequestParameter playsRole pendingRequestParameter {
-        multiplicity *;
-    }
-}
-
-relation PendingRequestParams {
-    PendingRequest playsRole pendingRequest;
-    PendingRequestParameter playsRole pendingRequestParameter {
-        multiplicity *;
     }
 }
 
@@ -20013,7 +16906,7 @@ relation ImportCandidaciesFromDgesProcessDgesImportationStudentFile {
 }
 
 relation DgesStudentImportationProcessCampus {
-	space.Campus playsRole dgesStudentImportationForCampus;
+	.org.fenixedu.spaces.domain.Space playsRole dgesStudentImportationForCampus;
 	student.importation.DgesStudentImportationProcess playsRole dgesStudentImportationProcess {
 		multiplicity*;
 	}
@@ -20138,13 +17031,13 @@ relation ProfessorshipUser {
 
 relation RootDomainObjectHasLibraries {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForLibrary;
-    space.Space playsRole libraries {
+    .org.fenixedu.spaces.domain.Space playsRole libraries {
         multiplicity *;
     }
 }
 
 relation SpacesHaveAttendances {
-    space.Space playsRole occupiedLibraryPlace {
+    .org.fenixedu.spaces.domain.Space playsRole occupiedLibraryPlace {
     	multiplicity 0..1;
     }
     space.SpaceAttendances playsRole currentAttendance {
@@ -20153,7 +17046,7 @@ relation SpacesHaveAttendances {
 }
 
 relation SpacesHaveAttendanceHistory {
-    space.Space playsRole visitedLibraryPlace {
+    .org.fenixedu.spaces.domain.Space playsRole visitedLibraryPlace {
     	multiplicity 0..1;
     }
     space.SpaceAttendances playsRole pastAttendances {
@@ -20356,38 +17249,6 @@ relation PhdIndividualProgramProcessPhdIndiPhdGratuityEvent {
     }
 }
 
-relation LibraryCardSystemRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	LibraryCardSystem playsRole libraryCardSystem;
-}
-
-relation InstitutionAffiliationEventIntitution {
-	organizationalStructure.Unit playsRole institution {
-		multiplicity 1..1;
-	}
-	accounting.events.InstitutionAffiliationEvent playsRole affiliationEvent {
-		multiplicity *;
-	}
-}
-
-relation InstitutionAffiliationOpenEvents {
-	organizationalStructure.Unit playsRole institutionWhereOpen {
-		multiplicity 0..1;
-	}
-	accounting.events.InstitutionAffiliationEvent playsRole openAffiliationEvent {
-		multiplicity *;
-	}
-}
-
-relation MicroPaymentEventIntitutionAffiliation {
-	accounting.events.InstitutionAffiliationEvent playsRole affiliationEvent {
-		multiplicity 1..1;
-	}
-	accounting.events.MicroPaymentEvent playsRole microPaymentEvent {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectPhdGratuityPriceQuirk {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.debts.PhdGratuityPriceQuirk playsRole phdGratuityPriceQuirks {
@@ -20421,16 +17282,6 @@ relation ExternalScholarshipProviderRootDomainObject {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectExternalScholarshipProvider;
 }
 
-relation MicroPaymentEventDestinationUnit {
-	organizationalStructure.Unit playsRole destinationUnit {
-		multiplicity 1..1;
-	}
-	accounting.events.MicroPaymentEvent playsRole microPaymentEvent {
-		multiplicity *;
-	}
-}
-
-
 relation PersonPersonIdentificationDocumentExtraInfo {
 	Person playsRole person {
 		multiplicity 1..1;
@@ -20443,34 +17294,6 @@ relation PersonPersonIdentificationDocumentExtraInfo {
 relation PersonIdentificationDocumentExtraInfoRootDomainObject {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PersonIdentificationDocumentExtraInfo playsRole personIdentificationDocumentExtraInfo {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectInstitutionAffiliationEventTicket {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.events.InstitutionAffiliationEventTicket playsRole institutionAffiliationEventTicket {
-        multiplicity *;
-    }
-}
-
-relation InstitutionAffiliationEventInstitutionAffiliationEventTicket {
-	accounting.events.InstitutionAffiliationEvent playsRole institutionAffiliationEvent;
-    accounting.events.InstitutionAffiliationEventTicket playsRole generatedTicket {
-        multiplicity *;
-    }
-}
-
-relation EventInstitutionAffiliationEventTicket {
-	accounting.Event playsRole consumerEvent;
-    accounting.events.InstitutionAffiliationEventTicket playsRole consumedTicket {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectStrikeDay {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    StrikeDay playsRole strikeDay {
         multiplicity *;
     }
 }
@@ -20799,50 +17622,12 @@ relation GenericApplicationPeriodManager {
 	}
 }
 
-relation RootDomainObjectSantanderPhotoEntry {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
-	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry {
-		multiplicity *;
-	}
-}
-
-relation SantanderEntryPerson {
-	Person playsRole person; 
-	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry;
-}
-
-relation SantanderEntrySantanderPhotoEntry {
-	cardGeneration.SantanderPhotoEntry playsRole previous;
-	cardGeneration.SantanderPhotoEntry playsRole next;
-}
-
-relation PhotographSantanderPhotoEntry {
-	Photograph playsRole photograph; 
-	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry {
-		multiplicity *;
-	}
-}
-
 relation DepartmentReductionService {
 	Department playsRole pendingApprovalFromDepartment;
 	teacher.ReductionService playsRole pendingReductionServices {
     	multiplicity *;
 	}
 }
-
-relation PictureFile {
-    photograph.Picture playsRole picture;
-    File playsRole file;
-/**
-	This should be the multiplicity rule, but it cannot be
-	used until all current pictures have their byte arrays
-	transfered to files.
-    {
-        multiplicity 1..1;
-    }
-*/
-}
-
 
 relation RootDomainObjectApps {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;  
@@ -20922,7 +17707,7 @@ relation PersistentStudentGroupCampus {
     public accessControl.PersistentStudentGroup playsRole studentGroup {
         multiplicity *;
     }
-    public space.Campus playsRole campus {
+    public .org.fenixedu.spaces.domain.Space playsRole campus {
         multiplicity 0..1;
     }
 }
@@ -20994,7 +17779,7 @@ relation PersistentTeacherGroupCampus {
     public accessControl.PersistentTeacherGroup playsRole teacherGroup {
         multiplicity *;
     }
-    public space.Campus playsRole campus {
+    public .org.fenixedu.spaces.domain.Space playsRole campus {
         multiplicity 0..1;
     }
 }
@@ -21201,7 +17986,7 @@ relation PersistentCampusEmployeeGroupCampus {
     public accessControl.PersistentCampusEmployeeGroup playsRole campusEmployeeGroup {
         multiplicity 0..1;
     }
-    public space.Campus playsRole campus {
+    public .org.fenixedu.spaces.domain.Space playsRole campus {
         multiplicity 1..1;
     }
 }
@@ -21220,6 +18005,96 @@ relation PersistentMembersLinkGroupPersistentGroupMembers {
 		multiplicity 0..1;
 	}
 	public accessControl.PersistentGroupMembers playsRole persistentGroupMembers {
+		multiplicity 1..1;
+	}
+}
+
+relation DegreeCurricularPlanMembers {
+	protected DegreeCurricularPlan playsRole degreeCurricularPlanAsMembers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation DepartmentCompetenceCourseMembersGroup {
+	protected Department playsRole departmentAsMembers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
+		multiplicity 1..1;
+	}
+}
+
+relation FilePermittedGroup {
+	protected File playsRole fileAsAccessGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole accessGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation RecipientMembers {
+	protected util.email.Recipient playsRole recipientAsMembers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation SenderMembers {
+	protected util.email.Sender playsRole senderAsMembers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
+		multiplicity 1..1;
+	}
+}
+
+relation AnnouncementBoardManagers {
+	protected messaging.AnnouncementBoard playsRole announcementBoardAsManagers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole managersGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation AnnouncementBoardReaders {
+	protected messaging.AnnouncementBoard playsRole announcementBoardAsReaders {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole readersGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation AnnouncementBoardWriters {
+	protected messaging.AnnouncementBoard playsRole announcementBoardAsWriters {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole writersGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation AnnouncementBoardApprovers {
+	protected messaging.AnnouncementBoard playsRole announcementBoardAsApprovers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole approversGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation PhdCustomAlertTargetGroup {
+	protected phd.alert.PhdCustomAlert playsRole phdCustomAlertAsTargetGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole targetGroup {
 		multiplicity 1..1;
 	}
 }
@@ -21252,3 +18127,4 @@ relation RemoteSystemDomainRoot {
     RemoteSystem playsRole remoteSystem;
     .pt.ist.fenixframework.DomainRoot playsRole domainRoot;
 }
+

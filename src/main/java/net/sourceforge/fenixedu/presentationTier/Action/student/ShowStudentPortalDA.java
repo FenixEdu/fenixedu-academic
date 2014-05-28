@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
 import java.util.ArrayList;
@@ -16,36 +34,39 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsApplication;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "student", path = "/showStudentPortal", scope = "request", parameter = "method")
+@StrutsApplication(bundle = "TitlesResources", path = "student", titleKey = "private.student",
+        accessGroup = StudentApplication.ACCESS_GROUP, hint = StudentApplication.HINT)
+@Mapping(module = "student", path = "/showStudentPortal")
 @Forwards(value = { @Forward(name = "studentPortal", path = "/student/main_bd.jsp") })
-public class ShowStudentPortalDA extends FenixDispatchAction {
+public class ShowStudentPortalDA extends Action {
 
     private static int NUMBER_OF_DAYS_BEFORE_PERIOD_TO_WARN = 100;
     private static int NUMBER_OF_DAYS_AFTER_PERIOD_TO_WARN = 5;
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         List<StudentPortalBean> studentPortalBeans = new ArrayList<StudentPortalBean>();
         List<String> genericDegreeWarnings = new ArrayList<String>();
-        List<ExecutionCourse> executionCourses;
 
-        final Student student = getLoggedPerson(request).getStudent();
+        final Student student = AccessControl.getPerson().getStudent();
         if (student != null) {
             for (Registration registration : student.getActiveRegistrationsIn(ExecutionSemester.readActualExecutionSemester())) {
                 DegreeCurricularPlan degreeCurricularPlan = registration.getActiveDegreeCurricularPlan();

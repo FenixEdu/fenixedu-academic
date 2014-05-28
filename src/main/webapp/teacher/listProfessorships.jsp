@@ -1,27 +1,31 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCourseProcessor" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@page import="java.util.Collections"%>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-<html:xhtml/>
-
-<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-<bean:define id="hostURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/</bean:define>
-<bean:define id="hostURL2" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %></bean:define>
-
-<em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="label.professorships"/></h2>
-
-<p>
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
-</p>
 
 
 <table class="tstyle5 thmiddle mtop1 mbottom1">
@@ -30,21 +34,17 @@
 			<bean:message key="property.executionPeriod"/>:
     	</td>
 		<td nowrap="nowrap">
-			<html:form action="/showProfessorships" >
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="list"/>
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-				<html:select bundle="HTMLALT_RESOURCES" property="executionPeriodID" size="1" onchange="this.form.submit();">
-					<html:option key="option.all.execution.periods" value=""/>
-					<html:options labelProperty="label" property="value" collection="executionPeriodLabelValueBeans"/>
-				</html:select>
-				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
-			</html:form>
+			<fr:form action="/showProfessorships.do">
+				<select name="executionPeriodID" onchange="this.form.submit();">
+					<option value=""><bean:message key="option.all.execution.periods"></bean:message></option>
+					<c:forEach items="${semesters}" var="semester">
+						<option value="${semester.externalId}" ${semester == executionPeriod ? 'selected' : ''}>${semester.qualifiedName}</option>
+					</c:forEach>
+				</select>
+			</fr:form>
     	</td>
     </tr>
 </table>
-
 
 <logic:empty name="executionCourses">
 	<p><em><bean:message key="label.noProfessorships"/></em></p>
@@ -53,7 +53,7 @@
 
 <logic:notEmpty name="executionCourses">
 	<p class="mbottom05"><bean:message key="label.choose.course.to.administrate"/>:</p>
-	<table class="tstyle4 thlight tdpadding1 mtop05">
+	<table class="tstyle4 mtop05">
 		<tr>
 			<th><bean:message key="label.semestre"/></th>
 			<th><bean:message key="label.executionCourseManagement.menu.view.courseAndPage"/></th>
@@ -68,15 +68,14 @@
 				</td>
 				<td style="width: 450px;">
 					<strong>
-						<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
-							<bean:write name="executionCourse" property="nome"/>
-		                    (<bean:write name="executionCourse" property="sigla"/>)
+						<html:link page="/manageExecutionCourse.do?method=instructions&executionCourseID=${executionCourse.externalId}">
+							${executionCourse.nome} (${executionCourse.sigla})
 						</html:link>
 					</strong>
 					
 		            <p class="mtop05 mbottom0">
 			            <span class="smalltxt breakword color888" style="word-wrap: break-word !important;">
-			            	<app:contentLink name="executionCourse" property="site" target="blank" hrefInBody="true" styleClass="color888"/>
+			            	<a href="${executionCourse.site.fullPath}">${executionCourse.site.fullPath}</a>
 		                </span>
 	                </p>
 				</td>
@@ -84,10 +83,7 @@
 		            <span class="smalltxt">
 						<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
 							<bean:define id="degreeCode" type="java.lang.String" name="degree" property="sigla"/>
-							<bean:define id="degreeLabel" type="java.lang.String"><bean:write name="degree" property="presentationName"/></bean:define>
-							<app:contentLink name="degree" property="site" target="_blank" title="<%= degreeLabel %>">
-								<bean:write name="degreeCode"/>	
-							</app:contentLink>					
+							<bean:write name="degreeCode"/>			
 						</logic:iterate>
 					</span>				
 				</td>

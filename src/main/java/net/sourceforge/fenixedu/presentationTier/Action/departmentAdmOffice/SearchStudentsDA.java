@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
 import java.io.OutputStream;
@@ -18,23 +36,26 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeStudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
-@Mapping(module = "departmentAdmOffice", path = "/searchStudents", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "searchStudents", path = "/departmentAdmOffice/searchStudents.jsp", tileProperties = @Tile(
-        title = "private.administrationofcreditsofdepartmentteachers.students.studentslistold")) })
+@StrutsFunctionality(app = DepartmentAdmOfficeStudentsApp.class, path = "search-students", titleKey = "link.students.search")
+@Mapping(module = "departmentAdmOffice", path = "/searchStudents")
+@Forwards(@Forward(name = "searchStudents", path = "/departmentAdmOffice/searchStudents.jsp"))
 public class SearchStudentsDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         SearchStudentsWithEnrolmentsByDepartment searchStudentsWithEnrolmentsByDepartment = getRenderedObject();

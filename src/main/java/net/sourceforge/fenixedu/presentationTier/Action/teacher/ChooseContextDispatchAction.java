@@ -1,4 +1,22 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  * Package presentationTier.Action.teacher
  * 
@@ -16,24 +34,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularYearAndSemesterAndInfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -41,9 +53,19 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author joaosa & rmalo
  */
+@Mapping(path = "/exportGroupProperties", module = "teacher",
+        input = "/exportGroupProperties.do?method=preparePublic&inputPage=chooseContext", validate = false,
+        formBean = "chooseSearchContextForm", functionality = ManageExecutionCourseDA.class)
+@Forwards({ @Forward(name = "chooseContext", path = "/teacher/chooseContext_bd.jsp"),
+        @Forward(name = "classSearch", path = "/teacher/viewClasses.do"),
+        @Forward(name = "executionCourseSearch", path = "/teacher/prepareSelectExecutionCourseAction.do") })
 public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction {
 
     protected static final String INFO_DEGREE_INITIALS_PARAMETER = "degreeInitials";
@@ -51,6 +73,18 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
     protected static final String SEMESTER_PARAMETER = "semester";
 
     protected static final String CURRICULAR_YEAR_PARAMETER = "curricularYear";
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ExecutionCourseBaseAction.propageContextIds(request);
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        if (forward.getPath().endsWith(".jsp")) {
+            return ExecutionCourseBaseAction.forward(request, forward.getPath());
+        } else {
+            return forward;
+        }
+    }
 
     /*
      * (non-Javadoc)
@@ -78,14 +112,14 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
         // TODO: this semester and curricular year list needs to be
         // refactored in order to incorporate masters
         /* Criar o bean de semestres */
-        ArrayList semestres = new ArrayList();
+        ArrayList<LabelValueBean> semestres = new ArrayList<>();
         semestres.add(new LabelValueBean("escolher", ""));
         semestres.add(new LabelValueBean("1 º", "1"));
         semestres.add(new LabelValueBean("2 º", "2"));
         request.setAttribute("semestres", semestres);
 
         /* Criar o bean de anos curricutares */
-        ArrayList anosCurriculares = new ArrayList();
+        ArrayList<LabelValueBean> anosCurriculares = new ArrayList<>();
         anosCurriculares.add(new LabelValueBean("escolher", ""));
         anosCurriculares.add(new LabelValueBean("1 º", "1"));
         anosCurriculares.add(new LabelValueBean("2 º", "2"));
@@ -140,20 +174,21 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
-        readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCodeString, null);
+        InfoSiteShiftsAndGroups shiftsAndGroupsView =
+                StudentGroupManagementDA.getInfoSiteShiftsAndGroups(groupPropertiesCodeString);
+        request.setAttribute("shiftsAndGroupsView", shiftsAndGroupsView);
 
         // TODO: this semester and curricular year list needs to be refactored
         // in order to incorporate masters
         /* Criar o bean de semestres */
-        ArrayList semestres = new ArrayList();
+        ArrayList<LabelValueBean> semestres = new ArrayList<>();
         semestres.add(new LabelValueBean("escolher", ""));
         semestres.add(new LabelValueBean("1 º", "1"));
         semestres.add(new LabelValueBean("2 º", "2"));
         request.setAttribute("semestres", semestres);
 
         /* Criar o bean de anos curricutares */
-        ArrayList anosCurriculares = new ArrayList();
+        ArrayList<LabelValueBean> anosCurriculares = new ArrayList<>();
         anosCurriculares.add(new LabelValueBean("escolher", ""));
         anosCurriculares.add(new LabelValueBean("1 º", "1"));
         anosCurriculares.add(new LabelValueBean("2 º", "2"));
@@ -341,40 +376,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             request.setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
         }
         return infoExecutionPeriod;
-    }
-
-    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
-            String obj1, String obj2) throws FenixActionException {
-        if (infoExecutionCourseCode == null) {
-            infoExecutionCourseCode = getObjectCode(request);
-        }
-
-        ISiteComponent commonComponent = new InfoSiteCommon();
-        try {
-            TeacherAdministrationSiteView siteView =
-                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(
-                            infoExecutionCourseCode, commonComponent, firstPageComponent, obj1, obj2);
-            request.setAttribute("siteView", siteView);
-            request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getExternalId());
-            if (siteView.getComponent() instanceof InfoSiteSection) {
-                request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
-            }
-
-            return siteView;
-
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-
-    }
-
-    private String getObjectCode(HttpServletRequest request) {
-        String objectCodeString = request.getParameter("objectCode");
-        if (objectCodeString == null) {
-            objectCodeString = (String) request.getAttribute("objectCode");
-        }
-        return objectCodeString;
     }
 
 }

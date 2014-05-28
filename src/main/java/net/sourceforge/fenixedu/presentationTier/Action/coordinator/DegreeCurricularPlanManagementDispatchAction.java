@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
 import java.util.ArrayList;
@@ -29,7 +47,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -51,29 +69,31 @@ import pt.ist.fenixframework.FenixFramework;
 /**
  * @author Fernanda Quit�rio 06/Nov/2003
  */
-@Mapping(module = "coordinator", path = "/degreeCurricularPlanManagement", attribute = "curricularCourseInformationForm",
-        formBean = "curricularCourseInformationForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "viewCurricularCourseInformation", path = "viewCurricularCourseInformation"),
+@Mapping(module = "coordinator", path = "/degreeCurricularPlanManagement", formBean = "curricularCourseInformationForm",
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards({
+        @Forward(name = "viewCurricularCourseInformation",
+                path = "/coordinator/degreeCurricularPlan/viewCurricularCourseInformation.jsp"),
         @Forward(name = "degreeCurricularPlanManagementExecutionYears",
-                path = "/degreeCurricularPlanManagement.do?method=prepareViewCurricularCourseInformationHistory"),
-        @Forward(name = "showCurricularCoursesHistory", path = "degreeCurricularPlanHistory"),
-        @Forward(name = "editCurriculumEn", path = "editCurriculumEn"),
-        @Forward(name = "editCurriculum", path = "editCurriculum"),
-        @Forward(name = "prepareViewCurricularCourseInformationHistory", path = "prepareViewCurricularCourseInformationHistory"),
+                path = "/coordinator/degreeCurricularPlanManagement.do?method=prepareViewCurricularCourseInformationHistory"),
+        @Forward(name = "showCurricularCoursesHistory",
+                path = "/coordinator/degreeCurricularPlan/showDegreeCurricularPlanHistory.jsp"),
+        @Forward(name = "editCurriculumEn", path = "/coordinator/degreeCurricularPlan/editCurriculumEn.jsp"),
+        @Forward(name = "editCurriculum", path = "/coordinator/degreeCurricularPlan/editCurriculum.jsp"),
+        @Forward(name = "prepareViewCurricularCourseInformationHistory",
+                path = "/coordinator/degreeCurricularPlan/prepareViewCurricularCourseInformationHistory.jsp"),
         @Forward(name = "degreeCurricularPlanManagement",
-                path = "/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses"),
-        @Forward(name = "showActiveCurricularCourses", path = "activeDegreeCurricularPlan") })
-@Exceptions(value = { @ExceptionHandling(
-        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class,
-        key = "resources.Action.exceptions.FenixActionException",
-        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+                path = "/coordinator/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses"),
+        @Forward(name = "showActiveCurricularCourses",
+                path = "/coordinator/degreeCurricularPlan/showActiveDegreeCurricularPlan.jsp") })
+@Exceptions(@ExceptionHandling(type = FenixActionException.class, key = "resources.Action.exceptions.FenixActionException",
+        handler = FenixErrorExceptionHandler.class, scope = "request"))
 public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 

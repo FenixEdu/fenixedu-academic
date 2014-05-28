@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 27/Ago/2003
  */
@@ -43,6 +61,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentSubmitApp;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
@@ -57,43 +76,41 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.util.Base64;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.io.BaseEncoding;
 
 /**
  * @author Susana Fernandes
  */
+@StrutsFunctionality(app = StudentSubmitApp.class, path = "tests", titleKey = "link.tests")
 @Mapping(module = "student", path = "/studentTests", input = "/studentTests.do?method=prepareToDoTest",
-        attribute = "studentTestForm", formBean = "studentTestForm", scope = "request", validate = false, parameter = "method")
-@Forwards(value = {
-        @Forward(name = "testsFirstPage", path = "/student/onlineTests/testsFirstPage_bd.jsp", tileProperties = @Tile(
-                title = "private.student.submit.worksheets")),
+        formBean = "studentTestForm", validate = false)
+@Forwards({
+        @Forward(name = "testsFirstPage", path = "/student/onlineTests/testsFirstPage_bd.jsp"),
         @Forward(name = "viewStudentExecutionCoursesWithTests",
-                path = "/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp", tileProperties = @Tile(
-                        title = "private.student.submit.worksheets")),
-        @Forward(name = "testError", path = "/student/onlineTests/testError_bd.jsp", tileProperties = @Tile(
-                title = "private.student.submit.worksheets")),
-        @Forward(name = "studentFeedback", path = "show-Student-Test-Feedback", tileProperties = @Tile(
-                title = "private.student.submit.worksheets")),
-        @Forward(name = "showTestCorrection", path = "show-Test-Correction", tileProperties = @Tile(
-                title = "private.student.submit.worksheets")),
-        @Forward(name = "doTest", path = "do-Test", tileProperties = @Tile(title = "private.student.submit.worksheets")),
-        @Forward(name = "giveUpQuestion", path = "/student/onlineTests/giveUpQuestion.jsp", tileProperties = @Tile(
-                title = "private.student.submit.worksheets")) })
+                path = "/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp"),
+        @Forward(name = "testError", path = "/student/onlineTests/testError_bd.jsp"),
+        @Forward(name = "studentFeedback", path = "/student/onlineTests/showStudentTestFeedback_bd.jsp"),
+        @Forward(name = "showTestCorrection", path = "/student/onlineTests/showTestCorrection_bd.jsp"),
+        @Forward(name = "doTest", path = "/student/onlineTests/doTest_bd.jsp"),
+        @Forward(name = "giveUpQuestion", path = "/student/onlineTests/giveUpQuestion.jsp") })
 public class StudentTestsAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward viewStudentExecutionCoursesWithTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final User userView = getUserView(request);
         final Student student = userView.getPerson().getStudent();
         RegistrationSelectExecutionYearBean registrationSelectExecutionYearBean =
-                new RegistrationSelectExecutionYearBean(student.getRegistrations().iterator().next());
+                new RegistrationSelectExecutionYearBean(student.getRegistrationsSet().iterator().next());
         ExecutionYear executionYear = getRenderedObject();
 
         if (executionYear == null) {
@@ -196,9 +213,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
-            studentTestQuestionList =
-                    ReadStudentTest.runReadStudentTestToDo(registration, distributedTest, new Boolean(true), getServlet()
-                            .getServletContext().getRealPath("/"));
+            studentTestQuestionList = ReadStudentTest.runReadStudentTestToDo(registration, distributedTest, new Boolean(true));
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -261,7 +276,6 @@ public class StudentTestsAction extends FenixDispatchAction {
         final String imgTypeString = request.getParameter("imgType");
         final Integer feedbackId = getRequestParameterAsInteger(request, "feedbackCode");
         final Integer itemIndex = getRequestParameterAsInteger(request, "item");
-        final String path = getServlet().getServletContext().getRealPath("/");
 
         final DistributedTest distributedTest = FenixFramework.getDomainObject(testCode);
         if (distributedTest == null) {
@@ -277,11 +291,11 @@ public class StudentTestsAction extends FenixDispatchAction {
         try {
             img =
                     ReadStudentTestQuestionImage.run(registration.getExternalId(), distributedTest.getExternalId(), exerciseId,
-                            imgCode, feedbackId, itemIndex, path);
+                            imgCode, feedbackId, itemIndex);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        byte[] imageData = Base64.decode(img.getBytes());
+        byte[] imageData = BaseEncoding.base64().decode(img);
         try {
             response.reset();
             response.setContentType(imgTypeString);
@@ -317,7 +331,6 @@ public class StudentTestsAction extends FenixDispatchAction {
             throws FenixActionException {
         final String objectCode = request.getParameter("objectCode");
         final Integer studentCode = new Integer(request.getParameter("studentCode"));
-        final String path = getServlet().getServletContext().getRealPath("/");
 
         request.setAttribute("date", getDate());
 
@@ -338,7 +351,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         List<StudentTestQuestion> studentTestQuestionList;
         try {
-            studentTestQuestionList = ReadStudentTest.runReadStudentTestToDo(registration, testCode, new Boolean(false), path);
+            studentTestQuestionList = ReadStudentTest.runReadStudentTestToDo(registration, testCode, new Boolean(false));
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -386,9 +399,8 @@ public class StudentTestsAction extends FenixDispatchAction {
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback;
         List<StudentTestQuestion> infoStudentTestQuestionList;
         try {
-            infoSiteStudentTestFeedback = InsertStudentTestResponses.run(registration, studentCode, testCode, userResponse, path);
-            infoStudentTestQuestionList =
-                    ReadStudentTest.runReadStudentTestToDo(registration, testCode, new Boolean(false), path);
+            infoSiteStudentTestFeedback = InsertStudentTestResponses.run(registration, studentCode, testCode, userResponse);
+            infoStudentTestQuestionList = ReadStudentTest.runReadStudentTestToDo(registration, testCode, new Boolean(false));
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -505,8 +517,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         Registration registration = Registration.readByUsername(userView.getUsername());
         try {
-            GiveUpQuestion.run(registration, distributedTest, exerciseCode, itemCode, getServlet().getServletContext()
-                    .getRealPath("/"));
+            GiveUpQuestion.run(registration, distributedTest, exerciseCode, itemCode);
         } catch (IllegalDataAccessException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -549,8 +560,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         }
 
         try {
-            CleanSubQuestions.run(registration, distributedTest, exerciseCode, itemCode, getServlet().getServletContext()
-                    .getRealPath("/"));
+            CleanSubQuestions.run(registration, distributedTest, exerciseCode, itemCode);
         } catch (IllegalDataAccessException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -566,7 +576,6 @@ public class StudentTestsAction extends FenixDispatchAction {
 
     public ActionForward showTestCorrection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        final String path = getServlet().getServletContext().getRealPath("/");
 
         String testCode = request.getParameter("testCode");
         final DistributedTest distributedTest = FenixFramework.getDomainObject(testCode);
@@ -583,7 +592,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
             studentTestQuestionList =
-                    ReadStudentTest.runReadStudentTestForCorrection(registration, distributedTest, new Boolean(false), path);
+                    ReadStudentTest.runReadStudentTestForCorrection(registration, distributedTest, new Boolean(false));
         } catch (InvalidArgumentsServiceException e) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");

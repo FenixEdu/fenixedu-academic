@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha;
 
 import java.util.ArrayList;
@@ -12,7 +30,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -27,19 +45,18 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 
+import pt.ist.fenixWebFramework.rendererExtensions.controllers.CopyCheckBoxValuesController;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
-import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlMultipleHiddenField;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
@@ -52,7 +69,6 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class BolonhaStudentEnrolmentLayout extends Layout {
 
@@ -292,17 +308,13 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     }
 
     protected HtmlLink createDegreeCurricularPlanLink(final StudentCurriculumGroupBean studentCurriculumGroupBean) {
-        final HtmlLink degreeCurricularPlanLink =
-                new HtmlLinkWithPreprendedComment(
-                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+        final HtmlLink degreeCurricularPlanLink = new HtmlLink();
         degreeCurricularPlanLink.setText(studentCurriculumGroupBean.getCurriculumModule().getName().getContent());
         degreeCurricularPlanLink.setModuleRelative(false);
         degreeCurricularPlanLink.setTarget("_blank");
         degreeCurricularPlanLink.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
 
         final StudentCurricularPlan studentCurricularPlan = getBolonhaStudentEnrollmentBean().getStudentCurricularPlan();
-        degreeCurricularPlanLink.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, studentCurricularPlan.getDegree()
-                .getSite().getReversePath());
         degreeCurricularPlanLink.setParameter("organizeBy", "groups");
         degreeCurricularPlanLink.setParameter("showRules", "false");
         degreeCurricularPlanLink.setParameter("hideCourses", "false");
@@ -420,7 +432,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         for (final CurricularRule curricularRule : curricularRules) {
             final HtmlTableCell cellName = rulesTable.createRow().createCell();
             cellName.setStyle("color: #888");
-            cellName.setBody(new HtmlText(CurricularRuleLabelFormatter.getLabel(curricularRule, Language.getLocale())));
+            cellName.setBody(new HtmlText(CurricularRuleLabelFormatter.getLabel(curricularRule, I18N.getLocale())));
         }
     }
 
@@ -516,7 +528,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
             return optionalEnrolment.getOptionalCurricularCourse().getName() + " ("
                     + optionalEnrolment.getCurricularCourse().getName() + ")";
         } else {
-            return enrolment.getName().getContent(Language.getLanguage());
+            return enrolment.getName().getContent();
         }
     }
 
@@ -660,8 +672,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     public void setBolonhaStudentEnrollmentBean(BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
         this.bolonhaStudentEnrollmentBean = bolonhaStudentEnrollmentBean;
         this.canPerformStudentEnrolments =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.STUDENT_ENROLMENTS).contains(
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(
                         bolonhaStudentEnrollmentBean.getStudentCurricularPlan().getDegree());
     }
 

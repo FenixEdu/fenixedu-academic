@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.math.BigDecimal;
@@ -13,6 +31,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Locality;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
@@ -52,7 +71,6 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AdministrativeOfficeDocument extends FenixReport {
@@ -150,15 +168,14 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected AdministrativeOfficeDocument(final IDocumentRequest documentRequest) {
-        this(documentRequest, new Locale(documentRequest.getLanguage().name()));
+        this(documentRequest, documentRequest.getLanguage());
     }
 
     public AdministrativeOfficeDocument(final IDocumentRequest documentRequest, final Locale locale) {
         super(locale);
-        this.portugueseEnumerationBundle =
-                ResourceBundle.getBundle("resources.EnumerationResources", Language.getDefaultLocale());
+        this.portugueseEnumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Locale.getDefault());
 
-        this.portugueseAcademicBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getDefaultLocale());
+        this.portugueseAcademicBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Locale.getDefault());
 
         setResourceBundle(ResourceBundle.getBundle("resources.AcademicAdminOffice", locale));
         this.documentRequestDomainReference = documentRequest;
@@ -282,7 +299,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
         addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
         addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
 
-        addParameter("employeeLocation", adminOfficeUnit.getCampus().getLocation());
+        final Locality locality = adminOfficeUnit.getCampus().getLocality();
+        addParameter("employeeLocation", locality != null ? locality.getName() : null);
         addParameter("supervisingUnit", getResourceBundle().getString("label.academicDocument.direcaoAcademica"));
 
         addParameter("institutionName", getInstitutionName());
@@ -412,7 +430,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
         return getMLSTextContent(mls, getLanguage());
     }
 
-    protected String getMLSTextContent(final MultiLanguageString mls, final Language language) {
+    protected String getMLSTextContent(final MultiLanguageString mls, final Locale language) {
         if (mls == null) {
             return EMPTY_STR;
         }
@@ -538,7 +556,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 MessageFormat.format(departmentAndInstitute, getMLSTextContent(adminOfficeUnit.getPartyName()), institutionName));
 
         addParameter("administrativeOfficeCoordinator", coordinator);
-        String location = adminOfficeUnit.getCampus().getLocation();
+        final Locality locality = adminOfficeUnit.getCampus().getLocality();
+        String location = locality != null ? locality.getName() : null;
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());
         String dateYYYY = new LocalDate().toString("yyyy", getLocale());

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.commons;
 
 import java.util.ArrayList;
@@ -17,6 +35,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.MasterDegreeOfficeApplication.MasterDegreeCandidatesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -26,15 +45,33 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-
+@StrutsFunctionality(app = MasterDegreeCandidatesApp.class, path = "register-candidate",
+        titleKey = "link.masterDegree.administrativeOffice.candidateRegistration")
+@Mapping(path = "/chooseExecutionYearToRegisterCandidate", module = "masterDegreeAdministrativeOffice",
+        input = "/chooseExecutionYear_bd.jsp")
+@Forwards({
+        @Forward(name = "DisplayMasterDegreeList",
+                path = "/masterDegreeAdministrativeOffice/candidate/displayMasterDegreesToEditCandidates_bd.jsp"),
+        @Forward(
+                name = "MasterDegreeReady",
+                path = "/masterDegreeAdministrativeOffice/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates_bd.jsp"),
+        @Forward(name = "PrepareSuccess", path = "/masterDegreeAdministrativeOffice/candidate/chooseExecutionYear_bd.jsp"),
+        @Forward(name = "ChooseSuccess",
+                path = "/masterDegreeAdministrativeOffice/candidateRegistration.do?method=getCandidateList") })
 public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

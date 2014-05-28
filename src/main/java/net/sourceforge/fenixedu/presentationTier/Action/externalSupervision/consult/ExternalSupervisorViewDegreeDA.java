@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.consult;
 
 import java.io.IOException;
@@ -14,12 +32,16 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.ExternalSupervisionApplication.ExternalSupervisionConsultApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -28,12 +50,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
+@StrutsFunctionality(app = ExternalSupervisionConsultApp.class, path = "degree", titleKey = "label.selectDegree.executionDegree")
 @Mapping(path = "/viewDegree", module = "externalSupervision")
 @Forwards({ @Forward(name = "selectDegree", path = "/externalSupervision/consult/selectDegree.jsp") })
 public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward beginTaskFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final User userView = Authenticate.getUser();
@@ -123,7 +147,7 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction {
 
     private String getFilename(ExternalSupervisorViewsBean bean) {
         StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
                 "label.students.lowercase"));
         strBuilder.append("_");
         strBuilder.append(bean.getProtocol().getRegistrationAgreement().getName());
@@ -176,7 +200,7 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction {
     }
 
     private Spreadsheet createSpreadSheet() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
         final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("list.students"));
 
         spreadsheet.setHeaders(new String[] {

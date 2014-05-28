@@ -1,14 +1,37 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.TagLib.content;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.Site;
 
-import org.apache.struts.util.RequestUtils;
+import org.apache.commons.lang.StringUtils;
+
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 public class ContentLinkTag extends BodyTagSupport {
 
@@ -84,9 +107,8 @@ public class ContentLinkTag extends BodyTagSupport {
         try {
             writeStartTag();
             if (getHrefInBody() != null && getHrefInBody()) {
-                final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
-                final String path = content.getReversePath();
-                write(RequestUtils.absoluteURL((HttpServletRequest) pageContext.getRequest(), path).toString());
+                final Site content = getContent(name, pageContext, getScope(), getProperty());
+                write(content.getFullPath());
             } else {
                 write(getBodyContent().getString().trim());
             }
@@ -101,15 +123,10 @@ public class ContentLinkTag extends BodyTagSupport {
     }
 
     protected void writeStartTag() throws IOException, JspException {
-        final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
-        if (content.isPublic()) {
-            write(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-        } else {
-            write(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-        }
+        final Site content = getContent(name, pageContext, getScope(), getProperty());
+        write(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
         write("<a href=\"");
-        write(getContextPath());
-        write(content.getReversePath());
+        write(content.getFullPath());
         write("\"");
         if (getTarget() != null) {
             write(" target=\"" + getTarget() + "\"");
@@ -121,6 +138,64 @@ public class ContentLinkTag extends BodyTagSupport {
             write(" class=\"" + getStyleClass() + "\"");
         }
         write(">");
+    }
+
+    public static Site getContent(final String name, final PageContext pageContext, final String scope, final String property) {
+        final Object object = getObject(name, pageContext, scope);
+        return getContent(object, property);
+    }
+
+    public static Object getObject(final String name, final PageContext pageContext, final String scope) {
+        final int pageScope = getPageScope(scope);
+        return pageScope == -1 ? pageContext.getAttribute(name) : pageContext.getAttribute(name, pageScope);
+    }
+
+    protected int getPageToScope() {
+        final String scope = getScope();
+        final int pageScope = getPageScope(scope);
+        return pageScope == -1 ? PageContext.PAGE_SCOPE : pageScope;
+    }
+
+    public static int getPageScope(final String scope) {
+        if (scope == null) {
+            return -1;
+        } else if (scope.equalsIgnoreCase("page")) {
+            return PageContext.PAGE_SCOPE;
+        } else if (scope.equalsIgnoreCase("request")) {
+            return PageContext.REQUEST_SCOPE;
+        } else if (scope.equalsIgnoreCase("session")) {
+            return PageContext.SESSION_SCOPE;
+        } else {
+            return -1;
+        }
+    }
+
+    public static Site getContent(final Object object, final String property) {
+        if (property == null) {
+            return (Site) object;
+        }
+        final String[] properties = property.split("\\.");
+        Object currentObject = object;
+        for (final String p : properties) {
+            currentObject = getObject(currentObject, p);
+        }
+        return (Site) currentObject;
+    }
+
+    public static Object getObject(final Object object, final String property) {
+        final String methodName = "get" + StringUtils.capitalize(property);
+        try {
+            final Method method = object.getClass().getMethod(methodName);
+            return method.invoke(object);
+        } catch (final NoSuchMethodException e) {
+            throw new Error(e);
+        } catch (final IllegalArgumentException e) {
+            throw new Error(e);
+        } catch (final IllegalAccessException e) {
+            throw new Error(e);
+        } catch (final InvocationTargetException e) {
+            throw new Error(e);
+        }
     }
 
     protected void writeEndTag() throws IOException {

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
 
 import java.util.ArrayList;
@@ -14,9 +32,8 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gr
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.TeachersWithGradesToSubmit;
-import net.sourceforge.fenixedu.domain.accessControl.TeachersWithMarkSheetsToConfirm;
+import net.sourceforge.fenixedu.domain.accessControl.TeachersWithGradesToSubmitGroup;
+import net.sourceforge.fenixedu.domain.accessControl.TeachersWithMarkSheetsToConfirmGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
@@ -25,6 +42,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -32,8 +50,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/markSheetSendMail", module = "academicAdministration", formBean = "markSheetSendMailForm",
-        input = "/academicAdminOffice/gradeSubmission/searchSendMail.jsp")
-@Forwards({ @Forward(name = "searchSendMail", path = "/academicAdminOffice/gradeSubmission/searchSendMail.jsp") })
+        input = "/gradeSubmission/searchSendMail.jsp", functionality = MarkSheetSearchDispatchAction.class)
+@Forwards({ @Forward(name = "searchSendMail", path = "/academicAdministration/gradeSubmission/searchSendMail.jsp") })
 public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward prepareSearchSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -95,8 +113,7 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
     public ActionForward prepareMarkSheetsToConfirmSendMail(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState("sendMailBean").getMetaObject().getObject();
-        Group teachersGroup =
-                new TeachersWithMarkSheetsToConfirm(bean.getExecutionPeriod(), bean.getDegree(), bean.getDegreeCurricularPlan());
+        Group teachersGroup = TeachersWithMarkSheetsToConfirmGroup.get(bean.getExecutionPeriod(), bean.getDegreeCurricularPlan());
         String message = getResources(request, "ACADEMIC_OFFICE_RESOURCES").getMessage("label.markSheets.to.confirm.send.mail");
         Recipient recipient = Recipient.newInstance(message, teachersGroup);
         UnitBasedSender sender = bean.getDegree().getAdministrativeOffice().getUnit().getUnitBasedSenderSet().iterator().next();
@@ -106,8 +123,7 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
     public ActionForward prepareGradesToSubmitSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState("sendMailBean").getMetaObject().getObject();
-        Group teachersGroup =
-                new TeachersWithGradesToSubmit(bean.getExecutionPeriod(), bean.getDegree(), bean.getDegreeCurricularPlan());
+        Group teachersGroup = TeachersWithGradesToSubmitGroup.get(bean.getExecutionPeriod(), bean.getDegreeCurricularPlan());
         String message = getResources(request, "ACADEMIC_OFFICE_RESOURCES").getMessage("label.grades.to.submit.send.mail");
         Recipient recipient = Recipient.newInstance(message, teachersGroup);
         UnitBasedSender sender =

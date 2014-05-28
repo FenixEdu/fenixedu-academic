@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.util.email;
 
 import java.util.ArrayList;
@@ -8,14 +26,14 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.Atomic;
@@ -44,6 +62,14 @@ public class Sender extends Sender_Base {
         setMembers(members);
     }
 
+    public Group getMembers() {
+        return getMembersGroup().toGroup();
+    }
+
+    public void setMembers(Group members) {
+        setMembersGroup(members.toPersistentGroup());
+    }
+
     public void delete() {
         for (final Message message : getMessagesSet()) {
             message.delete();
@@ -64,7 +90,7 @@ public class Sender extends Sender_Base {
     }
 
     public static String getNoreplyMail() {
-        return Instalation.getInstance().getInstituitionalEmailAddress("noreply");
+        return Installation.getInstance().getInstituitionalEmailAddress("noreply");
     }
 
     public static boolean hasAvailableSender() {
@@ -89,7 +115,7 @@ public class Sender extends Sender_Base {
     }
 
     protected boolean allows(final User userView) {
-        return getMembers().allows(userView);
+        return getMembers().isMember(userView);
     }
 
     public static Set<Sender> getAvailableSenders() {
@@ -97,7 +123,7 @@ public class Sender extends Sender_Base {
 
         final Set<Sender> senders = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
         for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
-            if (sender.getMembers().allows(userView) || (userView != null && userView.getPerson().hasRole(RoleType.MANAGER))) {
+            if (sender.getMembers().isMember(userView) || (userView != null && userView.getPerson().hasRole(RoleType.MANAGER))) {
                 senders.add(sender);
             }
         }

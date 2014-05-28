@@ -1,3 +1,24 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
@@ -8,9 +29,9 @@
 <h2><bean:message key="link.periods" bundle="SOP_RESOURCES"/></h2>
 
 <div class="simpleblock3 mtop2">
-	<fr:form action="/periods.do?method=firstPage">
+	<fr:form action="/showPeriods.do?method=firstPage">
 		<fr:edit id="executionSemesterContextBean" name="contextBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.PeriodsDA$ContextBean" bundle="APPLICATION_RESOURCES">
+			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewPeriodsAction$ContextBean" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="executionSemester" layout="menu-select-postback" key="label.executionPeriod">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider"/>
 					<fr:property name="format" value="${semester} - ${executionYear.year}" />
@@ -35,9 +56,9 @@
 </div>
 
 <div class="simpleblock3 mtop2">
-	<fr:form action="/periods.do?method=firstPage">
+	<fr:form action="/showPeriods.do?method=firstPage">
 		<fr:edit id="executionDegreeContextBean" name="contextBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.PeriodsDA$ContextBean" bundle="APPLICATION_RESOURCES">
+			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewPeriodsAction$ContextBean" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="executionDegree" layout="menu-select-postback" key="label.executionDegree">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionPeriodProvider"/>
 					<fr:property name="format" value="${degree.presentationName}" />

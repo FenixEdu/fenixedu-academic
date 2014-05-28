@@ -1,4 +1,22 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * Aug 6, 2005
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
@@ -11,12 +29,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRendererShift;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
+
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * @author Ricardo Rodrigues
@@ -56,12 +76,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
 
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
-            if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
@@ -69,9 +84,9 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 
-            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
-                strBuffer.append(allocatableSpace.getNome());
+                strBuffer.append(allocatableSpace.getName());
             }
             strBuffer.append("</span>");
         } else if (showOccupation instanceof InfoLessonInstance) {
@@ -82,12 +97,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
 
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
-            if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
@@ -105,12 +115,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
 
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
-            if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
@@ -118,9 +123,9 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
             strBuffer.append("&nbsp;").append("&nbsp;(")
                     .append(infoLessonInstanceAggregation.getShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
-            final AllocatableSpace allocatableSpace = infoLessonInstanceAggregation.getAllocatableSpace();
+            final Space allocatableSpace = infoLessonInstanceAggregation.getAllocatableSpace();
             if (allocatableSpace != null) {
-                strBuffer.append(allocatableSpace.getNome());
+                strBuffer.append(allocatableSpace.getName());
             }
             strBuffer.append("</span>");
         }

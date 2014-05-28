@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.text.ParseException;
@@ -12,27 +30,27 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -100,10 +118,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return fullName;
     }
 
-    public Campus getCampus() {
-        List<AllocatableSpace> rooms = getAssociatedRooms();
+    public Space getCampus() {
+        List<Space> rooms = getAssociatedRooms();
         if (rooms.size() > 0) {
-            return rooms.iterator().next().getSpaceCampus();
+            return SpaceUtils.getSpaceCampus(rooms.iterator().next());
         } else {
             return null;
         }
@@ -182,8 +200,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    public List<AllocatableSpace> getAssociatedRooms() {
-        final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
+    public List<Space> getAssociatedRooms() {
+        final List<Space> result = new ArrayList<Space>();
         for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
             result.add(roomOccupation.getRoom());
         }
@@ -323,10 +341,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected void setAttributesAndAssociateRooms(Date day, Date beginning, Date end,
             List<ExecutionCourse> executionCoursesToAssociate, List<DegreeModuleScope> curricularCourseScopesToAssociate,
-            List<AllocatableSpace> rooms) {
+            List<Space> rooms) {
 
         if (rooms == null) {
-            rooms = new ArrayList<AllocatableSpace>(0);
+            rooms = new ArrayList<Space>(0);
         }
 
         checkValidHours(beginning, end);
@@ -353,7 +371,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         final Set<WrittenEvaluationSpaceOccupation> roomOccupationsToDelete = new HashSet<WrittenEvaluationSpaceOccupation>();
         for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
             if (!newOccupations.contains(roomOccupation)) {
-                final AllocatableSpace room = roomOccupation.getRoom();
+                final Space room = roomOccupation.getRoom();
                 if (!rooms.contains(room)) {
                     roomOccupationsToDelete.add(roomOccupation);
                 } else {
@@ -386,19 +404,19 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    public void removeRoomOccupation(AllocatableSpace room) {
+    public void removeRoomOccupation(Space room) {
         if (hasOccupationForRoom(room)) {
             WrittenEvaluationSpaceOccupation occupation =
-                    (WrittenEvaluationSpaceOccupation) room
-                            .getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
+                    (WrittenEvaluationSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(room,
+                            WrittenEvaluationSpaceOccupation.class);
             removeWrittenEvaluationSpaceOccupations(occupation);
         }
     }
 
-    protected List<WrittenEvaluationSpaceOccupation> associateNewRooms(final List<AllocatableSpace> rooms) {
+    protected List<WrittenEvaluationSpaceOccupation> associateNewRooms(final List<Space> rooms) {
 
         List<WrittenEvaluationSpaceOccupation> newInsertedOccupations = new ArrayList<WrittenEvaluationSpaceOccupation>();
-        for (final AllocatableSpace room : rooms) {
+        for (final Space room : rooms) {
             WrittenEvaluationSpaceOccupation spaceOccupation = associateNewRoom(room);
             if (spaceOccupation != null) {
                 newInsertedOccupations.add(spaceOccupation);
@@ -407,12 +425,12 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return newInsertedOccupations;
     }
 
-    protected WrittenEvaluationSpaceOccupation associateNewRoom(AllocatableSpace room) {
+    protected WrittenEvaluationSpaceOccupation associateNewRoom(Space room) {
         if (!hasOccupationForRoom(room)) {
 
             WrittenEvaluationSpaceOccupation occupation =
-                    (WrittenEvaluationSpaceOccupation) room
-                            .getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
+                    (WrittenEvaluationSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(room,
+                            WrittenEvaluationSpaceOccupation.class);
 
             occupation = occupation == null ? new WrittenEvaluationSpaceOccupation(room) : occupation;
             occupation.edit(this);
@@ -422,7 +440,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    private boolean hasOccupationForRoom(AllocatableSpace room) {
+    private boolean hasOccupationForRoom(Space room) {
         for (final WrittenEvaluationSpaceOccupation roomOccupation : this.getWrittenEvaluationSpaceOccupations()) {
             if (roomOccupation.getRoom() == room) {
                 return true;
@@ -432,7 +450,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     protected void edit(Date day, Date beginning, Date end, List<ExecutionCourse> executionCoursesToAssociate,
-            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale) {
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<Space> rooms, GradeScale gradeScale) {
 
         setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);
 
@@ -542,14 +560,14 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return false;
     }
 
-    public void distributeStudentsByRooms(List<Registration> studentsToDistribute, List<AllocatableSpace> selectedRooms) {
+    public void distributeStudentsByRooms(List<Registration> studentsToDistribute, List<Space> selectedRooms) {
 
         this.checkIfCanDistributeStudentsByRooms();
         this.checkRoomsCapacityForStudents(selectedRooms, studentsToDistribute.size());
 
-        for (final AllocatableSpace room : selectedRooms) {
-            for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < room.getCapacidadeExame()
-                    && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
+        for (final Space room : selectedRooms) {
+            Integer examCapacity = room.<Integer> getMetadata("examCapacity").orElse(0);
+            for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < examCapacity && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
                 final Registration registration = getRandomStudentFromList(studentsToDistribute);
                 final WrittenEvaluationEnrolment writtenEvaluationEnrolment = this.getWrittenEvaluationEnrolmentFor(registration);
                 if (writtenEvaluationEnrolment == null) {
@@ -600,11 +618,9 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    private void checkRoomsCapacityForStudents(final List<AllocatableSpace> selectedRooms, int studentsToDistributeSize) {
-        int totalCapacity = 0;
-        for (final AllocatableSpace room : selectedRooms) {
-            totalCapacity += room.getCapacidadeExame();
-        }
+    private void checkRoomsCapacityForStudents(final List<Space> selectedRooms, int studentsToDistributeSize) {
+        int totalCapacity = selectedRooms.stream().mapToInt(room -> room.<Integer> getMetadata("examCapacity").orElse(0)).sum();
+
         if (studentsToDistributeSize > totalCapacity) {
             throw new DomainException("error.not.enough.room.space");
         }
@@ -666,11 +682,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public Integer getCountNumberReservedSeats() {
-        int i = 0;
-        for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
-            i += (roomOccupation.getRoom()).getCapacidadeExame().intValue();
-        }
-        return i;
+        return getWrittenEvaluationSpaceOccupationsSet().stream()
+                .mapToInt(occupation -> occupation.getRoom().<Integer> getMetadata("examCapacity").orElse(0)).sum();
     }
 
     public Integer getCountVacancies() {
@@ -752,7 +765,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public String getAssociatedRoomsAsString() {
         String rooms = "";
-        for (AllocatableSpace room : getAssociatedRooms()) {
+        for (Space room : getAssociatedRooms()) {
             rooms += room.getName() + "\n";
         }
         return rooms;
@@ -826,7 +839,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return result;
     }
 
-    public abstract boolean canBeAssociatedToRoom(AllocatableSpace room);
+    public abstract boolean canBeAssociatedToRoom(Space room);
 
     public void fillVigilancyReport() {
         if (!getVigilantsReport()) {
@@ -842,7 +855,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected List<EvaluationEventBean> getAllEvents(String description, Registration registration) {
         List<EvaluationEventBean> result = new ArrayList<EvaluationEventBean>();
-        String url = FenixConfigurationManager.getFenixUrl();
+        String url = CoreConfiguration.getConfiguration().applicationUrl();
 
         Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
         executionCourses.addAll(this.getAttendingExecutionCoursesFor(registration));
@@ -860,7 +873,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
                     enrollmentEnd, false, null, url + "/privado", null, executionCourses));
         }
 
-        Set<AllocatableSpace> rooms = new HashSet<>();
+        Set<Space> rooms = new HashSet<>();
 
         if (registration.getRoomFor(this) != null) {
             rooms.add(registration.getRoomFor(this));
@@ -890,9 +903,9 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public String getAssociatedRoomsAsStringList() {
         StringBuilder builder = new StringBuilder("(");
-        Iterator<AllocatableSpace> iterator = getAssociatedRooms().iterator();
+        Iterator<Space> iterator = getAssociatedRooms().iterator();
         while (iterator.hasNext()) {
-            builder.append(iterator.next().getIdentification());
+            builder.append(iterator.next().getName());
             if (iterator.hasNext()) {
                 builder.append(", ");
             }

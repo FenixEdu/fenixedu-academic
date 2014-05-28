@@ -1,6 +1,27 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <html:xhtml/>
 
 <logic:notPresent name="registration" >
@@ -28,7 +49,6 @@
 		</ul>
 		<br />
 	</logic:messagesPresent>
-	
 
 	<p>Aqui pode, <strong>a título condicional</strong>, escolher disciplinas em que não se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condições:</p>
 	
@@ -67,13 +87,11 @@
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degree" property="degree" styleClass="degrees" size="1" onchange="this.form.method.value='start'; this.form.submit();">
 					<html:optionsCollection name="executionDegrees"/>
 				</html:select>
-				
-				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
 			</html:form>
 			
-			<html:form action="/studentShiftEnrollmentManagerLoockup">
+			<html:form action="/studentShiftEnrollmentManagerLookup">
+
+				<input type="hidden" name="method" id="mainMethod" />
 			
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationOID" property="registrationOID" value="<%= registrationToEnrol.toString() %>" />
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree" value="<%= degreeSelected.toString() %>" />
@@ -101,7 +119,8 @@
 					
 					<p style="text-align:center;margin-top:5px">
 					<logic:lessThan name="wantedCoursesSize" value="8">			
-						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" style="width:13em">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" style="width:13em"
+							onclick="document.getElementById('mainMethod').value='addCourses'">
 							<bean:message key="button.addCourse"/>
 						</html:submit>
 					</logic:lessThan>
@@ -121,7 +140,7 @@
 									<html:options collection="attendingCourses" labelProperty="nome"  property="externalId"/>
 								</html:select>
 								<logic:notEqual name="wantedCoursesSize" value="0">
-									<p style="text-align:center;margin-top:5px"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" style="width:13em" ><bean:message key="button.removeCourse"/></html:submit></p>
+									<p style="text-align:center;margin-top:5px"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" style="width:13em" onclick="document.getElementById('mainMethod').value='removeCourses'"><bean:message key="button.removeCourse"/></html:submit></p>
 								</logic:notEqual>
 							</logic:present>
 							<logic:notPresent name="attendingCourses">
@@ -137,14 +156,11 @@
 					<br/>
 						
 					<logic:notEqual name="wantedCoursesSize" value="0">
-						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton"
+						 onclick="document.getElementById('mainMethod').value='prepareStartViewWarning'">
 							<bean:message key="button.continue.enrolment"/>
 						</html:submit>
-					</logic:notEqual>	
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton">
-						<bean:message key="button.exit.shift.enrollment"/>
-					</html:submit>		
-			
+					</logic:notEqual>
 				</logic:present>
 			</html:form>
 

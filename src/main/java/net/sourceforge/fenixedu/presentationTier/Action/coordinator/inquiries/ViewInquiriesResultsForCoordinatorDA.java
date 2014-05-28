@@ -1,5 +1,23 @@
 /**
- * 
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
+ *
  */
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.inquiries;
 
@@ -31,7 +49,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -43,33 +61,30 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
+ *
  */
 
-@Mapping(path = "/viewInquiriesResults", module = "coordinator", formBeanClass = ViewInquiriesResultPageDTO.class)
-@Forwards({
-        @Forward(name = "inquiryResults", path = "/coordinator/inquiries/viewInquiriesResults.jsp"),
-        @Forward(name = "curricularUnitSelection", path = "/coordinator/inquiries/curricularUnitSelection.jsp",
-                tileProperties = @Tile(title = "private.coordinator.management.courses.management.qucresults")),
-        @Forward(name = "showFilledTeachingInquiry", path = "/inquiries/showFilledTeachingInquiry.jsp", useTile = false),
-        @Forward(name = "showFilledTeachingInquiry_v2", path = "/inquiries/showFilledTeachingInquiry_v2.jsp", useTile = false),
-        @Forward(name = "showFilledDelegateInquiry", path = "/inquiries/showFilledDelegateInquiry.jsp", useTile = false),
-        @Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
-        @Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false),
-        @Forward(name = "coordinatorUCView", path = "/coordinator/inquiries/coordinatorUCView.jsp", tileProperties = @Tile(
-                title = "private.coordinator.management.courses.management.qucresults")),
+@Mapping(path = "/viewInquiriesResults", module = "coordinator", formBeanClass = ViewInquiriesResultPageDTO.class,
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards({ @Forward(name = "inquiryResults", path = "/coordinator/inquiries/viewInquiriesResults.jsp"),
+        @Forward(name = "curricularUnitSelection", path = "/coordinator/inquiries/curricularUnitSelection.jsp"),
+        @Forward(name = "showFilledTeachingInquiry", path = "/inquiries/showFilledTeachingInquiry.jsp"),
+        @Forward(name = "showFilledTeachingInquiry_v2", path = "/inquiries/showFilledTeachingInquiry_v2.jsp"),
+        @Forward(name = "showFilledDelegateInquiry", path = "/inquiries/showFilledDelegateInquiry.jsp"),
+        @Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp"),
+        @Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp"),
+        @Forward(name = "coordinatorUCView", path = "/coordinator/inquiries/coordinatorUCView.jsp"),
         @Forward(name = "coordinatorInquiry", path = "/coordinator/inquiries/coordinatorInquiry.jsp") })
 public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -145,7 +160,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
                 ExecutionDegree currentExecutionDegree =
                         resultPageDTO.getDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(
                                 currentExecutionSemester.getAcademicInterval());
-                // check if the course has been opened this semester 
+                // check if the course has been opened this semester
                 if (currentExecutionDegree != null) {
                     currentCoordinator = currentExecutionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
                 }
@@ -323,7 +338,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
         request.setAttribute("degreeCurricularPlanID", coordinatorResultsBean.getExecutionDegree().getDegreeCurricularPlan()
                 .getExternalId().toString());
 
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return selectexecutionSemester(actionMapping, actionForm, request, response);
     }
 
@@ -353,7 +368,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
         request.setAttribute("degreeCurricularPlanID", coordinatorInquiryBean.getCoordinator().getExecutionDegree()
                 .getDegreeCurricularPlan().getExternalId().toString());
 
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return selectexecutionSemester(actionMapping, actionForm, request, response);
     }
 

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
@@ -42,8 +60,8 @@ public class InsertDistributedTest {
 
     protected void run(String executionCourseId, String testId, String testInformation, String evaluationTitle,
             Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
-            CorrectionAvailability correctionAvaiability, Boolean imsFeedback, List<InfoStudent> infoStudentList,
-            String contextPath) throws FenixServiceException {
+            CorrectionAvailability correctionAvaiability, Boolean imsFeedback, List<InfoStudent> infoStudentList)
+            throws FenixServiceException {
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
@@ -61,13 +79,11 @@ public class InsertDistributedTest {
             distributedTestCreator.start();
             distributedTestCreator.join();
 
-            final String replacedContextPath = contextPath.replace('\\', '/');
-
             final String distributedTestId = distributedTestCreator.distributedTestId;
             if (distributedTestId == null) {
                 throw new Error("Creator thread was unable to create a distributed test!");
             }
-            Distributor.runThread(infoStudentList, distributedTestId, test.getExternalId(), replacedContextPath);
+            Distributor.runThread(infoStudentList, distributedTestId, test.getExternalId());
 
         } catch (InterruptedException e) {
             throw new Error(e);
@@ -256,14 +272,10 @@ public class InsertDistributedTest {
 
         private final String testId;
 
-        private final String replacedContextPath;
-
-        public Distributor(final List<InfoStudent> infoStudentList, final String distributedTestId, final String testId,
-                final String replacedContextPath) {
+        public Distributor(final List<InfoStudent> infoStudentList, final String distributedTestId, final String testId) {
             this.infoStudentList = infoStudentList;
             this.distributedTestId = distributedTestId;
             this.testId = testId;
-            this.replacedContextPath = replacedContextPath;
         }
 
         @Atomic
@@ -283,15 +295,15 @@ public class InsertDistributedTest {
                 final InfoStudent infoStudent = entry.getKey();
                 final Collection<QuestionPair> questions = entry.getValue();
                 try {
-                    DistributeForStudentThread.runThread(distributedTestId, replacedContextPath, infoStudent, questions);
+                    DistributeForStudentThread.runThread(distributedTestId, infoStudent, questions);
                 } catch (InterruptedException e) {
                 }
             }
         }
 
         protected static void runThread(final List<InfoStudent> infoStudentList, final String distributedTestId,
-                final String testId, final String replacedContextPath) throws InterruptedException {
-            final Distributor distributor = new Distributor(infoStudentList, distributedTestId, testId, replacedContextPath);
+                final String testId) throws InterruptedException {
+            final Distributor distributor = new Distributor(infoStudentList, distributedTestId, testId);
             distributor.start();
             distributor.join();
         }
@@ -307,16 +319,13 @@ public class InsertDistributedTest {
 
         private final String distributedTestId;
 
-        private final String replacedContextPath;
-
         private final InfoStudent infoStudent;
 
         private final Collection<QuestionPair> questionList;
 
-        public DistributeForStudentThread(final String distributedTestId, final String replacedContextPath,
-                final InfoStudent infoStudent, final Collection<QuestionPair> questionList) {
+        public DistributeForStudentThread(final String distributedTestId, final InfoStudent infoStudent,
+                final Collection<QuestionPair> questionList) {
             this.distributedTestId = distributedTestId;
-            this.replacedContextPath = replacedContextPath;
             this.infoStudent = infoStudent;
             this.questionList = questionList;
         }
@@ -345,7 +354,7 @@ public class InsertDistributedTest {
 
                 Question question = null;
                 try {
-                    question = getStudentQuestion(questionPair.getQuestion(), replacedContextPath);
+                    question = getStudentQuestion(questionPair.getQuestion());
                 } catch (ParseQuestionException e) {
                     throw new Error(e);
                 }
@@ -360,15 +369,15 @@ public class InsertDistributedTest {
             }
         }
 
-        private Question getStudentQuestion(final Question question, String path) throws ParseQuestionException {
+        private Question getStudentQuestion(final Question question) throws ParseQuestionException {
             return question.getSubQuestions() == null || question.getSubQuestions().size() == 0 ? new ParseSubQuestion()
-                    .parseSubQuestion(question, path) : question;
+                    .parseSubQuestion(question) : question;
         }
 
-        protected static void runThread(final String distributedTestId, final String replacedContextPath,
-                final InfoStudent infoStudent, final Collection<QuestionPair> questionList) throws InterruptedException {
+        protected static void runThread(final String distributedTestId, final InfoStudent infoStudent,
+                final Collection<QuestionPair> questionList) throws InterruptedException {
             final DistributeForStudentThread distributeForStudentThread =
-                    new DistributeForStudentThread(distributedTestId, replacedContextPath, infoStudent, questionList);
+                    new DistributeForStudentThread(distributedTestId, infoStudent, questionList);
             distributeForStudentThread.start();
             // TODO
             distributeForStudentThread.join();
@@ -383,10 +392,10 @@ public class InsertDistributedTest {
     public static void runInsertDistributedTest(String executionCourseId, String testId, String testInformation,
             String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
             TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
-            List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException, NotAuthorizedException {
+            List<InfoStudent> infoStudentList) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, testId, testInformation, evaluationTitle, beginDate, beginHour, endDate, endHour,
-                testType, correctionAvaiability, imsFeedback, infoStudentList, contextPath);
+                testType, correctionAvaiability, imsFeedback, infoStudentList);
     }
 
 }

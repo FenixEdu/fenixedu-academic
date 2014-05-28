@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -8,7 +28,6 @@
 <html:xhtml/>
 <logic:present name="person">
 
-	<em><bean:message key="label.person.main.title" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:message key="link.title.professionalInformation" bundle="CONTRACTS_RESOURCES"/></h2>
 	<div class="infoselected">
 		<fr:view name="person" schema="FindPersonFactoryResult" layout="tabular"/>
@@ -16,13 +35,13 @@
 			<tr>
 				<th scope="row"><bean:message key="label.person.username" bundle="APPLICATION_RESOURCES"/></th>
 				<logic:notEmpty name="person" property="user">
-					<td><bean:write name="person" property="user.username"/></td>
+					<td>&nbsp; <bean:write name="person" property="user.username"/></td>
 				</logic:notEmpty>
 				<logic:notEmpty name="person" property="student">
-					<td><bean:write name="person" property="student.number"/></td>
+					<td>&nbsp;- <bean:write name="person" property="student.number"/></td>
 				</logic:notEmpty>
 				<logic:notEmpty name="person" property="employee">
-					<td><bean:write name="person" property="employee.employeeNumber"/></td>
+					<td>&nbsp;- <bean:write name="person" property="employee.employeeNumber"/></td>
 				</logic:notEmpty>
 			</tr>
 		</table>

@@ -1,7 +1,27 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -12,27 +32,19 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
-import org.fenixedu.bennu.core.domain.groups.UserGroup;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixframework.FenixFramework;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.base.Joiner;
 
-public class SearchDegreeStudentsGroup extends Group {
+public class SearchDegreeStudentsGroup implements Serializable {
 
     private static final long serialVersionUID = -1670838875686375271L;
 
@@ -199,16 +211,15 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getSortBy() {
-        return sortBy;
+        return sortBy != null ? sortBy : "student.number";
     }
 
     public void setSortBy(String sortBy) {
         this.sortBy = sortBy;
     }
 
-    @Override
     public Set<Person> getElements() {
-        final Set<Person> elements = super.buildSet();
+        final Set<Person> elements = new HashSet<>();
         final Map<StudentCurricularPlan, RegistrationStateType> students = searchStudentCurricularPlans(null, null);
         for (StudentCurricularPlan student : students.keySet()) {
             elements.add(student.getPerson());
@@ -216,14 +227,17 @@ public class SearchDegreeStudentsGroup extends Group {
         return elements;
     }
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-        return new Argument[] { new OidOperator(getDegreeCurricularPlan()), new OidOperator(getExecutionYear()),
-                new StaticArgument(getSortBy()), new StaticArgument(getRegistrationStateType()),
-                new StaticArgument(getMinGrade()), new StaticArgument(getMaxGrade()), new StaticArgument(getMinNumberApproved()),
-                new StaticArgument(getMaxNumberApproved()), new StaticArgument(getMinStudentNumber()),
-                new StaticArgument(getMaxStudentNumber()), new StaticArgument(getMinimumYear()),
-                new StaticArgument(getMaximumYear()) };
+    public org.fenixedu.bennu.core.groups.Group getUserGroup() {
+        Set<User> users = new HashSet<>();
+        final Map<StudentCurricularPlan, RegistrationStateType> students = searchStudentCurricularPlans(null, null);
+        for (StudentCurricularPlan student : students.keySet()) {
+            User user = student.getPerson().getUser();
+            if (user != null) {
+                users.add(user);
+            }
+        }
+//        return UserGroup.of(users);
+        return null;
     }
 
     private Comparator<StudentCurricularPlan> determineComparatorKind() {
@@ -472,7 +486,7 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(name);
+        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
     }
 
     public String getLabel() {
@@ -490,65 +504,49 @@ public class SearchDegreeStudentsGroup extends Group {
         return label;
     }
 
-    public static class Builder implements GroupBuilder {
-
-        private void verifyArgs(Object[] arguments) {
-            for (int i = 4; i < 10; i++) {
-                String arg = (String) arguments[i];
-                if (arg.equalsIgnoreCase("null")) {
-                    arguments[i] = null;
-                } else if (i < 10) {
-                    arguments[i] = Double.valueOf(arg);
-                }
-            }
-            for (int i = 10; i < 12; i++) {
-                if (arguments[i] instanceof String) {
-                    arguments[i] = null;
-                }
-            }
-        }
-
-        @Override
-        public Group build(Object[] arguments) {
-            verifyArgs(arguments);
-            try {
-                return new SearchDegreeStudentsGroup((DegreeCurricularPlan) arguments[0], (ExecutionYear) arguments[1],
-                        (String) arguments[2], RegistrationStateType.valueOf((String) arguments[3]), (Double) arguments[4],
-                        (Double) arguments[5], (Double) arguments[6], (Double) arguments[7], (Double) arguments[8],
-                        (Double) arguments[9], (Integer) arguments[10], (Integer) arguments[11]);
-            } catch (final ClassCastException e) {
-                throw new Error(e);
-            }
-        }
-
-        @Override
-        public int getMinArguments() {
-            return 12;
-        }
-
-        @Override
-        public int getMaxArguments() {
-            return 12;
-        }
-
+    public static SearchDegreeStudentsGroup parse(String serialized) {
+        String[] parts = serialized.split(":");
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(parts[0]);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(parts[1]);
+        String sortBy = parts[2];
+        RegistrationStateType registrationStateType = parts[3].equals("ND") ? null : RegistrationStateType.valueOf(parts[3]);
+        Double minGrade = parts[4].equals("ND") ? null : Double.valueOf(parts[4]);
+        Double maxGrade = parts[5].equals("ND") ? null : Double.valueOf(parts[5]);
+        Double minNumberApproved = parts[6].equals("ND") ? null : Double.valueOf(parts[6]);
+        Double maxNumberApproved = parts[7].equals("ND") ? null : Double.valueOf(parts[7]);
+        Double minStudentNumber = parts[8].equals("ND") ? null : Double.valueOf(parts[8]);
+        Double maxStudentNumber = parts[9].equals("ND") ? null : Double.valueOf(parts[9]);
+        Integer minimumYear = parts[10].equals("ND") ? null : Integer.valueOf(parts[10]);
+        Integer maximumYear = parts[11].equals("ND") ? null : Integer.valueOf(parts[11]);
+        return new SearchDegreeStudentsGroup(degreeCurricularPlan, executionYear, sortBy, registrationStateType, minGrade,
+                maxGrade, minNumberApproved, maxNumberApproved, minStudentNumber, maxStudentNumber, minimumYear, maximumYear);
     }
 
-    @Override
-    public org.fenixedu.bennu.core.domain.groups.Group convert() {
-        ImmutableSet<User> users = FluentIterable.from(getElements()).filter(new Predicate<Person>() {
-            @Override
-            public boolean apply(Person person) {
-                return person.getUser() != null;
-            }
-        }).transform(new Function<Person, User>() {
-            @Override
-            public User apply(Person person) {
-                return person.getUser();
-            }
-        }).toSet();
-        if (users.isEmpty()) {
-            return NobodyGroup.getInstance();
-        }
-        return UserGroup.getInstance(users);
+    public String serialize() {
+        List<String> parts = new ArrayList<>();
+        parts.add(getDegreeCurricularPlan().getExternalId());
+        parts.add(getExecutionYear().getExternalId());
+        parts.add(getSortBy());
+        parts.add(getRegistrationStateType() != null ? getRegistrationStateType().getName() : "ND");
+        parts.add(getMinGradeString());
+        parts.add(getMaxGradeString());
+        parts.add(getMinNumberApprovedString());
+        parts.add(getMaxNumberApprovedString());
+        parts.add(getMinStudentNumberString());
+        parts.add(getMaxStudentNumberString());
+        parts.add(getMinimumYearString());
+        parts.add(getMaximumYearString());
+        return Joiner.on(':').join(parts);
     }
+
+//  @Override
+//  protected Argument[] getExpressionArguments() {
+//      return new Argument[] { new OidOperator(getDegreeCurricularPlan()), new OidOperator(getExecutionYear()),
+//              new StaticArgument(getSortBy()), new StaticArgument(getRegistrationStateType()),
+//              new StaticArgument(getMinGrade()), new StaticArgument(getMaxGrade()), new StaticArgument(getMinNumberApproved()),
+//              new StaticArgument(getMaxNumberApproved()), new StaticArgument(getMinStudentNumber()),
+//              new StaticArgument(getMaxStudentNumber()), new StaticArgument(getMinimumYear()),
+//              new StaticArgument(getMaximumYear()) };
+//  }
+
 }

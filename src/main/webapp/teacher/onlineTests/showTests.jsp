@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
@@ -6,7 +26,7 @@
 <h2><bean:message key="title.showTests" /></h2>
 
 <logic:present name="testList">
-	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+	<bean:define id="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>" />
 
 	<bean:size id="testsSize" name="testList" />
 	<logic:equal name="testsSize" value="0">
@@ -20,7 +40,7 @@
 		</table>
 		<br />
 		<div class="gen-button"><html:link
-			page="<%= "/testsManagement.do?method=prepareCreateTest&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
+			page="<%= "/testsManagement.do?method=prepareCreateTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")%>">
 			<bean:message key="link.createTest" />
 		</html:link></div>
 		<br />
@@ -42,32 +62,32 @@
 					<bean:define id="testCode" name="test" property="externalId" />
 					<td>
 					<div class="gen-button"><html:link
-						page="<%= "/testEdition.do?method=editTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + testCode %>">
+						page="<%= "/testEdition.do?method=editTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;testCode=" + testCode %>">
 						<bean:message key="label.edit" />
 					</html:link></div>
 					</td>
 					<td>
 					<div class="gen-button"><html:link
-						page="<%= "/testsManagement.do?method=prepareDeleteTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + testCode %>">
+						page="<%= "/testsManagement.do?method=prepareDeleteTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;testCode=" + testCode %>">
 						<bean:message key="link.remove" />
 					</html:link></div>
 					</td>
 					<td>
 					<div class="gen-button"><html:link
-						page="<%= "/testEdition.do?method=editAsNewTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + testCode %>">
+						page="<%= "/testEdition.do?method=editAsNewTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;testCode=" + testCode %>">
 						<bean:message key="label.duplicate" />
 					</html:link></div>
 					</td>
 					<td>
 					<div class="gen-button"><html:link
-						page="<%= "/testDistribution.do?method=prepareDistributeTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + testCode %>">
+						page="<%= "/testDistribution.do?method=prepareDistributeTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;testCode=" + testCode %>">
 						<bean:message key="link.student.room.distribution" />
 					</html:link></div>
 					</td>
 					<%--
 					<td>
 					<div class="gen-button"><html:link
-						page="<%= "/studentTestManagement.do?method=chooseTestSimulationOptions&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" +testCode %>">
+						page="<%= "/studentTestManagement.do?method=chooseTestSimulationOptions&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;testCode=" +testCode %>">
 						<bean:message key="label.Simulate" />
 					</html:link></div>
 					</td>

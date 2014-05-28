@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment;
 
 import java.util.ArrayList;
@@ -7,6 +25,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadShiftsToEnroll;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.UnEnrollStudentFromShift;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -20,8 +39,10 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentEnrollApp;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 
 import org.apache.commons.lang.StringUtils;
@@ -29,50 +50,42 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = StudentEnrollApp.class, path = "shift-enrollment", titleKey = "link.shift.enrolment")
 @Mapping(module = "student", path = "/studentShiftEnrollmentManager", input = "/studentShiftEnrollmentManager.do?method=prepare",
-        attribute = "studentShiftEnrollmentForm", formBean = "studentShiftEnrollmentForm", scope = "request", validate = false,
-        parameter = "method")
+        formBean = "studentShiftEnrollmentForm", validate = false)
 @Forwards(value = {
-        @Forward(name = "showEnrollmentPage", path = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos",
-                tileProperties = @Tile(title = "private.student.subscribe.groups")),
-        @Forward(name = "chooseRegistration", path = "/student/enrollment/shifts/chooseRegistration.jsp", tileProperties = @Tile(
-                title = "private.student.subscribe.groups")),
-        @Forward(name = "showShiftsEnrollment", path = "show-shifts-enrollment", tileProperties = @Tile(
-                title = "private.student.subscribe.groups")),
-        @Forward(name = "prepareEnrollmentViewWarning", path = "prepare-enrollment-view-warning", tileProperties = @Tile(
-                title = "private.student.subscribe.groups")),
-        @Forward(name = "selectCourses", path = "show-courses-by-degree", tileProperties = @Tile(
-                title = "private.student.subscribe.groups")),
-        @Forward(name = "shiftEnrollmentCannotProceed", path = "/student/enrollment/bolonha/shiftEnrollmentCannotProceed.jsp",
-                tileProperties = @Tile(title = "private.student.subscribe.groups")) })
-@Exceptions(
-        value = {
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan.class,
-                        key = "error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        scope = "request"),
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.InquiriesNotAnswered.class,
-                        key = "message.student.cannotEnroll.inquiriesNotAnswered",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        scope = "request"),
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan.class,
-                        key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        scope = "request") })
-public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDispatchAction {
+        @Forward(name = "showEnrollmentPage",
+                path = "/student/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment"),
+        @Forward(name = "chooseRegistration", path = "/student/enrollment/shifts/chooseRegistration.jsp"),
+        @Forward(name = "showShiftsEnrollment", path = "/student/enrollment/showShiftsEnrollment.jsp"),
+        @Forward(name = "prepareEnrollmentViewWarning", path = "/student/enrollment/prepareEnrollmentViewWarning.jsp"),
+        @Forward(name = "selectCourses", path = "/student/enrollment/showCoursesByDegree.jsp"),
+        @Forward(name = "shiftEnrollmentCannotProceed", path = "/student/enrollment/bolonha/shiftEnrollmentCannotProceed.jsp") })
+@Exceptions({
+        @ExceptionHandling(
+                type = ClassEnrollmentAuthorizationFilter.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan.class,
+                key = "error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan",
+                handler = FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(type = ClassEnrollmentAuthorizationFilter.InquiriesNotAnswered.class,
+                key = "message.student.cannotEnroll.inquiriesNotAnswered", handler = FenixErrorExceptionHandler.class,
+                scope = "request"),
+        @ExceptionHandling(
+                type = ClassEnrollmentAuthorizationFilter.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan.class,
+                key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
+                handler = FenixErrorExceptionHandler.class, scope = "request") })
+public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         final Student student = getUserView(request).getPerson().getStudent();
@@ -116,8 +129,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
-        super.createToken(request);
+        generateToken(request);
+        saveToken(request);
         return prepareShiftEnrollment(mapping, form, request, response);
     }
 

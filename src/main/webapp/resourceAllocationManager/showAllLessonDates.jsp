@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.SortedSet"%>
 <%@page import="net.sourceforge.fenixedu.domain.LessonInstance"%>
@@ -69,7 +89,7 @@
 	</p>
 
 	<%
-		final Lesson lesson = ((InfoLesson) request.getAttribute("lesson")).getLesson();
+		final Lesson lesson = (Lesson) request.getAttribute("lesson");
 		final ExecutionCourse executionCourse = lesson.getExecutionCourse();
 		final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
 		final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
@@ -153,7 +173,7 @@
 		        	<bean:message key="property.capacity"/>
 		        </th>
 			</tr>
-			<logic:iterate id="olesson" name="lesson" property="lesson.shift.associatedLessonsSet">
+			<logic:iterate id="olesson" name="lesson" property="shift.associatedLessonsSet">
 				<tr <% if (olesson == lesson) { %> class="selectedLesson" <% } else { %> class="notSelectedLesson" <% } %>>
 					<td>
 	<%
@@ -189,12 +209,12 @@
 					</td>
 					<td>
 						<logic:notEmpty name="olesson" property="sala">
-							<bean:write name="olesson" property="sala.nome"/>
+							<bean:write name="olesson" property="sala.name"/>
 						</logic:notEmpty>	
 					</td>
 					<td>
 						<logic:notEmpty name="olesson" property="sala">
-							<bean:write name="olesson" property="sala.capacidadeNormal"/>
+							<bean:write name="olesson" property="sala.allocatableCapacity"/>
 						</logic:notEmpty>
 					</td>
 				</tr>

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies;
 
 import java.io.IOException;
@@ -16,7 +34,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -36,24 +54,22 @@ import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.KaptchaAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.Pair;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
-import com.octo.captcha.module.struts.CaptchaServicePlugin;
-import com.octo.captcha.service.CaptchaServiceException;
 
 public abstract class RefactoredIndividualCandidacyProcessPublicDA extends IndividualCandidacyProcessDA {
 
@@ -72,7 +88,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     protected String getStringFromDefaultBundle(String key) {
-        return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(key);
+        return ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale()).getString(key);
     }
 
     @Override
@@ -130,7 +146,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     protected CandidacyProcess getCurrentOpenParentProcess() {
         Set<Process> degreeChangeCandidacyProcesses =
-                Sets.newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), getParentProcessType()));
+                Sets.<Process> newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), getParentProcessType()));
 
         for (Process candidacyProcess : degreeChangeCandidacyProcesses) {
             if (candidacyProcess instanceof CandidacyProcess && ((CandidacyProcess) candidacyProcess).hasOpenCandidacyPeriod()) {
@@ -161,11 +177,11 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
                             .getUnusedOrCreateNewHashCodeAndSendEmailForApplicationSubmissionToCandidate(getProcessType(),
                                     getCurrentOpenParentProcess(), email);
 
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
             String link =
                     String.format(
                             bundle.getString(getProcessType().getSimpleName() + ".const.public.application.submission.link"),
-                            hash.getValue(), Language.getLocale().getLanguage());
+                            hash.getValue(), I18N.getLocale().getLanguage());
 
             request.setAttribute("link", link);
 
@@ -210,25 +226,17 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
             HttpServletResponse response);
 
     protected boolean validateCaptcha(ActionMapping mapping, HttpServletRequest request) {
-        final String captchaId = request.getSession().getId();
         final String captchaResponse = request.getParameter("j_captcha_response");
 
-        try {
-            if (!CaptchaServicePlugin.getInstance().getService().validateResponseForID(captchaId, captchaResponse)) {
-                addActionMessage("captcha.error", request, "captcha.wrong.word");
-                return false;
-            }
-            return true;
-        } catch (CaptchaServiceException e) { // may be thrown if the id is not
-            // valid
-            logger.error(e.getMessage(), e);
+        if (!KaptchaAction.validateResponse(request.getSession(), captchaResponse)) {
             addActionMessage("captcha.error", request, "captcha.wrong.word");
             return false;
         }
+        return true;
     }
 
     private boolean isInEnglishLocale() {
-        Locale locale = Language.getLocale();
+        Locale locale = I18N.getLocale();
         return locale.getLanguage().equals(Locale.ENGLISH.getLanguage());
     }
 
@@ -439,9 +447,9 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     protected String getFormattedApplicationSubmissionEndDate() {
         DateTime end = getCurrentOpenParentProcess().getCandidacyEnd();
         if (isInEnglishLocale()) {
-            return end.toString("dd', 'MMMM' of 'yyyy", Language.getLocale());
+            return end.toString("dd', 'MMMM' of 'yyyy", I18N.getLocale());
         }
-        return end.toString("dd' de 'MMMM' de 'yyyy", Language.getLocale());
+        return end.toString("dd' de 'MMMM' de 'yyyy", I18N.getLocale());
     }
 
     @Override
@@ -482,8 +490,6 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     private ActionForward forward(HttpServletRequest request, String windowLocation) {
         final ActionForward actionForward = new ActionForward();
-        String contextContextPath = request.getParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-        windowLocation = windowLocation + "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + contextContextPath;
         actionForward.setName(windowLocation);
         actionForward.setPath(windowLocation);
         actionForward.setRedirect(true);
@@ -644,15 +650,15 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     public ActionForward candidaciesTypesInformationIntro(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        Locale locale = Language.getLocale();
+        Locale locale = I18N.getLocale();
         String countryCode = readCountryCode(locale);
 
-        String institutionalURL = Instalation.getInstance().getInstituitionURL();
+        String institutionalURL = Installation.getInstance().getInstituitionURL();
         if ("PT".equals(countryCode)) {
-            return redirect(institutionalURL + "pt/candidatos/candidaturas/", request, false);
+            return redirect(institutionalURL + "pt/candidatos/candidaturas/", request);
         }
 
-        return redirect(institutionalURL + "en/prospective-students/admissions/", request, false);
+        return redirect(institutionalURL + "en/prospective-students/admissions/", request);
     }
 
     static private String readCountryCode(final Locale locale) {

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 10/Set/2003
  *
@@ -9,9 +27,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 
 /**
  * @author Susana Fernandes
@@ -38,7 +58,7 @@ public class StudentTestLog extends StudentTestLog_Base {
                         dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute(), 0);
         checksumCode.append(thisDateTime.getMillis());
         checksumCode.append(Bennu.getInstance().getTestChecksumsSet().iterator().next().getChecksumCode());
-        return (DigestUtils.shaHex(checksumCode.toString()));
+        return (Hashing.sha1().hashString(checksumCode.toString(), Charsets.UTF_8)).toString();
     }
 
     public void delete() {

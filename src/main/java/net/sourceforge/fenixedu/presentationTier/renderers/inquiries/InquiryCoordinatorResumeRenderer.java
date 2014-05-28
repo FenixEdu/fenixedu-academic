@@ -1,7 +1,27 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
+
+import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
@@ -18,6 +38,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
@@ -100,33 +121,25 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
         String resultsParameters = buildParametersForResults(courseResumeResult);
         HtmlLink link = new HtmlLink();
         link.setModule("/publico");
-        link.setUrl("/viewCourseResults.do?" + resultsParameters + "&"
-                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                + "=" + getContextPath());
+        link.setUrl("/viewCourseResults.do?" + resultsParameters);
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
-        optionUC.setValue(calculatedUrl
-                + "&_request_checksum_="
-                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                        .calculateChecksum(calculatedUrl));
+        optionUC.setValue(calculatedUrl + "&_request_checksum_="
+                + GenericChecksumRewriter.calculateChecksum(calculatedUrl, getSession()));
 
         for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : courseResumeResult.getTeachersResults()) {
             String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
             HtmlLink teacherLink = new HtmlLink();
             teacherLink.setEscapeAmpersand(false);
             teacherLink.setModule("/publico");
-            teacherLink.setUrl("/viewTeacherResults.do?" + teacherResultsParameters + "&"
-                    + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                    + "=" + getContextPath());
+            teacherLink.setUrl("/viewTeacherResults.do?" + teacherResultsParameters);
             calculatedUrl = teacherLink.calculateUrl();
 
             HtmlMenuOption optionTeacher = resultsGroup.createOption();
             optionTeacher.setText(teacherShiftTypeResultsBean.getShiftType().getFullNameTipoAula() + " - "
                     + teacherShiftTypeResultsBean.getProfessorship().getPerson().getName());
-            optionTeacher.setValue(calculatedUrl
-                    + "&_request_checksum_="
-                    + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                            .calculateChecksum(calculatedUrl));
+            optionTeacher.setValue(calculatedUrl + "&_request_checksum_="
+                    + GenericChecksumRewriter.calculateChecksum(calculatedUrl, getSession()));
         }
     }
 
@@ -141,20 +154,13 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
                 HtmlLink delegateLink = new HtmlLink();
                 delegateLink.setEscapeAmpersand(false);
                 delegateLink.setModule("/publico");
-                delegateLink
-                        .setUrl("/viewQUCInquiryAnswers.do?"
-                                + delegateInquiryParameters
-                                + "&"
-                                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                                + "=" + getContextPath());
+                delegateLink.setUrl("/viewQUCInquiryAnswers.do?" + delegateInquiryParameters);
                 calculatedUrl = delegateLink.calculateUrl();
 
                 HtmlMenuOption optionDelegate = reportsGroup.createOption();
                 optionDelegate.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.delegate"));
-                optionDelegate.setValue(calculatedUrl
-                        + "&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl));
+                optionDelegate.setValue(calculatedUrl + "&_request_checksum_="
+                        + GenericChecksumRewriter.calculateChecksum(calculatedUrl, getSession()));
             }
         }
 
@@ -163,20 +169,14 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
                 HtmlLink teacherLink = new HtmlLink();
                 teacherLink.setEscapeAmpersand(false);
                 teacherLink.setModule("/publico");
-                teacherLink
-                        .setUrl("/viewQUCInquiryAnswers.do?method=showTeacherInquiry&professorshipOID="
-                                + professorship.getExternalId()
-                                + "&"
-                                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                                + "=" + getContextPath());
+                teacherLink.setUrl("/viewQUCInquiryAnswers.do?method=showTeacherInquiry&professorshipOID="
+                        + professorship.getExternalId());
                 calculatedUrl = teacherLink.calculateUrl();
                 HtmlMenuOption optionTeacher = reportsGroup.createOption();
                 optionTeacher.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.teacher") + " ("
                         + professorship.getPerson().getName() + ")");
-                optionTeacher.setValue(calculatedUrl
-                        + "&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl));
+                optionTeacher.setValue(calculatedUrl + "&_request_checksum_="
+                        + GenericChecksumRewriter.calculateChecksum(calculatedUrl, getSession()));
             }
         }
 
@@ -185,22 +185,20 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
                 HtmlLink regentLink = new HtmlLink();
                 regentLink.setEscapeAmpersand(false);
                 regentLink.setModule("/publico");
-                regentLink
-                        .setUrl("/viewQUCInquiryAnswers.do?method=showRegentInquiry&professorshipOID="
-                                + professorship.getExternalId()
-                                + "&"
-                                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                                + "=" + getContextPath());
+                regentLink.setUrl("/viewQUCInquiryAnswers.do?method=showRegentInquiry&professorshipOID="
+                        + professorship.getExternalId());
                 calculatedUrl = regentLink.calculateUrl();
                 HtmlMenuOption optionRegent = reportsGroup.createOption();
                 optionRegent.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.regent") + " ("
                         + professorship.getPerson().getName() + ")");
-                optionRegent.setValue(calculatedUrl
-                        + "&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl));
+                optionRegent.setValue(calculatedUrl + "&_request_checksum_="
+                        + GenericChecksumRewriter.calculateChecksum(calculatedUrl, getSession()));
             }
         }
+    }
+
+    private HttpSession getSession() {
+        return getContext().getViewState().getRequest().getSession();
     }
 
     private String buildParametersForDelegateInquiry(InquiryDelegateAnswer inquiryDelegateAnswer) {

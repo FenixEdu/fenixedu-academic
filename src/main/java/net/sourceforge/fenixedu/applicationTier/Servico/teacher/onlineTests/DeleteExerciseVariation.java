@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 24/Set/2003
  */
@@ -13,6 +31,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -28,7 +47,8 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class DeleteExerciseVariation {
 
-    public List<LabelValueBean> run(String executionCourseId, String questionCode) throws InvalidArgumentsServiceException {
+    public List<LabelValueBean> run(ExecutionCourse executionCourseId, String questionCode)
+            throws InvalidArgumentsServiceException {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
         Question question = FenixFramework.getDomainObject(questionCode);
@@ -107,7 +127,7 @@ public class DeleteExerciseVariation {
     private static final DeleteExerciseVariation serviceInstance = new DeleteExerciseVariation();
 
     @Atomic
-    public static List<LabelValueBean> runDeleteExerciseVariation(String executionCourseId, String questionCode)
+    public static List<LabelValueBean> runDeleteExerciseVariation(ExecutionCourse executionCourseId, String questionCode)
             throws InvalidArgumentsServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, questionCode);

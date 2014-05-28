@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
 
 import java.io.IOException;
@@ -8,10 +26,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
+import net.sourceforge.fenixedu.dataTransferObject.commons.OpenFileBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.AuditProcessBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CompetenceCourseResultsResume;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -21,16 +39,19 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.io.ByteStreams;
+
 public abstract class QUCAuditorDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward showAuditProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -173,7 +194,7 @@ public abstract class QUCAuditorDA extends FenixDispatchAction {
             RenderUtils.invalidateViewState();
             return forwardToFiles(mapping, request, executionCourseAudit);
         }
-        executionCourseAudit.addFile(fileBean.getFileName(), IOUtils.toByteArray(fileBean.getInputStream()));
+        executionCourseAudit.addFile(fileBean.getFileName(), ByteStreams.toByteArray(fileBean.getInputStream()));
         request.setAttribute("fileAdded", "true");
 
         return forwardToFiles(mapping, request, executionCourseAudit);

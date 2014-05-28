@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -11,18 +31,18 @@
 <h2><bean:write name="department" property="realName"/></h2>
 <h3><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></h3>
 
-<logic:notEmpty name="department" property="competenceCourseMembersGroup.elements">
+<logic:notEmpty name="department" property="competenceCourseMembersGroup.members">
 
 <p class="mtop15 mbottom05"><strong class='highlight1'><bean:message key="groupMembers" bundle="BOLONHA_MANAGER_RESOURCES"/></strong> <bean:message key="label.group.members.explanation" bundle="BOLONHA_MANAGER_RESOURCES"/></p>
 
 <ul>
-	<logic:iterate id="person" type="net.sourceforge.fenixedu.domain.Person" name="department" property="competenceCourseMembersGroup.elements">
-		<li><fr:view name="person" layout="name-with-alias"/></li>
+	<logic:iterate id="user" name="department" property="competenceCourseMembersGroup.members">
+		<li><fr:view name="user" property="person" layout="name-with-alias"/></li>
 	</logic:iterate>
 </ul>
 </logic:notEmpty>
 
-<logic:empty name="department" property="competenceCourseMembersGroup.elements">
+<logic:empty name="department" property="competenceCourseMembersGroup.members">
 	<p>
 		<em><bean:message key="label.empty.group.members" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
 	</p>

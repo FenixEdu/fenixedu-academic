@@ -1,7 +1,26 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.gep.a3es;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -48,7 +67,6 @@ import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -56,7 +74,6 @@ import org.json.simple.JSONValue;
 
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class A3ESDegreeProcess implements Serializable {
@@ -132,7 +149,7 @@ public class A3ESDegreeProcess implements Serializable {
     }
 
     public void initialize() {
-        base64Hash = new String(Base64.encodeBase64((user + ":" + password).getBytes()));
+        base64Hash = new String(Base64.getEncoder().encode((user + ":" + password).getBytes()));
         JSONArray processes = invoke(webResource().path(API_PROCESS));
         JSONObject json = (JSONObject) processes.iterator().next();
         id = (String) json.get("id");
@@ -306,14 +323,14 @@ public class A3ESDegreeProcess implements Serializable {
 
                 JSONObject q6214 = new JSONObject();
                 MultiLanguageString objectives = competence.getObjectivesI18N(executionSemester);
-                q6214.put("en", cut("objectivos em ingles", objectives.getContent(Language.en), output, 1000));
-                q6214.put("pt", cut("objectivos em portugues", objectives.getContent(Language.pt), output, 1000));
+                q6214.put("en", cut("objectivos em ingles", objectives.getContent(MultiLanguageString.en), output, 1000));
+                q6214.put("pt", cut("objectivos em portugues", objectives.getContent(MultiLanguageString.pt), output, 1000));
                 json.put("q-6.2.1.4", q6214);
 
                 JSONObject q6215 = new JSONObject();
                 MultiLanguageString program = competence.getProgramI18N(executionSemester);
-                q6215.put("en", cut("programa em ingles", program.getContent(Language.en), output, 1000));
-                q6215.put("pt", cut("programa em portugues", program.getContent(Language.pt), output, 1000));
+                q6215.put("en", cut("programa em ingles", program.getContent(MultiLanguageString.en), output, 1000));
+                q6215.put("pt", cut("programa em portugues", program.getContent(MultiLanguageString.pt), output, 1000));
                 json.put("q-6.2.1.5", q6215);
 
                 JSONObject q6216 = new JSONObject();

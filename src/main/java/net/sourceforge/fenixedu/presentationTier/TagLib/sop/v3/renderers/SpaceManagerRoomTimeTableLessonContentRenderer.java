@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
 import java.util.Locale;
@@ -5,9 +23,9 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
+import net.sourceforge.fenixedu.dataTransferObject.InfoOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
@@ -74,9 +92,9 @@ public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotCo
 
             strBuffer.append("</span>");
 
-        } else if (showOccupation instanceof InfoGenericEvent) {
+        } else if (showOccupation instanceof InfoOccupation) {
 
-            InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;
+            InfoOccupation infoGenericEvent = (InfoOccupation) showOccupation;
             strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
             strBuffer.append(spaceManagerResourceBundle.getString("label.punctual.occupation")).append(" - ");
             strBuffer.append(infoGenericEvent.getTitle());

@@ -4,22 +4,12 @@
 	Global Text Proprieties
 ******************************************/
 body {
-	font: 12px Verdana, Arial, Helvetica, sans-serif;
-	background-color: #F6F4ED;
-}
-
-table,div,span {
-	color: #333;
+	font: 12px 'Roboto', sans-serif;
+	background-color: #F1F1F1;
 }
 
 form {
 	
-}
-
-h1 {
-	font: bold 16px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #036;
-	margin-bottom:0px;
 }
 
 /******************************************
@@ -32,22 +22,21 @@ h1 {
 
 #container {
 	margin: 80px auto 0 auto;
-	width: 500px;
-	background-color: #f7f7f7;
+	width: 350px;
+	background-color: white;
 	padding: 0 0 20px 0;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
-	-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
 .institutionName {
-	color:#AAA;
-	font-weight:bold;
+	color:#617383;
+	text-align:center;
 	margin-top:2px;
-	margin-bottom:21px;
+	margin-bottom:10px;
+	font-size:22px;
+	font-weight:100;
 }
 
 #content {
@@ -79,7 +68,6 @@ h1 {
 	}
 	
 #footer {
-	float: right;
 	padding: 10px;
 	vertical-align: bottom;
 }
@@ -116,22 +104,8 @@ input.button {
 	padding: 2px;
 }
 
-input {
-	font: 14px Verdana, Arial, Helvetica, sans-serif;
-}
 
-input[type="text"], input[type="password"] {
-	font-size: 16px;
-	padding: 10px;
-	border: 1px solid #ccc;
-	-webkit-border-radius: 3px;
-	width: 312px;
-}
 
-input[type="text"]:focus , input[type="password"]:focus {
-	
-	outline-color: #657799;
-}
 
 
 a.button {
@@ -145,6 +119,65 @@ a.button {
 	border-left: 2px solid #f8f7f0;
 }
 
-a[href] {
-	color: #427fed;
+input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea {
+  font-family: Roboto,Arial,Helvetica,sans-serif;
+  padding: 8px 6px;
+  border: 1px solid #c6c6c6;
+  resize: none;
+  background: #fff;
+  vertical-align: middle;
+  outline:none;
+  font-size:20px;
+  font-weight:300;
+  width:280px;
+}
+input[type=text]:focus, input[type=password]:focus{
+	border-color: rgba(153,153,153,.9);
+  -webkit-box-shadow: rgba(0,0,0,.2) 0 1px 1px inset;
+  -moz-box-shadow: rgba(0,0,0,.2) 0 1px 1px inset;
+  box-shadow: rgba(0,0,0,.2) 0 1px 1px inset;
+  outline: 0 none;
+}
+
+table{
+	width:100%;
+}
+
+input[type=submit]{
+	width:100%;
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	padding: 6px 12px;
+	font-size: 30px;
+	line-height: 1.42857143;
+	border-radius: 1px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	outline:none;
+	color: #f1f1f1;
+	background-color: #19accd;
+	border-color: #1699b6;
+}
+
+input[type=submit]:hover{
+	color: #f1f1f1;
+	background-color: #158da9;
+	border-color: #106b80;
+}
+
+.inputContainer{
+	padding: 10px;
+}
+
+#logo{
+	text-align:center;
 }

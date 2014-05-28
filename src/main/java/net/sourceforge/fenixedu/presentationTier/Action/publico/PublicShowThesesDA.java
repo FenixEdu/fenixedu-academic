@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.Collection;
@@ -15,7 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -23,6 +40,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixframework.DomainObject;
 
 public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
@@ -146,17 +165,21 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
     public ActionForward showThesisDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Thesis thesis = getDomainObject(request, "thesisID");
-        request.setAttribute("thesis", thesis);
-
-        return mapping.findForward("showThesisDetails");
+        DomainObject thesis = getDomainObject(request, "thesisID");
+        if (thesis instanceof Thesis) {
+            request.setAttribute("thesis", thesis);
+            return mapping.findForward("showThesisDetails");
+        } else {
+            request.getRequestDispatcher("/notFound.jsp").forward(request, response);
+            return null;
+        }
     }
 
     public ActionForward showResult(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        ResearchResult result = getDomainObject(request, "thesisID");
-        request.setAttribute("result", result);
+//        ResearchResult result = getDomainObject(request, "thesisID");
+//        request.setAttribute("result", result);
 
         return mapping.findForward("showResult");
     }

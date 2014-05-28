@@ -1,3 +1,24 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@page import="net.sourceforge.fenixedu.domain.util.email.Sender"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
@@ -18,7 +39,7 @@
 </logic:present>
 
 <% if (Sender.hasAvailableSender()) { %>
-<form action="<%= request.getContextPath() + "/messaging/emails.do" %>" method="post">
+<fr:form action="/emails.do">
 	<html:hidden property="method" value="sendEmail"/>
 
 	<fr:edit id="emailBean" name="emailBean">
@@ -71,9 +92,9 @@
 		</fr:layout>
 
 		<fr:destination name="selectSender" path="/emails.do?method=newEmail"/>
-		<fr:destination name="cancel" path="/index.do"/>
 	</fr:edit>
-</form>
+	<html:submit><bean:message key="label.send" /></html:submit>
+</fr:form>
 <% } else { %>
 	<bean:message bundle="MANAGER_RESOURCES" key="message.not.authorized.to.send.emails"/>
 <% } %>

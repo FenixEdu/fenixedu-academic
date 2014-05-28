@@ -1,219 +1,23 @@
-<!-- Rooms Punctual Scheduling Schemas -->
+<!--
 
-<schema name="ChooseRoomsPunctualSchedulingPeriodType" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
-	<slot name="periodType" layout="radio-postback" key="label.period.type">
-		<property name="classes" value="list2 liinline" />
-		<property name="destination" value="postBack"/>
-	</slot>       				
-</schema>
+    Copyright © 2002 Instituto Superior Técnico
 
-<schema name="GanttDiagramAvailable" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
-	<slot name="ganttDiagramAvailable" key="label.ganttDiagram.available" layout="radio-postback">
-		<property name="classes" value="list2 liinline" />
-		<property name="destination" value="postBack"/>
-	</slot>
-</schema>
+    This file is part of FenixEdu Core.
 
-<schema name="CreateDailyRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
-	<slot name="begin" key="label.day" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="beginTime" key="label.begin.hour" layout="hour-minute" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endTime" key="label.end.hour" layout="hour-minute" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>		
-	<setter signature="editDailyType(begin, beginTime, endTime)"/>
-</schema>
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-<schema name="CreateFrequencyRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
-	<slot name="begin" key="label.day" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="beginTime" key="label.begin.hour" layout="hour-minute" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endTime" key="label.end.hour" layout="hour-minute" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>		
-	<slot name="end" key="label.until" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="frequency" key="label.frequency" layout="menu-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >	
-		<property name="destination" value="postBack"/>	
-	</slot>		
-	<setter signature="editFrequencyTypeWithoutDailyFrequency(begin, beginTime, end, endTime, frequency)"/>
-</schema>
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
 
-<schema name="CreateFrequencyWithDailyFrequencyRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
-	<slot name="begin" key="label.day" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="beginTime" key="label.begin.hour" layout="hour-minute" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endTime" key="label.end.hour" layout="hour-minute" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>		
-	<slot name="end" key="label.until" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />	
-	<slot name="frequency" key="label.frequency" layout="menu-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >	
-		<property name="destination" value="postBack"/>	
-	</slot>		
-	<slot name="markSaturday" key="label.mark.saturday" />
-	<slot name="markSunday" key="label.mark.sunday" />
-	<setter signature="editFrequencyTypeWithDailyFrequency(begin, beginTime, end, endTime, frequency, markSaturday, markSunday)"/>
-</schema>
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
-<schema name="CreateContinuousRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
-	<slot name="begin" key="label.day" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="beginTime" key="label.begin.hour" layout="hour-minute" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="end" key="label.until" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="endTime" key="label.end.hour" layout="hour-minute" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<setter signature="editContinuousType(begin, beginTime, end, endTime)"/>		
-</schema>
-
-<schema name="AddNewRoomsToPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
-	<slot name="selectedRoom" key="label.room" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FreeRoomsToPunctualSchedulingProvider"/>		
-		<property name="format"	value="${completeIdentification}" />	
-	</slot>	
-</schema>
-
-<schema name="ViewSelectedRooms" type="net.sourceforge.fenixedu.domain.space.Room" bundle="SOP_RESOURCES">	
-	<slot name="name" />
-	<slot name="capacidadeNormal" key="label.normal.capacity"/>	
-	<slot name="capacidadeExame" key="label.exams.capacity"/>	
-</schema>
-
-<schema name="FinalizeCreationOfRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
-	<slot name="emailsTo" key="label.email.tos"/>
-	<slot name="smallDescription" key="label.small.description" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
-		<property name="size" value="50" />
-	</slot>	
-	<slot name="completeDescription" layout="area" key="label.complete.description">
-		<property name="rows" value="5" />
-		<property name="columns" value="40"/>
-	</slot>	
-</schema>
-
-<schema name="RoomsPunctualSchedulingHistory" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingHistoryBean" bundle="SOP_RESOURCES">	
-	<slot name="year" key="label.room.punctual.scheduling.year" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.YearsPartialProvider"/>		
-		<property name="destination" value="postBack"/>				
-		<property name="saveOptions" value="true"/>
-    </slot>        
-	<slot name="month" key="label.room.punctual.scheduling.month" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.MonthsPartialProvider" />		
-		<property name="destination" value="postBack"/>		
-		<property name="eachLayout" value="month" />
-		<property name="saveOptions" value="true"/>
-    </slot>      
-    <slot name="allocatableSpace" layout="menu-select-postback" key="label.room" >
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomsForEducationAndPunctualOccupationsProvider" />
-		<property name="format" value="${completeIdentification}" />
-		<property name="destination" value="postBack"/>	
-	</slot>	      
-</schema>
-
-<!-- Vehicle Management Schemas -->
-
-<schema name="SeeVehicleAllocation" type="net.sourceforge.fenixedu.domain.resource.VehicleAllocation" bundle="SOP_RESOURCES">	
-	<slot name="vehicle" key="label.vehicleAllocation.vehicle" layout="vehicle-plain"/>
-	<slot name="beginDateTime" key="label.vehicleAllocation.begin.date.time"/>
-	<slot name="endDateTime" key="label.vehicleAllocation.end.date.time"/>
-	<slot name="requestor.partyPresentationName" key="label.vehicleAllocation.requestor.name"/>
-	<slot name="reasonAvailable" key="label.vehicleAllocation.reason.available"/>
-</schema>
-
-<schema name="SeeVehicleAllocationWithReason" type="net.sourceforge.fenixedu.domain.resource.VehicleAllocation" bundle="SOP_RESOURCES">	
-	<slot name="vehicle" key="label.vehicleAllocation.vehicle" layout="vehicle-plain"/>
-	<slot name="beginDateTime" key="label.vehicleAllocation.begin.date.time"/>
-	<slot name="endDateTime" key="label.vehicleAllocation.end.date.time"/>
-	<slot name="requestor.partyPresentationName" key="label.vehicleAllocation.requestor.name"/>
-	<slot name="reason" key="label.vehicleAllocation.reason"/>
-	<slot name="distance" key="label.vehicle.allocation.distance" layout="null-as-label">
-		<property name="label" value="--"/>	
-	</slot>
-	<slot name="numberOfAllocationHours" key="label.vehicle.allocation.hours.number" />
-	<slot name="allocationCost" layout="null-as-label" key="label.vehicle.allocation.cost">
-		<property name="label" value="--"/>	
-	</slot>	
-	<slot name="amountCharged" key="label.vehicle.allocation.amountCharged" layout="null-as-label">
-		<property name="label" value="--"/>	
-	</slot>	
-</schema>
-
-<schema name="PrepareCreateVehicleAllocation" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationBean" bundle="SOP_RESOURCES">
-	<slot name="vehicle" layout="menu-select" key="label.vehicleAllocation.vehicle" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveVehiclesProvider"/>		
-		<property name="eachLayout"	value="vehicle-plain" />	
-	</slot>
-	<slot name="beginDateTime" key="label.vehicleAllocation.begin.date.time" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDateTime" key="label.vehicleAllocation.end.date.time" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="requestor" layout="autoComplete" key="label.vehicleAllocation.requestor.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-		<property name="labelField" value="partyPresentationName"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActivePartiesByName"/>
-		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
-		<property name="minChars" value="2"/>	
-	</slot>
-	<slot name="distance" key="label.vehicle.allocation.distance" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="15"/>
-	</slot>		
-	<slot name="reason" key="label.vehicleAllocation.reason" layout="longText">
-		<property name="columns" value="40"/>
-		<property name="rows" value="6"/>
-	</slot>	
-</schema>
-
-<schema name="ViewVehicleAllocation" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationBean" bundle="SOP_RESOURCES">
-	<slot name="vehicle" key="label.vehicleAllocation.vehicle" layout="vehicle-plain"/>
-	<slot name="beginDateTime" key="label.vehicleAllocation.begin.date.time"/>
-	<slot name="endDateTime" key="label.vehicleAllocation.end.date.time"/>
-	<slot name="requestor.partyPresentationName" key="label.vehicleAllocation.requestor.name"/>
-	<slot name="distance" key="label.vehicle.allocation.distance" layout="null-as-label">
-		<property name="label" value="--"/>	
-	</slot>
-	<slot name="reason" key="label.vehicleAllocation.reason"/>
-</schema>
-
-<schema name="CreateVehicleAllocation" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationBean" bundle="SOP_RESOURCES">	
-	<slot name="amountCharged" key="label.vehicle.allocation.amountCharged" >
-		<property name="size" value="15"/>
-	</slot>				
-</schema>
-
-<schema name="EditVehicleAllocation" type="net.sourceforge.fenixedu.domain.resource.VehicleAllocation" bundle="SOP_RESOURCES">
-	<slot name="vehicle" layout="menu-select" key="label.vehicleAllocation.vehicle" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveVehiclesProvider"/>		
-		<property name="eachLayout"	value="vehicle-plain" />	
-	</slot>
-	<slot name="beginDateTime" key="label.vehicleAllocation.begin.date.time" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDateTime" key="label.vehicleAllocation.end.date.time" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="requestor" layout="autoComplete" key="label.vehicleAllocation.requestor.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-		<property name="labelField" value="partyPresentationName"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActivePartiesByName"/>
-		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
-		<property name="minChars" value="2"/>	
-	</slot>
-	<slot name="reason" key="label.vehicleAllocation.reason" layout="longText">
-		<property name="columns" value="40"/>
-		<property name="rows" value="6"/>
-	</slot>
-	<slot name="amountCharged" key="label.vehicle.allocation.amountCharged" >
-		<property name="size" value="15"/>
-	</slot>	
-	<slot name="distance" key="label.vehicle.allocation.distance" >
-		<property name="size" value="15"/>
-	</slot>
-	<setter signature="edit(beginDateTime, endDateTime, vehicle, requestor, reason, distance, amountCharged)"/>	
-</schema>
-
-<schema name="VehicleAllocationHistory" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationHistoryBean" bundle="SOP_RESOURCES">	
-	<slot name="year" key="label.vehicle.allocation.year" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.YearsPartialProvider"/>		
-		<property name="destination" value="postBack"/>				
-		<property name="saveOptions" value="true"/>
-    </slot>        
-	<slot name="month" key="label.vehicle.allocation.month" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.MonthsPartialProvider" />		
-		<property name="destination" value="postBack"/>		
-		<property name="eachLayout" value="month" />
-		<property name="saveOptions" value="true"/>
-    </slot>        
-    <slot name="vehicle" layout="menu-select-postback" key="label.vehicleAllocation.vehicle" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveVehiclesProvider"/>		
-		<property name="eachLayout"	value="vehicle-plain" />
-		<property name="destination" value="postBack"/>			
-	</slot>
-</schema>
-
+-->
 <!-- ExecutionCourse CourseLoad Management Schemas -->
 
 <schema name="ExecutionCourseCourseLoadManagement" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.CourseLoadBean" bundle="SOP_RESOURCES">
@@ -255,15 +59,6 @@
 </schema>
 
 <!-- Access Groups Management -->
-
-<schema name="ViewPersonToListAccessGroupsInResourceAllocationManagement" type="net.sourceforge.fenixedu.domain.Person" bundle="SOP_RESOURCES">
-	<slot name="name" key="label.access.group.person.name"/>
-	<slot name="username" key="label.access.group.person.username"/>	
-</schema>	
-<schema name="AddPersonToAccessGroupInResourceAllocationManagement" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.AccessGroupBean" bundle="SOP_RESOURCES">
-	<slot name="accessGroupType" key="label.access.group" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="person" layout="username-as-person" key="label.access.group.person" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			
-</schema>
 
 <schema name="academicIntervalSelectionBean.choosePostBack"
 	type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
@@ -355,27 +150,5 @@
         <property name="format" value="${pathName}" />
         <property name="nullOptionHidden" value="true" />
         <property name="destination" value="academicIntervalPostBack" />
-    </slot>
-</schema>
-
-<schema name="roomOccupationWeek.choose"
-    type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomOccupationWeekBean"
-    bundle="SOP_RESOURCES">
-    <slot name="academicInterval" layout="menu-select-postback" key="property.executionPeriod"
-        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveAcademicIntervalProvider" />
-        <property name="format" value="${pathName}" />
-        <property name="nullOptionHidden" value="true" />
-        <property name="destination" value="academicIntervalPostBack" />
-    </slot>
-    <slot name="weekBean" layout="menu-select-postback" key="property.executionPeriod"
-        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomOccupationWeekBeanProvider" />
-        <property name="format" value="${presentationName}" />
-        <property name="sortBy" value="presentationName" />
-        <property name="nullOptionHidden" value="true" />
-        <property name="destination" value="weekPostBack" />
     </slot>
 </schema>

@@ -1,6 +1,23 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,52 +60,66 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificDisserationsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
+import com.google.common.io.ByteStreams;
+
+@StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list", titleKey = "navigation.list.jury.proposals")
 @Mapping(path = "/scientificCouncilManageThesis", module = "scientificCouncil")
-@Forwards({
-        @Forward(name = "list-thesis", path = "/scientificCouncil/thesis/listThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "review-proposal", path = "/scientificCouncil/thesis/reviewProposal.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "review-thesis", path = "/scientificCouncil/thesis/reviewThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")) })
+@Forwards({ @Forward(name = "list-thesis", path = "/scientificCouncil/thesis/listThesis.jsp"),
+        @Forward(name = "review-proposal", path = "/scientificCouncil/thesis/reviewProposal.jsp"),
+        @Forward(name = "review-thesis", path = "/scientificCouncil/thesis/reviewThesis.jsp"),
+        @Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp"),
+        @Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp"),
+        @Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp"),
+        @Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp"),
+        @Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp"),
+        @Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp"),
+        @Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp"),
+        @Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp"),
+        @Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp") })
 public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
+
+    @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "define-rules", titleKey = "navigation.thesis.info")
+    @Mapping(path = "/defineDissertationRules", module = "scientificCouncil")
+    public static class DefineDissertationRules extends ScientificCouncilManageThesisDA {
+        @EntryPoint
+        @Override
+        public ActionForward dissertations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.dissertations(mapping, actionForm, request, response);
+        }
+    }
+
+    @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "define-periods",
+            titleKey = "navigation.list.thesis.creation.periods")
+    @Mapping(path = "/defineDissertationPeriods", module = "scientificCouncil")
+    public static class DefineDissertationPeriods extends ScientificCouncilManageThesisDA {
+        @EntryPoint
+        @Override
+        public ActionForward listThesisCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.listThesisCreationPeriods(mapping, actionForm, request, response);
+        }
+    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -174,6 +205,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         return getDomainObject(request, "executionYearID");
     }
 
+    @EntryPoint
     public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ThesisContextBean bean = getContextBean(request);
@@ -439,17 +471,9 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         RenderUtils.invalidateViewState();
 
         if (bean != null && bean.getFile() != null) {
-            File temporaryFile = null;
-
-            try {
-                temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                CreateThesisDissertationFile.runCreateThesisDissertationFile(getThesis(request), temporaryFile,
-                        bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-            } finally {
-                if (temporaryFile != null) {
-                    temporaryFile.delete();
-                }
-            }
+            byte[] bytes = ByteStreams.toByteArray(bean.getFile());
+            CreateThesisDissertationFile.runCreateThesisDissertationFile(getThesis(request), bytes, bean.getSimpleFileName(),
+                    bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
         }
 
         return viewThesis(mapping, actionForm, request, response);
@@ -461,17 +485,9 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         RenderUtils.invalidateViewState();
 
         if (bean != null && bean.getFile() != null) {
-            File temporaryFile = null;
-
-            try {
-                temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), temporaryFile, bean.getSimpleFileName(),
-                        bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-            } finally {
-                if (temporaryFile != null) {
-                    temporaryFile.delete();
-                }
-            }
+            byte[] bytes = ByteStreams.toByteArray(bean.getFile());
+            CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), bytes, bean.getSimpleFileName(),
+                    bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
         }
 
         return viewThesis(mapping, actionForm, request, response);

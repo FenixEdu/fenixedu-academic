@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.library;
 
 import java.io.Serializable;
@@ -7,8 +25,11 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
+
+import org.fenixedu.spaces.domain.Space;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
@@ -19,8 +40,8 @@ public class LibraryInformation implements Serializable {
         public Object provide(Object source, Object currentValue) {
             LibraryInformation attendance = (LibraryInformation) source;
             Set<Space> availableSpaces = new HashSet<Space>();
-            for (Space space : attendance.getLibrary().getActiveContainedSpaces()) {
-                if (space.canAddAttendance()) {
+            for (Space space : attendance.getLibrary().getChildren()) {
+                if (SpaceUtils.currentAttendaceCount(space) < space.getAllocatableCapacity()) {
                     availableSpaces.add(space);
                 }
             }

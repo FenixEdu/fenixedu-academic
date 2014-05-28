@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on May 18, 2006
  */
@@ -39,9 +57,19 @@ import org.apache.struts.action.ActionMessages;
 import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@Mapping(path = "/markSheetManagement", module = "teacher", functionality = ManageExecutionCourseDA.class)
+@Forwards(@Forward(name = "mainPage", path = "/teacher/evaluation/finalEvaluationIndex.faces"))
 public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCourseDA {
+
+    private ActionForward doForward(HttpServletRequest request, String path) {
+        request.setAttribute("teacher$actual$page", path);
+        return new ActionForward("/evaluation/evaluationFrame.jsp");
+    }
 
     private void addMessage(HttpServletRequest request, ActionMessages actionMessages, String keyMessage, String... args) {
         actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(keyMessage, args));
@@ -50,13 +78,13 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
 
     public ActionForward evaluationIndex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        return mapping.findForward("evaluationIndex");
+        return doForward(request, "/teacher/evaluation/evaluationIndex.jsp");
     }
 
     public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("submissionBean", getObjectFromViewState("submissionBean-invisible"));
         RenderUtils.invalidateViewState();
-        return mapping.findForward("gradeSubmission.step.two");
+        return doForward(request, "/teacher/evaluation/gradeSubmission/gradeSubmissionStepTwo.jsp");
     }
 
     public ActionForward prepareSubmitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -71,7 +99,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         submissionBean.setExecutionCourse(executionCourse);
 
         request.setAttribute("submissionBean", submissionBean);
-        return mapping.findForward("gradeSubmission.step.one");
+        return doForward(request, "/teacher/evaluation/gradeSubmission/gradeSubmissionStepOne.jsp");
     }
 
     public ActionForward gradeSubmissionStepOne(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -92,10 +120,10 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
                     request,
                     actionMessages,
                     (!canSubmitMarksAnyCurricularCourse) ? "error.teacher.gradeSubmission.noStudentsToSubmitMarksInPeriods" : "error.teacher.gradeSubmission.noStudentsToSubmitMarks");
-            return mapping.findForward("gradeSubmission.step.one");
+            return doForward(request, "/teacher/evaluation/gradeSubmission/gradeSubmissionStepOne.jsp");
         }
 
-        return mapping.findForward("gradeSubmission.step.two");
+        return doForward(request, "/teacher/evaluation/gradeSubmission/gradeSubmissionStepTwo.jsp");
     }
 
     public ActionForward gradeSubmissionStepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -112,7 +140,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         try {
             List<EnrolmentEvaluation> marksSubmited = CreateMarkSheetByTeacher.run(submissionBean);
             request.setAttribute("marksSubmited", marksSubmited);
-            return mapping.findForward("viewGradesSubmited");
+            return doForward(request, "/teacher/evaluation/gradeSubmission/viewGradesSubmited.jsp");
         } catch (IllegalDataAccessException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
         } catch (InvalidArgumentsServiceException e) {
@@ -122,7 +150,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         }
 
         request.setAttribute("submissionBean", submissionBean);
-        return mapping.findForward("gradeSubmission.step.two");
+        return doForward(request, "/teacher/evaluation/gradeSubmission/gradeSubmissionStepTwo.jsp");
     }
 
     public ActionForward backToMainPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -252,7 +280,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
 
         request.setAttribute("markSheets", associatedMarkSheets);
         request.setAttribute("executionCourseID", executionCourse.getExternalId());
-        return mapping.findForward("viewSubmitedMarkSheets");
+        return doForward(request, "/teacher/evaluation/gradeSubmission/viewSubmitedMarkSheets.jsp");
     }
 
     public ActionForward viewMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -262,6 +290,6 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         MarkSheet markSheet = FenixFramework.getDomainObject(markSheetID);
         request.setAttribute("markSheet", markSheet);
         request.setAttribute("executionCourseID", executionCourse.getExternalId());
-        return mapping.findForward("viewMarkSheet");
+        return doForward(request, "/teacher/evaluation/gradeSubmission/viewMarkSheet.jsp");
     }
 }

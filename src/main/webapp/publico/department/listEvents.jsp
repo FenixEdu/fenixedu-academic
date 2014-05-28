@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -5,13 +25,12 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/messaging" prefix="messaging" %>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <html:xhtml/>
 
 <div class="breadcumbs mvert0">
     <bean:define id="institutionUrl">
-        <%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>
+        <%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>
     </bean:define>
     <bean:define id="structureUrl">
         <bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
@@ -265,13 +284,11 @@ if (month != null && year!=null)
 	<logic:present name="announcementBoard">
 		<bean:define id="board" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
 		<%
-		final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-		final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
 	    final String module = org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).getPrefix();
 		%>
 
 		<div class="aarchives">
-			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getExternalId() + "&amp;" + extraParameters + "&amp;" %>"/>	
+			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + request.getContextPath() + module + contextPrefix + "method=viewArchive&amp;announcementBoardId=" + board.getExternalId() + "&amp;" + extraParameters + "&amp;" %>"/>	
 		</div>
 
 	</logic:present>

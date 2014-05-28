@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -21,8 +39,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.ID
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -42,7 +58,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
-import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
@@ -64,10 +80,14 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
@@ -187,7 +207,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         if (curricularPeriod == null) {
             throw new DomainException("degreeCurricularPlan.curricularPeriod.not.null");
         }
-        setCurricularPlanMembersGroup(new FixedSetGroup(creator));
+        setCurricularPlanMembersGroup(UserGroup.of(creator.getUser()));
         setDegreeStructure(curricularPeriod);
         setState(DegreeCurricularPlanState.ACTIVE);
 
@@ -461,7 +481,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getMostRecentExecutionDegree().getExecutionYear();
     }
 
-    public ExecutionDegree getExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Campus campus) {
+    public ExecutionDegree getExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Space campus) {
         for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
             if (executionDegree.getExecutionYear() == executionYear && executionDegree.getCampus() == campus) {
                 return executionDegree;
@@ -470,7 +490,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return null;
     }
 
-    public boolean hasExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Campus campus) {
+    public boolean hasExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Space campus) {
         return getExecutionDegreeByYearAndCampus(executionYear, campus) != null;
     }
 
@@ -1171,7 +1191,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Boolean getUserCanBuild() {
         Person person = AccessControl.getPerson();
         return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(this.getDegree())
-                || (this.isBolonhaDegree() ? this.getCurricularPlanMembersGroup().isMember(person) : false);
+                || (this.isBolonhaDegree() ? this.getCurricularPlanMembersGroup().isMember(person.getUser()) : false);
     }
 
     public Boolean getCanModify() {
@@ -1184,20 +1204,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 || executionDegrees.iterator().next().getExecutionYear().isCurrent();
     }
 
-    @Override
-    public void setCurricularPlanMembersGroup(Group curricularPlanMembersGroup) {
-        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
-        super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
+    public Group getCurricularPlanMembersGroup() {
+        return getMembersGroup() != null ? getMembersGroup().toGroup() : NobodyGroup.get();
     }
 
-    /**
-     * Delete after group migration
-     * 
-     * @param curricularPlanMembersGroup
-     */
-    @Deprecated
-    public void setCurricularPlanMembersGroupWithoutCheckingPermissions(Group curricularPlanMembersGroup) {
-        super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
+    public void setCurricularPlanMembersGroup(Group group) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
+        setMembersGroup(group.toPersistentGroup());
     }
 
     @Override
@@ -1237,11 +1250,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String getPresentationName() {
-        return getPresentationName(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
+        return getPresentationName(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
     }
 
     public String getPresentationName(final ExecutionYear executionYear) {
-        return getPresentationName(executionYear, Language.getLocale());
+        return getPresentationName(executionYear, I18N.getLocale());
     }
 
     public String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
@@ -1392,7 +1405,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return curricularCourseScopes;
     }
 
-    public ExecutionDegree createExecutionDegree(ExecutionYear executionYear, Campus campus, Boolean publishedExamMap) {
+    public ExecutionDegree createExecutionDegree(ExecutionYear executionYear, Space campus, Boolean publishedExamMap) {
 
         if (isBolonhaDegree() && isDraft()) {
             throw new DomainException("degree.curricular.plan.not.approved.cannot.create.execution.degree", this.getName());
@@ -1561,32 +1574,32 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getState().equals(DegreeCurricularPlanState.PAST);
     }
 
-    public Campus getCampus(final ExecutionYear executionYear) {
+    public Space getCampus(final ExecutionYear executionYear) {
         for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
             if (executionDegree.getExecutionYear() == executionYear) {
-                return executionDegree.getCampus().getSpaceCampus();
+                return executionDegree.getCampus();
             }
         }
 
         return null;
     }
 
-    public Campus getCurrentCampus() {
+    public Space getCurrentCampus() {
         for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
             if (executionYear.isCurrent()) {
-                return executionDegree.getCampus().getSpaceCampus();
+                return executionDegree.getCampus();
             }
         }
 
         return null;
     }
 
-    public Campus getLastCampus() {
+    public Space getLastCampus() {
         if (hasAnyExecutionDegrees()) {
-            return getMostRecentExecutionDegree().getCampus().getSpaceCampus();
+            return getMostRecentExecutionDegree().getCampus();
         }
-        return Campus.getDefaultCampus();
+        return SpaceUtils.getDefaultCampus();
     }
 
     @Override
@@ -1632,7 +1645,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String getGraduateTitle() {
-        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
+        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
     }
 
     public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
@@ -1988,10 +2001,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         MultiLanguageString result = new MultiLanguageString();
 
         if (!StringUtils.isEmpty(getDescription())) {
-            result = result.with(Language.pt, getDescription());
+            result = result.with(MultiLanguageString.pt, getDescription());
         }
         if (!StringUtils.isEmpty(getDescriptionEn())) {
-            result = result.with(Language.en, getDescriptionEn());
+            result = result.with(MultiLanguageString.en, getDescriptionEn());
         }
 
         return result;
@@ -2131,16 +2144,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Deprecated
     public boolean hasAnyExecutionDegrees() {
         return !getExecutionDegreesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup> getTSDVirtualCourseGroups() {
-        return getTSDVirtualCourseGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDVirtualCourseGroups() {
-        return !getTSDVirtualCourseGroupsSet().isEmpty();
     }
 
     @Deprecated

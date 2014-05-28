@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.text.DecimalFormat;
@@ -7,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+
+import org.fenixedu.commons.i18n.I18N;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -31,12 +51,11 @@ import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class ChangeStudentTestQuestionMark {
     protected void run(String executionCourseId, String distributedTestId, Double newMark, String questionId, String studentId,
-            TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
-        path = path.replace('\\', '/');
+            TestQuestionStudentsChangesType studentsType) throws FenixServiceException {
 
         DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         Question question = distributedTest.findQuestionByOID(questionId);
@@ -69,7 +88,7 @@ public class ChangeStudentTestQuestionMark {
                     Response response = null;
                     try {
                         ParseSubQuestion parse = new ParseSubQuestion();
-                        studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, path);
+                        studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion);
                     } catch (Exception e) {
                         throw new FenixServiceException(e);
                     }
@@ -99,7 +118,7 @@ public class ChangeStudentTestQuestionMark {
                     mark.setPublishedMark(markValue);
                 }
             }
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
             String event =
                     MessageFormat.format(bundle.getString("message.changeStudentMarkLogMessage"), new Object[] { newMark });
 
@@ -126,10 +145,10 @@ public class ChangeStudentTestQuestionMark {
 
     @Atomic
     public static void runChangeStudentTestQuestionMark(String executionCourseId, String distributedTestId, Double newMark,
-            String questionId, String studentId, TestQuestionStudentsChangesType studentsType, String path)
-            throws FenixServiceException, NotAuthorizedException {
+            String questionId, String studentId, TestQuestionStudentsChangesType studentsType) throws FenixServiceException,
+            NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        serviceInstance.run(executionCourseId, distributedTestId, newMark, questionId, studentId, studentsType, path);
+        serviceInstance.run(executionCourseId, distributedTestId, newMark, questionId, studentId, studentsType);
     }
 
 }

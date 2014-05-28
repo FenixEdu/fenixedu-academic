@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.operator;
 
 import java.io.FileNotFoundException;
@@ -22,27 +40,29 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(module = "operator", path = "/submitPhoto", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "chooseFile", path = "/operator/photo/submitPhoto_bd.jsp", tileProperties = @Tile(
-        title = "private.operator.submitphotos")) })
+@StrutsFunctionality(app = OperatorApplication.class, path = "submit-photo", titleKey = "link.operator.submitPhoto")
+@Mapping(module = "operator", path = "/submitPhoto")
+@Forwards(value = { @Forward(name = "chooseFile", path = "/operator/photo/submitPhoto_bd.jsp") })
 public class SubmitPhotoAction extends FenixDispatchAction {
 
     private static final int MAX_RAW_SIZE = 1000000; // 2M
 
+    @EntryPoint
     public ActionForward preparePhotoUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         request.setAttribute("photo", new PhotographUploadBean());
         request.setAttribute("phroperCaption", bundle.getString("phroper.caption"));
         request.setAttribute("phroperSubCaption", bundle.getString("phroper.subCaption"));

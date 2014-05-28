@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -37,26 +57,18 @@
 				<bean:define id="degreeCode" name="degree" property="sigla"/>
 				<bean:define id="degreeName" name="degree" property="presentationName"/>
 				<tr>
+					<bean:define id="degreeSitePath" name="degree" property="site.reversePath"/>
 					<td>
-						<bean:define id="degreeSitePath" name="degree" property="site.reversePath"/>
-						<html:link href="<%= request.getContextPath() + degreeSitePath.toString() %>" title="<%= degreeName.toString() %>"><bean:write name="degree" property="sigla"/></html:link>
+						<!-- NO_CHECKSUM --><html:link href="<%= request.getContextPath() + degreeSitePath.toString() %>" title="<%= degreeName.toString() %>"><bean:write name="degree" property="sigla"/></html:link>
 					</td>
 					<td>
-						<html:link href="<%= degreeCode.toString() %>" title="<%= degreeName.toString() %>"><bean:write name="degree" property="sigla"/></html:link>
-					</td>
-					<td>
-						<html:link href="<%= degreeCode.toString() + "/disciplinas"%>">
+						<!-- NO_CHECKSUM --><html:link href="<%= request.getContextPath() + degreeSitePath.toString() + "/paginas-de-disciplinas"%>">
 							<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES"/>
 						</html:link>
 					</td>
 					<td>
-						<html:link href="<%= degreeCode.toString() + "/horarios"%>">
+						<!-- NO_CHECKSUM --><html:link href="<%= request.getContextPath() + degreeSitePath.toString() + "/horarios-por-turma"%>">
 							<bean:message key="schedules.url.subpattern" bundle="GLOBAL_RESOURCES"/>
-						</html:link>
-					</td>
-					<td>
-						<html:link href="<%= degreeCode.toString() + "/exames"%>">
-							<bean:message key="exams.url.subpattern" bundle="GLOBAL_RESOURCES"/>
 						</html:link>
 					</td>
 				</tr>

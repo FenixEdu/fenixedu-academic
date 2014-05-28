@@ -1,14 +1,34 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.CoordinatorGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -29,16 +49,16 @@ public class PedagogicalCouncilSite extends PedagogicalCouncilSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new GroupUnion(new RoleTypeGroup(RoleType.PEDAGOGICAL_COUNCIL), new RoleTypeGroup(RoleType.TUTORSHIP),
-                new FixedSetGroup(getManagers()));
+    public Group getOwner() {
+        return RoleGroup.get(RoleType.PEDAGOGICAL_COUNCIL).or(RoleGroup.get(RoleType.TUTORSHIP))
+                .or(UserGroup.of(Person.convertToUsers(getManagers())));
     }
 
     @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> list = super.getContextualPermissionGroups();
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> list = super.getContextualPermissionGroups();
 
-        list.add(new DegreeCoordinatorsGroup());
+        list.add(CoordinatorGroup.get(DegreeType.DEGREE));
 
         return list;
     }
@@ -51,10 +71,6 @@ public class PedagogicalCouncilSite extends PedagogicalCouncilSite_Base {
     public static PedagogicalCouncilSite getSite() {
         final PedagogicalCouncilUnit pedagogicalCouncilUnit = PedagogicalCouncilUnit.getPedagogicalCouncilUnit();
         return pedagogicalCouncilUnit == null ? null : (PedagogicalCouncilSite) pedagogicalCouncilUnit.getSite();
-    }
-
-    @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
     }
 
     @Override

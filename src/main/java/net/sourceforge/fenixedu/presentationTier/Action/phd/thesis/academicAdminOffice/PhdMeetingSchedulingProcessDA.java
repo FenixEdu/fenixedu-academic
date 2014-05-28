@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.academicAdminOffice;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +37,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFir
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SubmitThesisMeetingMinutes;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -30,22 +49,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdMeetingSchedulingProcess", module = "academicAdministration")
+@Mapping(path = "/phdMeetingSchedulingProcess", module = "academicAdministration",
+        functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({
-
         @Forward(name = "requestScheduleFirstThesisMeeting",
                 path = "/phd/thesis/academicAdminOffice/requestScheduleFirstThesisMeeting.jsp"),
-
         @Forward(name = "scheduleFirstThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleFirstThesisMeeting.jsp"),
-
         @Forward(name = "requestScheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleThesisMeeting.jsp"),
-
         @Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleThesisMeeting.jsp"),
-
         @Forward(name = "submitThesisMeetingMinutes", path = "/phd/thesis/academicAdminOffice/submitThesisMeetingMinutes.jsp"),
-
         @Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp"),
-
         @Forward(name = "editMeetingAttributes", path = "/phd/thesis/academicAdminOffice/editMeetingAttributes.jsp") })
 public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 

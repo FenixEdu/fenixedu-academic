@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
@@ -45,7 +65,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 		<ul class="mbottom05">
 			<logic:present name="showContactsMessage">
 				<li>
-					<bean:define id="url"><%= request.getContextPath() %>/person/visualizePersonalInfo.do?<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/person")%></bean:define>
+					<bean:define id="url"><%= request.getContextPath() %>/person/visualizePersonalInfo.do</bean:define>
 					<b><bean:message key="label.alumni.contacts" bundle="ALUMNI_RESOURCES"/>:</b> 
 					<bean:message key="message.alumni.contacts" bundle="ALUMNI_RESOURCES"/>
 					<html:link href="<%= url %>">
@@ -168,7 +188,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	
 <h3> <bean:message key="label.alumni.opportunities" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
-	<li><a target="_blank" href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/ensino/">Ensino, Pós-graduações e Formação</a></li>
+	<li><a target="_blank" href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>html/ensino/">Ensino, Pós-graduações e Formação</a></li>
 	<li><a target="_blank" href="http://galtec.ist.utl.pt/">Licenciamento de Tecnologia</a></li>
 	<li><a target="_blank" href="http://www.istpress.ist.utl.pt/">Oportunidades de publicação de livros</a></li>
 	<li><a href="mailto:empreendedorismo@ist.utl.pt">Empreendedorismo</a></li>

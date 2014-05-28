@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.publico.department;
 
 import java.util.HashMap;
@@ -9,16 +27,18 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -29,6 +49,9 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.base.Strings;
 
 @Mapping(module = "publico", path = "/department/departmentSite", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "department-employees", path = "department-employees"),
@@ -36,7 +59,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "department-degrees", path = "department-degrees"),
         @Forward(name = "frontPage-INTRO_BANNER", path = "department-site-front-page-intro-banner"),
         @Forward(name = "eventsAction", path = "/department/events.do"),
-        @Forward(name = "showPublications", path = "department-show-publications"),
         @Forward(name = "department-teachers-category", path = "department-teachers-category"),
         @Forward(name = "unit-subunits", path = "department-subunits"),
         @Forward(name = "frontPage-BANNER_INTRO", path = "department-site-front-page-banner-intro"),
@@ -55,7 +77,12 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        request.setAttribute("department", getDepartment(request));
+        Department department = getDepartment(request);
+        if (department != null) {
+            request.setAttribute("department", department);
+            request.setAttribute("unit", department.getDepartmentUnit());
+            OldCmsSemanticURLHandler.selectSite(request, department.getDepartmentUnit().getSite());
+        }
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -71,11 +98,13 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
     }
 
     private Department getDepartment(HttpServletRequest request) {
-        Unit unit = getUnit(request);
-        if (unit == null) {
-            return null;
+        String selectedDepartmentUnitId = FenixContextDispatchAction.getFromRequest("selectedDepartmentUnitID", request);
+        if (!Strings.isNullOrEmpty(selectedDepartmentUnitId)) {
+            DepartmentUnit departmentUnit = FenixFramework.getDomainObject(selectedDepartmentUnitId);
+            return departmentUnit != null ? departmentUnit.getDepartment() : null;
         } else {
-            return unit.getDepartment();
+            Unit unit = getUnit(request);
+            return unit != null ? unit.getDepartment() : null;
         }
     }
 
@@ -253,10 +282,5 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
         }
 
         teachers.add(teacher);
-    }
-
-    @Override
-    protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit, ExecutionYearIntervalBean bean) {
-        putPublicationsOnRequest(request, unit, bean, Boolean.TRUE);
     }
 }

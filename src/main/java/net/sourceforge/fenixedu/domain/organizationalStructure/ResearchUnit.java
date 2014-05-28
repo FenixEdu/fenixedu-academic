@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
@@ -11,17 +29,16 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
-import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.util.email.ResearchUnitBasedSender;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -36,7 +53,7 @@ public class ResearchUnit extends ResearchUnit_Base {
 
     public static ResearchUnit createNewResearchUnit(MultiLanguageString name, String unitNameCard, Integer costCenterCode,
             String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 
         ResearchUnit researchUnit = new ResearchUnit();
         researchUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
@@ -60,7 +77,7 @@ public class ResearchUnit extends ResearchUnit_Base {
     public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
-            Campus campus) {
+            Space campus) {
 
         super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
                 degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
@@ -178,15 +195,9 @@ public class ResearchUnit extends ResearchUnit_Base {
     }
 
     @Override
-    public List<IGroup> getDefaultGroups() {
-        List<IGroup> groups = super.getDefaultGroups();
-
-        groups.add(new ResearchUnitMembersGroup(this, ResearcherContract.class));
-        groups.add(new ResearchUnitMembersGroup(this, ResearchInternshipContract.class));
-        groups.add(new ResearchUnitMembersGroup(this, ResearchScholarshipContract.class));
-        groups.add(new ResearchUnitMembersGroup(this, ResearchTechnicalStaffContract.class));
-        groups.add(new ResearchUnitElementGroup(this));
-
+    public List<Group> getDefaultGroups() {
+        List<Group> groups = super.getDefaultGroups();
+        groups.add(UnitGroup.get(this, AccountabilityTypeEnum.RESEARCH_CONTRACT, false));
         return groups;
     }
 

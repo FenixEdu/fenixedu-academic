@@ -1,42 +1,46 @@
 /**
- * Project Sop 
- * 
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
+ * Project Sop
+ *
  * Package presentationTier.Action.sop.utils
- * 
+ *
  * Created on 16/Dez/2002
  *
  */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadSite;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-
-import org.apache.struts.util.LabelValueBean;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
-
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author jpvl
@@ -104,21 +108,6 @@ public abstract class RequestUtils {
         return infoExecutionPeriod;
     }
 
-    public static final InfoSite getSiteFromRequest(HttpServletRequest request) throws FenixActionException {
-        InfoSite infoSite = null;
-
-        try {
-            InfoExecutionCourse infoExecutionCourse = getExecutionCourseFromRequest(request);
-
-            infoSite = ReadSite.run(infoExecutionCourse);
-
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-
-        return infoSite;
-    }
-
     public static final InfoExecutionDegree getExecutionDegreeFromRequest(HttpServletRequest request,
             InfoExecutionYear infoExecutionYear) throws FenixActionException {
 
@@ -144,26 +133,6 @@ public abstract class RequestUtils {
         return infoExecutionDegree;
     }
 
-    public static final void setSiteFirstPageToRequest(HttpServletRequest request, InfoSite infoSite) {
-        if (infoSite != null) {
-            request.setAttribute("siteMail", infoSite.getMail());
-            request.setAttribute("altSite", infoSite.getAlternativeSite());
-            request.setAttribute("initStat", infoSite.getInitialStatement());
-            request.setAttribute("intro", infoSite.getIntroduction());
-
-        }
-    }
-
-    public static final void setExecutionCourseToRequest(HttpServletRequest request, InfoExecutionCourse infoExecutionCourse) {
-        if (infoExecutionCourse != null) {
-            request.setAttribute("exeName", infoExecutionCourse.getNome());
-            request.setAttribute("exeCode", infoExecutionCourse.getSigla());
-            request.setAttribute("ePName", infoExecutionCourse.getInfoExecutionPeriod().getName());
-            request.setAttribute("eYName", infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());
-
-        }
-    }
-
     public static final void setExecutionPeriodToRequest(HttpServletRequest request, InfoExecutionPeriod infoExecutionPeriod) {
         if (infoExecutionPeriod != null) {
 
@@ -186,36 +155,4 @@ public abstract class RequestUtils {
 
     }
 
-    public static final void keepExecutionPeriodInRequest(HttpServletRequest request) {
-        request.setAttribute("ePName", request.getParameter("ePName"));
-        request.setAttribute("eYName", request.getParameter("eYName"));
-    }
-
-    public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws FenixActionException {
-
-        User userView = Authenticate.getUser();
-
-        // Read executionPeriod from request
-        InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
-
-        // If executionPeriod not in request nor in DB, read current
-        if (infoExecutionPeriod == null) {
-            userView = Authenticate.getUser();
-            infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
-        }
-        return infoExecutionPeriod;
-    }
-
-    public static void setLessonTypes(HttpServletRequest request) {
-        final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-        for (final ShiftType shiftType : ShiftType.values()) {
-            tiposAula.add(createLabelValueBean(bundle, shiftType));
-        }
-        request.setAttribute("tiposAula", tiposAula);
-    }
-
-    public static LabelValueBean createLabelValueBean(final ResourceBundle resourceBundle, final ShiftType shiftType) {
-        return new LabelValueBean(resourceBundle.getString(shiftType.getName()), shiftType.name());
-    }
 }

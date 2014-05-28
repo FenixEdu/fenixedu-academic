@@ -1,19 +1,36 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ScientificAreaSite extends ScientificAreaSite_Base {
@@ -39,8 +56,8 @@ public class ScientificAreaSite extends ScientificAreaSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new FixedSetGroup(getManagers());
+    public Group getOwner() {
+        return UserGroup.of(Person.convertToUsers(getManagers()));
     }
 
     @Override
@@ -59,34 +76,24 @@ public class ScientificAreaSite extends ScientificAreaSite_Base {
             }
         }
 
-        return new MultiLanguageString().with(Language.pt, buffer.toString());
+        return new MultiLanguageString().with(MultiLanguageString.pt, buffer.toString());
     }
 
     @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
-    }
+    public String getReversePath() {
+        StringBuilder stringBuilder = new StringBuilder(super.getReversePath()).append('/');
 
-    @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
-        final ScientificAreaUnit unit = getUnit();
-        appendReversePathPart(stringBuilder, unit);
-    }
-
-    public void appendReversePathPart(final StringBuilder stringBuilder, final Unit unit) {
-        if (stringBuilder.length() > 0) {
-            stringBuilder.append('/');
-        }
         Unit institutionalUnit = UnitUtils.readInstitutionUnit();
 
-        for (final Unit parentUnit : unit.getParentUnitsPath()) {
+        for (final Unit parentUnit : getUnit().getParentUnitsPath()) {
             if (!parentUnit.isAggregateUnit() && parentUnit != institutionalUnit) {
-                stringBuilder.append(Content.normalize(parentUnit.getAcronym()));
+                stringBuilder.append(CmsContent.normalize(parentUnit.getAcronym()));
                 stringBuilder.append('/');
             }
         }
-        stringBuilder.append(Content.normalize(unit.getAcronym()));
+        stringBuilder.append(CmsContent.normalize(getUnit().getAcronym()));
+
+        return stringBuilder.toString();
     }
 
 }

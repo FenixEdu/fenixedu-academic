@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.student.importation;
 
 import java.io.IOException;
@@ -10,17 +28,20 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.importation.DgesBaseProcessLauncher;
 import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationFile;
 import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess;
 import net.sourceforge.fenixedu.domain.student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration;
 import net.sourceforge.fenixedu.domain.student.importation.ExportExistingStudentsFromImportationProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -29,6 +50,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "dges-student-importation",
+        titleKey = "title.dges.student.importation")
 @Mapping(path = "/dgesStudentImportationProcess", module = "manager")
 @Forwards({
         @Forward(name = "list", path = "/manager/student/importation/list.jsp"),
@@ -37,6 +60,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
                 path = "/manager/student/importation/prepareCreateNewExportationForPasswordGeneration.jsp") })
 public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         DgesBaseProcessBean bean = getRenderedBean();
@@ -158,7 +182,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
         private Long filesize;
 
         private ExecutionYear executionYear;
-        private Campus campus;
+        private Space campus;
         private EntryPhase phase;
 
         public DgesBaseProcessBean(final ExecutionYear executionYear) {
@@ -197,11 +221,11 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
             this.executionYear = executionYear;
         }
 
-        public Campus getCampus() {
+        public Space getCampus() {
             return campus;
         }
 
-        public void setCampus(Campus campus) {
+        public void setCampus(Space campus) {
             this.campus = campus;
         }
 

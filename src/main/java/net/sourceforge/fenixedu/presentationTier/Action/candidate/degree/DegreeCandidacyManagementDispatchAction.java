@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.candidate.degree;
 
 import java.io.IOException;
@@ -36,6 +54,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.candidate.ViewCandidaciesDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
@@ -52,8 +71,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
+@Mapping(path = "/degreeCandidacyManagement", module = "candidate", functionality = ViewCandidaciesDispatchAction.class)
+@Forwards({ @Forward(name = "showWelcome", path = "/candidate/degree/showWelcome.jsp"),
+        @Forward(name = "showCandidacyDetails", path = "/candidate/degree/showCandidacyDetails.jsp"),
+        @Forward(name = "fillData", path = "/candidate/degree/fillData.jsp"),
+        @Forward(name = "showData", path = "/candidate/degree/showData.jsp"),
+        @Forward(name = "showOperationFinished", path = "/candidate/degree/showOperationFinished.jsp"),
+        @Forward(name = "printSchedule", path = "/commons/student/timeTable/classTimeTable.jsp"),
+        @Forward(name = "printRegistrationDeclaration", path = "/candidate/degree/printRegistrationDeclaration.jsp"),
+        @Forward(name = "printSystemAccessData", path = "/candidate/degree/printSystemAccessData.jsp"),
+        @Forward(name = "printUnder23TransportsDeclation", path = "/candidate/degree/printUnder23TransportsDeclaration.jsp"),
+        @Forward(name = "printMeasurementTestDate", path = "/candidate/degree/printMeasurementTestDate.jsp"),
+        @Forward(name = "printAllDocuments", path = "/candidate/degree/printAllDocuments.jsp") })
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(DegreeCandidacyManagementDispatchAction.class);
@@ -365,14 +400,10 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     private String buildSummaryPdfGeneratorURL(HttpServletRequest request, final StudentCandidacy candidacy) {
         String url =
                 "/candidate/degreeCandidacyManagement.do?method=doOperation&operationType=PRINT_ALL_DOCUMENTS&candidacyID="
-                        + candidacy.getExternalId()
-                        + "&"
-                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "=/portal-do-candidato/portal-do-candidato";
+                        + candidacy.getExternalId();
 
         String urlWithChecksum =
-                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.injectChecksumInUrl(
-                        request.getContextPath(), url);
+                GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url, request.getSession(false));
 
         return urlWithChecksum.substring("/candidate".length());
     }

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.util.renderer;
 
 import java.util.ArrayList;
@@ -9,12 +27,13 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class GanttDiagram {
 
@@ -330,7 +349,7 @@ public class GanttDiagram {
 
     public Locale getLocale() {
         if (locale == null) {
-            locale = Language.getLocale();
+            locale = I18N.getLocale();
         }
         return locale;
     }

@@ -1,15 +1,36 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="df.layout.two-column.contents" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication$CurricularPlansManagement" />
+
+<f:view>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="managerBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="<br/>" escape="false" />
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 		
 	<h:outputText value="<h2>#{managerBundle['label.manager.bolonhaCurricularPlansManagement']}</h2>" escape="false"/>
@@ -18,11 +39,11 @@
 	<h:panelGroup>
 	
 		<fc:dataRepeater value="#{AcademicAdministrationDegreeManagement.filteredBolonhaDegrees}" var="degree" rendered="#{!empty AcademicAdministrationDegreeManagement.filteredBolonhaDegrees}">
-			<h:outputText value="<table style='width: 750px' class='showinfo1 bgcolor1'>" escape="false"/>
+			<h:outputText value="<table style='width: 90%' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
 			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})</td>" escape="false"/>
-			<h:outputText value="<td style='width: 140px'>" escape="false"/>
+			<h:outputText value="<td style='width: 300px'>" escape="false"/>
 			<h:outputLink value="#{AcademicAdministrationDegreeManagement.request.contextPath}/academicAdministration/bolonha/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
 				<f:param name="degreeId" value="#{degree.externalId}"/>
@@ -90,11 +111,11 @@
 	<h:panelGroup>
 	
 		<fc:dataRepeater value="#{AcademicAdministrationDegreeManagement.filteredPreBolonhaDegrees}" var="degree" rendered="#{!empty AcademicAdministrationDegreeManagement.filteredPreBolonhaDegrees}">
-			<h:outputText value="<table style='width: 750px' class='showinfo1 bgcolor1'>" escape="false"/>
+			<h:outputText value="<table style='width: 90%' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
 			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})</td>" escape="false"/>
-			<h:outputText value="<td style='width: 140px'>" escape="false"/>
+			<h:outputText value="<td style='width: 300px'>" escape="false"/>
 			<h:outputLink value="#{AcademicAdministrationDegreeManagement.request.contextPath}/academicAdministration/bolonha/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
 				<f:param name="degreeId" value="#{degree.externalId}"/>
@@ -144,4 +165,4 @@
 		</fc:dataRepeater>
 	</h:panelGroup>
 
-</ft:tilesView>
+</f:view>

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeChange;
 
 import java.io.IOException;
@@ -24,6 +42,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChang
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.poi.hssf.util.Region;
@@ -31,6 +50,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -40,16 +61,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
+@StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "degree-change", titleKey = "label.candidacy.degreeChange",
+        accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))",
+        bundle = "ApplicationResources")
 @Mapping(path = "/caseHandlingDegreeChangeCandidacyProcess", module = "academicAdministration",
         formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards({
-
-@Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
+@Forwards({ @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
         @Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
         @Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
@@ -57,9 +79,7 @@ import com.google.common.base.Predicates;
         @Forward(name = "view-candidacy-results", path = "/candidacy/degreeChange/viewCandidacyResults.jsp"),
         @Forward(name = "introduce-candidacy-results", path = "/candidacy/degreeChange/introduceCandidacyResults.jsp"),
         @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
-        @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp")
-
-})
+        @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp") })
 public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 
     private static final int MAX_GRADE_VALUE = 20;
@@ -212,7 +232,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private String getLabel(final String key) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(key);
+        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(key);
     }
 
     private void writeReportForExternalDegrees(final DegreeChangeCandidacyProcess process, final ServletOutputStream outputStream)
@@ -257,7 +277,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
             excelSpreadsheet.addCell(getValue(calculateB(process, true)));
             excelSpreadsheet.addCell(getValue(calculateC(process)));
             if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
-                excelSpreadsheet.addCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale())
+                excelSpreadsheet.addCell(ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale())
                         .getString(process.getCandidacyState().getQualifiedName()).toUpperCase());
             } else {
                 excelSpreadsheet.addCell("");
@@ -321,7 +341,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private void createHeader(final StyledExcelSpreadsheet spreadsheet, final Degree degree) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
 
         // title
         spreadsheet.newHeaderRow();
@@ -392,7 +412,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
     protected List<Object> getCandidacyHeader() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", I18N.getLocale());
         final List<Object> result = new ArrayList<Object>();
 
         result.add(bundle.getString("label.spreadsheet.processCode"));
@@ -416,8 +436,8 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
             final IndividualCandidacyProcess individualCandidacyProcess) {
         DegreeChangeIndividualCandidacyProcess degreeChangeIndividualCandidacyProcess =
                 (DegreeChangeIndividualCandidacyProcess) individualCandidacyProcess;
-        ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
-        ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+        ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale());
+        ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", I18N.getLocale());
 
         final Row row = spreadsheet.addRow();
         row.setCell(degreeChangeIndividualCandidacyProcess.getProcessCode());

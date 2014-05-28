@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists;
 
 import static org.apache.commons.lang.StringUtils.EMPTY;
@@ -26,7 +44,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
@@ -42,6 +60,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminListingsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
@@ -50,6 +69,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -61,12 +82,15 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * @author - Angela Almeida (argelina@ist.utl.pt)
  */
+@StrutsFunctionality(app = AcademicAdminListingsApp.class, path = "students-by-degree", titleKey = "link.studentsListByDegree",
+        accessGroup = "academic(STUDENT_LISTINGS)")
 @Mapping(path = "/studentsListByDegree", module = "academicAdministration")
-@Forwards({ @Forward(name = "searchRegistrations", path = "/academicAdminOffice/lists/searchRegistrationsByDegree.jsp") })
+@Forwards(@Forward(name = "searchRegistrations", path = "/academicAdminOffice/lists/searchRegistrationsByDegree.jsp"))
 public class StudentListByDegreeDA extends FenixDispatchAction {
 
     private static final String YMD_FORMAT = "yyyy-MM-dd";
 
+    @EntryPoint
     public ActionForward prepareByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -88,12 +112,10 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         SearchStudentsByDegreeParametersBean bean = getRenderedObject("searchParametersBean");
         if (bean == null) {
             Set<DegreeType> degreeTypesForOperation =
-                    AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.STUDENT_LISTINGS);
+                    AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS);
             bean =
                     new SearchStudentsByDegreeParametersBean(degreeTypesForOperation,
-                            AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                                    AcademicOperationType.STUDENT_LISTINGS));
+                            AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS));
         }
         return bean;
     }
@@ -649,8 +671,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
     protected Set<CycleType> getAdministratedCycleTypes() {
         Set<CycleType> cycles = new HashSet<CycleType>();
-        for (DegreeType degreeType : AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.STUDENT_LISTINGS)) {
+        for (DegreeType degreeType : AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS)) {
             cycles.addAll(degreeType.getCycleTypes());
         }
         return cycles;

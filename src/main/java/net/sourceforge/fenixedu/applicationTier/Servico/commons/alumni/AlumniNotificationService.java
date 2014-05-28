@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.alumni;
 
 import java.text.MessageFormat;
@@ -10,28 +28,27 @@ import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.commons.i18n.I18N;
 
 public class AlumniNotificationService {
 
     static ResourceBundle getAlumniBundle() {
-        return ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
+        return ResourceBundle.getBundle("resources.AlumniResources", I18N.getLocale());
     }
 
     static ResourceBundle getGlobalBundle() {
-        return ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
+        return ResourceBundle.getBundle("resources.GlobalResources", I18N.getLocale());
     }
 
     static ResourceBundle getManagerBundle() {
-        return ResourceBundle.getBundle("resources.ManagerResources", Language.getLocale());
+        return ResourceBundle.getBundle("resources.ManagerResources", I18N.getLocale());
     }
 
     private static void sendEmail(final Collection<Recipient> recipients, final String subject, final String body,
@@ -41,7 +58,7 @@ public class AlumniNotificationService {
     }
 
     private static List<Recipient> getAlumniRecipients(Alumni alumni) {
-        return Collections.singletonList(Recipient.newInstance(new PersonGroup(alumni.getStudent().getPerson())));
+        return Collections.singletonList(Recipient.newInstance(UserGroup.of(alumni.getStudent().getPerson().getUser())));
     }
 
     protected static void sendPublicAccessMail(final Alumni alumni, final String alumniEmail) {

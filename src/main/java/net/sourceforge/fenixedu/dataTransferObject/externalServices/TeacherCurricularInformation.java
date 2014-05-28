@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
 import java.io.Serializable;
@@ -31,14 +49,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
-import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
-import net.sourceforge.fenixedu.domain.research.result.publication.Article;
-import net.sourceforge.fenixedu.domain.research.result.publication.Book;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
-import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection;
@@ -246,53 +256,6 @@ public class TeacherCurricularInformation implements Serializable {
             top5.add(StringUtils.EMPTY);
         }
         return top5;
-    }
-
-    public String getResearchDescription(ResearchResultPublication publication, boolean shortestPossible) {
-        List<String> resultDescription = new ArrayList<String>();
-        resultDescription.add(filter(publication.getTitle()));
-        if (shortestPossible) {
-            resultDescription.add(formatParticipant(getTeacher().getPerson().getName() + " et. al."));
-        } else {
-            List<String> parts = new ArrayList<String>();
-            for (ResultParticipation participant : publication.getOrderedAuthorsResultParticipations()) {
-                parts.add(formatParticipant(participant.getPerson().getNickname()));
-            }
-            resultDescription.add(filter(StringUtils.join(parts, ", ")));
-        }
-        if (publication instanceof Article) {
-            JournalIssue issue = ((Article) publication).getArticleAssociation().getJournalIssue();
-            String journal = filter(issue.getScientificJournal().getName());
-
-            String volume =
-                    filter(issue.getVolume() + (StringUtils.isNotBlank(issue.getNumber()) ? " (" + issue.getNumber() + ")" : ""));
-            insert(resultDescription, join(journal, volume, publication.getYear()));
-            insert(resultDescription, filter(issue.getPublisher()));
-        } else if (publication instanceof Book) {
-            Book book = (Book) publication;
-            insert(resultDescription, filter(book.getPublisher()));
-            insert(resultDescription, book.getYear());
-            insert(resultDescription, filter(book.getEdition()));
-        } else if (publication instanceof BookPart) {
-            BookPart bookPart = (BookPart) publication;
-            insert(resultDescription, filter(bookPart.getBookTitle()));
-            insert(resultDescription, filter(bookPart.getPublisher()));
-            insert(resultDescription, publication.getYear());
-            insert(resultDescription, filter(bookPart.getEdition()));
-        } else if (publication instanceof Inproceedings) {
-            insert(resultDescription, publication.getYear());
-            insert(resultDescription, filter(publication.getPublisher()));
-            insert(resultDescription, filter(((Inproceedings) publication).getEventEdition().getFullName()));
-        } else if (publication instanceof Proceedings) {
-            insert(resultDescription, publication.getYear());
-            insert(resultDescription, filter(((Proceedings) publication).getEventEdition().getFullName()));
-        }
-
-        String output = StringUtils.join(resultDescription, ", ");
-        if (output.length() > 300 && !shortestPossible) {
-            return getResearchDescription(publication, true);
-        }
-        return output;
     }
 
     private static String formatParticipant(String name) {

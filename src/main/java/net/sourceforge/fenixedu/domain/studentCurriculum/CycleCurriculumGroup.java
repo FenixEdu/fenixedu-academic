@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -11,7 +29,7 @@ import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
@@ -162,8 +180,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
         if (isFirstCycle()) {
             if (getRegistration().getIngression() == Ingression.DA1C || getRegistration().getIngression() == Ingression.CIA2C) {
                 final User userView = Authenticate.getUser();
-                if (AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.STUDENT_ENROLMENTS).contains(getRegistration().getDegree())
+                if (AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(getRegistration().getDegree())
                         || userView.getPerson().hasRole(RoleType.MANAGER)) {
                     return;
                 }

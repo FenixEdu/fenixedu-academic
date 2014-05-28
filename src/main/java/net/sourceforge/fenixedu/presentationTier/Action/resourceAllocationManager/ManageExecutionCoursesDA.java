@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
 import java.util.ArrayList;
@@ -18,6 +36,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMExecutionCoursesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -26,13 +45,29 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
+@StrutsFunctionality(app = RAMExecutionCoursesApp.class, path = "manage", titleKey = "link.management")
+@Mapping(path = "/manageExecutionCourses", module = "resourceAllocationManager")
+@Forwards({ @Forward(name = "ShowSearchForm", path = "/resourceAllocationManager/manageExecutionCourses_bd.jsp"),
+    @Forward(name = "showOccupancy", path = "/resourceAllocationManager/showOccupancyLevels_bd.jsp"),
+        @Forward(name = "showLoads", path = "/resourceAllocationManager/showLoads_bd.jsp") })
 public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         return mapping.findForward("ShowSearchForm");

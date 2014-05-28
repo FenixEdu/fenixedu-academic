@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE struts-config PUBLIC
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
       <!-- ========== Data Source Configuration =============================== -->
       <!-- ========== Form Bean Definitions ================================== -->
@@ -17,23 +40,9 @@
       <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
-            <!-- ********************* DEGREE CANDIDACY ******************* -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.candidate.degree.DegreeCandidacyManagementDispatchAction" parameter="method" scope="request" path="/degreeCandidacyManagement">
-                  <forward path="degreeCandidacy.show.welcome" name="showWelcome"></forward>
-                  <forward path="degreeCandidacy.show.candidacy.details" name="showCandidacyDetails"></forward>
-                  <forward path="degreeCandidacy.fill.data" name="fillData"></forward>
-                  <forward path="degreeCandidacy.show.data" name="showData"></forward>
-                  <forward path="degreeCandidacy.show.operation.finished" name="showOperationFinished"></forward>
-                  <forward path="/../commons/student/timeTable/classTimeTable.jsp" name="printSchedule"></forward>
-                  <forward path="/degree/printRegistrationDeclaration.jsp" name="printRegistrationDeclaration"></forward>
-                  <forward path="/degree/printSystemAccessData.jsp" name="printSystemAccessData"></forward>
-                  <forward path="/degree/printUnder23TransportsDeclaration.jsp" name="printUnder23TransportsDeclation"></forward>
-                  <forward path="/degree/printMeasurementTestDate.jsp" name="printMeasurementTestDate"></forward>
-                  <forward path="/degree/printAllDocuments.jsp" name="printAllDocuments"></forward>
-            </action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
@@ -42,14 +51,7 @@
       <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-candidate.xml" property="pathnames"></set-property>
-      </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
-            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/candidate/tiles-candidate-definitions.xml,/WEB-INF/tiles/candidate/tiles-candidate-pages-definitions.xml" property="definitions-config"></set-property>
-            <set-property value="true" property="moduleAware"></set-property>
-            <set-property value="true" property="definitions-parser-validate"></set-property>
-            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
-            <set-property value="candidate.masterPage" property="defaultTileDefinition"></set-property>
+            <set-property value="/WEB-INF/validator-rules.xml" property="pathnames"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

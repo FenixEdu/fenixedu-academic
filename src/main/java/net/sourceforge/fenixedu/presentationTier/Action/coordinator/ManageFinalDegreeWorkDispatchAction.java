@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 2004/03/09
  */
@@ -77,8 +95,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFil
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.StatusCountPair;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.WithCandidatesFilter;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 import net.sourceforge.fenixedu.presentationTier.util.CollectionFilter;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
@@ -99,6 +117,11 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
@@ -110,18 +133,64 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
  * @author Luis Cruz
  */
 
+@Mapping(path = "/manageFinalDegreeWork", module = "coordinator", formBean = "finalDegreeWorkCandidacyRequirements",
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards({
+        @Forward(name = "error", path = "/coordinator/welcomeScreen.jsp"),
+        @Forward(name = "show-choose-execution-degree-page",
+                path = "/coordinator/finalDegreeWork/showFinalDegreeChooseExecutionDegree_bd.jsp"),
+        @Forward(name = "show-final-degree-work-list", path = "/coordinator/finalDegreeWork/showFinalDegreeWorkList_bd.jsp"),
+        @Forward(name = "show-final-degree-work-info", path = "/coordinator/finalDegreeWork/showFinalDegreeWorkInfo.jsp"),
+        @Forward(name = "show-proposals", path = "/coordinator/finalDegreeWork/showProposals.jsp"),
+        @Forward(name = "show-proposal", path = "/coordinator/finalDegreeWork/showProposal.jsp"),
+        @Forward(name = "edit-proposal", path = "/coordinator/finalDegreeWork/editProposal.jsp"),
+        @Forward(name = "show-candidates", path = "/coordinator/finalDegreeWork/showCandidates.jsp"),
+        @Forward(name = "show-final-degree-work-proposal",
+                path = "/coordinator/finalDegreeWork/showFinalDegreeWorkProposal_bd.jsp"),
+        @Forward(name = "prepare-show-final-degree-work-proposal",
+                path = "/coordinator/manageFinalDegreeWork.do?method=prepare&page=0"),
+        @Forward(name = "show-student-curricular-plan", path = "/coordinator/viewStudentCurriculum.do?method=prepare"),
+        @Forward(name = "edit-final-degree-periods", path = "/coordinator/finalDegreeWork/editFinalDegreePeriods.jsp"),
+        @Forward(name = "edit-final-degree-requirements", path = "/coordinator/finalDegreeWork/editFinalDegreeRequirements.jsp"),
+        @Forward(name = "detailed-proposal-list", path = "/coordinator/finalDegreeWork/detailedProposalList_bd.jsp") })
+@Exceptions({
+        @ExceptionHandling(key = "error.final.degree.work.scheduling.has.proposals", handler = FenixErrorExceptionHandler.class,
+                type = AddExecutionDegreeToScheduling.SchedulingContainsProposalsException.class),
+        @ExceptionHandling(key = "error.final.degree.work.scheduling.has.proposals", handler = FenixErrorExceptionHandler.class,
+                type = RemoveExecutionDegreeToScheduling.SchedulingContainsProposalsException.class) })
 public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
+
+    @Mapping(path = "/finalDegreeWorkProposal", module = "coordinator",
+            input = "/finalDegreeWorkProposal.do?method=createNewFinalDegreeWorkProposal", formBean = "finalDegreeWorkProposal",
+            functionality = DegreeCoordinatorIndex.class)
+    @Forwards(@Forward(name = "show-final-degree-work-list",
+            path = "/coordinator/manageFinalDegreeWork.do?method=showProposal&page=0"))
+    public static class FinalDegreeWorkProposalDA extends ManageFinalDegreeWorkDispatchAction {
+    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.newSetCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
+        final String executionDegreePlanOID = newFindExecutionDegreeID(request);
+        if (executionDegreePlanOID != null) {
+            request.setAttribute("executionDegreeOID", executionDegreePlanOID);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreePlanOID);
+            request.setAttribute("executionDegree", executionDegree);
+        }
         return super.execute(mapping, actionForm, request, response);
+    }
+
+    private static String newFindExecutionDegreeID(HttpServletRequest request) {
+        String executionDegreePlanOID = request.getParameter("executionDegreeOID");
+        if (executionDegreePlanOID == null) {
+            executionDegreePlanOID = (String) request.getAttribute("executionDegreeOID");
+        }
+        return executionDegreePlanOID;
     }
 
     public ActionForward showChooseExecutionDegreeForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        final User userView = Authenticate.getUser();
 
         // keep degreeCurricularPlan in request
         final String degreeCurricularPlanOID = (String) getFromRequest(request, "degreeCurricularPlanID");

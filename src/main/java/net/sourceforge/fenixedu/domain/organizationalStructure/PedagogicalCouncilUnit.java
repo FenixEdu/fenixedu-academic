@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Collection;
@@ -8,13 +26,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PedagogicalCouncilSite;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
-import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.YearMonthDay;
 
 public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
@@ -30,18 +48,18 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
     }
 
     @Override
-    protected List<IGroup> getDefaultGroups() {
-        List<IGroup> groups = super.getDefaultGroups();
+    protected List<Group> getDefaultGroups() {
+        List<Group> groups = super.getDefaultGroups();
 
-        groups.add(new PedagogicalCouncilMembersGroup());
-        groups.add(new WebSiteManagersGroup(getSite()));
+        groups.add(RoleGroup.get(RoleType.PEDAGOGICAL_COUNCIL));
+        groups.add(ManagersOfUnitSiteGroup.get(getSite()));
 
         /* For sending mail to all degrees delegates */
-        groups.add(new DelegatesGroup(FunctionType.DELEGATE_OF_GGAE));
-        groups.add(new DelegatesGroup(FunctionType.DELEGATE_OF_YEAR));
-        groups.add(new DelegatesGroup(FunctionType.DELEGATE_OF_DEGREE));
-        groups.add(new DelegatesGroup(FunctionType.DELEGATE_OF_MASTER_DEGREE));
-        groups.add(new DelegatesGroup(FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE));
+        groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_GGAE));
+        groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_YEAR));
+        groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_DEGREE));
+        groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_MASTER_DEGREE));
+        groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE));
 
         /*
          * For sending mail to selected degrees delegates IS THIS REALLY

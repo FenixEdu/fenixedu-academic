@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -50,7 +68,7 @@ public class InsertStudentTestResponses {
 
     @Atomic
     public static InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber,
-            final String distributedTestId, Response[] response, String path) throws FenixServiceException {
+            final String distributedTestId, Response[] response) throws FenixServiceException {
         check(RolePredicates.STUDENT_PREDICATE);
 
         ServiceMonitoring.logService(InsertStudentTestResponses.class, registration, studentNumber, distributedTestId, response,
@@ -58,7 +76,6 @@ public class InsertStudentTestResponses {
 
         String logIdString = "student num" + studentNumber.toString() + " testId " + distributedTestId.toString();
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
-        path = path.replace('\\', '/');
         if (registration == null) {
             throw new FenixServiceException();
         }
@@ -101,7 +118,7 @@ public class InsertStudentTestResponses {
                         // n�o pode aceitar nova resposta
                     } else {
                         try {
-                            studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, path);
+                            studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion);
                             studentTestQuestion
                                     .setSubQuestionByItem(correctQuestionValues(studentTestQuestion.getSubQuestionByItem(),
                                             new Double(studentTestQuestion.getTestQuestionValue().doubleValue())));
@@ -242,7 +259,7 @@ public class InsertStudentTestResponses {
             StudentTestQuestion nextStudentTestQuestion) throws FenixServiceException {
         ParseSubQuestion parse = new ParseSubQuestion();
         try {
-            parse.parseStudentTestQuestion(nextStudentTestQuestion, path.replace('\\', '/'));
+            parse.parseStudentTestQuestion(nextStudentTestQuestion);
         } catch (Exception e) {
             throw new FenixServiceException(e);
         }

@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -23,7 +41,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
@@ -49,7 +67,6 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -94,6 +111,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -2097,18 +2115,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getDegreeCurricularPlan().getPresentationName(executionYear);
     }
 
-    final public Campus getCurrentCampus() {
-        final Campus currentCampus = getDegreeCurricularPlan().getCurrentCampus();
+    final public Space getCurrentCampus() {
+        final Space currentCampus = getDegreeCurricularPlan().getCurrentCampus();
         return currentCampus == null ? getLastCampus() : currentCampus;
     }
 
-    final public Campus getCampus(final ExecutionYear executionYear) {
-        final Campus result = getDegreeCurricularPlan().getCampus(executionYear);
+    final public Space getCampus(final ExecutionYear executionYear) {
+        final Space result = getDegreeCurricularPlan().getCampus(executionYear);
         return result == null ? getLastCampus() : result;
     }
 
-    final public Campus getLastCampus() {
-        final Campus lastScpCampus = getDegreeCurricularPlan().getCampus(getLastExecutionYear());
+    final public Space getLastCampus() {
+        final Space lastScpCampus = getDegreeCurricularPlan().getCampus(getLastExecutionYear());
         return lastScpCampus == null ? getDegreeCurricularPlan().getLastCampus() : lastScpCampus;
     }
 

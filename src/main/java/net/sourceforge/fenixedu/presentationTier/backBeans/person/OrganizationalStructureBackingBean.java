@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on Nov 10, 2005
  *	by angela
@@ -34,15 +52,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
@@ -62,7 +79,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (getRequestParameter("unitID") != null) {
             getUnitIDHidden().setValue(getRequestParameter("unitID"));
         }
-        this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
     }
 
     public List<SelectItem> getExecutionYears() throws FenixServiceException {
@@ -342,13 +359,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String getHomePageUrl(Person person) {
         StringBuilder buffer = new StringBuilder();
-        String appContext = FenixConfigurationManager.getConfiguration().appContext();
-
         if (person.getHomepage() != null && person.getHomepage().getActivated()) {
-            buffer.append(getRequest().getScheme()).append("://").append(getRequest().getServerName()).append(":")
-                    .append(getRequest().getServerPort()).append("/")
-                    .append(!StringUtils.isEmpty(appContext) ? appContext + "/" : "").append("homepage/")
-                    .append(person.getIstUsername());
+            buffer.append(person.getHomepage().getFullPath());
         }
         return buffer.toString();
     }

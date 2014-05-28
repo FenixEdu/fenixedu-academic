@@ -1,15 +1,36 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
-<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication$ScientificCompetenceCoursesManagement" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
-		<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
 		<h:outputText value="<h2>#{scouncilBundle['competenceCoursesManagement']}</h2>" escape="false"/>
 
 		<h:form>
@@ -22,7 +43,6 @@
 			<fc:selectOneMenu value="#{CompetenceCourseManagement.selectedDepartmentUnitID}" onchange="submit()">
 				<f:selectItems value="#{CurricularCourseManagement.departmentUnits}"/>
 			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		</h:panelGrid>
 
 
@@ -49,7 +69,7 @@
 		<h:outputText value="<ul>" escape="false"/>
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.departmentDraftCompetenceCourses}" >
 			<h:outputText value="<li>" escape="false"/>
-				<h:outputLink value="showAllCompetenceCourses.faces" target="_blank">
+				<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/showAllCompetenceCourses.faces" target="_blank">
 					<h:outputText value="#{scouncilBundle['showDraftCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
 					<f:param name="competenceCoursesToList" value="DRAFT"/>
 					<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
@@ -59,7 +79,7 @@
 
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.departmentPublishedCompetenceCourses}">		
 			<h:outputText value="<li>" escape="false"/>
-			<h:outputLink value="showAllCompetenceCourses.faces" target="_blank">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/showAllCompetenceCourses.faces" target="_blank">
 				<h:outputText value="#{scouncilBundle['showPublishedCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
 				<f:param name="competenceCoursesToList" value="PUBLISHED"/>
 				<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
@@ -69,7 +89,7 @@
 		
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.departmentApprovedCompetenceCourses}">
 			<h:outputText value="<li>" escape="false"/>
-			<h:outputLink value="showAllCompetenceCourses.faces" target="_blank">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/showAllCompetenceCourses.faces" target="_blank">
 				<h:outputText value="#{scouncilBundle['showApprovedCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
 				<f:param name="competenceCoursesToList" value="APPROVED"/>
 				<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
@@ -109,7 +129,7 @@
 										</h:column>
 									
 										<h:column>
-											<h:outputLink value="showCompetenceCourse.faces">
+											<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/showCompetenceCourse.faces">
 												<h:outputText value="#{scouncilBundle['show']}"/>
 												<f:param name="action" value="ccm"/>
 												<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
@@ -117,7 +137,7 @@
 											</h:outputLink>
 											<logic:present role="(role(SCIENTIFIC_COUNCIL) | role(BOLONHA_MANAGER))">
 												<h:outputText value=" , "/>
-												<h:outputLink value="transferCompetenceCourse.faces">
+												<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/transferCompetenceCourse.faces">
 													<h:outputText value="#{scouncilBundle['transfer']}"/>
 													<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 													<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
@@ -149,4 +169,4 @@
 		</h:panelGroup>
 		
 	</h:form>
-</ft:tilesView>
+</f:view>

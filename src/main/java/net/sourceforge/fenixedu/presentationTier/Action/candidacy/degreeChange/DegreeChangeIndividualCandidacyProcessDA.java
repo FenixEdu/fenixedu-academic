@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeChange;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +49,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingDegreeChangeIndividualCandidacyProcess", module = "academicAdministration",
-        formBeanClass = FenixActionForm.class)
+        formBeanClass = FenixActionForm.class, functionality = DegreeChangeCandidacyProcessDA.class)
 @Forwards({
-        // @Forward(name = "intro", path =
-        // "/candidacy/mainCandidacyProcess.jsp"),
-        @Forward(name = "intro", path = "/caseHandlingDegreeChangeCandidacyProcess.do?method=listProcessAllowedActivities"),
+        @Forward(name = "intro",
+                path = "/academicAdministration/caseHandlingDegreeChangeCandidacyProcess.do?method=listProcessAllowedActivities"),
         @Forward(name = "list-allowed-activities", path = "/candidacy/degreeChange/listIndividualCandidacyActivities.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
         @Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
@@ -52,9 +69,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
         @Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp"),
         @Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp"),
-        @Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp")
-
-})
+        @Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp") })
 public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override

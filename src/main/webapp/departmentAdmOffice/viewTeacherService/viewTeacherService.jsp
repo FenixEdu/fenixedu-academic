@@ -1,20 +1,38 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core"  prefix="c" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp$ViewTeacherService" />
 
-<ft:tilesView definition="departmentAdmOffice.masterPage"
-	attributeName="body-inline">
+<f:view>
 	
 	<f:loadBundle basename="resources/DepartmentMemberResources"
 		var="bundle" />
 	<f:loadBundle basename="resources/EnumerationResources"
 		var="bundleEnumeration" />
-		
-	<h:outputText value="<i>#{bundle['label.teacherService.title']}</i><p /><p />" escape="false"/>
-	
+			
 	<h:outputText value="<h2>#{viewTeacherService.departmentName}</h2> <p />" escape="false"/>
 	
 	<h:form id="teacherServiceForm">
@@ -25,20 +43,17 @@
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionYearItems}"/>
 				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			 	<h:outputText value="#{bundle['label.common.courseSemester']}&nbsp;" escape="false" styleClass="aright" />
 				<fc:selectOneMenu id="selectedExecutionPeriodID" value="#{viewTeacherService.selectedExecutionPeriodID}"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionPeriodsItems}"/>
 				</fc:selectOneMenu>	
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
 			<h:panelGrid columns="2" styleClass="search" width="100%">
 				<h:selectManyCheckbox value="#{viewTeacherService.selectedViewByTeacherOptions}" layout="pageDirection"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.viewByTeacherOptionsItems}"/>
 				</h:selectManyCheckbox>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
 		</h:panelGrid>
 	</h:form>	
@@ -47,7 +62,7 @@
 
 	<h:outputText value="<b>#{bundle['label.teacherService.navigateByTeacher']}</b>" escape="false"/>
 	<h:outputText value=" #{bundle['label.teacherService.separator']} " escape="false"/>
-	<h:outputText value="<a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
+	<h:outputText value="<a href='#{facesContext.externalContext.requestContextPath}/departmentAdmOffice/viewTeacherService/viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
 	<h:outputText value="#{bundle['label.teacherService.navigateByCourse']}" escape="false"/>
 	<h:outputText value="</a> <br /> <p />" escape="false"/>
 		
@@ -90,7 +105,7 @@
 					<h:outputText value="<td colspan=8 class='backwhite' style='background-color: #fff;'>" escape="false" />
 						<h:outputText value="<ul>" escape="false" />
 							<fc:dataRepeater value="#{teacher.executionCourseTeacherServiceList}" var="coursesList">
-								<h:outputText value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseExternalId}'>" escape="false"/>
+								<h:outputText value="<li><a href='#{facesContext.externalContext.requestContextPath}/departmentAdmOffice/viewTeacherService/viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseExternalId}'>" escape="false"/>
 								<h:outputText value="#{coursesList.description} " escape="false" />	
 							 	<h:outputText value="</a></li>" escape="false"/>
 							</fc:dataRepeater>
@@ -115,4 +130,4 @@
 	</h:panelGroup>
 
 	
-</ft:tilesView>
+</f:view>

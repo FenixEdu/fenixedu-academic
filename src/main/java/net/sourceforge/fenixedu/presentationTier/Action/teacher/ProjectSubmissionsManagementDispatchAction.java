@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.io.IOException;
@@ -20,8 +38,8 @@ import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.ProjectSubmission;
 import net.sourceforge.fenixedu.domain.ProjectSubmissionLog;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Archive;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.DiskZipArchive;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher;
@@ -33,23 +51,16 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "teacher", path = "/projectSubmissionsManagement", scope = "request", parameter = "method")
-@Forwards(
-        value = {
-                @Forward(name = "editProjectObservations", path = "edit-project-observations", tileProperties = @Tile(
-                        title = "bolacha5")),
-                @Forward(name = "viewLastProjectSubmissionForEachGroup", path = "view-last-project-submission-for-each-group",
-                        tileProperties = @Tile(title = "bolacha6")),
-                @Forward(name = "viewProjectSubmissionsByGroup", path = "view-project-submissions-by-group",
-                        tileProperties = @Tile(title = "bolacha7")),
-                @Forward(name = "selectiveDownload", path = "selective-download", tileProperties = @Tile(title = "bolacha8")) })
-public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAction {
+@Mapping(module = "teacher", path = "/projectSubmissionsManagement", functionality = ManageExecutionCourseDA.class)
+public class ProjectSubmissionsManagementDispatchAction extends ExecutionCourseBaseAction {
+
+    private ActionForward doForward(HttpServletRequest request, String path) {
+        request.setAttribute("teacher$actual$page", path);
+        return new ActionForward("/evaluation/evaluationFrame.jsp");
+    }
 
     public ActionForward viewLastProjectSubmissionForEachGroup(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
@@ -68,7 +79,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
         setRequestParameters(request, project, projectSubmissions, null);
         request.setAttribute("deletedStudentGroupProjectSubmissions", deletedGroupsProjectSubmissions);
 
-        return mapping.findForward("viewLastProjectSubmissionForEachGroup");
+        return doForward(request, "/teacher/evaluation/viewLastProjectSubmissionForEachGroup.jsp");
 
     }
 
@@ -86,7 +97,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
 
         setRequestParameters(request, project, projectSubmissions, projectSubmissionLogs);
 
-        return mapping.findForward("viewProjectSubmissionsByGroup");
+        return doForward(request, "/teacher/evaluation/viewProjectSubmissionsByGroup.jsp");
 
     }
 
@@ -131,7 +142,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
         }
 
         request.setAttribute("bean", bean);
-        return mapping.findForward("selectiveDownload");
+        return doForward(request, "/teacher/evaluation/selectiveDownload.jsp");
     }
 
     public ActionForward selectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -171,7 +182,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
         request.setAttribute("projectSubmission", project.getLastProjectSubmissionForStudentGroup(getStudentGroup(request)));
         setRequestParameters(request, project, null, null);
 
-        return mapping.findForward("editProjectObservations");
+        return doForward(request, "/teacher/evaluation/editProjectObservations.jsp");
     }
 
     public ActionForward sendCommentThroughEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,

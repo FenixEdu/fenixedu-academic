@@ -1,20 +1,38 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UnionGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -28,17 +46,17 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
         setCreatedBy(createdBy);
         filename = processFilename(teacherEvaluation, teacherEvaluationFileType, getExtension(filename));
 
-        final Collection<IGroup> groups = new ArrayList<>();
+        final Set<Group> groups = new HashSet<>();
 
         final TeacherEvaluationProcess process = teacherEvaluation.getTeacherEvaluationProcess();
-        groups.add(new PersonGroup(process.getEvaluator()));
-        groups.add(new PersonGroup(process.getEvaluee()));
+        groups.add(UserGroup.of(process.getEvaluator().getUser()));
+        groups.add(UserGroup.of(process.getEvaluee().getUser()));
         final UnitSite unitSite = Bennu.getInstance().getTeacherEvaluationCoordinatorCouncil();
         if (unitSite != null) {
-            groups.add(new WebSiteManagersGroup(unitSite));
+            groups.add(ManagersOfUnitSiteGroup.get(unitSite));
         }
 
-        init(filename, filename, content, new GroupUnion(groups));
+        init(filename, filename, content, UnionGroup.of(groups));
     }
 
     private String getExtension(String filename) {

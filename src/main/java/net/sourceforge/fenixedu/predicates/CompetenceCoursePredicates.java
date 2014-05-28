@@ -1,20 +1,36 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  */
 package net.sourceforge.fenixedu.predicates;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -117,22 +133,21 @@ public class CompetenceCoursePredicates {
     private static boolean isMemberOfDegreeCurricularPlansGroup(Person person) {
         Collection<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans();
 
-        Collection<IGroup> groups = new ArrayList<IGroup>();
         for (DegreeCurricularPlan plan : degreeCurricularPlans) {
             Group curricularPlanMembersGroup = plan.getCurricularPlanMembersGroup();
             if (curricularPlanMembersGroup != null) {
-                groups.add(curricularPlanMembersGroup);
+                return curricularPlanMembersGroup.isMember(person.getUser());
             }
         }
 
-        return new GroupUnion(groups).isMember(person);
+        return false;
     }
 
     private static boolean isMemberOfCompetenceCourseGroup(CompetenceCourse competenceCourse, Person person) {
         Group competenceCourseMembersGroup =
                 competenceCourse.getDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
         if (competenceCourseMembersGroup != null) {
-            return competenceCourseMembersGroup.isMember(person);
+            return competenceCourseMembersGroup.isMember(person.getUser());
         }
         return false;
     }

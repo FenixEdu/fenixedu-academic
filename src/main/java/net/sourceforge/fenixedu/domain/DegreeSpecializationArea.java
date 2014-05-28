@@ -1,8 +1,25 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
@@ -26,7 +43,7 @@ public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
             throw new DomainException(MultiLanguageString.class.getName() + ".area.required");
         }
 
-        if (area.getAllLanguages().isEmpty()) {
+        if (area.getAllLocales().isEmpty()) {
             throw new DomainException(DegreeSpecializationArea.class.getName() + ".area.names.required");
         }
 
@@ -51,20 +68,20 @@ public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
 
     @Atomic
     public void setNameEn(String nameEn) {
-        setName(getName().with(Language.en, nameEn));
+        setName(getName().with(MultiLanguageString.en, nameEn));
     }
 
     @Atomic
     public void setNamePt(String namePt) {
-        setName(getName().with(Language.pt, namePt));
+        setName(getName().with(MultiLanguageString.pt, namePt));
     }
 
     public String getNameEn() {
-        return this.getName().getContent(Language.en);
+        return this.getName().getContent(MultiLanguageString.en);
     }
 
     public String getNamePt() {
-        return this.getName().getContent(Language.pt);
+        return this.getName().getContent(MultiLanguageString.pt);
     }
 
     @Deprecated

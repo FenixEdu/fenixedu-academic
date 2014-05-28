@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentMember;
 
 import java.util.ArrayList;
@@ -18,6 +36,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageCreditsReductionsDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberPresidentApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -25,6 +44,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -32,13 +53,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "departmentMember", path = "/creditsReductions", scope = "request", parameter = "method")
+@StrutsFunctionality(app = DepartmentMemberPresidentApp.class, path = "credits-reductions",
+        titleKey = "label.credits.creditsReduction", bundle = "TeacherCreditsSheetResources")
+@Mapping(module = "departmentMember", path = "/creditsReductions")
 @Forwards(value = { @Forward(name = "editReductionService", path = "/credits/degreeTeachingService/editCreditsReduction.jsp"),
-        @Forward(name = "viewAnnualTeachingCredits", path = "/credits.do?method=viewAnnualTeachingCredits"),
+        @Forward(name = "viewAnnualTeachingCredits", path = "/departmentMember/credits.do?method=viewAnnualTeachingCredits"),
         @Forward(name = "showReductionServices", path = "/credits/reductionService/showReductionServices.jsp"),
         @Forward(name = "showReductionService", path = "/credits/reductionService/showReductionService.jsp") })
 public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsReductionsDispatchAction {
 
+    @EntryPoint
     public ActionForward showReductionServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();

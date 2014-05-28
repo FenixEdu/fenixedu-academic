@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.candidacy.registrations;
 
 import java.io.Serializable;
@@ -17,9 +35,9 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -37,13 +55,13 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
             if (result == 0) {
                 result =
                         o1.getActiveCandidacySituation().getSituationDate()
-                                .compareTo(o2.getActiveCandidacySituation().getSituationDate());
+                        .compareTo(o2.getActiveCandidacySituation().getSituationDate());
             }
             if (result == 0) {
                 final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
                 result =
                         o1.getExecutionDegree().getDegree().getNameFor(executionYear)
-                                .compareTo(o2.getExecutionDegree().getDegree().getNameFor(executionYear));
+                        .compareTo(o2.getExecutionDegree().getDegree().getNameFor(executionYear));
             }
             if (result == 0) {
                 result = o1.getRegistration().getNumber().compareTo(o2.getRegistration().getNumber());
@@ -58,7 +76,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
         }
     };
 
-    private Campus campus;
+    private Space campus;
     private ExecutionYear executionYear;
     private EntryPhase entryPhase;
     private DateTime beginDate;
@@ -68,11 +86,11 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
         this.executionYear = ExecutionYear.readCurrentExecutionYear();
     }
 
-    public Campus getCampus() {
+    public Space getCampus() {
         return campus;
     }
 
-    public void setCampus(Campus campus) {
+    public void setCampus(Space campus) {
         this.campus = campus;
     }
 
@@ -141,7 +159,8 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
     }
 
     public Spreadsheet export(final Set<Degree> allowedPrograms) {
-        final Spreadsheet spreadsheet = new Spreadsheet(campus.getName());
+        Spreadsheet spreadsheet;
+        spreadsheet = new Spreadsheet(getCampus().getName());
         addHeaders(spreadsheet);
 
         List<StudentCandidacy> result = search(allowedPrograms);

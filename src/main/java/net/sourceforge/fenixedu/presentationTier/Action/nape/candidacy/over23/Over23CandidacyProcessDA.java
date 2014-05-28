@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.nape.candidacy.over23;
 
 import java.io.IOException;
@@ -21,6 +39,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualC
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.nape.NapeApplication.NapeCandidaciesApp;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -28,6 +47,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -35,8 +56,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
+@StrutsFunctionality(app = NapeCandidaciesApp.class, path = "over-23", titleKey = "title.application.name.over23")
 @Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "nape",
         formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards({ @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp") })
@@ -118,7 +140,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private Spreadsheet buildReport(final List<Over23IndividualCandidacyProcess> over23IndividualCandidacies) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         final Spreadsheet result = new CandidacyReport("candidacies");
 
         result.setHeaders(new String[] { bundle.getString("label.name"), bundle.getString("label.identificationNumber"),

@@ -1,4 +1,22 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * Nov 24, 2005
  */
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.credits;
@@ -14,6 +32,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherAdviseServiceDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice.DepartmentAdmOfficeViewTeacherCreditsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,12 +55,15 @@ import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/teacherAdviseServiceManagement",
         input = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0",
-        attribute = "teacherDegreeFinalProjectStudentForm", formBean = "teacherDegreeFinalProjectStudentForm", scope = "request",
-        parameter = "method")
-@Forwards(value = { @Forward(name = "list-teacher-advise-services", path = "list-teacher-advise-services"),
-        @Forward(name = "successfull-delete", path = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
-        @Forward(name = "successfull-edit", path = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
-        @Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
+        formBean = "teacherDegreeFinalProjectStudentForm", functionality = DepartmentAdmOfficeViewTeacherCreditsDA.class)
+@Forwards(value = {
+        @Forward(name = "list-teacher-advise-services", path = "/credits/adviseServices/showTeacherAdviseServices.jsp"),
+        @Forward(name = "successfull-delete",
+                path = "/departmentAdmOffice/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
+        @Forward(name = "successfull-edit",
+                path = "/departmentAdmOffice/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
+        @Forward(name = "teacher-not-found",
+                path = "/departmentAdmOffice/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
 @Exceptions(
         value = {
                 @ExceptionHandling(

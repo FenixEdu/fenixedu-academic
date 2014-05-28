@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 21/Jul/2003
  *
@@ -11,11 +29,11 @@ import java.util.List;
 import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
@@ -58,7 +76,7 @@ public class Summary extends Summary_Base {
 
     public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-            AllocatableSpace room, Partial hour, ShiftType type, Boolean taught) {
+            Space room, Partial hour, ShiftType type, Boolean taught) {
 
         super();
         setRootDomainObject(Bennu.getInstance());
@@ -72,7 +90,7 @@ public class Summary extends Summary_Base {
 
     public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-            AllocatableSpace room, Partial hour, ShiftType type, Boolean taught) {
+            Space room, Partial hour, ShiftType type, Boolean taught) {
 
         fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
                 lesson, date, room, hour, type, taught);
@@ -84,7 +102,7 @@ public class Summary extends Summary_Base {
 
     private void fillSummaryWithInfo(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
             Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson,
-            YearMonthDay day, AllocatableSpace room, Partial hour, ShiftType type, Boolean taught) {
+            YearMonthDay day, Space room, Partial hour, ShiftType type, Boolean taught) {
 
         setShift(shift);
         setSummaryDateYearMonthDay(day);
@@ -144,7 +162,7 @@ public class Summary extends Summary_Base {
                 && getSummaryDateYearMonthDay() != null && getSummaryHourHourMinuteSecond() != null && getIsExtraLesson() != null;
     }
 
-    private void lessonInstanceManagement(Lesson lesson, YearMonthDay day, AllocatableSpace room) {
+    private void lessonInstanceManagement(Lesson lesson, YearMonthDay day, Space room) {
         LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
         if (lessonInstance == null) {
             new LessonInstance(this, lesson);
@@ -283,7 +301,7 @@ public class Summary extends Summary_Base {
     }
 
     @Override
-    public AllocatableSpace getRoom() {
+    public Space getRoom() {
         if (isExtraSummary()) {
             return super.getRoom();
         } else if (hasLessonInstance()) {

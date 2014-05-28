@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
@@ -39,7 +57,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
@@ -1059,11 +1076,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         MultiLanguageString multiLanguageString = new MultiLanguageString();
         String name = getName(semester);
         if (name != null && name.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, name);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, name);
         }
         String nameEn = getNameEn(semester);
         if (nameEn != null && nameEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, nameEn);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, nameEn);
         }
         return multiLanguageString;
     }
@@ -1076,11 +1093,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         MultiLanguageString multiLanguageString = new MultiLanguageString();
         String objectives = getObjectives(semester);
         if (objectives != null && objectives.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, objectives);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, objectives);
         }
         String objectivesEn = getObjectivesEn(semester);
         if (objectivesEn != null && objectivesEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, objectivesEn);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, objectivesEn);
         }
         return multiLanguageString;
     }
@@ -1093,11 +1110,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         MultiLanguageString multiLanguageString = new MultiLanguageString();
         String program = getProgram(semester);
         if (program != null && program.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, program);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, program);
         }
         String programEn = getProgramEn(semester);
         if (programEn != null && programEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, programEn);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, programEn);
         }
         return multiLanguageString;
     }
@@ -1322,16 +1339,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     @Deprecated
     public boolean hasAnyPhdStudyPlanEntries() {
         return !getPhdStudyPlanEntriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCompetenceCourse> getTSDCompetenceCourses() {
-        return getTSDCompetenceCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDCompetenceCourses() {
-        return !getTSDCompetenceCoursesSet().isEmpty();
     }
 
     @Deprecated

@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@page import="pt.ist.fenixframework.FenixFramework"%>
 <%@ page language="java" %>
 
@@ -5,7 +25,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
 
 <html:xhtml/>
 
@@ -20,7 +39,7 @@
 
     <h2>
         <fr:view name="section" property="name" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
-        <span class="permalink1">(<app:contentLink name="section"><bean:message key="label.link" bundle="SITE_RESOURCES"/></app:contentLink>)</span>
+        <span class="permalink1">(<a href="${section.fullPath}"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h2>
 
     <bean:define id="sectionId" name="section" property="externalId"/>
@@ -28,11 +47,8 @@
        <em><bean:message key="message.section.view.mustLogin" bundle="SITE_RESOURCES"/></em>
 		<%
 		    if (org.fenixedu.bennu.core.util.CoreConfiguration.casConfig().isCasEnabled()) {
-							    final String schema = request.getScheme();
-							    final String server = request.getServerName();
-							    final int port = request.getServerPort();
 		%>
-				<a href="<%= "https://barra.tecnico.ulisboa.pt/login?next=https://id.ist.utl.pt/cas/login?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + section.getReversePath() %>">
+				<a href="<%= "https://barra.tecnico.ulisboa.pt/login?next=https://id.ist.utl.pt/cas/login?service=" + section.getFullPath() %>">
             		<bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
        			</a>.
 		<%
@@ -47,16 +63,7 @@
     </p>
     <bean:message key="label.permittedGroup" bundle="SITE_RESOURCES"/>
 
-	<logic:present name="section" property="availabilityPolicy">
-		<logic:present name="section" property="availabilityPolicy.targetGroup">
-			<logic:present name="section" property="availabilityPolicy.targetGroup.name">
-				<fr:view name="section" property="availabilityPolicy.targetGroup.name">
-				</fr:view>
-			</logic:present>
-		</logic:present>
-	</logic:present>
-	<logic:notPresent name="section" property="availabilityPolicy">
-		<bean:message key="link.section.no.availability.policy" bundle="SITE_RESOURCES"/>
-	</logic:notPresent>
+
+    ${section.permittedGroup.presentationName}
 
 </logic:present>

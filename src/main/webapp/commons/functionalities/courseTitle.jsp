@@ -1,16 +1,26 @@
-<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
+<%--
 
-<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
-	<bean:define id="funcContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContent" type="net.sourceforge.fenixedu.domain.contents.Content"/>
-	<bean:write name="funcContext" property="name" /> -
-</logic:present>
-<logic:notPresent name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
-	<tiles:getAsString name="title" ignore="true" />
-</logic:notPresent>
-<logic:present name="executionCourse">
-	<bean:write name="executionCourse" property="name"/> -
-</logic:present>
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:if test="${not empty actual$content}">
+	${actual$content.name} -
+</c:if>
+${actual$site.executionCourse.name} - 

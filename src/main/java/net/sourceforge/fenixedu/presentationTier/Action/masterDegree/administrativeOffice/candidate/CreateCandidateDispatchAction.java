@@ -1,6 +1,24 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 14/Mar/2003
- *  
+ *
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
 
@@ -25,7 +43,9 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.MasterDegreeOfficeApplication.MasterDegreeCandidatesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -35,13 +55,43 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  *         This is the Action to create a Master Degree Candidate
  */
+@StrutsFunctionality(app = MasterDegreeCandidatesApp.class, path = "create-candidate",
+        titleKey = "link.masterDegree.administrativeOffice.createCandidate")
+@Mapping(path = "/chooseExecutionYear", module = "masterDegreeAdministrativeOffice", input = "/chooseExecutionYear_bd.jsp",
+        formBean = "chooseExecutionYearForm")
+@Forwards(value = {
+        @Forward(name = "DisplayMasterDegreeList",
+                path = "/masterDegreeAdministrativeOffice/candidate/displayMasterDegrees_bd.jsp"),
+        @Forward(name = "MasterDegreeReady",
+                path = "/masterDegreeAdministrativeOffice/candidate/displayCurricularPlanByChosenMasterDegree_bd.jsp"),
+        @Forward(name = "CreateReady",
+                path = "/masterDegreeAdministrativeOffice/createCandidateDispatchAction.do?method=prepare&page=0"),
+        @Forward(name = "PrepareSuccess", path = "/masterDegreeAdministrativeOffice/chooseExecutionYear_bd.jsp"),
+        @Forward(name = "CreateSuccess", path = "/masterDegreeAdministrativeOffice/createCandidateSuccess_bd.jsp") })
+@Exceptions({ @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+        handler = FenixErrorExceptionHandler.class, type = NonExistingActionException.class) })
 public class CreateCandidateDispatchAction extends FenixDispatchAction {
 
+    @Mapping(path = "/createCandidateDispatchAction", module = "masterDegreeAdministrativeOffice",
+            formBean = "createCandidateForm", functionality = CreateCandidateDispatchAction.class)
+    @Forwards(@Forward(name = "PrepareSuccess", path = "/masterDegreeAdministrativeOffice/createCandidate_bd.jsp"))
+    public static class CreateCandidateAction extends CreateCandidateDispatchAction {
+    }
+
+    @EntryPoint
     public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

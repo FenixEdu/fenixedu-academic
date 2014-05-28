@@ -1,13 +1,32 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.util.email;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.MembersLinkGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
-import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 
 public class UnitBasedSender extends UnitBasedSender_Base {
@@ -80,8 +99,8 @@ public class UnitBasedSender extends UnitBasedSender_Base {
         final Unit unit = getUnit();
         if (unit != null) {
 
-            for (final IGroup group : unit.getGroups()) {
-                if (!hasRecipientWithToName(group.getName())) {
+            for (final Group group : unit.getGroups()) {
+                if (!hasRecipientWithToName(group.getPresentationName())) {
                     createRecipient(group);
                 }
             }
@@ -92,7 +111,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
                 }
             }
             for (final Recipient recipient : super.getRecipientsSet()) {
-                if (recipient.getMembers() instanceof PersistentGroup) {
+                if (recipient.getMembers() instanceof MembersLinkGroup) {
                     if (!hasPersistentGroup(recipient.getToName())) {
                         if (recipient.getMessagesSet().isEmpty()) {
                             recipient.delete();
@@ -129,16 +148,16 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 
     @Atomic
     protected void createRecipient(final PersistentGroupMembers persistentGroupMembers) {
-        addRecipients(new Recipient(null, new PersistentGroup(persistentGroupMembers)));
+        addRecipients(new Recipient(null, MembersLinkGroup.get(persistentGroupMembers)));
     }
 
-    protected void createRecipient(final IGroup group) {
-        addRecipients(new Recipient(null, (Group) group));
+    protected void createRecipient(final Group group) {
+        addRecipients(new Recipient(null, group));
     }
 
     @Atomic
     public static UnitBasedSender newInstance(Unit unit) {
-        return new UnitBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
+        return new UnitBasedSender(unit, Sender.getNoreplyMail(), UnitGroup.recursiveWorkers(unit));
     }
 
     @Deprecated

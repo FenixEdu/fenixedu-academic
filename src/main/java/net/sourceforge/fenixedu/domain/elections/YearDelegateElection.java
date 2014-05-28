@@ -1,9 +1,28 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.elections;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -20,7 +39,7 @@ import org.apache.poi.hssf.util.Region;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class YearDelegateElection extends YearDelegateElection_Base {
 
@@ -278,7 +297,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
             throws IOException {
         StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet();
         final ResourceBundle BUNDLE =
-                ResourceBundle.getBundle("resources.PedagogicalCouncilResources", Language.getDefaultLocale());
+                ResourceBundle.getBundle("resources.PedagogicalCouncilResources", Locale.getDefault());
 
         for (Degree degree : degrees) {
             spreadsheet.getSheet(degree.getSigla());

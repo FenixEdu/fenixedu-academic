@@ -1,10 +1,32 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$OrganizationalStructurePage" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
@@ -19,7 +41,7 @@
 		
 		<h:outputText value="<h2>#{bundle['title.unitDetails']}</h2>" escape="false" />
 								
-		<h:outputText value="<div class='warning0'><strong>#{bundle['label.attention']}:</strong><br/>#{bundle['label.root.units.note']}</div>" escape="false"/>
+		<h:outputText value="<div class='alert alert-warning'><strong>#{bundle['label.attention']}:</strong><br/>#{bundle['label.root.units.note']}</div>" escape="false"/>
 						
 		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.institutionUnit}" onclick="this.form.submit()"/>
 		<h:outputText value="<b>#{bundle['label.rootInstitution']}</b>" escape="false" />&nbsp;&nbsp;										
@@ -32,7 +54,7 @@
 			
 		<h:outputText value="<br/><br/>" escape="false" />
 				
-		<h:dataTable value="#{organizationalStructureBackingBean.unit}" var="unit"
+		<h:dataTable value="#{organizationalStructureBackingBean.unit}" styleClass="table table-bordered" var="unit"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.unit}">
 			<h:column>
 				<f:facet name="header">
@@ -140,7 +162,7 @@
 		</fc:selectOneMenu>		
 		<h:outputText value="<br/><br/>" escape="false"/>		
 			
-		<h:dataTable value="#{organizationalStructureBackingBean.allSubUnits}" var="unit"
+		<h:dataTable value="#{organizationalStructureBackingBean.allSubUnits}" styleClass="table table-bordered table-condensed" var="unit"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.allSubUnits}">
 			<h:column>	
 				<f:facet name="header">
@@ -238,7 +260,7 @@
 		</fc:selectOneMenu>		
 		<h:outputText value="<br/><br/>" escape="false"/>
 		
-		<h:dataTable value="#{organizationalStructureBackingBean.allNonInherentFunctions}" var="function"
+		<h:dataTable value="#{organizationalStructureBackingBean.allNonInherentFunctions}" styleClass="table table-condensed table-bordered" var="function"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.allNonInherentFunctions}">
 			<h:column>
 				<f:facet name="header">
@@ -299,7 +321,7 @@
 				
 		<h:outputText value="<br/><h3>#{bundle['title.inherentFunctions']}</h3>" escape="false" />				
 		
-		<h:dataTable value="#{organizationalStructureBackingBean.allInherentFunctions}" var="function"
+		<h:dataTable value="#{organizationalStructureBackingBean.allInherentFunctions}" styleClass="table table-condensed table-bordered" var="function"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.allInherentFunctions}">
 			<h:column>
 				<f:facet name="header">
@@ -382,4 +404,4 @@
 								
 	</h:form>
 	
-</ft:tilesView>
+</f:view>

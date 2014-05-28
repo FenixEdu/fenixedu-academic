@@ -1,10 +1,32 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="c"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication$WrittenEvaluationsByRoom" />
+
+<f:view>
 			
 	<script type="text/javascript">
 		<!--
@@ -22,7 +44,6 @@
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundle"/>
 	
-	<h:outputFormat value="<em class='printhidden'>#{bundle['link.writtenEvaluationManagement']}</em>" escape="false"/>
 	<h:outputFormat value="<h2 class='printhidden'>#{bundle['link.writtenEvaluation.by.room']}</h2>" escape="false"/>
 				
 	<h:panelGroup rendered="#{writtenEvaluationsByRoom.roomsToDisplayMap == null}">	
@@ -31,9 +52,18 @@
 		
 		<h:form>
 			<h:outputText escape="false" value="<input alt='input.submittedForm' id='submittedForm' name='submittedForm' type='hidden' value='true'/>"/>
-			<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{writtenEvaluationsByRoom.academicInterval}'/>"/>
 	
 			<h:outputText value="<table class='tstyle5 thlight thright thmiddle mtop05 mbottom05'>" escape="false"/>
+
+			<h:outputText value="<tr><th>" escape="false"/>
+				<h:outputText value="#{bundle['property.academicInterval']}:"/>
+			<h:outputText value="</th><td>" escape="false"/>
+				<h:selectOneMenu id="academicInterval" value="#{writtenEvaluationsByRoom.academicInterval}">
+					<f:selectItems value="#{writtenEvaluationsByRoom.academicIntervals}"/>
+				</h:selectOneMenu>
+			<h:outputText value="</td></tr>" escape="false"/>
+	
+
 			<h:outputText value="<tr><th>" escape="false"/>
 				<h:outputText value="#{bundle['property.room.name']}:"/>
 			<h:outputText value="</th><td>" escape="false"/>
@@ -141,7 +171,7 @@
 						<f:facet name="header">
 							<h:outputText value="#{bundle['property.room.building']}"/>
 						</f:facet>
-						<h:outputText value="#{room.spaceBuilding.spaceInformation.name}"/>
+						<h:outputText value="#{room.x.spaceInformation.name}"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
@@ -189,9 +219,9 @@
 			
 			<h:outputText value="<tr>" escape="false"/>
 				<h:outputText value="<td>#{calendarLinks.key.nome}</td>" escape="false"/>
-				<h:outputText value="<td>#{calendarLinks.key.spaceBuilding.name}</td>" escape="false"/>
+				<h:outputText value="<td>#{calendarLinks.key.edificio}</td>" escape="false"/>
 				<h:outputText value="<td>#{calendarLinks.key.piso}</td>" escape="false"/>
-				<h:outputText value="<td>#{calendarLinks.key.tipo.name}</td>" rendered="#{calendarLinks.key.tipo != null}" escape="false"/>
+				<h:outputText value="<td>#{calendarLinks.key.tipo}</td>" rendered="#{calendarLinks.key.tipo != null}" escape="false"/>
 				<h:outputText value="<td>#{calendarLinks.key.capacidadeNormal}</td>" escape="false"/>
 				<h:outputText value="<td>#{calendarLinks.key.capacidadeExame}</td>" escape="false"/>
 			<h:outputText value="</tr>" escape="false"/>
@@ -200,10 +230,10 @@
 		 	<fc:fenixCalendar 
 			 		begin="#{writtenEvaluationsByRoom.calendarBegin}" 
 		 			end="#{writtenEvaluationsByRoom.calendarEnd}"
-					editLinkPage="editWrittenTest.faces?contentContextPath_PATH=/gestao-de-recursos/gestao-de-recursos"
+					editLinkPage="#{writtenEvaluationsByRoom.request.contextPath}/resourceAllocationManager/writtenEvaluations/editWrittenTest.faces"
 		 			editLinkParameters="#{calendarLinks.value}"
 		 			extraLines="true"/>
 		</h:panelGroup>
 	</fc:dataRepeater>
 		
-</ft:tilesView>
+</f:view>

@@ -1,3 +1,23 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -8,41 +28,36 @@
 <%@page
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
 <h2><bean:message key="label.selected.space.written.evaluations"/></h2>
 <p><bean:message key="label.selected.space.written.evaluations.information"/></p>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
-<fr:form action="/mainExamsNew.do?method=choose">
-	<fr:edit schema="academicIntervalSelectionBean.choose"
-		name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>">
+<fr:form action="/mainExams.do?method=prepare">
+	<fr:edit schema="academicIntervalSelectionBean.choosePostBack" name="bean">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 	</fr:edit>
-
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="label.choose" />
-	</html:submit>
 </fr:form>
 <br />
 
-<html:form action="/publishExams">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method"
-		value="switchPublishedState" />
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
+<html:link styleClass="btn btn-default" page="/writtenEvaluations/writtenEvaluationCalendar.faces?academicInterval=${bean.academicInterval.resumedRepresentationInStringFormat}">
+	<bean:message key="link.writtenEvaluation.map" />
+</html:link>
+
+<fr:form action="/publishExams.do">
 	<html:hidden alt="<%=PresentationConstants.ACADEMIC_INTERVAL%>"
 		property="<%=PresentationConstants.ACADEMIC_INTERVAL%>"
-		value="<%=pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString()%>" />
+		value="${bean.academicInterval.resumedRepresentationInStringFormat}" />
 
 	<p><bean:message key="publish.exams.map" /> <html:submit bundle="HTMLALT_RESOURCES"
 		altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="label.change.published.state" />
 	</html:submit></p>
 
-	<bean:define id="executionSemester" name="executionSemester" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
+	<bean:define id="executionSemester" name="executionInterval" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 	<logic:present name="executionDegrees">
 		<table class="tstyle4">
 			<tr>
@@ -67,4 +82,4 @@
 		</table>
 	</logic:present>
 
-</html:form>
+</fr:form>

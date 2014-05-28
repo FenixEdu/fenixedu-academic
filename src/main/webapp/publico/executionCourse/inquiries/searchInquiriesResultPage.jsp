@@ -1,3 +1,24 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -78,7 +99,7 @@ font-size: 11px;
 	<bean:define id="executionCourseLink"><c:out value="${pageContext.request.contextPath}" /><c:out value="${executionCourse.site.reversePath}" />/resultados-quc</bean:define>	
 	<div>
 		<p id="button_results">
-			<span>&nbsp;</span><!-- NO_CHECKSUM --><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="<%= executionCourseLink %>" target="_blank" title="Ir para p&aacute;gina de Resultados">Ir para p&aacute;gina de Resultados</a>	
+			<span>&nbsp;</span><!-- NO_CHECKSUM --><a href="<%= executionCourseLink %>" target="_blank" title="Ir para p&aacute;gina de Resultados">Ir para p&aacute;gina de Resultados</a>	
 		</p>
 	</div>
 	

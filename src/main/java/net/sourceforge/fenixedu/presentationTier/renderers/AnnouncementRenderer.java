@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -171,25 +189,9 @@ public class AnnouncementRenderer extends OutputRenderer {
         private HtmlComponent getContent() {
             HtmlBlockContainer container = new HtmlBlockContainer();
             if (announcement.isExcerptEmpty()) {
-                container
-                        .addChild(new HtmlText(
-                                new String(
-                                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX),
-                                false));
                 container.addChild(new HtmlText(announcement.getBody().getContent(), false));
-                container.addChild(new HtmlText(new String(
-                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX),
-                        false));
             } else {
-                container
-                        .addChild(new HtmlText(
-                                new String(
-                                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX),
-                                false));
                 container.addChild(new HtmlText(announcement.getExcerpt().getContent(), false));
-                container.addChild(new HtmlText(new String(
-                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX),
-                        false));
                 HtmlLink link = new HtmlLink();
                 link.setUrl(RenderUtils.getFormattedProperties(getViewMoreUrl(), announcement));
                 link.setText(RenderUtils.getFormatedResourceString(getBundle(), getViewMoreLabel()));

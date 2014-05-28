@@ -1,4 +1,22 @@
 /**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
  * 
  */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists;
@@ -27,13 +45,14 @@ import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminListingsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -43,6 +62,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -57,11 +78,14 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-
+@StrutsFunctionality(app = AcademicAdminListingsApp.class, path = "students-by-curricular-course",
+        titleKey = "link.studentsListByCurricularCourse", accessGroup = "academic(STUDENT_LISTINGS)")
 @Mapping(path = "/studentsListByCurricularCourse", module = "academicAdministration")
 @Forwards({ @Forward(name = "chooseCurricularCourse", path = "/academicAdminOffice/lists/chooseCurricularCourses.jsp"),
         @Forward(name = "studentByCurricularCourse", path = "/academicAdminOffice/lists/studentsByCurricularCourses.jsp") })
 public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
+
+    @EntryPoint
     public ActionForward prepareByCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
@@ -83,8 +107,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         SearchStudentsByCurricularCourseParametersBean bean = getRenderedObject("searchBean");
         if (bean == null) {
             bean =
-                    new SearchStudentsByCurricularCourseParametersBean(AcademicAuthorizationGroup.getDegreesForOperation(
-                            AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS));
+                    new SearchStudentsByCurricularCourseParametersBean(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS));
         }
         return bean;
     }
@@ -260,8 +283,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ExecutionYear executionYear = getDomainObject(request, "executionYearId");
         Set<Degree> degreesToInclude =
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.STUDENT_LISTINGS);
+                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS);
 
         final String filename = getResourceMessage("label.statistics") + "_" + executionYear.getName().replace('/', '-');
         final Spreadsheet spreadsheet = new Spreadsheet(filename);
@@ -328,7 +350,6 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     protected Set<DegreeType> getAdministratedDegreeTypes() {
-        return AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.STUDENT_LISTINGS);
+        return AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS);
     }
 }

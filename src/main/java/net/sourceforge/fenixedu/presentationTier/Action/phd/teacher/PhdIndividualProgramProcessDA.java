@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.phd.teacher;
 
 import java.util.ArrayList;
@@ -18,49 +36,38 @@ import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCandidacyPredicat
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdSeminarPredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdThesisPredicateContainer;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherPhdApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
+@StrutsFunctionality(app = TeacherPhdApp.class, path = "processes", titleKey = "label.phd.manageProcesses")
 @Mapping(path = "/phdIndividualProgramProcess", module = "teacher")
-@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
-
-        @Forward(name = "manageProcesses", path = "/phd/teacher/manageProcesses.jsp", tileProperties = @Tile(
-                title = "private.teacher.doctorates.phdprocesses")),
-        @Forward(name = "viewProcess", path = "/phd/teacher/viewProcess.jsp", tileProperties = @Tile(
-                title = "private.teacher.doctorates.phdprocesses")),
-        @Forward(name = "viewInactiveProcesses", path = "/phd/teacher/viewInactiveProcesses.jsp", tileProperties = @Tile(
-                title = "private.teacher.doctorates.phdprocesses")),
-        @Forward(name = "searchResults", path = "/phd/teacher/searchResults.jsp", tileProperties = @Tile(
-                title = "private.teacher.doctorates.phdprocesses")),
-        @Forward(name = "viewAlertMessages", path = "/phd/teacher/viewAlertMessages.jsp", tileProperties = @Tile(
-                title = "private.teacher.doctorates.alertmessages")),
-        @Forward(name = "viewAlertMessageArchive", path = "/phd/teacher/viewAlertMessageArchive.jsp", tileProperties = @Tile(
-                title = "private.teacher.doctorates.alertmessages")),
-        @Forward(name = "viewAlertMessage", path = "/phd/teacher/viewAlertMessage.jsp", tileProperties = @Tile(
-                title = "private.teacher.doctorates.alertmessages")),
-        @Forward(name = "viewProcessAlertMessages", path = "/phd/teacher/viewProcessAlertMessages.jsp", tileProperties = @Tile(
-                title = "private.teacher.doctorates.alertmessages")),
-        @Forward(name = "viewProcessAlertMessageArchive", path = "/phd/teacher/viewProcessAlertMessageArchive.jsp",
-                tileProperties = @Tile(title = "private.teacher.doctorates.alertmessages")),
+@Forwards({
+        @Forward(name = "manageProcesses", path = "/phd/teacher/manageProcesses.jsp"),
+        @Forward(name = "viewProcess", path = "/phd/teacher/viewProcess.jsp"),
+        @Forward(name = "viewInactiveProcesses", path = "/phd/teacher/viewInactiveProcesses.jsp"),
+        @Forward(name = "searchResults", path = "/phd/teacher/searchResults.jsp"),
+        @Forward(name = "viewAlertMessages", path = "/phd/teacher/viewAlertMessages.jsp"),
+        @Forward(name = "viewAlertMessageArchive", path = "/phd/teacher/viewAlertMessageArchive.jsp"),
+        @Forward(name = "viewAlertMessage", path = "/phd/teacher/viewAlertMessage.jsp"),
+        @Forward(name = "viewProcessAlertMessages", path = "/phd/teacher/viewProcessAlertMessages.jsp"),
+        @Forward(name = "viewProcessAlertMessageArchive", path = "/phd/teacher/viewProcessAlertMessageArchive.jsp"),
         @Forward(name = "requestPublicPresentationSeminarComission",
-                path = "/phd/teacher/requestPublicPresentationSeminarComission.jsp", tileProperties = @Tile(
-                        title = "private.teacher.doctorates.phdprocesses")),
+                path = "/phd/teacher/requestPublicPresentationSeminarComission.jsp"),
         @Forward(name = "exemptPublicPresentationSeminarComission",
-                path = "/phd/teacher/exemptPublicPresentationSeminarComission.jsp", tileProperties = @Tile(
-                        title = "private.teacher.doctorates.phdprocesses")),
-        @Forward(name = "manageGuidanceDocuments", path = "/phd/teacher/manageGuidanceDocuments.jsp", tileProperties = @Tile(
-                title = "private.teacher.doctorates.phdprocesses")),
-        @Forward(name = "uploadGuidanceDocument", path = "/phd/teacher/uploadGuidanceDocument.jsp", tileProperties = @Tile(
-                title = "private.teacher.doctorates.phdprocesses")) })
+                path = "/phd/teacher/exemptPublicPresentationSeminarComission.jsp"),
+        @Forward(name = "manageGuidanceDocuments", path = "/phd/teacher/manageGuidanceDocuments.jsp"),
+        @Forward(name = "uploadGuidanceDocument", path = "/phd/teacher/uploadGuidanceDocument.jsp") })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
     private static final PredicateContainer<?>[] CANDIDACY_CATEGORY = { PhdCandidacyPredicateContainer.DELIVERED,
@@ -80,7 +87,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         searchBean.setFilterPhdPrograms(false);
 
         final List<PhdIndividualProgramProcess> processes = new ArrayList<PhdIndividualProgramProcess>();
-        for (final InternalPhdParticipant participant : getLoggedPerson(request).getInternalParticipants()) {
+        for (final InternalPhdParticipant participant : getLoggedPerson(request).getInternalParticipantsSet()) {
             processes.add(participant.getIndividualProcess());
         }
 
@@ -95,8 +102,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
             HttpServletResponse response) {
         RenderUtils.invalidateViewState();
         final PhdIndividualProgramProcess process = getProcess(request);
-        Collection<PhdParticipant> guidingsList = process.getGuidings();
-        Collection<PhdParticipant> assistantGuidingsList = process.getAssistantGuidings();
+        Collection<PhdParticipant> guidingsList = process.getGuidingsSet();
+        Collection<PhdParticipant> assistantGuidingsList = process.getAssistantGuidingsSet();
         request.setAttribute("guidingsList", guidingsList);
         request.setAttribute("assistantGuidingsList", assistantGuidingsList);
         return forwardToViewProcess(mapping, request);
@@ -132,5 +139,12 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         bean.setGenerateAlert(true);
 
         return forward;
+    }
+
+    @Override
+    @EntryPoint
+    public ActionForward manageProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return super.manageProcesses(mapping, form, request, response);
     }
 }

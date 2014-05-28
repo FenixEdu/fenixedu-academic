@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans;
 
 import java.util.ArrayList;
@@ -39,7 +57,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeManagementBackingBean extends FenixBackingBean {
 
@@ -110,7 +128,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             for (final DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
                 if (dcp.getCurricularStage().equals(CurricularStage.PUBLISHED)
                         || dcp.getCurricularStage().equals(CurricularStage.APPROVED)
-                        || dcp.getCurricularPlanMembersGroup().isMember(this.getUserView().getPerson())) {
+                        || dcp.getCurricularPlanMembersGroup().isMember(this.getUserView())) {
                     result.add(degree);
                 }
             }
@@ -136,7 +154,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     public String getName() {
         return (name == null && getDegree() != null) ? (name =
-                getDegree().getNameFor(getSelectedExecutionYear()).getContent(Language.pt)) : name;
+                getDegree().getNameFor(getSelectedExecutionYear()).getContent(MultiLanguageString.pt)) : name;
     }
 
     public void setName(String name) {
@@ -145,7 +163,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     public String getNameEn() {
         return (nameEn == null && getDegree() != null) ? (nameEn =
-                getDegree().getNameFor(getSelectedExecutionYear()).getContent(Language.en)) : nameEn;
+                getDegree().getNameFor(getSelectedExecutionYear()).getContent(MultiLanguageString.en)) : nameEn;
     }
 
     public void setNameEn(String nameEn) {
@@ -339,10 +357,10 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             }
 
             if (degreeInfo != null) {
-                this.name = degreeInfo.getName().getContent(Language.pt);
-                this.nameEn = degreeInfo.getName().getContent(Language.en);
-                this.nameInputComponent.setValue(degreeInfo.getName().getContent(Language.pt));
-                this.nameEnInputComponent.setValue(degreeInfo.getName().getContent(Language.en));
+                this.name = degreeInfo.getName().getContent(MultiLanguageString.pt);
+                this.nameEn = degreeInfo.getName().getContent(MultiLanguageString.en);
+                this.nameInputComponent.setValue(degreeInfo.getName().getContent(MultiLanguageString.pt));
+                this.nameEnInputComponent.setValue(degreeInfo.getName().getContent(MultiLanguageString.en));
             }
         }
     }
@@ -377,7 +395,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
             DegreeInfo degreeInfo = getDegreeInfo(executionYear);
             setSelectedExecutionYearId(degreeInfo.getExecutionYear().getExternalId());
-            this.nameInputComponent.setValue(degreeInfo.getName().getContent(Language.pt));
+            this.nameInputComponent.setValue(degreeInfo.getName().getContent(MultiLanguageString.pt));
         }
         return this.nameInputComponent;
     }
@@ -392,7 +410,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             ExecutionYear executionYear =
                     (getSelectedExecutionYear() != null) ? getSelectedExecutionYear() : ExecutionYear.readCurrentExecutionYear();
             final DegreeInfo degreeInfo = getDegreeInfo(executionYear);
-            this.nameEnInputComponent.setValue(degreeInfo.getName().getContent(Language.en));
+            this.nameEnInputComponent.setValue(degreeInfo.getName().getContent(MultiLanguageString.en));
         }
 
         return this.nameEnInputComponent;

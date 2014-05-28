@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
 import java.io.IOException;
@@ -24,10 +42,10 @@ import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.protocol.DefaultProtocolSocketFactory;
 import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.protocol.SSLProtocolSocketFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.codehaus.xfire.transport.http.EasySSLProtocolSocketFactory;
 import org.fenixedu.bennu.core.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,7 +127,7 @@ public class SetEmailDA extends FenixDispatchAction {
             if (serverPort == 80 || serverPort == 8080) {
                 protocol = new Protocol("http", new DefaultProtocolSocketFactory(), serverPort);
             } else if (serverPort == 443 || serverPort == 8443) {
-                protocol = new Protocol("https", new EasySSLProtocolSocketFactory(), serverPort);
+                protocol = new Protocol("https", new SSLProtocolSocketFactory(), serverPort);
             } else {
                 throw new Error("Unknown protocol for port: " + serverPort);
             }
@@ -122,10 +140,7 @@ public class SetEmailDA extends FenixDispatchAction {
             final String url =
                     contextPath
                             + "/publico/regenerateDocuments.do?method=doOperation&operationType=PRINT_ALL_DOCUMENTS&candidacyID="
-                            + candidacyId
-                            + "&"
-                            + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                            + "=/candidaturas";
+                            + candidacyId;
 
             final GetMethod method = new GetMethod(url);
             method.setFollowRedirects(false);

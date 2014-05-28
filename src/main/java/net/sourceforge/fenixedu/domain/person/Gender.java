@@ -1,32 +1,20 @@
-/* 
- * ################################################################
- * 
- * FenixEdu: The Java(TM) Object-Oriented Framework for University 
- *	    Academic Applications
- * 
- * Copyright (C) 2002-2006 IST/Technical University of Lisbon
- * Contact: suporte@dot.ist.utl.pt
- * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or any later version.
- *  
- * This library is distributed in the hope that it will be useful,
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
- * USA
- *  
- *  Initial developer(s):               The Fenix Team
- *                              http://fenix-ashes.ist.utl.pt/
- *  Contributor(s): 
- * 
- * ################################################################
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
 package net.sourceforge.fenixedu.domain.person;
 
@@ -34,9 +22,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public enum Gender implements IPresentableEnum {
 
@@ -100,7 +89,7 @@ public enum Gender implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         return bundle.getString(this.getClass().getName() + "." + name());
     }
 }

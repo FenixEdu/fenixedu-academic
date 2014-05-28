@@ -1,5 +1,25 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@page import="java.util.List"%>
-<%@page import="net.sourceforge.fenixedu.domain.space.AllocatableSpace"%>
+<%@page import="org.fenixedu.spaces.domain.Space"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@page import="org.joda.time.Weeks"%>
 <%@page import="org.joda.time.Interval"%>
@@ -18,6 +38,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
+<jsp:include page="/commons/contextLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
+
 <style>
 <!--
 .selectedLesson {
@@ -30,13 +52,12 @@
 -->
 </style>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
 <h2><bean:message key="link.manage.turnos"/></h2>
 
 <jsp:include page="context.jsp"/>
 
 	<%
-		final Lesson lesson = ((InfoLesson) request.getAttribute("lesson")).getLesson();
+		final Lesson lesson = ((InfoLesson) pageContext.findAttribute("lesson")).getLesson();
 		final ExecutionCourse executionCourse = lesson.getExecutionCourse();
 		final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
 		final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
@@ -148,12 +169,12 @@
 					</td>
 					<td>
 						<logic:notEmpty name="olesson" property="sala">
-							<bean:write name="olesson" property="sala.nome"/>
+							<bean:write name="olesson" property="sala.name"/>
 						</logic:notEmpty>	
 					</td>
 					<td>
 						<logic:notEmpty name="olesson" property="sala">
-							<bean:write name="olesson" property="sala.capacidadeNormal"/>
+							<bean:write name="olesson" property="sala.allocatableCapacity"/>
 						</logic:notEmpty>
 					</td>
 				</tr>
@@ -179,8 +200,8 @@
 			 			value="<%= lesson.getShift().getExternalId().toString() %>"/>
 
 			<select name="spaceOID">
-				<% for (final AllocatableSpace space : (List<AllocatableSpace>) request.getAttribute("emptySpaces")) { %>
-					<option value="<%= space.getExternalId() %>"><%= space.getCompleteIdentification() %></option>
+				<% for (final Space space : (List<Space>) request.getAttribute("emptySpaces")) { %>
+					<option value="<%= space.getExternalId() %>"><%= space.getPresentationName() %></option>
 				<% } %>
 			</select>
 
@@ -216,4 +237,3 @@
 				</tr>
 			</logic:iterate>
 		</table>
-

@@ -1,15 +1,36 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="pedagogicalCouncil.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp$PedagogicalCurricularPlansManagement" />
+
+<f:view>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/PedagogicalCouncilResources" var="pcouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="<i>#{pcouncilBundle['pedagogical.council']}</i>" escape="false"/>
 	<h:outputText value="<h2>#{bolonhaBundle['curricularPlans']}</h2>" escape="false"/>
 
 	<h:outputText value="<i>#{pcouncilBundle['no.degree.access']}</i>" escape="false" rendered="#{empty DegreeManagement.bolonhaDegrees}"/>
@@ -19,7 +40,7 @@
 		<h:messages errorClass="error0" infoClass="success0"/>
 	
 		<fc:dataRepeater value="#{DegreeManagement.bolonhaDegrees}" var="degree" rendered="#{!empty DegreeManagement.bolonhaDegrees}">
-			<h:outputText value="<table style='width: 720px' class='showinfo1 bgcolor1'>" escape="false"/>
+			<h:outputText value="<table style='width: 100%' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
 			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})</td>" escape="false"/>
@@ -62,4 +83,4 @@
 
 	</h:panelGroup>
 
-</ft:tilesView>
+</f:view>

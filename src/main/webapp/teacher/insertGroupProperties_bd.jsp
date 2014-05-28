@@ -1,11 +1,29 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml />
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-
-<logic:present name="siteView">
 
 	<h2>
 		<bean:message key="title.insertGroupProperties" />
@@ -24,27 +42,27 @@
 	</p>
 
 	<div class="dinline forminline">
-		<html:form action="/createGroupProperties" styleClass="dinline">
+		<html:form action="/studentGroupManagement" styleClass="dinline">
 			<fr:context>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page"
 					property="page" value="1" />
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method"
 					property="method" value="createGroupProperties" />
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"
-					property="objectCode"
-					value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"
+					property="executionCourseID"
+					value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 
 				<bean:define id="isAutomaticEnrolment" value="false" />
 
 
-				<logic:equal name="groupPropertiesForm"
+				<logic:equal name="studentGroupsForm"
 					property="automaticEnrolment" value="true">
 					<bean:define id="isAutomaticEnrolment" value="true" />
 				</logic:equal>
 
 				<bean:define id="isDifferentiatedCapacity" value="false" />
 
-				<logic:equal name="groupPropertiesForm"
+				<logic:equal name="studentGroupsForm"
 					property="differentiatedCapacity" value="true">
 					<bean:define id="isDifferentiatedCapacity" value="true" />
 				</logic:equal>
@@ -223,29 +241,18 @@
 			</fr:context>
 		</html:form>
 
-		<html:form action="/viewExecutionCourseProjects">
+		<html:form action="/studentGroupManagement">
 			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel"
 				styleClass="inputbutton">
 				<bean:message key="button.cancel" />
 			</html:cancel>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method"
 				property="method" value="prepareViewExecutionCourseProjects" />
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"
-				property="objectCode"
-				value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"
+				property="executionCourseID"
+				value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 		</html:form>
 	</div>
-
-
-</logic:present>
-
-<logic:notPresent name="siteView">
-	<p class="mvert15">
-		<em><bean:message
-				key="message.insert.infoGroupProperties.not.available" />
-		</em>
-	</p>
-</logic:notPresent>
 
 <script language="javascript">
 	function setAutomaticValues(form) {

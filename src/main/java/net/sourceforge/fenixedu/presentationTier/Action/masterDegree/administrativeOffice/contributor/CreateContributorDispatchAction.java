@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /*
  * Created on 21/Mar/2003
  *
@@ -11,6 +29,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor.ContributorType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminContributorsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 
@@ -22,6 +41,8 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -34,6 +55,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  */
+@StrutsFunctionality(app = AcademicAdminContributorsApp.class, path = "create",
+        titleKey = "link.masterDegree.administrativeOffice.createContributor", accessGroup = "academic(MANAGE_CONTRIBUTORS)")
 @Mapping(module = "academicAdministration", path = "/createContributorDispatchAction", input = "contributor.createContributor",
         attribute = "createContributorForm", formBean = "createContributorForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "PrepareReady", path = "/academicAdminOffice/contributor/createContributor.jsp"),
@@ -46,6 +69,7 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
 
     private final String prepareReadyForward = "PrepareReady";
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 

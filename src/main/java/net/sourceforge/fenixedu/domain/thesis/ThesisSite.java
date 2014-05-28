@@ -1,8 +1,26 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.domain.thesis;
 
-import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ThesisSite extends ThesisSite_Base {
@@ -13,19 +31,19 @@ public class ThesisSite extends ThesisSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new NoOneGroup();
+    public Group getOwner() {
+        return NobodyGroup.get();
     }
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString().with(Language.pt, String.valueOf(getThesis().getExternalId()));
+        return new MultiLanguageString().with(MultiLanguageString.pt, String.valueOf(getThesis().getExternalId()));
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setThesis(null);
-        super.disconnect();
+        super.delete();
 
     }
 

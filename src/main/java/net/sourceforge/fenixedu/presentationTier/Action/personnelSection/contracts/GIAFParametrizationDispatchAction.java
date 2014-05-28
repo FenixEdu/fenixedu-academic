@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.personnelSection.contracts;
 
 import javax.servlet.http.HttpServletRequest;
@@ -5,29 +23,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.personnelSection.PersonnelSectionApplication;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = PersonnelSectionApplication.class, path = "giaf-interface", titleKey = "title.giaf.interface",
+        accessGroup = "#managers")
 @Mapping(path = "/giafParametrization", module = "personnelSection")
-@Forwards({
-        @Forward(name = "show-contract-situations", path = "/personnelSection/contracts/showContractSituations.jsp",
-                tileProperties = @Tile(title = "private.staffarea.interfacegiaf.situations")),
-        @Forward(name = "show-professional-categories", path = "/personnelSection/contracts/showProfessionalCategories.jsp",
-                tileProperties = @Tile(title = "private.staffarea.interfacegiaf.categories")),
-        @Forward(name = "show-grantOwner-equivalences", path = "/personnelSection/contracts/showGrantOwnerEquivalences.jsp",
-                tileProperties = @Tile(title = "private.staffarea.interfacegiaf.grantownerequivalences")),
-        @Forward(name = "show-service-exemptions", path = "/personnelSection/contracts/showServiceExemptions.jsp",
-                tileProperties = @Tile(title = "private.staffarea.interfacegiaf.serviceexemptions")),
-        @Forward(name = "show-absences", path = "/personnelSection/contracts/showAbsences.jsp", tileProperties = @Tile(
-                title = "private.staffarea.interfacegiaf.absences")) })
+@Forwards({ @Forward(name = "show-menu", path = "/personnelSection/contracts/showGiafMenu.jsp"),
+        @Forward(name = "show-contract-situations", path = "/personnelSection/contracts/showContractSituations.jsp"),
+        @Forward(name = "show-professional-categories", path = "/personnelSection/contracts/showProfessionalCategories.jsp"),
+        @Forward(name = "show-grantOwner-equivalences", path = "/personnelSection/contracts/showGrantOwnerEquivalences.jsp"),
+        @Forward(name = "show-service-exemptions", path = "/personnelSection/contracts/showServiceExemptions.jsp"),
+        @Forward(name = "show-absences", path = "/personnelSection/contracts/showAbsences.jsp") })
 public class GIAFParametrizationDispatchAction extends FenixDispatchAction {
+
+    @EntryPoint
+    public ActionForward showMenu(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("show-menu");
+    }
 
     public ActionForward showContractSituations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {

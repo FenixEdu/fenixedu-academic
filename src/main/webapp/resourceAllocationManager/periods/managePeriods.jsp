@@ -1,17 +1,45 @@
+<%--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+--%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <jsp:include page="managePeriodsScripts.jsp"/>
-		
-		<header>
-			<h2><bean:message key="label.occupation.period.management" bundle="SOP_RESOURCES" />
-			<span><bean:write name="managementBean" property="executionYear.year"/> - <a id="changeYear-link">
+
+		<header class="col-lg-8">
+			<h3><bean:message key="label.occupation.period.management" bundle="SOP_RESOURCES" />
+			<span class="small"><bean:write name="managementBean" property="executionYear.year"/> - <a href="#" data-toggle="modal" data-target="#change-year-modal">
 				  <bean:message key="label.change" bundle="APPLICATION_RESOURCES" /></a>
 			</span>
-			</h2>
+			<h3>
 		</header>
+			<span class="col-lg-4">
+			<logic:equal value="false" name="managementBean" property="hasNewObject">
+				<fr:form action="/periods.do?method=addNewPeriod">
+					<fr:edit name="managementBean" visible="false" />
+					<html:submit value="Criar novo Período"/>
+				</fr:form>
+			</logic:equal>
+			</span>
 		
 		<logic:messagesPresent message="true" property="error">
 			<br />
@@ -30,18 +58,12 @@
 		</logic:messagesPresent>
 		
 		
-		
-		<div id="all">
-		<div id="main">
+		<div class="all">
+		<div class="col-lg-8">
 				
 			<section id="periods">
 			
-				<logic:equal value="false" name="managementBean" property="hasNewObject">
-					<fr:form action="/periods.do?method=addNewPeriod">
-						<fr:edit name="managementBean" visible="false" />
-						<html:submit value="Criar novo Período"/>
-					</fr:form>
-				</logic:equal>
+
 				
 				<br />
 			
@@ -109,11 +131,11 @@
 				
 				<div id="period" class="period first-period <%= periodType %> <%= newObject ? "newObject" : "" %>">
 					<header id="header">
-						<h2><bean:write name="period" property="name"/><span><bean:write name="period" property="datesString"/></span></h2>
-						<span id="size">
+						<h4><bean:write name="period" property="name"/> <span class="small"><bean:write name="period" property="datesString"/> - 
 						<bean:message key="label.Total" bundle="APPLICATION_RESOURCES"/>: <bean:write name="size"/> <bean:message key="label.degrees" bundle="APPLICATION_RESOURCES"/></span>
+						</h4>
 						<span class="saveButton"><i> - <bean:message key="label.occupation.period.unsavedChanges" bundle="SOP_RESOURCES"/></i></span>
-						<a href="javascript:void(0);" class="edit-period"><img src="../images/iconEditOff.png" /> <bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></a>
+						<a href="javascript:void(0);" class="edit-period"><img src="${pageContext.request.contextPath}/images/iconEditOff.png" /> <bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></a>
 					</header>
 					
 					<div class="period-edit">
@@ -142,8 +164,8 @@
 										<label for="data-fim"><bean:message key="label.endDate" bundle="APPLICATION_RESOURCES"/></label>
 										<input type="text" name="data-fim" class="endDate" value="<%= interval.getEnd().toString("dd/MM/yyyy") %>" readonly="readonly">
 									</div>
-									<span class="symbol add-date"><img src="../images/iconCreatePeriod.png"/></span>
-									<span class="<%="symbol remove-date " + (first ? "hide" : "") %>"><img src="../images/iconRemovePeriod.png"/></span>
+									<span class="symbol add-date"><img src="${pageContext.request.contextPath}/images/iconCreatePeriod.png"/></span>
+									<span class="<%="symbol remove-date " + (first ? "hide" : "") %>"><img src="${pageContext.request.contextPath}/images/iconRemovePeriod.png"/></span>
 								</div>
 								<% first = false; %>
 							</logic:iterate>
@@ -159,7 +181,7 @@
 						
 						<logic:equal name="newObject" value="false">
 						<div class="links-periodo">
-							<span class="duplicate"><a onclick="<%= "duplicatePeriodFunction($(this), " + id + ")"%>">
+							<span class="duplicate"><a href="#" onclick="duplicatePeriodFunction($(this), ${id}); return false;">
 							<bean:message key="label.occupation.period.duplicate" bundle="SOP_RESOURCES"/></a></span>
 							<a class="eliminar" onclick="<%= "deletePeriod($(this)," + id + " )"%>" style="color: red"><bean:message key="label.occupation.period.delete" bundle="SOP_RESOURCES"/></a>
 						</div>
@@ -173,12 +195,12 @@
 							<div id="oid" style="display:none"><bean:write name="course" property="oid"/></div>
 							<div id="years" style="display:none"><bean:write name="reference" property="curricularYearsString" /></div>
 							<bean:write name="course" property="degree.presentationName"/> <span>- <bean:write name="reference" property="curricularYearsPresentationString"/></span>
-							<img src="../images/iconRemoveOff.png" alt="remove"/>
+							<img src="${pageContext.request.contextPath}/images/iconRemoveOff.png" alt="remove"/>
 							</li>
 						</logic:iterate>
 					</ul>
 					<ul class="placeholder-tip">
-						<li><span><bean:message key="<%= "label.occupation.period.dragCourses" + (newObject ? ".new" : "") %>" bundle="SOP_RESOURCES"/></span>
+						<li><span class="small"><bean:message key="<%= "label.occupation.period.dragCourses" + (newObject ? ".new" : "") %>" bundle="SOP_RESOURCES"/></span>
 						<html:submit value="Descartar Alterações" styleClass="saveButton" onclick="<%= "this.form.submit;" %>"/>
 						<html:submit value="Guardar Alterações" styleClass="saveButton" onclick="<%= "prepareEditPeriod($(this).parents().eq(3), " + id + ");" %>" property="editPeriodCourses" style="margin-right: 8px;"/>
 						</li>
@@ -194,8 +216,8 @@
 			</section>
 		</div><!--main-->
 		
-		
-		<div id="sidebar">
+		<div class="col-lg-4">
+		<div data-spy="affix" id="sidebar">
 			
 			<div id="years-filters">
 				<h4><bean:message key="label.select.years" bundle="SOP_RESOURCES"/></h4>
@@ -225,71 +247,110 @@
 				</span>
 			</div>
 			
-			<section id="courses">
-				<div id="cursos_acc">
-					<h3><bean:message key="label.first.cycle" bundle="SOP_RESOURCES"/></h3>
-					<div>
-						<logic:iterate id="degree" name="managementBean" property="degrees">
-							<logic:equal value="true" name="degree" property="degreeType.firstCycle">
-								<logic:equal value="false" name="degree" property="degreeType.secondCycle">
-									<div class="draggable_course tooltip">
-										<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
-										<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
-										<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
-										<div id="name"><bean:write name="degree" property="degreeName"/></div>
-									</div>
-								</logic:equal>
-							</logic:equal>
-						</logic:iterate>
+			<div class="panel-group" id="courses">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a data-toggle="collapse" data-parent="#courses" data-target="#collapseFirst" href="#">
+								<bean:message key="label.first.cycle" bundle="SOP_RESOURCES"/>
+							</a>
+						</h3>
 					</div>
-					<h3><bean:message key="label.second.cycle" bundle="SOP_RESOURCES"/></h3>
-					<div>
-						<logic:iterate id="degree" name="managementBean" property="degrees">
-							<logic:equal value="false" name="degree" property="degreeType.firstCycle">
-								<logic:equal value="true" name="degree" property="degreeType.secondCycle">
-									<div class="draggable_course tooltip">
-										<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
-										<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
-										<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
-										<div id="name"><bean:write name="degree" property="degreeName"/></div>
-									</div>							
+					<div id="collapseFirst" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<logic:iterate id="degree" name="managementBean" property="degrees">
+								<logic:equal value="true" name="degree" property="degreeType.firstCycle">
+									<logic:equal value="false" name="degree" property="degreeType.secondCycle">
+										<div class="draggable_course">
+											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
+											<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
+											<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
+											<div id="name"><bean:write name="degree" property="degreeName"/></div>
+										</div>
+									</logic:equal>
 								</logic:equal>
-							</logic:equal>
-						</logic:iterate>
-					</div>
-					<h3><bean:message key="label.firstAndSecond.cycles" bundle="SOP_RESOURCES"/></h3>
-					<div>
-						<logic:iterate id="degree" name="managementBean" property="degrees">
-							<logic:equal value="true" name="degree" property="degreeType.firstCycle">
-								<logic:equal value="true" name="degree" property="degreeType.secondCycle">
-									<div class="draggable_course tooltip">
-										<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
-										<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
-										<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
-										<div id="name"><bean:write name="degree" property="degreeName"/></div>
-									</div>							
-								</logic:equal>
-							</logic:equal>
-						</logic:iterate>
-					</div>
-					<h3><bean:message key="label.third.cycle" bundle="SOP_RESOURCES"/></h3>
-					<div>
-						<logic:iterate id="degree" name="managementBean" property="degrees">
-							<logic:equal value="true" name="degree" property="degreeType.thirdCycle">
-								<div class="draggable_course tooltip">
-									<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
-									<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
-									<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
-									<div id="name"><bean:write name="degree" property="degreeName"/></div>
-								</div>							
-							</logic:equal>
-						</logic:iterate>
+							</logic:iterate>
+						</div>
 					</div>
 				</div>
-			</section>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a data-toggle="collapse" data-parent="#courses" data-target="#collapseSecond" href="#">
+								<bean:message key="label.second.cycle" bundle="SOP_RESOURCES"/>
+							</a>
+						</h3>
+					</div>
+					<div id="collapseSecond" class="panel-collapse collapse">
+						<div class="panel-body">
+							<logic:iterate id="degree" name="managementBean" property="degrees">
+								<logic:equal value="false" name="degree" property="degreeType.firstCycle">
+									<logic:equal value="true" name="degree" property="degreeType.secondCycle">
+										<div class="draggable_course">
+											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
+											<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
+											<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
+											<div id="name"><bean:write name="degree" property="degreeName"/></div>
+										</div>
+									</logic:equal>
+								</logic:equal>
+							</logic:iterate>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a data-toggle="collapse" data-parent="#courses" data-target="#collapseIntegrated" href="#">
+								<bean:message key="label.firstAndSecond.cycles" bundle="SOP_RESOURCES"/>
+							</a>
+						</h3>
+					</div>
+					<div id="collapseIntegrated" class="panel-collapse collapse">
+						<div class="panel-body">
+							<logic:iterate id="degree" name="managementBean" property="degrees">
+								<logic:equal value="true" name="degree" property="degreeType.firstCycle">
+									<logic:equal value="true" name="degree" property="degreeType.secondCycle">
+										<div class="draggable_course">
+											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
+											<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
+											<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
+											<div id="name"><bean:write name="degree" property="degreeName"/></div>
+										</div>
+									</logic:equal>
+								</logic:equal>
+							</logic:iterate>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a data-toggle="collapse" data-parent="#courses" data-target="#collapseThird" href="#">
+								<bean:message key="label.third.cycle" bundle="SOP_RESOURCES"/>
+							</a>
+						</h3>
+					</div>
+					<div id="collapseThird" class="panel-collapse collapse">
+						<div class="panel-body">
+							<logic:iterate id="degree" name="managementBean" property="degrees">
+								<logic:equal value="true" name="degree" property="degreeType.thirdCycle">
+									<div class="draggable_course">
+										<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
+										<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
+										<div id="availableYears" style="display: none"><bean:write name="degree" property="degree.degreeType.years"/></div>
+										<div id="name"><bean:write name="degree" property="degreeName"/></div>
+									</div>							
+								</logic:equal>
+							</logic:iterate>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--courses-->
 		</div><!--sidebar-->
-		</div>
-		
+		</div><!--all-->
+
 		<div id="date-prototype" class="date hide">
 			<div class="data-bloco">
 				<label for="data-inicio"><bean:message key="label.beginDate" bundle="APPLICATION_RESOURCES"/></label>
@@ -299,40 +360,59 @@
 				<label for="data-fim"><bean:message key="label.endDate" bundle="APPLICATION_RESOURCES"/></label>
 				<input type="text" name="data-fim" class="endDate prototype" readonly="readonly">
 			</div>
-			<span class="symbol add-date"><img src="../images/iconCreatePeriod.png"/></span>
-			<span class="symbol remove-date"><img src="../images/iconRemovePeriod.png"/></span>
-		</div>
-		
-		<div id="duplicate-dialog" class="hide">
-			<fr:form action="/periods.do?method=duplicatePeriod">
-				<fr:edit name="managementBean">
-					<fr:schema bundle="SOP_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.PeriodsManagementBean">
-						<fr:slot name="newPeriodType" layout="radio" key="label.occupation.period.duplicate.message" />
-					</fr:schema>
-				</fr:edit>
-				<input type="hidden" name="toDuplicateId" value=""/>
-			</fr:form>
+			<span class="symbol add-date"><img src="${pageContext.request.contextPath}/images/iconCreatePeriod.png"/></span>
+			<span class="symbol remove-date"><img src="${pageContext.request.contextPath}/images/iconRemovePeriod.png"/></span>
 		</div>
 
-		<div id="changeYear-dialog" class="hide">
-		
-		<fr:form action="/periods.do?method=managePeriods">
-		
-			<fr:edit name="managementBean">
-			
-			<fr:schema bundle="SOP_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.PeriodsManagementBean">
-				<fr:slot name="executionYear" layout="menu-select-postback">
-					<fr:property name="from" value="years"/>
-					<fr:property name="format" value="${year}" />
-				</fr:slot>
-			</fr:schema>
-			
-			</fr:edit>
-		
-		</fr:form>
-		
+		<div class="modal fade" id="duplicate-dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<fr:form action="/periods.do?method=duplicatePeriod">
+						<div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					        <h4><bean:message key="label.occupation.period.duplicate"></bean:message></h4>
+						</div>
+						<div class="modal-body">
+							<fr:edit name="managementBean">
+								<fr:schema bundle="SOP_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.PeriodsManagementBean">
+									<fr:slot name="newPeriodType" layout="radio" key="label.occupation.period.type" />
+								</fr:schema>
+							</fr:edit>
+							<input type="hidden" name="toDuplicateId" value=""/>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal"><bean:message key="button.cancel"></bean:message></button>
+							<button type="submit" class="btn btn-default"><bean:message key="label.occupation.period.duplicate"></bean:message></button>
+						</div>
+					</fr:form>
+				</div>
+			</div>
 		</div>
 
-
+		<div class="modal fade" id="change-year-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				        <h4><bean:message key="label.executionYear"></bean:message></h4>
+					</div>
+					<div class="modal-body">
+						<fr:form action="/periods.do?method=managePeriods">
+							<fr:edit name="managementBean">
+								<fr:schema bundle="SOP_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.PeriodsManagementBean">
+									<fr:slot name="executionYear" layout="menu-select-postback">
+										<fr:property name="from" value="years"/>
+										<fr:property name="format" value="\${year}" />
+									</fr:slot>
+								</fr:schema>
+							</fr:edit>
+						</fr:form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"><bean:message key="button.cancel"></bean:message></button>
+					</div>
+				</div>
+			</div>
 
 		
+		</div>

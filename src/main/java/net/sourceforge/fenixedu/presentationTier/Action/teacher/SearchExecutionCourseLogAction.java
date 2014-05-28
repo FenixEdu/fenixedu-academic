@@ -1,3 +1,21 @@
+/**
+ * Copyright © 2002 Instituto Superior Técnico
+ *
+ * This file is part of FenixEdu Core.
+ *
+ * FenixEdu Core is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FenixEdu Core is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.ArrayList;
@@ -14,8 +32,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourseLog.ExecutionCourseLogTypes;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.lang.StringUtils;
@@ -24,41 +41,28 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-@Mapping(module = "teacher", path = "/searchECLog", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "search", path = "/teacher/viewLogSearch.jsp", tileProperties = @Tile(
-        navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.changesLog",
-        bundle = "TITLES_RESOURCES")) })
-public class SearchExecutionCourseLogAction extends FenixDispatchAction {
-
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
-        return super.execute(mapping, actionForm, request, response);
-    }
+@Mapping(module = "teacher", path = "/searchECLog", functionality = ManageExecutionCourseDA.class)
+public class SearchExecutionCourseLogAction extends ExecutionCourseBaseAction {
 
     public ActionForward prepareInit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        ExecutionCourse executionCourse = getDomainObject(request, "objectCode");
+        ExecutionCourse executionCourse = getExecutionCourse(request);
         SearchExecutionCourseLogBean seclb = new SearchExecutionCourseLogBean(executionCourse);
         seclb.setExecutionCourseLogTypes(new ArrayList<ExecutionCourseLogTypes>());
 
         request.setAttribute("searchBean", seclb);
         request.setAttribute("executionCourse", seclb.getExecutionCourse());
 
-        return mapping.findForward("search");
+        return forward(request, "/teacher/viewLogSearch.jsp");
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        ExecutionCourse executionCourse = getDomainObject(request, "objectCode");
+        ExecutionCourse executionCourse = getExecutionCourse(request);
         SearchExecutionCourseLogBean seclb = readSearchBean(request, executionCourse);
 
         searchLogs(seclb);
@@ -66,14 +70,13 @@ public class SearchExecutionCourseLogAction extends FenixDispatchAction {
         request.setAttribute("executionCourse", seclb.getExecutionCourse());
 
         prepareAttendsCollectionPages(request, seclb, seclb.getExecutionCourse());
-        return mapping.findForward("search");
+        return forward(request, "/teacher/viewLogSearch.jsp");
     }
 
     private SearchExecutionCourseLogBean readSearchBean(HttpServletRequest request, ExecutionCourse executionCourse) {
-        String executionCourseID = request.getParameter("executionCourse");
-        if (executionCourseID != null) {
-            SearchExecutionCourseLogBean seclb =
-                    new SearchExecutionCourseLogBean(FenixFramework.<ExecutionCourse> getDomainObject(executionCourseID));
+        ExecutionCourse course = getExecutionCourse(request);
+        if (course != null) {
+            SearchExecutionCourseLogBean seclb = new SearchExecutionCourseLogBean(course);
 
             String viewPhoto = request.getParameter("viewPhoto");
             if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {
@@ -143,7 +146,7 @@ public class SearchExecutionCourseLogAction extends FenixDispatchAction {
     private void searchLogs(SearchExecutionCourseLogBean bean) {
         final Predicate<ExecutionCourseLog> filter = bean.getFilters();
         final Collection<ExecutionCourseLog> validLogs = new HashSet<ExecutionCourseLog>();
-        for (final ExecutionCourseLog log : bean.getExecutionCourse().getExecutionCourseLogs()) {
+        for (final ExecutionCourseLog log : bean.getExecutionCourse().getExecutionCourseLogsSet()) {
             if (filter.eval(log)) {
                 validLogs.add(log);
             }
@@ -152,9 +155,6 @@ public class SearchExecutionCourseLogAction extends FenixDispatchAction {
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
-        request.setAttribute("objectCode", request.getAttribute("objectCode"));
-
         SearchExecutionCourseLogBean bean = getRenderedObject();
         RenderUtils.invalidateViewState();
         searchLogs(bean);
@@ -164,7 +164,7 @@ public class SearchExecutionCourseLogAction extends FenixDispatchAction {
 
         prepareAttendsCollectionPages(request, bean, bean.getExecutionCourse());
 
-        return mapping.findForward("search");
+        return forward(request, "/teacher/viewLogSearch.jsp");
     }
 
 }
