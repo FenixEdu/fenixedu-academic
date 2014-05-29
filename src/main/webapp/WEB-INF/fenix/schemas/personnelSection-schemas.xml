@@ -382,7 +382,6 @@
 	
 </schema>
 
-
 <schema name="oauthapps.confirm.app" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
 	<slot name="name" />
 	<slot name="scopes" layout="list">
