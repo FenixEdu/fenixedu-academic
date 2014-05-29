@@ -299,7 +299,7 @@
 					<fr:property name="labelStyle" value="display:none"/>
 					<fr:property name="size" value="30"/>
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
-					<fr:property name="format"	value="${spaceInformation.presentationName}" />
+					<fr:property name="format"	value="${name}" />
 				</fr:layout>
 			</fr:edit>
 		</td>
