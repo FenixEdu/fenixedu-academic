@@ -333,7 +333,9 @@ public class ExternalAppsDA extends FenixDispatchAction {
         if (authSessions == null) {
             return redirect("/externalApps.do?method=manageAuthorizations", request);
         } else {
-            request.setAttribute("logo", Base64.getEncoder().encodeToString(app.getLogo()));
+            if (app.getLogo() != null) {
+                request.setAttribute("logo", Base64.getEncoder().encodeToString(app.getLogo()));
+            }
             request.setAttribute("authorizations", authSessions);
             request.setAttribute("application", app);
             return mapping.findForward("viewAuthorizations");
