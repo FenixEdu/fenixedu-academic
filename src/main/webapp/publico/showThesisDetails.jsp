@@ -97,9 +97,7 @@
 	<%
 		} else {
 	%>
-		(<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />,
-		
-		<html:img page="/images/icon_pdf.gif" module=""/>
+		(<html:img page="/images/icon_pdf.gif" module=""/>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.extendedAbstract"/>
 		<fr:view name="thesis" property="extendedAbstract.size" layout="fileSize"/>
 		

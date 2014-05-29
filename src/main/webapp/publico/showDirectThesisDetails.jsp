@@ -72,31 +72,25 @@
 
 <h3 class="mtop15 mbottom05"><bean:message key="title.thesis.details.publication"/></h3>
 
-<logic:notEmpty name="thesis" property="publication">
+<logic:equal name="thesis" property="evaluated" value="true">
 
-    <bean:define id="files" name="thesis" property="publication.resultDocumentFiles"/>
+    <fr:view name="thesis" property="finalTitle"/>,
+    <fr:view name="thesis" property="student.name"/>,
+    <fr:view name="thesis" property="discussed.year"/>,
 
-    <fr:view name="thesis" property="publication.title"/>,
-    <fr:view name="thesis" property="publication.authorsNames"/>,
-    <fr:view name="thesis" property="publication.year"/>,
-    <fr:view name="thesis" property="publication.organization"/>
-    
-    <bean:define id="publicationId" name="thesis" property="publication.externalId"/>
-    (<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId="+ publicationId %>">
-        <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />
-    </html:link><logic:iterate id="file" name="files" length="1">,
-    
-    <bean:define id="downloadUrl" name="file" property="downloadUrl" type="java.lang.String"/>  
-    <html:link href="<%= downloadUrl %>">
-        <html:img page="/images/icon_pdf.gif" module=""/>
-        <fr:view name="file" property="size" layout="fileSize"/>
-    </html:link></logic:iterate>)
+    <p>
+        <bean:define id="downloadUrl" name="thesis" property="dissertation.downloadUrl" type="java.lang.String"/>   
+        <html:link href="<%= downloadUrl %>">
+            <html:img page="/images/icon_pdf.gif" module=""/>
+            <fr:view name="thesis" property="dissertation.size" layout="fileSize"/>
+        </html:link>
+    </p>
 
 	<p>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="label.publication.subject.to.copyright"/>
 	</p>
-</logic:notEmpty>
+</logic:equal>
 
-<logic:empty name="thesis" property="publication">
+<logic:equal name="thesis" property="evaluated" value="false">
     <em><bean:message key="message.thesis.publication.notAvailable"/></em>
-</logic:empty>
+</logic:equal>
