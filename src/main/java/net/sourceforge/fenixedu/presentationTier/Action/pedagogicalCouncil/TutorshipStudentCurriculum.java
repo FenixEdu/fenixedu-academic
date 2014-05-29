@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.NumberBean;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.CurriculumDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
 
@@ -80,11 +81,13 @@ public class TutorshipStudentCurriculum extends FenixDispatchAction {
             registration = FenixFramework.getDomainObject(registrationOID);
         } else {
             final Student student = Student.readStudentByNumber(bean.getNumber());
-            if (student.getRegistrationsSet().size() == 1) {
-                registration = student.getRegistrationsSet().iterator().next();
-            } else {
-                request.setAttribute("student", student);
-                return mapping.findForward("chooseRegistration");
+            if (student != null) {
+                if (student.getRegistrationsSet().size() == 1) {
+                    registration = student.getRegistrationsSet().iterator().next();
+                } else {
+                    request.setAttribute("student", student);
+                    return mapping.findForward("chooseRegistration");
+                }
             }
         }
 
@@ -92,6 +95,7 @@ public class TutorshipStudentCurriculum extends FenixDispatchAction {
             studentErrorMessage(request, bean.getNumber());
         } else {
             request.setAttribute("registration", registration);
+            CurriculumDispatchAction.computeCurricularInfo(request, registration);
         }
 
         return mapping.findForward("showStudentCurriculum");
