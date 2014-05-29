@@ -34,7 +34,10 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.base.Strings;
 
 @Mapping(module = "publico", path = "/showDegreeTheses", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "showThesisDetails", path = "degree-showDegreeThesisDetails"),
@@ -44,7 +47,11 @@ public class DegreeShowThesesDA extends PublicShowThesesDA {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        request.setAttribute("degree", getDegree(request));
+        Degree degree = getDegree(request);
+        if (degree == null) {
+            return new ActionForward("/notFound.jsp");
+        }
+        request.setAttribute("degree", degree);
         return super.execute(mapping, form, request, response);
     }
 
@@ -55,7 +62,12 @@ public class DegreeShowThesesDA extends PublicShowThesesDA {
             degree = site.getDegree();
         } else {
             String degreeId = FenixContextDispatchAction.getFromRequest("degreeID", request);
-            degree = FenixFramework.getDomainObject(degreeId);
+            if (!Strings.isNullOrEmpty(degreeId) && !"null".equals(degreeId)) {
+                DomainObject obj = FenixFramework.getDomainObject(degreeId);
+                if (obj instanceof Degree) {
+                    degree = (Degree) obj;
+                }
+            }
         }
         if (degree != null) {
             request.setAttribute("degreeID", degree.getExternalId());

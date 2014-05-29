@@ -96,7 +96,7 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
         }
         try {
             return FenixFramework.getDomainObject(parameter);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | ClassCastException e) {
             return null;
         }
     }

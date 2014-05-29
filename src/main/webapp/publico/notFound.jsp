@@ -18,16 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<html:xhtml/>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-
-<h1><bean:message key="error.not.found"/></h1>
-<br />
-<span class="error"><!-- Error messages go here --><html:errors /></span>
 <%
-	response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-	response.addIntHeader("Not Found", HttpServletResponse.SC_NOT_FOUND);
+response.setStatus(404);
 %>
+<jsp:include page="/notFound.jsp" />

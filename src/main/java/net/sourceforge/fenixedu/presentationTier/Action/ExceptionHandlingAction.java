@@ -79,6 +79,7 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
             if (!response.isCommitted()) {
                 response.reset();
             }
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             PortalLayoutInjector.skipLayoutOn(request);
             if (CoreConfiguration.getConfiguration().developmentMode()) {
                 return new ActionForward("/debugExceptionPage.jsp");
