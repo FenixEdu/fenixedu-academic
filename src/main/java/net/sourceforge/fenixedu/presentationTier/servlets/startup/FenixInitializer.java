@@ -259,13 +259,21 @@ public class FenixInitializer implements ServletContextListener {
 
     private void registerUncaughtExceptionHandler() {
         ExceptionHandlerFilter.setExceptionHandler((request, response, t) -> {
-            ExceptionInformation exceptionInfo = new ExceptionInformation((HttpServletRequest) request, t);
+            HttpServletRequest req = (HttpServletRequest) request;
+
+            ExceptionInformation exceptionInfo = new ExceptionInformation(req, t);
+
+            logger.error("Request at " + req.getRequestURI() + " threw an exception: ", t);
 
             if (CoreConfiguration.getConfiguration().developmentMode()) {
                 request.setAttribute("debugExceptionInfo", exceptionInfo);
             } else {
                 request.setAttribute("requestBean", exceptionInfo.getRequestBean());
                 request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
+            }
+
+            if (response.isCommitted()) {
+                logger.error("Attempting to forward an already committed response for URL: " + req.getRequestURI());
             }
 
             request.getRequestDispatcher("/showErrorPage.do").forward(request, response);
