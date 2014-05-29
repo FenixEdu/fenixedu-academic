@@ -86,59 +86,59 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
 
     private SearchExecutionCourseAttendsBean readSearchBean(HttpServletRequest request, ExecutionCourse executionCourse) {
         String executionCourseID = request.getParameter("executionCourse");
+        SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean;
         if (executionCourseID != null) {
-            SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean =
+            searchExecutionCourseAttendsBean =
                     new SearchExecutionCourseAttendsBean(FenixFramework.<ExecutionCourse> getDomainObject(executionCourseID));
-
-            String viewPhoto = request.getParameter("viewPhoto");
-            if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {
-                searchExecutionCourseAttendsBean.setViewPhoto(true);
-            } else {
-                searchExecutionCourseAttendsBean.setViewPhoto(false);
-            }
-
-            String attendsStates = request.getParameter("attendsStates");
-            if (attendsStates != null) {
-                List<StudentAttendsStateType> list = new ArrayList<StudentAttendsStateType>();
-                for (String attendsState : attendsStates.split(":")) {
-                    list.add(StudentAttendsStateType.valueOf(attendsState));
-                }
-                searchExecutionCourseAttendsBean.setAttendsStates(list);
-            }
-
-            String workingStudentTypes = request.getParameter("workingStudentTypes");
-            if (workingStudentTypes != null) {
-                List<WorkingStudentSelectionType> list = new ArrayList<WorkingStudentSelectionType>();
-                for (String workingStudentType : workingStudentTypes.split(":")) {
-                    list.add(WorkingStudentSelectionType.valueOf(workingStudentType));
-                }
-                searchExecutionCourseAttendsBean.setWorkingStudentTypes(list);
-            }
-
-            String degreeCurricularPlans = request.getParameter("degreeCurricularPlans");
-            if (degreeCurricularPlans != null) {
-                List<DegreeCurricularPlan> list = new ArrayList<DegreeCurricularPlan>();
-                for (String degreeCurricularPlan : degreeCurricularPlans.split(":")) {
-                    list.add(FenixFramework.<DegreeCurricularPlan> getDomainObject(degreeCurricularPlan));
-                }
-                searchExecutionCourseAttendsBean.setDegreeCurricularPlans(list);
-            }
-
-            String shifts = request.getParameter("shifts");
-            if (shifts != null) {
-                List<Shift> list = new ArrayList<Shift>();
-                for (String shift : shifts.split(":")) {
-                    if (!StringUtils.isEmpty(shift)) {
-                        list.add(FenixFramework.<Shift> getDomainObject(shift));
-                    }
-                }
-                searchExecutionCourseAttendsBean.setShifts(list);
-            }
-
-            return searchExecutionCourseAttendsBean;
         } else {
-            return new SearchExecutionCourseAttendsBean(executionCourse);
+            searchExecutionCourseAttendsBean = new SearchExecutionCourseAttendsBean(executionCourse);
         }
+        String viewPhoto = request.getParameter("viewPhoto");
+        if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {
+            searchExecutionCourseAttendsBean.setViewPhoto(true);
+        } else {
+            searchExecutionCourseAttendsBean.setViewPhoto(false);
+        }
+
+        String attendsStates = request.getParameter("attendsStates");
+        if (attendsStates != null) {
+            List<StudentAttendsStateType> list = new ArrayList<StudentAttendsStateType>();
+            for (String attendsState : attendsStates.split(":")) {
+                list.add(StudentAttendsStateType.valueOf(attendsState));
+            }
+            searchExecutionCourseAttendsBean.setAttendsStates(list);
+        }
+
+        String workingStudentTypes = request.getParameter("workingStudentTypes");
+        if (workingStudentTypes != null) {
+            List<WorkingStudentSelectionType> list = new ArrayList<WorkingStudentSelectionType>();
+            for (String workingStudentType : workingStudentTypes.split(":")) {
+                list.add(WorkingStudentSelectionType.valueOf(workingStudentType));
+            }
+            searchExecutionCourseAttendsBean.setWorkingStudentTypes(list);
+        }
+
+        String degreeCurricularPlans = request.getParameter("degreeCurricularPlans");
+        if (degreeCurricularPlans != null) {
+            List<DegreeCurricularPlan> list = new ArrayList<DegreeCurricularPlan>();
+            for (String degreeCurricularPlan : degreeCurricularPlans.split(":")) {
+                list.add(FenixFramework.<DegreeCurricularPlan> getDomainObject(degreeCurricularPlan));
+            }
+            searchExecutionCourseAttendsBean.setDegreeCurricularPlans(list);
+        }
+
+        String shifts = request.getParameter("shifts");
+        if (shifts != null) {
+            List<Shift> list = new ArrayList<Shift>();
+            for (String shift : shifts.split(":")) {
+                if (!StringUtils.isEmpty(shift)) {
+                    list.add(FenixFramework.<Shift> getDomainObject(shift));
+                }
+            }
+            searchExecutionCourseAttendsBean.setShifts(list);
+        }
+
+        return searchExecutionCourseAttendsBean;
     }
 
     private void prepareAttendsCollectionPages(HttpServletRequest request,
