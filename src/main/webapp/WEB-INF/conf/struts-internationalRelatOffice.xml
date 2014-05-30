@@ -27,6 +27,16 @@
       <data-sources></data-sources>
       <!-- ========== Form Bean Definitions ================================== -->
       <form-beans type="org.apache.struts.action.ActionFormBean">
+        <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentCurricularPlanAndEnrollmentsSelectionForm">
+              <form-property type="java.lang.String" name="studentCPID"></form-property>
+              <form-property type="java.lang.String" name="select"></form-property>
+              <form-property type="java.lang.String" name="studentNumber"></form-property>
+              <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+              <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
+              <form-property type="java.lang.String" name="organizedBy"></form-property>
+              <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
+              <form-property type="java.lang.String" name="viewType"></form-property>
+        </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
@@ -47,5 +57,8 @@
       <message-resources null="false" key="GEP_RESOURCES" parameter="resources.GEPResources"></message-resources>
       <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml" property="pathnames"></set-property>
+      </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>
