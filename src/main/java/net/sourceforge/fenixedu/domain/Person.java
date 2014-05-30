@@ -634,7 +634,7 @@ public class Person extends Person_Base {
     }
 
     /**
-     * 
+     *
      * @deprecated use edit(PersonBean personBean)
      * @see edit(PersonBean personBean)
      */
@@ -1026,7 +1026,7 @@ public class Person extends Person_Base {
     /**
      * The main difference between this method and {@link #getActivePersonFunctions()} is that person functions with a virtual
      * function are also included. This method also collects person functions from the given unit and all subunits.
-     * 
+     *
      * @see Function#isVirtual()
      */
     public List<PersonFunction> getAllActivePersonFunctions(final Unit unit) {
@@ -1121,7 +1121,7 @@ public class Person extends Person_Base {
     /**
      * Filters all parent PersonFunction accountabilities and returns all the PersonFunctions that selection indicated in the
      * parameters.
-     * 
+     *
      * @param unit
      *            filter all PersonFunctions to this unit, or <code>null</code> for all PersonFunctions
      * @param includeSubUnits
@@ -1206,9 +1206,9 @@ public class Person extends Person_Base {
     }
 
     /**
-     * 
+     *
      * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
-     * 
+     *
      */
     @Atomic
     public void mergeAndDelete(Person personToMergeLogs) {
@@ -1220,10 +1220,10 @@ public class Person extends Person_Base {
     }
 
     /**
-     * 
+     *
      * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
-     * 
-     * 
+     *
+     *
      * @return true if the person have been deleted, false otherwise
      */
     @Override
@@ -1512,9 +1512,9 @@ public class Person extends Person_Base {
 
             if (sender != null) {
                 final Recipient recipient = new Recipient(RoleGroup.get(RoleType.MANAGER));
-                new Message(sender, recipient, BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
-                        subjectKey), BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, bodyKey,
-                        person.getPresentationName()));
+                new Message(sender, recipient, BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, subjectKey),
+                        BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, bodyKey,
+                                person.getPresentationName()));
             }
         }
 
@@ -2716,7 +2716,7 @@ public class Person extends Person_Base {
         return name[0] + " " + name[name.length - 1];
     }
 
-    private List<String> getImportantRoles(final List<String> mainRoles) {
+    private List<Role> getImportantRoles(final List<Role> mainRoles) {
 
         if (getPersonRolesSet().size() != 0) {
             boolean teacher = false, employee = false, researcher = false;
@@ -2724,37 +2724,44 @@ public class Person extends Person_Base {
             final List<Role> roles = new ArrayList<Role>(getPersonRolesSet());
             Collections.sort(roles, Role.COMPARATOR_BY_ROLE_TYPE);
 
-            final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-
             for (final Role personRole : roles) {
 
                 if (personRole.getRoleType() == RoleType.TEACHER) {
-                    mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
+                    mainRoles.add(personRole);
                     teacher = true;
 
                 } else if (personRole.getRoleType() == RoleType.STUDENT) {
-                    mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
+                    mainRoles.add(personRole);
 
                 } else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
-                    mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
+                    mainRoles.add(personRole);
                 } else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
                     employee = true;
                 } else if (personRole.getRoleType() == RoleType.RESEARCHER) {
-                    mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
+                    mainRoles.add(personRole);
                     researcher = true;
                 } else if (personRole.getRoleType() == RoleType.ALUMNI) {
-                    mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
+                    mainRoles.add(personRole);
                 }
             }
             if (employee && !teacher && !researcher) {
-                mainRoles.add(0, bundle.getString(RoleType.EMPLOYEE.toString()));
+                mainRoles.add(0, Role.getRoleByRoleType(RoleType.EMPLOYEE));
             }
         }
         return mainRoles;
     }
 
     public List<String> getMainRoles() {
-        return getImportantRoles(new ArrayList<String>());
+        final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
+        final List<String> result = new ArrayList<String>();
+        for (Role role : getImportantRoles(new ArrayList<Role>())) {
+            result.add(bundle.getString(role.getRoleType().toString()));
+        }
+        return result;
+    }
+
+    public Set<Role> getMainPersonRoles() {
+        return new HashSet<Role>(getImportantRoles(new ArrayList<Role>()));
     }
 
     public static Collection<Person> findPerson(final String name) {
@@ -4153,11 +4160,11 @@ public class Person extends Person_Base {
     private void logSetterNullString(String keyInfoType, String oldValue, String newValue, String keyLabel) {
         String argNew, argOld;
         argOld =
-                valueToUpdateIfNewNotNull(
-                        BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"), oldValue);
+                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"),
+                        oldValue);
         argNew =
-                valueToUpdateIfNewNotNull(
-                        BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"), newValue);
+                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"),
+                        newValue);
         logSetter(keyInfoType, argOld, argNew, keyLabel);
     }
 
@@ -4189,11 +4196,11 @@ public class Person extends Person_Base {
         Object argNew, argOld;
         String strNew, strOld;
         argOld =
-                valueToUpdateIfNewNotNull(
-                        BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"), oldValue);
+                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"),
+                        oldValue);
         argNew =
-                valueToUpdateIfNewNotNull(
-                        BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"), newValue);
+                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"),
+                        newValue);
 
         if (argOld instanceof Enum) {
             strOld = ((IPresentableEnum) argOld).getLocalizedName();
