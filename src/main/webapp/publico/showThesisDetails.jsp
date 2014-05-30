@@ -87,8 +87,8 @@
 			<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.extendedAbstract"/>
 			<fr:view name="thesis" property="extendedAbstract.size" layout="fileSize"/>
 		</html:link>
-		
-		<bean:define id="downloadUrl" name="thesis" property="dissertation.downloadUrl" type="java.lang.String"/>	
+
+		<bean:define id="downloadUrl" name="thesis" property="dissertation.downloadUrl" type="java.lang.String"/>
 		<html:link href="<%= downloadUrl %>">
 			<html:img page="/images/icon_pdf.gif" module=""/>
 			<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.thesis"/>
@@ -100,10 +100,10 @@
 		(<html:img page="/images/icon_pdf.gif" module=""/>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.extendedAbstract"/>
 		<fr:view name="thesis" property="extendedAbstract.size" layout="fileSize"/>
-		
+
 		<html:img page="/images/icon_pdf.gif" module=""/>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.thesis"/>
-		<fr:view name="file" property="size" layout="fileSize"/>)
+		<fr:view name="thesis" property="dissertation.size" layout="fileSize"/>)
 	<%
 		}
 	%>
