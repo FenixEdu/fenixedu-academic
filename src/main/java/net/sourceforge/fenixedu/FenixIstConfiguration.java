@@ -24,6 +24,9 @@ public class FenixIstConfiguration {
 
         @ConfigurationProperty(key = "sotisURL", defaultValue = "https://sotis.tecnico.ulisboa.pt")
         public String sotisURL();
+
+        @ConfigurationProperty(key = "legacyFilesRedirectMapLocation", defaultValue = "")
+        public String legacyFilesRedirectMapLocation();
     }
 
     public static ConfigurationProperties getConfiguration() {
