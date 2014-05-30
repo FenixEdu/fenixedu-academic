@@ -259,6 +259,11 @@ public class FenixInitializer implements ServletContextListener {
 
     private void registerUncaughtExceptionHandler() {
         ExceptionHandlerFilter.setExceptionHandler((request, response, t) -> {
+            if (response.isCommitted()) {
+                // We cannot forward to the error form after the response is committed
+                return false;
+            }
+
             HttpServletRequest req = (HttpServletRequest) request;
 
             ExceptionInformation exceptionInfo = new ExceptionInformation(req, t);
@@ -270,10 +275,6 @@ public class FenixInitializer implements ServletContextListener {
             } else {
                 request.setAttribute("requestBean", exceptionInfo.getRequestBean());
                 request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
-            }
-
-            if (response.isCommitted()) {
-                logger.error("Attempting to forward an already committed response for URL: " + req.getRequestURI());
             }
 
             request.getRequestDispatcher("/showErrorPage.do").forward(request, response);
