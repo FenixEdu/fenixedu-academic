@@ -37,7 +37,6 @@ import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import java.util.Locale;
 
 public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurricularPlanBean {
 

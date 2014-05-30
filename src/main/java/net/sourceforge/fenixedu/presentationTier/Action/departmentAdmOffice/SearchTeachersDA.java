@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeTeachersApp;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -74,7 +75,7 @@ public class SearchTeachersDA extends FenixAction {
 
     private Spreadsheet getSpreadsheet() {
         final ResourceBundle enumResourceBundle =
-                ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt", "PT"));
+                ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, new Locale("pt", "PT"));
         final Spreadsheet spreadsheet = new Spreadsheet("Teachers");
         spreadsheet.setHeader("Identificação");
         spreadsheet.setHeader(enumResourceBundle.getString("label.person.name"));

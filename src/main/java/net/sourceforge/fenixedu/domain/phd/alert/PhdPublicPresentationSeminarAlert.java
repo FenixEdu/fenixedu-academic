@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -39,7 +40,6 @@ import org.fenixedu.bennu.core.groups.UserGroup;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.FluentIterable;

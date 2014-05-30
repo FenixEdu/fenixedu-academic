@@ -22,19 +22,24 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.servlet.UnavailableException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean.SpacesSearchCriteriaType;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -44,12 +49,14 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
 import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Ordering;
 
@@ -409,5 +416,159 @@ public class SpaceUtils {
     public static int currentAttendaceCount(Space space) {
         return space.getCurrentAttendanceSet().size()
                 + space.getChildren().stream().mapToInt(SpaceUtils::currentAttendaceCount).sum();
+    }
+
+    public static String[] getIdentificationWords(String name) {
+        String[] identificationWords = null;
+        if (name != null && !Strings.isNullOrEmpty(name.trim())) {
+            identificationWords = StringNormalizer.normalize(name).trim().split(" ");
+        }
+        return identificationWords;
+    }
+
+    private static Set<ExecutionCourse> searchExecutionCoursesByName(SpacesSearchCriteriaType searchType, String[] labelWords) {
+        Set<ExecutionCourse> executionCoursesToTest = null;
+        if (labelWords != null
+                && (searchType.equals(SpacesSearchCriteriaType.EXECUTION_COURSE) || searchType
+                        .equals(SpacesSearchCriteriaType.WRITTEN_EVALUATION))) {
+            executionCoursesToTest = new HashSet<ExecutionCourse>();
+            for (ExecutionCourse executionCourse : ExecutionSemester.readActualExecutionSemester()
+                    .getAssociatedExecutionCoursesSet()) {
+                if (executionCourse.verifyNameEquality(labelWords)) {
+                    executionCoursesToTest.add(executionCourse);
+                }
+            }
+        }
+        return executionCoursesToTest;
+    }
+
+//    private static Collection<Person> searchPersonsByName(SpacesSearchCriteriaType searchType, String labelToSearch) {
+//        if (labelToSearch != null && !Strings.isNullOrEmpty(labelToSearch) && searchType.equals(SpacesSearchCriteriaType.PERSON)) {
+//            return Person.findPerson(labelToSearch);
+//        }
+//        return Collections.EMPTY_LIST;
+//    }
+
+    private static boolean verifyNameEquality(Space space, String[] nameWords) {
+        if (nameWords != null) {
+            String spacePresentationName = space.getPresentationName();
+            if (spacePresentationName != null) {
+                String[] spaceIdentificationWords = StringNormalizer.normalize(spacePresentationName).trim().split(" ");
+                int j, i;
+                for (i = 0; i < nameWords.length; i++) {
+                    if (!nameWords[i].equals("")) {
+                        for (j = 0; j < spaceIdentificationWords.length; j++) {
+                            if (spaceIdentificationWords[j].equals(nameWords[i])) {
+                                break;
+                            }
+                        }
+                        if (j == spaceIdentificationWords.length) {
+                            return false;
+                        }
+                    }
+                }
+                if (i == nameWords.length) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static List<Space> getSpaceFullPath(Space space) {
+        List<Space> result = new ArrayList<Space>();
+        result.add(space);
+        Space suroundingSpace = space.getParent();
+        while (suroundingSpace != null) {
+            result.add(0, suroundingSpace);
+            suroundingSpace = suroundingSpace.getParent();
+        }
+        return result;
+    }
+
+    public static Set<Space> findSpaces(String labelToSearch, Space campus, Space building, SpacesSearchCriteriaType searchType) {
+
+        Set<Space> result = new TreeSet<Space>(COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS);
+
+        if (searchType != null
+                && (campus != null || building != null || (labelToSearch != null && !Strings.isNullOrEmpty(labelToSearch.trim())))) {
+
+            String[] labelWords = getIdentificationWords(labelToSearch);
+            Set<ExecutionCourse> executionCoursesToTest = searchExecutionCoursesByName(searchType, labelWords);
+            //Collection<Person> personsToTest = searchPersonsByName(searchType, labelToSearch);
+
+            for (Space space : Space.getSpaces().collect(Collectors.toList())) {
+
+                if (!space.equals(campus) && !space.equals(building)) {
+
+                    if (labelWords != null) {
+
+                        boolean toAdd = false;
+
+                        switch (searchType) {
+
+                        case SPACE:
+                            toAdd = verifyNameEquality(space, labelWords);
+                            break;
+
+//                        case PERSON:
+//                            for (Person person : personsToTest) {
+//                                if (person.getActivePersonSpaces().contains(resource)) {
+//                                    toAdd = true;
+//                                    break;
+//                                }
+//                            }
+//                            break;
+
+                        case EXECUTION_COURSE:
+                            for (ExecutionCourse executionCourse : executionCoursesToTest) {
+                                if (executionCourse.getAllRooms().contains(space)) {
+                                    toAdd = true;
+                                    break;
+                                }
+                            }
+                            break;
+
+                        case WRITTEN_EVALUATION:
+                            for (ExecutionCourse executionCourse : executionCoursesToTest) {
+                                SortedSet<WrittenEvaluation> writtenEvaluations = executionCourse.getWrittenEvaluations();
+                                for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
+                                    if (writtenEvaluation.getAssociatedRooms().contains(space)) {
+                                        toAdd = true;
+                                        break;
+                                    }
+                                }
+                                if (toAdd) {
+                                    break;
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                        }
+
+                        if (!toAdd) {
+                            continue;
+                        }
+                    }
+
+                    if (building != null) {
+                        Space spaceBuilding = getSpaceBuilding(space);
+                        if (spaceBuilding == null || !spaceBuilding.equals(building)) {
+                            continue;
+                        }
+                    } else if (campus != null) {
+                        Space spaceCampus = getSpaceCampus(space);
+                        if (spaceCampus == null || !spaceCampus.equals(campus)) {
+                            continue;
+                        }
+                    }
+
+                    result.add(space);
+                }
+            }
+        }
+        return result;
     }
 }

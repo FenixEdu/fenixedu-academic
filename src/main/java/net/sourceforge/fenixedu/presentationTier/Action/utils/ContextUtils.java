@@ -56,6 +56,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.commons.i18n.I18N;
@@ -64,7 +65,6 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import java.util.Locale;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -258,8 +258,8 @@ public class ContextUtils {
 
     @Deprecated
     public static void prepareChangeExecutionDegreeAndCurricularYear(HttpServletRequest request) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
-        ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
+        ResourceBundle applicationResources = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);

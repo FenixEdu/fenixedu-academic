@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -124,7 +125,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
         for (final ShiftType shiftType : shiftTypes) {
             fileContents +=
                     SHIFT
-                            + ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(
+                            + ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(
                                     shiftType.getName()) + SEPARATOR;
         }
 
@@ -141,7 +142,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
                                 .getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionPeriod()) + SEPARATOR;
             }
             fileContents +=
-                    ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(
+                    ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(
                             attends.getAttendsStateType().getQualifiedName())
                             + SEPARATOR;
             fileContents += attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getName() + SEPARATOR;

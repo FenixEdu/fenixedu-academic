@@ -503,16 +503,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public DegreeCurricularPlan getSourceDegreeCurricularPlan() {
-        return null;
-    }
-
-    @Override
-    public void setSourceDegreeCurricularPlan(DegreeCurricularPlan sourceDegreeCurricularPlan) {
-        throw new DomainException("EmptyDegreeCurricularPlan.not.available");
-    }
-
-    @Override
     public DegreeCurricularPlanEquivalencePlan createEquivalencePlan(final DegreeCurricularPlan sourceDegreeCurricularPlan) {
         throw new DomainException("EmptyDegreeCurricularPlan.not.available");
     }

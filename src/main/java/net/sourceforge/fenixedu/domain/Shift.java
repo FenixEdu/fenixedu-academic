@@ -420,7 +420,7 @@ public class Shift extends Shift_Base {
         int index = 0;
         SortedSet<ShiftType> sortedTypes = getSortedTypes();
         for (ShiftType shiftType : sortedTypes) {
-            builder.append(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", shiftType.getName()));
+            builder.append(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, shiftType.getName()));
             index++;
             if (index < sortedTypes.size()) {
                 builder.append(", ");
@@ -545,9 +545,9 @@ public class Shift extends Shift_Base {
         Collection<Recipient> recipients =
                 Collections.singletonList(new Recipient(UserGroup.of(registration.getPerson().getUser())));
         final String subject =
-                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.remove.subject");
+                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.shift.remove.subject");
         final String body =
-                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.remove.body", getNome());
+                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.shift.remove.body", getNome());
 
         new Message(sender, sender.getConcreteReplyTos(), recipients, subject, body, "");
     }

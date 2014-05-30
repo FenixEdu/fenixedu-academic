@@ -23,12 +23,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
-import java.util.Locale;
+
+import org.fenixedu.commons.i18n.I18N;
 
 public enum PhdProcessAccessType {
 

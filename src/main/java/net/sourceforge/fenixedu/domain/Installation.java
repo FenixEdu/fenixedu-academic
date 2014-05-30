@@ -18,8 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.Installation_Base;
-
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;

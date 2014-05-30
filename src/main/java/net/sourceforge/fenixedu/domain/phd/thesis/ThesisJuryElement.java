@@ -33,7 +33,6 @@ import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import java.util.Locale;
 
 public class ThesisJuryElement extends ThesisJuryElement_Base {
 

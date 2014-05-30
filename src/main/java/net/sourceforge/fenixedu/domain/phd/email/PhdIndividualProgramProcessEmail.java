@@ -28,13 +28,13 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import java.util.Locale;
 
 public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProcessEmail_Base {
 
@@ -82,7 +82,7 @@ public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProces
     }
 
     private static String validateEmailBean(PhdIndividualProgramProcessEmailBean bean) {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
         if (bean.getParticipantsGroup().isEmpty() && bean.getSelectedParticipants().isEmpty()
                 && StringUtils.isEmpty(bean.getBccs())) {

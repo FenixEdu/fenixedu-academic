@@ -18,8 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.research;
 
-import java.util.Comparator;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;

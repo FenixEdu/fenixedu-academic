@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCalendarUtil;
@@ -27,7 +28,6 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdFinalProofRequestAlert extends PhdFinalProofRequestAlert_Base {

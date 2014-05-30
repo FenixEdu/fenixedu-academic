@@ -39,9 +39,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
-
-import java.util.Locale;
-
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CountryUnit extends CountryUnit_Base {

@@ -27,8 +27,6 @@ import java.util.ResourceBundle;
 
 import org.fenixedu.commons.i18n.I18N;
 
-import java.util.Locale;
-
 public enum RegimeType {
 
     INTEGRAL_TIME, PARTIAL_TIME, EXCLUSIVENESS;
@@ -38,7 +36,7 @@ public enum RegimeType {
     }
 
     public String localizedName(Locale locale) {
-        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(qualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(qualifiedName());
     }
 
     protected String qualifiedName() {

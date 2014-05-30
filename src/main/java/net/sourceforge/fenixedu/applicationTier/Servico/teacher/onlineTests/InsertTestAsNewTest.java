@@ -22,17 +22,18 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
+import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import java.util.Locale;
 
 public class InsertTestAsNewTest {
 
@@ -42,7 +43,7 @@ public class InsertTestAsNewTest {
             throw new InvalidArgumentsServiceException();
         }
 
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
         String title = MessageFormat.format(bundle.getString("label.testTitle.duplicated"), new Object[] { oldTest.getTitle() });
         Test test = new Test(title, oldTest.getInformation(), oldTest.getTestScope());
 

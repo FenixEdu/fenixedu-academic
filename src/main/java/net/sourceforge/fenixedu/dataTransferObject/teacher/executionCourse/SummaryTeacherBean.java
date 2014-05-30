@@ -63,7 +63,7 @@ public class SummaryTeacherBean implements Serializable {
         if (getProfessorship() != null) {
             return getProfessorship().getPerson().getName();
         } else if (getOthers()) {
-            return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.others");
+            return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.others");
         }
         return "";
     }

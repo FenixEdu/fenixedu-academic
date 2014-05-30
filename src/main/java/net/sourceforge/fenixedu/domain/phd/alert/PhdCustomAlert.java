@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -33,7 +34,6 @@ import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.FluentIterable;

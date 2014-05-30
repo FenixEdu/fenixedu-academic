@@ -59,7 +59,6 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
-import java.util.Locale;
 
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "coordinator",
         formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class,

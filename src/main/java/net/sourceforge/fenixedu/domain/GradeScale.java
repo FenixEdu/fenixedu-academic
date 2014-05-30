@@ -23,12 +23,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
-
-import java.util.Locale;
 
 public enum GradeScale {
 
@@ -72,7 +71,7 @@ public enum GradeScale {
             try {
                 final int intValue = Integer.parseInt(grade.getValue());
                 final ResourceBundle applicationResources =
-                        ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+                        ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
                 if (18 <= intValue && intValue <= 20) {
                     return applicationResources.getString("label.grade.a");
@@ -181,7 +180,7 @@ public enum GradeScale {
             try {
                 final int intValue = Integer.parseInt(grade.getValue());
                 final ResourceBundle applicationResources =
-                        ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+                        ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
                 if (intValue == 5) {
                     return applicationResources.getString("label.grade.a");
@@ -266,7 +265,7 @@ public enum GradeScale {
             }
 
             final ResourceBundle applicationResources =
-                    ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+                    ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
             final String value = grade.getValue();
             if (value.equals(AP)) {
@@ -325,7 +324,7 @@ public enum GradeScale {
             }
 
             final ResourceBundle applicationResources =
-                    ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+                    ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
             final String value = grade.getValue();
             if (value.equals(APT)) {
@@ -488,15 +487,15 @@ public enum GradeScale {
     }
 
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(name());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(name());
     }
 
     public String getPossibleValueDescription(boolean isFinal) {
         if (isFinal) {
-            return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString("TYPE.final");
+            return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString("TYPE.final");
         }
 
-        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale())
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale())
                 .getString(name() + ".description");
     }
 

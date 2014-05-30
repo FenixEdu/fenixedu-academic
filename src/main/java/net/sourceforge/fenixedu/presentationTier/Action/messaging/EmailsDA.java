@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication.MessagingEmailsApp;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -90,7 +91,7 @@ public class EmailsDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
         String validate = emailBean.validate();
         if (validate != null) {
-            final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+            final ResourceBundle resourceBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
             final String noneSentString = resourceBundle.getString("error.email.none.sent");
             request.setAttribute("errorMessage", noneSentString + " " + validate);
             request.setAttribute("emailBean", emailBean);

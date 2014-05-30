@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -38,11 +36,11 @@ import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
-import java.util.Locale;
 
 public class SearchExecutionCourseAttendsBean implements Serializable {
 

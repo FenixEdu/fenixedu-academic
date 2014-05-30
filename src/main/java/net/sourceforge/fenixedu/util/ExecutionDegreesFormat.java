@@ -39,8 +39,6 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.commons.i18n.I18N;
 
-import java.util.Locale;
-
 /**
  * @author Tânia Pousão
  * 

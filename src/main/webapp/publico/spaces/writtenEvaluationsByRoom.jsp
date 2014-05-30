@@ -46,9 +46,9 @@
 			
 			<h:outputText value="<tr>" escape="false"/>
 				<h:outputText value="<td><strong>#{calendarLinks.key.nome}</strong></td>" escape="false"/>
-				<h:outputText value="<td>#{calendarLinks.key.x.name}</td>" escape="false"/>
+				<h:outputText value="<td>#{calendarLinks.key.edificio}</td>" escape="false"/>
 				<h:outputText value="<td>#{calendarLinks.key.piso}</td>" escape="false"/>
-				<h:outputText value="<td>#{calendarLinks.key.tipo.name}</td>" rendered="#{calendarLinks.key.tipo != null}" escape="false"/>
+				<h:outputText value="<td>#{calendarLinks.key.tipo}</td>" rendered="#{calendarLinks.key.tipo != null}" escape="false"/>
 				<h:outputText value="<td>#{calendarLinks.key.capacidadeNormal}</td>" escape="false"/>
 				<h:outputText value="<td>#{calendarLinks.key.capacidadeExame}</td>" escape="false"/>
 			<h:outputText value="</tr>" escape="false"/>

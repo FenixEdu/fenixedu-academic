@@ -23,10 +23,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import java.util.Locale;
+import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.commons.i18n.I18N;
 
 public enum GratuityExemptionJustificationType {
 
@@ -90,7 +90,7 @@ public enum GratuityExemptionJustificationType {
     }
 
     public String localizedName(Locale locale) {
-        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getQualifiedName());
     }
 
     public String getLocalizedName() {

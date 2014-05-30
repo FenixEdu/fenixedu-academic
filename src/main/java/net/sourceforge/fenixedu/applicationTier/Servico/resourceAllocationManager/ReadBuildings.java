@@ -21,10 +21,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.spaces.domain.Space;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
+
+import org.fenixedu.spaces.domain.Space;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ReadBuildings {

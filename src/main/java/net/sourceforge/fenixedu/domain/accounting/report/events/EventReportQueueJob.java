@@ -53,6 +53,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.ConnectionManager;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -389,8 +390,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     private EventBean writeEvent(final Event event) {
         Properties formatterProperties = new Properties();
 
-        formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
-        formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
+        formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, BundleUtil.ENUMERATION_BUNDLE);
+        formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, BundleUtil.APPLICATION_BUNDLE);
 
         Wrapper wrapper = buildWrapper(event);
 
@@ -532,8 +533,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     private StringBuilder getErrorLine(Event event, Throwable e) {
         Properties formatterProperties = new Properties();
-        formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
-        formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
+        formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, BundleUtil.ENUMERATION_BUNDLE);
+        formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, BundleUtil.APPLICATION_BUNDLE);
 
         StringBuilder errorLine = new StringBuilder();
         try {
@@ -580,8 +581,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
             ExemptionBean bean = new ExemptionBean();
 
-            formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
-            formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
+            formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, BundleUtil.ENUMERATION_BUNDLE);
+            formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, BundleUtil.APPLICATION_BUNDLE);
 
             bean.eventExternalId = event.getExternalId();
             bean.exemptionTypeDescription = wrapper.getExemptionTypeDescription();

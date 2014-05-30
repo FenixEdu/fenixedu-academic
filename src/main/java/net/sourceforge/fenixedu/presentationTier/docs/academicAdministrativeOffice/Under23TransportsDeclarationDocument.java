@@ -29,8 +29,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarat
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
-
 public class Under23TransportsDeclarationDocument extends AdministrativeOfficeDocument {
 
     static private final long serialVersionUID = 1L;

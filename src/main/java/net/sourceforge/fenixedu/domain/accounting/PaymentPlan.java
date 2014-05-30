@@ -36,14 +36,13 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRu
 import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRuleManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
-
-import java.util.Locale;
 
 abstract public class PaymentPlan extends PaymentPlan_Base {
 
@@ -368,7 +367,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     abstract protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules();
 
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
+        return ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale()).getString(
                 this.getClass().getSimpleName() + ".description");
     }
 

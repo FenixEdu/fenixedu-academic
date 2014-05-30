@@ -18,13 +18,14 @@
  */
 package net.sourceforge.fenixedu.domain.student.importation;
 
-import org.fenixedu.spaces.domain.Space;
-
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.fenixedu.spaces.domain.Space;
+
 import pt.ist.fenixframework.Atomic;
 
 public class DgesStudentImportationFile extends DgesStudentImportationFile_Base {

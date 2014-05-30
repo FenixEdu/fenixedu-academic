@@ -20,9 +20,9 @@ package pt.utl.ist.codeGenerator.database;
 
 import java.util.Stack;
 
-import org.fenixedu.spaces.domain.Space;
-
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
+
+import org.fenixedu.spaces.domain.Space;
 
 public class LessonRoomManager extends Stack<Space> {
 

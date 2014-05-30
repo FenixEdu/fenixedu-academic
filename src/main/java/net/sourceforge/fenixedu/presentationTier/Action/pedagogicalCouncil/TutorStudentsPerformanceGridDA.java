@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.ViewStudentsPerformanceGridDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -103,7 +104,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
                     @Override
                     protected void makeLine(PerformanceGridLine item) {
                         final ResourceBundle bundle =
-                                ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+                                ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
                         Registration registration = item.getRegistration();
                         addCell(bundle.getString("label.studentNumber"), registration.getNumber());
                         addCell(bundle.getString("label.name"), registration.getPerson().getName());

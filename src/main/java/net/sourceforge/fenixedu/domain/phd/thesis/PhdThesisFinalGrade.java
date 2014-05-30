@@ -26,7 +26,6 @@ import java.util.ResourceBundle;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
-import java.util.Locale;
 
 public enum PhdThesisFinalGrade implements IPresentableEnum {
 

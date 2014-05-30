@@ -118,6 +118,6 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.final.evaluation");
+        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.final.evaluation");
     }
 }

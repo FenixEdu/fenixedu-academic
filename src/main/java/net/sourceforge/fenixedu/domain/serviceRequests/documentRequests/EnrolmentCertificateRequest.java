@@ -81,54 +81,27 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     }
 
     final public Collection<Enrolment> getEntriesToReport() {
-        return filterEntries();
+        return getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear());
     }
 
-    private Collection<Enrolment> filterEntries() {
-        final Collection<Enrolment> result = new HashSet<Enrolment>();
-        if (extraCurricular == null) {
-            extraCurricular = new HashSet<Enrolment>();
-        } else {
-            extraCurricular.clear();
-        }
-        if (propaedeutic == null) {
-            propaedeutic = new HashSet<Enrolment>();
-        } else {
-            propaedeutic.clear();
-        }
-
+    final public Collection<Enrolment> getExtraCurricularEntriesToReport() {
+        final Collection<Enrolment> extraCurricular = new HashSet<Enrolment>();
         for (final Enrolment entry : getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear())) {
             if (entry.isExtraCurricular() && !entry.hasAnyEnrolmentWrappers()) {
                 extraCurricular.add(entry);
-                continue;
-            } else if (entry.isPropaedeutic()) {
-                propaedeutic.add(entry);
-                continue;
             }
-
-            result.add(entry);
         }
-
-        return result;
-    }
-
-    Collection<Enrolment> extraCurricular = null;
-
-    final public Collection<Enrolment> getExtraCurricularEntriesToReport() {
-        if (extraCurricular == null) {
-            filterEntries();
-        }
-
         return extraCurricular;
     }
 
-    Collection<Enrolment> propaedeutic = null;
 
     final public Collection<Enrolment> getPropaedeuticEntriesToReport() {
-        if (propaedeutic == null) {
-            filterEntries();
+        final Collection<Enrolment> propaedeutic = new HashSet<Enrolment>();
+        for (final Enrolment entry : getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear())) {
+            if (!(entry.isExtraCurricular() && !entry.hasAnyEnrolmentWrappers()) && entry.isPropaedeutic()) {
+                propaedeutic.add(entry);
+            }
         }
-
         return propaedeutic;
     }
 

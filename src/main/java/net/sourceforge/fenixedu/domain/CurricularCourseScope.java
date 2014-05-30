@@ -196,19 +196,8 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         return false;
     }
 
-    private DegreeModuleScopeCurricularCourseScope degreeModuleScopeCurricularCourseScope = null;
-
-    private synchronized void initDegreeModuleScopeCurricularCourseScope() {
-        if (degreeModuleScopeCurricularCourseScope == null) {
-            degreeModuleScopeCurricularCourseScope = new DegreeModuleScopeCurricularCourseScope(this);
-        }
-    }
-
     public DegreeModuleScopeCurricularCourseScope getDegreeModuleScopeCurricularCourseScope() {
-        if (degreeModuleScopeCurricularCourseScope == null) {
-            initDegreeModuleScopeCurricularCourseScope();
-        }
-        return degreeModuleScopeCurricularCourseScope;
+        return new DegreeModuleScopeCurricularCourseScope(this);
     }
 
     public boolean hasEndYearMonthDay() {

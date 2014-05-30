@@ -20,8 +20,6 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -29,8 +27,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixframework.Atomic;
-import java.util.Locale;
 
 public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
 

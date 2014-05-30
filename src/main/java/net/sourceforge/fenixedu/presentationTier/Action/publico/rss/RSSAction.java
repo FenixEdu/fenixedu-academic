@@ -65,7 +65,12 @@ public abstract class RSSAction extends InformaRSSAction {
     protected ChannelIF getRSSChannel(final HttpServletRequest request) throws Exception {
         final ChannelBuilder builder = new ChannelBuilder();
 
-        final ChannelIF channel = builder.createChannel(getFeedTitle(request));
+        String feedTitle = getFeedTitle(request);
+        if (feedTitle == null) {
+            return null;
+        }
+
+        final ChannelIF channel = builder.createChannel(feedTitle);
         channel.setDescription(getFeedDescription(request));
         channel.setLocation(new URL(getFeedLink(request)));
         String siteLocation = getSiteLocation(request);

@@ -23,15 +23,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeLog;
 import net.sourceforge.fenixedu.domain.DegreeLog.DegreeLogTypes;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
-import java.util.Locale;
 
 public class SearchDegreeLogBean implements Serializable {
 

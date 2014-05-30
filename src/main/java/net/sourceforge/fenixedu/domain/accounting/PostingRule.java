@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDet
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -42,7 +43,6 @@ import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import java.util.Locale;
 
 public abstract class PostingRule extends PostingRule_Base {
 
@@ -354,7 +354,7 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public String getFormulaDescription() {
-        return ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
+        return ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale()).getString(
                 this.getClass().getSimpleName() + ".formulaDescription");
     }
 

@@ -318,7 +318,7 @@ public class Proposal extends Proposal_Base {
 
     public String getAttributionStatusLabel() {
         String key = getAttributionStatus().getClass().getSimpleName() + "." + getAttributionStatus();
-        return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", key);
+        return BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, key);
     }
 
     public boolean getForPublish() {

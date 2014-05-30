@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.exceptions.InDebtEnrolmentsException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -57,7 +58,6 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import java.util.Locale;
 
 public class MarkSheet extends MarkSheet_Base {
 
@@ -980,7 +980,7 @@ public class MarkSheet extends MarkSheet_Base {
     public String getStateDiscription() {
         StringBuilder stringBuilder = new StringBuilder();
         final ResourceBundle enumerationResources =
-                ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+                ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
         stringBuilder.append(enumerationResources.getString(getMarkSheetState().getName()).trim());
         if (getSubmittedByTeacher()) {
             final ResourceBundle academicResources =

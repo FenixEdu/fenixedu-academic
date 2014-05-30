@@ -22,10 +22,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.fenixedu.spaces.domain.Space;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCourse;
+
+import org.fenixedu.spaces.domain.Space;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

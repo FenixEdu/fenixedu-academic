@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.DateI18NUtil;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 
@@ -76,8 +77,8 @@ abstract public class FenixReport implements Serializable {
 
     private FenixReport(final Collection<?> dataSource, final Locale locale) {
         this.dataSource = dataSource == null ? new ArrayList<Object>() : dataSource;
-        this.enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
-        this.applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources", locale);
+        this.enumerationBundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale);
+        this.applicationBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, locale);
         this.locale = locale;
         this.language = locale;
     }

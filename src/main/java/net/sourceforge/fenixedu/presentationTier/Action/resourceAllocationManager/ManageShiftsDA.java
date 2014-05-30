@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -97,7 +98,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
         if (infoExecutionCourse != null) {
             final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-            final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+            final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
 
             for (final ShiftType shiftType : infoExecutionCourse.getExecutionCourse().getShiftTypes()) {
                 tiposAula.add(new LabelValueBean(bundle.getString(shiftType.getName()), shiftType.name()));

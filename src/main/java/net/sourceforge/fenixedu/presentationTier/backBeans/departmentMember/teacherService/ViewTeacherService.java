@@ -54,7 +54,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import java.util.Locale;
 
 /**
  * 

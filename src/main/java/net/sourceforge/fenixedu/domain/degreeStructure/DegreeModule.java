@@ -374,13 +374,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return false;
     }
 
-    private Boolean bolonhaDegree = null;
-
     public boolean isBolonhaDegree() {
-        if (bolonhaDegree == null) {
-            bolonhaDegree = Boolean.valueOf(getParentDegreeCurricularPlan().isBolonhaDegree());
-        }
-        return bolonhaDegree.booleanValue();
+        return getParentDegreeCurricularPlan().isBolonhaDegree();
     }
 
     public boolean isOptional() {

@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 
@@ -38,7 +39,7 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
+    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE);
     private static final ResourceBundle academicResources = ResourceBundle.getBundle("resources.AcademicAdminOffice");
 
     private String gradeValue;

@@ -24,6 +24,8 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
@@ -57,6 +59,6 @@ public enum AccountabilityTypeEnum implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(getQualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(getQualifiedName());
     }
 }

@@ -20,6 +20,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 public enum ProfessionalSituationConditionType {
 
     //TODO: RAIDES Provider and beans exclude this value.
@@ -61,7 +63,7 @@ public enum ProfessionalSituationConditionType {
     }
 
     public String getLocalizedName() {
-        return ResourceBundle.getBundle("resources.EnumerationResources").getString(getQualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE).getString(getQualifiedName());
     }
 
 }

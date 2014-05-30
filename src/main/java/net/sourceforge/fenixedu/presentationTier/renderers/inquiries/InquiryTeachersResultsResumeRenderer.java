@@ -23,11 +23,13 @@ package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
@@ -36,7 +38,6 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-import java.util.Locale;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
@@ -51,7 +52,7 @@ public class InquiryTeachersResultsResumeRenderer extends OutputRenderer {
 
     private class InquiryGeneralGroupLayout extends Layout {
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
 
         public InquiryGeneralGroupLayout(Object object) {
         }

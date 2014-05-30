@@ -388,7 +388,7 @@ public class Project extends Project_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.project") + " " + getName();
+        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.project") + " " + getName();
     }
 
     @Deprecated

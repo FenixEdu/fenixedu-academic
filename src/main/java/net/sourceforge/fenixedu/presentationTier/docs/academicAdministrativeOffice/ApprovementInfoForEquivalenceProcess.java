@@ -44,12 +44,12 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
 
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ApprovementInfoForEquivalenceProcess {
@@ -57,7 +57,7 @@ public class ApprovementInfoForEquivalenceProcess {
     static final private ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice",
             I18N.getLocale());
 
-    static final private ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources",
+    static final private ResourceBundle enumBundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE,
             I18N.getLocale());
 
     static final protected String[] identifiers = { "*", "#", "+", "**", "***" };

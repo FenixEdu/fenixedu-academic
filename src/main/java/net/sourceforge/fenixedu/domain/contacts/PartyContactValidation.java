@@ -26,7 +26,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public abstract class PartyContactValidation extends PartyContactValidation_Base {
-    private final int MAX_TRIES = 3;
+    private static final int MAX_TRIES = 3;
 
     public static class PartyContactValidationPredicate extends Predicate<PartyContactValidation> {
 

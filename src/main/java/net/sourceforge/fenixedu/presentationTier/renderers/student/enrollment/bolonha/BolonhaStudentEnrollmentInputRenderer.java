@@ -20,21 +20,22 @@ package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.b
 
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-import java.util.Locale;
 
 public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     private static final Logger logger = LoggerFactory.getLogger(BolonhaStudentEnrollmentInputRenderer.class);
 
-    final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+    final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
     final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
-    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+    final ResourceBundle applicationResources = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
     private Integer initialWidth = 70;
     private Integer widthDecreasePerLevel = 3;

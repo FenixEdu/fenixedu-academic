@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -88,7 +89,7 @@ public class StudentPortalBean implements Serializable {
             }
 
             public EvaluationAnnouncement(Grouping grouping) {
-                ResourceBundle resource = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+                ResourceBundle resource = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
                 setEvaluationType(resource.getString("label.grouping"));
                 setIdentification(grouping.getName());
                 setRegister(isStudentEnrolled(grouping));

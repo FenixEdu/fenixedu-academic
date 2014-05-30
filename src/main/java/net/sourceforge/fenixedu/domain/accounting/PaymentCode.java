@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGeneratorFactory;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -240,7 +241,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     public String getDescription() {
-        final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+        final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
         return enumerationResources.getString(getType().getQualifiedName());
     }
 

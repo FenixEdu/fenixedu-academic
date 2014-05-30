@@ -266,13 +266,13 @@ public class ExternalAppsDA extends FenixDispatchAction {
         final InputStream resourceAsStream = getClass().getResourceAsStream("/api/serviceAgreement.html");
         if (resourceAsStream == null) {
             return BundleUtil
-                    .getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.default.service.agreement");
+                    .getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "oauthapps.default.service.agreement");
         }
         try {
             return new String(ByteStreams.toByteArray(resourceAsStream));
         } catch (IOException e) {
             return BundleUtil
-                    .getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.default.service.agreement");
+                    .getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "oauthapps.default.service.agreement");
         }
     }
 
@@ -333,7 +333,9 @@ public class ExternalAppsDA extends FenixDispatchAction {
         if (authSessions == null) {
             return redirect("/externalApps.do?method=manageAuthorizations", request);
         } else {
-            request.setAttribute("logo", Base64.getEncoder().encodeToString(app.getLogo()));
+            if (app.getLogo() != null) {
+                request.setAttribute("logo", Base64.getEncoder().encodeToString(app.getLogo()));
+            }
             request.setAttribute("authorizations", authSessions);
             request.setAttribute("application", app);
             return mapping.findForward("viewAuthorizations");

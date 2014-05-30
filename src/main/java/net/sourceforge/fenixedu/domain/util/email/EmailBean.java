@@ -25,13 +25,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.EMail;
-import java.util.Locale;
 
 public class EmailBean implements Serializable {
 
@@ -152,7 +153,7 @@ public class EmailBean implements Serializable {
     }
 
     public String validate() {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
         String bccs = getBccs();
         if (getRecipients().isEmpty() && StringUtils.isEmpty(bccs)) {
@@ -192,7 +193,7 @@ public class EmailBean implements Serializable {
 
     @Atomic
     public Message send() {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
         final StringBuilder message = new StringBuilder();
         if (getMessage() != null && !getMessage().trim().isEmpty()) {

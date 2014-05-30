@@ -24,6 +24,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -48,7 +50,7 @@ public class PaymentPhase extends PaymentPhase_Base {
     }
 
     public String getDescriptionFromMessageResourses() {
-        MessageResources messages = MessageResources.getMessageResources("resources.ApplicationResources");
+        MessageResources messages = MessageResources.getMessageResources(BundleUtil.APPLICATION_BUNDLE);
 
         String newDescription = null;
         newDescription = messages.getMessage(super.getDescription());

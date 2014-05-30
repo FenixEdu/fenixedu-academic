@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.DismissalLog;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.joda.time.DateTime;
@@ -368,7 +369,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public String getModuleTypeName() {
-        ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
+        ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE);
         return enumerationResources.getString(this.getClass().getName());
     }
 

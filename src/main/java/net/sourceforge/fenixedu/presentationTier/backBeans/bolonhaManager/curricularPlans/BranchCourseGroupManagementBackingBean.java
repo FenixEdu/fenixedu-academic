@@ -24,14 +24,13 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateBranchCourseGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import java.util.Locale;
+
+import org.fenixedu.commons.i18n.I18N;
 
 public class BranchCourseGroupManagementBackingBean extends CourseGroupManagementBackingBean {
 

@@ -398,7 +398,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         if (sb.length() > 1) {
             sb.setLength(sb.length() - 2); // trim ", "
         } else {
-            sb.append(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty"));
+            sb.append(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"));
         }
         return sb.toString();
     }

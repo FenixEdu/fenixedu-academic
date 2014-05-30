@@ -66,8 +66,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
-import java.util.Locale;
-
 import com.google.common.collect.Sets;
 
 public class MobilityApplicationProcess extends MobilityApplicationProcess_Base {

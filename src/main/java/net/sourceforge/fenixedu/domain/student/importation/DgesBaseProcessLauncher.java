@@ -18,10 +18,11 @@
  */
 package net.sourceforge.fenixedu.domain.student.importation;
 
-import org.fenixedu.spaces.domain.Space;
-
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+
+import org.fenixedu.spaces.domain.Space;
+
 import pt.ist.fenixframework.Atomic;
 
 public class DgesBaseProcessLauncher {

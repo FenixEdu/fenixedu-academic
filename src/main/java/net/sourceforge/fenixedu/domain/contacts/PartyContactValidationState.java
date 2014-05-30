@@ -25,6 +25,6 @@ public enum PartyContactValidationState {
 
     public String getPresentationName() {
         final String key = getClass().getSimpleName() + "." + this;
-        return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", key);
+        return BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, key);
     };
 }

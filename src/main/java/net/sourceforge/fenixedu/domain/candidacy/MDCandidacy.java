@@ -23,12 +23,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
-import java.util.Locale;
+
+import org.fenixedu.commons.i18n.I18N;
 
 public class MDCandidacy extends MDCandidacy_Base {
 

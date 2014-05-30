@@ -46,7 +46,7 @@ public class FenixContainerExceptionHandler extends FenixExceptionHandler {
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
             HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
-        logger.error(ex.getMessage(), ex);
+        logger.error("Request at " + request.getRequestURI() + " threw an exception: ", ex);
 
         if (Authenticate.isLogged()) {
             request.setAttribute("loggedPersonEmail", Authenticate.getUser().getPerson().getDefaultEmailAddressValue());

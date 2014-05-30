@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
@@ -34,7 +35,6 @@ import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {

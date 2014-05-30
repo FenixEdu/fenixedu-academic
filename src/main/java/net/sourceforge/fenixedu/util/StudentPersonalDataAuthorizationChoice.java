@@ -28,8 +28,6 @@ import java.util.ResourceBundle;
 
 import org.fenixedu.commons.i18n.I18N;
 
-import java.util.Locale;
-
 /**
  * @author Ricardo Rodrigues
  * 
@@ -68,7 +66,7 @@ public enum StudentPersonalDataAuthorizationChoice {
 
     public String getDescription() {
         final ResourceBundle ENUMERATION_RESOURCES =
-                ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+                ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
         return ENUMERATION_RESOURCES.getString(getQualifiedName());
     }
 

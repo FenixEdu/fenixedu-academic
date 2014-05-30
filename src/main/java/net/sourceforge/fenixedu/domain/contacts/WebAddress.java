@@ -139,7 +139,7 @@ public class WebAddress extends WebAddress_Base {
     @Override
     public void logEditAux(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact,
             String newValue, String typeKey) {
-        final String infoLabel = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", typeKey);
+        final String infoLabel = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, typeKey);
 
         boolean oldValueDiffersFromNew = false;
         if (valueChanged) {

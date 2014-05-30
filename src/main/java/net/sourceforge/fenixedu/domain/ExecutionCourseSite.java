@@ -250,9 +250,9 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
             final String avaiable;
 
             if (lessonPlanningAvailable) {
-                avaiable = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.available");
+                avaiable = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "message.available");
             } else {
-                avaiable = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.not.available");
+                avaiable = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "message.not.available");
             }
 
             CurricularManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",

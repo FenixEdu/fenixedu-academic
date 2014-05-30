@@ -29,8 +29,6 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -38,7 +36,8 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-import java.util.Locale;
+
+import org.fenixedu.commons.i18n.I18N;
 
 public class UIDegreeCurricularPlan extends UIInput {
     public static final String COMPONENT_TYPE =

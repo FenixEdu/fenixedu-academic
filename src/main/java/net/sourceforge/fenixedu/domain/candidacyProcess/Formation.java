@@ -27,8 +27,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
 
-import java.util.Locale;
-
 public class Formation extends Formation_Base {
 
     public Formation() {

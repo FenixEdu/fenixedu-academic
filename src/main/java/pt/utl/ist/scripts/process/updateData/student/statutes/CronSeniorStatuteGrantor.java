@@ -39,8 +39,6 @@ import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
-
 @Task(englishTitle = "CronSeniorStatuteGrantor", readOnly = true)
 public class CronSeniorStatuteGrantor extends CronTask {
 

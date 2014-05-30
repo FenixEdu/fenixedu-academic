@@ -57,7 +57,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import java.util.Locale;
 
 abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 

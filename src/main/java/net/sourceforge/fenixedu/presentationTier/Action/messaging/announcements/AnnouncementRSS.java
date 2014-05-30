@@ -57,12 +57,13 @@ import com.sun.syndication.feed.synd.SyndContentImpl;
 public class AnnouncementRSS extends RSSAction {
 
     protected String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
+        if (board == null) {
+            return null;
+        }
         MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
         String titlePrefix = resources.getMessage(this.getLocale(request), "messaging.announcements.channelTitlePrefix");
         StringBuilder buffer = new StringBuilder();
-        if (board != null) {
-            buffer.append(titlePrefix).append(" ").append(board.getName());
-        }
+        buffer.append(titlePrefix).append(" ").append(board.getName());
         return buffer.toString();
     }
 

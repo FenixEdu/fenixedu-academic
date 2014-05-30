@@ -77,7 +77,7 @@ public class AuthScope extends AuthScope_Base {
     }
 
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.label.app.scope." + getName());
+        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "oauthapps.label.app.scope." + getName());
     }
 
     @Atomic(mode = TxMode.WRITE)

@@ -1731,19 +1731,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getDissertationCurricularCourses(ExecutionYear.readCurrentExecutionYear());
     }
 
-    // this slot is a hack to allow renderers to call the setter. Don't
-    // delete
-    // it.
-    private DegreeCurricularPlan sourceDegreeCurricularPlan = null;
-
-    public DegreeCurricularPlan getSourceDegreeCurricularPlan() {
-        return sourceDegreeCurricularPlan;
-    }
-
-    public void setSourceDegreeCurricularPlan(DegreeCurricularPlan sourceDegreeCurricularPlan) {
-        this.sourceDegreeCurricularPlan = sourceDegreeCurricularPlan;
-    }
-
     public DegreeCurricularPlanEquivalencePlan createEquivalencePlan(final DegreeCurricularPlan sourceDegreeCurricularPlan) {
         return new DegreeCurricularPlanEquivalencePlan(this, sourceDegreeCurricularPlan);
     }

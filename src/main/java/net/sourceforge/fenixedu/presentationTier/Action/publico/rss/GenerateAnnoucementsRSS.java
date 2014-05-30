@@ -30,19 +30,21 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "publico", path = "/announcementsRSS", scope = "session")
+@Mapping(module = "publico", path = "/announcementsRSS")
 public class GenerateAnnoucementsRSS extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         final String executionCourseIdString = request.getParameter("id");
-        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseIdString);
-        if (executionCourse == null) {
-            return forward("/publico/notFound.do");
+        final DomainObject obj = FenixFramework.getDomainObject(executionCourseIdString);
+        if (!(obj instanceof ExecutionCourse)) {
+            return forward("/notFound.jsp");
         }
+        ExecutionCourse executionCourse = (ExecutionCourse) obj;
         final ExecutionCourseAnnouncementBoard announcementBoard = executionCourse.getBoard();
         if (announcementBoard == null) {
             return forward("/publico/executionCourse.do?method=notFound&executionCourseID=" + executionCourse.getExternalId());

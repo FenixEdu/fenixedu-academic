@@ -46,7 +46,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import java.util.Locale;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;

@@ -28,8 +28,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
-import java.util.Locale;
 
 public class DismissalLog extends DismissalLog_Base {
 
@@ -84,7 +84,7 @@ public class DismissalLog extends DismissalLog_Base {
     }
 
     protected String getLabel() {
-        return ResourceBundle.getBundle("resources.ApplicationResources", Locale.getDefault()).getString(
+        return ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, Locale.getDefault()).getString(
                 "label.dismissal");
     }
 

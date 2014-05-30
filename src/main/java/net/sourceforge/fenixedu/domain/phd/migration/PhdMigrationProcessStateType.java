@@ -23,8 +23,6 @@ import java.util.ResourceBundle;
 
 import org.fenixedu.commons.i18n.I18N;
 
-import java.util.Locale;
-
 public enum PhdMigrationProcessStateType {
 
     NOT_MIGRATED,

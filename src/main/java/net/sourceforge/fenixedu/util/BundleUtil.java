@@ -19,13 +19,12 @@
 package net.sourceforge.fenixedu.util;
 
 import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
-
-import java.util.Locale;
 
 public class BundleUtil {
 
@@ -35,9 +34,21 @@ public class BundleUtil {
     private static final String APPLICATION_MODULE = "Application";
     private static final String ENUMERATION_MODULE = "Enumeration";
 
+    public static final String ENUMERATION_BUNDLE = "resources.EnumerationResources";
+    public static final String APPLICATION_BUNDLE = "resources.ApplicationResources";
+
     public static String getStringFromResourceBundle(final String bundle, final String key, String... arguments) {
         try {
             final ResourceBundle resourceBundle = getResourceBundleByName(bundle);
+            return MessageFormat.format(resourceBundle.getString(key), (Object[]) arguments);
+        } catch (MissingResourceException e) {
+            return key;
+        }
+    }
+
+    public static String getStringFromResourceBundle(final String bundle, final Locale locale, final String key, String... arguments) {
+        try {
+            final ResourceBundle resourceBundle = ResourceBundle.getBundle(bundle, locale);
             return MessageFormat.format(resourceBundle.getString(key), (Object[]) arguments);
         } catch (MissingResourceException e) {
             return key;
@@ -101,4 +112,5 @@ public class BundleUtil {
     private static ResourceBundle getResourceBundleByName(final String bundleName) {
         return ResourceBundle.getBundle(bundleName, I18N.getLocale());
     }
+
 }

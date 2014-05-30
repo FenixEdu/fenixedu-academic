@@ -24,9 +24,9 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
-import java.util.Locale;
+import org.fenixedu.commons.i18n.I18N;
 
 public enum PhdIndividualProgramCollaborationType {
 
@@ -69,7 +69,7 @@ public enum PhdIndividualProgramCollaborationType {
     }
 
     public String getLocalizedName(final Locale locale) {
-        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getQualifiedName());
     }
 
     private String getQualifiedName() {

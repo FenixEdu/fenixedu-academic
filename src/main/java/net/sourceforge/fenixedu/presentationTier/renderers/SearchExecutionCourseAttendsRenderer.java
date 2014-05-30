@@ -20,13 +20,15 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -45,13 +47,12 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
-import java.util.Locale;
 
 public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
 
-    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
+    private final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE,
             I18N.getLocale());
-    private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
+    private final ResourceBundle applicationResources = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE,
             I18N.getLocale());
 
     private String searchTableClasses;

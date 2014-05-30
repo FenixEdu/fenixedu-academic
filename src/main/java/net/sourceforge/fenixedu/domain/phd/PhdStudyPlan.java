@@ -35,7 +35,6 @@ import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import java.util.Locale;
 
 public class PhdStudyPlan extends PhdStudyPlan_Base {
 

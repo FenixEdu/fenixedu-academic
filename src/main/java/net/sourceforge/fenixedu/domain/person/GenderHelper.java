@@ -23,11 +23,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 import org.apache.struts.util.LabelValueBean;
 
 public class GenderHelper {
 
-    public static final String GENDER_RESOURCE_BUNDLE = "resources.ApplicationResources";
+    public static final String GENDER_RESOURCE_BUNDLE = BundleUtil.APPLICATION_BUNDLE;
 
     private GenderHelper() {
         super();

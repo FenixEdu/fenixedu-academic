@@ -35,8 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.I18N;
 
-import java.util.Locale;
-
 /**
  * This is used to set the language in the FenixAPI.
  * It was created to use the Bennu API.

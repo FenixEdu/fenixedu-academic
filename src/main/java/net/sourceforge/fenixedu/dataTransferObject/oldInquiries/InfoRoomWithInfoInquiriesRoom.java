@@ -23,9 +23,9 @@
 
 package net.sourceforge.fenixedu.dataTransferObject.oldInquiries;
 
-import org.fenixedu.spaces.domain.Space;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+
+import org.fenixedu.spaces.domain.Space;
 
 /**
  * @author João Fialho & Rita Ferreira

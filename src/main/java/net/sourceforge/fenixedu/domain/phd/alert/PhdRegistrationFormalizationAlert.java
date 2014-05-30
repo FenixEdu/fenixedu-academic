@@ -18,6 +18,7 @@
  */
 package net.sourceforge.fenixedu.domain.phd.alert;
 
+import java.util.Locale;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -31,7 +32,6 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.FluentIterable;

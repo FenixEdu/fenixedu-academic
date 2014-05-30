@@ -29,8 +29,6 @@ import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Locale;
-
 public class CollectionPagerTag extends TagSupport {
 
     private static final Logger logger = LoggerFactory.getLogger(CollectionPagerTag.class);

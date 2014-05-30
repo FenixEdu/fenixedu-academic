@@ -152,3 +152,27 @@
         <property name="destination" value="academicIntervalPostBack" />
     </slot>
 </schema>
+
+<schema name="SpaceOccupationEventBean" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.SpaceOccupationEventBean" bundle="SPACE_RESOURCES">
+	<slot name="day" key="label.search.spaces.events.day"/>
+	<slot name="startTime" key="label.search.spaces.events.start"/>
+	<slot name="endTime" key="label.search.spaces.events.end"/>
+	<slot name="spaceName" key="label.search.spaces.events.spaceName"/>
+	<slot name="occupationType" key="label.search.spaces.events.occupationType"/>
+	<slot name="description" key="label.search.spaces.events.description"/>
+</schema>
+
+<schema name="SearchSpaceEvents" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.SearchOccupationEventsBean" bundle="SPACE_RESOURCES">
+	<slot name="start" layout="picker" key="label.search.spaces.events.start" 
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="end" layout="picker" key="label.search.spaces.events.end" 
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="building" key="label.search.spaces.events.building" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.AllBuildingsProvider"/>		
+		<property name="format"	value="${presentationName}" />	
+	</slot>
+	<slot name="types" key="label.search.spaces.events.occupationType" layout="option-select">
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.OccupationTypeProvider" />
+		<property name="classes" value="list2"/>
+	</slot>	
+</schema>

@@ -61,7 +61,6 @@ import org.joda.time.format.DateTimeFormatter;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
-import java.util.Locale;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;

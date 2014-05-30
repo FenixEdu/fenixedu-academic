@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
+
 import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;

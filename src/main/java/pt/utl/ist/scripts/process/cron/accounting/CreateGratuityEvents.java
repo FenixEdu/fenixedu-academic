@@ -32,7 +32,6 @@ import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import java.util.Locale;
 
 @Task(englishTitle = "CreateGratuityEvents", readOnly = true)
 public class CreateGratuityEvents extends CronTask {

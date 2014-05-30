@@ -62,6 +62,8 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
             request.setAttribute("degreeCurricularPlans", DegreeCurricularPlan.getDegreeCurricularPlans(degreeTypes));
         } else {
             request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+            final DegreeCurricularPlanBean degreeCurricularPlanBean = new DegreeCurricularPlanBean(degreeCurricularPlan);
+            request.setAttribute("degreeCurricularPlanBean", degreeCurricularPlanBean);
         }
         return super.execute(mapping, actionForm, request, response);
     }

@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.EquivalencePlanRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.bennu.core.domain.User;
@@ -143,7 +144,7 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
 
     public String getMaximumAmountDescription() {
         if (Money.ZERO.equals(this.getMaximumAmount())) {
-            return ResourceBundle.getBundle("resources.ApplicationResources").getString(
+            return ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE).getString(
                     "label.base.amount.plus.units.with.no.maximum.value");
         }
 

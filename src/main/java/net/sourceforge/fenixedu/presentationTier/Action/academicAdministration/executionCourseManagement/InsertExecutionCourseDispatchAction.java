@@ -209,7 +209,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 
     private String errorStringBuilder(String property) {
         return BundleUtil.getStringFromResourceBundle("resources.ManagerResources", "errors.required",
-                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", property))
+                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, property))
                 + " ";
     }
 }
