@@ -168,6 +168,8 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         DynaActionForm classForm = (DynaActionForm) form;
         classForm.set("className", infoClass.getNome());
 
+        request.setAttribute("className", infoClass.getNome());
+
         // Place list of lessons in request
 
         /** InfoLesson List */
