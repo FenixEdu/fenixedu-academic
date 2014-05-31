@@ -26,9 +26,9 @@
 <logic:present name="studentTestQuestionList">
 <logic:notEmpty name="studentTestQuestionList" >
 
-<bean:define id="testCode" value='<%=request.getParameter("testCode")%>'/>
-<bean:define id="pageType" value='<%=request.getParameter("pageType")%>'/>
-<bean:define id="correctionType" value='<%=request.getParameter("correctionType")%>'/>
+<bean:define id="testCode" value="${pageContext.request.getParameter('distributedTestCode')}"/>
+<bean:define id="pageType" value="${pageContext.request.getParameter('pageType')}"/>
+<bean:define id="correctionType" value="${pageContext.request.getParameter('correctionType')}"/>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <br/>
