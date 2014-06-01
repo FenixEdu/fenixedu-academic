@@ -87,15 +87,19 @@ public class FileDownloadServlet extends HttpServlet {
     }
 
     public final static File getFileFromURL(String url) {
-        // Remove trailing path, and split the tokens
-        String[] parts = url.substring(url.indexOf(SERVLET_PATH)).replace(SERVLET_PATH, "").split("\\/");
-        if (parts.length == 0) {
-            return null;
-        }
-        DomainObject object = FenixFramework.getDomainObject(parts[0]);
-        if (object instanceof File && FenixFramework.isDomainObjectValid(object)) {
-            return (File) object;
-        } else {
+        try {
+            // Remove trailing path, and split the tokens
+            String[] parts = url.substring(url.indexOf(SERVLET_PATH)).replace(SERVLET_PATH, "").split("\\/");
+            if (parts.length == 0) {
+                return null;
+            }
+            DomainObject object = FenixFramework.getDomainObject(parts[0]);
+            if (object instanceof File && FenixFramework.isDomainObjectValid(object)) {
+                return (File) object;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
             return null;
         }
     }
