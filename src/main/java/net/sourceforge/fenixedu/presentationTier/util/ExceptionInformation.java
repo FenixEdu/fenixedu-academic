@@ -388,7 +388,6 @@ public class ExceptionInformation {
         User userView = Authenticate.getUser();
         if (userView != null) {
             user = userView.getUsername();
-            exceptionInfo.append(userView.getUsername()).append("\n");
             requestBean = SupportRequestBean.generateExceptionBean(userView.getPerson());
             MenuFunctionality selectedFunctionality = BennuPortalDispatcher.getSelectedFunctionality(request);
             if (selectedFunctionality != null) {
@@ -419,6 +418,7 @@ public class ExceptionInformation {
         exceptionInfo.append("[RequestURI] ").append(request.getRequestURI()).append("\n");
         exceptionInfo.append("[RequestURL] ").append(request.getRequestURL()).append("\n");
         exceptionInfo.append("[QueryString] ").append(request.getQueryString()).append("\n");
+        exceptionInfo.append("[Method] ").append(request.getMethod()).append('\n');
 
         if (request.getAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY) != null) {
             ActionMapping mapping = (ActionMapping) request.getAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY);

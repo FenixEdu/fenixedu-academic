@@ -32,9 +32,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputHidden;
@@ -61,6 +63,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks.AttendsMark;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks.StudentMark;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WrittenEvaluationRoomDistribution;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -88,7 +91,6 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.spaces.domain.Space;
 
@@ -883,13 +885,15 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return WrittenTest.class.getSimpleName();
     }
 
-    public List<Space> getEvaluationRooms() throws FenixServiceException {
+    public List<InfoRoom> getEvaluationRooms() throws FenixServiceException {
         final Space[] result = new Space[getEvaluationRoomsPositions().size()];
         for (final Entry<String, Integer> entry : getEvaluationRoomsPositions().entrySet()) {
             final Space room = getRoom(entry.getKey());
             result[entry.getValue() - 1] = room;
         }
-        return Arrays.asList(result);
+//        return Arrays.asList(result);
+
+        return Arrays.stream(result).map(s -> new InfoRoom(s)).collect(Collectors.toList());
     }
 
     private Space getRoom(final String roomID) throws FenixServiceException {
@@ -910,11 +914,19 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return (Map<String, Integer>) getViewState().getAttribute("evaluationRooms");
     }
 
+    public Integer getExamCapacity(Space space) {
+        Optional<Integer> metadata = space.getMetadata("examCapacity");
+        return metadata.isPresent() ? metadata.get() : 0;
+    }
+
     private Map<String, Integer> initializeEvaluationRoomsPositions() throws FenixServiceException {
         final Map<String, Integer> evaluationRooms = new TreeMap();
+        WrittenEvaluation writtenEvaluation = (WrittenEvaluation) getEvaluation();
+
         final List<WrittenEvaluationSpaceOccupation> roomOccupations =
-                new ArrayList(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupations());
-        Collections.sort(roomOccupations, new ReverseComparator(new BeanComparator("room.examCapacity")));
+                writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet().stream()
+                        .sorted((o1, o2) -> getExamCapacity(o2.getRoom()).compareTo(getExamCapacity(o1.getRoom())))
+                        .collect(Collectors.toList());
         int count = 0;
         for (final WrittenEvaluationSpaceOccupation roomOccupation : roomOccupations) {
             evaluationRooms.put(roomOccupation.getRoom().getExternalId(), Integer.valueOf(++count));
@@ -979,9 +991,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     private List<String> getRoomIDs() throws FenixServiceException {
-        final List<Space> rooms = getEvaluationRooms();
+        final List<InfoRoom> rooms = getEvaluationRooms();
         final List<String> result = new ArrayList(rooms.size());
-        for (final Space room : rooms) {
+        for (final InfoRoom room : rooms) {
             result.add(room.getExternalId());
         }
         return result;

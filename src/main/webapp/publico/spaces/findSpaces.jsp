@@ -82,10 +82,7 @@ display: inline !important;
 					<fr:property name="moduleRelative" value="true"/>
 					<fr:property name="contextRelative" value="true"/>
 				</fr:slot>
-				<fr:slot name="space.class" layout="label" key="label.space.type">
-					<fr:property name="labelFormat" value="label.${simpleName}" />
-					<fr:property name="bundle" value="SPACE_RESOURCES" />
-				</fr:slot>
+				<fr:slot name="space.classification.name.content" layout="null-as-label" key="label.space.classification"/>
 			</fr:schema>			
 			<fr:layout name="tabular">
 				

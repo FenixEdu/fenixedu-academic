@@ -375,12 +375,12 @@
 	<slot name="campus" key="label.find.spaces.campus" layout="menu-select-postback">	
 		<property name="size" value="30"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
-		<property name="format"	value="${spaceInformation.presentationName}" />
+		<property name="format"	value="${name}" />
 		<property name="destination" value="postBack"/>	
 	</slot>
 	<slot name="building" key="label.find.spaces.building" layout="menu-select">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.BuildingProvider"/>		
-		<property name="format"	value="${spaceInformation.presentationName}" />	
+		<property name="format"	value="${name}" />	
 	</slot>								       
 </schema>
 

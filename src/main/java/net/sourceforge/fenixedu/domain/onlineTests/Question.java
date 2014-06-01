@@ -60,14 +60,6 @@ public class Question extends Question_Base {
         return ParseSubQuestion.getSubQuestionFor(this);
     }
 
-    public void setSubQuestions(List<SubQuestion> subQuestions) {
-        ParseSubQuestion.setSubQuestionFor(this, subQuestions);
-    }
-
-    public void addSubQuestion(SubQuestion subQuestion) {
-        ParseSubQuestion.addSubQuestionFor(this, subQuestion);
-    }
-
     // public SubQuestion getSubQuestionByItem(String itemId) {
     // for (SubQuestion subQuestion : getSubQuestions()) {
     // if (itemId != null && subQuestion.getItemId() != null) {
