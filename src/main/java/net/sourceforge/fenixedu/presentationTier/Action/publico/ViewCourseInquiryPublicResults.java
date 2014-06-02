@@ -65,7 +65,11 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 
     public static ActionForward getCourseResultsActionForward(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(request.getParameter("executionCourseOID"));
+        String executionCourseId = request.getParameter("executionCourseOID");
+        if (executionCourseId == null) {
+            executionCourseId = request.getParameter("executionCourseID");
+        }
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
 
         CurricularCourseInquiryTemplate curricularCourseInquiryTemplate =

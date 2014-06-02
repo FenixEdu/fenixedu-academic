@@ -120,6 +120,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.base.Strings;
 import com.google.common.io.BaseEncoding;
 
 /**
@@ -385,7 +386,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
-        } else if (optionShuffle != null) {
+        } else if (optionShuffle != null && !Strings.isNullOrEmpty(testCode)) {
             try {
                 img = ReadQuestionImage.run(testCode, exerciseCode, optionShuffle, imgCode, feedbackCode);
             } catch (FenixServiceException e) {

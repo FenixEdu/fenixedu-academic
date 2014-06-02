@@ -11,7 +11,7 @@
     <groupId>pt.ist</groupId>
     <artifactId>fenix</artifactId>
     <packaging>jar</packaging>
-    <version>3.0.4</version>
+    <version>3.0.5</version>
 
     <name>FenixEdu Core</name>
     <url>http://fenixedu.org</url>
@@ -333,7 +333,7 @@
         <dependency>
             <groupId>org.fenixedu</groupId>
             <artifactId>fenixedu-spaces</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.axet</groupId>

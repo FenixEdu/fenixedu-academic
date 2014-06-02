@@ -60,7 +60,7 @@ public class InfoOccupation extends InfoShowOccupation implements GanttDiagramEv
 
     @Override
     public DiaSemana getDiaSemana() {
-        return new DiaSemana(interval.getStart().getDayOfWeek());
+        return DiaSemana.fromJodaWeekDay(interval.getStart().getDayOfWeek());
     }
 
     @Override

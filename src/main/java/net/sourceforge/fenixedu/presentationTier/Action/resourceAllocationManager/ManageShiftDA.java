@@ -96,7 +96,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
     @Mapping(path = "/manageShiftMultipleItems", module = "resourceAllocationManager",
             input = "/manageShift.do?method=prepareEditShift&page=0", formBean = "selectMultipleItemsForm",
             functionality = ExecutionPeriodDA.class)
-    @Forwards(@Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift"))
+    @Forwards(@Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"))
     public static class ManageShiftMultipleItemsDA extends ManageShiftDA {
     }
 

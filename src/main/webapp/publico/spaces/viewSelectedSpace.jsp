@@ -28,11 +28,11 @@
 			<fr:slot name="space.classification.name.content" layout="null-as-label" key="label.space.classification">
 			</fr:slot>
 			<fr:slot name="space.allocatableCapacity" layout="null-as-label" key="label.space.normal.capacity">
-				<fr:property name="label" value="--"/>		
+				<fr:property name="label" value="--"/>
 			</fr:slot>
 			<fr:slot name="examCapacity" layout="null-as-label" key="label.space.exam.capacity">
 				<fr:property name="label" value="--"/>		
-			</fr:slot>	
+			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright mtop15" />
@@ -67,13 +67,12 @@
 
 	<logic:notEmpty name="mostRecentBlueprint">
 
-		<p class="mtop2 mbottom05"><b><bean:message key="label.selected.space.blueprint" bundle="DEFAULT"/></b></p>
+		<p class="mtop2 mbottom05"><b><bean:message key="label.selected.space.blueprint" bundle="APPLICATION_RESOURCES"/></b></p>
 
-		<bean:define id="urlToImage"><%= request.getContextPath() %>/publico/findSpaces.do?method=viewSpaceBlueprint&amp;spaceId=<bean:write name="selectedSpace" property="externalId"/></bean:define>			
+		<bean:define id="urlToImage"><%= request.getContextPath() %>/publico/findSpaces.do?method=viewSpaceBlueprint&amp;spaceId=<bean:write name="selectedSpace" property="space.externalId"/>&amp;viewSpaceIdentifications=true</bean:define>			
 		<div style="width: 710px; height: 510px; border: 1px solid #ccc; padding: 10px 5px 5px 10px;">
 			<div style="width: 700px; height: 500px; overflow: scroll;">
-			<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" style="border: 1px solid #ddd; padding: 10px;"/>
-				<%--<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap" style="border: 1px solid #ddd; padding: 10px;"/>
+				<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap" style="border: 1px solid #ddd; padding: 10px;"/>
 				<map id ="roomLinksMap" name="roomLinksMap">
 					<logic:iterate id="blueprintTextRectanglesEntry" name="blueprintTextRectangles">																	
 						<bean:define id="blueprintSpace" name="blueprintTextRectanglesEntry" property="key" />					
@@ -86,11 +85,11 @@
 							<bean:define id="urlToCoords"><%= request.getContextPath() %>/publico/findSpaces.do?method=viewSpace&amp;spaceID=<bean:write name="blueprintSpace" property="externalId"/>&amp;viewSpaceIdentifications=true</bean:define>
 							<area shape="poly" coords="<%= coords %>" href="<%= urlToCoords %>"/>									
 						</logic:iterate>										
-					</logic:iterate>					
-				</map> --%>
-			</div>
-		</div>					
-					
+					</logic:iterate>
+				</map>
+ 			</div>
+		</div>									
+	
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="containedSpaces">
@@ -98,11 +97,11 @@
 		<p class="mtop2 mbottom05"><b><bean:message key="label.selected.space.contained.spaces" bundle="DEFAULT"/></b></p>
 					
 		<fr:view name="containedSpaces">	
-			<fr:schema type="net.sourceforge.fenixedu.domain.space.Space" bundle="DEFAULT">
-				<fr:slot name="class" layout="label" key="label.space.type">
-					<fr:property name="labelFormat" value="label.${simpleName}" />
-					<fr:property name="bundle" value="SPACE_RESOURCES" />
-				</fr:slot>	
+			<fr:schema type="org.fenixedu.spaces.domain.Space" bundle="DEFAULT">
+				<fr:slot name="classification" key="label.space.type">
+					<fr:property name="format" value="${name.content}"></fr:property>
+				</fr:slot>
+				
 				<fr:slot name="presentationName" key="label.find.spaces.space.name"/>
 			</fr:schema>		
 			<fr:layout name="tabular">
