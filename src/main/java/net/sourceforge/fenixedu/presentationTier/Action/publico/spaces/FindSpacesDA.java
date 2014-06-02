@@ -37,7 +37,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
 
 @Mapping(module = "publico", path = "/findSpaces", attribute = "findSpacesForm", formBean = "findSpacesForm", scope = "request",
-        parameter = "method")
+parameter = "method")
 @Forwards(value = { @Forward(name = "listFoundSpaces", path = "list-found-spaces"),
         @Forward(name = "viewSelectedSpace", path = "view-selected-space") })
 public class FindSpacesDA extends FenixDispatchAction {
@@ -137,35 +137,35 @@ public class FindSpacesDA extends FenixDispatchAction {
         final String viewBlueprintNumbersString =
                 request.getParameterMap().containsKey("viewBlueprintNumbers") ? request.getParameter("viewBlueprintNumbers") : (String) request
                         .getAttribute("viewBlueprintNumbers");
-                return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString) : null;
+        return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString) : null;
     }
 
     private Boolean isToViewOriginalSpaceBlueprint(HttpServletRequest request) {
         final String viewOriginalSpaceBlueprintString =
                 request.getParameterMap().containsKey("viewOriginalSpaceBlueprint") ? request
                         .getParameter("viewOriginalSpaceBlueprint") : (String) request.getAttribute("viewOriginalSpaceBlueprint");
-                        return viewOriginalSpaceBlueprintString != null ? Boolean.valueOf(viewOriginalSpaceBlueprintString) : null;
+        return viewOriginalSpaceBlueprintString != null ? Boolean.valueOf(viewOriginalSpaceBlueprintString) : null;
     }
 
     private Boolean isToViewSpaceIdentifications(HttpServletRequest request) {
         final String viewSpaceIdentificationsString =
                 request.getParameterMap().containsKey("viewSpaceIdentifications") ? request
                         .getParameter("viewSpaceIdentifications") : (String) request.getAttribute("viewSpaceIdentifications");
-                        return viewSpaceIdentificationsString != null ? Boolean.valueOf(viewSpaceIdentificationsString) : null;
+        return viewSpaceIdentificationsString != null ? Boolean.valueOf(viewSpaceIdentificationsString) : null;
     }
 
     private Boolean isToViewDoorNumbers(HttpServletRequest request) {
         final String viewDoorNumbersString =
                 request.getParameterMap().containsKey("viewDoorNumbers") ? request.getParameter("viewDoorNumbers") : (String) request
                         .getAttribute("viewDoorNumbers");
-                return viewDoorNumbersString != null ? Boolean.valueOf(viewDoorNumbersString) : null;
+        return viewDoorNumbersString != null ? Boolean.valueOf(viewDoorNumbersString) : null;
     }
 
     private BigDecimal getScalePercentage(HttpServletRequest request) {
         final String scalePercentageString =
                 request.getParameterMap().containsKey("scalePercentage") ? request.getParameter("scalePercentage") : (String) request
                         .getAttribute("scalePercentage");
-                return scalePercentageString != null ? BigDecimal.valueOf(Double.valueOf(scalePercentageString)) : null;
+        return scalePercentageString != null ? BigDecimal.valueOf(Double.valueOf(scalePercentageString)) : null;
     }
 
     public ActionForward viewSpaceBlueprint(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -218,8 +218,6 @@ public class FindSpacesDA extends FenixDispatchAction {
         DateTime now = new DateTime();
 
         Space spaceWithBlueprint = getSuroundingSpaceMostRecentBlueprint(space);
-
-        Boolean suroundingSpaceBlueprint = !spaceWithBlueprint.equals(space);
 
         BlueprintFile mostRecentBlueprint = spaceWithBlueprint.getBlueprintFile().get();
 
