@@ -54,7 +54,7 @@ padding: 0;
 					<logic:iterate id="curricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName">		
 						<bean:define id="degreeCurricularPlanOID" name="curricularCourse" property="degreeCurricularPlan.externalId"/>
 						<li>
-							<html:link page="<%= "/executionCourse.do?method=dispatchToInquiriesResultPage&executionCourseOID=" + executionCourse.getExternalId() + 
+							<html:link page="<%= "/executionCourse.do?method=dispatchToInquiriesResultPage&executionCourseID=" + executionCourse.getExternalId() + 
 								"&degreeCurricularPlanOID=" + degreeCurricularPlanOID %>" target="_blank">
 								Resultados da UC (<bean:write name="curricularCourse" property="degreeCurricularPlan.degree.sigla"/>)
 							</html:link>
@@ -76,8 +76,7 @@ padding: 0;
 					<ul>			
 						<logic:iterate id="teacherInquiryByShift" name="teacherInquiry" property="value">
 							<li>
-								<html:link page="<%= "/executionCourse.do?method=dispatchToTeacherInquiriesResultPage&professorshipOID=" + professorshipOID + 
-										"&shiftType=" + teacherInquiryByShift %>" target="_blank">
+								<html:link page="/executionCourse.do?method=dispatchToTeacherInquiriesResultPage&professorshipOID=${professorshipOID}&shiftType=${teacherInquiryByShift}&executionCourseID=${executionCourse.externalId}" target="_blank">
 									<bean:message name="teacherInquiryByShift" property="name" bundle="ENUMERATION_RESOURCES"/>
 								</html:link>
 							</li>

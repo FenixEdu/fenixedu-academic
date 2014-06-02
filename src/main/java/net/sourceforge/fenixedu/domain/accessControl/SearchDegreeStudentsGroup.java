@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -236,8 +237,7 @@ public class SearchDegreeStudentsGroup implements Serializable {
                 users.add(user);
             }
         }
-//        return UserGroup.of(users);
-        return null;
+        return UserGroup.of(users);
     }
 
     private Comparator<StudentCurricularPlan> determineComparatorKind() {

@@ -108,8 +108,8 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
     protected Locale getRequestedLanguage(HttpServletRequest request) {
         final String language = getRequestedLanguageString(request);
-        return (language == null) ? MultiLanguageString.pt : new Locale.Builder()
-                .setLanguage(getRequestedLanguageString(request)).build();
+        return (language == null) ? MultiLanguageString.pt : new Locale.Builder().setLanguageTag(
+                getRequestedLanguageString(request)).build();
     }
 
     private Integer getSelectedMonth(HttpServletRequest request) {
@@ -219,18 +219,20 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
     }
 
     private boolean testContentAvailabilityForLanguage(Announcement announcement, Locale language) {
-        if (announcement.getSubject() != null && !announcement.getSubject().hasLocale(language)) {
-            return false;
+        return testLanguage(announcement.getSubject(), language) && testLanguage(announcement.getBody(), language)
+                && testLanguage(announcement.getExcerpt(), language) && testLanguage(announcement.getKeywords(), language);
+    }
+
+    private boolean testLanguage(MultiLanguageString mls, Locale language) {
+        return mls == null || mls.isEmpty() || mls.hasLocale(language) || hasLanguage(mls.getAllLocales(), language);
+    }
+
+    private boolean hasLanguage(Collection<Locale> allLocales, Locale language) {
+        for (Locale locale : allLocales) {
+            if (locale.getLanguage().equals(language.getLanguage())) {
+                return true;
+            }
         }
-        if (announcement.getBody() != null && !announcement.getBody().hasLocale(language)) {
-            return false;
-        }
-        if (announcement.getExcerpt() != null && !announcement.getExcerpt().hasLocale(language)) {
-            return false;
-        }
-        if (announcement.getKeywords() != null && !announcement.getKeywords().hasLocale(language)) {
-            return false;
-        }
-        return true;
+        return false;
     }
 }
