@@ -125,7 +125,9 @@ public enum RegistrationAgreement {
 
     DOUBLE_DEGREE_CHINA(false, false, true, false),
 
-    DOUBLE_DEGREE_NETHERLANDS(false, false, true, false);
+    DOUBLE_DEGREE_NETHERLANDS(false, false, true, false),
+
+    IS_LINK(false, false, true, false);
 
     private boolean enrolmentByStudentAllowed;
 
