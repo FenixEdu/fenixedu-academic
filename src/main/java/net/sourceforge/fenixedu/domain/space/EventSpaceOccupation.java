@@ -335,6 +335,11 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         return builder.toString();
     }
 
+    @Override
+    public String getSubject() {
+        return getPresentationString();
+    }
+
     public String getPresentationString() {
         return StringUtils.EMPTY;
     }
@@ -360,6 +365,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     public abstract boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start,
             final DateTime end);
 
+    @Override
     public void delete() {
         setBennu(null);
         getSpaceSet().clear();
