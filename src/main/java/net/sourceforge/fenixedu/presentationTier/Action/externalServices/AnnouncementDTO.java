@@ -105,8 +105,7 @@ public class AnnouncementDTO {
         if (multiLanguageString == null) {
             return null;
         }
-        return multiLanguageString.hasLocale(language) ? multiLanguageString.getContent(language) : multiLanguageString
-                .getContent();
+        return multiLanguageString.getContent(language);
     }
 
     public String getId() {
