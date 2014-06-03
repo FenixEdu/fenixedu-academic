@@ -73,4 +73,14 @@ public class DepartmentProjectSubmissionDA extends ProjectSubmissionsManagementD
         return mapping.findForward("showProjects");
     }
 
+    @Override
+    protected ActionForward doForward(HttpServletRequest request, String path) {
+        return new ActionForward("path", path, false, "");
+    }
+
+    @Override
+    protected void propageIds(HttpServletRequest request) {
+        // Do nothing
+    }
+
 }
