@@ -57,7 +57,7 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(module = "teacher", path = "/projectSubmissionsManagement", functionality = ManageExecutionCourseDA.class)
 public class ProjectSubmissionsManagementDispatchAction extends ExecutionCourseBaseAction {
 
-    private ActionForward doForward(HttpServletRequest request, String path) {
+    protected ActionForward doForward(HttpServletRequest request, String path) {
         request.setAttribute("teacher$actual$page", path);
         return new ActionForward("/evaluation/evaluationFrame.jsp");
     }
