@@ -18,8 +18,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis;
 
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -35,6 +35,8 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -49,9 +51,10 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 
     private static final String SUBJECT_KEY = "thesis.proposal.jury.approve.subject";
     private static final String BODY_KEY = "thesis.proposal.jury.approve.body";
-    private static final String COORDINATOR_BODY_KEY = "thesis.proposal.jury.approve.body.coordinator";
     private static final String NO_DATE_KEY = "thesis.proposal.jury.approve.body.noDate";
     private static final String WITH_DATE_KEY = "thesis.proposal.jury.approve.body.withDate";
+    private static final String COORDINATOR_SENDER = "thesis.proposal.jury.approve.body.sender.coordinator";
+    private static final String COUNCIL_MEMBER_SENDER = "thesis.proposal.jury.approve.body.sender.council";
 
     private static final String DEGREE_ANNOUNCEMENTS_BOARD_NAME = "Anúncios";
 
@@ -66,11 +69,9 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     @Override
     protected Collection<Person> getReceivers(Thesis thesis) {
         Person student = thesis.getStudent().getPerson();
-        Person orientator = thesis.getOrientator().getPerson();
-        Person coorientator = getPerson(thesis.getCoorientator());
         Person president = getPerson(thesis.getPresident());
 
-        Set<Person> persons = personSet(student, orientator, coorientator, president);
+        Set<Person> persons = personSet(student, president);
         for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
             persons.add(participant.getPerson());
         }
@@ -93,8 +94,10 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 
     @Override
     protected String getMessage(Thesis thesis) {
+        Locale locale = I18N.getLocale();
         Person currentPerson = AccessControl.getPerson();
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        String institutionName = Bennu.getInstance().getInstitutionUnit().getPartyName().getContent(locale);
 
         String title = thesis.getTitle().getContent();
         String year = executionYear.getYear();
@@ -103,18 +106,15 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         String studentNumber = thesis.getStudent().getNumber().toString();
         String presidentName = name(thesis.getPresident());
         String presidentAffiliation = affiliation(thesis.getPresident());
-        String orientatorName = name(thesis.getOrientator());
-        String orientatorAffiliation = affiliation(thesis.getOrientator());
-        String coorientatorName = name(thesis.getCoorientator());
-        String coorientatorAffiliation = affiliation(thesis.getCoorientator());
         String vowel1Name = name(thesis.getVowels(), 0);
         String vowel1Affiliation = affiliation(thesis.getVowels(), 0);
         String vowel2Name = name(thesis.getVowels(), 1);
         String vowel2Affiliation = affiliation(thesis.getVowels(), 1);
         String vowel3Name = name(thesis.getVowels(), 2);
         String vowel3Affiliation = affiliation(thesis.getVowels(), 2);
+        String vowel4Name = name(thesis.getVowels(), 3);
+        String vowel4Affiliation = affiliation(thesis.getVowels(), 3);
 
-        String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
         String currentPersonName = currentPerson.getNickname();
 
         String dateMessage;
@@ -129,20 +129,16 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
             discussedDate = thesis.getDiscussed().toString(fmt);
         }
 
-        if (thesis.isCoordinator()) {
-            return getMessage(COORDINATOR_BODY_KEY, year, degreeName, studentName, studentNumber, presidentName,
-                    presidentAffiliation, orientatorName, orientatorAffiliation, includeFlag(coorientatorName), coorientatorName,
-                    coorientatorAffiliation, includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name),
-                    vowel2Name, vowel2Affiliation, includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, dateMessage,
-                    discussedDate, date, currentPersonName);
-        } else {
-            return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
-                    orientatorName, orientatorAffiliation, includeFlag(coorientatorName), coorientatorName,
-                    coorientatorAffiliation, includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name),
-                    vowel2Name, vowel2Affiliation, includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, dateMessage,
-                    discussedDate, date, currentPersonName);
+        String sender = thesis.isCoordinator() ? getMessage(COORDINATOR_SENDER) : getMessage(COUNCIL_MEMBER_SENDER);
 
-        }
+        Calendar today = Calendar.getInstance(locale);
+
+        return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
+                includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name), vowel2Name, vowel2Affiliation,
+                includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, includeFlag(vowel4Name), vowel4Name, vowel4Affiliation,
+                dateMessage, discussedDate, institutionName, "" + today.get(Calendar.DAY_OF_MONTH),
+                today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale), "" + today.get(Calendar.YEAR), sender,
+                currentPersonName);
     }
 
     private int includeFlag(String value) {
