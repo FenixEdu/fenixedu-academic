@@ -892,7 +892,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
             classification = 0;
         }
         request.setAttribute("classification", (new DecimalFormat("#0.##").format(classification)));
-        return doForward(request, "showStudentTest");
+        return doForward(request, "showStudentTestCorrection");
     }
 
     public ActionForward showStudentTestLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -1109,7 +1109,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
             request.setAttribute("changesType", changesType);
             return chooseAnotherExercise(mapping, form, request, response);
         }
-        return doForward(request, "showStudentTest");
+        return doForward(request, "showStudentTestCorrection");
     }
 
     public ActionForward prepareChangeStudentTestQuestionValue(ActionMapping mapping, ActionForm form,
@@ -1141,7 +1141,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
         }
         request.setAttribute("distributedTestCode", distributedTestCode);
         request.setAttribute("studentCode", studentCode);
-        return doForward(request, "showStudentTest");
+        return doForward(request, "showStudentTestCorrection");
     }
 
     public ActionForward prepareChangeStudentTestQuestionMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -1173,7 +1173,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
         }
         request.setAttribute("distributedTestCode", distributedTestCode);
         request.setAttribute("studentCode", studentCode);
-        return doForward(request, "showStudentTest");
+        return doForward(request, "showStudentTestCorrection");
     }
 
     public ActionForward chooseTestSimulationOptions(ActionMapping mapping, ActionForm form, HttpServletRequest request,

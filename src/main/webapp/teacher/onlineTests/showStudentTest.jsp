@@ -26,7 +26,7 @@
 <logic:present name="studentTestQuestionList">
 <logic:notEmpty name="studentTestQuestionList" >
 
-<bean:define id="testCode" value="${pageContext.request.getParameter('testCode')}"/>
+<bean:define id="testCode" value="${pageContext.request.getParameter('distributedTestCode')}"/>
 <bean:define id="pageType" value="${pageContext.request.getParameter('pageType')}"/>
 <bean:define id="correctionType" value="${pageContext.request.getParameter('correctionType')}"/>
 
@@ -540,10 +540,9 @@
 		}%>
 		<tr><td>
 	<%}%>
-	<hr />
 	</logic:iterate>
 	</logic:iterate>
-	</td></tr><tr><td></td></tr>
+	</td></tr><tr><td><hr/></td></tr>
 </table><br/><br/>
 </logic:notEmpty>
 </logic:present>
