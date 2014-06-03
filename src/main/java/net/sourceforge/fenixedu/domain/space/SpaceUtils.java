@@ -21,6 +21,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -165,16 +166,43 @@ public class SpaceUtils {
     public static boolean isFree(Space space, YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime,
             HourMinuteSecond endTime, DiaSemana dayOfWeek, FrequencyType frequency, Boolean dailyFrequencyMarkSaturday,
             Boolean dailyFrequencyMarkSunday) {
+        return isFree(space, startDate, endDate, startTime, endTime, dayOfWeek, frequency, dailyFrequencyMarkSaturday,
+                dailyFrequencyMarkSunday, null);
+    }
+
+    public static boolean isFree(Space space, YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime,
+            HourMinuteSecond endTime, DiaSemana dayOfWeek, FrequencyType frequency, Boolean dailyFrequencyMarkSaturday,
+            Boolean dailyFrequencyMarkSunday, Set<Class<? extends EventSpaceOccupation>> eventSpaceOccupationClassesToSkip) {
+        List<Interval> intervals = null;
+
+        if (eventSpaceOccupationClassesToSkip == null) {
+            eventSpaceOccupationClassesToSkip = Collections.emptySet();
+        }
 
         for (Occupation spaceOccupation : getResourceAllocationsForCheck(space)) {
             if (spaceOccupation instanceof EventSpaceOccupation) {
+                if (eventSpaceOccupationClassesToSkip.contains(spaceOccupation.getClass())) {
+                    continue;
+                }
                 EventSpaceOccupation occupation = (EventSpaceOccupation) spaceOccupation;
                 if (occupation.alreadyWasOccupiedIn(startDate, endDate, startTime, endTime, dayOfWeek, frequency,
                         dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday)) {
                     return false;
                 }
             }
+
+            if (spaceOccupation.getClass().equals(Occupation.class)) {
+                if (intervals == null) {
+                    intervals =
+                            EventSpaceOccupation.generateEventSpaceOccupationIntervals(startDate, endDate, startTime, endTime,
+                                    frequency, dayOfWeek, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday, null, null);
+                }
+                if (spaceOccupation.overlaps(intervals)) {
+                    return false;
+                }
+            }
         }
+
         return true;
     }
 
