@@ -83,6 +83,7 @@ import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
@@ -1221,7 +1222,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
         RoleType roleType = RoleType.MANAGER;
-        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), null, RoleGroup.get(roleType),
+        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), NobodyGroup.get(), RoleGroup.get(roleType),
                 ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
                 ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC, ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
     }
