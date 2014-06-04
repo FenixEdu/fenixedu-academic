@@ -79,6 +79,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         if (!(SpaceUtils.isRoom(resource) || SpaceUtils.isRoomSubdivision(resource))) {
             throw new DomainException("error.EventSpaceOccupation.invalid.resource");
         }
+        getSpaceSet().clear();
         super.addSpace(resource);
     }
 
