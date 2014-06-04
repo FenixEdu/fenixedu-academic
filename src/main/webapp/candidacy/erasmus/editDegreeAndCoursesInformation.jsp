@@ -71,6 +71,7 @@
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="chooseCountryPostback" path="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&method=chooseCountry&amp;processId=" + processId.toString() %>"/>
+		<fr:destination name="chooseMobilityProgramPostback" path="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&method=chooseMobilityProgram&amp;processId=" + processId.toString() %>"/>
 		<fr:destination name="chooseUniversityPostback" path="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&method=chooseUniversity&amp;processId=" + processId.toString() %>"/>
 	</fr:edit>
 </fr:form>

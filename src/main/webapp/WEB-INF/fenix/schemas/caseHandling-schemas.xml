@@ -2349,8 +2349,9 @@
 </schema> 
 
 <schema name="ErasmusIndividualCandidacyProcess.university.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="selectedMobilityProgram" key="label.mobility.program" layout="menu-select" read-only="true">
-		<property name="format" value="${registrationAgreement}" />
+	<slot name="selectedMobilityProgram" key="label.mobility.program" layout="menu-select-postback">
+		<property name="format" value="${name}" />
+		<property name="destination" value="chooseMobilityProgramPostback"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.MobilityProgramProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
