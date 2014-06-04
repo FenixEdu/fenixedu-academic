@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import java.util.SortedSet;
 
 import javax.servlet.ServletOutputStream;
@@ -41,12 +40,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -223,8 +223,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
             row.setCell(process.getPrecedentDegreeInformation().getConclusionGrade());
             row.setCell(process.getCandidacyGrade());
             if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
-                row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(
-                        process.getCandidacyState().getQualifiedName()));
+                row.setCell(BundleUtil.getString(Bundle.ENUMERATION, process.getCandidacyState().getQualifiedName()));
             } else {
                 row.setCell("");
             }
@@ -234,15 +233,14 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
     }
 
     private List<Object> getHeader() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         final List<Object> result = new ArrayList<Object>();
-        result.add(bundle.getString("label.name"));
-        result.add(bundle.getString("label.candidacy.degree.and.school"));
-        result.add(bundle.getString("label.candidacy.affinity"));
-        result.add(bundle.getString("label.candidacy.degreeNature"));
-        result.add(bundle.getString("label.candidacy.mfc"));
-        result.add(bundle.getString("label.candidacy.grade"));
-        result.add(bundle.getString("label.candidacy.result"));
+        result.add(BundleUtil.getString(Bundle.APPLICATION, "label.name"));
+        result.add(BundleUtil.getString(Bundle.APPLICATION, "label.candidacy.degree.and.school"));
+        result.add(BundleUtil.getString(Bundle.APPLICATION, "label.candidacy.affinity"));
+        result.add(BundleUtil.getString(Bundle.APPLICATION, "label.candidacy.degreeNature"));
+        result.add(BundleUtil.getString(Bundle.APPLICATION, "label.candidacy.mfc"));
+        result.add(BundleUtil.getString(Bundle.APPLICATION, "label.candidacy.grade"));
+        result.add(BundleUtil.getString(Bundle.APPLICATION, "label.candidacy.result"));
         return result;
     }
 
@@ -272,8 +270,6 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
             final IndividualCandidacyProcess individualCandidacyProcess) {
         DegreeCandidacyForGraduatedPersonIndividualProcess degreeCandidacyForGraduatedPersonProcess =
                 (DegreeCandidacyForGraduatedPersonIndividualProcess) individualCandidacyProcess;
-        ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale());
-        ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", I18N.getLocale());
 
         final Row row = spreadsheet.addRow();
         row.setCell(degreeCandidacyForGraduatedPersonProcess.getProcessCode());
@@ -288,8 +284,8 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
                 .toString(dateFormat));
         row.setCell(degreeCandidacyForGraduatedPersonProcess.getPrecedentDegreeInformation().getConclusionGrade());
         row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacy().getSelectedDegree().getName());
-        row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
-        row.setCell(candidateBundle.getString(degreeCandidacyForGraduatedPersonProcess.getProcessChecked() != null
+        row.setCell(BundleUtil.getString(Bundle.ENUMERATION, individualCandidacyProcess.getCandidacyState().getQualifiedName()));
+        row.setCell(BundleUtil.getString(Bundle.CANDIDATE, degreeCandidacyForGraduatedPersonProcess.getProcessChecked() != null
                 && degreeCandidacyForGraduatedPersonProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
         return spreadsheet;
     }

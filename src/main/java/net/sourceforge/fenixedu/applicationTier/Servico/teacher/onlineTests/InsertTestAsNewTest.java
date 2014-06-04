@@ -18,9 +18,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -28,9 +26,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -43,8 +41,7 @@ public class InsertTestAsNewTest {
             throw new InvalidArgumentsServiceException();
         }
 
-        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
-        String title = MessageFormat.format(bundle.getString("label.testTitle.duplicated"), new Object[] { oldTest.getTitle() });
+        String title = BundleUtil.getString(Bundle.APPLICATION, "label.testTitle.duplicated", oldTest.getTitle() );
         Test test = new Test(title, oldTest.getInformation(), oldTest.getTestScope());
 
         Collection<TestQuestion> testQuestionList = oldTest.getTestQuestions();

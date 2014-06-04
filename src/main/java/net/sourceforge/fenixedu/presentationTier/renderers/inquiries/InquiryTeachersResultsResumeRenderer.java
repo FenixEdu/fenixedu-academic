@@ -21,14 +21,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -51,8 +49,6 @@ public class InquiryTeachersResultsResumeRenderer extends OutputRenderer {
     }
 
     private class InquiryGeneralGroupLayout extends Layout {
-
-        final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
 
         public InquiryGeneralGroupLayout(Object object) {
         }
@@ -80,7 +76,7 @@ public class InquiryTeachersResultsResumeRenderer extends OutputRenderer {
                 }
                 teacherId = " (" + teacherId + ") - ";
 
-                labelCell.setBody(new HtmlText(bundle.getString(summaryBean.getQuestionResult().getShiftType().name())
+                labelCell.setBody(new HtmlText(BundleUtil.getString(Bundle.ENUMERATION, summaryBean.getQuestionResult().getShiftType().name())
                         + person.getName() + teacherId));
             }
             return mainTable;

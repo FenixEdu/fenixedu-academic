@@ -19,15 +19,15 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -68,8 +68,7 @@ public class PublicPhdMissingCandidacyValidationAlert extends PublicPhdMissingCa
 
     @Override
     public String getDescription() {
-        final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-        return bundle.getString(String.format("message.phd.missing.candidacy.validation.alert", INTERVAL));
+        return BundleUtil.getString(Bundle.PHD, String.format("message.phd.missing.candidacy.validation.alert", INTERVAL));
     }
 
     @Override

@@ -24,7 +24,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -39,11 +38,11 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalTime;
@@ -89,8 +88,7 @@ public class StudentPortalBean implements Serializable {
             }
 
             public EvaluationAnnouncement(Grouping grouping) {
-                ResourceBundle resource = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
-                setEvaluationType(resource.getString("label.grouping"));
+                setEvaluationType(BundleUtil.getString(Bundle.APPLICATION, "label.grouping"));
                 setIdentification(grouping.getName());
                 setRegister(isStudentEnrolled(grouping));
                 setRealization(grouping);
@@ -268,12 +266,11 @@ public class StudentPortalBean implements Serializable {
 
                 this.enrolmentElapsing = interval.containsNow();
 
-                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
                 if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() != null
                         && writtenEvaluation.getEnrollmentEndDayDateYearMonthDay() != null) {
                     this.enrolment =
                             writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay().toString() + " "
-                                    + resource.getString("message.out.until") + " "
+                                    + BundleUtil.getString(Bundle.STUDENT, "message.out.until") + " "
                                     + writtenEvaluation.getEnrollmentEndDayDateYearMonthDay().toString();
                 } else {
                     this.enrolment = "-";
@@ -287,15 +284,13 @@ public class StudentPortalBean implements Serializable {
                         new DateTime(grouping.getEnrolmentBeginDay()).isBeforeNow()
                                 && new DateTime(grouping.getEnrolmentEndDay()).isAfterNow();
 
-                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
                 this.enrolment =
                         YearMonthDay.fromDateFields(grouping.getEnrolmentBeginDayDate()).toString() + " "
-                                + resource.getString("message.out.until") + " "
+                                + BundleUtil.getString(Bundle.STUDENT, "message.out.until") + " "
                                 + YearMonthDay.fromDateFields(grouping.getEnrolmentEndDayDate()).toString();
             }
 
             public void setRoom(WrittenEvaluation writtenEvaluation) {
-                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
                 for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation
                         .getWrittenEvaluationEnrolments()) {
                     if (writtenEvaluationEnrolment.getStudent() != null
@@ -320,14 +315,9 @@ public class StudentPortalBean implements Serializable {
             }
 
             public void setRegister(Boolean registered) {
-                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
-                if (registered) {
-                    this.register = resource.getString("label.enroled");
-                    setRegistered(true);
-                } else {
-                    this.register = resource.getString("message.out.not.enrolled");
-                    setRegistered(false);
-                }
+                final String label = registered ? "label.enroled" : "message.out.not.enrolled";
+                this.register = BundleUtil.getString(Bundle.STUDENT, label);
+                setRegistered(registered);
             }
 
             public void setRegistered(Boolean registered) {

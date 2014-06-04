@@ -98,6 +98,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 import net.sourceforge.fenixedu.presentationTier.util.CollectionFilter;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -1377,9 +1378,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     }
 
     private static final MessageResources applicationResources = MessageResources
-            .getMessageResources("resources/ApplicationResources");
+            .getMessageResources(Bundle.APPLICATION);
     private static final MessageResources enumerationResources = MessageResources
-            .getMessageResources("resources/EnumerationResources");
+            .getMessageResources(Bundle.ENUMERATION);
 
     private void fillProposalsSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
         int maxNumberStudentsPerGroup = 0;

@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
-import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
@@ -47,8 +46,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -525,8 +526,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 new RegistrationConclusionBean(getRegistration(), getCycleCurriculumGroup());
         ExecutionYear executionYear = registrationConclusionBean.getConclusionYear();
         final String degreeFilteredName = degree.getFilteredName(executionYear, getLanguage());
-        result.append(" ")
-                .append(ResourceBundle.getBundle("resources/ApplicationResources", getLanguage()).getString("label.in"));
+        result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, getLanguage(), "label.in"));
 
         List<DegreeCurricularPlan> degreeCurricularPlansForYear = getDegree().getDegreeCurricularPlansForYear(executionYear);
         if (degreeCurricularPlansForYear.size() == 1) {

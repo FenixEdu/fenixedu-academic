@@ -46,9 +46,11 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument {
@@ -166,11 +168,11 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
             final StringBuilder unit = new StringBuilder();
 
             unit.append(academicUnitId.getValue());
-            unit.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.external.curricular.courses.one"));
+            unit.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, "documents.external.curricular.courses.one"));
             unit.append(SINGLE_SPACE).append(getMLSTextContent(academicUnitId.getKey().getPartyName()).toUpperCase());
 
             if (description.length() > 0) {
-                unit.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.external.curricular.courses.two"));
+                unit.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, "documents.external.curricular.courses.two"));
                 unit.append(SINGLE_SPACE).append(description);
             }
             result.append(unit.toString());
@@ -188,7 +190,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
     }
 
     private String getEctsGradeDescription() {
-        return getResourceBundle().getString("label.ects.grade").concat(":");
+        return BundleUtil.getString(Bundle.ACADEMIC, "label.ects.grade").concat(":");
     }
 
     private DateTime computeProcessingDateToLockECTSTableUse() {
@@ -231,7 +233,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
             getCreditsInfo(result, entry);
         }
         result.append(entry.getGradeValue());
-        result.append(StringUtils.rightPad("(" + getEnumerationBundle().getString(entry.getGradeValue()) + ")", SUFFIX_LENGTH,
+        result.append(StringUtils.rightPad("(" + BundleUtil.getString(Bundle.ENUMERATION, entry.getGradeValue()) + ")", SUFFIX_LENGTH,
                 ' '));
 
         result.append(", ");
@@ -242,7 +244,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
         result.append(SINGLE_SPACE);
         result.append(", ");
 
-        final String in = getResourceBundle().getString("label.in");
+        final String in = BundleUtil.getString(Bundle.ACADEMIC, "label.in");
         if (executionYear == null) {
             result.append(StringUtils.rightPad(EMPTY_STR, in.length(), ' '));
             result.append(SINGLE_SPACE).append(StringUtils.rightPad(EMPTY_STR, 9, ' '));
@@ -276,9 +278,9 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
         final Person person = getDocumentRequest().getPerson();
 
         StringBuilder builder1 = new StringBuilder();
-        builder1.append(getResourceBundle().getString("label.with"));
+        builder1.append(BundleUtil.getString(Bundle.ACADEMIC, "label.with"));
         builder1.append(SINGLE_SPACE).append(person.getIdDocumentType().getLocalizedName(getLocale()));
-        builder1.append(SINGLE_SPACE).append(getResourceBundle().getString("label.number.short"));
+        builder1.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, "label.number.short"));
         builder1.append(SINGLE_SPACE).append(person.getDocumentIdNumber());
 
         addParameter("name", person.getName().toUpperCase());

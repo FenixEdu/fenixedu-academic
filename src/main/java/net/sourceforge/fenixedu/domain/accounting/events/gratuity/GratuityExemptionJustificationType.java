@@ -21,11 +21,11 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public enum GratuityExemptionJustificationType {
@@ -90,7 +90,7 @@ public enum GratuityExemptionJustificationType {
     }
 
     public String localizedName(Locale locale) {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
     }
 
     public String getLocalizedName() {

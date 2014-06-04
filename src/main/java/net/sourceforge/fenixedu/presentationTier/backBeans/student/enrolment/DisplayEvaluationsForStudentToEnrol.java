@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -42,16 +41,17 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
 
 public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
-    private final ResourceBundle messages = getResourceBundle("resources/StudentResources");
     private static final ComparatorChain comparatorChain = new ComparatorChain();
     static {
         comparatorChain.addComparator(new ReverseComparator(new BeanComparator("isInEnrolmentPeriod")));
@@ -95,11 +95,11 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     public List<SelectItem> getEvaluationTypes() {
         if (this.evaluationTypes == null) {
             this.evaluationTypes = new ArrayList(4);
-            final String allEvaluations = messages.getString("link.all");
+            final String allEvaluations = BundleUtil.getString(Bundle.STUDENT, "link.all");
             evaluationTypes.add(new SelectItem(ALL, allEvaluations));
-            final String exams = messages.getString("link.exams.enrolment");
+            final String exams = BundleUtil.getString(Bundle.STUDENT, "link.exams.enrolment");
             evaluationTypes.add(new SelectItem(EXAMS, exams));
-            final String writtenTests = messages.getString("link.writtenTests.enrolment");
+            final String writtenTests = BundleUtil.getString(Bundle.STUDENT, "link.writtenTests.enrolment");
             evaluationTypes.add(new SelectItem(WRITTENTESTS, writtenTests));
         }
         return this.evaluationTypes;

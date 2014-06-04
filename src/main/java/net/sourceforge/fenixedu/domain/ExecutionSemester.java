@@ -27,8 +27,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
@@ -52,12 +50,13 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFill
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -76,9 +75,6 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * 
  */
 public class ExecutionSemester extends ExecutionSemester_Base implements Comparable<ExecutionSemester> {
-
-    private static final ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE,
-            new Locale("pt"));
 
     public static final Comparator<ExecutionSemester> COMPARATOR_BY_SEMESTER_AND_YEAR = new Comparator<ExecutionSemester>() {
 
@@ -200,9 +196,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             AcademicCalendarEntry parentEntry = getAcademicInterval().getAcademicCalendarEntry();
             AcademicCalendarRootEntry rootEntry = getAcademicInterval().getAcademicCalendar();
 
-            new TeacherCreditsFillingForDepartmentAdmOfficeCE(parentEntry, new MultiLanguageString(
-                    applicationResourcesBundle.getString("label.TeacherCreditsFillingCE.entry.title")), null, begin, end,
-                    rootEntry);
+            new TeacherCreditsFillingForDepartmentAdmOfficeCE(parentEntry, new MultiLanguageString(BundleUtil.getString(
+                    Bundle.APPLICATION, "label.TeacherCreditsFillingCE.entry.title")), null, begin, end, rootEntry);
 
         } else {
             creditsFillingCE.edit(begin, end);
@@ -218,9 +213,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             AcademicCalendarEntry parentEntry = getAcademicInterval().getAcademicCalendarEntry();
             AcademicCalendarRootEntry rootEntry = getAcademicInterval().getAcademicCalendar();
 
-            new TeacherCreditsFillingForTeacherCE(parentEntry, new MultiLanguageString(
-                    applicationResourcesBundle.getString("label.TeacherCreditsFillingCE.entry.title")), null, begin, end,
-                    rootEntry);
+            new TeacherCreditsFillingForTeacherCE(parentEntry, new MultiLanguageString(BundleUtil.getString(Bundle.APPLICATION,
+                    "label.TeacherCreditsFillingCE.entry.title")), null, begin, end, rootEntry);
             new CreditsPersonFunctionsSharedQueueJob(this);
         } else {
             creditsFillingCE.edit(begin, end);

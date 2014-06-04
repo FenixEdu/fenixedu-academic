@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -109,11 +110,11 @@ public class RejectNewProjectProposal {
         Person senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
 
         List<ExecutionCourse> ecs = groupProperties.getExecutionCourses();
-        GroupsAndShiftsManagementLog.createLog(executionCourse, "resources.MessagingResources",
+        GroupsAndShiftsManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.groupAndShifts.grouping.exportGroup.rejected", groupProperties.getName(),
                 executionCourse.getNome(), executionCourse.getDegreePresentationString());
         for (ExecutionCourse ec : ecs) {
-            GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING,
                     "log.executionCourse.groupAndShifts.grouping.exportGroup.rejected", groupProperties.getName(),
                     executionCourse.getNome(), executionCourse.getDegreePresentationString());
         }

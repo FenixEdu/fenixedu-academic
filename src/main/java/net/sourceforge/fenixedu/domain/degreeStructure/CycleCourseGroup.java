@@ -23,15 +23,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
@@ -78,7 +79,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
             result.append(getDegreeType().getGraduateTitle(getCycleType(), locale));
 
             final String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
-            result.append(" ").append(ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
+            result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, locale, "label.in"));
 
             final MultiLanguageString mls = getGraduateTitleSuffix();
             final String suffix = mls == null ? null : mls.getContent(locale);

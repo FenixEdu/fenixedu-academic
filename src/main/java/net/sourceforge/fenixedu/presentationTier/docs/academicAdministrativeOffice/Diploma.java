@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 
 import java.text.MessageFormat;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -30,10 +29,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 public class Diploma extends AdministrativeOfficeDocument {
@@ -57,25 +58,26 @@ public class Diploma extends AdministrativeOfficeDocument {
         String universityName = getUniversity(diplomaRequest.getRequestDate()).getPartyName().getPreferedContent();
 
         addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
-        addParameter("documentNumber", getResourceBundle().getString("label.diploma.documentNumber"));
+        addParameter("documentNumber", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.documentNumber"));
         addParameter("conclusionDate", diplomaRequest.getConclusionDate().toString(getDatePattern(), getLocale()));
-        addParameter("day", MessageFormat.format(getResourceBundle().getString("label.diploma.university.actualDate"),
+        addParameter("day", MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.university.actualDate"),
                 universityName, getFormatedCurrentDate()));
 
         if (diplomaRequest.hasFinalAverageDescription()) {
             addParameter("finalAverageDescription",
-                    StringUtils.capitalize(getEnumerationBundle().getString(diplomaRequest.getFinalAverage().toString())));
+                    StringUtils.capitalize(BundleUtil.getString(Bundle.ENUMERATION, diplomaRequest.getFinalAverage().toString())));
             addParameter("finalAverageQualified", diplomaRequest.getFinalAverageQualified());
         } else if (diplomaRequest.hasDissertationTitle()) {
             addParameter("dissertationTitle", diplomaRequest.getDissertationThesisTitle());
         }
 
-        String finalAverage = getResourceBundle().getString("diploma.finalAverage");
+        String finalAverage = BundleUtil.getString(Bundle.ACADEMIC, "diploma.finalAverage");
         addParameter("finalAverageDescription", MessageFormat.format(finalAverage,
-                getEnumerationBundle().getString(diplomaRequest.getFinalAverage().toString()), diplomaRequest.getFinalAverage()
-                        .toString(), getResourceBundle().getString(getQualifiedAverageGrade(getLocale()))));
+                BundleUtil.getString(Bundle.ENUMERATION, diplomaRequest.getFinalAverage().toString()), diplomaRequest.getFinalAverage()
+                        .toString(), BundleUtil.getString(Bundle.ACADEMIC, getQualifiedAverageGrade(getLocale()))));
 
-        addParameter("conclusionStatus", MessageFormat.format(getResourceBundle().getString("label.diploma.conclusionStatus"),
+        addParameter("conclusionStatus", MessageFormat.format(
+                BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.conclusionStatus"),
                 getConclusionStatusAndDegreeType(diplomaRequest, getRegistration())));
         addParameter("degreeFilteredName", diplomaRequest.getDegreeFilteredName());
 
@@ -90,9 +92,9 @@ public class Diploma extends AdministrativeOfficeDocument {
         }
 
         addParameter("graduateTitle", graduateTitle);
-        addParameter("message1", getResourceBundle().getString("label.diploma.message1"));
-        addParameter("message2", getResourceBundle().getString("label.diploma.message2"));
-        addParameter("message3", getResourceBundle().getString("label.diploma.message3"));
+        addParameter("message1", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.message1"));
+        addParameter("message2", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.message2"));
+        addParameter("message3", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.message3"));
 
     }
 
@@ -113,21 +115,21 @@ public class Diploma extends AdministrativeOfficeDocument {
         String rectorGender, rectorGrant, presidentGender;
 
         if (presidentIst.isMale()) {
-            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentMale");
+            presidentGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentMale");
         } else {
-            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentFemale");
+            presidentGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentFemale");
         }
 
         if (principal.isMale()) {
-            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorMale");
-            rectorGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantMale");
+            rectorGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.rectorMale");
+            rectorGrant = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentGrantMale");
         } else {
-            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorFemale");
-            rectorGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantFemale");
+            rectorGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.rectorFemale");
+            rectorGrant = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentGrantFemale");
         }
         addParameter("theRector", rectorGender);
         addParameter("president", MessageFormat.format(presidentGender, institutionUnitName));
-        String firstParagraph = getResourceBundle().getString("label.diploma.universityPrincipal");
+        String firstParagraph = BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.universityPrincipal");
         addParameter("firstParagraph",
                 MessageFormat.format(firstParagraph, rectorGender, universityName, rectorGrant, principal.getValidatedName()));
 
@@ -136,11 +138,11 @@ public class Diploma extends AdministrativeOfficeDocument {
 
         if (getUniversity(getDocumentRequest().getRequestDate()) != getUniversity(getDocumentRequest().getConclusionDate()
                 .toDateTimeAtCurrentTime())) {
-            addParameter("UTLDescription", getResourceBundle().getString("label.diploma.UTLDescription"));
-            addParameter("certification", getResourceBundle().getString("label.diploma.certification.UTL"));
+            addParameter("UTLDescription", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.UTLDescription"));
+            addParameter("certification", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.certification.UTL"));
         } else {
             addParameter("UTLDescription", StringUtils.EMPTY);
-            addParameter("certification", getResourceBundle().getString("label.diploma.certification.UL"));
+            addParameter("certification", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.certification.UL"));
         }
     }
 
@@ -160,7 +162,7 @@ public class Diploma extends AdministrativeOfficeDocument {
             throw new DomainException("error.personWithoutParishOfBirth");
         }
 
-        String nationality = getResourceBundle().getString("diploma.nationality");
+        String nationality = BundleUtil.getString(Bundle.ACADEMIC, "diploma.nationality");
         addParameter("birthLocale", MessageFormat.format(nationality, country));
     }
 
@@ -171,9 +173,9 @@ public class Diploma extends AdministrativeOfficeDocument {
     private String getDatePattern() {
         final StringBuilder result = new StringBuilder();
         result.append("dd '");
-        result.append(getApplicationBundle().getString("label.of"));
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.of"));
         result.append("' MMMM '");
-        result.append(getApplicationBundle().getString("label.of"));
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.of"));
         result.append("' yyyy");
         return result.toString();
     }
@@ -183,33 +185,31 @@ public class Diploma extends AdministrativeOfficeDocument {
 
         if (registration.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA
                 || registration.getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
-            forDFA(result, getApplicationBundle(), diplomaRequest, registration);
+            forDFA(result, diplomaRequest, registration);
         } else {
-            forOthers(result, getApplicationBundle(), diplomaRequest, registration);
+            forOthers(result, diplomaRequest, registration);
         }
 
         return result.toString();
     }
 
-    private void forOthers(StringBuilder result, ResourceBundle applicationResources, final DiplomaRequest diplomaRequest,
-            final Registration registration) {
+    private void forOthers(StringBuilder result, final DiplomaRequest diplomaRequest, final Registration registration) {
         final DegreeType degreeType = registration.getDegreeType();
 
         if (degreeType.hasAnyCycleTypes()) {
-            result.append(getEnumerationBundle().getString(diplomaRequest.getWhatShouldBeRequestedCycle().getQualifiedName()));
-            result.append(SINGLE_SPACE).append(applicationResources.getString("of.masculine")).append(SINGLE_SPACE);
+            result.append(BundleUtil.getString(Bundle.ENUMERATION, diplomaRequest.getWhatShouldBeRequestedCycle().getQualifiedName()));
+            result.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.APPLICATION, "of.masculine")).append(SINGLE_SPACE);
         }
 
         result.append(degreeType.getPrefix(getLocale())).append(degreeType.getFilteredName(getLocale()));
     }
 
-    private void forDFA(StringBuilder result, ResourceBundle applicationResources, final DiplomaRequest diplomaRequest,
-            final Registration registration) {
+    private void forDFA(StringBuilder result, final DiplomaRequest diplomaRequest, final Registration registration) {
         final DegreeType degreeType = registration.getDegreeType();
 
         result.append(degreeType.getPrefix()).append(degreeType.getFilteredName());
         if (degreeType.hasExactlyOneCycleType()) {
-            result.append(" (").append(getEnumerationBundle().getString(degreeType.getCycleType().getQualifiedName()))
+            result.append(" (").append(BundleUtil.getString(Bundle.ENUMERATION, degreeType.getCycleType().getQualifiedName()))
                     .append(")");
         }
     }

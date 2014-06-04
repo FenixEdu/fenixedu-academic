@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -83,7 +84,7 @@ public class InsertStudentsInGrouping {
         if (totalStudentsProcessed > 0) {
             List<ExecutionCourse> ecs = groupProperties.getExecutionCourses();
             for (ExecutionCourse ec : ecs) {
-                GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+                GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING,
                         "log.executionCourse.groupAndShifts.grouping.attends.added", Integer.toString(totalStudentsProcessed),
                         sbStudentNumbers.toString(), groupProperties.getName(), ec.getNome(), ec.getDegreePresentationString());
             }

@@ -19,8 +19,10 @@
 package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public enum PhdJuryElementsRatificationEntity {
@@ -28,9 +30,7 @@ public enum PhdJuryElementsRatificationEntity {
 
         @Override
         public String getRatificationEntityMessage(final PhdThesisProcess process, final Locale locale) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
-
-            String message = bundle.getString("message.phd.thesis.ratification.entity." + getName());
+            String message = BundleUtil.getString(Bundle.PHD, "message.phd.thesis.ratification.entity." + getName());
 
             String phdProgramName = process.getIndividualProgramProcess().getPhdProgram().getName().getContent();
             String whenJuryDesignated = process.getWhenJuryDesignated().toString("dd/MM/yyyy");
@@ -44,9 +44,7 @@ public enum PhdJuryElementsRatificationEntity {
 
         @Override
         public String getRatificationEntityMessage(PhdThesisProcess process, final Locale locale) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
-
-            String message = bundle.getString("message.phd.thesis.ratification.entity." + getName());
+            String message = BundleUtil.getString(Bundle.PHD, "message.phd.thesis.ratification.entity." + getName());
 
             String phdProgramName = process.getIndividualProgramProcess().getPhdProgram().getName().getContent();
             String whenJuryDesignated = process.getWhenJuryDesignated().toString("dd/MM/yyyy");
@@ -60,9 +58,7 @@ public enum PhdJuryElementsRatificationEntity {
 
         @Override
         public String getRatificationEntityMessage(PhdThesisProcess process, final Locale locale) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
-
-            String message = bundle.getString("message.phd.thesis.ratification.entity." + getName());
+            String message = BundleUtil.getString(Bundle.PHD, "message.phd.thesis.ratification.entity." + getName());
 
             String phdProgramName = process.getIndividualProgramProcess().getPhdProgram().getName().getContent();
             String whenJuryDesignated = process.getWhenJuryDesignated().toString("dd/MM/yyyy");
@@ -90,7 +86,7 @@ public enum PhdJuryElementsRatificationEntity {
     }
 
     public String getLocalizedName(final Locale locale) {
-        return ResourceBundle.getBundle("resources.PhdResources", locale).getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.PHD, locale, getQualifiedName());
     }
 
     private String getQualifiedName() {

@@ -18,13 +18,15 @@
  */
 package net.sourceforge.fenixedu.domain.contacts;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public enum PartyContactValidationState {
     VALID, INVALID, REFUSED;
 
     public String getPresentationName() {
         final String key = getClass().getSimpleName() + "." + this;
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, key);
+        return BundleUtil.getString(Bundle.ENUMERATION, key);
     };
 }

@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.documents;
 
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +47,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -199,9 +197,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
         final IRSCustomDeclaration customDeclaration = new IRSCustomDeclaration(declarationDTO);
 
         return ReportsUtils.exportToPdfFileAsByteArray(customDeclaration.getReportTemplateKey(),
-                customDeclaration.getParameters(),
-                ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale()),
-                customDeclaration.getDataSource());
+                customDeclaration.getParameters(), customDeclaration.getDataSource());
     }
 
     private void addPayedAmount(Person person, int civilYear, final IRSDeclarationDTO declarationDTO) throws FenixActionException {

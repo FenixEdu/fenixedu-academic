@@ -19,10 +19,10 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public enum BranchType {
@@ -48,7 +48,7 @@ public enum BranchType {
     }
 
     public String getDescription(final Locale locale) {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, locale, getQualifiedName());
     }
 
 }

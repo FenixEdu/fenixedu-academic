@@ -19,13 +19,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.epfl;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -77,12 +75,14 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadDo
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ValidatedByCandidate;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PublicPhdProgramCandidacyProcessDA;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.phd.EPFLPhdCandidacyProcessProperties;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
@@ -274,9 +274,9 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
     }
 
     private void sendSubmissionEmailForCandidacy(final PublicCandidacyHashCode hashCode, final HttpServletRequest request) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
-        final String subject = bundle.getString("message.phd.epfl.application.email.subject.send.link.to.submission");
-        final String body = bundle.getString("message.phd.epfl.email.body.send.link.to.submission");
+        final String subject =
+                BundleUtil.getString(Bundle.PHD, "message.phd.epfl.application.email.subject.send.link.to.submission");
+        final String body = BundleUtil.getString(Bundle.PHD, "message.phd.epfl.email.body.send.link.to.submission");
         hashCode.sendEmail(subject, String.format(body, EPFLPhdCandidacyProcessProperties.getConfiguration()
                 .getPublicCandidacySubmissionLink(), hashCode.getValue()));
     }
@@ -312,10 +312,9 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
     }
 
     private void sendRecoveryEmailForCandidate(PhdProgramPublicCandidacyHashCode candidacyHashCode, HttpServletRequest request) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         final String subject =
-                MessageFormat.format(bundle.getString("message.phd.email.subject.recovery.access"), Unit.getInstitutionAcronym());
-        final String body = bundle.getString("message.phd.epfl.email.body.recovery.access");
+                BundleUtil.getString(Bundle.PHD, "message.phd.email.subject.recovery.access", Unit.getInstitutionAcronym());
+        final String body = BundleUtil.getString(Bundle.APPLICATION, "message.phd.epfl.email.body.recovery.access");
         candidacyHashCode.sendEmail(subject, String.format(body, EPFLPhdCandidacyProcessProperties.getConfiguration()
                 .getPublicCandidacyAccessLink(), candidacyHashCode.getValue()));
     }
@@ -685,9 +684,8 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         // TODO: if candidacy period exists, then change body message to send
         // candidacy limit end date
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
-        final String subject = bundle.getString("message.phd.epfl.email.subject.application.submited");
-        final String body = bundle.getString("message.phd.epfl.email.body.application.submited");
+        final String subject = BundleUtil.getString(Bundle.PHD, "message.phd.epfl.email.subject.application.submited");
+        final String body = BundleUtil.getString(Bundle.PHD, "message.phd.epfl.email.body.application.submited");
         hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
                 EPFLPhdCandidacyProcessProperties.getConfiguration().getPublicCandidacyAccessLink(), hashCode.getValue()));
     }

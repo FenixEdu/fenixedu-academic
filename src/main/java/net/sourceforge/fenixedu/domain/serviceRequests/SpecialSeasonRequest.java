@@ -18,8 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -27,8 +25,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -82,11 +81,8 @@ public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
         if (getDeferred() == null) {
             return "-";
         }
-        if (getDeferred() == true) {
-            return ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale()).getString("request.granted");
-        } else {
-            return ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale()).getString("request.declined");
-        }
+        final String key = getDeferred() == true ? "request.granted" : "request.declined";
+        return BundleUtil.getString(Bundle.ACADEMIC, key);
     }
 
     @Atomic

@@ -76,13 +76,15 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ExecutionCoursePredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseManagementBean;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
@@ -319,7 +321,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         String ecFrom = executionCourseFrom.getName();
         String ecFromPresentation = executionCourseFrom.getDegreePresentationString();
 
-        ContentManagementLog.createLog(this, "resources.MessagingResources", "log.executionCourse.content.section.import",
+        ContentManagementLog.createLog(this, Bundle.MESSAGING, "log.executionCourse.content.section.import",
                 ecFrom, ecFromPresentation, this.getName(), this.getDegreePresentationString());
     }
 
@@ -363,14 +365,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         final String type;
         if (optional) {
             type =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+                    BundleUtil.getString(Bundle.APPLICATION,
                             "option.bibliographicReference.optional");
         } else {
             type =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+                    BundleUtil.getString(Bundle.APPLICATION,
                             "option.bibliographicReference.recommended");
         }
-        CurricularManagementLog.createLog(this, "resources.MessagingResources",
+        CurricularManagementLog.createLog(this, Bundle.MESSAGING,
                 "log.executionCourse.curricular.bibliographic.created", type, title, this.getName(),
                 this.getDegreePresentationString());
     }
@@ -1221,7 +1223,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
         RoleType roleType = RoleType.MANAGER;
-        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), null, RoleGroup.get(roleType),
+        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), NobodyGroup.get(), RoleGroup.get(roleType),
                 ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
                 ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC, ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
     }

@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class DegreeLog extends DegreeLog_Base {
 
@@ -56,7 +56,7 @@ public class DegreeLog extends DegreeLog_Base {
     }
 
     protected static String generateLabelDescription(String bundle, String key, String... args) {
-        return BundleUtil.getStringFromResourceBundle(bundle, key, args);
+        return BundleUtil.getString(bundle, key, args);
     }
 
     public DegreeLogTypes getDegreeLogType() {

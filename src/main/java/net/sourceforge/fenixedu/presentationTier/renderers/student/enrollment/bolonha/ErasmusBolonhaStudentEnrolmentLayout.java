@@ -36,10 +36,12 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.rendererExtensions.controllers.CopyCheckBoxValuesController;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
@@ -105,7 +107,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 
                 CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
                 degreeName +=
-                        " (" + getRenderer().studentResources.getString("label.grade.scale") + " - "
+                        " (" + BundleUtil.getString(Bundle.STUDENT, "label.grade.scale") + " - "
                                 + curricularCourse.getGradeScaleChain().getDescription() + ") ";
             }
 
@@ -124,7 +126,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 
                 final StringBuilder ects = new StringBuilder();
                 ects.append(degreeModuleToEvaluate.getEctsCredits()).append(" ")
-                        .append(getRenderer().studentResources.getString("label.credits.abbreviation"));
+                        .append(BundleUtil.getString(Bundle.STUDENT, "label.credits.abbreviation"));
                 ectsCell.setBody(new HtmlText(ects.toString()));
 
                 HtmlTableCell checkBoxCell = htmlTableRow.createCell();
@@ -144,7 +146,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
                 linkTableCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
 
                 final HtmlActionLink actionLink = new HtmlActionLink();
-                actionLink.setText(getRenderer().studentResources.getString("label.chooseOptionalCurricularCourse"));
+                actionLink.setText(BundleUtil.getString(Bundle.STUDENT, "label.chooseOptionalCurricularCourse"));
                 actionLink.setController(new OptionalCurricularCourseLinkController(degreeModuleToEvaluate));
                 actionLink
                         .setOnClick("$(\\\"form[name='net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm']\\\").method.value='prepareChooseOptionalCurricularCourseToEnrol';");
@@ -273,7 +275,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
                 }
 
                 degreeName +=
-                        " (" + getRenderer().studentResources.getString("label.grade.scale") + " - "
+                        " (" + BundleUtil.getString(Bundle.STUDENT, "label.grade.scale") + " - "
                                 + curricularCourse.getGradeScaleChain().getDescription() + ") ";
             }
 
@@ -290,7 +292,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 
             final StringBuilder ects = new StringBuilder();
             ects.append(curricularCourse.getEctsCredits()).append(" ")
-                    .append(getRenderer().studentResources.getString("label.credits.abbreviation"));
+                    .append(BundleUtil.getString(Bundle.STUDENT, "label.credits.abbreviation"));
             ectsCell.setBody(new HtmlText(ects.toString()));
 
             HtmlTableCell checkBoxCell = htmlTableRow.createCell();

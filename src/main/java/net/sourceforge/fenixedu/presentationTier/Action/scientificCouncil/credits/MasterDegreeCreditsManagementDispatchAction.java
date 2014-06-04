@@ -53,7 +53,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificCreditsApp;
 import net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -63,6 +63,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.ExceptionHandler;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
@@ -395,7 +396,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
                     ExecutionCourse executionCourse = executionCourseMap.getFirst().getKey();
                     final Row row = spreadsheet.addRow();
                     row.setCell(masterDegreeCreditsDTO.getCurricularCourse().getName());
-                    row.setCell(BundleUtil.getEnumName(masterDegreeCreditsDTO.getCurricularCourse().getType()));
+                    row.setCell(BundleUtil.getString(Bundle.ENUMERATION, masterDegreeCreditsDTO.getCurricularCourse().getType().name()));
                     row.setCell(masterDegreeCreditsDTO.getCurricularCourse().getCredits().toString());
                     row.setCell(String.valueOf(executionCourseMap.getSecond()));
                     row.setCell(String.valueOf(executionCourseMap.getThird()));

@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -66,7 +67,7 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
+    private static final MessageResources messages = MessageResources.getMessageResources(Bundle.DEGREE);
 
     private static final Locale locale = new Locale("pt", "PT");
 

@@ -49,11 +49,12 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
@@ -229,7 +230,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
             if (degree != null) {
                 filename += "_" + degree.getNameFor(executionYear).getContent().replace(' ', '_');
             } else if (degreeType != null) {
-                filename += "_" + BundleUtil.getEnumName(degreeType).replace(' ', '_');
+                filename += "_" + degreeType.getLocalizedName().replace(' ', '_');
             }
             filename += "_" + executionYear.getYear();
 
@@ -265,16 +266,16 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
         AcademicServiceRequestSituationType situationType = requestSearchBean.getAcademicServiceRequestSituationType();
         spreadsheet.newHeaderRow();
         if (requestType != null) {
-            spreadsheet.addHeader(getResourceMessage("label.type") + ": " + BundleUtil.getEnumName(requestType));
+            spreadsheet.addHeader(getResourceMessage("label.type") + ": " + requestType.getLocalizedName());
         }
         if (documentType != null) {
             spreadsheet
                     .addHeader(getResourceMessage("label.documentRequestsManagement.searchDocumentRequests.documentRequestType")
-                            + ": " + BundleUtil.getEnumName(documentType));
+                            + ": " + documentType.getQualifiedName());
         }
         spreadsheet.newHeaderRow();
         if (situationType != null) {
-            spreadsheet.addHeader(getResourceMessage("label.state") + ": " + BundleUtil.getEnumName(situationType));
+            spreadsheet.addHeader(getResourceMessage("label.state") + ": " + situationType.getLocalizedName());
         }
         spreadsheet.newHeaderRow();
         if (requestSearchBean.isUrgentRequest()) {
@@ -322,6 +323,6 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     }
 
     static private String getResourceMessage(String key) {
-        return BundleUtil.getMessageFromModuleOrApplication("academicAdminOffice", key);
+        return BundleUtil.getString(Bundle.ACADEMIC, key);
     }
 }

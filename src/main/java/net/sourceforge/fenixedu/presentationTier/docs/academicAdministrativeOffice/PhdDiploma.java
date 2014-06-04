@@ -27,11 +27,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 public class PhdDiploma extends AdministrativeOfficeDocument {
@@ -55,12 +57,12 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
         String universityName = university.getPartyName().getPreferedContent();
 
         PhdDiplomaRequest diplomaRequest = getDocumentRequest();
-        String phdProgramConclusion = getResourceBundle().getString("label.phd.diploma.pdhProgramConclusion");
+        String phdProgramConclusion = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.diploma.pdhProgramConclusion");
         ExecutionYear conclusionYear = ExecutionYear.readByDateTime(diplomaRequest.getConclusionDate());
         String phdProgramDescription =
                 getDocumentRequest().getPhdIndividualProgramProcess().getPhdProgram().getDegree().getNameI18N(conclusionYear)
                         .getContent(getLanguage());
-        String phdConclusionDate = getResourceBundle().getString("label.phd.diploma.pdhConclusionDate");
+        String phdConclusionDate = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.diploma.pdhConclusionDate");
 
         addParameter("conclusionMessage", phdProgramConclusion);
         addParameter("phdProgram", phdProgramDescription);
@@ -69,31 +71,31 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
                 MessageFormat.format(phdConclusionDate, diplomaRequest.getConclusionDate()
                         .toString(getDatePattern(), getLocale()).toLowerCase()));
 
-        addParameter("documentNumber", getResourceBundle().getString("label.diploma.documentNumber"));
+        addParameter("documentNumber", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.documentNumber"));
         addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
-        addParameter("day", MessageFormat.format(getResourceBundle().getString("label.diploma.university.actualDate"),
+        addParameter("day", MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.university.actualDate"),
                 universityName, getFormatedCurrentDate()));
 
         addParameter("classificationResult", MessageFormat.format(
-                getResourceBundle().getString("label.phd.Diploma.classificationResult"), diplomaRequest.getThesisFinalGrade()
+                BundleUtil.getString(Bundle.ACADEMIC, "label.phd.Diploma.classificationResult"), diplomaRequest.getThesisFinalGrade()
                         .getLocalizedName(getLocale())));
         addParameter("dissertationTitle", diplomaRequest.getDissertationThesisTitle());
         addParameter("graduateTitle", diplomaRequest.getGraduateTitle(getLocale()));
 
         if (getUniversity(getDocumentRequest().getRequestDate()) != getUniversity(getDocumentRequest().getConclusionDate()
                 .toDateTimeAtCurrentTime())) {
-            addParameter("UTLDescription", getResourceBundle().getString("label.diploma.UTLDescription"));
-            addParameter("certification", getResourceBundle().getString("label.diploma.phd.certification.UTL"));
+            addParameter("UTLDescription", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.UTLDescription"));
+            addParameter("certification", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.phd.certification.UTL"));
 
         } else {
             addParameter("UTLDescription", StringUtils.EMPTY);
-            addParameter("certification", getResourceBundle().getString("label.diploma.phd.certification.UL"));
+            addParameter("certification", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.phd.certification.UL"));
         }
 
-        addParameter("message1", getResourceBundle().getString("label.diploma.message1"));
-        addParameter("message3", getResourceBundle().getString("label.diploma.message3"));
-        addParameter("phdmessage1", getResourceBundle().getString("label.phd.diploma.message1"));
+        addParameter("message1", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.message1"));
+        addParameter("message3", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.message3"));
+        addParameter("phdmessage1", BundleUtil.getString(Bundle.ACADEMIC, "label.phd.diploma.message1"));
     }
 
     private String getFormatedCurrentDate() {
@@ -103,9 +105,9 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
     private String getDatePattern() {
         final StringBuilder result = new StringBuilder();
         result.append("dd '");
-        result.append(getApplicationBundle().getString("label.of"));
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.of"));
         result.append("' MMMM '");
-        result.append(getApplicationBundle().getString("label.of"));
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.of"));
         result.append("' yyyy");
         return result.toString();
     }
@@ -125,7 +127,7 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
             throw new DomainException("error.personWithoutParishOfBirth");
         }
 
-        String nationality = getResourceBundle().getString("diploma.nationality");
+        String nationality = BundleUtil.getString(Bundle.ACADEMIC, "diploma.nationality");
         addParameter("birthLocale", MessageFormat.format(nationality, country));
 
     }
@@ -149,21 +151,21 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
         String rectorGender, rectorGrant, presidentGender;
 
         if (presidentIst.isMale()) {
-            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentMale");
+            presidentGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentMale");
         } else {
-            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentFemale");
+            presidentGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentFemale");
         }
 
         if (principal.isMale()) {
-            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorMale");
-            rectorGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantMale");
+            rectorGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.rectorMale");
+            rectorGrant = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentGrantMale");
         } else {
-            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorFemale");
-            rectorGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantFemale");
+            rectorGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.rectorFemale");
+            rectorGrant = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentGrantFemale");
         }
         addParameter("theRector", rectorGender);
         addParameter("president", MessageFormat.format(presidentGender, institutionUnitName));
-        String firstParagraph = getResourceBundle().getString("label.diploma.universityPrincipal");
+        String firstParagraph = BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.universityPrincipal");
         addParameter("firstParagraph",
                 MessageFormat.format(firstParagraph, rectorGender, universityName, rectorGrant, principal.getValidatedName()));
     }

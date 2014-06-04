@@ -18,10 +18,10 @@
  */
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public enum TypeOfProgramme {
     PROJECT, THESIS, LAB, SEMINAR, COURSES;
@@ -39,7 +39,6 @@ public enum TypeOfProgramme {
     }
 
     public String getDescription() {
-        ResourceBundle ENUMERATION_RESOURCES = ResourceBundle.getBundle("resources/EnumerationResources", Locale.getDefault());
-        return ENUMERATION_RESOURCES.getString(getFullyQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, getFullyQualifiedName());
     }
 }

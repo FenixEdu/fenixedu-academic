@@ -37,7 +37,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMFirstYearShiftsApp;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -122,20 +123,20 @@ public class ExportFirstYearShiftsDA extends FenixContextDispatchAction {
     }
 
     private void addHeader(final Spreadsheet spreadsheet, final EntryPhase phase) {
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources",
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION,
                 "label.manager.degree.name"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources",
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION,
                 "label.class"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources",
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION,
                 "property.executionCourse.name"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources",
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION,
                 "property.shift"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources",
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION,
                 "property.shift.type"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources",
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION,
                 "property.shift.capacity"));
         if (!phase.equals(EntryPhase.FIRST_PHASE)) {
-            spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources",
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION,
                     "property.shift.ocupation"));
         }
 

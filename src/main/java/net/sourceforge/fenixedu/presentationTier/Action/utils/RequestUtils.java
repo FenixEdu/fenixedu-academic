@@ -38,13 +38,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * 
@@ -83,18 +84,6 @@ public class RequestUtils {
             @Override
             public Object transform(Object arg0) {
                 InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
-                //InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
-                //InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
-                /*
-                TODO: DUPLICATE check really needed?
-                StringBuilder label = new StringBuilder();
-                label.append(infoDegree.getDegreeType().toString());
-                label.append(" " + BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.in") + " ");
-                label.append(infoDegree.getNome());
-                if (((Boolean) duplicateDegreesMap.get(infoDegree.getNome())).booleanValue()) {
-                    label.append(" - ");
-                    label.append(infoDegreeCurricularPlan.getName());
-                }*/
 
                 String label =
                         infoExecutionDegree.getInfoDegreeCurricularPlan().getDegreeCurricularPlan()
@@ -115,18 +104,12 @@ public class RequestUtils {
 
     public static final List<LabelValueBean> buildCurricularYearLabelValueBean() {
         final List<LabelValueBean> curricularYears = new ArrayList<LabelValueBean>();
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.RendererResources",
-                "renderers.menu.default.title"), ""));
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE,
-                "1.ordinal.short"), "1"));
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE,
-                "2.ordinal.short"), "2"));
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE,
-                "3.ordinal.short"), "3"));
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE,
-                "4.ordinal.short"), "4"));
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE,
-                "5.ordinal.short"), "5"));
+        curricularYears.add(new LabelValueBean(BundleUtil.getString(Bundle.RENDERER, "renderers.menu.default.title"), ""));
+        curricularYears.add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, "1.ordinal.short"), "1"));
+        curricularYears.add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, "2.ordinal.short"), "2"));
+        curricularYears.add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, "3.ordinal.short"), "3"));
+        curricularYears.add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, "4.ordinal.short"), "4"));
+        curricularYears.add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, "5.ordinal.short"), "5"));
         return curricularYears;
     }
 

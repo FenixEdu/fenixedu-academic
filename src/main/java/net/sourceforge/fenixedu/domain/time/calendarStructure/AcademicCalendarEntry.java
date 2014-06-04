@@ -24,7 +24,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
@@ -32,10 +31,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeFieldType;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.DayType;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -440,9 +441,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     public MultiLanguageString getType() {
         MultiLanguageString type = new MultiLanguageString();
         String key = "label." + getClass().getSimpleName() + ".type";
-        type =
-                type.with(MultiLanguageString.pt,
-                        ResourceBundle.getBundle("resources/ManagerResources", new Locale("pt", "PT")).getString(key));
+        type = type.with(MultiLanguageString.pt, BundleUtil.getString(Bundle.MANAGER, new Locale("pt", "PT"), key));
         return type;
     }
 

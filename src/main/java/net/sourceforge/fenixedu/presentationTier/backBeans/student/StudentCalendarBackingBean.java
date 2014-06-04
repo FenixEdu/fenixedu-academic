@@ -49,6 +49,7 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
@@ -58,7 +59,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
     private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/StudentResources");
+    private static final MessageResources messages = MessageResources.getMessageResources(Bundle.STUDENT);
 
     private static final Comparator<ExecutionCourse> executionCourseComparator = new Comparator<ExecutionCourse>() {
 

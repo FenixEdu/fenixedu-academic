@@ -28,9 +28,10 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
@@ -298,7 +299,7 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
             if (approvedEvaluationMark == null) {
                 stringBuilder.append("N/A");
             } else {
-                stringBuilder.append(BundleUtil.getEnumName(approvedEvaluationMark));
+                stringBuilder.append(BundleUtil.getString(Bundle.ENUMERATION, approvedEvaluationMark.name()));
             }
         }
         return stringBuilder.length() == 0 ? null : stringBuilder.toString();

@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 
 import java.io.Serializable;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,10 +32,12 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -166,8 +167,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
                 return getRegistration().getDegreeCurricularPlanName();
             } else {
                 Locale locale = I18N.getLocale();
-                ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
-                StringBuilder stringBuilder = new StringBuilder(bundle.getString("label.phd")).append(" ");
+                StringBuilder stringBuilder = new StringBuilder(BundleUtil.getString(Bundle.PHD, "label.phd")).append(" ");
                 stringBuilder.append(getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(locale));
                 return stringBuilder.toString();
             }

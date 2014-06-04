@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -29,8 +28,10 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsTableIndex;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.CreditsDismissalLog;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -108,8 +109,8 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString(MultiLanguageString.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
-                new Locale("pt", "PT")).getString("label.group.credits"));
+        return new MultiLanguageString(MultiLanguageString.pt, BundleUtil.getString(Bundle.ACADEMIC, new Locale("pt", "PT"),
+                "label.group.credits"));
     }
 
     @Override

@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext;
 
@@ -39,9 +38,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -318,7 +317,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
+        return BundleUtil.getString(Bundle.APPLICATION, name);
     }
 
     public String getSerializedFilteredStudents() {
@@ -416,8 +415,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     private String getFilename() {
-        return ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale()).getString(
-                "label.students.lowercase");
+        return BundleUtil.getString(Bundle.APPLICATION, "label.students.lowercase");
     }
 
     private String getAverageInformation(final StudentCurricularPlan studentCurricularPlan) {
@@ -436,26 +434,25 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     private Spreadsheet createSpreadSheet() {
-        final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
-        final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("list.students"));
+        final Spreadsheet spreadsheet = new Spreadsheet(BundleUtil.getString(Bundle.APPLICATION, "list.students"));
 
         spreadsheet.setHeaders(new String[] {
 
-        bundle.getString("label.number"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.number"),
 
-        bundle.getString("label.name"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.name"),
 
-        bundle.getString("label.email"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.email"),
 
-        bundle.getString("label.student.curricular.plan.state"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.student.curricular.plan.state"),
 
-        bundle.getString("label.number.approved.curricular.courses"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.number.approved.curricular.courses"),
 
-        bundle.getString("label.ects"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.ects"),
 
-        bundle.getString("label.aritmeticAverage"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.aritmeticAverage"),
 
-        bundle.getString("label.student.curricular.year"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.student.curricular.year"),
 
         " ", " " });
 

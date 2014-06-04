@@ -34,7 +34,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -148,7 +147,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.Money;
@@ -166,10 +165,10 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.user.management.UserLoginPeriod;
 import org.fenixedu.bennu.user.management.UserManager;
 import org.fenixedu.commons.StringNormalizer;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -634,7 +633,7 @@ public class Person extends Person_Base {
     }
 
     /**
-     *
+     * 
      * @deprecated use edit(PersonBean personBean)
      * @see edit(PersonBean personBean)
      */
@@ -1026,7 +1025,7 @@ public class Person extends Person_Base {
     /**
      * The main difference between this method and {@link #getActivePersonFunctions()} is that person functions with a virtual
      * function are also included. This method also collects person functions from the given unit and all subunits.
-     *
+     * 
      * @see Function#isVirtual()
      */
     public List<PersonFunction> getAllActivePersonFunctions(final Unit unit) {
@@ -1121,7 +1120,7 @@ public class Person extends Person_Base {
     /**
      * Filters all parent PersonFunction accountabilities and returns all the PersonFunctions that selection indicated in the
      * parameters.
-     *
+     * 
      * @param unit
      *            filter all PersonFunctions to this unit, or <code>null</code> for all PersonFunctions
      * @param includeSubUnits
@@ -1206,9 +1205,9 @@ public class Person extends Person_Base {
     }
 
     /**
-     *
+     * 
      * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
-     *
+     * 
      */
     @Atomic
     public void mergeAndDelete(Person personToMergeLogs) {
@@ -1220,10 +1219,10 @@ public class Person extends Person_Base {
     }
 
     /**
-     *
+     * 
      * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
-     *
-     *
+     * 
+     * 
      * @return true if the person have been deleted, false otherwise
      */
     @Override
@@ -1512,9 +1511,8 @@ public class Person extends Person_Base {
 
             if (sender != null) {
                 final Recipient recipient = new Recipient(RoleGroup.get(RoleType.MANAGER));
-                new Message(sender, recipient, BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, subjectKey),
-                        BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, bodyKey,
-                                person.getPresentationName()));
+                new Message(sender, recipient, BundleUtil.getString(Bundle.APPLICATION, subjectKey), BundleUtil.getString(
+                        Bundle.APPLICATION, bodyKey, person.getPresentationName()));
             }
         }
 
@@ -2752,10 +2750,9 @@ public class Person extends Person_Base {
     }
 
     public List<String> getMainRoles() {
-        final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
         final List<String> result = new ArrayList<String>();
         for (Role role : getImportantRoles(new ArrayList<Role>())) {
-            result.add(bundle.getString(role.getRoleType().toString()));
+            result.add(BundleUtil.getString(Bundle.ENUMERATION, role.getRoleType().toString()));
         }
         return result;
     }
@@ -4150,33 +4147,25 @@ public class Person extends Person_Base {
 
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(this);
         if (oldValue.compareTo(newValue) != 0) {
-            String infoLabel = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, keyLabel);
-            String typeOfData = BundleUtil.getStringFromResourceBundle("resources.MessagingResources", keyTypeOfData);
-            PersonInformationLog.createLog(this, "resources.MessagingResources", "log.personInformation.edit.generalTemplate",
-                    typeOfData, infoLabel, personViewed, oldValue);
+            String infoLabel = BundleUtil.getString(Bundle.APPLICATION, keyLabel);
+            String typeOfData = BundleUtil.getString(Bundle.MESSAGING, keyTypeOfData);
+            PersonInformationLog.createLog(this, Bundle.MESSAGING, "log.personInformation.edit.generalTemplate", typeOfData,
+                    infoLabel, personViewed, oldValue);
         }
     }
 
     private void logSetterNullString(String keyInfoType, String oldValue, String newValue, String keyLabel) {
         String argNew, argOld;
-        argOld =
-                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"),
-                        oldValue);
-        argNew =
-                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"),
-                        newValue);
+        argOld = valueToUpdateIfNewNotNull(BundleUtil.getString(Bundle.APPLICATION, "label.empty"), oldValue);
+        argNew = valueToUpdateIfNewNotNull(BundleUtil.getString(Bundle.APPLICATION, "label.empty"), newValue);
         logSetter(keyInfoType, argOld, argNew, keyLabel);
     }
 
     private void logSetterNullYearMonthDay(String keyInfoType, YearMonthDay oldValue, YearMonthDay newValue, String keyLabel) {
         Object argNew, argOld;
         String strNew, strOld;
-        argOld =
-                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle("resources.HtmlaltResources", "text.dateEmpty"),
-                        oldValue);
-        argNew =
-                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle("resources.HtmlaltResources", "text.dateEmpty"),
-                        newValue);
+        argOld = valueToUpdateIfNewNotNull(BundleUtil.getString(Bundle.HTML, "text.dateEmpty"), oldValue);
+        argNew = valueToUpdateIfNewNotNull(BundleUtil.getString(Bundle.HTML, "text.dateEmpty"), newValue);
 
         if (argOld instanceof YearMonthDay) {
             strOld = ((YearMonthDay) argOld).toString("yyyy/MM/dd");
@@ -4195,12 +4184,8 @@ public class Person extends Person_Base {
     private void logSetterNullEnum(String keyInfoType, IPresentableEnum oldValue, IPresentableEnum newValue, String keyLabel) {
         Object argNew, argOld;
         String strNew, strOld;
-        argOld =
-                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"),
-                        oldValue);
-        argNew =
-                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"),
-                        newValue);
+        argOld = valueToUpdateIfNewNotNull(BundleUtil.getString(Bundle.APPLICATION, "label.empty"), oldValue);
+        argNew = valueToUpdateIfNewNotNull(BundleUtil.getString(Bundle.APPLICATION, "label.empty"), newValue);
 
         if (argOld instanceof Enum) {
             strOld = ((IPresentableEnum) argOld).getLocalizedName();
@@ -4295,7 +4280,7 @@ public class Person extends Person_Base {
                 argOld = getCountry().getName();
             }
         } else {
-            argOld = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty");
+            argOld = BundleUtil.getString(Bundle.APPLICATION, "label.empty");
         }
 
         if (arg != null) {
@@ -4305,7 +4290,7 @@ public class Person extends Person_Base {
                 argNew = arg.getName();
             }
         } else {
-            argNew = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty");
+            argNew = BundleUtil.getString(Bundle.APPLICATION, "label.empty");
         }
         super.setCountry(arg);
         logSetter("log.personInformation.edit.generalTemplate.filiation", argOld, argNew, "label.nationality");
@@ -4340,13 +4325,13 @@ public class Person extends Person_Base {
         if (getCountryOfBirth() != null) {
             argOld = getCountryOfBirth().getName();
         } else {
-            argOld = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty");
+            argOld = BundleUtil.getString(Bundle.APPLICATION, "label.empty");
         }
 
         if (arg != null) {
             argNew = arg.getName();
         } else {
-            argNew = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty");
+            argNew = BundleUtil.getString(Bundle.APPLICATION, "label.empty");
         }
         super.setCountryOfBirth(arg);
         logSetter("log.personInformation.edit.generalTemplate.filiation", argOld, argNew, "label.countryOfBirth");

@@ -24,7 +24,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.faces.component.UISelectItems;
 import javax.faces.context.FacesContext;
@@ -49,9 +48,10 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
@@ -216,12 +216,13 @@ public class ViewTeacherService extends FenixBackingBean {
 
     private List<SelectItem> getExecutionPeriods() throws FenixServiceException {
 
-        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", I18N.getLocale());
-
         List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(BOTH_SEMESTERS_ID, rb.getString("label.teacherService.bothSemesters")));
-        result.add(new SelectItem(FIRST_SEMESTER_ID, rb.getString("label.teacherService.firstSemester")));
-        result.add(new SelectItem(SECOND_SEMESTER_ID, rb.getString("label.teacherService.secondSemester")));
+        result.add(new SelectItem(BOTH_SEMESTERS_ID, BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.bothSemesters")));
+        result.add(new SelectItem(FIRST_SEMESTER_ID, BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.firstSemester")));
+        result.add(new SelectItem(SECOND_SEMESTER_ID, BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.secondSemester")));
 
         return result;
 
@@ -277,10 +278,9 @@ public class ViewTeacherService extends FenixBackingBean {
             loadDistributionServiceDataByCourse();
         }
 
-        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", I18N.getLocale());
         final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("teacher distribution");
-        fillSpreadSheetHeaders(spreadsheet, rb);
-        fillSpreadSheedResults(spreadsheet, rb);
+        fillSpreadSheetHeaders(spreadsheet);
+        fillSpreadSheedResults(spreadsheet);
 
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
@@ -298,46 +298,57 @@ public class ViewTeacherService extends FenixBackingBean {
         fc.responseComplete();
     }
 
-    private void fillSpreadSheetHeaders(final StyledExcelSpreadsheet spreadsheet, ResourceBundle rb) {
+    private void fillSpreadSheetHeaders(final StyledExcelSpreadsheet spreadsheet) {
         spreadsheet.newHeaderRow();
 
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.name"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.campus"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.degrees"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.curricularYears"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.semester"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.name"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.campus"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.degrees"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.curricularYears"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.semester"));
 
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.firstTimeEnrolledStudentsNumber"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.secondTimeEnrolledStudentsNumber"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.firstTimeEnrolledStudentsNumber"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.secondTimeEnrolledStudentsNumber"));
 
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.totalStudentsNumber"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.totalStudentsNumber"));
 
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.theoreticalHours"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.praticalHours"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.laboratorialHours"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.theoPratHours"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.seminary"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.problems"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.tutorialOrientation"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.fieldWork"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.trainingPeriod"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.theoreticalHours"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.praticalHours"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.laboratorialHours"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.theoPratHours"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.seminary"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.problems"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.tutorialOrientation"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.fieldWork"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.trainingPeriod"));
 
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.totalHours"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.availability"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.totalHours"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.course.availability"));
 
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.studentsNumberByTheoreticalShift"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.studentsNumberByPraticalShift"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.studentsNumberByLaboratorialShift"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.studentsNumberByTheoPraticalShift"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.studentsNumberBySeminaryShift"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.studentsNumberByProblemsShift"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.studentsNumberByTutorialOrientationShift"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.studentsNumberByFieldWorkShift"));
-        spreadsheet.addHeader(rb.getString("label.teacherService.course.studentsNumberByTrainingPeriodShift"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.studentsNumberByTheoreticalShift"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.studentsNumberByPraticalShift"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.studentsNumberByLaboratorialShift"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.studentsNumberByTheoPraticalShift"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.studentsNumberBySeminaryShift"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.studentsNumberByProblemsShift"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.studentsNumberByTutorialOrientationShift"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.studentsNumberByFieldWorkShift"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.course.studentsNumberByTrainingPeriodShift"));
 
     }
 
-    private void fillSpreadSheedResults(final StyledExcelSpreadsheet spreadsheet, ResourceBundle rb) {
+    private void fillSpreadSheedResults(final StyledExcelSpreadsheet spreadsheet) {
 
         for (ExecutionCourseDistributionServiceEntryDTO entry : this.executionCourseServiceDTO) {
             int teacherColumns =
@@ -382,7 +393,7 @@ public class ViewTeacherService extends FenixBackingBean {
                 spreadsheet.newRow();
                 String description = teacher.getDescription();
                 if (!teacher.getTeacherOfDepartment()) {
-                    description += " " + rb.getString("label.teacherService.hours");
+                    description += " " + BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.hours");
                 }
                 spreadsheet.addCell(description);
                 spreadsheet.mergeCells(spreadsheet.getRow().getRowNum(), spreadsheet.getRow().getRowNum(), 0, teacherColumns - 1);
@@ -479,22 +490,24 @@ public class ViewTeacherService extends FenixBackingBean {
 
     private List<SelectItem> getViewOptions() throws FenixServiceException {
 
-        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", I18N.getLocale());
-
         List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(VIEW_COURSE_INFORMATION, rb.getString("label.teacherService.viewCourseInfo")));
-        result.add(new SelectItem(VIEW_STUDENTS_ENROLMENTS, rb.getString("label.teacherService.viewStudentsEnrolments")));
-        result.add(new SelectItem(VIEW_HOURS_PER_SHIFT, rb.getString("label.teacherService.viewHoursPerShift")));
-        result.add(new SelectItem(VIEW_STUDENTS_PER_SHIFT, rb.getString("label.teacherService.viewStudentsPerShift")));
+        result.add(new SelectItem(VIEW_COURSE_INFORMATION, BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.viewCourseInfo")));
+        result.add(new SelectItem(VIEW_STUDENTS_ENROLMENTS, BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.viewStudentsEnrolments")));
+        result.add(new SelectItem(VIEW_HOURS_PER_SHIFT, BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.viewHoursPerShift")));
+        result.add(new SelectItem(VIEW_STUDENTS_PER_SHIFT, BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.viewStudentsPerShift")));
 
         return result;
     }
 
     private List<SelectItem> getByTeacherViewOptions() throws FenixServiceException {
 
-        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", I18N.getLocale());
         List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(VIEW_CREDITS_INFORMATION, rb.getString("label.teacherService.viewCreditsInfo")));
+        result.add(new SelectItem(VIEW_CREDITS_INFORMATION, BundleUtil.getString(Bundle.DEPARTMENT_MEMBER,
+                "label.teacherService.viewCreditsInfo")));
 
         return result;
     }

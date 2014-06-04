@@ -69,6 +69,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
@@ -375,18 +376,18 @@ public class MergeExecutionCourses {
         if (transferedContents.size() > 0) {
             final Set<String> bccs = createListOfEmailAddresses(executionCourseTo);
             final StringBuilder message = new StringBuilder();
-            message.append(BundleUtil.getString("resources.GlobalResources", "mergeExecutionCourses.email.body"));
+            message.append(BundleUtil.getString(Bundle.GLOBAL, "mergeExecutionCourses.email.body"));
 
             for (final CmsContent content : transferedContents) {
                 message.append("\n\t");
                 message.append(content.getName());
             }
 
-            message.append(BundleUtil.getString("resources.GlobalResources", "mergeExecutionCourses.email.greetings"));
+            message.append(BundleUtil.getString(Bundle.GLOBAL, "mergeExecutionCourses.email.greetings"));
             SystemSender systemSender = Bennu.getInstance().getSystemSender();
             new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, BundleUtil.getString(
-                    "resources.GlobalResources", "mergeExecutionCourses.email.subject",
-                    new String[] { executionCourseTo.getNome() }), message.toString(), bccs);
+                    Bundle.GLOBAL, "mergeExecutionCourses.email.subject", new String[] { executionCourseTo.getNome() }),
+                    message.toString(), bccs);
         }
     }
 

@@ -19,8 +19,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
 import java.io.OutputStream;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,11 +28,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeTeachersApp;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -74,12 +73,10 @@ public class SearchTeachersDA extends FenixAction {
     }
 
     private Spreadsheet getSpreadsheet() {
-        final ResourceBundle enumResourceBundle =
-                ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, new Locale("pt", "PT"));
         final Spreadsheet spreadsheet = new Spreadsheet("Teachers");
         spreadsheet.setHeader("Identificação");
-        spreadsheet.setHeader(enumResourceBundle.getString("label.person.name"));
-        spreadsheet.setHeader(enumResourceBundle.getString("label.person.email"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.person.name"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.person.email"));
         return spreadsheet;
     }
 

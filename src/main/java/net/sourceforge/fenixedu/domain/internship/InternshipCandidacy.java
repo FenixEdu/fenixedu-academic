@@ -24,7 +24,8 @@ import java.util.Random;
 import net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -60,10 +61,10 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         beanToModel(bean, candidacy);
 
         SystemSender sender = Bennu.getInstance().getSystemSender();
-        new Message(sender, sender.getConcreteReplyTos(), Collections.EMPTY_LIST, BundleUtil.getStringFromResourceBundle(
-                "resources.GlobalResources", "iaeste.email.subject"), BundleUtil.getStringFromResourceBundle(
-                "resources.GlobalResources", "iaeste.email.body", new String[] { candidacy.getName(),
-                        candidacy.getCandidacyCode().toString() }), candidacy.getEmail());
+        new Message(sender, sender.getConcreteReplyTos(), Collections.EMPTY_LIST, BundleUtil.getString(
+                Bundle.GLOBAL, "iaeste.email.subject"), BundleUtil.getString(Bundle.GLOBAL,
+                "iaeste.email.body", new String[] { candidacy.getName(), candidacy.getCandidacyCode().toString() }),
+                candidacy.getEmail());
         return candidacy.getCandidacyCode();
     }
 

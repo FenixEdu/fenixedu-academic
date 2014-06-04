@@ -27,7 +27,8 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluat
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessYear;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -218,15 +219,15 @@ public class ReductionService extends ReductionService_Base {
 
     private void log(final String key, BigDecimal credits) {
         final StringBuilder log = new StringBuilder();
-        log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", key));
+        log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS, key));
         log.append(credits);
         new TeacherServiceLog(getTeacherService(), log.toString());
     }
 
     private void log(final String key, Boolean requested) {
         final StringBuilder log = new StringBuilder();
-        log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", key));
-        log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+        log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS, key));
+        log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                 requested ? "message.yes" : "message.no"));
         new TeacherServiceLog(getTeacherService(), log.toString());
     }

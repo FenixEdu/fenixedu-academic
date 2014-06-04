@@ -44,7 +44,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificTeachersApp;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -240,7 +241,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                     final String[] parts = tline.split(splitChar);
 
                     if (parts.length != 6) {
-                        messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+                        messages.add(BundleUtil.getString(Bundle.SCIENTIFIC,
                                 "label.message.invalid.line.format", Integer.toString(lineCount)));
                         continue;
                     }
@@ -257,25 +258,25 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                     final Department department = Department.find(parts[5].trim());
 
                     if (istUsername == null || istUsername.isEmpty() || User.findByUsername(istUsername) == null) {
-                        messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+                        messages.add(BundleUtil.getString(Bundle.SCIENTIFIC,
                                 "label.message.istUsername.invalid", Integer.toString(lineCount), parts[0].trim()));
                         continue;
                     }
 
                     if (professionalCategory == null) {
-                        messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+                        messages.add(BundleUtil.getString(Bundle.SCIENTIFIC,
                                 "label.message.professionalCategory.invalid", Integer.toString(lineCount), parts[1].trim()));
                         continue;
                     }
 
                     if (department == null) {
-                        messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+                        messages.add(BundleUtil.getString(Bundle.SCIENTIFIC,
                                 "label.message.department.invalid", Integer.toString(lineCount), parts[5].trim()));
                         continue;
                     }
 
                     if (lessonHours == null) {
-                        messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+                        messages.add(BundleUtil.getString(Bundle.SCIENTIFIC,
                                 "label.message.lessonHours.invalid", Integer.toString(lineCount), parts[2].trim()));
                         continue;
                     }
@@ -301,7 +302,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                 try {
                     bean.create();
                 } catch (final FenixActionException ex) {
-                    messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources", ex.getMessage(),
+                    messages.add(BundleUtil.getString(Bundle.SCIENTIFIC, ex.getMessage(),
                             bean.getIstUsername()));
                 }
             }

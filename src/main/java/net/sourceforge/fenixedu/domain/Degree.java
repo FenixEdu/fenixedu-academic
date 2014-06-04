@@ -33,7 +33,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -61,13 +60,14 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisState;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -725,7 +725,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         final String degreeType = getDegreeType().getLocalizedName(locale);
         if (!StringUtils.isEmpty(degreeType)) {
             res.append(degreeType).append(" ");
-            res.append(ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, locale).getString("label.in"));
+            res.append(BundleUtil.getString(Bundle.APPLICATION, locale, "label.in"));
             res.append(" ");
         }
 

@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
@@ -40,8 +39,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -270,7 +271,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 
     @Override
     public String getProgrammeTypeDescription() {
-        return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString("label.php.program");
+        return BundleUtil.getString(Bundle.PHD, "label.php.program");
     }
 
     @Override

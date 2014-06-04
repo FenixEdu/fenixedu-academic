@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
@@ -79,8 +78,10 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrd
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -111,15 +112,14 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
             result.setWhenJuryRequired(bean.getWhenThesisDiscussionRequired());
 
             String presidentTitlePt =
-                    MessageFormat.format(
-                            ResourceBundle.getBundle("resources.PhdResources", new Locale("pt", "PT")).getString(
-                                    "message.phd.thesis.president.title.default"), Unit.getInstitutionAcronym());
+                    MessageFormat.format(BundleUtil.getString(Bundle.PHD, new Locale("pt", "PT"),
+                            "message.phd.thesis.president.title.default"), Unit.getInstitutionAcronym());
             String presidentTitleEn =
-                    MessageFormat.format(
-                            ResourceBundle.getBundle("resources.PhdResources", new Locale("en", "EN")).getString(
-                                    "message.phd.thesis.president.title.default"), Unit.getInstitutionAcronym());
+                    MessageFormat.format(BundleUtil.getString(Bundle.PHD, new Locale("en", "EN"),
+                            "message.phd.thesis.president.title.default"), Unit.getInstitutionAcronym());
 
-            result.setPresidentTitle(new MultiLanguageString(MultiLanguageString.pt, presidentTitlePt).with(MultiLanguageString.en, presidentTitleEn));
+            result.setPresidentTitle(new MultiLanguageString(MultiLanguageString.pt, presidentTitlePt).with(
+                    MultiLanguageString.en, presidentTitleEn));
 
             if (!result.getIndividualProgramProcess().isMigratedProcess()) {
                 new PhdThesisRequestFee(bean.getProcess());
@@ -238,7 +238,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     @Override
     public String getDisplayName() {
-        return ResourceBundle.getBundle("resources/PhdResources").getString(getClass().getSimpleName());
+        return BundleUtil.getString(Bundle.PHD, getClass().getSimpleName());
     }
 
     @Override

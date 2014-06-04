@@ -20,9 +20,6 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import static org.apache.commons.lang.StringUtils.EMPTY;
 import static org.apache.commons.lang.StringUtils.isEmpty;
-
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -30,8 +27,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -186,12 +184,11 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
     }
 
     public String getRoleOnProcess() {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         if (getIndividualProcess().isGuider(getPerson())) {
-            return resourceBundle.getString("label.phd.guiding");
+            return BundleUtil.getString(Bundle.PHD, "label.phd.guiding");
         }
         if (getIndividualProcess().isAssistantGuider(getPerson())) {
-            return resourceBundle.getString("label.phd.assistant.guiding");
+            return BundleUtil.getString(Bundle.PHD, "label.phd.assistant.guiding");
         }
         return null;
     }

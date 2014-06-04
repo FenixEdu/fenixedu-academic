@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.faces.event.ActionEvent;
@@ -53,9 +52,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -86,20 +87,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     private List<PersonFunction> teacherFunctions;
 
-    private ResourceBundle bundle;
-
-    private static final String BUNDLE_NAME = "resources/DepartmentMemberResources";
-
     private static final String ALL_EXECUTION_YEARS_KEY = "label.common.allExecutionYears";
-
-    public ResourceBundle getBundle() {
-
-        if (this.bundle == null) {
-            this.bundle = getResourceBundle(BUNDLE_NAME);
-        }
-
-        return this.bundle;
-    }
 
     public String getSelectedTeacherID() {
 
@@ -180,7 +168,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
                 result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
             }
 
-            result.add(0, new SelectItem(0, getBundle().getString(ALL_EXECUTION_YEARS_KEY)));
+            result.add(0, new SelectItem(0, BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, ALL_EXECUTION_YEARS_KEY)));
 
             this.executionYearItems = result;
         }

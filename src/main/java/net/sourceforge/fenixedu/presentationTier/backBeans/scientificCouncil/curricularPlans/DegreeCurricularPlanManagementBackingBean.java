@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.cu
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.faces.model.SelectItem;
 
@@ -43,12 +42,13 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
-    private final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
-    private final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
     private final String NO_SELECTION = "noSelection";
 
     private String degreeId;
@@ -129,9 +129,9 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     public List<SelectItem> getGradeScales() {
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        result.add(new SelectItem(this.NO_SELECTION, scouncilBundle.getString("choose")));
-        result.add(new SelectItem(GradeScale.TYPE20.name(), enumerationBundle.getString(GradeScale.TYPE20.name())));
-        result.add(new SelectItem(GradeScale.TYPE5.name(), enumerationBundle.getString(GradeScale.TYPE5.name())));
+        result.add(new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
+        result.add(new SelectItem(GradeScale.TYPE20.name(), BundleUtil.getString(Bundle.ENUMERATION, GradeScale.TYPE20.name())));
+        result.add(new SelectItem(GradeScale.TYPE5.name(), BundleUtil.getString(Bundle.ENUMERATION, GradeScale.TYPE5.name())));
 
         return result;
     }
@@ -144,20 +144,20 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         try {
             CreateDegreeCurricularPlan.run(this.getDegreeId(), this.name, null);
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
         } catch (FenixServiceException e) {
-            this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, e.getMessage()));
             return "";
         } catch (DomainException e) {
-            addErrorMessages(domainExceptionBundle, e.getKey(), e.getArgs());
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getKey(), e.getArgs()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(scouncilBundle.getString("error.creatingDegreeCurricularPlan"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.creatingDegreeCurricularPlan"));
             return "curricularPlansManagement";
         }
 
-        this.addInfoMessage(scouncilBundle.getString("degreeCurricularPlan.created"));
+        this.addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degreeCurricularPlan.created"));
         return "curricularPlansManagement";
     }
 
@@ -165,12 +165,13 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         List<SelectItem> result = new ArrayList<SelectItem>();
 
         if (!getDcp().hasAnyExecutionDegrees()) {
-            result.add(new SelectItem(CurricularStage.DRAFT.name(), enumerationBundle.getString(CurricularStage.DRAFT.getName())));
+            result.add(new SelectItem(CurricularStage.DRAFT.name(), BundleUtil.getString(Bundle.ENUMERATION,
+                    CurricularStage.DRAFT.getName())));
         }
-        result.add(new SelectItem(CurricularStage.PUBLISHED.name(), enumerationBundle.getString(CurricularStage.PUBLISHED
-                .getName())));
-        result.add(new SelectItem(CurricularStage.APPROVED.name(),
-                enumerationBundle.getString(CurricularStage.APPROVED.getName())));
+        result.add(new SelectItem(CurricularStage.PUBLISHED.name(), BundleUtil.getString(Bundle.ENUMERATION,
+                CurricularStage.PUBLISHED.getName())));
+        result.add(new SelectItem(CurricularStage.APPROVED.name(), BundleUtil.getString(Bundle.ENUMERATION,
+                CurricularStage.APPROVED.getName())));
 
         return result;
     }
@@ -178,14 +179,14 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     public List<SelectItem> getStates() {
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        result.add(new SelectItem(DegreeCurricularPlanState.ACTIVE.name(), enumerationBundle
-                .getString(DegreeCurricularPlanState.ACTIVE.getName())));
-        result.add(new SelectItem(DegreeCurricularPlanState.NOT_ACTIVE.name(), enumerationBundle
-                .getString(DegreeCurricularPlanState.NOT_ACTIVE.getName())));
-        result.add(new SelectItem(DegreeCurricularPlanState.CONCLUDED.name(), enumerationBundle
-                .getString(DegreeCurricularPlanState.CONCLUDED.getName())));
-        result.add(new SelectItem(DegreeCurricularPlanState.PAST.name(), enumerationBundle
-                .getString(DegreeCurricularPlanState.PAST.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.ACTIVE.name(), BundleUtil.getString(Bundle.ENUMERATION,
+                DegreeCurricularPlanState.ACTIVE.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.NOT_ACTIVE.name(), BundleUtil.getString(Bundle.ENUMERATION,
+                DegreeCurricularPlanState.NOT_ACTIVE.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.CONCLUDED.name(), BundleUtil.getString(Bundle.ENUMERATION,
+                DegreeCurricularPlanState.CONCLUDED.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.PAST.name(), BundleUtil.getString(Bundle.ENUMERATION,
+                DegreeCurricularPlanState.PAST.getName())));
 
         return result;
     }
@@ -235,20 +236,20 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
             EditDegreeCurricularPlan.run(getDcpId(), getName(), CurricularStage.valueOf(getCurricularStage()),
                     DegreeCurricularPlanState.valueOf(getState()), null, getExecutionYearID());
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
         } catch (FenixServiceException e) {
-            this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, e.getMessage()));
             return "";
         } catch (DomainException e) {
-            addErrorMessages(domainExceptionBundle, e.getKey(), e.getArgs());
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getKey(), e.getArgs()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(scouncilBundle.getString("error.editingDegreeCurricularPlan"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.editingDegreeCurricularPlan"));
             return "curricularPlansManagement";
         }
 
-        this.addInfoMessage(scouncilBundle.getString("degreeCurricularPlan.edited"));
+        this.addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degreeCurricularPlan.edited"));
         return "curricularPlansManagement";
     }
 
@@ -256,20 +257,20 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         try {
             DeleteDegreeCurricularPlan.run(this.getDcpId());
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
         } catch (FenixServiceException e) {
-            this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, e.getMessage()));
             return "";
         } catch (DomainException e) {
-            addErrorMessages(domainExceptionBundle, e.getKey(), e.getArgs());
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getKey(), e.getArgs()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(scouncilBundle.getString("error.deletingDegreeCurricularPlan"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.deletingDegreeCurricularPlan"));
             return "curricularPlansManagement";
         }
 
-        this.addInfoMessage(scouncilBundle.getString("degreeCurricularPlan.deleted"));
+        this.addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degreeCurricularPlan.deleted"));
         return "curricularPlansManagement";
     }
 

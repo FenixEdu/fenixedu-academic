@@ -32,13 +32,14 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -96,12 +97,12 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
     private void sendPhysicalAddressValidationEmail(PhysicalAddressValidation physicalAddressValidation) {
         final Person person = (Person) physicalAddressValidation.getPartyContact().getParty();
         final String subject =
-                BundleUtil.getMessageFromModuleOrApplication("manager", "label.contacts.validation.operator.email.subject",
+                BundleUtil.getString(Bundle.MANAGER, "label.contacts.validation.operator.email.subject",
                         Unit.getInstitutionAcronym());
         final String state = StringUtils.uncapitalize(physicalAddressValidation.getState().getPresentationName());
         String body =
-                BundleUtil.getMessageFromModuleOrApplication("manager", "label.contacts.validation.operator.email.body",
-                        physicalAddressValidation.getPartyContact().getPresentationValue(), state);
+                BundleUtil.getString(Bundle.MANAGER, "label.contacts.validation.operator.email.body", physicalAddressValidation
+                        .getPartyContact().getPresentationValue(), state);
         final String description = physicalAddressValidation.getDescription();
         if (!StringUtils.isEmpty(description)) {
             body += "\n" + description;

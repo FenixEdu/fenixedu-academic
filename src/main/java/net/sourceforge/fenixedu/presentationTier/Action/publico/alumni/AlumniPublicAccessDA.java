@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.alumni;
 
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,12 +38,13 @@ import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.KaptchaAction;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,8 +70,6 @@ import pt.utl.ist.fenix.tools.util.EMail;
 public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(AlumniPublicAccessDA.class);
-
-    final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.AlumniResources", I18N.getLocale());
 
     public ActionForward initFenixPublicAccess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -159,14 +157,6 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
             final Alumni alumni =
                     RegisterAlumniData.run(alumniBean.getStudentNumber(), alumniBean.getDocumentIdNumber().trim(),
                             alumniBean.getEmail());
-
-            // development help
-            // String url =
-            // MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"),
-            // alumni.getStudent()
-            // .getPerson().getFirstAndLastName(),
-            // alumni.getExternalId().toString(), alumni.getUrlRequestToken(),
-            // ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
             String url = AlumniNotificationService.getRegisterConclusionURL(alumni);
             request.setAttribute("alumniEmailSuccessMessage", "http" + url.split("http")[1]);
             request.setAttribute("alumni", alumni);
@@ -202,12 +192,10 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     public ActionForward sendEmailReportingError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AlumniResources", I18N.getLocale());
-
         final AlumniErrorSendingMailBean alumniBean = getRenderedObject();
         StringBuilder mailBody = new StringBuilder();
-        mailBody.append(resourceBundle.getString("message.alumni.mail.body.header"));
-        mailBody.append("'").append(resourceBundle.getString(alumniBean.getErrorMessage())).append("'\n\n");
+        mailBody.append(BundleUtil.getString(Bundle.ALUMNI, "message.alumni.mail.body.header"));
+        mailBody.append("'").append(BundleUtil.getString(Bundle.ALUMNI, alumniBean.getErrorMessage())).append("'\n\n");
 
         String[] mailArgs = new String[8];
         mailArgs[0] = alumniBean.getFullName();
@@ -222,7 +210,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
         String messageBody =
                 RenderUtils.getFormatedResourceString("ALUMNI_RESOURCES", "message.alumni.mail.person.data", mailArgs);
         mailBody.append(messageBody);
-        mailBody.append("\n\n").append(resourceBundle.getString("message.alumni.mail.body.footer"));
+        mailBody.append("\n\n").append(BundleUtil.getString(Bundle.ALUMNI, "message.alumni.mail.body.footer"));
         EMail email = null;
         try {
             if (!request.getServerName().equals("localhost")) {
@@ -243,8 +231,8 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
     public ActionForward innerFenixPublicAccessValidation(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        String alumniId = RESOURCES.getString("alumni.public.registration.first.argument");
-        String urlToken = RESOURCES.getString("alumni.public.registration.second.argument");
+        String alumniId = BundleUtil.getString(Bundle.ALUMNI, "alumni.public.registration.first.argument");
+        String urlToken = BundleUtil.getString(Bundle.ALUMNI, "alumni.public.registration.second.argument");
         final Alumni alumni = getDomainObject(request, alumniId);
 
         if (StringUtils.isEmpty(alumniId) || StringUtils.isEmpty(urlToken) || alumni == null) {
@@ -332,8 +320,8 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String publicAccessURL =
-                MessageFormat.format(RESOURCES.getString("alumni.public.registration.url.content.path"), ResourceBundle
-                        .getBundle("resources.GlobalResources").getString("fenix.url"));
+                MessageFormat.format(BundleUtil.getString(Bundle.ALUMNI, "alumni.public.registration.url.content.path"),
+                        BundleUtil.getString(Bundle.GLOBAL, "fenix.url"));
         request.setAttribute("publicAccessUrl", publicAccessURL);
         return mapping.findForward("alumniMailingLists");
     }

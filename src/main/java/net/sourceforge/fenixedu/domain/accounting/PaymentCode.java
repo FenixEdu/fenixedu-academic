@@ -19,20 +19,19 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Comparator;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGeneratorFactory;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -241,8 +240,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     public String getDescription() {
-        final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-        return enumerationResources.getString(getType().getQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, getType().getQualifiedName());
     }
 
     abstract protected void internalProcess(final Person person, final Money amount, final DateTime whenRegistered,

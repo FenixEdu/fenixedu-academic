@@ -19,11 +19,11 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public enum NoCourseGroupCurriculumGroupType {
@@ -55,7 +55,7 @@ public enum NoCourseGroupCurriculumGroupType {
     }
 
     public String getLocalizedName(final Locale locale) {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, locale, getQualifiedName());
     }
 
     public String getQualifiedName() {

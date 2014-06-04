@@ -24,7 +24,8 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionW
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
@@ -51,7 +52,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
 
     private void log(final String key) {
         final StringBuilder log = new StringBuilder();
-        log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", key));
+        log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS, key));
         log.append(getWeekDay().getLabel());
         log.append(" ");
         log.append(getStartTime().getHours());

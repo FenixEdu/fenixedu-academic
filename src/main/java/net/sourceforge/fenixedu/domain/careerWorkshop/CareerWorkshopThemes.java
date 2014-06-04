@@ -21,8 +21,10 @@ package net.sourceforge.fenixedu.domain.careerWorkshop;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public enum CareerWorkshopThemes {
@@ -47,7 +49,7 @@ public enum CareerWorkshopThemes {
     }
 
     public String getDescription(final Locale locale) {
-        return ResourceBundle.getBundle("resources.StudentResources", locale).getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.STUDENT, locale, getQualifiedName());
     }
 
     static public Map<Integer, CareerWorkshopThemes> getEmptyRankings() {

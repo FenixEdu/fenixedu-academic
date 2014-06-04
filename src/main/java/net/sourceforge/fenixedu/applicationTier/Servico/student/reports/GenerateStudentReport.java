@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.reports;
 
 import java.io.Serializable;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -38,8 +37,6 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class GenerateStudentReport implements Serializable {
-
-    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources/EnumerationResources");
 
     public static class StudentReportPredicate implements Serializable {
 

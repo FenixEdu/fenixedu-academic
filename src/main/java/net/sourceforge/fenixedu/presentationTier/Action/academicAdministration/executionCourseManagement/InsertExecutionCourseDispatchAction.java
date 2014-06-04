@@ -37,7 +37,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.A
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -208,8 +209,8 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     private String errorStringBuilder(String property) {
-        return BundleUtil.getStringFromResourceBundle("resources.ManagerResources", "errors.required",
-                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, property))
+        return BundleUtil.getString(Bundle.MANAGER, "errors.required",
+                BundleUtil.getString(Bundle.APPLICATION, property))
                 + " ";
     }
 }

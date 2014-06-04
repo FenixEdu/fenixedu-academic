@@ -19,26 +19,24 @@
 package net.sourceforge.fenixedu.domain.phd.reports;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class RecommendationLetterReport extends PhdReport {
 
-    private final ResourceBundle bundle;
-
     public RecommendationLetterReport(HSSFWorkbook workbook) {
         super(workbook);
-        this.bundle = ResourceBundle.getBundle("resources.PhdResources");
     }
 
     public HSSFSheet build(final SearchPhdIndividualProgramProcessBean bean) {
@@ -139,12 +137,12 @@ public class RecommendationLetterReport extends PhdReport {
     }
 
     private String getHeaderInBundle(String field) {
-        return this.bundle.getString("label.net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport."
+        return BundleUtil.getString(Bundle.PHD, "label.net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport."
                 + field);
     }
 
     private String getResource(String key) {
-        return this.bundle.getString(key);
+        return BundleUtil.getString(Bundle.PHD, key);
     }
 
 }

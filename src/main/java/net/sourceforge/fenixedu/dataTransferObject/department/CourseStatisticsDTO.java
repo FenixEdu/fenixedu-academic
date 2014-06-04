@@ -21,10 +21,11 @@ package net.sourceforge.fenixedu.dataTransferObject.department;
 import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public abstract class CourseStatisticsDTO implements Serializable, Comparable<CourseStatisticsDTO> {
@@ -66,8 +67,7 @@ public abstract class CourseStatisticsDTO implements Serializable, Comparable<Co
             };
 
     public CourseStatisticsDTO() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/DepartmentMemberResources", I18N.getLocale());
-        NOT_AVAILABLE = bundle.getString("label.common.notAvailable");
+        NOT_AVAILABLE = BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.common.notAvailable");
     }
 
     public CourseStatisticsDTO(String externalId, String name, int firstEnrolledCount, int firstApprovedCount,

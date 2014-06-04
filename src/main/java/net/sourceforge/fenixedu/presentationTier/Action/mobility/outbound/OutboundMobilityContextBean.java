@@ -38,7 +38,8 @@ import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandida
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.joda.time.DateTime;
 
@@ -335,8 +336,8 @@ public class OutboundMobilityContextBean implements Serializable {
                 }
             }
         } else {
-            throw new DomainException("error.mobility.outbound.unable.to.set.grades", BundleUtil.getStringFromResourceBundle(
-                    "resources.AcademicAdminOffice", "error.mobility.outbound.null.file"));
+            throw new DomainException("error.mobility.outbound.unable.to.set.grades", BundleUtil.getString(
+                    Bundle.ACADEMIC, "error.mobility.outbound.null.file"));
         }
     }
 

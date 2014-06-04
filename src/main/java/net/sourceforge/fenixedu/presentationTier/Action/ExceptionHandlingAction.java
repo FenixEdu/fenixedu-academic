@@ -224,7 +224,7 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
         appendNewLine(builder, 1);
 
         generateLabel(builder,
-                BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.APPLICATION_BUNDLE, "label.type.single"))
+                BundleUtil.getString(net.sourceforge.fenixedu.util.Bundle.APPLICATION, "label.type.single"))
                 .append("[").append(getRequestTypeAsString(requestBean)).append("]");
         appendNewLine(builder, 1);
 
@@ -253,13 +253,13 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
     }
 
     private void appendUserInfo(StringBuilder builder, Person loggedPerson, SupportRequestBean requestBean) {
-        generateLabel(builder, BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.APPLICATION_BUNDLE, "label.name"));
+        generateLabel(builder, BundleUtil.getString(net.sourceforge.fenixedu.util.Bundle.APPLICATION, "label.name"));
         if (loggedPerson != null) {
             builder.append("[").append(loggedPerson.getName()).append("]\n");
             generateLabel(builder, "Username");
             builder.append("[").append(loggedPerson.getUsername()).append("]");
         } else {
-            builder.append(BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.APPLICATION_BUNDLE,
+            builder.append(BundleUtil.getString(net.sourceforge.fenixedu.util.Bundle.APPLICATION,
                     "support.mail.session.error"));
         }
     }

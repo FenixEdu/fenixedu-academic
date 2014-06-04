@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.TutorshipIntention;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -138,11 +139,11 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
             ExecutionYear executionYear = (ExecutionYear) ExecutionYear.getExecutionInterval(academicInterval);
             if (intention == null && intending) {
                 new TutorshipIntention(dcp, teacher, academicInterval);
-                ProgramTutoredParticipationLog.createLog(dcp.getDegree(), executionYear, "resources.MessagingResources",
+                ProgramTutoredParticipationLog.createLog(dcp.getDegree(), executionYear, Bundle.MESSAGING,
                         "log.degree.programtutoredparticipation.addteacher", teacher.getPerson().getPresentationName(), dcp
                                 .getDegree().getPresentationName());
             } else if (intention != null && !intending) {
-                ProgramTutoredParticipationLog.createLog(dcp.getDegree(), executionYear, "resources.MessagingResources",
+                ProgramTutoredParticipationLog.createLog(dcp.getDegree(), executionYear, Bundle.MESSAGING,
                         "log.degree.programtutoredparticipation.removeteacher", teacher.getPerson().getPresentationName(), dcp
                                 .getDegree().getPresentationName());
                 intention.delete();

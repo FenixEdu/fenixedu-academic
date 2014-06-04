@@ -25,17 +25,12 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
-import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.photograph.AspectRatio;
 import net.sourceforge.fenixedu.domain.photograph.Picture;
@@ -45,11 +40,13 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
@@ -66,7 +63,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     private static final int COMPRESSED_PHOTO_HEIGHT = 100;
 
-    private static final String RESOURCE_BUNDLE_NAME = "resources.PersonalInformationResources";
+    private static final String RESOURCE_BUNDLE_NAME = Bundle.PERSONAL;
 
     private static final String REJECTION_MAIL_SUBJECT_KEY = "photo.email.subject.rejection";
 
@@ -130,16 +127,10 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
                 if (person != null) {
                     setRejector(person);
                 }
-                final EmailAddress institutionalOrDefaultEmailAddress = getPerson().getInstitutionalOrDefaultEmailAddress();
-                if (institutionalOrDefaultEmailAddress != null) {
-                    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Locale.getDefault());
-                    Set<String> sendTo = Collections.singleton(institutionalOrDefaultEmailAddress.getValue());
-
-                    SystemSender systemSender = getRootDomainObject().getSystemSender();
-                    new Message(systemSender, systemSender.getConcreteReplyTos(), new Recipient(UserGroup.of(getPerson()
-                            .getUser())).asCollection(), bundle.getString(REJECTION_MAIL_SUBJECT_KEY),
-                            bundle.getString(REJECTION_MAIL_BODY_KEY), "");
-                }
+                SystemSender systemSender = getRootDomainObject().getSystemSender();
+                new Message(systemSender, systemSender.getConcreteReplyTos(),
+                        new Recipient(UserGroup.of(getPerson().getUser())).asCollection(), BundleUtil.getString(Bundle.PERSONAL,
+                                REJECTION_MAIL_SUBJECT_KEY), BundleUtil.getString(Bundle.PERSONAL, REJECTION_MAIL_BODY_KEY), "");
 
             }
             if (state == PhotoState.APPROVED) {
@@ -275,7 +266,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     private void logState(String keyLabel) {
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(getPerson());
-        PersonInformationLog.createLog(getPerson(), "resources.MessagingResources", keyLabel, personViewed);
+        PersonInformationLog.createLog(getPerson(), Bundle.MESSAGING, keyLabel, personViewed);
     }
 
     @Deprecated

@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.text.MessageFormat;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -28,9 +27,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -52,9 +53,9 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     public PhdCustomAlert(PhdCustomAlertBean bean) {
-        this(bean.getProcess(), bean.calculateTargetGroup(), new MultiLanguageString(Locale.getDefault(),
-                bean.getSubject()), new MultiLanguageString(Locale.getDefault(), bean.getBody()), bean.isToSendEmail(),
-                bean.getFireDate(), bean.getUserDefined(), bean.getShared());
+        this(bean.getProcess(), bean.calculateTargetGroup(), new MultiLanguageString(Locale.getDefault(), bean.getSubject()),
+                new MultiLanguageString(Locale.getDefault(), bean.getBody()), bean.isToSendEmail(), bean.getFireDate(), bean
+                        .getUserDefined(), bean.getShared());
     }
 
     protected void init(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
@@ -118,10 +119,9 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
     @Override
     public String getDescription() {
-        final ResourceBundle bundle = getResourceBundle();
-        return MessageFormat.format(bundle.getString("message.phd.alert.custom.description"), getTargetAccessGroup()
-                .getPresentationName(), getWhenToFire().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getFormattedSubject(),
-                getFormattedBody());
+        return MessageFormat.format(BundleUtil.getString(Bundle.PHD, "message.phd.alert.custom.description"),
+                getTargetAccessGroup().getPresentationName(), getWhenToFire().toString(DateFormatUtil.DEFAULT_DATE_FORMAT),
+                getFormattedSubject(), getFormattedBody());
     }
 
     @Override

@@ -22,14 +22,16 @@
  */
 package net.sourceforge.fenixedu.presentationTier.jsf.validators;
 
-import java.util.ResourceBundle;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
+
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class RegexValidator implements Validator, StateHolder {
     private String regex;
@@ -46,10 +48,7 @@ public class RegexValidator implements Validator, StateHolder {
             val = _value.toString();
         }
         if (!val.matches(regex)) {
-            ResourceBundle resourceBundle =
-                    ResourceBundle.getBundle(_context.getApplication().getMessageBundle(), _context.getViewRoot().getLocale());
-            throw new ValidatorException(new FacesMessage(resourceBundle.getString(INVALID_INPUT)));
-        }
+            throw new ValidatorException(new FacesMessage(BundleUtil.getString(Bundle.APPLICATION, INVALID_INPUT)));        }
     }
 
     public String getRegex() {

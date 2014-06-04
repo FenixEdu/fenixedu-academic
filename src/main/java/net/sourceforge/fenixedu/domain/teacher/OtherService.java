@@ -20,7 +20,8 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 
 public class OtherService extends OtherService_Base {
@@ -48,7 +49,7 @@ public class OtherService extends OtherService_Base {
         setReason(reason);
         setCorrectedExecutionSemester(correctedExecutionSemester != null ? correctedExecutionSemester : teacherService
                 .getExecutionPeriod());
-        new TeacherServiceLog(teacherService, BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+        new TeacherServiceLog(teacherService, BundleUtil.getString(Bundle.TEACHER_CREDITS,
                 "label.teacher.otherService", credits.toString(), reason, getCorrectedExecutionSemester().getExecutionYear()
                         .getQualifiedName()));
     }
@@ -56,8 +57,8 @@ public class OtherService extends OtherService_Base {
     @Override
     @Atomic
     public void delete() {
-        new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
-                "resources.TeacherCreditsSheetResources", "label.teacher.otherService.delete", getCredits().toString(),
+        new TeacherServiceLog(getTeacherService(), BundleUtil.getString(
+                Bundle.TEACHER_CREDITS, "label.teacher.otherService.delete", getCredits().toString(),
                 getReason(), getCorrectedExecutionSemester().getExecutionYear().getQualifiedName()));
         setTeacherService(null);
         setCorrectedExecutionSemester(null);

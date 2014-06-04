@@ -38,8 +38,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CurricularCourseManagementBackingBean;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class AcademicAdministrationCurricularCourseManagementBackingBean extends CurricularCourseManagementBackingBean {
 
@@ -224,22 +226,22 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
                     getWeight(), getEnrollmentWeigth(), getCredits(), getEctsCredits(), getCurricularYearID(),
                     getCurricularSemesterID(), getBeginExecutionPeriodID(), getEndExecutionPeriodID(), getGradeScale());
         } catch (FenixActionException e) {
-            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
             return "buildCurricularPlan";
         } catch (FenixServiceException e) {
-            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";
         } catch (DomainException e) {
-            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(bolonhaBundle.getString("general.error"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "general.error"));
             return "buildCurricularPlan";
         }
-        addInfoMessage(bolonhaBundle.getString("curricularCourseCreated"));
+        addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "curricularCourseCreated"));
         return "buildCurricularPlan";
     }
 
@@ -251,9 +253,9 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
                     getPraticalHours(), getTheoPratHours(), getGradeScale());
             setContextID(null); // resetContextID
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         }
-        addInfoMessage(bolonhaBundle.getString("curricularCourseEdited"));
+        addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "curricularCourseEdited"));
         return "";
     }
 
@@ -321,9 +323,9 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
 
     public List<SelectItem> getGradeScales() {
         List<SelectItem> res = new ArrayList<SelectItem>();
-        res.add(new SelectItem(this.NO_SELECTION_STRING, bolonhaBundle.getString("choose")));
+        res.add(new SelectItem(this.NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         for (GradeScale gradeScale : GradeScale.values()) {
-            res.add(new SelectItem(gradeScale.getName(), enumerationBundle.getString(gradeScale.getName())));
+            res.add(new SelectItem(gradeScale.getName(), BundleUtil.getString(Bundle.ENUMERATION, gradeScale.getName())));
         }
         return res;
     }
