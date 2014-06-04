@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sf.jasperreports.engine.JRException;
@@ -29,7 +28,6 @@ import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
@@ -92,7 +90,6 @@ public class ExportIRSDeclarations extends CronTask {
                 final byte[] report =
                         ReportsUtils.exportToPdfFileAsByteArray(customDeclaration.getReportTemplateKey(),
                                 customDeclaration.getParameters(),
-                                ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale()),
                                 customDeclaration.getDataSource());
 
                 new AnnualIRSDeclarationDocument(exportIRSDeclaration.getPerson(), null, customDeclaration.getReportFileName()
