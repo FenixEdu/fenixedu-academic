@@ -23,9 +23,10 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.fenixedu.idcards.domain.CardGenerationBatch;
@@ -132,17 +133,11 @@ public class CreateCardGenerationEntries extends CronTask {
                     }
                     cardGenerationBatch.setPeopleForEntryCreation(null);
                     final SystemSender systemSender = Bennu.getInstance().getSystemSender();
-                    new Message(
-                            systemSender,
-                            Collections.EMPTY_SET,
-                            Collections.EMPTY_SET,
-                            Collections.EMPTY_SET,
+                    new Message(systemSender, Collections.EMPTY_SET, Collections.EMPTY_SET, Collections.EMPTY_SET,
                             getRecipients(),
-                            BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
-                                    "label.card.generation.entry.fill.subject"),
-                            BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
-                                    "label.card.generation.entry.fill.body",
-                                    cardGenerationBatch.getCreated().toString("yyyy-MM-dd"), cardGenerationBatch.getDescription()),
+                            BundleUtil.getString(Bundle.APPLICATION, "label.card.generation.entry.fill.subject"),
+                            BundleUtil.getString(Bundle.APPLICATION, "label.card.generation.entry.fill.body", cardGenerationBatch
+                                    .getCreated().toString("yyyy-MM-dd"), cardGenerationBatch.getDescription()),
                             Collections.EMPTY_SET);
                 }
             }
@@ -150,8 +145,9 @@ public class CreateCardGenerationEntries extends CronTask {
     }
 
     private Collection<Recipient> getRecipients() {
-        return Collections.singleton(new Recipient(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
-                "label.card.generation.manager.group"), RoleGroup.get(RoleType.IDENTIFICATION_CARD_MANAGER)));
+        return Collections.singleton(new Recipient(BundleUtil
+                .getString(Bundle.APPLICATION, "label.card.generation.manager.group"), RoleGroup
+                .get(RoleType.IDENTIFICATION_CARD_MANAGER)));
     }
 
     private PhdIndividualProgramProcess find(final Collection<PhdIndividualProgramProcess> phdIndividualProgramProcesses) {
