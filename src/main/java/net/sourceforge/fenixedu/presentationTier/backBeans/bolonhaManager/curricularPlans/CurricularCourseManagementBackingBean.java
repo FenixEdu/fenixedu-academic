@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -65,20 +64,19 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
-    protected final ResourceBundle bolonhaBundle = getResourceBundle("resources/BolonhaManagerResources");
-    protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
-    protected final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
     protected final String NO_SELECTION_STRING = "-1";
     protected final Integer NO_SELECTION_INTEGER = Integer.valueOf(-1);
 
@@ -238,10 +236,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getCurricularYears() {
         final int years = getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
         final List<SelectItem> result = new ArrayList<SelectItem>(years);
-        result.add(new SelectItem(this.NO_SELECTION_INTEGER, bolonhaBundle.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION_INTEGER, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         for (int i = 1; i <= years; i++) {
             result.add(new SelectItem(Integer.valueOf(i), String.valueOf(i)
-                    + bolonhaBundle.getString("label.context.period.sign")));
+                    + BundleUtil.getString(Bundle.BOLONHA, "label.context.period.sign")));
         }
         return result;
     }
@@ -249,9 +247,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getCurricularSemesters() {
         final List<SelectItem> result = new ArrayList<SelectItem>(2);
 
-        result.add(new SelectItem(this.NO_SELECTION_INTEGER, bolonhaBundle.getString("choose")));
-        result.add(new SelectItem(Integer.valueOf(1), String.valueOf(1) + bolonhaBundle.getString("label.context.period.sign")));
-        result.add(new SelectItem(Integer.valueOf(2), String.valueOf(2) + bolonhaBundle.getString("label.context.period.sign")));
+        result.add(new SelectItem(this.NO_SELECTION_INTEGER, BundleUtil.getString(Bundle.BOLONHA, "choose")));
+        result.add(new SelectItem(Integer.valueOf(1), String.valueOf(1)
+                + BundleUtil.getString(Bundle.BOLONHA, "label.context.period.sign")));
+        result.add(new SelectItem(Integer.valueOf(2), String.valueOf(2)
+                + BundleUtil.getString(Bundle.BOLONHA, "label.context.period.sign")));
         return result;
     }
 
@@ -478,7 +478,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getEndExecutionPeriodItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>(readExecutionPeriodItems());
-        result.add(0, new SelectItem(NO_SELECTION_STRING, bolonhaBundle.getString("opened")));
+        result.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "opened")));
         return result;
     }
 
@@ -513,19 +513,19 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             runCreateCurricularCourse();
 
         } catch (FenixActionException e) {
-            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";
         } catch (FenixServiceException e) {
-            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";
         } catch (DomainException e) {
-            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(bolonhaBundle.getString("general.error"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "general.error"));
             return "buildCurricularPlan";
         }
-        addInfoMessage(bolonhaBundle.getString("curricularCourseCreated"));
+        addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "curricularCourseCreated"));
         return "buildCurricularPlan";
     }
 
@@ -552,11 +552,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public String editCurricularCourse() {
         try {
             runEditCurricularCourse();
-            addInfoMessage(bolonhaBundle.getString("curricularCourseEdited"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "curricularCourseEdited"));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (FenixActionException e) {
-            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         }
         setContextID(null); // resetContextID
         return "";
@@ -620,18 +620,18 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             checkCurricularSemesterAndYear();
             AddContextToCurricularCourse.run(getCurricularCourse(), getCourseGroup(), getBeginExecutionPeriodID(),
                     getFinalEndExecutionPeriodID(), getCurricularYearID(), getCurricularSemesterID());
-            addInfoMessage(bolonhaBundle.getString("addedNewContextToCurricularCourse"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "addedNewContextToCurricularCourse"));
         } catch (FenixActionException e) {
-            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";
         } catch (FenixServiceException e) {
-            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";
         } catch (DomainException e) {
-            this.addErrorMessages(bolonhaBundle, e.getMessage(), e.getArgs());
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage(), e.getArgs()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(bolonhaBundle.getString("general.error"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "general.error"));
             return "buildCurricularPlan";
         }
         setContextID(null); // resetContextID
@@ -645,11 +645,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                     .run(getCurricularCourse(), getContext(getContextID()), getCourseGroup(), getCurricularYearID(),
                             getCurricularSemesterID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
         } catch (DomainException e) {
-            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         } catch (FenixActionException e) {
-            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         }
         setContextID(null); // resetContextID
         return "";
@@ -672,13 +672,13 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public void deleteContext(ActionEvent event) {
         try {
             DeleteContextFromDegreeModule.run(getCurricularCourseID(), getContextIDToDelete());
-            addInfoMessage(bolonhaBundle.getString("successAction"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "successAction"));
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            addErrorMessage(getFormatedMessage(domainExceptionBundle, e.getKey(), e.getArgs()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,  e.getKey(), e.getArgs()));
         }
         setContextID(null); // resetContextID
     }
@@ -699,7 +699,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
         }
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(this.NO_SELECTION_STRING, bolonhaBundle.getString("choose")));
+        result.add(0, new SelectItem(this.NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
@@ -740,14 +740,15 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                     for (final CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
                         if (competenceCourse.getCurricularStage() != CurricularStage.DRAFT) {
                             result.add(new SelectItem(competenceCourse.getExternalId(), competenceCourse.getName() + " ("
-                                    + enumerationBundle.getString(competenceCourse.getCurricularStage().getName()) + ")"));
+                                    + BundleUtil.getString(Bundle.ENUMERATION, competenceCourse.getCurricularStage().getName())
+                                    + ")"));
                         }
                     }
                 }
             }
             Collections.sort(result, new BeanComparator("label"));
         }
-        result.add(0, new SelectItem(this.NO_SELECTION_STRING, bolonhaBundle.getString("choose")));
+        result.add(0, new SelectItem(this.NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
@@ -763,7 +764,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             result.add(new SelectItem(degreeModules.get(degreeModules.size() - 1).getExternalId(), pathName.toString()));
         }
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(this.NO_SELECTION_STRING, bolonhaBundle.getString("choose")));
+        result.add(0, new SelectItem(this.NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 

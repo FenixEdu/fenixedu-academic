@@ -28,8 +28,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCalendarUtil;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -60,7 +62,7 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
 
     @Override
     public String getDescription() {
-        return getResourceBundle().getString("message.phd.alert.registration.formalization.description");
+        return BundleUtil.getString(Bundle.PHD, "message.phd.alert.registration.formalization.description");
     }
 
     private LocalDate getWhenToFire() {

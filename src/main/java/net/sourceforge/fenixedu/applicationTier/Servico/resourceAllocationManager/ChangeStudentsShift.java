@@ -20,9 +20,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
-import java.text.MessageFormat;
 import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -35,10 +33,12 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -75,18 +75,15 @@ public class ChangeStudentsShift {
             recievers.add(registration.getPerson());
         }
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ResourceManagerResources");
+        final String subject = getString("changeStudentsShift.email.subject");
 
-        final String subject = bundle.getString("changeStudentsShift.email.subject");
+        final String groupName = getString("changeStudentsShift.email.groupName", oldShift.getNome());
 
-        final String groupName =
-                MessageFormat.format(bundle.getString("changeStudentsShift.email.groupName"), oldShift.getNome());
-
-        final String messagePrefix = MessageFormat.format(bundle.getString("changeStudentsShift.email.body"), oldShift.getNome());
+        final String messagePrefix = getString("changeStudentsShift.email.body", oldShift.getNome());
 
         final String messagePosfix =
-                newShift == null ? bundle.getString("changeStudentsShift.email.body.notNewShift") : MessageFormat.format(
-                        bundle.getString("changeStudentsShift.email.body.newShift"), oldShift.getNome());
+                newShift == null ? getString("changeStudentsShift.email.body.notNewShift") : getString(
+                        "changeStudentsShift.email.body.newShift", oldShift.getNome());
 
         final String message = messagePrefix + messagePosfix;
 
@@ -94,6 +91,10 @@ public class ChangeStudentsShift {
         Sender sender = Bennu.getInstance().getSystemSender();
         String gopEmailAddress = Installation.getInstance().getInstituitionalEmailAddress("gop");
         new Message(sender, new ConcreteReplyTo(gopEmailAddress).asCollection(), recipient.asCollection(), subject, message, "");
+    }
+
+    private static String getString(final String key, final String... args) {
+        return BundleUtil.getString(Bundle.RESOURCE_MANAGER, key, args);
     }
 
     public static class UnableToTransferStudentsException extends FenixServiceException {

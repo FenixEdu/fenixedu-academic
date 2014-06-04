@@ -29,9 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.finalDegreeWork.CandidacyAttributionType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -167,7 +168,7 @@ public class ProposalsFilterBean implements Serializable {
     public String toString() {
         StringBuffer label = new StringBuffer();
         List<String> filters = new ArrayList<String>();
-        final String string = BundleUtil.getEnumName(getStatus().getStatus());
+        final String string = BundleUtil.getString(Bundle.ENUMERATION, getStatus().getStatus().name());
         filters.add(string);
         if (getAttribution() != AttributionFilter.ALL) {
             filters.add(RenderUtils.getEnumString(getAttribution()));

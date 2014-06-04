@@ -26,7 +26,8 @@ import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeacherResponsibleOfExecutionCourseGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 
 public class ExecutionCourseSender extends ExecutionCourseSender_Base {
@@ -58,15 +59,15 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
         addReplyTos(new CurrentUserReplyTo());
         setMembers(TeacherGroup.get(executionCourse));
         final String labelECTeachers =
-                BundleUtil.getStringFromResourceBundle("resources.SiteResources",
+                BundleUtil.getString(Bundle.SITE,
                         "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroupWithName",
                         new String[] { executionCourse.getNome() });
         final String labelECStudents =
-                BundleUtil.getStringFromResourceBundle("resources.SiteResources",
+                BundleUtil.getString(Bundle.SITE,
                         "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroupWithName",
                         new String[] { executionCourse.getNome() });
         final String labelECResponsibleTeachers =
-                BundleUtil.getStringFromResourceBundle("resources.SiteResources",
+                BundleUtil.getString(Bundle.SITE,
                         "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName",
                         new String[] { executionCourse.getNome() });
         // fixed recipients

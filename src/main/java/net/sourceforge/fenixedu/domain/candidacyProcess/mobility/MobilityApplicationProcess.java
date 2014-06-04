@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -56,6 +55,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -63,7 +63,7 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import com.google.common.collect.Sets;
@@ -280,7 +280,8 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
             DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
     static private boolean isAllowedToManageProcess(User userView) {
-        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
             if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
                 return true;
             }
@@ -313,8 +314,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     @Override
     public String getDisplayName() {
-        return ResourceBundle.getBundle("resources/CaseHandlingResources", I18N.getLocale()).getString(
-                getClass().getSimpleName());
+        return BundleUtil.getString(Bundle.CASE_HANDLEING, getClass().getSimpleName());
     }
 
     public MobilityIndividualApplicationProcess getProcessByEIdentifier(String eIdentifier) {

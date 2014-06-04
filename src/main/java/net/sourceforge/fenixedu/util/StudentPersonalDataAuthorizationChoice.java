@@ -24,9 +24,8 @@ package net.sourceforge.fenixedu.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * @author Ricardo Rodrigues
@@ -65,9 +64,7 @@ public enum StudentPersonalDataAuthorizationChoice {
     }
 
     public String getDescription() {
-        final ResourceBundle ENUMERATION_RESOURCES =
-                ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-        return ENUMERATION_RESOURCES.getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
     }
 
     public static List<StudentPersonalDataAuthorizationChoice> getGeneralPersonalDataAuthorizationsTypes() {

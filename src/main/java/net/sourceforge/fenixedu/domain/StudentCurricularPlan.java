@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -102,6 +101,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.Curricul
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.State;
 
@@ -110,6 +110,7 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -1498,8 +1499,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private double getAccumulatedEctsCreditsForOldCurricularCourses(final CurricularCourse curricularCourse,
             ExecutionSemester executionSemester) {
         Double factor;
-        Integer curricularCourseAcumulatedEnrolments =
-                calculateStudentAcumulatedEnrollments(curricularCourse, executionSemester);
+        Integer curricularCourseAcumulatedEnrolments = calculateStudentAcumulatedEnrollments(curricularCourse, executionSemester);
         if (curricularCourseAcumulatedEnrolments == null || curricularCourseAcumulatedEnrolments.intValue() == 0) {
             factor = 1.0;
         } else {
@@ -1583,7 +1583,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                     if (!enrolment.isAnnulled()
                             && enrolment.getExecutionPeriod().isBefore(executionSemester)
                             && enrolment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment()
-                            .equalsIgnoreCase(curricularCourse.getCurricularCourseUniqueKeyForEnrollment())) {
+                                    .equalsIgnoreCase(curricularCourse.getCurricularCourseUniqueKeyForEnrollment())) {
                         result++;
                     }
                 }
@@ -2935,8 +2935,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
     }
 
-    private static final ResourceBundle ACADEMIC_RESOURCES = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-
     private List<MarkSheetEnrolmentEvaluationBean> setIndividualEvaluationsForCurriculumValidation(
             List<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationsBeanList) {
 
@@ -2964,7 +2962,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                             enrolmentEvaluationBean.getBookReference(), enrolmentEvaluationBean.getPage(),
                             enrolmentEvaluationBean.getGradeScale());
             enrolmentEvaluation.confirmSubmission(AccessControl.getPerson(),
-                    ACADEMIC_RESOURCES.getString("message.curriculum.validation.observation"));
+                    BundleUtil.getString(Bundle.ACADEMIC, "message.curriculum.validation.observation"));
 
             enrolmentEvaluationBean.setEnrolmentEvaluationSet(Boolean.TRUE);
         }

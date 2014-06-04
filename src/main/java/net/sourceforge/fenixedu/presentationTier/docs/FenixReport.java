@@ -24,9 +24,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.DateI18NUtil;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 
@@ -44,12 +42,6 @@ abstract public class FenixReport implements Serializable {
     final private Collection dataSource;
 
     final private Map<String, Object> parameters = new HashMap<String, Object>();
-
-    private ResourceBundle resourceBundle;
-
-    private final ResourceBundle applicationBundle;
-
-    private final ResourceBundle enumerationBundle;
 
     private final Locale locale;
 
@@ -77,8 +69,6 @@ abstract public class FenixReport implements Serializable {
 
     private FenixReport(final Collection<?> dataSource, final Locale locale) {
         this.dataSource = dataSource == null ? new ArrayList<Object>() : dataSource;
-        this.enumerationBundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale);
-        this.applicationBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, locale);
         this.locale = locale;
         this.language = locale;
     }
@@ -89,22 +79,6 @@ abstract public class FenixReport implements Serializable {
 
     public final Map<String, Object> getParameters() {
         return parameters;
-    }
-
-    public final ResourceBundle getResourceBundle() {
-        return resourceBundle;
-    }
-
-    public void setResourceBundle(ResourceBundle resourceBundle) {
-        this.resourceBundle = resourceBundle;
-    }
-
-    public ResourceBundle getApplicationBundle() {
-        return applicationBundle;
-    }
-
-    public ResourceBundle getEnumerationBundle() {
-        return enumerationBundle;
     }
 
     public Locale getLocale() {
@@ -149,8 +123,7 @@ abstract public class FenixReport implements Serializable {
     }
 
     protected String verboseDate(LocalDate date) {
-        return "dia " + DateI18NUtil.verboseNumber(date.getDayOfMonth(), getEnumerationBundle()) + " do mês de "
-                + date.toString("MMMM", new Locale("pt")) + " de "
-                + DateI18NUtil.verboseNumber(date.getYear(), getEnumerationBundle());
+        return "dia " + DateI18NUtil.verboseNumber(date.getDayOfMonth()) + " do mês de "
+                + date.toString("MMMM", new Locale("pt")) + " de " + DateI18NUtil.verboseNumber(date.getYear());
     }
 }

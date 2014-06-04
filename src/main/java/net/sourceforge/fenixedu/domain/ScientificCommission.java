@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -45,7 +46,7 @@ public class ScientificCommission extends ScientificCommission_Base {
         setPerson(person);
 
         ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
-                "resources.MessagingResources", "log.degree.scientificcomission.addmember", this.getPerson()
+                Bundle.MESSAGING, "log.degree.scientificcomission.addmember", this.getPerson()
                         .getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
     }
 
@@ -68,7 +69,7 @@ public class ScientificCommission extends ScientificCommission_Base {
 
     public void delete() {
         ScientificCommissionLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
-                "resources.MessagingResources", "log.degree.scientificcomission.removemember", this.getPerson().getName(), this
+                Bundle.MESSAGING, "log.degree.scientificcomission.removemember", this.getPerson().getName(), this
                         .getPerson().getIstUsername(), this.getExecutionDegree().getDegree().getPresentationName());
         setPerson(null);
         setExecutionDegree(null);
@@ -123,7 +124,7 @@ public class ScientificCommission extends ScientificCommission_Base {
 
     public void logEditMember() {
         ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
-                "resources.MessagingResources", "log.degree.scientificcomission.editmember", this.getPerson()
+                Bundle.MESSAGING, "log.degree.scientificcomission.editmember", this.getPerson()
                         .getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
     }
 

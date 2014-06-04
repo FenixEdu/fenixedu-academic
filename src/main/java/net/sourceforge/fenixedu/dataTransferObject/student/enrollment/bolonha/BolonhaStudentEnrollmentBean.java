@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.IStudentCurricularPlanBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -32,8 +31,9 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -153,19 +153,17 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
     }
 
     public String getFuncionalityTitle() {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
-
         final StringBuilder result = new StringBuilder();
-        result.append(resourceBundle.getString("label.student.enrollment.courses")).append(" ");
+        result.append(BundleUtil.getString(Bundle.ACADEMIC, "label.student.enrollment.courses")).append(" ");
 
         switch (curricularRuleLevel) {
 
         case ENROLMENT_WITH_RULES:
-            result.append("(").append(resourceBundle.getString("label.student.enrollment.withRules")).append(")");
+            result.append("(").append(BundleUtil.getString(Bundle.ACADEMIC, "label.student.enrollment.withRules")).append(")");
             break;
 
         case ENROLMENT_NO_RULES:
-            result.append("(").append(resourceBundle.getString("label.student.enrollment.withoutRules")).append(")");
+            result.append("(").append(BundleUtil.getString(Bundle.ACADEMIC, "label.student.enrollment.withoutRules")).append(")");
             break;
         }
 

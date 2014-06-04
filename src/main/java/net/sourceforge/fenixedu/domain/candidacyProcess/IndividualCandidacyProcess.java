@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
@@ -34,12 +33,14 @@ import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
@@ -266,7 +267,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     @Override
     public String getDisplayName() {
-        return ResourceBundle.getBundle("resources/CaseHandlingResources").getString(getClass().getSimpleName());
+        return BundleUtil.getString(Bundle.CASE_HANDLEING, getClass().getSimpleName());
     }
 
     protected void editPersonalCandidacyInformation(final PersonBean personBean) {

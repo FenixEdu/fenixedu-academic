@@ -27,6 +27,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -85,7 +86,7 @@ public class StudentGroup extends StudentGroup_Base {
         }
         List<ExecutionCourse> ecs = getGrouping().getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
-            GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING,
                     "log.executionCourse.groupAndShifts.grouping.group.removed", getGroupNumber().toString(), getGrouping()
                             .getName(), ec.getNome(), ec.getDegreePresentationString());
 

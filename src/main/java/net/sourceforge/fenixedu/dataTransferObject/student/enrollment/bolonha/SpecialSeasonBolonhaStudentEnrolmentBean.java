@@ -18,14 +18,13 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.CurriculumModuleEnroledWrapperConverter;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -46,8 +45,7 @@ public class SpecialSeasonBolonhaStudentEnrolmentBean extends BolonhaStudentEnro
 
     @Override
     public String getFuncionalityTitle() {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
-        return resourceBundle.getString("label.special.season.enrolment");
+        return BundleUtil.getString(Bundle.ACADEMIC, "label.special.season.enrolment");
     }
 
 }

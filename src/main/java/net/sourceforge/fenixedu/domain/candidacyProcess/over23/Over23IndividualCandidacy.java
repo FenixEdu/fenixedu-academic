@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Formatter;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -40,9 +39,10 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
@@ -242,14 +242,14 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     public void exportValues(StringBuilder result) {
         super.exportValues(result);
 
-        final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
         Formatter formatter = new Formatter(result);
-        formatter.format("%s: %s\n", candidateBundle.getString("label.over23.languages.read"),
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.over23.languages.read"),
                 StringUtils.isEmpty(getLanguagesRead()) ? StringUtils.EMPTY : getLanguagesRead());
-        formatter.format("%s: %s\n", candidateBundle.getString("label.over23.languages.write"),
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.over23.languages.write"),
                 StringUtils.isEmpty(getLanguagesWrite()) ? StringUtils.EMPTY : getLanguagesWrite());
-        formatter.format("%s: %s\n", candidateBundle.getString("label.over23.languages.speak"),
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.over23.languages.speak"),
                 StringUtils.isEmpty(getLanguagesSpeak()) ? StringUtils.EMPTY : getLanguagesSpeak());
+        formatter.close();
     }
 
     @Override

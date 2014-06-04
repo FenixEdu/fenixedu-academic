@@ -20,8 +20,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.io.OutputStream;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,10 +28,12 @@ import net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyVie
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
@@ -102,30 +102,28 @@ public class VigilantGroupExportReport extends VigilantGroupManagement {
     }
 
     private Spreadsheet getSpreadsheet(Boolean withNames) {
-        final ResourceBundle enumResourceBundle =
-                ResourceBundle.getBundle("resources.VigilancyResources", new Locale("pt", "PT"));
         final Spreadsheet spreadsheet = new Spreadsheet("Report");
-        spreadsheet.setHeader(enumResourceBundle.getString("label.vigilancy.writtenEvaluation.header"));
-        spreadsheet.setHeader(enumResourceBundle.getString("label.totalVigilancies"));
-        spreadsheet.setHeader(enumResourceBundle.getString("label.vigilanciesFromTeachers"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.vigilancy.writtenEvaluation.header"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.totalVigilancies"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.vigilanciesFromTeachers"));
         if (withNames) {
-            spreadsheet.setHeader(enumResourceBundle.getString("label.teachersVigilants"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.teachersVigilants"));
         }
-        spreadsheet.setHeader(enumResourceBundle.getString("label.vigilanciesFromOthers"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.vigilanciesFromOthers"));
         if (withNames) {
-            spreadsheet.setHeader(enumResourceBundle.getString("label.otherVigilants"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.otherVigilants"));
         }
-        spreadsheet.setHeader(enumResourceBundle.getString("label.numberOfCancelledConvokes"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.numberOfCancelledConvokes"));
         if (withNames) {
-            spreadsheet.setHeader(enumResourceBundle.getString("label.cancelledConvokes"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.cancelledConvokes"));
         }
-        spreadsheet.setHeader(enumResourceBundle.getString("label.numberOfConfirmedConvokes"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.numberOfConfirmedConvokes"));
         if (withNames) {
-            spreadsheet.setHeader(enumResourceBundle.getString("label.confirmedConvokes"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.confirmedConvokes"));
         }
-        spreadsheet.setHeader(enumResourceBundle.getString("label.numberOfAttendedConvokes"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.numberOfAttendedConvokes"));
         if (withNames) {
-            spreadsheet.setHeader(enumResourceBundle.getString("label.attendedConvokes"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.attendedConvokes"));
         }
 
         return spreadsheet;

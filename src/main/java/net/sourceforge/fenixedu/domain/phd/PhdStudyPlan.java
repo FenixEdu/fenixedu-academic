@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -29,9 +28,10 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -204,8 +204,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     public String getDescription() {
         if (getExempted().booleanValue()) {
-            return ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale()).getString(
-                    "label.PhdStudyPlan.description.exempted");
+            return BundleUtil.getString(Bundle.PHD, "label.PhdStudyPlan.description.exempted");
         } else {
             return getDegree().getPresentationName(getProcess().getExecutionYear());
         }

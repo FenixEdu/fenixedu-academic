@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
@@ -79,16 +79,16 @@ public class NotUpdatedAlumniInfoForSpecificDaysGroup extends FenixGroup {
         String key = "label.name.alumniInfoNotUpdated.oneItem";
         int iter = 0;
         if (checkFormationNotUpdated) {
-            args[iter] = BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), "label.name.alumni.formationInfo");
+            args[iter] = BundleUtil.getString(getPresentationNameBundle(), "label.name.alumni.formationInfo");
             iter++;
         }
         if (checkJobNotUpdated) {
-            args[iter] = BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), "label.name.alumni.jobInfo");
+            args[iter] = BundleUtil.getString(getPresentationNameBundle(), "label.name.alumni.jobInfo");
             iter++;
         }
         if (checkPersonalDataNotUpdated) {
             args[iter] =
-                    BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), "label.name.alumni.personalDataInfo");
+                    BundleUtil.getString(getPresentationNameBundle(), "label.name.alumni.personalDataInfo");
             iter++;
         }
         if (iter == 2) {
@@ -97,7 +97,7 @@ public class NotUpdatedAlumniInfoForSpecificDaysGroup extends FenixGroup {
             key = "label.name.alumniInfoNotUpdated.threeItems";
         }
         args[iter] = Integer.toString(daysNotUpdated);
-        return BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), key, args);
+        return BundleUtil.getString(getPresentationNameBundle(), key, args);
     }
 
     @Override

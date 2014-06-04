@@ -18,11 +18,9 @@
  */
 package net.sourceforge.fenixedu.domain.curriculum;
 
-import java.util.ResourceBundle;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
-
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * @author David Santos in Jun 15, 2004
@@ -53,7 +51,7 @@ public enum EnrollmentCondition {
     }
 
     public String getDescription() {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
     }
 
 }

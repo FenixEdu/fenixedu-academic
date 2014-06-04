@@ -31,7 +31,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -80,7 +79,6 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
@@ -125,7 +123,7 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -134,6 +132,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
@@ -714,7 +713,7 @@ public class Registration extends Registration_Base {
 
     final public String getFinalAverageDescription(final CycleType cycleType) {
         final Integer finalAverage = getFinalAverage(cycleType);
-        return finalAverage == null ? null : ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE).getString(
+        return finalAverage == null ? null : BundleUtil.getString(Bundle.ENUMERATION, 
                 finalAverage.toString());
     }
 
@@ -1939,13 +1938,11 @@ public class Registration extends Registration_Base {
     final public String getDegreeDescription(ExecutionYear executionYear, final CycleType cycleType, final Locale locale) {
         final StringBuilder res = new StringBuilder();
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", locale);
-
         final Degree degree = getDegree();
         final DegreeType degreeType = degree.getDegreeType();
         if (getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
             res.append(cycleType.getDescription(locale)).append(",");
-            res.append(" ").append(bundle.getString("label.of.the.male")).append(" ");
+            res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC,"label.of.the.male")).append(" ");
         }
 
         if (!isEmptyDegree() && !degreeType.isEmpty()) {
@@ -1955,7 +1952,7 @@ public class Registration extends Registration_Base {
             if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
                 res.append(" (").append(cycleType.getDescription(locale)).append(")");
             }
-            res.append(" ").append(bundle.getString("label.in")).append(" ");
+            res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC,"label.in")).append(" ");
         }
 
         res.append(degree.getFilteredName(executionYear, locale).toUpperCase());
@@ -3857,15 +3854,13 @@ public class Registration extends Registration_Base {
     }
 
     public void exportValues(StringBuilder result) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
-
         Formatter formatter = new Formatter(result);
         final Student student = getStudent();
-        formatter.format("%s: %s\n", bundle.getString("label.ingression"), getIngression() == null ? " - " : getIngression()
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC,"label.ingression"), getIngression() == null ? " - " : getIngression()
                 .getFullDescription());
-        formatter.format("%s: %d\n", bundle.getString("label.studentNumber"), student.getNumber());
-        formatter.format("%s: %s\n", bundle.getString("label.Student.Person.name"), student.getPerson().getName());
-        formatter.format("%s: %s\n", bundle.getString("label.degree"), getDegree().getPresentationName());
+        formatter.format("%s: %d\n", BundleUtil.getString(Bundle.ACADEMIC,"label.studentNumber"), student.getNumber());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC,"label.Student.Person.name"), student.getPerson().getName());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC,"label.degree"), getDegree().getPresentationName());
         formatter.close();
     }
 

@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
+import net.sourceforge.fenixedu.util.Bundle;
 import pt.ist.fenixframework.Atomic;
 
 public class ChangeConvokeStatus {
@@ -30,7 +31,7 @@ public class ChangeConvokeStatus {
     public static void run(Vigilancy vigilancy, AttendingStatus status) {
         vigilancy.setStatus(status);
         for (ExecutionCourse ec : vigilancy.getAssociatedExecutionCourses()) {
-            EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
+            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
                     "log.executionCourse.evaluation.generic.edited.vigilancy", vigilancy.getWrittenEvaluation()
                             .getPresentationName(), ec.getName(), ec.getDegreePresentationString());
         }

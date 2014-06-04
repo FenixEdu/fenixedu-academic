@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
@@ -38,8 +37,10 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
@@ -130,8 +131,7 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     private String getPrefix(final Locale locale) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
-        return bundle.getString("label.php.program") + " " + bundle.getString("label.in") + " ";
+        return BundleUtil.getString(Bundle.PHD, locale, "label.php.program") + " " + BundleUtil.getString(Bundle.APPLICATION, "label.in") + " ";
     }
 
     @Override

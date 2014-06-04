@@ -43,7 +43,8 @@ import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificCreditsApp;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -95,14 +96,14 @@ public class CreditsReportsDA extends FenixDispatchAction {
             spreadsheet.getSheet(sheetName);
             spreadsheet.newHeaderRow();
             spreadsheet.addHeader(
-                    BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.course"), 10000);
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                    BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.course"), 10000);
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.degrees"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.shift.type"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.hasSchedule"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.enrolmentsNumber"));
             for (ExecutionCourse executionCourse : department.getDepartmentUnit().getAllExecutionCoursesByExecutionPeriod(
                     departmentCreditsBean.getExecutionSemester())) {
@@ -140,17 +141,17 @@ public class CreditsReportsDA extends FenixDispatchAction {
             String sheetName = "Cargos_" + department.getAcronym();
             spreadsheet.getSheet(sheetName);
             spreadsheet.newHeaderRow();
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.teacher.id", Unit.getInstitutionAcronym()));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.name"),
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.name"),
                     10000);
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.managementPosition.position"), 10000);
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.managementPosition.unit"), 10000);
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.teacher-dfp-student.percentage"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.managementPosition.credits"));
             for (Teacher teacher : department.getAllTeachers(departmentCreditsBean.getExecutionSemester().getAcademicInterval())) {
 
@@ -193,36 +194,36 @@ public class CreditsReportsDA extends FenixDispatchAction {
             spreadsheet.getSheet(department.getAcronym());
             spreadsheet.newHeaderRow();
 
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.teacher.id", Unit.getInstitutionAcronym()));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.name"),
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.name"),
                     10000);
 
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.teachingCredits.simpleCode"));
             //spreadsheet.addHeader("CL correcções");
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.masterDegreeTheses.simpleCode"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.phdDegreeTheses.simpleCode"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.projectsAndTutorials.simpleCode"));
 
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.managementPositions.simpleCode"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.otherCredits.simpleCode"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.creditsReduction.simpleCode"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.serviceExemptionSituations.simpleCode"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.normalizedAcademicCredits.simpleCode"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.yearCredits.simpleCode"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.finalCredits.simpleCode"));
-            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+            spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                     "label.credits.accumulatedCredits.simpleCode"));
 
             AnnualCreditsState annualCreditsState =

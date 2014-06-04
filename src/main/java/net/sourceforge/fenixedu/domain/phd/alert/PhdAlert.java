@@ -18,9 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.phd.alert;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -100,14 +97,6 @@ abstract public class PhdAlert extends PhdAlert_Base {
     @Override
     public boolean hasFireDate() {
         return getFireDate() != null;
-    }
-
-    final protected ResourceBundle getResourceBundle() {
-        return getResourceBundle(Locale.getDefault());
-    }
-
-    final protected ResourceBundle getResourceBundle(final Locale locale) {
-        return ResourceBundle.getBundle("resources.PhdResources", locale);
     }
 
     protected UnitBasedSender getSender() {

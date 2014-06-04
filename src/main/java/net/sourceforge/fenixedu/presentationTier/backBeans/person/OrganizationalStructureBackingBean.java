@@ -26,12 +26,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -52,12 +50,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -70,8 +68,6 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public Integer personID;
 
-    public ResourceBundle bundle;
-
     public String listType;
 
     private HtmlInputHidden unitIDHidden;
@@ -80,7 +76,6 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (getRequestParameter("unitID") != null) {
             getUnitIDHidden().setValue(getRequestParameter("unitID"));
         }
-        this.bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
     }
 
     public List<SelectItem> getExecutionYears() throws FenixServiceException {
@@ -124,8 +119,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     partyTypeOrClassificationName = typeOrClassificationName;
 
                     buffer.append("<h3 class='mtop2'>")
-                            .append(hasKey(bundle, partyTypeOrClassificationName) ? getBundle().getString(
-                                    partyTypeOrClassificationName) : partyTypeOrClassificationName).append("</h3>\r\n");
+                            .append(BundleUtil.getString(Bundle.ENUMERATION, partyTypeOrClassificationName)).append("</h3>\r\n");
                 }
 
                 buffer.append("<ul class='padding nobullet'>\r\n");
@@ -215,8 +209,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         Map<String, Set<Unit>> resultMap = new TreeMap<String, Set<Unit>>(new Comparator<String>() {
             @Override
             public int compare(String arg0, String arg1) {
-                String firstString = StringNormalizer.normalize(hasKey(getBundle(), arg0) ? getBundle().getString(arg0) : arg0);
-                String secondString = StringNormalizer.normalize(hasKey(getBundle(), arg1) ? getBundle().getString(arg1) : arg1);
+                String firstString = StringNormalizer.normalize(BundleUtil.getString(Bundle.ENUMERATION, arg0));
+                String secondString = StringNormalizer.normalize(BundleUtil.getString(Bundle.ENUMERATION, arg1));
                 return firstString.compareToIgnoreCase(secondString);
             }
         });
@@ -504,16 +498,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         list.add(selectItem);
         list.add(selectItem2);
 
-        ResourceBundle bundle = getResourceBundle("resources/MessagingResources");
-        addDefaultSelectedItem(list, bundle);
+        addDefaultSelectedItem(list);
 
         return list;
     }
 
-    private void addDefaultSelectedItem(List<SelectItem> list, ResourceBundle bundle) {
+    private void addDefaultSelectedItem(List<SelectItem> list) {
         SelectItem firstItem = new SelectItem();
-        firstItem.setLabel(hasKey(bundle, "label.find.organization.listing.type.default") ? bundle
-                .getString("label.find.organization.listing.type.default") : "label.find.organization.listing.type.default");
+        firstItem.setLabel(BundleUtil.getString(Bundle.MESSAGING, "label.find.organization.listing.type.default"));
         firstItem.setValue("#");
         list.add(0, firstItem);
     }
@@ -540,14 +532,6 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     @Override
     protected String getRequestParameter(String parameterName) {
         return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(parameterName);
-    }
-
-    public ResourceBundle getBundle() {
-        return bundle;
-    }
-
-    public void setBundle(ResourceBundle bundle) {
-        this.bundle = bundle;
     }
 
     public String getListType() {
@@ -577,14 +561,4 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.choosenExecutionYearID = choosenExecutionYearID;
     }
 
-    private boolean hasKey(ResourceBundle bundle, String key) {
-        Enumeration<String> keys = bundle.getKeys();
-        while (keys.hasMoreElements()) {
-            String nextKey = keys.nextElement();
-            if (nextKey.equals(key)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

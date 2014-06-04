@@ -23,11 +23,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
@@ -49,7 +50,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
         }
 
         public String getLocalizedName(final Locale locale) {
-            return ResourceBundle.getBundle("resources.PhdResources", locale).getString(getQualifiedName());
+            return BundleUtil.getString(Bundle.PHD, locale, getQualifiedName());
         }
 
         public String getQualifiedName() {

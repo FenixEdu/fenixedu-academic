@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.util.Bundle;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -81,7 +82,7 @@ public class DeleteGroupingMembers {
         if (sbStudentNumbers.length() != 0) {
             List<ExecutionCourse> ecs = grouping.getExecutionCourses();
             for (ExecutionCourse ec : ecs) {
-                GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+                GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING,
                         "log.executionCourse.groupAndShifts.grouping.memberSet.removed",
                         Integer.toString(studentUsernames.size()), sbStudentNumbers.toString(), grouping.getName(), ec.getNome(),
                         ec.getDegreePresentationString());

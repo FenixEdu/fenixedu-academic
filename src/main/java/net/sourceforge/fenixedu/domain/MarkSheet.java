@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -46,14 +45,14 @@ import net.sourceforge.fenixedu.domain.exceptions.InDebtEnrolmentsException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -651,10 +650,9 @@ public class MarkSheet extends MarkSheet_Base {
         parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
         parameters.put("rectification", rectification);
         parameters.put("rectified", rectification.getRectified());
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", I18N.getLocale());
 
         boolean result =
-                ReportsUtils.printReport("markSheetRectification", parameters, bundle, Collections.emptyList(), printerName);
+                ReportsUtils.printReport("markSheetRectification", parameters, Collections.emptyList(), printerName);
         if (!result) {
             throw new UnableToPrintServiceException("error.print.failed");
         }
@@ -664,11 +662,10 @@ public class MarkSheet extends MarkSheet_Base {
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("markSheet", markSheet);
         parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", I18N.getLocale());
         List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluations());
         Collections.sort(evaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
 
-        boolean result = ReportsUtils.printReport("markSheet", parameters, bundle, evaluations, printerName);
+        boolean result = ReportsUtils.printReport("markSheet", parameters, evaluations, printerName);
         if (!result) {
             throw new UnableToPrintServiceException("error.print.failed");
         }
@@ -979,13 +976,9 @@ public class MarkSheet extends MarkSheet_Base {
 
     public String getStateDiscription() {
         StringBuilder stringBuilder = new StringBuilder();
-        final ResourceBundle enumerationResources =
-                ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-        stringBuilder.append(enumerationResources.getString(getMarkSheetState().getName()).trim());
+        stringBuilder.append(BundleUtil.getString(Bundle.ENUMERATION, getMarkSheetState().getName()).trim());
         if (getSubmittedByTeacher()) {
-            final ResourceBundle academicResources =
-                    ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
-            stringBuilder.append(" (").append(academicResources.getString("label.markSheet.submittedByTeacher").trim())
+            stringBuilder.append(" (").append(BundleUtil.getString(Bundle.ACADEMIC, "label.markSheet.submittedByTeacher").trim())
                     .append(")");
         }
         return stringBuilder.toString();

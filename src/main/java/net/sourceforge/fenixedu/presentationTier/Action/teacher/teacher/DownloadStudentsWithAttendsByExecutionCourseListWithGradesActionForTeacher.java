@@ -39,11 +39,12 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -58,10 +59,10 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
         final ExecutionCourse executionCourse = getDomainObject(request, "executionCourseOID");
 
         final Spreadsheet spreadsheet = new Spreadsheet(executionCourse.getSigla());
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.number"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.name"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.degree.code"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.number"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.name"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.degree.code"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION,
                 "label.attends.enrollmentState"));
         final List<Evaluation> evaluations = executionCourse.getOrderedAssociatedEvaluations();
         for (final Evaluation evaluation : evaluations) {
@@ -70,7 +71,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
                 spreadsheet.setHeader(adHocEvaluation.getName());
             } else if (evaluation instanceof FinalEvaluation) {
                 final FinalEvaluation finalEvaluation = (FinalEvaluation) evaluation;
-                spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+                spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION,
                         "label.final.evaluation"));
             } else if (evaluation instanceof OnlineTest) {
                 final OnlineTest onlineTest = (OnlineTest) evaluation;
@@ -80,7 +81,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
                 spreadsheet.setHeader(project.getName());
             } else if (evaluation instanceof Exam) {
                 final Exam exam = (Exam) evaluation;
-                spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, exam.getSeason()
+                spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, exam.getSeason()
                         .getKey()));
             } else if (evaluation instanceof WrittenTest) {
                 final WrittenTest writtenTest = (WrittenTest) evaluation;
@@ -100,7 +101,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
                 final EnrolmentEvaluationType enrolmentEvaluationType = attends.getEnrolmentEvaluationType();
                 row.setCell(enrolmentEvaluationType.getDescription());
             } else {
-                row.setCell(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+                row.setCell(BundleUtil.getString(Bundle.APPLICATION,
                         "label.attends.enrollmentState.notEnrolled"));
             }
             for (final Evaluation evaluation : evaluations) {

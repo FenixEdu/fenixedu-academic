@@ -45,9 +45,10 @@ import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -763,8 +764,8 @@ public class PersonalInformationBean implements Serializable {
 
     public String getDescription() {
         if (hasPhdIndividualProgramProcess()) {
-            return BundleUtil.getMessageFromModuleOrApplication("GEP", "label.personal.ingression.data.viewer.phd.program.name")
-                    + " " + BundleUtil.getMessageFromModuleOrApplication("Application", "label.in") + " "
+            return BundleUtil.getString(Bundle.GEP, "label.personal.ingression.data.viewer.phd.program.name") + " "
+                    + BundleUtil.getString(Bundle.APPLICATION, "label.in") + " "
                     + getPhdIndividualProgramProcess().getPhdProgram().getName().getContent();
         } else {
             return getRegistration().getDegreeNameWithDescription();

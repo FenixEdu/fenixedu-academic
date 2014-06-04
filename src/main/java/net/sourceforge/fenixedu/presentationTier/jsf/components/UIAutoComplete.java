@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
@@ -31,9 +30,12 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.IntegerConverter;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.util.Bundle;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.CharEncoding;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.DomainObject;
@@ -262,10 +264,6 @@ public class UIAutoComplete extends UIInput {
     }
 
     private String getMessageFromBundle(FacesContext context, String key) {
-        ResourceBundle resourceBundle =
-                ResourceBundle.getBundle(context.getApplication().getMessageBundle(), context.getViewRoot().getLocale());
-
-        String errorMessage = resourceBundle.getString(key);
-        return errorMessage;
+        return BundleUtil.getString(Bundle.APPLICATION, key);
     }
 }

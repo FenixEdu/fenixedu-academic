@@ -21,9 +21,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.sc
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -33,6 +33,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -144,15 +145,13 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
         sheet.createRow(0);
         sheet.createRow(1);
 
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "institutionCode"), 0);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "institutionName"), 1);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "candidacyNumber"), 2);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "studentNumberForPrint"), 3);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "studentName"), 4);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "documentTypeName"), 5);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "documentNumber"), 6);
+        addHeaderCell(sheet, getHeaderInBundle("institutionCode"), 0);
+        addHeaderCell(sheet, getHeaderInBundle("institutionName"), 1);
+        addHeaderCell(sheet, getHeaderInBundle("candidacyNumber"), 2);
+        addHeaderCell(sheet, getHeaderInBundle("studentNumberForPrint"), 3);
+        addHeaderCell(sheet, getHeaderInBundle("studentName"), 4);
+        addHeaderCell(sheet, getHeaderInBundle("documentTypeName"), 5);
+        addHeaderCell(sheet, getHeaderInBundle("documentNumber"), 6);
     }
 
     private void fillRegimeTable(HSSFWorkbook wb) {
@@ -305,8 +304,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
         } else if (value instanceof String) {
             return (String) value;
         } else if (value instanceof Boolean) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-            return bundle.getString(((Boolean) value) ? "label.yes" : "label.no");
+            return BundleUtil.getString(Bundle.ACADEMIC, ((Boolean) value) ? "label.yes" : "label.no");
         }
 
         return value.toString();
@@ -316,66 +314,64 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
         sheet.createRow(0);
         sheet.createRow(1);
 
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "institutionCode"), 0);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "institutionName"), 1);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "candidacyNumber"), 2);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "studentNumberForPrint"), 3);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "studentName"), 4);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "documentTypeName"), 5);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "documentNumber"), 6);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeCode"), 7);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeName"), 8);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeTypeName"), 9);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "code"), 10);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "countNumberOfDegreeChanges"), 11);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "hasMadeDegreeChange"), 12);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "firstEnrolmentOnCurrentExecutionYear"), 13);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "regime"), 14);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "code"), 15);
+        addHeaderCell(sheet, getHeaderInBundle("institutionCode"), 0);
+        addHeaderCell(sheet, getHeaderInBundle("institutionName"), 1);
+        addHeaderCell(sheet, getHeaderInBundle("candidacyNumber"), 2);
+        addHeaderCell(sheet, getHeaderInBundle("studentNumberForPrint"), 3);
+        addHeaderCell(sheet, getHeaderInBundle("studentName"), 4);
+        addHeaderCell(sheet, getHeaderInBundle("documentTypeName"), 5);
+        addHeaderCell(sheet, getHeaderInBundle("documentNumber"), 6);
+        addHeaderCell(sheet, getHeaderInBundle("degreeCode"), 7);
+        addHeaderCell(sheet, getHeaderInBundle("degreeName"), 8);
+        addHeaderCell(sheet, getHeaderInBundle("degreeTypeName"), 9);
+        addHeaderCell(sheet, getHeaderInBundle("code"), 10);
+        addHeaderCell(sheet, getHeaderInBundle("countNumberOfDegreeChanges"), 11);
+        addHeaderCell(sheet, getHeaderInBundle("hasMadeDegreeChange"), 12);
+        addHeaderCell(sheet, getHeaderInBundle("firstEnrolmentOnCurrentExecutionYear"), 13);
+        addHeaderCell(sheet, getHeaderInBundle("regime"), 14);
+        addHeaderCell(sheet, getHeaderInBundle("code"), 15);
 
         HSSFRow row = sheet.getRow(0);
         HSSFCell cell = row.createCell(16);
-        cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies"));
+        cell.setCellValue(getHeaderInBundle("ingression.year.on.cycle.studies"));
         cell.setCellStyle(headerStyle);
         sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 18));
 
         cell = sheet.getRow(1).createCell(16);
-        cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.year"));
+        cell.setCellValue(getHeaderInBundle("ingression.year.on.cycle.studies.year"));
         cell.setCellStyle(headerStyle);
 
         cell = sheet.getRow(1).createCell(17);
-        cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.count"));
+        cell.setCellValue(getHeaderInBundle("ingression.year.on.cycle.studies.count"));
         cell.setCellStyle(headerStyle);
 
         cell = sheet.getRow(1).createCell(18);
-        cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.integral.count"));
+        cell.setCellValue(getHeaderInBundle("ingression.year.on.cycle.studies.integral.count"));
         cell.setCellStyle(headerStyle);
 
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfDegreeCurricularYears"), 19);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "curricularYearOneYearAgo"), 20);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledEctsOneYearAgo"), 21);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfApprovedEctsOneYearAgo"), 22);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "curricularYearInCurrentYear"), 23);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledECTS"), 24);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "gratuityAmount"), 25);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfMonthsExecutionYear"), 26);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "firstMonthOfPayment"), 27);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCETQualification"), 28);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeQualificationOwner"), 29);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "masterQualificationOwner"), 30);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "phdQualificationOwner"), 31);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCollegeQualification"), 32);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "observations"), 33);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "lastEnrolledExecutionYear"), 34);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "nif"), 35);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "last.conclusion.academic.facts"), 36);
+        addHeaderCell(sheet, getHeaderInBundle("numberOfDegreeCurricularYears"), 19);
+        addHeaderCell(sheet, getHeaderInBundle("curricularYearOneYearAgo"), 20);
+        addHeaderCell(sheet, getHeaderInBundle("numberOfEnrolledEctsOneYearAgo"), 21);
+        addHeaderCell(sheet, getHeaderInBundle("numberOfApprovedEctsOneYearAgo"), 22);
+        addHeaderCell(sheet, getHeaderInBundle("curricularYearInCurrentYear"), 23);
+        addHeaderCell(sheet, getHeaderInBundle("numberOfEnrolledECTS"), 24);
+        addHeaderCell(sheet, getHeaderInBundle("gratuityAmount"), 25);
+        addHeaderCell(sheet, getHeaderInBundle("numberOfMonthsExecutionYear"), 26);
+        addHeaderCell(sheet, getHeaderInBundle("firstMonthOfPayment"), 27);
+        addHeaderCell(sheet, getHeaderInBundle("ownerOfCETQualification"), 28);
+        addHeaderCell(sheet, getHeaderInBundle("degreeQualificationOwner"), 29);
+        addHeaderCell(sheet, getHeaderInBundle("masterQualificationOwner"), 30);
+        addHeaderCell(sheet, getHeaderInBundle("phdQualificationOwner"), 31);
+        addHeaderCell(sheet, getHeaderInBundle("ownerOfCollegeQualification"), 32);
+        addHeaderCell(sheet, getHeaderInBundle("observations"), 33);
+        addHeaderCell(sheet, getHeaderInBundle("lastEnrolledExecutionYear"), 34);
+        addHeaderCell(sheet, getHeaderInBundle("nif"), 35);
+        addHeaderCell(sheet, getHeaderInBundle("last.conclusion.academic.facts"), 36);
     }
 
-    protected String getHeaderInBundle(ResourceBundle bundle, String field) {
-        return bundle
-                .getString("label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.StudentLine."
+    protected String getHeaderInBundle(String field) {
+        return BundleUtil.getString(Bundle.ACADEMIC,
+                "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.StudentLine."
                         + field);
     }
 

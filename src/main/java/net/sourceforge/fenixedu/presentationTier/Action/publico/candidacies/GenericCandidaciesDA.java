@@ -37,7 +37,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.struts.action.ActionForm;
@@ -303,7 +304,7 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
             GenericApplicationUploadBean uploadBean = getRenderedObject("uploadBean");
             if (uploadBean == null) {
                 uploadBean = new GenericApplicationUploadBean();
-                uploadBean.setDisplayName(BundleUtil.getStringFromResourceBundle("resources.CandidateResources",
+                uploadBean.setDisplayName(BundleUtil.getString(Bundle.CANDIDATE,
                         "label.recommendation.document"));
             } else {
                 try {

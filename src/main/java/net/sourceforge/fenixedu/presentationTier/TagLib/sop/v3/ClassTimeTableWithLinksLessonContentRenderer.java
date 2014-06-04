@@ -30,7 +30,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
@@ -130,7 +131,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             final InfoLessonInstanceAggregation infoLessonInstanceAggregation = (InfoLessonInstanceAggregation) showOccupation;
             if (!infoLessonInstanceAggregation.availableInAllWeeks()) {
                 builder.append("<span>");
-                builder.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.weeks"));
+                builder.append(BundleUtil.getString(Bundle.CANDIDATE, "label.weeks"));
                 builder.append(": &nbsp;&nbsp;");
                 builder.append(infoLessonInstanceAggregation.prettyPrintWeeks());
                 builder.append("&nbsp;");

@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -31,14 +30,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.accounting.SibsPaymentFileProcessReport;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPaymentsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -120,43 +120,45 @@ public class ExportSibsPaymentsReport extends FenixDispatchAction {
     private SheetData<SibsPaymentFileProcessReport> buildSpreadsheet(final SibsPaymentsReportBean bean) {
         final SheetData<SibsPaymentFileProcessReport> spreadsheet =
                 new SheetData<SibsPaymentFileProcessReport>(getSibsPaymentFileProcessReports(bean)) {
+
+                    private String getString(final String key) {
+                        return BundleUtil.getString(Bundle.MANAGER, key);
+                    }
+
                     @Override
                     protected void makeLine(SibsPaymentFileProcessReport line) {
-                        final ResourceBundle bundle =
-                                ResourceBundle.getBundle("resources.ManagerResources", I18N.getLocale());
-                        addCell(bundle.getString("label.reports.date"), line.getWhenProcessedBySibs());
-                        addCell(bundle.getString("label.reports.version"), line.getFileVersion());
-                        addCell(bundle.getString("label.reports.gratuity.lic"), line.getDegreeGratuityTotalAmount());
-                        addCell(bundle.getString("label.reports.gratuity.lb"), line.getBolonhaDegreeGratuityTotalAmount());
-                        addCell(bundle.getString("label.reports.gratuity.mi"),
+                        addCell(getString("label.reports.date"), line.getWhenProcessedBySibs());
+                        addCell(getString("label.reports.version"), line.getFileVersion());
+                        addCell(getString("label.reports.gratuity.lic"), line.getDegreeGratuityTotalAmount());
+                        addCell(getString("label.reports.gratuity.lb"), line.getBolonhaDegreeGratuityTotalAmount());
+                        addCell(getString("label.reports.gratuity.mi"),
                                 line.getIntegratedBolonhaMasterDegreeGratuityTotalAmount());
-                        addCell(bundle.getString("label.reports.gratuity.mb"), line.getBolonhaMasterDegreeGratuityTotalAmount());
-                        addCell(bundle.getString("label.reports.grad.fee"), line.getAdministrativeOfficeTaxTotalAmount());
-                        addCell(bundle.getString("label.reports.insurance"), line.getGraduationInsuranceTotalAmount());
-                        addCell(bundle.getString("label.reports.proesp"), line.getSpecializationGratuityTotalAmount());
-                        addCell(bundle.getString("label.reports.propmest"), line.getMasterDegreeGratuityTotalAmount());
-                        addCell(bundle.getString("label.reports.propdout"), line.getPhdGratuityTotalAmount());
-                        addCell(bundle.getString("label.reports.propdfa"), line.getDfaGratuityTotalAmount());
-                        addCell(bundle.getString("label.reports.pgrad.fee"), line.getAfterGraduationInsuranceTotalAmount());
-                        addCell(bundle.getString("label.reports.residence"), line.getResidencePayment());
-                        addCell(bundle.getString("label.reports.degreeCandidacyForGraduatedPerson"),
+                        addCell(getString("label.reports.gratuity.mb"), line.getBolonhaMasterDegreeGratuityTotalAmount());
+                        addCell(getString("label.reports.grad.fee"), line.getAdministrativeOfficeTaxTotalAmount());
+                        addCell(getString("label.reports.insurance"), line.getGraduationInsuranceTotalAmount());
+                        addCell(getString("label.reports.proesp"), line.getSpecializationGratuityTotalAmount());
+                        addCell(getString("label.reports.propmest"), line.getMasterDegreeGratuityTotalAmount());
+                        addCell(getString("label.reports.propdout"), line.getPhdGratuityTotalAmount());
+                        addCell(getString("label.reports.propdfa"), line.getDfaGratuityTotalAmount());
+                        addCell(getString("label.reports.pgrad.fee"), line.getAfterGraduationInsuranceTotalAmount());
+                        addCell(getString("label.reports.residence"), line.getResidencePayment());
+                        addCell(getString("label.reports.degreeCandidacyForGraduatedPerson"),
                                 line.getDegreeCandidacyForGraduatedPersonAmount());
-                        addCell(bundle.getString("label.reports.degreeChangeIndividualCandidacy"),
+                        addCell(getString("label.reports.degreeChangeIndividualCandidacy"),
                                 line.getDegreeChangeIndividualCandidacyAmount());
-                        addCell(bundle.getString("label.reports.degreeTransferIndividualCandidacy"),
+                        addCell(getString("label.reports.degreeTransferIndividualCandidacy"),
                                 line.getDegreeTransferIndividualCandidacyAmount());
-                        addCell(bundle.getString("label.reports.secondCycleIndividualCandidacy"),
+                        addCell(getString("label.reports.secondCycleIndividualCandidacy"),
                                 line.getSecondCycleIndividualCandidacyAmount());
-                        addCell(bundle.getString("label.reports.standaloneEnrolmentGratuityEvent"),
+                        addCell(getString("label.reports.standaloneEnrolmentGratuityEvent"),
                                 line.getStandaloneEnrolmentGratuityEventAmount());
-                        addCell(bundle.getString("label.reports.over23IndividualCandidacy"),
+                        addCell(getString("label.reports.over23IndividualCandidacy"),
                                 line.getOver23IndividualCandidacyEventAmount());
-                        addCell(bundle.getString("label.reports.institutionAffiliation"),
-                                line.getInstitutionAffiliationEventAmount());
-                        addCell(bundle.getString("label.reports.phdProgramCandidacy"), line.getPhdProgramCandidacyEventAmount());
-                        addCell(bundle.getString("label.reports.rectorate"), line.getRectorateAmount());
-                        addCell(bundle.getString("label.reports.totrans"), line.getTransactionsTotalAmount());
-                        addCell(bundle.getString("label.reports.totarif"), line.getTotalCost());
+                        addCell(getString("label.reports.institutionAffiliation"), line.getInstitutionAffiliationEventAmount());
+                        addCell(getString("label.reports.phdProgramCandidacy"), line.getPhdProgramCandidacyEventAmount());
+                        addCell(getString("label.reports.rectorate"), line.getRectorateAmount());
+                        addCell(getString("label.reports.totrans"), line.getTransactionsTotalAmount());
+                        addCell(getString("label.reports.totarif"), line.getTotalCost());
                     }
                 };
 

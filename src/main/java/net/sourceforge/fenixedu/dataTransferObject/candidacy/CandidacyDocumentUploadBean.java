@@ -28,6 +28,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
+import net.sourceforge.fenixedu.util.Bundle;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -59,7 +60,7 @@ public class CandidacyDocumentUploadBean implements Serializable {
 
     public String getActualFile() {
         return (actualFile == null) ? new LabelFormatter().appendLabel("label.file.not.uploaded.yet",
-                "resources.CandidateResources").toString() : actualFile;
+                Bundle.CANDIDATE).toString() : actualFile;
     }
 
     public CandidacyDocument getCandidacyDocument() {
@@ -83,7 +84,7 @@ public class CandidacyDocumentUploadBean implements Serializable {
     }
 
     public String getDocumentDescription() {
-        return new LabelFormatter().appendLabel("label." + documentDescription, "resources.CandidateResources").toString();
+        return new LabelFormatter().appendLabel("label." + documentDescription, Bundle.CANDIDATE).toString();
     }
 
     public boolean getIsFileUploaded() {

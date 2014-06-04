@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -34,13 +33,14 @@ import net.sourceforge.fenixedu.domain.TutorshipSummaryRelation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship.ViewStudentsByTutorDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -77,9 +77,6 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
 
     public ActionForward exportSummaries(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
-        final ResourceBundle bundleEnum = ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale());
-
         TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
 
         if (bean == null) {
@@ -99,13 +96,13 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
                 addCell("Semestre", summary.getSemester().getSemester() + " - "
                         + summary.getSemester().getExecutionYear().getYear());
                 addCell("Curso", summary.getDegree().getSigla());
-                addCell(bundle.getString("label.tutorshipSummary.form.relationsSize"), summary.getTutorshipSummaryRelationsSet()
+                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.relationsSize"), summary.getTutorshipSummaryRelationsSet()
                         .size());
-                addCell(bundle.getString("label.tutorshipSummary.form.howManyReunionsGroup"), summary.getHowManyReunionsGroup());
-                addCell(bundle.getString("label.tutorshipSummary.form.howManyReunionsIndividual"),
+                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyReunionsGroup"), summary.getHowManyReunionsGroup());
+                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyReunionsIndividual"),
                         summary.getHowManyReunionsIndividual());
-                addCell(bundle.getString("label.tutorshipSummary.form.howManyContactsPhone"), summary.getHowManyContactsPhone());
-                addCell(bundle.getString("label.tutorshipSummary.form.howManyContactsEmail"), summary.getHowManyContactsEmail());
+                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyContactsPhone"), summary.getHowManyContactsPhone());
+                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyContactsEmail"), summary.getHowManyContactsEmail());
 
                 addCell("Problemas:", "");
                 addCell("Horários/Inscrições", convertBoolean(summary.getProblemsR1()));
@@ -135,7 +132,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
                 addCell("Outro", summary.getGainsOther());
 
                 if (summary.getTutorshipSummaryProgramAssessment() != null) {
-                    addCell("Apreciação Global", bundleEnum.getString(summary.getTutorshipSummaryProgramAssessment().getName()));
+                    addCell("Apreciação Global", BundleUtil.getString(Bundle.ENUMERATION, summary.getTutorshipSummaryProgramAssessment().getName()));
                 } else {
                     addCell("Apreciação Global", "");
                 }
@@ -162,23 +159,23 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
                         addCell("Curso", line.getKey().getDegree().getSigla());
                         addCell("Aluno", line.getValue().getTutorship().getStudent().getName() + "("
                                 + line.getValue().getTutorship().getStudent().getNumber() + ")");
-                        addCell(bundle.getString("label.tutorshipSummary.form.withoutEnrolments"), convertBoolean(line.getValue()
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.withoutEnrolments"), convertBoolean(line.getValue()
                                 .getWithoutEnrolments()));
                         if (line.getValue().getParticipationType() == null) {
-                            addCell(bundle.getString("label.tutorshipSummary.form.participationType"), "");
+                            addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.participationType"), "");
                         } else {
-                            addCell(bundle.getString("label.tutorshipSummary.form.participationType"),
-                                    bundleEnum.getString(line.getValue().getParticipationType().getName()));
+                            addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.participationType"),
+                                    BundleUtil.getString(Bundle.ENUMERATION, line.getValue().getParticipationType().getName()));
                         }
-                        addCell(bundle.getString("label.tutorshipSummary.form.participationRegularly"), convertBoolean(line
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.participationRegularly"), convertBoolean(line
                                 .getValue().getParticipationRegularly()));
-                        addCell(bundle.getString("label.tutorshipSummary.form.participationNone"), convertBoolean(line.getValue()
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.participationNone"), convertBoolean(line.getValue()
                                 .getParticipationNone()));
-                        addCell(bundle.getString("label.tutorshipSummary.form.outOfTouch"), convertBoolean(line.getValue()
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.outOfTouch"), convertBoolean(line.getValue()
                                 .getOutOfTouch()));
-                        addCell(bundle.getString("label.tutorshipSummary.form.highPerformance"), convertBoolean(line.getValue()
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.highPerformance"), convertBoolean(line.getValue()
                                 .getHighPerformance()));
-                        addCell(bundle.getString("label.tutorshipSummary.form.lowPerformance"), convertBoolean(line.getValue()
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.lowPerformance"), convertBoolean(line.getValue()
                                 .getLowPerformance()));
                     }
                 };

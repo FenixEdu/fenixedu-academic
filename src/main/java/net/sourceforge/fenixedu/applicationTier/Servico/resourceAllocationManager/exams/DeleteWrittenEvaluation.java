@@ -37,7 +37,8 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
@@ -86,10 +87,10 @@ public class DeleteWrittenEvaluation {
             String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
 
             String subject =
-                    BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.subject", new String[] {
+                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.subject", new String[] {
                             writtenEvaluation.getName(), group.getName(), beginDateString, time });
             String body =
-                    BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
+                    BundleUtil.getString(Bundle.VIGILANCY,
                             "label.writtenEvaluationDeletedMessage", new String[] { writtenEvaluation.getName(), beginDateString,
                                     time });
             for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {

@@ -43,7 +43,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -204,7 +205,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         Collections.sort(executionDegreeList, new BeanComparator("label"));
         executionDegreeList.add(
                 0,
-                new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.RendererResources",
+                new LabelValueBean(BundleUtil.getString(Bundle.RENDERER,
                         "renderers.menu.default.title"), ""));
     }
 
@@ -398,7 +399,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         if (sb.length() > 1) {
             sb.setLength(sb.length() - 2); // trim ", "
         } else {
-            sb.append(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"));
+            sb.append(BundleUtil.getString(Bundle.APPLICATION, "label.empty"));
         }
         return sb.toString();
     }

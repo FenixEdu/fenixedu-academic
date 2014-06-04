@@ -44,13 +44,14 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.Duration;
 
 import pt.ist.fenixframework.Atomic;
@@ -383,7 +384,7 @@ public class Shift extends Shift_Base {
     public boolean reserveForStudent(final Registration registration) {
         final boolean result = getLotacao().intValue() > getStudentsSet().size();
         if (result || isResourceAllocationManager()) {
-            GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+            GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
                     "log.executionCourse.groupAndShifts.shifts.attends.added", registration.getNumber().toString(), getNome(),
                     getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
             addStudents(registration);
@@ -420,7 +421,7 @@ public class Shift extends Shift_Base {
         int index = 0;
         SortedSet<ShiftType> sortedTypes = getSortedTypes();
         for (ShiftType shiftType : sortedTypes) {
-            builder.append(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, shiftType.getName()));
+            builder.append(BundleUtil.getString(Bundle.ENUMERATION, shiftType.getName()));
             index++;
             if (index < sortedTypes.size()) {
                 builder.append(", ");
@@ -536,7 +537,7 @@ public class Shift extends Shift_Base {
     @Atomic
     public void removeAttendFromShift(Registration registration, ExecutionCourse executionCourse) {
 
-        GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+        GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.groupAndShifts.shifts.attends.removed", registration.getNumber().toString(), getNome(),
                 getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
         registration.removeShifts(this);
@@ -545,9 +546,9 @@ public class Shift extends Shift_Base {
         Collection<Recipient> recipients =
                 Collections.singletonList(new Recipient(UserGroup.of(registration.getPerson().getUser())));
         final String subject =
-                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.shift.remove.subject");
+                BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.subject");
         final String body =
-                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.shift.remove.body", getNome());
+                BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.body", getNome());
 
         new Message(sender, sender.getConcreteReplyTos(), recipients, subject, body, "");
     }

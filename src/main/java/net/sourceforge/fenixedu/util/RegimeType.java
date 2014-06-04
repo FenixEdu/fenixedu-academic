@@ -23,8 +23,8 @@
 package net.sourceforge.fenixedu.util;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public enum RegimeType {
@@ -36,7 +36,7 @@ public enum RegimeType {
     }
 
     public String localizedName(Locale locale) {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(qualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName());
     }
 
     protected String qualifiedName() {

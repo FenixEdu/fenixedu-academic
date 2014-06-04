@@ -24,6 +24,10 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroupInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class CycleCourseGroupInformationManagementBackingBean extends CurricularCourseManagementBackingBean {
@@ -55,7 +59,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
             courseGroup.createCycleCourseGroupInformation(getInformationExecutionYear(), getGraduatedTitle(),
                     getGraduatedTitleEn());
 
-            this.addInfoMessage(bolonhaBundle.getString("cycleCourseGroupInformationAdded"));
+            this.addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "cycleCourseGroupInformationAdded"));
 
             setInformationExecutionYearId(null);
             setGraduatedTitle("");
@@ -63,7 +67,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
 
             return "editCurricularPlanStructure";
         } catch (DomainException e) {
-            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";
         }
     }
@@ -82,7 +86,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
             CycleCourseGroupInformation information = getInformation();
             information.edit(getEditInformationExecutionYear(), getEditGraduatedTitle(), getEditGraduatedTitleEn());
 
-            this.addInfoMessage(bolonhaBundle.getString("cycleCourseGroupInformationEdit"));
+            this.addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "cycleCourseGroupInformationEdit"));
 
             setEditGraduatedTitle("");
             setEditGraduatedTitleEn("");
@@ -90,7 +94,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
 
             return "editCurricularPlanStructure";
         } catch (DomainException e) {
-            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";
         }
     }

@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -33,9 +31,11 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.util.Region;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
@@ -295,8 +295,6 @@ public class YearDelegateElection extends YearDelegateElection_Base {
     public static StyledExcelSpreadsheet exportElectionsResultsToFile(List<Degree> degrees, ExecutionYear executionYear)
             throws IOException {
         StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet();
-        final ResourceBundle BUNDLE =
-                ResourceBundle.getBundle("resources.PedagogicalCouncilResources", Locale.getDefault());
 
         for (Degree degree : degrees) {
             spreadsheet.getSheet(degree.getSigla());
@@ -306,19 +304,19 @@ public class YearDelegateElection extends YearDelegateElection_Base {
                     DelegateElectionVotingPeriod votingPeriod = election.getLastVotingPeriod();
                     spreadsheet.newHeaderRow();
                     int fistHeaderRow = spreadsheet.getRow().getRowNum();
-                    spreadsheet.addHeader(String.format("%s - %s (%s)", BUNDLE.getString("label.elections.excel.curricularYear"),
+                    spreadsheet.addHeader(String.format("%s - %s (%s)", BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.curricularYear"),
                             election.getCurricularYear().getYear(), votingPeriod.getPeriod()), 10000);
                     spreadsheet.getSheet().addMergedRegion(new Region(fistHeaderRow, (short) 0, fistHeaderRow, (short) 5));
                     spreadsheet.newRow();
                     if (votingPeriod.getVotesSet().size() == 0) {
-                        spreadsheet.addCell(BUNDLE.getString("label.elections.excel.not.have.votes"));
+                        spreadsheet.addCell(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.not.have.votes"));
                     } else {
-                        spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.studentNumber"), 6000);
-                        spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.studentName"), 10000);
-                        spreadsheet.addHeader(BUNDLE.getString("label.phone"), 4000);
-                        spreadsheet.addHeader(BUNDLE.getString("label.email"), 6000);
-                        spreadsheet.addHeader(BUNDLE.getString("label.address"), 12000);
-                        spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.nrTotalVotes"), 5000);
+                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.studentNumber"), 6000);
+                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.studentName"), 10000);
+                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.phone"), 4000);
+                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.email"), 6000);
+                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.address"), 12000);
+                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.nrTotalVotes"), 5000);
                         List<DelegateElectionResultsByStudentDTO> resultsByStudent =
                                 sortByResults(votingPeriod.getDelegateElectionResults());
                         for (DelegateElectionResultsByStudentDTO resultByStudent : resultsByStudent) {
@@ -343,7 +341,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
                         spreadsheet.setRegionBorder(fistHeaderRow, spreadsheet.getRow().getRowNum() + 1, 0, 2);
                         spreadsheet.newRow();
                         spreadsheet.newRow();
-                        spreadsheet.addCell(BUNDLE.getString("label.elections.excel.nrBlankTotalVotes"));
+                        spreadsheet.addCell(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.nrBlankTotalVotes"));
                         spreadsheet.addCell(votingPeriod.getBlankVotesElection(), spreadsheet.getExcelStyle().getValueStyle());
                     }
                 }

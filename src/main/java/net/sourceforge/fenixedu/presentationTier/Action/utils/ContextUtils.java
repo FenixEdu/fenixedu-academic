@@ -25,7 +25,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,10 +55,10 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.util.LabelValueBean;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -258,8 +257,6 @@ public class ContextUtils {
 
     @Deprecated
     public static void prepareChangeExecutionDegreeAndCurricularYear(HttpServletRequest request) {
-        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-        ResourceBundle applicationResources = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
@@ -279,10 +276,10 @@ public class ContextUtils {
 
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             final Degree degree = degreeCurricularPlan.getDegree();
-            final String degreeTypeString = bundle.getString(degree.getDegreeType().toString());
+            final String degreeTypeString = BundleUtil.getString(Bundle.ENUMERATION, degree.getDegreeType().toString());
             final StringBuilder name = new StringBuilder();
             name.append(degreeTypeString);
-            name.append(" ").append(applicationResources.getString("label.in")).append(" ");
+            name.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, "label.in")).append(" ");
             name.append(degree.getNameFor(executionDegree.getExecutionYear()).getContent());
             if (duplicateDegreeInList(degree, executionYear)) {
                 name.append(" - ");

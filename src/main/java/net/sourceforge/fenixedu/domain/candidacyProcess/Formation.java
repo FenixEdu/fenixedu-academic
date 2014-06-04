@@ -19,13 +19,13 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.util.Formatter;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class Formation extends Formation_Base {
 
@@ -81,15 +81,15 @@ public class Formation extends Formation_Base {
     }
 
     public void exportValues(StringBuilder result) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
         Formatter formatter = new Formatter(result);
-        formatter.format("\n%s:\n", bundle.getString("title.other.academic.titles"));
-        formatter.format("%s: %s\n", bundle.getString("label.other.academic.titles.program.name"), getDesignation());
-        formatter.format("%s: %s\n", bundle.getString("label.other.academic.titles.institution"), getInstitution().getName());
-        formatter.format("%s: %s\n", bundle.getString("label.other.academic.titles.conclusion.date"),
+        formatter.format("\n%s:\n", BundleUtil.getString(Bundle.CANDIDATE, "title.other.academic.titles"));
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.other.academic.titles.program.name"), getDesignation());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.other.academic.titles.institution"), getInstitution().getName());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.other.academic.titles.conclusion.date"),
                 StringUtils.isEmpty(getYear()) ? StringUtils.EMPTY : getYear());
-        formatter.format("%s: %s\n", bundle.getString("label.other.academic.titles.conclusion.grade"),
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.other.academic.titles.conclusion.grade"),
                 StringUtils.isEmpty(getConclusionGrade()) ? StringUtils.EMPTY : getConclusionGrade());
+        formatter.close();
     }
 
     @Deprecated

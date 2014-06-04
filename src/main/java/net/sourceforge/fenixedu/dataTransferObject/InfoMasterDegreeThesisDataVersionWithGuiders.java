@@ -18,12 +18,9 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Properties;
 
 import net.sourceforge.fenixedu.domain.GuiderType;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
@@ -47,15 +44,6 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
     private List<GuiderDTO> allGuiders;
 
     public List getAllGuiders() {
-
-        Properties properties = new Properties();
-
-        InputStream inputStream = getClass().getResourceAsStream("/resources/GlobalResources.properties");
-        try {
-            properties.load(inputStream);
-        } catch (IOException e1) {
-            logger.error(e1.getMessage(), e1);
-        }
         String institution = Unit.getInstitutionAcronym();
 
         this.allGuiders = new ArrayList<GuiderDTO>();

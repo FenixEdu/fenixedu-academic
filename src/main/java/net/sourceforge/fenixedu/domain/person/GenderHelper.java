@@ -21,15 +21,17 @@ package net.sourceforge.fenixedu.domain.person;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class GenderHelper {
 
-    public static final String GENDER_RESOURCE_BUNDLE = BundleUtil.APPLICATION_BUNDLE;
+    @Deprecated
+    // remove on move to major version 4.0.0
+    public static final String GENDER_RESOURCE_BUNDLE = Bundle.APPLICATION;
 
     private GenderHelper() {
         super();
@@ -46,18 +48,19 @@ public class GenderHelper {
             return labelValueBeans;
         }
 
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle(GENDER_RESOURCE_BUNDLE, locale);
         labelValueBeans =
-                new LabelValueBean[] { new LabelValueBean(resourceBundle.getString(Gender.MALE.name()), Gender.MALE.name()),
-                        new LabelValueBean(resourceBundle.getString(Gender.FEMALE.name()), Gender.FEMALE.name()) };
+                new LabelValueBean[] {
+                        new LabelValueBean(BundleUtil.getString(Bundle.APPLICATION, locale, Gender.MALE.name()),
+                                Gender.MALE.name()),
+                        new LabelValueBean(BundleUtil.getString(Bundle.APPLICATION, locale, Gender.FEMALE.name()),
+                                Gender.FEMALE.name()) };
         sexLabelValuesByLocale.put(locale, labelValueBeans);
         return labelValueBeans;
     }
 
     public static String toLocalizedString(Gender gender, Locale locale) {
         try {
-            final ResourceBundle resourceBundle = ResourceBundle.getBundle(GENDER_RESOURCE_BUNDLE, locale);
-            return resourceBundle.getString(gender.name());
+            return BundleUtil.getString(Bundle.APPLICATION, locale, gender.name());
         } catch (Exception swallowed) {
             return null;
         }

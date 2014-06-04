@@ -19,10 +19,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,19 +39,19 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
 
 abstract public class PhdProcessDA extends PhdDA {
 
     static protected final Pattern AREA_CODE_REGEX = Pattern.compile("\\d{4}-\\d{3}");
-    static protected final String PHD_RESOURCES = "resources.PhdResources";
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -141,8 +139,8 @@ abstract public class PhdProcessDA extends PhdDA {
         }
     }
 
-    protected String getMessageFromResource(final String key, Object... args) {
-        return MessageFormat.format(ResourceBundle.getBundle(PHD_RESOURCES, I18N.getLocale()).getString(key), args);
+    protected String getMessageFromResource(final String key, String... args) {
+        return BundleUtil.getString(Bundle.PHD, key, args);
     }
 
     protected String getZipDocumentsFilename(PhdIndividualProgramProcess process) {

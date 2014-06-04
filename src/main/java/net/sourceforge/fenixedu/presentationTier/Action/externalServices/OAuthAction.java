@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import nl.bitwalker.useragentutils.UserAgent;
 
 import org.apache.amber.oauth2.as.issuer.MD5Generator;
@@ -58,6 +58,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.util.CookieReaderUtils;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
@@ -87,7 +88,7 @@ public class OAuthAction extends FenixDispatchAction {
             String browserName = userAgent.getBrowser().getName();
             String osName = userAgent.getOperatingSystem().getName();
             deviceId =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "oauthapps.label.device.type",
+                    BundleUtil.getString(Bundle.APPLICATION, "oauthapps.label.device.type",
                             browserName, osName);
         }
         return deviceId;

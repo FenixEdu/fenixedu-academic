@@ -37,7 +37,8 @@ import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandida
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -163,18 +164,18 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
 
     public Spreadsheet getCandidatesInformationSpreadSheet(final OutboundMobilityCandidacyPeriod period) {
         final String filename =
-                BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                BundleUtil.getString(Bundle.ACADEMIC,
                         "label.mobility.candidates.information.filename");
 
         final Spreadsheet spreadsheetCurricularInfo = new Spreadsheet(filename);
         final Spreadsheet spreadsheetOptions =
-                spreadsheetCurricularInfo.addSpreadsheet(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                spreadsheetCurricularInfo.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC,
                         "label.mobility.candidates.options"));
         final Spreadsheet spreadsheetContactInformation =
-                spreadsheetOptions.addSpreadsheet(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                spreadsheetOptions.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC,
                         "label.contact.information"));
         final Spreadsheet spreadsheetOtherCurricularInfo =
-                spreadsheetOptions.addSpreadsheet(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                spreadsheetOptions.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC,
                         "label.other.curricular.info"));
 
         final Set<Registration> processed = new HashSet<Registration>();
@@ -275,7 +276,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     }
 
     private String getString(final String key) {
-        return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", key);
+        return BundleUtil.getString(Bundle.ACADEMIC, key);
     }
 
     @Atomic
@@ -316,7 +317,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     }
 
     private String getMessage(final String key, final String... args) {
-        return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", key, args);
+        return BundleUtil.getString(Bundle.ACADEMIC, key, args);
     }
 
     // truncate string and add (...) if it is longer than length

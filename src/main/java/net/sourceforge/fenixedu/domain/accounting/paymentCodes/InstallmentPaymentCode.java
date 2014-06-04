@@ -19,9 +19,6 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentCodes;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
@@ -29,10 +26,10 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Money;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
 @Deprecated
@@ -112,11 +109,7 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
     @Override
     public String getDescription() {
         if (getInstallment().getPaymentPlan().hasSingleInstallment()) {
-            final ResourceBundle enumerationResources =
-                    ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-
-            return enumerationResources.getString(PaymentCodeType.TOTAL_GRATUITY.getQualifiedName());
-
+            return BundleUtil.getString(Bundle.ENUMERATION, PaymentCodeType.TOTAL_GRATUITY.getQualifiedName());
         }
 
         return super.getDescription();

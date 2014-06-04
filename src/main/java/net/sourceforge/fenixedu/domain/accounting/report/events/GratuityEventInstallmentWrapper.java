@@ -20,12 +20,13 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import java.math.BigDecimal;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class GratuityEventInstallmentWrapper implements InstallmentWrapper {
@@ -40,25 +41,28 @@ public class GratuityEventInstallmentWrapper implements InstallmentWrapper {
 
     @Override
     public String getExpirationDateLabel() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
         String label =
-                bundle.getString("label.net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob.installment.expiration.date");
+                BundleUtil
+                        .getString(Bundle.ACADEMIC,
+                                "label.net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob.installment.expiration.date");
         return String.format(label, this.installment.getOrder());
     }
 
     @Override
     public String getAmountToPayLabel() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
         String label =
-                bundle.getString("label.net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob.installment.expiration.amountToPay");
+                BundleUtil
+                        .getString(Bundle.ACADEMIC,
+                                "label.net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob.installment.expiration.amountToPay");
         return String.format(label, this.installment.getOrder());
     }
 
     @Override
     public String getRemainingAmountLabel() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
         String label =
-                bundle.getString("label.net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob.installment.expiration.remainingAmount");
+                BundleUtil
+                        .getString(Bundle.ACADEMIC,
+                                "label.net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob.installment.expiration.remainingAmount");
         return String.format(label, this.installment.getOrder());
     }
 

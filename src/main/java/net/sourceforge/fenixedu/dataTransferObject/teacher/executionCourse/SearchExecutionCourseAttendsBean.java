@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -32,11 +31,12 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
@@ -54,11 +54,11 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
     private transient Map<Integer, Integer> enrolmentsNumberMap;
 
     public String getEnumerationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(name);
+        return BundleUtil.getString(Bundle.ENUMERATION, name);
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
+        return BundleUtil.getString(Bundle.APPLICATION, name);
     }
 
     public SearchExecutionCourseAttendsBean(ExecutionCourse executionCourse) {

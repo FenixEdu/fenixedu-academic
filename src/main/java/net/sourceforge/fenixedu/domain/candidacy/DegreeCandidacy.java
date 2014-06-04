@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.EntryPhase;
@@ -35,8 +34,9 @@ import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintSystemAccessDataO
 import net.sourceforge.fenixedu.domain.candidacy.workflow.RegistrationOperation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class DegreeCandidacy extends DegreeCandidacy_Base {
 
@@ -59,8 +59,8 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale()).getString("label.degreeCandidacy")
-                + " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
+        return BundleUtil.getString(Bundle.CANDIDATE, "label.degreeCandidacy") + " - "
+                + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
                 + getExecutionDegree().getExecutionYear().getYear();
     }
 

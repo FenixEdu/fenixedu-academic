@@ -19,7 +19,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.utilities;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.StringFormatter;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class MasterDegreeDiplomaReport extends DiplomaReport {
 
@@ -40,10 +43,10 @@ public class MasterDegreeDiplomaReport extends DiplomaReport {
         addParameter("degreeFilteredName", StringFormatter.prettyPrint(this.studentDiplomaInformation.getDegreeName()));
 
         addParameter("conclusionStatus",
-                "curso de " + getEnumerationBundle().getString(DegreeType.MASTER_DEGREE.getQualifiedName()).toLowerCase());
+                "curso de " + BundleUtil.getString(Bundle.ENUMERATION, DegreeType.MASTER_DEGREE.getQualifiedName()).toLowerCase());
 
         addParameter("graduateTitle",
-                getEnumerationBundle().getString(DegreeType.MASTER_DEGREE.getQualifiedName() + ".graduate.title") + " em "
+                BundleUtil.getString(Bundle.ENUMERATION, DegreeType.MASTER_DEGREE.getQualifiedName() + ".graduate.title") + " em "
                         + StringFormatter.prettyPrint(this.studentDiplomaInformation.getDegreeName()));
 
     }

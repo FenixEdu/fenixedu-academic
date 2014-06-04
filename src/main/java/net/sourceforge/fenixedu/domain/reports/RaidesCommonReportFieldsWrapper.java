@@ -44,8 +44,9 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -517,8 +518,8 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(mobilityAgreement != null ? mobilityAgreement.getUniversityUnit().getCountry().getName() : "");
 
         // Duração do programa de mobilidade
-        row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getEnumName(personalInformationBean
-                .getMobilityProgramDuration()) : "");
+        row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getString(Bundle.ENUMERATION,
+                personalInformationBean.getMobilityProgramDuration().name()) : "");
 
         // Tipo de Estabelecimento Frequentado no Ensino Secundário
         if (personalInformationBean.getHighSchoolType() != null) {

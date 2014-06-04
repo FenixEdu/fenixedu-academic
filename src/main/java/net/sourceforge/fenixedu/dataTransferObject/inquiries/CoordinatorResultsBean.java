@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -94,7 +95,7 @@ public class CoordinatorResultsBean extends GlobalCommentsResultsBean {
 
     public void qucResultsLog() {
         QUCResultsLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
-                "resources.MessagingResources", "log.degree.qucresults.comment", getExecutionDegree().getDegree()
+                Bundle.MESSAGING, "log.degree.qucresults.comment", getExecutionDegree().getDegree()
                         .getPresentationName(), getExecutionCourse().getNameI18N().getContent());
     }
 }

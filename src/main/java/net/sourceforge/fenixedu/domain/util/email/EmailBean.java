@@ -22,13 +22,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -153,11 +152,9 @@ public class EmailBean implements Serializable {
     }
 
     public String validate() {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
-
         String bccs = getBccs();
         if (getRecipients().isEmpty() && StringUtils.isEmpty(bccs)) {
-            return resourceBundle.getString("error.email.validation.no.recipients");
+            return BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.no.recipients");
         }
 
         if (!StringUtils.isEmpty(bccs)) {
@@ -165,7 +162,7 @@ public class EmailBean implements Serializable {
             for (String emailString : emails) {
                 final String email = emailString.trim();
                 if (!email.matches(EMail.W3C_EMAIL_SINTAX_VALIDATOR)) {
-                    StringBuilder builder = new StringBuilder(resourceBundle.getString("error.email.validation.bcc.invalid"));
+                    StringBuilder builder = new StringBuilder(BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.bcc.invalid"));
                     builder.append(email);
                     return builder.toString();
                 }
@@ -173,11 +170,11 @@ public class EmailBean implements Serializable {
         }
 
         if (StringUtils.isEmpty(getSubject())) {
-            return resourceBundle.getString("error.email.validation.subject.empty");
+            return BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.subject.empty");
         }
 
         if (StringUtils.isEmpty(getMessage()) && StringUtils.isEmpty(getHtmlMessage())) {
-            return resourceBundle.getString("error.email.validation.message.empty");
+            return BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.message.empty");
         }
 
         return null;
@@ -193,15 +190,13 @@ public class EmailBean implements Serializable {
 
     @Atomic
     public Message send() {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
-
         final StringBuilder message = new StringBuilder();
         if (getMessage() != null && !getMessage().trim().isEmpty()) {
             message.append(getMessage());
             message.append("\n\n---\n");
-            message.append(resourceBundle.getString("message.email.footer.prefix"));
+            message.append(BundleUtil.getString(Bundle.APPLICATION, "message.email.footer.prefix"));
             message.append(getSender().getFromName());
-            message.append(resourceBundle.getString("message.email.footer.prefix.suffix"));
+            message.append(BundleUtil.getString(Bundle.APPLICATION, "message.email.footer.prefix.suffix"));
             for (final Recipient recipient : getRecipients()) {
                 message.append("\n\t");
                 message.append(recipient.getToName());

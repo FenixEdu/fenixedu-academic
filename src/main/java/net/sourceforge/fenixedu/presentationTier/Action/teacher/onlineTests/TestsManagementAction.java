@@ -31,7 +31,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -88,7 +87,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
@@ -110,7 +109,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -1440,13 +1439,11 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
     }
 
     private String createDefaultDistributedTestInfo(Test test) {
-        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE);
-        return MessageFormat.format(bundle.getString("message.distributeTest.evaluation"), new Object[] { test.getTitle(),
-                test.getTestQuestions().size() });
+        return MessageFormat.format(BundleUtil.getString(Bundle.APPLICATION, "message.distributeTest.evaluation"), new Object[] {
+                test.getTitle(), test.getTestQuestions().size() });
     }
 
     private String createDefaultDistributedInquiryInfo() {
-        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
-        return bundle.getString("message.distributeTest.inquiry");
+        return BundleUtil.getString(Bundle.APPLICATION, "message.distributeTest.inquiry");
     }
 }

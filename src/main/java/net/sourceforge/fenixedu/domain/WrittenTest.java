@@ -40,7 +40,8 @@ import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.predicates.WrittenTestPredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.fenixedu.bennu.core.domain.User;
@@ -252,7 +253,7 @@ public class WrittenTest extends WrittenTest_Base {
         }
 
         for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
-            EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
+            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
                     "log.executionCourse.evaluation.generic.edited.rooms", getPresentationName(), ec.getName(),
                     ec.getDegreePresentationString());
         }
@@ -295,7 +296,7 @@ public class WrittenTest extends WrittenTest_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.written.test") + " "
+        return BundleUtil.getString(Bundle.APPLICATION, "label.written.test") + " "
                 + getDescription();
     }
 

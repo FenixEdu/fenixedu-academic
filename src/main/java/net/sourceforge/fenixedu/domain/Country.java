@@ -22,12 +22,13 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
+
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -124,9 +125,7 @@ public class Country extends Country_Base {
             return nationality;
         }
 
-        final String specialCase =
-                ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale())
-                        .getString("label.person.portugueseNationality").toUpperCase();
+        final String specialCase = BundleUtil.getString(Bundle.APPLICATION, "label.person.portugueseNationality").toUpperCase();
         return nationality.trim().contains(specialCase) ? specialCase : nationality;
     }
 

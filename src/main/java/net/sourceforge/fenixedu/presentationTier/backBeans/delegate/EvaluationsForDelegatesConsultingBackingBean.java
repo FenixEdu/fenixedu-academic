@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
@@ -56,7 +57,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBean {
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/DelegateResources");
+    private static final MessageResources messages = MessageResources.getMessageResources(Bundle.DELEGATE);
 
     private static final DateFormat yearFormat = new SimpleDateFormat("yyyy");
 

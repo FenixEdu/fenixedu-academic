@@ -42,9 +42,10 @@ import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -479,8 +480,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
                 .getNumberOfPreviousYearEnrolmentsInPrecedentDegree().toString() : "");
 
         // Duração do programa de mobilidade
-        row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getEnumName(personalInformationBean
-                .getMobilityProgramDuration()) : "");
+        row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getString(Bundle.ENUMERATION,
+                personalInformationBean.getMobilityProgramDuration().name()) : "");
 
         // Tipo de Estabelecimento Frequentado no Ensino Secundário
         if (personalInformationBean.getHighSchoolType() != null) {

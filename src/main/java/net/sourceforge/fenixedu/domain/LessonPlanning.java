@@ -22,9 +22,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -49,7 +50,7 @@ public class LessonPlanning extends LessonPlanning_Base {
         setLessonType(lessonType);
         setExecutionCourse(executionCourse);
 
-        CurricularManagementLog.createLog(executionCourse, "resources.MessagingResources",
+        CurricularManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.curricular.planning.added", title.getContent(), lessonType.getFullNameTipoAula(),
                 executionCourse.getNome(), executionCourse.getDegreePresentationString());
     }
@@ -60,7 +61,7 @@ public class LessonPlanning extends LessonPlanning_Base {
     }
 
     public void deleteWithoutReOrder() {
-        CurricularManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+        CurricularManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.curricular.planning.removed", getTitle().getContent(),
                 getLessonType().getFullNameTipoAula(), getExecutionCourse().getNome(), getExecutionCourse()
                         .getDegreePresentationString());
@@ -144,16 +145,16 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     public String getLessonPlanningLabel() {
         StringBuilder builder = new StringBuilder();
-        builder.append(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.lesson")).append(" ");
+        builder.append(BundleUtil.getString(Bundle.APPLICATION, "label.lesson")).append(" ");
         builder.append(getOrderOfPlanning()).append(" (");
-        builder.append(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, getLessonType().getName()))
+        builder.append(BundleUtil.getString(Bundle.ENUMERATION, getLessonType().getName()))
                 .append(") - ");
         builder.append(getTitle().getContent());
         return builder.toString();
     }
 
     public void logEditEditLessonPlanning() {
-        CurricularManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+        CurricularManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.curricular.planning.edited", getTitle().getContent(), getLessonType().getFullNameTipoAula(),
                 getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
     }

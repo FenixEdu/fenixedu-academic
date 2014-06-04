@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.ws.rs.client.Client;
@@ -66,8 +65,10 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -334,10 +335,8 @@ public class A3ESDegreeProcess implements Serializable {
                 json.put("q-6.2.1.5", q6215);
 
                 JSONObject q6216 = new JSONObject();
-                q6216.put("en",
-                        ResourceBundle.getBundle("resources.GEPResources", Locale.ENGLISH).getString("label.gep.a3es.q6-2-1-6"));
-                q6216.put("pt",
-                        ResourceBundle.getBundle("resources.GEPResources", new Locale("pt")).getString("label.gep.a3es.q6-2-1-6"));
+                q6216.put("en", BundleUtil.getString(Bundle.GEP, Locale.ENGLISH, "label.gep.a3es.q6-2-1-6"));
+                q6216.put("pt", BundleUtil.getString(Bundle.GEP, new Locale("pt"), "label.gep.a3es.q6-2-1-6"));
                 json.put("q-6.2.1.6", q6216);
 
                 JSONObject q6217 = new JSONObject();
@@ -346,10 +345,8 @@ public class A3ESDegreeProcess implements Serializable {
                 json.put("q-6.2.1.7", q6217);
 
                 JSONObject q6218 = new JSONObject();
-                q6218.put("en",
-                        ResourceBundle.getBundle("resources.GEPResources", Locale.ENGLISH).getString("label.gep.a3es.q6-2-1-8"));
-                q6218.put("pt",
-                        ResourceBundle.getBundle("resources.GEPResources", new Locale("pt")).getString("label.gep.a3es.q6-2-1-8"));
+                q6218.put("en", BundleUtil.getString(Bundle.GEP, Locale.ENGLISH, "label.gep.a3es.q6-2-1-8"));
+                q6218.put("pt", BundleUtil.getString(Bundle.GEP, new Locale("pt"), "label.gep.a3es.q6-2-1-8"));
                 json.put("q-6.2.1.8", q6218);
 
                 List<String> references = new ArrayList<String>();

@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -44,14 +43,14 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -218,13 +217,12 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
         if (cerimonyInquiry != null) {
             Collection<CerimonyInquiryPerson> requests = cerimonyInquiry.getCerimonyInquiryPerson();
 
-            final ResourceBundle bundle = ResourceBundle.getBundle("resources/AlumniResources", I18N.getLocale());
             String inquiryName =
                     (cerimonyInquiry.getDescription() != null ? cerimonyInquiry.getDescription() : "UnnamedInquiry").replaceAll(
                             " ", "_");
             final String filename =
-                    bundle.getString("label.publicRelationOffice.alumniCerimony.inquiry.report") + "_" + inquiryName + "_"
-                            + new DateTime().toString("ddMMyyyyHHmmss");
+                    BundleUtil.getString(Bundle.ALUMNI, "label.publicRelationOffice.alumniCerimony.inquiry.report") + "_"
+                            + inquiryName + "_" + new DateTime().toString("ddMMyyyyHHmmss");
 
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
@@ -305,7 +303,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
     }
 
     static private String getResourceMessage(String key) {
-        return BundleUtil.getMessageFromModuleOrApplication(MODULE, key);
+        return BundleUtil.getString(Bundle.ALUMNI, key);
     }
 
 }

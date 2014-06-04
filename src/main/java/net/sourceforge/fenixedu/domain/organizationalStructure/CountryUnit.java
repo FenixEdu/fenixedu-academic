@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Country;
@@ -29,10 +28,11 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
@@ -143,9 +143,8 @@ public class CountryUnit extends CountryUnit_Base {
             return defaultCountry;
         }
         defaultCountry =
-                (CountryUnit) Unit.readUnitByAcronymAndType(
-                        ResourceBundle.getBundle("resources.GlobalResources", I18N.getLocale()).getString(
-                                "default.country.code"), PartyTypeEnum.COUNTRY);
+                (CountryUnit) Unit.readUnitByAcronymAndType(BundleUtil.getString(Bundle.GLOBAL, "default.country.code"),
+                        PartyTypeEnum.COUNTRY);
         return defaultCountry;
     }
 

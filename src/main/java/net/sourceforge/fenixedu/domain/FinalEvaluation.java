@@ -23,8 +23,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EvaluationType;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * @author T�nia Pous�o
@@ -118,6 +120,6 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.final.evaluation");
+        return BundleUtil.getString(Bundle.APPLICATION, "label.final.evaluation");
     }
 }

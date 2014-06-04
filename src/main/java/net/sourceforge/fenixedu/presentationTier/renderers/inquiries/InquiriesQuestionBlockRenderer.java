@@ -21,9 +21,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
-import java.util.MissingResourceException;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.CheckBoxQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesBlock;
@@ -31,9 +29,10 @@ import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestio
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.QuestionHeader;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.RadioGroupQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TextBoxQuestion;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -57,9 +56,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
  * 
  */
 public class InquiriesQuestionBlockRenderer extends InputRenderer {
-
-    private final ResourceBundle inquiriesResources = ResourceBundle.getBundle("resources.InquiriesResources",
-            I18N.getLocale());
 
     private String columnClasses;
 
@@ -219,11 +215,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
         }
 
         private String getResource(String label) {
-            try {
-                return inquiriesResources.getString(label);
-            } catch (MissingResourceException e) {
-            }
-            return label;
+            return BundleUtil.getString(Bundle.INQUIRIES, label);
         }
 
         private void createHeaderRow(final QuestionHeader header, final HtmlTable mainTable, InquiriesBlock block) {

@@ -38,12 +38,13 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.StrutsApplication;
 import org.joda.time.YearMonthDay;
 
@@ -95,7 +96,7 @@ public class ShowStudentPortalDA extends Action {
         for (final EnrolmentPeriod enrolmentPeriod : degreeCurricularPlan.getEnrolmentPeriodsSet()) {
             if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
                 if (isBetweenWarnPeriod(enrolmentPeriod)) {
-                    warnings.add(BundleUtil.getMessageFromModuleOrApplication("Student", "message.out.degree.enrolment.period",
+                    warnings.add(BundleUtil.getString(Bundle.STUDENT,  "message.out.degree.enrolment.period",
                             degreeCurricularPlan.getDegree().getSigla(),
                             YearMonthDay.fromDateFields(enrolmentPeriod.getStartDate()).toString(),
                             YearMonthDay.fromDateFields(enrolmentPeriod.getEndDate()).toString()));
@@ -110,7 +111,7 @@ public class ShowStudentPortalDA extends Action {
         for (final EnrolmentPeriod enrolmentPeriod : degreeCurricularPlan.getEnrolmentPeriodsSet()) {
             if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) {
                 if (isBetweenWarnPeriod(enrolmentPeriod)) {
-                    warnings.add(BundleUtil.getMessageFromModuleOrApplication("Student",
+                    warnings.add(BundleUtil.getString(Bundle.STUDENT, 
                             "message.out.degree.enrolment.period.after.special.season", degreeCurricularPlan.getDegree()
                                     .getSigla(), YearMonthDay.fromDateFields(enrolmentPeriod.getStartDate()).toString(),
                             YearMonthDay.fromDateFields(enrolmentPeriod.getEndDate()).toString()));
@@ -154,14 +155,14 @@ public class ShowStudentPortalDA extends Action {
         for (TreeSet<EnrolmentPeriod> periods : enrolmentPeriodsByDate.values()) {
             if (periods.size() == 1) {
                 EnrolmentPeriod enrolmentPeriod = periods.first();
-                warnings.add(BundleUtil.getMessageFromModuleOrApplication("Student",
+                warnings.add(BundleUtil.getString(Bundle.STUDENT, 
                         "message.out.degree.enrolment.period.in.special.season.evaluations", degreeCurricularPlan.getDegree()
                                 .getSigla(), enrolmentPeriod.getExecutionPeriod().getSemester().toString(), enrolmentPeriod
                                 .getExecutionPeriod().getYear(), YearMonthDay.fromDateFields(enrolmentPeriod.getStartDate())
                                 .toString(), YearMonthDay.fromDateFields(enrolmentPeriod.getEndDate()).toString()));
             } else {
                 EnrolmentPeriod enrolmentPeriod = periods.first();
-                warnings.add(BundleUtil.getMessageFromModuleOrApplication("Student",
+                warnings.add(BundleUtil.getString(Bundle.STUDENT, 
                         "message.out.degree.enrolment.period.in.special.season.evaluations.simple", degreeCurricularPlan
                                 .getDegree().getSigla(), YearMonthDay.fromDateFields(enrolmentPeriod.getStartDate()).toString(),
                         YearMonthDay.fromDateFields(enrolmentPeriod.getEndDate()).toString()));
@@ -175,7 +176,7 @@ public class ShowStudentPortalDA extends Action {
         for (final EnrolmentPeriod enrolmentPeriod : degreeCurricularPlan.getEnrolmentPeriodsSet()) {
             if (enrolmentPeriod instanceof EnrolmentPeriodInClasses) {
                 if (isBetweenWarnPeriod(enrolmentPeriod)) {
-                    warnings.add(BundleUtil.getMessageFromModuleOrApplication("Student", "message.out.classes.enrolment.period",
+                    warnings.add(BundleUtil.getString(Bundle.STUDENT,  "message.out.classes.enrolment.period",
                             degreeCurricularPlan.getDegree().getSigla(),
                             YearMonthDay.fromDateFields(enrolmentPeriod.getStartDate()).toString(),
                             YearMonthDay.fromDateFields(enrolmentPeriod.getEndDate()).toString()));

@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.util.MessageResources;
@@ -63,7 +64,7 @@ public class UnEnrollStudentInGroup {
         return (server != null) ? server : "mail.adm";
     }
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
+    private static final MessageResources messages = MessageResources.getMessageResources(Bundle.GLOBAL);
 
     @Atomic
     public static Boolean run(String userName, String studentGroupCode) throws FenixServiceException {

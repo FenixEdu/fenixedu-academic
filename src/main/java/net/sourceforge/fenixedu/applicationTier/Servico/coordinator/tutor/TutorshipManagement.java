@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -28,9 +27,9 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public abstract class TutorshipManagement {
 
@@ -60,8 +59,7 @@ public abstract class TutorshipManagement {
 
         if (!verifyIfBelongsToDegree(registration, degreeCurricularPlan.getDegree())) {
             // student doesn't belong to this degree
-            ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-            String degreeType = bundle.getString(executionDegree.getDegree().getDegreeType().getName());
+            String degreeType = BundleUtil.getString(Bundle.ENUMERATION, executionDegree.getDegree().getDegreeType().getName());
 
             throw new FenixServiceException("error.tutor.studentNoDegree", new String[] { studentNumber.toString(), degreeType,
                     executionDegree.getDegree().getNameFor(registration.getStartExecutionYear()).getContent() });

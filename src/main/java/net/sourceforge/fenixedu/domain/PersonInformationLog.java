@@ -18,7 +18,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -45,7 +45,7 @@ public class PersonInformationLog extends PersonInformationLog_Base {
     }
 
     private static String generateLabelDescription(String bundle, String key, String... args) {
-        return BundleUtil.getStringFromResourceBundle(bundle, key, args).trim();
+        return BundleUtil.getString(bundle, key, args).trim();
     }
 
     public static PersonInformationLog createLog(Person personViewed, String bundle, String key, String... args) {

@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
@@ -44,7 +43,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.DiplomaSupplement;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -334,7 +335,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public String getProgrammeTypeDescription() {
-        return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString("label.php.program");
+        return BundleUtil.getString(Bundle.PHD, "label.php.program");
     }
 
     @Override

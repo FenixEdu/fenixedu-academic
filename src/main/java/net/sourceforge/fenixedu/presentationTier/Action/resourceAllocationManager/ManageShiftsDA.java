@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +45,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -55,7 +54,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -98,10 +97,8 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
         if (infoExecutionCourse != null) {
             final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-            final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-
             for (final ShiftType shiftType : infoExecutionCourse.getExecutionCourse().getShiftTypes()) {
-                tiposAula.add(new LabelValueBean(bundle.getString(shiftType.getName()), shiftType.name()));
+                tiposAula.add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, shiftType.getName()), shiftType.name()));
             }
 
             request.setAttribute("tiposAula", tiposAula);

@@ -52,7 +52,8 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.candidacydocfiller.PdfFiller;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.htmlcleaner.HtmlCleaner;
@@ -264,7 +265,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
                 // nothing; print everything else
             }
 
-            map.put("sex", BundleUtil.getStringFromResourceBundle("resources/EnumerationResources", person.getGender().name()));
+            map.put("sex", BundleUtil.getString(Bundle.ENUMERATION, person.getGender().name()));
             map.put("maritalStatus", person.getMaritalStatus().getPresentationName());
             map.put("profession", person.getProfession());
             map.put("idDocType", person.getIdDocumentType().getLocalizedName());

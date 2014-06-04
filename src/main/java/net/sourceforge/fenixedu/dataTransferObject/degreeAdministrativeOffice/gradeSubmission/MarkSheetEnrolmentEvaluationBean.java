@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.g
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -30,7 +29,9 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 
@@ -38,9 +39,6 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
      * 
      */
     private static final long serialVersionUID = 1L;
-
-    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE);
-    private static final ResourceBundle academicResources = ResourceBundle.getBundle("resources.AcademicAdminOffice");
 
     private String gradeValue;
     private Date evaluationDate;
@@ -193,7 +191,7 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 
     public String getExecutionSemesterFullLabel() {
         return String.format("%s %s", getEnrolment().getExecutionPeriod().getSemester().toString(),
-                enumerationResources.getString("SEMESTER.ABBREVIATION"));
+                BundleUtil.getString(Bundle.ENUMERATION, "SEMESTER.ABBREVIATION"));
     }
 
     public String getEnrolmentState() {
@@ -244,10 +242,10 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     public String getEnrolmentEvaluationTypeDescription() {
         if (EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
                 && CurriculumValidationEvaluationPhase.FIRST_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
-            return academicResources.getString(NORMAL_TYPE_FIRST_SEASON_DESCRIPTION);
+            return BundleUtil.getString(Bundle.ACADEMIC, NORMAL_TYPE_FIRST_SEASON_DESCRIPTION);
         } else if (EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
                 && CurriculumValidationEvaluationPhase.SECOND_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
-            return academicResources.getString(NORMAL_TYPE_SECOND_SEASON_DESCRIPTION);
+            return BundleUtil.getString(Bundle.ACADEMIC, NORMAL_TYPE_SECOND_SEASON_DESCRIPTION);
         }
 
         return this.getEnrolmentEvaluationType().getDescription();

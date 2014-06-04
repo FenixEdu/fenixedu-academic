@@ -23,10 +23,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class OnlineTest extends OnlineTest_Base {
 
@@ -61,7 +62,7 @@ public class OnlineTest extends OnlineTest_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.online.test") + " "
+        return BundleUtil.getString(Bundle.APPLICATION, "label.online.test") + " "
                 + getDistributedTest().getEvaluationTitle();
     }
 

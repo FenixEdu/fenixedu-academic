@@ -28,7 +28,8 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -163,9 +164,9 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
     }
 
     private void appendMessage(final StringBuilder stringBuilder, final int lineNumber, final String key, final String[] args) {
-        final String description = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, key, args);
+        final String description = BundleUtil.getString(Bundle.APPLICATION, key, args);
         final String message =
-                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "error.invalid.file.contents.line",
+                BundleUtil.getString(Bundle.APPLICATION, "error.invalid.file.contents.line",
                         Integer.toString(lineNumber), description);
         stringBuilder.append("\n\t");
         stringBuilder.append(message);
@@ -258,8 +259,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
                     }
                 } else {
                     final String message =
-                            BundleUtil.getStringFromResourceBundle("resources/ResearcherResources",
-                                    "error.evaluee.has.no.process", evaluee);
+                            BundleUtil.getString(Bundle.RESEARCHER, "error.evaluee.has.no.process", evaluee);
                     stringBuilder.append(message);
                     stringBuilder.append('\n');
                 }

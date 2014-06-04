@@ -34,9 +34,11 @@ import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
@@ -93,7 +95,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
     @Override
     public String getDescription() {
-        return getResourceBundle().getString("message.phd.alert.public.presentation.seminar.description");
+        return BundleUtil.getString(Bundle.PHD, "message.phd.alert.public.presentation.seminar.description");
     }
 
     @Override

@@ -18,6 +18,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.util.Bundle;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
@@ -82,7 +84,7 @@ public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
 
     public void logEditProfessorship() {
         ExecutionCourse ec = getProfessorship().getExecutionCourse();
-        ProfessorshipManagementLog.createLog(ec, "resources.MessagingResources", "log.executionCourse.professorship.edited",
+        ProfessorshipManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.professorship.edited",
                 getProfessorship().getPerson().getPresentationName(), ec.getNome(), ec.getDegreePresentationString());
     }
 

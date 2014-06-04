@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -39,12 +38,15 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class CourseGroupReportBackingBean extends FenixBackingBean {
-    private final ResourceBundle enumerationResources = getResourceBundle("resources/EnumerationResources");
     private InfoToExport infoToExport;
     private final boolean rootWasClicked;
     private String name = null;
@@ -288,8 +290,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
             row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
 
-            row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime()
-                    .toString()));
+            row.setCell(BundleUtil.getString(Bundle.ENUMERATION, curricularCourse.getCompetenceCourse().getRegime().toString()));
             row.setCell(curricularPeriod.getParent().getChildOrder() == null ? "" : curricularPeriod.getParent().getChildOrder()
                     .toString());
             row.setCell(curricularPeriod.getChildOrder().toString());

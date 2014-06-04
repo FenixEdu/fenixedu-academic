@@ -19,12 +19,11 @@
 package net.sourceforge.fenixedu.domain.person;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.util.LabelValueBean;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
@@ -90,7 +89,6 @@ public enum Gender implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-        return bundle.getString(this.getClass().getName() + "." + name());
+        return BundleUtil.getString(Bundle.ENUMERATION, this.getClass().getName() + "." + name());
     }
 }

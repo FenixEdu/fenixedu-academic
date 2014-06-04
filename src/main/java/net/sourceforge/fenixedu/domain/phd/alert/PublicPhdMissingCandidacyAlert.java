@@ -19,16 +19,16 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -55,16 +55,14 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
 
     private MultiLanguageString generateSubject(final PhdProgramPublicCandidacyHashCode candidacyHashCode) {
         // TODO: if collaboration type change, then message must be different
-        final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-        return new MultiLanguageString().with(MultiLanguageString.en, bundle.getString("message.phd.email.subject.missing.candidacy"));
+        return new MultiLanguageString().with(MultiLanguageString.en, BundleUtil.getString(Bundle.PHD, "message.phd.email.subject.missing.candidacy"));
     }
 
     private MultiLanguageString generateBody(final PhdProgramPublicCandidacyHashCode hashCode) {
         // TODO: if collaboration type change, then message must be different
         String submissionAccessURL = FenixConfigurationManager.getConfiguration().getPhdPublicCandidacySubmissionLink();
-        final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
         final String body =
-                String.format(bundle.getString("message.phd.email.body.missing.candidacy"), submissionAccessURL,
+                String.format(BundleUtil.getString(Bundle.PHD, "message.phd.email.body.missing.candidacy"), submissionAccessURL,
                         hashCode.getValue());
         return new MultiLanguageString().with(MultiLanguageString.en, body);
     }
@@ -104,8 +102,7 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
 
     @Override
     public String getDescription() {
-        final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-        return bundle.getString(String.format("message.phd.missing.candidacy.alert", INTERVAL));
+        return BundleUtil.getString(Bundle.PHD, String.format("message.phd.missing.candidacy.alert", INTERVAL));
     }
 
     @Override

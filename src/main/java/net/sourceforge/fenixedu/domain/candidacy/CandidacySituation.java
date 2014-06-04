@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -31,10 +30,10 @@ import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.IStateWithOperations;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 // FIXME: Rename to CandidacyState
@@ -95,8 +94,7 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     }
 
     public String getDescription() {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(
-                getCandidacySituationType().getQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, getCandidacySituationType().getQualifiedName());
     }
 
     public boolean canChangePersonalData() {

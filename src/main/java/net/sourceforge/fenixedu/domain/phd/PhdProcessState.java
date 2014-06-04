@@ -22,14 +22,15 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -115,8 +116,7 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
     protected static String buildExpectedStatesDescription(List<? extends PhdProcessStateType> possibleNextStates) {
 
         if (possibleNextStates.isEmpty()) {
-            return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString(
-                    "message.phd.process.state.none");
+            return BundleUtil.getString(Bundle.PHD, Locale.getDefault(), "message.phd.process.state.none");
         }
 
         StringBuilder builder = new StringBuilder();

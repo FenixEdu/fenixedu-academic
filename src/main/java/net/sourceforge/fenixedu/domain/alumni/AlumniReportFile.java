@@ -19,11 +19,9 @@
 package net.sourceforge.fenixedu.domain.alumni;
 
 import java.io.ByteArrayOutputStream;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -43,11 +41,11 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,10 +98,8 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
     @Override
     public String getFilename() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/GEPResources", I18N.getLocale());
-        return MessageFormat.format(
-                getFullReport() ? bundle.getString("alumni.full.reports.name") : bundle.getString("alumni.partial.reports.name"),
-                getRequestDate());
+        return getFullReport() ? BundleUtil.getString(Bundle.GEP, "alumni.full.reports.name") : BundleUtil.getString(Bundle.GEP,
+                "alumni.partial.reports.name", getRequestDate().toString());
     }
 
     private List<Spreadsheet> buildReport() {
@@ -293,11 +289,11 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     private String getEnum(final String key) {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, PT, key);
+        return BundleUtil.getString(Bundle.ENUMERATION, PT, key);
     }
 
     private String getApp(final String key) {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, PT, key);
+        return BundleUtil.getString(Bundle.APPLICATION, PT, key);
     }
 
     private void addJobDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Job job) {

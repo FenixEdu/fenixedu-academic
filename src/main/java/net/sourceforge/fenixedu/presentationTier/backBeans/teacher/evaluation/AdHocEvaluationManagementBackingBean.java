@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -36,8 +35,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import pt.ist.fenixframework.FenixFramework;
 
 public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
-    protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
-
     protected String name;
     protected AdHocEvaluation adHocEvaluation;
     protected String adHocEvaluationID;

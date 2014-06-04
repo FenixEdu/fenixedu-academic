@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum;
 
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -28,10 +27,10 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -45,14 +44,6 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 public class CurriculumRenderer extends InputRenderer {
-
-    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
-
-    private final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE,
-            I18N.getLocale());
-
-    private final ResourceBundle applicationResources = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE,
-            I18N.getLocale());
 
     private String studentCurricularPlanClass = "scplan";
 
@@ -211,25 +202,25 @@ public class CurriculumRenderer extends InputRenderer {
             final HtmlContainer container = new HtmlBlockContainer();
 
             if (this.curriculum == null) {
-                container.addChild(createHtmlTextItalic(studentResources.getString("message.no.average")));
+                container.addChild(createHtmlTextItalic(BundleUtil.getString(Bundle.STUDENT, "message.no.average")));
 
                 return container;
             }
 
             if (!this.curriculum.getStudentCurricularPlan().isBoxStructure()) {
-                container.addChild(createHtmlTextItalic(studentResources.getString("not.applicable")));
+                container.addChild(createHtmlTextItalic(BundleUtil.getString(Bundle.STUDENT, "not.applicable")));
 
                 return container;
             }
 
             if (this.curriculum.isEmpty()) {
-                container.addChild(createHtmlTextItalic(studentResources.getString("message.no.approvals")));
+                container.addChild(createHtmlTextItalic(BundleUtil.getString(Bundle.STUDENT, "message.no.approvals")));
 
                 return container;
             }
 
             if (this.curriculum.getCurriculumEntries().isEmpty()) {
-                container.addChild(createHtmlTextItalic(studentResources.getString("message.empty.curriculum")));
+                container.addChild(createHtmlTextItalic(BundleUtil.getString(Bundle.STUDENT, "message.empty.curriculum")));
             } else {
                 final HtmlContainer averageContainer = new HtmlBlockContainer();
                 averageContainer.setStyle("padding-bottom: 3.5em;");
@@ -318,8 +309,8 @@ public class CurriculumRenderer extends InputRenderer {
 
             final HtmlTableRow groupSubRow = mainTable.createRow();
             groupSubRow.setClasses(getHeaderRowClass());
-            generateCellWithText(groupSubRow, applicationResources.getString("label.grade"), getGradeCellClass());
-            generateCellWithText(groupSubRow, applicationResources.getString("label.weight"), getEctsCreditsCellClass());
+            generateCellWithText(groupSubRow, BundleUtil.getString(Bundle.APPLICATION, "label.grade"), getGradeCellClass());
+            generateCellWithText(groupSubRow, BundleUtil.getString(Bundle.APPLICATION, "label.weight"), getEctsCreditsCellClass());
             generateCellWithText(groupSubRow, "Peso x Classificação", getEctsCreditsCellClass());
         }
 
@@ -406,7 +397,7 @@ public class CurriculumRenderer extends InputRenderer {
         private void generateSemesterCell(final HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
             final String semester =
                     entry.getExecutionPeriod() == null ? "-" : entry.getExecutionPeriod().getSemester().toString() + " "
-                            + applicationResources.getString("label.semester.short");
+                            + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short");
 
             generateCellWithText(enrolmentRow, semester, getEnrolmentSemesterCellClass());
         }
@@ -499,7 +490,7 @@ public class CurriculumRenderer extends InputRenderer {
 
             final HtmlTableRow groupSubRow = table.createRow();
             groupSubRow.setClasses(getHeaderRowClass());
-            generateCellWithText(groupSubRow, applicationResources.getString("label.ects"), getEctsCreditsCellClass());
+            generateCellWithText(groupSubRow, BundleUtil.getString(Bundle.APPLICATION, "label.ects"), getEctsCreditsCellClass());
         }
 
         private void generateCurricularYearRows(HtmlTable mainTable, Set<ICurriculumEntry> entries, int level) {

@@ -30,8 +30,10 @@ import net.sf.jasperreports.engine.JRPrintPage;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class StudentThesisIdentificationDocument extends ThesisDocument {
@@ -98,7 +100,7 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
             return EMPTY_STR;
         }
 
-        return getEnumerationBundle().getString(language.getLanguage());
+        return BundleUtil.getString(Bundle.ENUMERATION, language.getLanguage());
     }
 
     private List<String> splitKeywords(String keywords) {

@@ -28,7 +28,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
@@ -72,8 +73,8 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 
     @Override
     public void delete() {
-        new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
-                "resources.TeacherCreditsSheetResources", "label.teacher.schedule.delete", getTeacherService().getTeacher()
+        new TeacherServiceLog(getTeacherService(), BundleUtil.getString(
+                Bundle.TEACHER_CREDITS, "label.teacher.schedule.delete", getTeacherService().getTeacher()
                         .getPerson().getNickname(), getShift().getPresentationName(), getPercentage().toString()));
         setTeacherService(null);
         setShift(null);

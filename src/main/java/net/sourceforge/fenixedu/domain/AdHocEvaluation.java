@@ -20,9 +20,10 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class AdHocEvaluation extends AdHocEvaluation_Base {
@@ -71,8 +72,7 @@ public class AdHocEvaluation extends AdHocEvaluation_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.adHocEvaluation") + " "
-                + getName();
+        return BundleUtil.getString(Bundle.APPLICATION, "label.adHocEvaluation") + " " + getName();
     }
 
     public void edit(final String name, final String description, final GradeScale gradeScale) {

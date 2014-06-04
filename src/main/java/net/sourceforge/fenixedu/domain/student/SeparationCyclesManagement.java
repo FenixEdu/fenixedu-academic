@@ -22,7 +22,6 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -72,11 +71,11 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.studentCurriculum.TemporarySubstitution;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.InvocationResult;
 import net.sourceforge.fenixedu.util.Money;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -85,9 +84,6 @@ public class SeparationCyclesManagement {
 
     private static final List<DegreeType> ACCEPTED_DEGREE_TYPES = Arrays.asList(DegreeType.BOLONHA_DEGREE,
             DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-
-    private final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE,
-            I18N.getLocale());
 
     public SeparationCyclesManagement() {
     }
@@ -684,7 +680,7 @@ public class SeparationCyclesManagement {
     }
 
     private String getNoPaymentsReason(final GratuityEvent second) {
-        final String message = RESOURCE_BUNDLE.getString("label.SeparationCyclesManagement.noPayments.reason");
+        final String message = BundleUtil.getString(Bundle.APPLICATION, "label.SeparationCyclesManagement.noPayments.reason");
         return MessageFormat.format(message, second.getStudentCurricularPlan().getName());
     }
 

@@ -35,6 +35,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
@@ -63,7 +64,7 @@ public class DistributedTest extends DistributedTest_Base {
 
     public void delete() {
         ExecutionCourse ec = getTestScope().getExecutionCourse();
-        EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
+        EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
                 "log.executionCourse.evaluation.tests.distribution.removed", getEvaluationTitle(), getBeginDateTimeFormatted(),
                 ec.getName(), ec.getDegreePresentationString());
 
