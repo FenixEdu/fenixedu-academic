@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%--
 
     Copyright © 2002 Instituto Superior Técnico
@@ -18,6 +19,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@ page import="net.sourceforge.fenixedu.domain.Person" %>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -650,6 +652,102 @@
 		<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
 	</html:submit>
 </fr:form>
+
+<!--  -->
+Pode dividir em dois grupos: Nomes Proprios e Apelidos. <br> 
+<div style="float: left;">
+<%
+	final Person p = (Person) person;
+	final String[] nameParts = p.getName().split(" ");
+	final int size = (2 < nameParts.length) ? 2 : nameParts.length;
+%>
+<select id="givenNamesBox" size="5" width="25">
+<%
+	int i;
+	for(i = 0; i < size; i++) {
+	    String name = nameParts[i];
+%>
+		<option value="<%= name %>"> <%= name %></option>
+<%	    
+	}
+%>
+</select>
+</div>
+<div style="float: left;">
+<input type="image" 
+	style="vertical-align:middle"  
+	src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Circle_arrow_right_font_awesome.svg/512px-Circle_arrow_right_font_awesome.svg.png" 
+	width="25" height="25" onclick="partitionInGivenBox('givenNamesBox','familyNamesBox')"/>
+<br>
+<input type="image" 
+	style="vertical-align:middle" 
+	src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Circle_arrow_left_font_awesome.svg/512px-Circle_arrow_left_font_awesome.svg.png" 
+	width="25" height="25" onclick="partitionInFamilyBox('familyNamesBox','givenNamesBox')"/>
+</div>
+<div style="float: left;">
+<select id="familyNamesBox" size="5" width="25">
+<%	
+	for(; i < nameParts.length; i++) {
+	    String name = nameParts[i];
+%>
+	<option value="<%= name %>"> <%= name %></option>
+<%
+	}
+%> 
+
+</select>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<script type="text/javascript" >
+function partitionInFamilyBox(fromSelectBoxName, toSelectBoxName) 
+{
+	var fromSelectBox = document.getElementById(fromSelectBoxName);
+	var toSelectBox = document.getElementById(toSelectBoxName);
+	var fromIndex = fromSelectBox.selectedIndex;
+	for(var i = 0; i <= fromIndex; i++) {
+		switchElement(fromSelectBox,0,toSelectBox, toSelectBox.length);
+	}
+}
+
+function partitionInGivenBox(fromSelectBoxName, toSelectBoxName) 
+{
+	var fromSelectBox = document.getElementById(fromSelectBoxName);
+	var toSelectBox = document.getElementById(toSelectBoxName);
+	var fromIndex = fromSelectBox.selectedIndex;
+	for(var i = fromSelectBox.length-1; i >= fromIndex; i--) {
+		switchElement(fromSelectBox,i,toSelectBox, 0);
+	}
+}
+
+function switchElement(fromSelectBox,fromIndex,toSelectBox, toIndex)
+{
+	var name = removeElement(fromSelectBox,fromIndex);
+	addElement(toSelectBox, toIndex, name);
+}
+
+function removeElement(selectBox,index)
+{
+	var deletedEl = selectBox[index].innerHTML;
+	selectBox.remove(index);
+	return deletedEl;
+}
+
+function addElement(selectBox, toIndex, newName)
+{
+	var option = document.createElement("option");
+	option.text = newName;
+	selectBox.add(option,selectBox[toIndex]);
+}
+</script>
+<!--  -->
+
 
 <fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
 	<fr:layout name="tabular">
