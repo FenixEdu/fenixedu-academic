@@ -38,8 +38,7 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
     public void checkPermissionsToManageSpaceOccupations() {
         User user = Authenticate.getUser();
         Space r = getSpace();
-        if (SpaceUtils.personIsSpacesAdministrator(user.getPerson())
-                || r.getManagementGroupWithChainOfResponsability() != null
+        if (SpaceUtils.personIsSpacesAdministrator(user.getPerson()) || r.getManagementGroupWithChainOfResponsability() != null
                 && r.getManagementGroupWithChainOfResponsability().isMember(user)) {
             return;
         }
@@ -54,6 +53,9 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
 
     public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManager() {
         User user = Authenticate.getUser();
+        if (getSpace() == null) {
+            return;
+        }
         final Group group = getAccessGroup();
         if (group != null && group.isMember(user)) {
             return;
