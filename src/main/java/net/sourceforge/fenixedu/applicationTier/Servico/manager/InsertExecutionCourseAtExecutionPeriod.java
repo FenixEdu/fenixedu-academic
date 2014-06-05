@@ -54,6 +54,5 @@ public class InsertExecutionCourseAtExecutionPeriod {
         final ExecutionCourse executionCourse =
                 new ExecutionCourse(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(), executionSemester,
                         infoExecutionCourse.getEntryPhase());
-        executionCourse.createSite();
     }
 }
