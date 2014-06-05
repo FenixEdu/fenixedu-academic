@@ -89,7 +89,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         }
         groups.add(GuidingsAndAssistantsOfPhdGroup.get(individualProgramProcess));
         final Person person = getPhdProgramProcess().getPerson();
-        if (person != null) {
+        if (person != null && person.getUser() != null) {
             groups.add(UserGroup.of(person.getUser()));
         }
 
@@ -152,8 +152,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     public boolean isPersonAllowedToAccess(Person person) {
         if (person != null) {
             if (getPhdProgramProcess().getPerson() == person
-                    || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES)
-                            .isMember(person.getUser())
+                    || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(person.getUser())
                     || getPhdProgramProcess().getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
                     || getPhdProgramProcess().getIndividualProgramProcess().isGuiderOrAssistentGuider(person)
                     || ExternalUser.isExternalUser(person.getUsername())) {

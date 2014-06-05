@@ -62,7 +62,6 @@ public class SeperateExecutionCourse {
 
         if (destinationExecutionCourse == null) {
             destinationExecutionCourse = createNewExecutionCourse(originExecutionCourse);
-            destinationExecutionCourse.createSite();
             ExecutionCourseUtils.copyBibliographicReference(originExecutionCourse, destinationExecutionCourse);
             ExecutionCourseUtils.copyEvaluationMethod(originExecutionCourse, destinationExecutionCourse);
         }
