@@ -18,9 +18,13 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -83,13 +87,21 @@ public class Item extends Item_Base {
     }
 
     public void setNextItem(Item item) {
+        List<CmsContent> ordered = getOrderedNeighboors();
+
+        ordered.remove(this);
+
         if (item != null) {
-            Integer order = item.getOrder();
-            shiftRight(getParent().getChildSet(), order);
-            setOrder(order);
+            ordered.add(ordered.indexOf(item), this);
         } else {
-            setOrder(getParent().getChildSet().size());
+            ordered.add(this);
         }
+
+        IntStream.range(0, ordered.size()).forEach(i -> ordered.get(i).setOrder(i));
+    }
+
+    private ArrayList<CmsContent> getOrderedNeighboors() {
+        return getParent().getChildSet().stream().sorted().collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**

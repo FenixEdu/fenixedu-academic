@@ -186,12 +186,4 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
         }
     }
 
-    public void shiftRight(Collection<? extends CmsContent> contents, Integer order) {
-        for (CmsContent content : contents) {
-            if (content.getOrder() >= order) {
-                content.setOrder(content.getOrder() + 1);
-            }
-        }
-    }
-
 }
