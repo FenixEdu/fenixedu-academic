@@ -91,11 +91,17 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "externalServices.koha.username")
         public String getExternalServicesKohaUsername();
 
-        @ConfigurationProperty(key = "fenix.api.events.rss.url")
-        public String getFenixApiEventsRSSUrl();
+        @ConfigurationProperty(key = "fenix.api.events.rss.url.pt")
+        public String getFenixApiEventsRSSUrlPt();
 
-        @ConfigurationProperty(key = "fenix.api.news.rss.url")
-        public String getFenixApiNewsRSSUrl();
+        @ConfigurationProperty(key = "fenix.api.news.rss.url.pt")
+        public String getFenixApiNewsRSSUrlPt();
+
+        @ConfigurationProperty(key = "fenix.api.events.rss.url.en")
+        public String getFenixApiEventsRSSUrlEn();
+
+        @ConfigurationProperty(key = "fenix.api.news.rss.url.en")
+        public String getFenixApiNewsRSSUrlEn();
 
         @ConfigurationProperty(key = "fenix.api.canteen.url", defaultValue = "")
         public String getFenixApiCanteenUrl();
