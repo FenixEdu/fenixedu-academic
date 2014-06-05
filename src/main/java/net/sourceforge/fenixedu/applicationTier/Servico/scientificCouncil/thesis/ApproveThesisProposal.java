@@ -69,9 +69,16 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     @Override
     protected Collection<Person> getReceivers(Thesis thesis) {
         Person student = thesis.getStudent().getPerson();
+        Person orientator = thesis.getOrientator().getPerson();
         Person president = getPerson(thesis.getPresident());
 
-        Set<Person> persons = personSet(student, president);
+        Set<Person> persons = personSet(student, president, orientator);
+
+        Person coorientator = thesis.getCoorientator() != null ? thesis.getCoorientator().getPerson() : null;
+        if (coorientator != null) {
+            persons.add(coorientator);
+        }
+
         for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
             persons.add(participant.getPerson());
         }
@@ -114,6 +121,10 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         String vowel3Affiliation = affiliation(thesis.getVowels(), 2);
         String vowel4Name = name(thesis.getVowels(), 3);
         String vowel4Affiliation = affiliation(thesis.getVowels(), 3);
+        String orientatorName = name(thesis.getOrientator());
+        String orientatorAffiliation = affiliation(thesis.getOrientator());
+        String coorientatorName = name(thesis.getCoorientator());
+        String coorientatorAffiliation = affiliation(thesis.getCoorientator());
 
         String currentPersonName = currentPerson.getNickname();
 
@@ -136,9 +147,10 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
                 includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name), vowel2Name, vowel2Affiliation,
                 includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, includeFlag(vowel4Name), vowel4Name, vowel4Affiliation,
-                dateMessage, discussedDate, institutionName, "" + today.get(Calendar.DAY_OF_MONTH),
-                today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale), "" + today.get(Calendar.YEAR), sender,
-                currentPersonName);
+                includeFlag(orientatorName), orientatorName, orientatorAffiliation, includeFlag(coorientatorName),
+                coorientatorName, coorientatorAffiliation, dateMessage, discussedDate, institutionName,
+                "" + today.get(Calendar.DAY_OF_MONTH), today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale),
+                "" + today.get(Calendar.YEAR), sender, currentPersonName);
     }
 
     private int includeFlag(String value) {
@@ -197,13 +209,13 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         MultiLanguageString subject =
                 new MultiLanguageString().with(MultiLanguageString.pt,
                         getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.pt)).with(
-                        MultiLanguageString.en,
-                        getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.en));
+                                MultiLanguageString.en,
+                                getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.en));
 
         MultiLanguageString body =
                 new MultiLanguageString().with(MultiLanguageString.pt,
                         getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.pt)).with(
-                        MultiLanguageString.en, getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.en));
+                                MultiLanguageString.en, getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.en));
 
         announcement.setSubject(subject);
         announcement.setBody(body);

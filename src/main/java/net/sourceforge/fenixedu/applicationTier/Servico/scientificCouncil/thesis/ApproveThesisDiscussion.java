@@ -20,8 +20,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesi
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
 
@@ -30,10 +30,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisSite;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixframework.Atomic;
 
 import com.google.common.io.ByteStreams;
@@ -64,10 +68,21 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
     @Override
     protected Collection<Person> getReceivers(Thesis thesis) {
         Person student = thesis.getStudent().getPerson();
+        Person orientator = thesis.getOrientator().getPerson();
         Person president = getPerson(thesis.getPresident());
 
-        Set<Person> persons = personSet(student, president);
+        Set<Person> persons = personSet(student, president, orientator);
 
+        Person coorientator = thesis.getCoorientator() != null ? thesis.getCoorientator().getPerson() : null;
+        if (coorientator != null) {
+            persons.add(coorientator);
+        }
+
+        for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
+            persons.add(participant.getPerson());
+        }
+
+        // also send proposal approval to the contact team
         ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();
         for (ScientificCommission member : thesis.getDegree().getScientificCommissionMembers(executionYear)) {
             if (member.isContact()) {
@@ -80,8 +95,11 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
     @Override
     protected String getMessage(Thesis thesis) {
+
+        Locale locale = I18N.getLocale();
         Person currentPerson = AccessControl.getPerson();
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        String institutionName = Bennu.getInstance().getInstitutionUnit().getPartyName().getContent(locale);
 
         String title = thesis.getTitle().getContent();
         String year = executionYear.getYear();
@@ -89,11 +107,12 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
         String studentName = thesis.getStudent().getPerson().getName();
         String studentNumber = thesis.getStudent().getNumber().toString();
 
-        String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
+        Calendar today = Calendar.getInstance(locale);
         String currentPersonName = currentPerson.getNickname();
-        String institutionAcronym = Unit.getInstitutionAcronym();
 
-        return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, date, currentPersonName, institutionAcronym);
+        return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, institutionName,
+                "" + today.get(Calendar.DAY_OF_MONTH), today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale),
+                "" + today.get(Calendar.YEAR), currentPersonName);
     }
 
     @Override
