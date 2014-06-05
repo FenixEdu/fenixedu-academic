@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
@@ -58,6 +59,7 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -81,6 +83,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
+        addParameter("bundle", ResourceBundle.getBundle(getBundle(), I18N.getLocale()));
         addParameter("name", StringFormatter.prettyPrint(getDocumentRequest().getPerson().getName().trim()));
 
         // Group 1

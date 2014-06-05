@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -69,6 +70,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -225,6 +227,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
+        addParameter("bundle", ResourceBundle.getBundle(getBundle(), I18N.getLocale()));
         addParameter("documentRequest", getDocumentRequest());
         addParameter("registration", getRegistration());
 
@@ -245,6 +248,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
         addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
 
         newFillReport();
+    }
+
+    protected String getBundle() {
+        return Bundle.ACADEMIC;
     }
 
     protected void newFillReport() {
