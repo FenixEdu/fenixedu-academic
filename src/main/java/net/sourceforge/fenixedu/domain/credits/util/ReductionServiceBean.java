@@ -29,9 +29,10 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluat
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessYear;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -114,7 +115,7 @@ public class ReductionServiceBean implements Serializable {
                         lastFacultyEvaluationProcessYear)) {
                     approvedEvaluationMark = approvedTeacherEvaluationProcessMark.getApprovedEvaluationMark();
                     if (approvedEvaluationMark != null) {
-                        return BundleUtil.getEnumName(approvedEvaluationMark);
+                        return BundleUtil.getString(Bundle.ENUMERATION, approvedEvaluationMark.name());
                     } else {
                         return "N/A";
                     }

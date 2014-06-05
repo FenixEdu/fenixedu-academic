@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -140,7 +141,7 @@ public class AlternativeSiteDA extends ExecutionCourseBaseAction {
         site.setIntroduction(introduction);
         site.setDynamicMailDistribution(dynamicMailDistribution);
 
-        ContentManagementLog.createLog(executionCourse, "resources.MessagingResources",
+        ContentManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.content.customization.edited", executionCourse.getNome(),
                 executionCourse.getDegreePresentationString());
     }

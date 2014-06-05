@@ -22,10 +22,10 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public enum RegimeType {
@@ -43,7 +43,7 @@ public enum RegimeType {
     }
 
     public String getLocalizedName(final Locale locale) {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getName());
+        return BundleUtil.getString(Bundle.ENUMERATION, locale, getName());
     }
 
     public String getAcronym() {
@@ -51,6 +51,6 @@ public enum RegimeType {
     }
 
     private String getAcronym(final Locale locale) {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getName() + ".ACRONYM");
+        return BundleUtil.getString(Bundle.ENUMERATION, locale, getName() + ".ACRONYM");
     }
 }

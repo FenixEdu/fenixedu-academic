@@ -28,6 +28,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ContentManagementLog;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.predicates.AnnouncementPredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -340,7 +341,7 @@ public class Announcement extends Announcement_Base {
         AnnouncementBoard ab = getAnnouncementBoard();
         if (ab instanceof ExecutionCourseAnnouncementBoard) {
             ExecutionCourseAnnouncementBoard ecab = (ExecutionCourseAnnouncementBoard) ab;
-            ContentManagementLog.createLog(ecab.getExecutionCourse(), "resources.MessagingResources",
+            ContentManagementLog.createLog(ecab.getExecutionCourse(), Bundle.MESSAGING,
                     "log.executionCourse.content.announcement.removed", getName().getContent(), ecab.getExecutionCourse()
                             .getNome(), ecab.getExecutionCourse().getDegreePresentationString());
         }

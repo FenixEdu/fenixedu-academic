@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.faces.component.html.HtmlInputText;
@@ -50,8 +49,10 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,14 +63,6 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class DegreeManagementBackingBean extends FenixBackingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(DegreeManagementBackingBean.class);
-
-    private static final String SC_PACKAGE = "net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans";
-
-    private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
-
-    private final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
-
-    private final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
 
     private final String NO_SELECTION = "noSelection";
 
@@ -221,10 +214,10 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getBolonhaDegreeTypes() {
 
         List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, scouncilBundle.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
 
         for (DegreeType degreeType : DegreeType.NOT_EMPTY_BOLONHA_VALUES) {
-            result.add(new SelectItem(degreeType.name(), enumerationBundle.getString(degreeType.getName()) + " ("
+            result.add(new SelectItem(degreeType.name(), BundleUtil.getString(Bundle.ENUMERATION, degreeType.getName()) + " ("
                     + degreeType.getYears() + " ano(s))"));
         }
 
@@ -234,7 +227,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getAcademicAdminOffices() {
 
         List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, scouncilBundle.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
 
         for (AdministrativeOffice administrativeOffice : rootDomainObject.getAdministrativeOfficesSet()) {
             result.add(new SelectItem(administrativeOffice.getExternalId(), administrativeOffice.getUnit().getName()));
@@ -246,26 +239,26 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getGradeScales() {
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        result.add(new SelectItem(this.NO_SELECTION, scouncilBundle.getString("choose")));
-        result.add(new SelectItem(GradeScale.TYPE20.name(), enumerationBundle.getString(GradeScale.TYPE20.name())));
-        result.add(new SelectItem(GradeScale.TYPE5.name(), enumerationBundle.getString(GradeScale.TYPE5.name())));
+        result.add(new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
+        result.add(new SelectItem(GradeScale.TYPE20.name(), BundleUtil.getString(Bundle.ENUMERATION, GradeScale.TYPE20.name())));
+        result.add(new SelectItem(GradeScale.TYPE5.name(), BundleUtil.getString(Bundle.ENUMERATION, GradeScale.TYPE5.name())));
 
         return result;
     }
 
     public String createDegree() {
         if (this.bolonhaDegreeType.equals(this.NO_SELECTION)) {
-            this.setErrorMessage(scouncilBundle.getString("choose.degreeType"));
+            this.setErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "choose.degreeType"));
             return "";
         }
         if (getAcademicAdminOfficeId().equals(this.NO_SELECTION)) {
-            this.setErrorMessage(scouncilBundle.getString("choose.administrativeOffice"));
+            this.setErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "choose.administrativeOffice"));
             return "";
         }
 
         if (this.name == null || this.name.length() == 0 || this.nameEn == null || this.nameEn.length() == 0
                 || this.acronym == null || this.acronym.length() == 0) {
-            this.addErrorMessage(scouncilBundle.getString("please.fill.mandatory.fields"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "please.fill.mandatory.fields"));
             return "";
         }
 
@@ -274,17 +267,17 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             CreateDegree.run(this.name, this.nameEn, this.acronym, DegreeType.valueOf(this.bolonhaDegreeType),
                     this.getEctsCredits(), null, this.prevailingScientificArea, administrativeOffice);
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
         } catch (DomainException e) {
-            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(scouncilBundle.getString("error.creatingDegree"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.creatingDegree"));
             return "curricularPlansManagement";
         }
 
-        this.addInfoMessage(scouncilBundle.getString("degree.created"));
+        this.addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degree.created"));
         return "curricularPlansManagement";
     }
 
@@ -292,7 +285,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         if (this.bolonhaDegreeType != null && this.bolonhaDegreeType.equals(this.NO_SELECTION)) {// ||
             // this.gradeScale.equals(this.NO_SELECTION))
             // {
-            this.setErrorMessage(scouncilBundle.getString("choose.request"));
+            this.setErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "choose.request"));
             return "";
         }
 
@@ -300,7 +293,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         String nameEn = (String) getNameEnInputComponent().getValue();
 
         if (StringUtils.isEmpty(name) || StringUtils.isEmpty(nameEn) || StringUtils.isEmpty(this.acronym)) {
-            this.addErrorMessage(scouncilBundle.getString("please.fill.mandatory.fields"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "please.fill.mandatory.fields"));
             return "";
         }
 
@@ -308,17 +301,17 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             EditDegree.run(this.getDegreeId(), name, nameEn, this.acronym, DegreeType.valueOf(getBolonhaDegreeType()),
                     this.getEctsCredits(), null, this.prevailingScientificArea, getSelectedExecutionYear());
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
         } catch (DomainException e) {
-            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(scouncilBundle.getString("error.editingDegree"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.editingDegree"));
             return "curricularPlansManagement";
         }
 
-        this.addInfoMessage(scouncilBundle.getString("degree.edited"));
+        this.addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degree.edited"));
         return "curricularPlansManagement";
     }
 
@@ -326,17 +319,17 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         try {
             DeleteDegree.run(this.getDegreeId());
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
         } catch (DomainException e) {
-            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(scouncilBundle.getString("error.deletingDegree"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.deletingDegree"));
             return "curricularPlansManagement";
         }
 
-        this.addInfoMessage(scouncilBundle.getString("degree.deleted"));
+        this.addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degree.deleted"));
         return "curricularPlansManagement";
     }
 
@@ -351,7 +344,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             ExecutionYear executionYear = getSelectedExecutionYear();
             DegreeInfo degreeInfo = getDegree().getMostRecentDegreeInfo(executionYear);
             if (degreeInfo == null) {
-                addErrorMessage(getFormatedMessage(scouncilBundle, "error.Degree.doesnot.have.degreeInfo.for.year",
+                addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.Degree.doesnot.have.degreeInfo.for.year",
                         executionYear.getName()));
                 degreeInfo = getDegree().getMostRecentDegreeInfo();
             }
@@ -649,23 +642,23 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
             // to remove
             if (date == null) {
-                this.addErrorMessage(scouncilBundle.getString("error.protocol.invalidDates"));
+                this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.protocol.invalidDates"));
                 return "";
             }
             String[] dateFields = date.split("/");
 
             if (dateFields.length != 3) {
-                this.addErrorMessage(scouncilBundle.getString("error.protocol.invalidDates"));
+                this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.protocol.invalidDates"));
                 return "";
             }
 
             if (dateFields[0].length() != 2 || dateFields[1].length() != 2 || dateFields[2].length() != 4) {
-                this.addErrorMessage(scouncilBundle.getString("error.protocol.invalidDates"));
+                this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.protocol.invalidDates"));
                 return "";
             }
 
             if (officialReference.isEmpty() || officialReference.compareTo("") == 0) {
-                this.addErrorMessage(scouncilBundle.getString("confirm.error.edit.reference.officialPublication"));
+                this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "confirm.error.edit.reference.officialPublication"));
                 return "";
             }
 
@@ -678,17 +671,17 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             try {
                 CreateDegreeOfficialPublication.run(degree, localDate, officialReference);
             } catch (IllegalDataAccessException e) {
-                this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+                this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
                 return "";
             } catch (DomainException e) {
-                this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+                this.addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
                 return "";
             } catch (FenixServiceException e) {
                 // TODO Auto-generated catch block
                 logger.error(e.getMessage(), e);
             }
 
-            this.addInfoMessage(scouncilBundle.getString("degreeOfficialPublication.created"));
+            this.addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degreeOfficialPublication.created"));
             return "editDegree";
         }
 

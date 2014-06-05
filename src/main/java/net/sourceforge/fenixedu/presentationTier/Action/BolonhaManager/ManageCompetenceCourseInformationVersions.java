@@ -48,7 +48,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.BolonhaManagerApplication.CompetenceCourseManagementApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -385,10 +386,10 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 
             final Spreadsheet spreadsheet = new Spreadsheet("list");
             spreadsheet
-                    .setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "competenceCourse"));
-            spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "curricularPlan"));
-            spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "curricularYear"));
-            spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "label.semester"));
+                    .setHeader(BundleUtil.getString(Bundle.BOLONHA, "competenceCourse"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.BOLONHA, "curricularPlan"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.BOLONHA, "curricularYear"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.BOLONHA, "label.semester"));
 
             for (final CompetenceCourse competenceCourse : competenceCourses) {
                 if (competenceCourse.getCurricularStage() == CurricularStage.APPROVED) {

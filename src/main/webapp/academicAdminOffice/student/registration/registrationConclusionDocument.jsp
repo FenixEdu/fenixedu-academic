@@ -30,6 +30,8 @@
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.joda.time.LocalDate"%>
 
+<link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
+
 <html:xhtml />
 
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>

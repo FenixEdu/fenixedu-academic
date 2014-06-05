@@ -18,16 +18,15 @@
  */
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.IInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -83,7 +82,6 @@ public class InsuranceExemption extends InsuranceExemption_Base {
     }
 
     public String getKindDescription() {
-        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE);
-        return bundle.getString(this.getClass().getSimpleName() + ".kindDescription");
+        return BundleUtil.getString(Bundle.ENUMERATION, this.getClass().getSimpleName() + ".kindDescription");
     }
 }

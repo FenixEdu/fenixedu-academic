@@ -19,10 +19,10 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public enum ApplicantOverallPromise {
@@ -44,7 +44,7 @@ public enum ApplicantOverallPromise {
     }
 
     public String getLocalizedName(final Locale locale) {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, locale, getQualifiedName());
     }
 
     public String getQualifiedName() {

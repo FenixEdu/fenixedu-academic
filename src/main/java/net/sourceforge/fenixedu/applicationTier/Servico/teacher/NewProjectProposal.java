@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -161,7 +162,7 @@ public class NewProjectProposal {
 
         List<ExecutionCourse> ecs = groupProperties.getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
-            GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING,
                     "log.executionCourse.groupAndShifts.grouping.exportGroup.added", groupProperties.getName(),
                     startExecutionCourse.getNome(), startExecutionCourse.getDegreePresentationString(),
                     goalExecutionCourse.getName(), goalExecutionCourse.getDegreePresentationString());

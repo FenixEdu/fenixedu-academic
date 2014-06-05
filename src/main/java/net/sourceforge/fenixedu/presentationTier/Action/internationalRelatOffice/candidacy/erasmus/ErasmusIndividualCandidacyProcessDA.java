@@ -77,7 +77,9 @@ import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/caseHandlingMobilityIndividualApplicationProcess", module = "internationalRelatOffice",
         formBeanClass = FenixActionForm.class, functionality = ErasmusCandidacyProcessDA.class)
-@Forwards({ @Forward(name = "intro", path = "/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities"),
+@Forwards({
+        @Forward(name = "intro",
+                path = "/internationalRelatOffice/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities"),
         @Forward(name = "list-allowed-activities", path = "/candidacy/erasmus/listIndividualCandidacyActivities.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/erasmus/selectPersonForCandidacy.jsp"),
         @Forward(name = "fill-personal-information", path = "/candidacy/erasmus/fillPersonalInformation.jsp"),

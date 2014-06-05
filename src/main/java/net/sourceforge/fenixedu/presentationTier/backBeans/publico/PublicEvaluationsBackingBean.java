@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
@@ -56,7 +57,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
+    private static final MessageResources messages = MessageResources.getMessageResources(Bundle.DEGREE);
 
     private static final DateFormat yearFormat = new SimpleDateFormat("yyyy");
 

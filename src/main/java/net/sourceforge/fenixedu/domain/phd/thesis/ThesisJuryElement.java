@@ -20,16 +20,16 @@ package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -148,13 +148,12 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     public String getNameWithTitleAndRoleOnProcess() {
         StringBuilder stringBuilder = new StringBuilder(getNameWithTitle());
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         if (getProcess().getIndividualProgramProcess().isGuider(getParticipant())) {
-            stringBuilder.append(" (").append(resourceBundle.getString("label.phd.guiding")).append(")");
+            stringBuilder.append(" (").append(BundleUtil.getString(Bundle.PHD, "label.phd.guiding")).append(")");
         }
 
         if (getProcess().getIndividualProgramProcess().isAssistantGuider(getParticipant())) {
-            stringBuilder.append(" (").append(resourceBundle.getString("label.phd.assistant.guiding")).append(")");
+            stringBuilder.append(" (").append(BundleUtil.getString(Bundle.PHD, "label.phd.assistant.guiding")).append(")");
         }
 
         return stringBuilder.toString();

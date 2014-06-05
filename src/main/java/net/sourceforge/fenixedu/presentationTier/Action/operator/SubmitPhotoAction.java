@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.operator;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +31,7 @@ import net.sourceforge.fenixedu.domain.PhotoType;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
@@ -40,9 +40,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -62,14 +62,13 @@ public class SubmitPhotoAction extends FenixDispatchAction {
     public ActionForward preparePhotoUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         request.setAttribute("photo", new PhotographUploadBean());
-        request.setAttribute("phroperCaption", bundle.getString("phroper.caption"));
-        request.setAttribute("phroperSubCaption", bundle.getString("phroper.subCaption"));
-        request.setAttribute("phroperButtonCaption", bundle.getString("phroper.buttonCaption"));
-        request.setAttribute("phroperLoadingCaption", bundle.getString("phroper.loadingCaption"));
-        request.setAttribute("buttonClean", bundle.getString("button.clean"));
-        request.setAttribute("buttonRevert", bundle.getString("button.phroper.revert"));
+        request.setAttribute("phroperCaption", BundleUtil.getString(Bundle.APPLICATION, "phroper.caption"));
+        request.setAttribute("phroperSubCaption", BundleUtil.getString(Bundle.APPLICATION, "phroper.subCaption"));
+        request.setAttribute("phroperButtonCaption", BundleUtil.getString(Bundle.APPLICATION, "phroper.buttonCaption"));
+        request.setAttribute("phroperLoadingCaption", BundleUtil.getString(Bundle.APPLICATION, "phroper.loadingCaption"));
+        request.setAttribute("buttonClean", BundleUtil.getString(Bundle.APPLICATION, "button.clean"));
+        request.setAttribute("buttonRevert", BundleUtil.getString(Bundle.APPLICATION, "button.phroper.revert"));
 
         return mapping.findForward("chooseFile");
     }

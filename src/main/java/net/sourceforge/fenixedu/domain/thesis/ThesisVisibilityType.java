@@ -18,11 +18,9 @@
  */
 package net.sourceforge.fenixedu.domain.thesis;
 
-import java.util.ResourceBundle;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
-
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
@@ -38,6 +36,6 @@ public enum ThesisVisibilityType implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(name());
+        return BundleUtil.getString(Bundle.ENUMERATION, name());
     }
 }

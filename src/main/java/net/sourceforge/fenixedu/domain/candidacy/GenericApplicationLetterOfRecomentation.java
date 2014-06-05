@@ -19,7 +19,8 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
 import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.NobodyGroup;
@@ -49,10 +50,10 @@ public class GenericApplicationLetterOfRecomentation extends GenericApplicationL
 
     public void sendEmailForRecommendationUploadNotification() {
         final String subject =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources",
+                BundleUtil.getString(Bundle.CANDIDATE,
                         "label.application.recomentation.upload.notification.email.subject");
         final String body =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources",
+                BundleUtil.getString(Bundle.CANDIDATE,
                         "label.application.recomentation.upload.notification.email.body", getRecomentation().getName(),
                         getRecomentation().getInstitution());
 

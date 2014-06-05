@@ -30,11 +30,12 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -66,10 +67,9 @@ public class MergeExternalUnits {
                     // : Unidade Origem -> {2} [{3}] Unidade Destino -> {4}[{5}]
                     final Person person = AccessControl.getPerson();
                     final String subject =
-                            BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
-                                    "mergeExternalUnits.email.subject");
+                            BundleUtil.getString(Bundle.GLOBAL, "mergeExternalUnits.email.subject");
                     final String body =
-                            BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExternalUnits.email.body",
+                            BundleUtil.getString(Bundle.GLOBAL, "mergeExternalUnits.email.body",
                                     new String[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID,
                                             destinationUnit.getName(), destinationUnit.getExternalId().toString() });
 

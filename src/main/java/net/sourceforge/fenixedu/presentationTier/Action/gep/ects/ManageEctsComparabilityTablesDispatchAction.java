@@ -23,8 +23,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,11 +61,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableFi
 import net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableLevel;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableType;
 import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepPortalApp;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -86,8 +86,6 @@ import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 @Forwards(@Forward(name = "index", path = "/gep/ects/comparabilityTableIndex.jsp"))
 public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAction {
     private static final String SEPARATOR = "\\t";
-
-    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("resources.GEPResources", Locale.getDefault());
 
     @EntryPoint
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -317,11 +315,11 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
                     @Override
                     protected void makeLine(IEctsConversionTable table) {
                         CompetenceCourse competence = (CompetenceCourse) table.getTargetEntity();
-                        addCell(BUNDLE.getString("label.externalId"), competence.getExternalId());
-                        addCell(BUNDLE.getString("label.departmentUnit.name"), competence.getDepartmentUnit().getName());
-                        addCell(BUNDLE.getString("label.competenceCourse.name"), competence.getName(querySemester));
-                        addCell(BUNDLE.getString("label.acronym"), competence.getAcronym(querySemester));
-                        addCell(BUNDLE.getString("label.externalId"), competence.getExternalId());
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.externalId"), competence.getExternalId());
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.departmentUnit.name"), competence.getDepartmentUnit().getName());
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.competenceCourse.name"), competence.getName(querySemester));
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.acronym"), competence.getAcronym(querySemester));
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.externalId"), competence.getExternalId());
                         Set<String> ids = new HashSet<String>();
                         for (CurricularCourse course : competence.getAssociatedCurricularCoursesSet()) {
                             List<ExecutionCourse> executions = course.getExecutionCoursesByExecutionYear(year);
@@ -331,7 +329,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
                                 }
                             }
                         }
-                        addCell(BUNDLE.getString("label.competenceCourse.executionCodes"), StringUtils.join(ids, ", "));
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.competenceCourse.executionCodes"), StringUtils.join(ids, ", "));
                         EctsComparabilityTable ects = table.getEctsTable();
                         for (int i = 10; i <= 20; i++) {
                             addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
@@ -345,7 +343,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     private void importEnrolmentByCompetenceCourseTables(AcademicInterval executionInterval, String file) {
         ExecutionSemester querySemester = ExecutionYear.readByAcademicInterval(executionInterval).getFirstExecutionPeriod();
         for (String line : file.split("\n")) {
-            if (!line.startsWith(BUNDLE.getString("label.externalId"))) {
+            if (!line.startsWith(BundleUtil.getString(Bundle.GEP, "label.externalId"))) {
                 String[] parts = fillArray(line.split(SEPARATOR), 17);
                 CompetenceCourse competence = FenixFramework.getDomainObject(parts[0]);
                 // if
@@ -397,10 +395,10 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
             @Override
             protected void makeLine(IEctsConversionTable table) {
                 Degree degree = (Degree) table.getTargetEntity();
-                addCell(BUNDLE.getString("label.externalId"), degree.getExternalId());
-                addCell(BUNDLE.getString("label.degreeType"), degree.getDegreeType().getLocalizedName());
-                addCell(BUNDLE.getString("label.name"), degree.getName());
-                addCell(BUNDLE.getString("label.curricularYear"), table.getCurricularYear().getYear());
+                addCell(BundleUtil.getString(Bundle.GEP, "label.externalId"), degree.getExternalId());
+                addCell(BundleUtil.getString(Bundle.GEP, "label.degreeType"), degree.getDegreeType().getLocalizedName());
+                addCell(BundleUtil.getString(Bundle.GEP, "label.name"), degree.getName());
+                addCell(BundleUtil.getString(Bundle.GEP, "label.curricularYear"), table.getCurricularYear().getYear());
                 EctsComparabilityTable ects = table.getEctsTable();
                 for (int i = 10; i <= 20; i++) {
                     addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
@@ -413,7 +411,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     @Atomic
     private void importEnrolmentByDegreeTables(AcademicInterval executionInterval, String file) {
         for (String line : file.split("\n")) {
-            if (!line.startsWith(BUNDLE.getString("label.externalId"))) {
+            if (!line.startsWith(BundleUtil.getString(Bundle.GEP, "label.externalId"))) {
                 String[] parts = fillArray(line.split(SEPARATOR), 15);
                 Degree degree = FenixFramework.getDomainObject(parts[0]);
                 if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
@@ -469,8 +467,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
                     protected void makeLine(IEctsConversionTable table) {
                         // FIXME: should not depend on ordinal(), use a resource bundle
                         // or something.
-                        addCell(BUNDLE.getString("label.cycle"), table.getCycle().ordinal() + 1);
-                        addCell(BUNDLE.getString("label.curricularYear"), table.getCurricularYear().getYear());
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.cycle"), table.getCycle().ordinal() + 1);
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.curricularYear"), table.getCurricularYear().getYear());
                         EctsComparabilityTable ects = table.getEctsTable();
                         for (int i = 10; i <= 20; i++) {
                             addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
@@ -483,7 +481,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     @Atomic
     private void importEnrolmentByCurricularYearTables(AcademicInterval executionInterval, String file) {
         for (String line : file.split("\n")) {
-            if (!line.startsWith(BUNDLE.getString("label.cycle"))) {
+            if (!line.startsWith(BundleUtil.getString(Bundle.GEP, "label.cycle"))) {
                 String[] parts = fillArray(line.split(SEPARATOR), 13);
                 final Unit ist = UnitUtils.readInstitutionUnit();
                 CycleType cycle;
@@ -570,10 +568,10 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
             @Override
             protected void makeLine(IEctsConversionTable table) {
                 Degree degree = (Degree) table.getTargetEntity();
-                addCell(BUNDLE.getString("label.externalId"), degree.getExternalId());
-                addCell(BUNDLE.getString("label.degreeType"), degree.getDegreeType().getLocalizedName());
-                addCell(BUNDLE.getString("label.name"), degree.getName());
-                addCell(BUNDLE.getString("label.cycle"), table.getCycle() != null ? table.getCycle().ordinal() + 1 : null);
+                addCell(BundleUtil.getString(Bundle.GEP, "label.externalId"), degree.getExternalId());
+                addCell(BundleUtil.getString(Bundle.GEP, "label.degreeType"), degree.getDegreeType().getLocalizedName());
+                addCell(BundleUtil.getString(Bundle.GEP, "label.name"), degree.getName());
+                addCell(BundleUtil.getString(Bundle.GEP, "label.cycle"), table.getCycle() != null ? table.getCycle().ordinal() + 1 : null);
                 EctsComparabilityTable ects = table.getEctsTable();
                 for (int i = 10; i <= 20; i++) {
                     addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
@@ -590,7 +588,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     @Atomic
     private void importGraduationByDegreeTables(AcademicInterval executionInterval, String file) {
         for (String line : file.split("\n")) {
-            if (!line.startsWith(BUNDLE.getString("label.externalId"))) {
+            if (!line.startsWith(BundleUtil.getString(Bundle.GEP, "label.externalId"))) {
                 String[] parts = fillArray(line.split(SEPARATOR), 26);
                 Degree degree = FenixFramework.getDomainObject(parts[0]);
                 if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
@@ -633,7 +631,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
             protected void makeLine(IEctsConversionTable table) {
                 // FIXME: should not depend on ordinal(), use a resource bundle
                 // or something.
-                addCell(BUNDLE.getString("label.cycle"), table.getCycle().ordinal() + 1);
+                addCell(BundleUtil.getString(Bundle.GEP, "label.cycle"), table.getCycle().ordinal() + 1);
                 EctsComparabilityTable ects = table.getEctsTable();
                 for (int i = 10; i <= 20; i++) {
                     addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
@@ -650,7 +648,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     @Atomic
     private void importGraduationByCycleTables(AcademicInterval executionInterval, String file) {
         for (String line : file.split("\n")) {
-            if (!line.startsWith(BUNDLE.getString("label.cycle"))) {
+            if (!line.startsWith(BundleUtil.getString(Bundle.GEP, "label.cycle"))) {
                 String[] parts = fillArray(line.split(SEPARATOR), 23);
                 CycleType cycle = CycleType.getSortedValues().toArray(new CycleType[0])[Integer.parseInt(parts[0]) - 1];
                 final Unit ist = UnitUtils.readInstitutionUnit();

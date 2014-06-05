@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.ist.fenixframework.Atomic;
@@ -120,7 +121,7 @@ public class EditDistributedTest {
             }
         }
 
-        EvaluationManagementLog.createLog(executionCourse, "resources.MessagingResources",
+        EvaluationManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.evaluation.tests.distribution.edited", distributedTest.getEvaluationTitle(),
                 executionCourse.getName(), executionCourse.getDegreePresentationString());
     }

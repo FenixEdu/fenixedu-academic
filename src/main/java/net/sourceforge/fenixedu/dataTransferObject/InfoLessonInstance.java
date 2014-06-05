@@ -23,9 +23,10 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public class InfoLessonInstance extends InfoShowOccupation {
@@ -86,7 +87,7 @@ public class InfoLessonInstance extends InfoShowOccupation {
 
     public String getShiftTypesPrettyPrint() {
         if (getLessonInstance().hasCourseLoad()) {
-            return BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, getLessonInstance().getCourseLoad()
+            return BundleUtil.getString(Bundle.ENUMERATION, getLessonInstance().getCourseLoad()
                     .getType().getName());
         } else {
             return getLessonInstance().getLesson().getShift().getShiftTypesPrettyPrint();

@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.cms.TemplatedSectionInstance;
@@ -106,15 +108,24 @@ public class Section extends Section_Base {
     }
 
     public void setNextSection(Section section) {
+        List<CmsContent> ordered = getOrderedSiblings();
+
+        ordered.remove(this);
+
         if (section != null) {
-            Integer order = section.getOrder();
-            shiftRight(getSiblings(), section.getOrder());
-            setOrder(order);
+            ordered.add(ordered.indexOf(section), this);
         } else {
-            setOrder(getSiblings().size());
+            ordered.add(this);
         }
+
+        IntStream.range(0, ordered.size()).forEach(i -> ordered.get(i).setOrder(i));
     }
 
+
+    private ArrayList<CmsContent> getOrderedSiblings() {
+        return getSiblings().stream().sorted().collect(Collectors.toCollection(ArrayList::new));
+    }
+    
     private Collection<? extends CmsContent> getSiblings() {
         return getSite() != null ? getSite().getAssociatedSectionSet() : getParent().getChildSet();
     }

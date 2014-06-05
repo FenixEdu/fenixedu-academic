@@ -268,7 +268,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public Group getWriters() {
-        return getWritersGroup().toGroup();
+        return getWritersGroup() != null ? getWritersGroup().toGroup() : null;
     }
 
     public void setWriters(Group writers) {

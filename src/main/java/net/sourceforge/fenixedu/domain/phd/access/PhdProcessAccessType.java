@@ -21,12 +21,13 @@ package net.sourceforge.fenixedu.domain.phd.access;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public enum PhdProcessAccessType {
@@ -96,7 +97,7 @@ public enum PhdProcessAccessType {
     }
 
     public String getLocalizedName(final Locale locale) {
-        return ResourceBundle.getBundle("resources.PhdResources", locale).getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.PHD, locale, getQualifiedName());
     }
 
     public String getQualifiedName() {

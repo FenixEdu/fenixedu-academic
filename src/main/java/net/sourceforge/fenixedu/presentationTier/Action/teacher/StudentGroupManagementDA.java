@@ -110,7 +110,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 // TODO Clean this up. Remove Info's
 @Mapping(path = "/studentGroupManagement", module = "teacher", formBean = "studentGroupsForm",
-        functionality = ManageExecutionCourseDA.class)
+        functionality = ManageExecutionCourseDA.class, validate = false)
 public class StudentGroupManagementDA extends ExecutionCourseBaseAction {
 
     private static final Logger logger = LoggerFactory.getLogger(StudentGroupManagementDA.class);
@@ -534,6 +534,14 @@ public class StudentGroupManagementDA extends ExecutionCourseBaseAction {
 
         final ArrayList<InfoShift> infoShifts = getRenderedObject("shiftsTable");
 
+        if ("".equals(name)) {
+            ActionMessages actionErrors = new ActionMessages();
+            ActionMessage error = new ActionMessage("error.groupProperties.missingName");
+            actionErrors.add("error.groupProperties.missingName", error);
+            saveErrors(request, actionErrors);
+            return prepareCreateGroupProperties(mapping, form, request, response);
+        }
+
         InfoGrouping infoGroupProperties = new InfoGrouping();
         infoGroupProperties.setName(name);
         infoGroupProperties.setProjectDescription(projectDescription);
@@ -636,6 +644,12 @@ public class StudentGroupManagementDA extends ExecutionCourseBaseAction {
                 enrolmentBeginDay.set(Calendar.MINUTE, (new Integer(beginHour[1])).intValue());
                 enrolmentBeginDay.set(Calendar.SECOND, 0);
             }
+        } else {
+            ActionMessages actionErrors = new ActionMessages();
+            ActionMessage error = new ActionMessage("error.groupProperties.missingEnrolmentBeginDay");
+            actionErrors.add("error.groupProperties.missingEnrolmentBeginDay", error);
+            saveErrors(request, actionErrors);
+            return prepareCreateGroupProperties(mapping, form, request, response);
         }
 
         infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
@@ -654,6 +668,12 @@ public class StudentGroupManagementDA extends ExecutionCourseBaseAction {
                 enrolmentEndDay.set(Calendar.MINUTE, (new Integer(endHour[1])).intValue());
                 enrolmentEndDay.set(Calendar.SECOND, 0);
             }
+        } else {
+            ActionMessages actionErrors = new ActionMessages();
+            ActionMessage error = new ActionMessage("error.groupProperties.missingEnrolmentEndDay");
+            actionErrors.add("error.groupProperties.missingEnrolmentEndDay", error);
+            saveErrors(request, actionErrors);
+            return prepareCreateGroupProperties(mapping, form, request, response);
         }
 
         float compareDate = enrolmentBeginDay.compareTo(enrolmentEndDay);
@@ -823,6 +843,14 @@ public class StudentGroupManagementDA extends ExecutionCourseBaseAction {
         Boolean differentiatedCapacity = getDifferentiatedCapacity(editGroupPropertiesForm);
 
         final ArrayList<InfoShift> infoShifts = getRenderedObject("shiftsTable");
+
+        if ("".equals(name)) {
+            ActionMessages actionErrors = new ActionMessages();
+            ActionMessage error = new ActionMessage("error.groupProperties.missingName");
+            actionErrors.add("error.groupProperties.missingName", error);
+            saveErrors(request, actionErrors);
+            return prepareEditGroupProperties(mapping, form, request, response);
+        }
 
         Calendar enrolmentBeginDay = null;
         if (!enrolmentBeginDayString.equals("")) {

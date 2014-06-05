@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +55,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -67,8 +66,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -96,7 +95,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
     @Mapping(path = "/manageShiftMultipleItems", module = "resourceAllocationManager",
             input = "/manageShift.do?method=prepareEditShift&page=0", formBean = "selectMultipleItemsForm",
             functionality = ExecutionPeriodDA.class)
-    @Forwards(@Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift"))
+    @Forwards(@Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"))
     public static class ManageShiftMultipleItemsDA extends ManageShiftDA {
     }
 
@@ -341,9 +340,8 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
     private void readAndSetShiftTypes(HttpServletRequest request, InfoExecutionCourse infoExecutionCourse) {
         final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-        final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
         for (final ShiftType shiftType : infoExecutionCourse.getExecutionCourse().getShiftTypes()) {
-            tiposAula.add(new LabelValueBean(bundle.getString(shiftType.getName()), shiftType.name()));
+            tiposAula.add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, shiftType.getName()), shiftType.name()));
         }
         request.setAttribute("tiposAula", tiposAula);
     }

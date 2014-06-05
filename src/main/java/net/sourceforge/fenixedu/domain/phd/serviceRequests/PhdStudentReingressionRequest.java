@@ -18,8 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.phd.serviceRequests;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -30,7 +28,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest_Base {
@@ -112,15 +112,12 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         super.internalChangeState(academicServiceRequestBean);
 
-        ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources");
-
         if (academicServiceRequestBean.isToConclude()) {
             PhdIndividualProgramProcess process = getPhdIndividualProgramProcess();
             PhdProgramProcessState lastActiveState = process.getLastActiveState();
             String remarks =
                     String.format(
-                            phdBundle
-                                    .getString("message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
+                            BundleUtil.getString(Bundle.PHD, "message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
                             getServiceRequestNumberYear());
 
             process.createState(lastActiveState.getType(), AccessControl.getPerson(), remarks);

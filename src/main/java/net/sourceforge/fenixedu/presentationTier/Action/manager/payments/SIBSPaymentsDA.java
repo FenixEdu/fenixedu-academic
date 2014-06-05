@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,6 +41,7 @@ import net.sourceforge.fenixedu.domain.accounting.SibsPaymentFileProcessReport;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPaymentsApp;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFile;
 import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 
@@ -49,6 +49,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.commons.StringNormalizer;
@@ -195,13 +196,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 
     private static String getMessage(Exception ex) {
         String message = (ex.getMessage() == null) ? ex.getClass().getSimpleName() : ex.getMessage();
-
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/ManagerResources");
-        if (bundle.containsKey(message)) {
-            return bundle.getString(message);
-        }
-
-        return message;
+        return BundleUtil.getString(Bundle.MANAGER, message);
     }
 
     private void recursiveZipProcess(File unzipDir, HttpServletRequest request) {

@@ -20,7 +20,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -67,14 +68,14 @@ public class BibliographicReference extends BibliographicReference_Base {
         final String type;
         if (optional) {
             type =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+                    BundleUtil.getString(Bundle.APPLICATION,
                             "option.bibliographicReference.optional");
         } else {
             type =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+                    BundleUtil.getString(Bundle.APPLICATION,
                             "option.bibliographicReference.recommended");
         }
-        CurricularManagementLog.createLog(executionCourse, "resources.MessagingResources",
+        CurricularManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.curricular.bibliographic.edited", type, title, executionCourse.getName(),
                 executionCourse.getDegreePresentationString());
     }
@@ -87,15 +88,15 @@ public class BibliographicReference extends BibliographicReference_Base {
         final String type;
         if (optional) {
             type =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+                    BundleUtil.getString(Bundle.APPLICATION,
                             "option.bibliographicReference.optional");
         } else {
             type =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+                    BundleUtil.getString(Bundle.APPLICATION,
                             "option.bibliographicReference.recommended");
         }
 
-        CurricularManagementLog.createLog(executionCourse, "resources.MessagingResources",
+        CurricularManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.curricular.bibliographic.removed", type, blBibliographicReference,
                 executionCourse.getName(), executionCourse.getDegreePresentationString());
 

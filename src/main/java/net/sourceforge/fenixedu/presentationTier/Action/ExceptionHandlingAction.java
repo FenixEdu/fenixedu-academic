@@ -23,6 +23,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -51,6 +53,7 @@ import org.fenixedu.bennu.portal.domain.MenuFunctionality;
 import org.fenixedu.bennu.portal.domain.MenuItem;
 import org.fenixedu.bennu.portal.servlet.BennuPortalDispatcher;
 import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,6 +73,16 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
 
     private static final String SEPARATOR =
             "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+
+    private static final String hostname = getHostName();
+
+    private static String getHostName() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            return "<Host name unknown>";
+        }
+    }
 
     @Mapping(path = "/showErrorPage")
     public static class ShowErrorPageAction extends Action {
@@ -161,10 +174,17 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
         appendNewLine(builder, 1);
         appendUserInfo(builder, request.getParameter("userAgent"));
         appendNewLine(builder, 1);
+        appendExtraInfo(builder);
+        appendNewLine(builder, 1);
         builder.append(SEPARATOR);
         appendNewLine(builder, 2);
         appendComments(builder, requestBean, request.getParameter("exceptionInfo"));
         return builder.toString();
+    }
+
+    private void appendExtraInfo(StringBuilder builder) {
+        generateLabel(builder, "When").append('[').append(DateTime.now()).append("]\n");
+        generateLabel(builder, "Host").append('[').append(hostname).append(']');
     }
 
     private void appendUserInfo(StringBuilder builder, String userAgent) {
@@ -203,8 +223,9 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
         builder.append("]");
         appendNewLine(builder, 1);
 
-        generateLabel(builder, BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.APPLICATION_BUNDLE, "label.type.single")).append("[")
-                .append(getRequestTypeAsString(requestBean)).append("]");
+        generateLabel(builder,
+                BundleUtil.getString(net.sourceforge.fenixedu.util.Bundle.APPLICATION, "label.type.single"))
+                .append("[").append(getRequestTypeAsString(requestBean)).append("]");
         appendNewLine(builder, 1);
 
         generateLabel(builder, "Priority").append("[").append(getRequestPriorityAsString(requestBean)).append("]");
@@ -232,13 +253,14 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
     }
 
     private void appendUserInfo(StringBuilder builder, Person loggedPerson, SupportRequestBean requestBean) {
-        generateLabel(builder, BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.APPLICATION_BUNDLE, "label.name"));
+        generateLabel(builder, BundleUtil.getString(net.sourceforge.fenixedu.util.Bundle.APPLICATION, "label.name"));
         if (loggedPerson != null) {
             builder.append("[").append(loggedPerson.getName()).append("]\n");
             generateLabel(builder, "Username");
             builder.append("[").append(loggedPerson.getUsername()).append("]");
         } else {
-            builder.append(BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.APPLICATION_BUNDLE, "support.mail.session.error"));
+            builder.append(BundleUtil.getString(net.sourceforge.fenixedu.util.Bundle.APPLICATION,
+                    "support.mail.session.error"));
         }
     }
 
@@ -249,13 +271,14 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
     }
 
     private String getRequestTypeAsString(SupportRequestBean requestBean) {
-        return requestBean.getRequestType() != null ? BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.ENUMERATION_BUNDLE, requestBean
-                .getRequestType().getQualifiedName()) : "";
+        return requestBean.getRequestType() != null ? BundleUtil.getString(
+                net.sourceforge.fenixedu.util.BundleUtil.ENUMERATION_BUNDLE, requestBean.getRequestType().getQualifiedName()) : "";
     }
 
     private String getRequestPriorityAsString(SupportRequestBean requestBean) {
-        return requestBean.getRequestPriority() != null ? BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.ENUMERATION_BUNDLE,
-                requestBean.getRequestPriority().getQualifiedName()).split(" \\(")[0] : "";
+        return requestBean.getRequestPriority() != null ? BundleUtil.getString(
+                net.sourceforge.fenixedu.util.BundleUtil.ENUMERATION_BUNDLE, requestBean.getRequestPriority().getQualifiedName())
+                .split(" \\(")[0] : "";
     }
 
     private void sendEmail(String from, String subject, String body) {

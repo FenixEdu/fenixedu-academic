@@ -25,7 +25,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.credits.util.ProjectTutorialServiceBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -49,8 +50,8 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
     public void setPercentageValue(Integer percentageValue) {
         checkPercentage(percentageValue);
         super.setPercentageValue(percentageValue);
-        new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
-                "resources.TeacherCreditsSheetResources", "label.teacher.degreeProjectTutorialService.change", getProfessorship()
+        new TeacherServiceLog(getTeacherService(), BundleUtil.getString(
+                Bundle.TEACHER_CREDITS, "label.teacher.degreeProjectTutorialService.change", getProfessorship()
                         .getExecutionCourse().getName(), getProfessorship().getTeacher().getPerson().getNickname(), getAttend()
                         .getRegistration().getNumber().toString(), getPercentageValue().toString()));
     }
@@ -95,8 +96,8 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
 
     @Override
     public void delete() {
-        new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
-                "resources.TeacherCreditsSheetResources", "label.teacher.degreeProjectTutorialService.delete", getProfessorship()
+        new TeacherServiceLog(getTeacherService(), BundleUtil.getString(
+                Bundle.TEACHER_CREDITS, "label.teacher.degreeProjectTutorialService.delete", getProfessorship()
                         .getExecutionCourse().getName(), getProfessorship().getTeacher().getPerson().getNickname(), getAttend()
                         .getRegistration().getNumber().toString(), getPercentageValue().toString()));
         setAttend(null);

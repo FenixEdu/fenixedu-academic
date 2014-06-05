@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -27,8 +26,9 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -54,9 +54,8 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
     }
 
     private MultiLanguageString generateSubject(final PhdCandidacyReferee referee) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
-        return new MultiLanguageString(String.format(bundle.getString("message.phd.email.subject.referee"), referee
-                .getCandidatePerson().getName(), referee.getCandidatePerson().getName()));
+        return new MultiLanguageString(String.format(BundleUtil.getString(Bundle.PHD, "message.phd.email.subject.referee"),
+                referee.getCandidatePerson().getName(), referee.getCandidatePerson().getName()));
     }
 
     private MultiLanguageString generateBody(final PhdCandidacyReferee referee) {
@@ -66,8 +65,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     @Override
     public String getDescription() {
-        final ResourceBundle bundle = getResourceBundle(I18N.getLocale());
-        return bundle.getString(String.format("message.phd.referee.alert", INTERVAL));
+        return BundleUtil.getString(Bundle.PHD, "message.phd.referee.alert", Integer.toString(INTERVAL));
     }
 
     @Override

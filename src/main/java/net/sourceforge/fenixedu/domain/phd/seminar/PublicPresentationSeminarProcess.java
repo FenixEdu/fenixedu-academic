@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.phd.seminar;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
@@ -34,8 +33,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 public class PublicPresentationSeminarProcess extends PublicPresentationSeminarProcess_Base {
@@ -610,7 +611,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
     @Override
     public String getDisplayName() {
-        return ResourceBundle.getBundle("resources/PhdResources").getString(getClass().getSimpleName());
+        return BundleUtil.getString(Bundle.PHD, getClass().getSimpleName());
     }
 
     @Override

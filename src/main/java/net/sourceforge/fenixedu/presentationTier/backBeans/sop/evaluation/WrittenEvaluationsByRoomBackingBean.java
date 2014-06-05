@@ -53,6 +53,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -66,8 +67,7 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBackingBean {
 
-    private static final MessageResources messages = MessageResources
-            .getMessageResources("resources/ResourceAllocationManagerResources");
+    private static final MessageResources messages = MessageResources.getMessageResources(Bundle.RESOURCE_ALLOCATION);
 
     private String name;
 

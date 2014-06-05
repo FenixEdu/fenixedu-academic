@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalCommunicationApp;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -111,8 +112,8 @@ public class SendEmailToStudents extends FenixDispatchAction {
         StudentGroup studentsByDegreeAndCurricularYear = StudentGroup.get(degree, curricularYear, executionYear);
 
         String message =
-                MessageResources.getMessageResources("resources.PedagogicalCouncilResources").getMessage(
-                        "label.mail.student.year.degree", curricularYear.getYear().toString(), degree.getSigla());
+                MessageResources.getMessageResources(Bundle.PEDAGOGICAL).getMessage("label.mail.student.year.degree",
+                        curricularYear.getYear().toString(), degree.getSigla());
 
         Recipient recipient = Recipient.newInstance(message, studentsByDegreeAndCurricularYear);
         EmailBean bean = new EmailBean();

@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -27,12 +26,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Objects;
@@ -71,17 +71,17 @@ public class DelegatesGroup extends FenixGroup {
 
     @Override
     public String getPresentationName() {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle(getPresentationNameBundle(), I18N.getLocale());
         if (degree != null) {
-            return resourceBundle.getString("label." + getClass().getSimpleName()) + " " + resourceBundle.getString("label.of")
-                    + " " + degree.getSigla();
+            return BundleUtil.getString(getPresentationNameBundle(), "label." + getClass().getSimpleName()) + " "
+                    + BundleUtil.getString(getPresentationNameBundle(), "label.of") + " " + degree.getSigla();
         }
-        return resourceBundle.getString("label." + getClass().getSimpleName() + "." + function.getName());
+        return BundleUtil
+                .getString(getPresentationNameBundle(), "label." + getClass().getSimpleName() + "." + function.getName());
     }
 
     @Override
     public String getPresentationNameBundle() {
-        return "resources.DelegateResources";
+        return Bundle.DELEGATE;
     }
 
     @Override

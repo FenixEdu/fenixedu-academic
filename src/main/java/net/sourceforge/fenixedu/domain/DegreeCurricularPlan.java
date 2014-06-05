@@ -29,7 +29,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -72,6 +71,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.predicates.DegreeCurricularPlanPredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -83,6 +83,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -1658,7 +1659,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 return getLastOrderedCycleCourseGroup().getGraduateTitle(executionYear, locale);
             } else {
                 final StringBuilder res = new StringBuilder(getDegreeType().getGraduateTitle(locale));
-                res.append(" ").append(ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
+                res.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, locale, "label.in"));
                 res.append(" ").append(getDegree().getFilteredName(executionYear, locale));
 
                 return res.toString();

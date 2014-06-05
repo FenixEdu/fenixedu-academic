@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
 import java.util.Arrays;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,14 +31,14 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication.MessagingEmailsApp;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -91,8 +90,7 @@ public class EmailsDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
         String validate = emailBean.validate();
         if (validate != null) {
-            final ResourceBundle resourceBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
-            final String noneSentString = resourceBundle.getString("error.email.none.sent");
+            final String noneSentString = BundleUtil.getString(Bundle.APPLICATION, "error.email.none.sent");
             request.setAttribute("errorMessage", noneSentString + " " + validate);
             request.setAttribute("emailBean", emailBean);
             return mapping.findForward("new.email");

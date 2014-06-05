@@ -79,6 +79,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         if (!(SpaceUtils.isRoom(resource) || SpaceUtils.isRoomSubdivision(resource))) {
             throw new DomainException("error.EventSpaceOccupation.invalid.resource");
         }
+        getSpaceSet().clear();
         super.addSpace(resource);
     }
 
@@ -216,7 +217,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
                 getDailyFrequencyMarkSunday(), startDateToSearch, endDateToSearch);
     }
 
-    protected List<Interval> generateEventSpaceOccupationIntervals(YearMonthDay begin, final YearMonthDay end,
+    public static List<Interval> generateEventSpaceOccupationIntervals(YearMonthDay begin, final YearMonthDay end,
             final HourMinuteSecond beginTime, final HourMinuteSecond endTime, final FrequencyType frequency,
             final DiaSemana diaSemana, final Boolean dailyFrequencyMarkSaturday, final Boolean dailyFrequencyMarkSunday,
             final YearMonthDay startDateToSearch, final YearMonthDay endDateToSearch) {
@@ -292,7 +293,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         return instantResult;
     }
 
-    private YearMonthDay getBeginDateInSpecificWeekDay(DiaSemana diaSemana, YearMonthDay begin) {
+    private static YearMonthDay getBeginDateInSpecificWeekDay(DiaSemana diaSemana, YearMonthDay begin) {
         if (diaSemana != null) {
             YearMonthDay newBegin =
                     begin.toDateTimeAtMidnight().withDayOfWeek(diaSemana.getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();
@@ -335,6 +336,11 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         return builder.toString();
     }
 
+    @Override
+    public String getSubject() {
+        return getPresentationString();
+    }
+
     public String getPresentationString() {
         return StringUtils.EMPTY;
     }
@@ -360,6 +366,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     public abstract boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start,
             final DateTime end);
 
+    @Override
     public void delete() {
         setBennu(null);
         getSpaceSet().clear();

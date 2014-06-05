@@ -23,11 +23,11 @@ package net.sourceforge.fenixedu.util;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 /**
@@ -37,21 +37,19 @@ import org.fenixedu.commons.i18n.I18N;
 public class CurricularRuleLabelFormatter {
 
     public static String getLabel(ICurricularRule curricularRule) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/BolonhaManagerResources", I18N.getLocale());
-        return buildLabel(curricularRule, bundle);
+        return buildLabel(curricularRule, I18N.getLocale());
     }
 
     public static String getLabel(ICurricularRule curricularRule, Locale locale) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/BolonhaManagerResources", locale);
-        return buildLabel(curricularRule, bundle);
+        return buildLabel(curricularRule, locale);
     }
 
-    private static String buildLabel(ICurricularRule curricularRule, ResourceBundle bundle) {
+    private static String buildLabel(ICurricularRule curricularRule, Locale locale) {
         List<GenericPair<Object, Boolean>> labelList = curricularRule.getLabel();
         StringBuilder labelResult = new StringBuilder();
         for (GenericPair<Object, Boolean> labelElement : labelList) {
             if (labelElement.getRight() == true) {
-                labelResult.append(bundle.getString(labelElement.getLeft().toString()));
+                labelResult.append(BundleUtil.getString(Bundle.BOLONHA, locale, labelElement.getLeft().toString()));
             } else {
                 labelResult.append(labelElement.getLeft());
             }

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
@@ -47,10 +46,12 @@ import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequestProcess_Base {
@@ -86,7 +87,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
     @Override
     public String getDisplayName() {
-        return ResourceBundle.getBundle("resources/PhdResources").getString(getClass().getSimpleName());
+        return BundleUtil.getString(Bundle.PHD, getClass().getSimpleName());
     }
 
     @Override

@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.con
 
 import java.io.IOException;
 import java.math.RoundingMode;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,16 +32,16 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.ExternalSupervisionApplication.ExternalSupervisionConsultApp;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -147,8 +146,7 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction {
 
     private String getFilename(ExternalSupervisorViewsBean bean) {
         StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append(ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale()).getString(
-                "label.students.lowercase"));
+        strBuilder.append(BundleUtil.getString(Bundle.APPLICATION, "label.students.lowercase"));
         strBuilder.append("_");
         strBuilder.append(bean.getProtocol().getRegistrationAgreement().getName());
         strBuilder.append("_");
@@ -200,40 +198,39 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction {
     }
 
     private Spreadsheet createSpreadSheet() {
-        final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
-        final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("list.students"));
+        final Spreadsheet spreadsheet = new Spreadsheet(BundleUtil.getString(Bundle.APPLICATION, "list.students"));
 
         spreadsheet.setHeaders(new String[] {
 
-        bundle.getString("label.istid"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.istid"),
 
-        bundle.getString("label.number"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.number"),
 
-        bundle.getString("label.name"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.name"),
 
-        bundle.getString("label.email"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.email"),
 
-        bundle.getString("label.identificationDocumentType"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.identificationDocumentType"),
 
-        bundle.getString("label.identificationDocumentNumber"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.identificationDocumentNumber"),
 
-        bundle.getString("label.Degree"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.Degree"),
 
-        bundle.getString("label.curricularPlan"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.curricularPlan"),
 
-        bundle.getString("label.net.sourceforge.fenixedu.domain.student.Registration.startDate"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.net.sourceforge.fenixedu.domain.student.Registration.startDate"),
 
-        bundle.getString("label.net.sourceforge.fenixedu.domain.student.Registration.conclusionDate"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.net.sourceforge.fenixedu.domain.student.Registration.conclusionDate"),
 
-        bundle.getString("label.student.curricular.plan.state"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.student.curricular.plan.state"),
 
-        bundle.getString("label.number.approved.curricular.courses"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.number.approved.curricular.courses"),
 
-        bundle.getString("label.ects"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.ects"),
 
-        bundle.getString("label.average"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.average"),
 
-        bundle.getString("label.student.curricular.year"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.student.curricular.year"),
 
         " ", " " });
 

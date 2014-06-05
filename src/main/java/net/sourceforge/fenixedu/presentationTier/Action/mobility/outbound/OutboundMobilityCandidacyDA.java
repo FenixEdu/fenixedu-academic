@@ -44,7 +44,8 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -303,7 +304,7 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
 
         final String filename =
-                BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                BundleUtil.getString(Bundle.ACADEMIC,
                         "label.mobility.candidates.information.filename");
 
         response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
@@ -322,7 +323,7 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
 
         final String filename =
-                BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                BundleUtil.getString(Bundle.ACADEMIC,
                         "label.mobility.outbound.period.export.selected.candiadates.filename");
 
         response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
@@ -450,7 +451,7 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
 
         final String toGroupName =
-                BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                BundleUtil.getString(Bundle.ACADEMIC,
                         "label.send.email.to.candidates.group.to.name", mobilityGroup.getDescription(), period
                                 .getExecutionInterval().getName());
         final Group group = UnionGroup.of(getCandidateGroups(mobilityGroup, period));

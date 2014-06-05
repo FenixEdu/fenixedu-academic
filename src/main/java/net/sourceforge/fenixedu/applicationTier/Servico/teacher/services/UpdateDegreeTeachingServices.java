@@ -33,7 +33,8 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDegreeTeachingServicesDispatchAction.ShiftIDTeachingPercentage;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -50,7 +51,7 @@ public class UpdateDegreeTeachingServices {
         }
 
         final StringBuilder log = new StringBuilder();
-        log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+        log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS,
                 "label.teacher.schedule.change"));
 
         for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {

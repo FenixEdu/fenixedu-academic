@@ -27,19 +27,19 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Random;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import jvstm.PerTxBox;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
@@ -88,9 +88,11 @@ public class ParseSubQuestion extends DefaultHandler {
             } catch (Exception e) {
                 throw new ParseQuestionException(e);
             }
+            List<SubQuestion> subQuestions = new ArrayList<SubQuestion>();
             for (QuestionElement questionElement : questionElementList) {
-                question.addSubQuestion(createSubQuestion(questionElement));
+                subQuestions.add(createSubQuestion(questionElement));
             }
+            setSubQuestionFor(question, subQuestions);
         }
         return question;
     }
@@ -1009,46 +1011,14 @@ public class ParseSubQuestion extends DefaultHandler {
         return newResponseList;
     }
 
-    private static PerTxBox<Map<Question, List<SubQuestion>>> subQuestions;
-
-    private static PerTxBox<Map<Question, List<SubQuestion>>> getBox() {
-        if (subQuestions == null) {
-            synchronized (ParseSubQuestion.class) {
-                if (subQuestions == null) {
-                    subQuestions = new PerTxBox<Map<Question, List<SubQuestion>>>(null);
-                }
-            }
-        }
-        return subQuestions;
-    }
-
-    private static Map<Question, List<SubQuestion>> getSubQuestionsMap() {
-        Map<Question, List<SubQuestion>> map = getBox().get();
-        if (map == null) {
-            map = new HashMap<Question, List<SubQuestion>>();
-            getBox().put(map);
-        }
-        return map;
-    }
+    private static final ConcurrentMap<Question, List<SubQuestion>> questionsMap = new ConcurrentHashMap<>();
 
     public static List<SubQuestion> getSubQuestionFor(final Question question) {
-        final Map<Question, List<SubQuestion>> map = getSubQuestionsMap();
-        List<SubQuestion> result = map.get(question);
-        if (result == null) {
-            result = new ArrayList<SubQuestion>();
-            map.put(question, result);
-        }
-        return result;
+        return questionsMap.getOrDefault(question, Collections.emptyList());
     }
 
-    public static void setSubQuestionFor(final Question question, final List<SubQuestion> subQuestions) {
-        final Map<Question, List<SubQuestion>> map = getSubQuestionsMap();
-        map.put(question, subQuestions);
-    }
-
-    public static void addSubQuestionFor(final Question question, final SubQuestion subQuestion) {
-        final List<SubQuestion> subQuestions = getSubQuestionFor(question);
-        subQuestions.add(subQuestion);
+    private static void setSubQuestionFor(final Question question, final List<SubQuestion> subQuestions) {
+        questionsMap.putIfAbsent(question, subQuestions);
     }
 
 }

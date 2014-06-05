@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.se
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -48,14 +47,14 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -205,29 +204,27 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
             protected void makeLine(AcademicServiceRequest academicServiceRequest) {
                 IDocumentRequest document = (IDocumentRequest) academicServiceRequest;
 
-                ResourceBundle enumeration = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-                ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
                 addCell("Código", document.getRegistryCode().getCode());
-                addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
+                addCell("Tipo de Documento", BundleUtil.getString(Bundle.ENUMERATION, document.getDocumentRequestType().name()));
                 switch (document.getDocumentRequestType()) {
                 case REGISTRY_DIPLOMA_REQUEST:
-                    addCell("Ciclo", enumeration.getString(((IRegistryDiplomaRequest) document).getRequestedCycle().name()));
+                    addCell("Ciclo", BundleUtil.getString(Bundle.ENUMERATION, ((IRegistryDiplomaRequest) document).getRequestedCycle().name()));
                     break;
                 case DIPLOMA_REQUEST:
                     CycleType cycle = ((IDiplomaRequest) document).getWhatShouldBeRequestedCycle();
-                    addCell("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
+                    addCell("Ciclo", cycle != null ? BundleUtil.getString(Bundle.ENUMERATION, cycle.name()) : null);
                     break;
                 case DIPLOMA_SUPPLEMENT_REQUEST:
-                    addCell("Ciclo", enumeration.getString(((IDiplomaSupplementRequest) document).getRequestedCycle().name()));
+                    addCell("Ciclo", BundleUtil.getString(Bundle.ENUMERATION, ((IDiplomaSupplementRequest) document).getRequestedCycle().name()));
                     break;
                 default:
                     addCell("Ciclo", null);
                 }
 
                 if (document.isRequestForRegistration()) {
-                    addCell("Tipo de Curso", enumeration.getString(((DocumentRequest) document).getDegreeType().name()));
+                    addCell("Tipo de Curso", BundleUtil.getString(Bundle.ENUMERATION, ((DocumentRequest) document).getDegreeType().name()));
                 } else if (document.isRequestForPhd()) {
-                    addCell("Tipo de Curso", phdBundle.getString("label.php.program"));
+                    addCell("Tipo de Curso", BundleUtil.getString(Bundle.PHD, "label.php.program"));
                 }
 
                 addCell("Nº de Aluno", document.getStudent().getNumber());

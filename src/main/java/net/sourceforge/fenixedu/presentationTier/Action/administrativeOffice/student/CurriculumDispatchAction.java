@@ -50,7 +50,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.EnrolmentStateFilterType;
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType;
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -61,6 +61,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -319,7 +320,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
             label.append(", ").append(studentCurricularPlan.getDegreeCurricularPlan().getName());
 
             if (studentCurricularPlan.getSpecialization() != null) {
-                label.append(" - ").append(BundleUtil.getEnumName(studentCurricularPlan.getSpecialization()));
+                label.append(" - ").append(BundleUtil.getString(Bundle.ENUMERATION, studentCurricularPlan.getSpecialization().name()));
             }
 
             label.append(" - ").append(studentCurricularPlan.getStartDateYearMonthDay());

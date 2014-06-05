@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
+package org.fenixedu.core.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -30,20 +31,30 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts.util.MessageResources;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.spaces.core.service.NotificationService;
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.occupation.Occupation;
+import org.fenixedu.spaces.domain.occupation.requests.OccupationComment;
+import org.fenixedu.spaces.domain.occupation.requests.OccupationRequest;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import pt.ist.fenixframework.Atomic;
 
-public class GOPSendMessageService {
+import com.google.common.base.Strings;
+
+@Service
+public class GOPSendMessageService implements NotificationService {
 
     private static final Logger logger = LoggerFactory.getLogger(GOPSendMessageService.class);
 
@@ -71,14 +82,6 @@ public class GOPSendMessageService {
     }
 
     @Atomic
-    public static void sendMessage(Collection<Recipient> spaceManagers, String email, String subject, String body) {
-        final Sender sender = getGOPSender();
-        if (email != null || !spaceManagers.isEmpty()) {
-            new Message(sender, sender.getConcreteReplyTos(), spaceManagers, subject, body, email);
-        }
-    }
-
-    @Atomic
     public static void requestRoom(WrittenTest test) {
         final String date = new SimpleDateFormat("dd/MM/yyyy").format(test.getDay().getTime());
         final String time = new SimpleDateFormat("HH:mm").format(test.getBeginning().getTime());
@@ -100,11 +103,11 @@ public class GOPSendMessageService {
         final String degreesString = StringUtils.join(degreeNames, ",");
         final String coursesString = StringUtils.join(courseNames, ",");
         final String subject =
-                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "email.request.room.subject",
+                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.subject",
                         coursesString, test.getDescription());
 
         final String body =
-                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "email.request.room.body",
+                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.body",
                         test.getDescription(), coursesString, date, time, degreesString, endTime);
         for (String email : getGOPEmail(degrees)) {
             new Message(getGOPSender(), email, subject, body);
@@ -136,14 +139,14 @@ public class GOPSendMessageService {
         String degreesString = StringUtils.join(degreeNames, ",");
 
         final String subject =
-                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "email.request.room.subject.edit",
+                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.subject.edit",
                         coursesString, test.getDescription());
 
         // O pedido de requisição de sala para {0} da disciplina {1} do(s)
         // cursos(s) {2} efecuado em {3} para o dia {4} das {5} às {6} foi
         // alterado para o dia {7} das {8} às {9}
         final String body =
-                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "email.request.room.body.edit",
+                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.body.edit",
                         test.getDescription(), coursesString, degreesString, test.getRequestRoomSentDateString(), oldDate,
                         oldStartTime, oldEndTime, date, startTime, endTime);
         for (String email : getGOPEmail(degrees)) {
@@ -156,7 +159,7 @@ public class GOPSendMessageService {
         Set<String> emails = new HashSet<String>();
         for (ExecutionDegree executionDegree : degrees) {
             String emailFromApplicationResources =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "email.gop."
+                    BundleUtil.getString(Bundle.APPLICATION, "email.gop."
                             + executionDegree.getCampus().getName());
             if (!StringUtils.isEmpty(emailFromApplicationResources)) {
                 emails.add(emailFromApplicationResources);
@@ -164,4 +167,57 @@ public class GOPSendMessageService {
         }
         return emails;
     }
+
+    @Override
+    public boolean notify(OccupationRequest request) {
+        MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
+        String body =
+                messages.getMessage("message.room.reservation.solved") + "\n\n"
+                        + messages.getMessage("message.room.reservation.request.number") + "\n" + request.getIdentification()
+                        + "\n\n";
+        body += messages.getMessage("message.room.reservation.request") + "\n";
+        if (request.getSubject() != null) {
+            body += request.getSubject();
+        } else {
+            body += "-";
+        }
+        body += "\n\n" + messages.getMessage("label.rooms.reserve.periods") + ":";
+        for (Occupation occupation : request.getOccupationSet()) {
+            body += "\n\t" + occupation.getSummary() + " - " + occupation.getSpaces().stream().map(Space::getName).collect(Collectors.joining(" "));
+        }
+        if (request.getOccupationSet().isEmpty()) {
+            body += "\n" + messages.getMessage("label.rooms.reserve.periods.none");
+        }
+        body += "\n\n" + messages.getMessage("message.room.reservation.description") + "\n";
+        if (request.getDescription() != null) {
+            body += request.getDescription();
+        } else {
+            body += "-";
+        }
+        OccupationComment occupationComment =
+                request.getCommentSet().stream().sorted(OccupationComment.COMPARATOR_BY_INSTANT.reversed()).findFirst().get();
+
+        body += "\n\n" + messages.getMessage("message.room.reservation.last.comment") + "\n";
+
+        if (occupationComment != null) {
+            body += occupationComment.getDescription();
+        } else {
+            body += "-";
+        }
+        sendEmail(request.getRequestor().getPerson().getEmailForSendingEmails(), messages.getMessage("message.room.reservation"),
+                body);
+        return true;
+    }
+
+    @Override
+    public boolean sendEmail(String emails, String subject, String body) {
+        if (!Strings.isNullOrEmpty(emails)) {
+            final Sender sender = getGOPSender();
+            new Message(sender, sender.getConcreteReplyTos(), null, subject, body, emails);
+            return true;
+        }
+        return false;
+    }
 }
+
+

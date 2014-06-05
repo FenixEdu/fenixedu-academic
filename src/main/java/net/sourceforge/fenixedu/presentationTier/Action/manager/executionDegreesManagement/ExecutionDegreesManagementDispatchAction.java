@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,11 +42,11 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerExecutionsApp;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
@@ -59,9 +58,9 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -302,14 +301,12 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     }
 
     private void readAndSetDegrees(HttpServletRequest request) {
-        final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale());
-
         final List<LabelValueBean> degreeTypes = new ArrayList<LabelValueBean>();
         for (final DegreeType bolonhaDegreeType : DegreeType.values()) {
             degreeTypes
-                    .add(new LabelValueBean(enumerationResources.getString(bolonhaDegreeType.name()), bolonhaDegreeType.name()));
+                    .add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, bolonhaDegreeType.name()), bolonhaDegreeType.name()));
         }
-        degreeTypes.add(0, new LabelValueBean(enumerationResources.getString("dropDown.Default"), ""));
+        degreeTypes.add(0, new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, "dropDown.Default"), ""));
         request.setAttribute("degreeTypes", degreeTypes);
     }
 
@@ -325,15 +322,13 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         Collections.sort(toShow,
                 DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
 
-        final ResourceBundle enumerationResources =
-                ResourceBundle.getBundle("resources/EnumerationResources", request.getLocale());
         final List<LabelValueBean> degreeCurricularPlans = new ArrayList<LabelValueBean>();
         for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
             degreeCurricularPlans.add(new LabelValueBean(degreeCurricularPlan.getDegree().getName() + " > "
                     + degreeCurricularPlan.getName(), degreeCurricularPlan.getExternalId().toString()));
         }
 
-        degreeCurricularPlans.add(0, new LabelValueBean(enumerationResources.getString("dropDown.Default"), ""));
+        degreeCurricularPlans.add(0, new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, "dropDown.Default"), ""));
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
     }
 

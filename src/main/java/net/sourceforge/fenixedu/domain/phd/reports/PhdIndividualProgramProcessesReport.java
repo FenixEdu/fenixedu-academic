@@ -19,14 +19,15 @@
 package net.sourceforge.fenixedu.domain.phd.reports;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -34,11 +35,8 @@ import org.joda.time.YearMonthDay;
 
 public class PhdIndividualProgramProcessesReport extends PhdReport {
 
-    private final ResourceBundle bundle;
-
     public PhdIndividualProgramProcessesReport(HSSFWorkbook workbook) {
         super(workbook);
-        this.bundle = ResourceBundle.getBundle("resources.PhdResources");
     }
 
     public HSSFSheet build(final SearchPhdIndividualProgramProcessBean bean) {
@@ -114,7 +112,7 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
     }
 
     private String getHeaderInBundle(String field) {
-        return this.bundle.getString("label.net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport."
-                + field);
+        return BundleUtil.getString(Bundle.PHD,
+                "label.net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport." + field);
     }
 }

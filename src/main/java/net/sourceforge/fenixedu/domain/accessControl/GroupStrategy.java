@@ -21,6 +21,8 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Collections;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.util.Bundle;
+
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.CustomGroup;
@@ -65,7 +67,7 @@ public abstract class GroupStrategy extends FenixGroup {
 
         @Override
         public String getPresentationName() {
-            return BundleUtil.getString("resources.BennuResources", "label.bennu.group.nobody");
+            return BundleUtil.getString(Bundle.BENNU, "label.bennu.group.nobody");
         }
 
         @Override

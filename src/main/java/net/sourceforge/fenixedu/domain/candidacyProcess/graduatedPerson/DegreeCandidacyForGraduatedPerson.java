@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Formatter;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -41,8 +40,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduatedPerson_Base {
@@ -190,26 +190,24 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     public void exportValues(StringBuilder result) {
         super.exportValues(result);
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
-        final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
-
         Formatter formatter = new Formatter(result);
 
-        formatter.format("%s: %s\n", candidateBundle.getString("label.process.id"), getCandidacyProcess().getProcessCode());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.process.id"), getCandidacyProcess().getProcessCode());
         PrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess().getPrecedentDegreeInformation();
-        formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.previous.degree"),
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.previous.degree"),
                 precedentDegreeInformation.getDegreeDesignation());
-        formatter.format("%s: %s\n", bundle.getString("label.conclusionDate"), precedentDegreeInformation.getConclusionDate());
-        formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.institution"),
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.conclusionDate"), precedentDegreeInformation.getConclusionDate());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.institution"),
                 precedentDegreeInformation.getInstitution().getName());
-        formatter.format("%s: %s\n", bundle.getString("label.conclusionGrade"), precedentDegreeInformation.getConclusionGrade());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.conclusionGrade"), precedentDegreeInformation.getConclusionGrade());
         formatter.format("\n");
-        formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.affinity"),
+        formatter.format("%s: %f\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.affinity"),
                 getAffinity() != null ? getAffinity() : BigDecimal.ZERO);
-        formatter.format("%s: %d\n", bundle.getString("label.SecondCycleIndividualCandidacy.degreeNature"),
+        formatter.format("%s: %d\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.degreeNature"),
                 getDegreeNature() != null ? getDegreeNature() : 0);
-        formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.candidacyGrade"),
+        formatter.format("%s: %f\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.candidacyGrade"),
                 getCandidacyGrade() != null ? getCandidacyGrade() : BigDecimal.ZERO);
+        formatter.close();
     }
 
     @Override

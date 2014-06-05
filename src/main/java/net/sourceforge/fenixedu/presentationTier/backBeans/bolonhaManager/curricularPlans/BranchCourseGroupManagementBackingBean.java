@@ -29,7 +29,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public class BranchCourseGroupManagementBackingBean extends CourseGroupManagementBackingBean {
@@ -38,7 +40,7 @@ public class BranchCourseGroupManagementBackingBean extends CourseGroupManagemen
     private List<SelectItem> branchTypes = null;
 
     public String getBranchTypeName() {
-        return (branchTypeName != null) ? branchTypeName : BranchType.MAJOR.getName();//BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "choose");
+        return (branchTypeName != null) ? branchTypeName : BranchType.MAJOR.getName();
     }
 
     public void setBranchTypeName(String branchTypeName) {
@@ -47,13 +49,6 @@ public class BranchCourseGroupManagementBackingBean extends CourseGroupManagemen
 
     public BranchType getBranchType() {
         return BranchType.valueOf(getBranchTypeName());
-        /*
-        if(branchType == null && getCourseGroupID() != null) {
-            CourseGroup group = getCourseGroup(getCourseGroupID());
-            return (group instanceof BranchCourseGroup ? ((BranchCourseGroup) group).getBranchType() : branchType);
-        }
-            return branchType;
-            */
     }
 
     public List<SelectItem> getBranchTypes() {
@@ -73,15 +68,15 @@ public class BranchCourseGroupManagementBackingBean extends CourseGroupManagemen
         try {
             CreateBranchCourseGroup.run(getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn(),
                     getBranchType(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
-            addInfoMessage(bolonhaBundle.getString("branchCourseGroupCreated"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "branchCourseGroupCreated"));
             return "editCurricularPlanStructure";
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
-            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (final DomainException e) {
-            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "";
     }

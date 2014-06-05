@@ -31,7 +31,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.faces.component.html.HtmlInputHidden;
@@ -58,12 +57,14 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -364,22 +365,21 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getPersonTypes() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 
         SelectItem selectItem1 = new SelectItem();
-        selectItem1.setLabel(bundle.getString(RoleType.EMPLOYEE.getName()).trim());
+        selectItem1.setLabel(BundleUtil.getString(Bundle.ENUMERATION, RoleType.EMPLOYEE.getName()).trim());
         selectItem1.setValue(RoleType.EMPLOYEE.name());
 
         SelectItem selectItem2 = new SelectItem();
-        selectItem2.setLabel(bundle.getString(RoleType.TEACHER.getName()).trim());
+        selectItem2.setLabel(BundleUtil.getString(Bundle.ENUMERATION, RoleType.TEACHER.getName()).trim());
         selectItem2.setValue(RoleType.TEACHER.name());
 
         SelectItem selectItem3 = new SelectItem();
-        selectItem3.setLabel(bundle.getString(RoleType.GRANT_OWNER.getName()).trim());
+        selectItem3.setLabel(BundleUtil.getString(Bundle.ENUMERATION, RoleType.GRANT_OWNER.getName()).trim());
         selectItem3.setValue(RoleType.GRANT_OWNER.name());
 
         SelectItem selectItem4 = new SelectItem();
-        selectItem4.setLabel(bundle.getString(RoleType.STUDENT.getName()).trim());
+        selectItem4.setLabel(BundleUtil.getString(Bundle.ENUMERATION, RoleType.STUDENT.getName()).trim());
         selectItem4.setValue(RoleType.STUDENT.name());
 
         list.add(selectItem1);

@@ -45,7 +45,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.bootstrap.AdminUserBootstrapper.AdminUserSection;
@@ -69,7 +69,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import com.google.common.collect.Lists;
 
 @Bootstrapper(sections = { SchoolSetupSection.class, PortalSection.class, AdminUserSection.class }, name = "bootstrapper.name",
-        bundle = BundleUtil.APPLICATION_BUNDLE, after = PortalBootstrapper.class)
+        bundle = Bundle.APPLICATION, after = PortalBootstrapper.class)
 public class FenixBootstrapper {
 
     final static Locale PT = new Locale("pt");
@@ -81,7 +81,7 @@ public class FenixBootstrapper {
 
         if (Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()) == null) {
             return singletonList(new BootstrapError(SchoolSetupSection.class, "getCountryCode", "bootstrapper.error.contry",
-                    BundleUtil.APPLICATION_BUNDLE));
+                    Bundle.APPLICATION));
         }
 
         createRoles();
@@ -272,7 +272,7 @@ public class FenixBootstrapper {
     }
 
     @Section(name = "bootstrapper.schoolSetup.name", description = "bootstrapper.schoolSetup.description",
-            bundle = BundleUtil.APPLICATION_BUNDLE)
+            bundle = Bundle.APPLICATION)
     public static interface SchoolSetupSection {
 
         @Field(name = "bootstrapper.schoolSetup.universityName", hint = "bootstrapper.schoolSetup.universityName.hint", order = 1)

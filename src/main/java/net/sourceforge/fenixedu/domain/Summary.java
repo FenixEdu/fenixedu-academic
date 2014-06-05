@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.lang.StringUtils;
@@ -83,7 +84,7 @@ public class Summary extends Summary_Base {
         fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
                 lesson, date, room, hour, type, taught);
 
-        ContentManagementLog.createLog(shift.getExecutionCourse(), "resources.MessagingResources",
+        ContentManagementLog.createLog(shift.getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.content.summary.added", title.getContent(), shift.getPresentationName(), shift
                         .getExecutionCourse().getNome(), shift.getExecutionCourse().getDegreePresentationString());
     }
@@ -95,7 +96,7 @@ public class Summary extends Summary_Base {
         fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
                 lesson, date, room, hour, type, taught);
 
-        ContentManagementLog.createLog(shift.getExecutionCourse(), "resources.MessagingResources",
+        ContentManagementLog.createLog(shift.getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.content.summary.edited", title.getContent(), shift.getPresentationName(), shift
                         .getExecutionCourse().getNome(), shift.getExecutionCourse().getDegreePresentationString());
     }
@@ -141,7 +142,7 @@ public class Summary extends Summary_Base {
 
     public void delete() {
 
-        ContentManagementLog.createLog(getShift().getExecutionCourse(), "resources.MessagingResources",
+        ContentManagementLog.createLog(getShift().getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.content.summary.removed", getTitle().getContent(), getShift().getPresentationName(),
                 getShift().getExecutionCourse().getNome(), getShift().getExecutionCourse().getDegreePresentationString());
 

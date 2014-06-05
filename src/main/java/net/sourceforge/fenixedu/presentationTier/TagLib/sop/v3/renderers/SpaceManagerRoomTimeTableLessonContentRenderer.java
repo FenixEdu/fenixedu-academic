@@ -18,9 +18,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -31,11 +28,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotContentRenderer {
-
-    private static final ResourceBundle spaceManagerResourceBundle = ResourceBundle.getBundle("resources.SpaceResources",
-            new Locale("pt"));
 
     @Override
     public StringBuilder render(String context, LessonSlot lessonSlot) {
@@ -62,9 +59,9 @@ public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotCo
 
             InfoExam infoExam = (InfoExam) showOccupation;
 
-            strBuffer.append(spaceManagerResourceBundle.getString("label.written.exam")).append(" ");
+            strBuffer.append(BundleUtil.getString(Bundle.SPACE , "label.written.exam")).append(" ");
             strBuffer.append(infoExam.getSeason().getSeason());
-            strBuffer.append(spaceManagerResourceBundle.getString("label.written.exam.season")).append(" - ");
+            strBuffer.append(BundleUtil.getString(Bundle.SPACE , "label.written.exam.season")).append(" - ");
 
             for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
                 InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
@@ -80,7 +77,7 @@ public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotCo
             InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
 
             strBuffer.append("<span title=\"").append(infoWrittenTest.getDescription()).append("\">");
-            strBuffer.append(spaceManagerResourceBundle.getString("label.written.test")).append(" - ");
+            strBuffer.append(BundleUtil.getString(Bundle.SPACE , "label.written.test")).append(" - ");
 
             for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
                 InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
@@ -96,7 +93,7 @@ public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotCo
 
             InfoOccupation infoGenericEvent = (InfoOccupation) showOccupation;
             strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
-            strBuffer.append(spaceManagerResourceBundle.getString("label.punctual.occupation")).append(" - ");
+            strBuffer.append(BundleUtil.getString(Bundle.SPACE , "label.punctual.occupation")).append(" - ");
             strBuffer.append(infoGenericEvent.getTitle());
             strBuffer.append("</span>");
         }

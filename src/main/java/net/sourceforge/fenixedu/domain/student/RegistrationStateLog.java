@@ -18,7 +18,7 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -47,7 +47,7 @@ public class RegistrationStateLog extends RegistrationStateLog_Base {
     }
 
     protected static String generateLabelDescription(String bundle, String key, String... args) {
-        return BundleUtil.getStringFromResourceBundle(bundle, key, args);
+        return BundleUtil.getString(bundle, key, args);
     }
 
     public String getPersonName() {

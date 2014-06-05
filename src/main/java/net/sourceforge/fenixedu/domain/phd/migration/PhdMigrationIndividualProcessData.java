@@ -18,8 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.phd.migration;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -61,11 +59,11 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -131,9 +129,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
                 errorTranslated = exceptionString + " " + messageString;
             } else {
                 try {
-                    errorTranslated =
-                            ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale()).getString(
-                                    messageString);
+                    errorTranslated = BundleUtil.getString(Bundle.APPLICATION, messageString);
                 } catch (Exception e) {
                     errorTranslated = exceptionString + " " + messageString;
                 }
@@ -146,9 +142,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
          * additional information in the messageString
          */
         try {
-            errorTranslated =
-                    ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale()).getString(
-                            "label.phd.migration.exception." + exceptionString);
+            errorTranslated = BundleUtil.getString(Bundle.PHD, "label.phd.migration.exception." + exceptionString);
         } catch (Exception e) {
             return exceptionString + " " + messageString;
         }

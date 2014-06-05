@@ -18,9 +18,9 @@
  */
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import java.util.ResourceBundle;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class NullEctsComparabilityPercentages extends EctsComparabilityPercentages {
     private static final long serialVersionUID = -929489243618382282L;
@@ -36,8 +36,7 @@ public class NullEctsComparabilityPercentages extends EctsComparabilityPercentag
 
     @Override
     public String getPrintableFormat() {
-        return ResourceBundle.getBundle("resources.GEPResources", I18N.getLocale()).getString(
-                "label.ects.table.nullPrintFormat");
+        return BundleUtil.getString(Bundle.GEP, "label.ects.table.nullPrintFormat");
     }
 
     @Override

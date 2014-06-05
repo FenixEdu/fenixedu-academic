@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMEvaluationsApp;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -80,8 +81,8 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
         AcademicInterval academicInterval = (AcademicInterval) bean.getObject();
         request.setAttribute("bean", bean);
 
-        final MessageResources enumMessages = MessageResources.getMessageResources("resources/EnumerationResources");
-        final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
+        final MessageResources enumMessages = MessageResources.getMessageResources(Bundle.ENUMERATION);
+        final MessageResources messages = MessageResources.getMessageResources(Bundle.DEGREE);
 
         final List<LabelValueBean> executionDegreeLabelValueBeans = new ArrayList<LabelValueBean>();
         for (final ExecutionDegree executionDegree : ExecutionDegree.filterByAcademicInterval(academicInterval)) {

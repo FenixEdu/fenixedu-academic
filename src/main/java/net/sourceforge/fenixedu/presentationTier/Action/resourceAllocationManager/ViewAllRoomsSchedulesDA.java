@@ -51,7 +51,8 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMSchedulesApp;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -269,12 +270,12 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         }
 
         final Spreadsheet spreadsheet = new Spreadsheet("OccupationMap");
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.building"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.identification"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.blueprintNumber"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.doorNumber"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.description"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.classification"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.building"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.identification"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.blueprintNumber"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.doorNumber"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.description"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.classification"));
         final DateTime now = new DateTime();
         for (int weekDay = 0; weekDay < 6; weekDay++) {
             final DateTime dateTime = now.withDayOfWeek(weekDay + 1);
@@ -364,17 +365,17 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         final String executionYear = executionSemester.getExecutionYear().getYear();
 
         final Spreadsheet spreadsheet = new Spreadsheet("ScheduleMap");
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionPeriod"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionYear"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionCourse"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionDegree"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.curricular.year"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.schedule"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.executionPeriod"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.executionYear"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.executionCourse"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.executionDegree"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.curricular.year"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.shift"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.shift.schedule"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION,
                 "label.shift.schedule.hasAllocatedRooms"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.teacher.emails"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.comments"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.teacher.emails"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.comments"));
 
         for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
             final StringBuilder executionDegreeBuilder = new StringBuilder();
@@ -438,12 +439,12 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         final String executionYear = executionSemester.getExecutionYear().getYear();
 
         final Spreadsheet spreadsheet = new Spreadsheet("ShiftAttendenceMap");
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionCourse"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionDegree"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.schedule"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.lesson.room"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.shift"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.executionCourse"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.executionDegree"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.shift.schedule"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.lesson.room"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION,
                 "label.number.students.enrolled"));
 
         for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
@@ -508,14 +509,14 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
 
     private String hasRoomsAttributed(final Shift shift) {
         if (!shift.hasAnyAssociatedLessons()) {
-            return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.no");
+            return BundleUtil.getString(Bundle.APPLICATION, "label.no");
         }
         for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
             if (!hasRoomsAttributed(lesson)) {
-                return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.no");
+                return BundleUtil.getString(Bundle.APPLICATION, "label.no");
             }
         }
-        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.yes");
+        return BundleUtil.getString(Bundle.APPLICATION, "label.yes");
     }
 
     private boolean hasRoomsAttributed(final Lesson lesson) {

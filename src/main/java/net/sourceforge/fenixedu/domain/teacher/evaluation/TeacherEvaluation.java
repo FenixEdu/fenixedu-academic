@@ -27,9 +27,10 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -96,7 +97,7 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
             final FacultyEvaluationProcess facultyEvaluationProcess = teacherEvaluationProcess.getFacultyEvaluationProcess();
             final String title = facultyEvaluationProcess.getTitle().getContent();
             final String body =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+                    BundleUtil.getString(Bundle.APPLICATION,
                             "message.email.stamp.teacher.evaluation.process", title);
             final SystemSender systemSender = Bennu.getInstance().getSystemSender();
             final Message message =

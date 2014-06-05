@@ -24,7 +24,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -36,9 +35,11 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -236,8 +237,7 @@ public class SearchDegreeStudentsGroup implements Serializable {
                 users.add(user);
             }
         }
-//        return UserGroup.of(users);
-        return null;
+        return UserGroup.of(users);
     }
 
     private Comparator<StudentCurricularPlan> determineComparatorKind() {
@@ -486,7 +486,7 @@ public class SearchDegreeStudentsGroup implements Serializable {
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
+        return BundleUtil.getString(Bundle.APPLICATION, name);
     }
 
     public String getLabel() {

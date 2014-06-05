@@ -40,6 +40,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 import net.sourceforge.fenixedu.util.ProposalState;
 
@@ -228,7 +229,7 @@ public class Grouping extends Grouping_Base {
         exportGrouping.setProposalState(new ProposalState(ProposalState.CRIADOR));
 
         addGroupingToAttends(grouping, executionCourse.getAttends());
-        GroupsAndShiftsManagementLog.createLog(executionCourse, "resources.MessagingResources",
+        GroupsAndShiftsManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.groupAndShifts.grouping.added", grouping.getName(), executionCourse.getNome(),
                 executionCourse.getDegreePresentationString());
         return grouping;
@@ -339,7 +340,7 @@ public class Grouping extends Grouping_Base {
 
         List<ExecutionCourse> ecs = getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
-            GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING,
                     "log.executionCourse.groupAndShifts.grouping.edited", getName(), ec.getNome(),
                     ec.getDegreePresentationString());
         }
@@ -428,7 +429,7 @@ public class Grouping extends Grouping_Base {
 
         List<ExecutionCourse> ecs = getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
-            GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources", labelKey, groupNumber.toString(),
+            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING, labelKey, groupNumber.toString(),
                     getName(), Integer.toString(students.size()), sbStudentNumbers.toString(), ec.getNome(),
                     ec.getDegreePresentationString());
         }
@@ -459,7 +460,7 @@ public class Grouping extends Grouping_Base {
 
         List<ExecutionCourse> ecs = getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
-            GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING,
                     "log.executionCourse.groupAndShifts.grouping.removed", getName(), ec.getNome(),
                     ec.getDegreePresentationString());
         }

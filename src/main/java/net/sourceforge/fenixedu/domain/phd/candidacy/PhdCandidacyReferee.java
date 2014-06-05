@@ -20,15 +20,15 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCandidacyRefereeAlert;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -89,9 +89,8 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
     }
 
     private String createSubject() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
-        return String.format(bundle.getString("message.phd.email.subject.referee"), getCandidatePerson().getName(),
-                getCandidatePerson().getName());
+        return String.format(BundleUtil.getString(Bundle.PHD, "message.phd.email.subject.referee"), getCandidatePerson()
+                .getName(), getCandidatePerson().getName());
     }
 
     public Person getCandidatePerson() {

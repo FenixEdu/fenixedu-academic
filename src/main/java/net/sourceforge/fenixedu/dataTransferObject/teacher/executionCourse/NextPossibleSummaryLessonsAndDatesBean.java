@@ -20,16 +20,17 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -37,7 +38,6 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Comparable<NextPossibleSummaryLessonsAndDatesBean> {
 
-    public static final ResourceBundle enumerationResourcesBundle = ResourceBundle.getBundle("resources/EnumerationResources");
     public static final Comparator<NextPossibleSummaryLessonsAndDatesBean> COMPARATOR_BY_DATE_AND_HOUR = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("date"), true);
@@ -103,7 +103,8 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
     }
 
     public String getShiftTypesPrettyPrint() {
-        return isExtraLesson() ? enumerationResourcesBundle.getString("EXTRA_SUMMARY") : getShift().getShiftTypesPrettyPrint();
+        return isExtraLesson() ? BundleUtil.getString(Bundle.ENUMERATION, "EXTRA_SUMMARY") : getShift()
+                .getShiftTypesPrettyPrint();
     }
 
     public boolean getWrittenSummary() {

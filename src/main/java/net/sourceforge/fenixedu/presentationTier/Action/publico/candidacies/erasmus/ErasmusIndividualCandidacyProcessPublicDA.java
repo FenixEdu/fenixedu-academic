@@ -64,7 +64,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForwa
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.LearningAgreementDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.stork.AttributesManagement;
 import net.sourceforge.fenixedu.util.stork.SPUtil;
@@ -1161,10 +1162,10 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
                 (MobilityIndividualApplicationProcessBean) individualCandidacyProcessBean;
 
         // Email intro and error message 
-        sb.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.intro"));
+        sb.append(BundleUtil.getString(Bundle.CANDIDATE, "error.mobility.report.mail.intro"));
         sb.append("\n");
         sb.append("\nError message: ");
-        sb.append(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, exception.getKey(),
+        sb.append(BundleUtil.getString(Bundle.APPLICATION, exception.getKey(),
                 exception.getArgs()));
         sb.append("\n");
 
@@ -1217,7 +1218,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
         // Exception details
         sb.append("\n");
-        sb.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.stacktrace"));
+        sb.append(BundleUtil.getString(Bundle.CANDIDATE, "error.mobility.report.mail.stacktrace"));
         sb.append("\n");
         sb.append("\nException key: ");
         sb.append(exception.getKey());
@@ -1237,7 +1238,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         // Email construction and sending
         String errorReportAddress = Installation.getInstance().getInstituitionalEmailAddress("nmci");
         String errorReportSubject =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.subject",
+                BundleUtil.getString(Bundle.CANDIDATE, "error.mobility.report.mail.subject",
                         Unit.getInstitutionAcronym());
         String errorReportBody = sb.toString();
 

@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -36,12 +35,12 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRu
 import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRuleManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 abstract public class PaymentPlan extends PaymentPlan_Base {
@@ -367,8 +366,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     abstract protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules();
 
     public String getDescription() {
-        return ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale()).getString(
-                this.getClass().getSimpleName() + ".description");
+        return BundleUtil.getString(Bundle.APPLICATION, this.getClass().getSimpleName() + ".description");
     }
 
     public boolean isFor(final ExecutionYear executionYear) {

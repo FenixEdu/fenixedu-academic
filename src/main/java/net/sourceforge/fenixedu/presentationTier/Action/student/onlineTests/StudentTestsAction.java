@@ -466,7 +466,7 @@ public class StudentTestsAction extends FenixDispatchAction {
                 studentTestLogs.add(studentTestLog);
                 byte[] data =
                         ReportsUtils.exportToPdfFileAsByteArray(
-                                "net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog.checksumReport", null, null,
+                                "net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog.checksumReport", null,
                                 studentTestLogs);
                 response.setContentType("application/pdf");
                 response.addHeader("Content-Disposition", "attachment; filename=" + studentTestLog.getStudent().getNumber()

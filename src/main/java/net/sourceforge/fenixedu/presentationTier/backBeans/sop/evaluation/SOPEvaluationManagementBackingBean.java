@@ -69,6 +69,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.Season;
@@ -89,9 +90,8 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 
-    private static final MessageResources messages = MessageResources
-            .getMessageResources("resources/ResourceAllocationManagerResources");
-    private static final MessageResources enumerations = MessageResources.getMessageResources("resources/EnumerationResources");
+    private static final MessageResources messages = MessageResources.getMessageResources(Bundle.RESOURCE_ALLOCATION);
+    private static final MessageResources enumerations = MessageResources.getMessageResources(Bundle.ENUMERATION);
     private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
     private String academicInterval;
@@ -993,7 +993,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public List<SelectItem> getOrderByCriteriaItems() {
-        MessageResources messageResources = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
+        MessageResources messageResources = MessageResources.getMessageResources(Bundle.RESOURCE_ALLOCATION);
 
         List<SelectItem> orderByCriteriaItems = new ArrayList<SelectItem>(3);
         orderByCriteriaItems.add(new SelectItem(0, messageResources.getMessage("label.capacity")));

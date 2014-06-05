@@ -18,7 +18,8 @@
  */
 package net.sourceforge.fenixedu.domain.mobility.outbound;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.joda.time.Interval;
 
@@ -73,12 +74,12 @@ public enum CandidacyGroupContestState {
         NOT_STARTED, UNDER_WAY, COMPLETED;
 
         public String getLocalizedName() {
-            return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label." + name());
+            return BundleUtil.getString(Bundle.ACADEMIC, "label." + name());
         }
     }
 
     public String getLocalizedName() {
-        return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label." + name());
+        return BundleUtil.getString(Bundle.ACADEMIC, "label." + name());
     }
 
     public abstract CandidacyGroupContestStateStage getStage(final OutboundMobilityCandidacyContestGroup group,

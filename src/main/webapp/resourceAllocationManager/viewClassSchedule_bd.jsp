@@ -34,7 +34,7 @@
 
 <h2><bean:message key="link.manage.turmas"/> <span class="small">${executionDegree.executionDegree.degreeCurricularPlan.name}</span></h2>
 
-<h3>Manipular Turma <span class="small">${classView.nome}</span></h3>
+<h3>Manipular Turma <span class="small">${className}</span></h3>
 
 
 <html:link styleClass="btn btn-primary btn-sm" page="/manageClass.do?method=prepareAddShifts&academicInterval=${academicInterval}&execution_degree_oid=${execution_degree_oid}&curricular_year_oid=${curricularYearOID}&class_oid=${classOID}">

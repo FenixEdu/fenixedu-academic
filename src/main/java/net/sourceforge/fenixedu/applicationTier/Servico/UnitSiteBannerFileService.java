@@ -27,6 +27,8 @@ import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType;
 
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
+
 import com.google.common.io.Files;
 
 public class UnitSiteBannerFileService {
@@ -36,7 +38,7 @@ public class UnitSiteBannerFileService {
         if (fileToUpload == null) {
             return null;
         }
-        return new UnitSiteBannerFile(name, name, Files.toByteArray(fileToUpload), null);
+        return new UnitSiteBannerFile(name, name, Files.toByteArray(fileToUpload), AnyoneGroup.get());
     }
 
     protected void updateBanner(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName, File backFile,

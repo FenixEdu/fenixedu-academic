@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.CoordinationTeamLog;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.Bundle;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -40,8 +41,8 @@ public class RemoveCoordinators {
                 final Person person = coordinator.getPerson();
 
                 CoordinationTeamLog.createLog(coordinator.getExecutionDegree().getDegree(), coordinator.getExecutionDegree()
-                        .getExecutionYear(), "resources.MessagingResources", "log.degree.coordinationteam.removemember",
-                        coordinator.getPerson().getPresentationName(), coordinator.getExecutionDegree().getPresentationName());
+                        .getExecutionYear(), Bundle.MESSAGING, "log.degree.coordinationteam.removemember", coordinator
+                        .getPerson().getPresentationName(), coordinator.getExecutionDegree().getPresentationName());
 
                 coordinator.delete();
                 if (!person.hasAnyCoordinators()) {

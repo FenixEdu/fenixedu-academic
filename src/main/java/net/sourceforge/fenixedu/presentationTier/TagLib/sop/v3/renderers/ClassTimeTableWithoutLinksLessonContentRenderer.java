@@ -27,7 +27,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.spaces.domain.Space;
 
@@ -148,7 +149,7 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer extends LessonSlotC
             final InfoLesson infoLesson = (InfoLesson) showOccupation;
 
             builder.append("<span>");
-            builder.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.weeks"));
+            builder.append(BundleUtil.getString(Bundle.CANDIDATE, "label.weeks"));
             builder.append(": &nbsp;&nbsp;");
             builder.append(infoLesson.getOccurrenceWeeksAsString());
             builder.append("&nbsp;");

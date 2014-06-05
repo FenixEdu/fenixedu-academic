@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -38,10 +37,11 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
@@ -57,8 +57,6 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer {
-
-    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
 
     private Integer initialWidth = 70;
 
@@ -236,7 +234,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
                 ectsCell.setClasses(getCurricularCourseEctsClasses());
                 final StringBuilder ects = new StringBuilder();
                 ects.append(scope.getCurricularCourse().getEctsCredits()).append(" ")
-                        .append(studentResources.getString("label.credits.abbreviation"));
+                        .append(BundleUtil.getString(Bundle.STUDENT, "label.credits.abbreviation"));
                 ectsCell.setBody(new HtmlText(ects.toString()));
 
                 // Enrollment Link
@@ -244,7 +242,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
                 linkTableCell.setClasses(getCurricularCourseLinkClasses());
 
                 final HtmlActionLink actionLink = new HtmlActionLink();
-                actionLink.setText(studentResources.getString("label.enroll"));
+                actionLink.setText(BundleUtil.getString(Bundle.STUDENT, "label.enroll"));
                 actionLink.setName("optionalCurricularCourseEnrolLink" + scope.getCurricularCourse().getExternalId());
                 actionLink
                         .setOnClick("$(this).closest('form').find('input[name=\\'method\\']').attr('value', 'enrolInOptionalCurricularCourse');");
@@ -310,7 +308,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 
                     final StringBuilder ects = new StringBuilder();
                     ects.append(curricularCourse.getEctsCredits()).append(" ")
-                            .append(studentResources.getString("label.credits.abbreviation"));
+                            .append(BundleUtil.getString(Bundle.STUDENT, "label.credits.abbreviation"));
                     ectsCell.setBody(new HtmlText(ects.toString()));
 
                     // Enrollment Link
@@ -318,7 +316,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
                     linkTableCell.setClasses(getCurricularCourseLinkClasses());
 
                     final HtmlActionLink actionLink = new HtmlActionLink();
-                    actionLink.setText(studentResources.getString("label.enroll"));
+                    actionLink.setText(BundleUtil.getString(Bundle.STUDENT, "label.enroll"));
                     actionLink.setName("optionalCurricularCourseEnrolLink" + curricularCourse.getExternalId() + "_"
                             + context.getExternalId());
                     actionLink

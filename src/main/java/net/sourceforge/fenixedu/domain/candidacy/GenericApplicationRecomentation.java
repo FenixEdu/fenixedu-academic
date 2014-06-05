@@ -21,7 +21,8 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.Random;
 
 import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -55,11 +56,11 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
     @Atomic
     public void sendEmailForRecommendation() {
         final String subject =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources",
+                BundleUtil.getString(Bundle.CANDIDATE,
                         "label.application.recomentation.email.subject", getGenericApplication().getName());
         final String body =
                 BundleUtil
-                        .getStringFromResourceBundle("resources.CandidateResources",
+                        .getString(Bundle.CANDIDATE,
                                 "label.application.recomentation.email.body", getTitle(), getName(), getGenericApplication()
                                         .getName(),
                                 getGenericApplication().getGenericApplicationPeriod().getTitle().getContent(),

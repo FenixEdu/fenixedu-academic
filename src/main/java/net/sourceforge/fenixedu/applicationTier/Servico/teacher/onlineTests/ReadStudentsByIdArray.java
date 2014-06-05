@@ -25,7 +25,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -38,10 +37,10 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.util.LabelValueBean;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -99,10 +98,10 @@ public class ReadStudentsByIdArray {
 
     private List<InfoStudent> returnStudentsFromShiftsArray(DistributedTest distributedTest, String[] shifts)
             throws FenixServiceException {
-        final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
+        final String value = BundleUtil.getString(Bundle.APPLICATION, "label.allShifts");
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (String shift2 : shifts) {
-            if (shift2.equals(bundle.getString("label.allShifts"))) {
+            if (shift2.equals(value)) {
                 continue;
             }
             Shift shift = FenixFramework.getDomainObject(shift2);
@@ -122,12 +121,12 @@ public class ReadStudentsByIdArray {
 
     private List<InfoStudent> returnStudentsFromStudentsArray(DistributedTest distributedTest, String[] students,
             String executionCourseId) throws FenixServiceException {
-        final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
+        final String value = BundleUtil.getString(Bundle.APPLICATION, "label.allStudents");
         List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
 
         for (String student : students) {
-            if (student.equals(bundle.getString("label.allStudents"))) {
+            if (student.equals(value)) {
                 Collection<Attends> attendList = executionCourse.getAttends();
                 for (Attends attend : attendList) {
                     InfoStudent infoStudent = InfoStudent.newInfoFromDomain(attend.getRegistration());

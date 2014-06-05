@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -127,9 +126,11 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -384,7 +385,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     @Override
     public String getDisplayName() {
-        return ResourceBundle.getBundle("resources/PhdResources").getString(getClass().getSimpleName());
+        return BundleUtil.getString(Bundle.PHD, getClass().getSimpleName());
     }
 
     public String getCollaborationTypeName() {
@@ -1320,8 +1321,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public String getGraduateTitle(Locale locale) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
-        StringBuilder stringBuilder = new StringBuilder(bundle.getString("label.phd.graduated.title.in")).append(" ");
+        StringBuilder stringBuilder = new StringBuilder(BundleUtil.getString(Bundle.PHD, locale, "label.phd.graduated.title.in")).append(" ");
         stringBuilder.append(getPhdProgram().getName().getContent(locale));
 
         return stringBuilder.toString();

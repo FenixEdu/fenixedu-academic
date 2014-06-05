@@ -165,25 +165,25 @@
 						<f:facet name="header">
 							<h:outputText value="#{bundle['property.room.name']}"/>
 						</f:facet>
-						<h:outputText value="#{room.spaceInformation.identification}"/>
+						<h:outputText value="#{room.name}"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{bundle['property.room.building']}"/>
 						</f:facet>
-						<h:outputText value="#{room.x.spaceInformation.name}"/>
+						<h:outputText value="#{room.edificio}"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{bundle['property.room.floor']}"/>
 						</f:facet>
-						<h:outputText value="#{room.spaceFloor.spaceInformation.presentationName}"/>
+						<h:outputText value="#{room.piso}"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{bundle['property.room.type']}"/>
 						</f:facet>
-						<h:outputText value="#{room.tipo.name}" rendered="#{room.tipo != null}"/>
+						<h:outputText value="#{room.tipo}" rendered="#{room.tipo != null}"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">

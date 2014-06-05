@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -37,8 +36,10 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
@@ -54,8 +55,6 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRenderer {
-
-    private final ResourceBundle academicAdminOfficeResources = ResourceBundle.getBundle("resources.AcademicAdminOffice");
 
     private Integer initialWidth = 70;
 
@@ -222,7 +221,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 
                     final StringBuilder ects = new StringBuilder();
                     ects.append(curricularCourse.getEctsCredits(getExecutionSemester())).append(" ")
-                            .append(academicAdminOfficeResources.getString("credits.abbreviation"));
+                            .append(BundleUtil.getString(Bundle.ACADEMIC, "credits.abbreviation"));
                     ectsCell.setBody(new HtmlText(ects.toString()));
 
                     // enrolment link
@@ -230,7 +229,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
                     linkTableCell.setClasses(getCurricularCourseLinkClasses());
 
                     final HtmlActionLink actionLink = new HtmlActionLink();
-                    actionLink.setText(academicAdminOfficeResources.getString("link.option.enrol.curricular.course"));
+                    actionLink.setText(BundleUtil.getString(Bundle.ACADEMIC, "link.option.enrol.curricular.course"));
                     actionLink.setName("curricularCourseEnrolLink" + curricularCourse.getExternalId());
                     actionLink.setOnClick(String.format(
                             "$(this).closest('form').find('input[name=\\'method\\']').attr('value', '%s');", getMethodName()));
@@ -291,7 +290,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
                 ectsCell.setClasses(getCurricularCourseEctsClasses());
                 final StringBuilder ects = new StringBuilder();
                 ects.append(scope.getCurricularCourse().getEctsCredits(getExecutionSemester())).append(" ")
-                        .append(academicAdminOfficeResources.getString("credits.abbreviation"));
+                        .append(BundleUtil.getString(Bundle.ACADEMIC, "credits.abbreviation"));
                 ectsCell.setBody(new HtmlText(ects.toString()));
 
                 // enrolment link
@@ -299,7 +298,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
                 linkTableCell.setClasses(getCurricularCourseLinkClasses());
 
                 final HtmlActionLink actionLink = new HtmlActionLink();
-                actionLink.setText(academicAdminOfficeResources.getString("link.option.enrol.curricular.course"));
+                actionLink.setText(BundleUtil.getString(Bundle.ACADEMIC, "link.option.enrol.curricular.course"));
                 actionLink.setName("curricularCourseEnrolLink" + scope.getCurricularCourse().getExternalId());
                 actionLink.setOnClick(String.format(
                         "$(this).closest('form').find('input[name=\\'method\\']').attr('value', '%s');", getMethodName()));

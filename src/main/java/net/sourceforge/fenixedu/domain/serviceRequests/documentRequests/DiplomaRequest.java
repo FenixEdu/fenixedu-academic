@@ -25,17 +25,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
-import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation;
@@ -45,9 +46,13 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaRequest, IRectorateSubmissionBatchDocumentEntry {
 
@@ -521,8 +526,21 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 new RegistrationConclusionBean(getRegistration(), getCycleCurriculumGroup());
         ExecutionYear executionYear = registrationConclusionBean.getConclusionYear();
         final String degreeFilteredName = degree.getFilteredName(executionYear, getLanguage());
-        result.append(" ")
-                .append(ResourceBundle.getBundle("resources/ApplicationResources", getLanguage()).getString("label.in"));
+        result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, getLanguage(), "label.in"));
+
+        List<DegreeCurricularPlan> degreeCurricularPlansForYear = getDegree().getDegreeCurricularPlansForYear(executionYear);
+        if (degreeCurricularPlansForYear.size() == 1) {
+            DegreeCurricularPlan dcp = degreeCurricularPlansForYear.iterator().next();
+            CycleCourseGroup cycleCourseGroup = dcp.getCycleCourseGroup(cycleType);
+            if (cycleCourseGroup != null) {
+                final MultiLanguageString mls = cycleCourseGroup.getGraduateTitleSuffix();
+                final String suffix = mls == null ? null : mls.getContent(getLanguage());
+                if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
+                    result.append(" ").append(suffix);
+                    result.append(" ").append("-");
+                }
+            }
+        }
         result.append(" ").append(degreeFilteredName);
 
         return result.toString();

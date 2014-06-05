@@ -23,6 +23,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -97,7 +98,7 @@ public abstract class Evaluation extends Evaluation_Base {
 
     private void logAuxBasic(String key) {
         for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
-            EvaluationManagementLog.createLog(ec, "resources.MessagingResources", key, getPresentationName(), ec.getName(),
+            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, key, getPresentationName(), ec.getName(),
                     ec.getDegreePresentationString());
         }
     }

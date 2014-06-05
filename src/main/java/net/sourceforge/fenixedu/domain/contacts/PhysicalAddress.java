@@ -25,9 +25,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -165,7 +166,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
             final PhysicalAddressValidation physicalAddressValidation = (PhysicalAddressValidation) getPartyContactValidation();
             physicalAddressValidation.setValid();
             final String userName = AccessControl.getPerson() == null ? "-" : AccessControl.getPerson().getUsername();
-            physicalAddressValidation.setDescription(BundleUtil.getMessageFromModuleOrApplication("AcademicAdminOffice",
+            physicalAddressValidation.setDescription(BundleUtil.getString(Bundle.ACADEMIC,
                     "label.contacts.physicalAddress.validation.description", userName));
         }
     }

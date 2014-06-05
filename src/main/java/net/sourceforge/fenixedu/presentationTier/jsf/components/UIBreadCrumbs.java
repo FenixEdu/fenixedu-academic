@@ -19,9 +19,7 @@
 package net.sourceforge.fenixedu.presentationTier.jsf.components;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -30,6 +28,9 @@ import javax.faces.context.ResponseWriter;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class UIBreadCrumbs extends UIInput {
 
@@ -62,16 +63,10 @@ public class UIBreadCrumbs extends UIInput {
 
         final ResponseWriter responseWriter = context.getResponseWriter();
 
-        final Locale locale = context.getViewRoot().getLocale();
-        final ResourceBundle globalResourceBundle = ResourceBundle.getBundle("resources/GlobalResources", locale);
-        final ResourceBundle publicDegreeInformationResourceBundle =
-                ResourceBundle.getBundle("resources/PublicDegreeInformation", locale);
-
         final String institutionUrl = Installation.getInstance().getInstituitionURL();
         final String institutionNameAbbreviation = Unit.getInstitutionAcronym();
-        final String linkInstitution = globalResourceBundle.getObject("link.institution").toString();
-        final String labelEducation =
-                publicDegreeInformationResourceBundle.getObject("public.degree.information.label.education").toString();
+        final String linkInstitution = BundleUtil.getString(Bundle.GLOBAL, "link.institution");
+        final String labelEducation = BundleUtil.getString(Bundle.DEGREE, "public.degree.information.label.education").toString();
 
         writeLink(responseWriter, institutionUrl, institutionNameAbbreviation);
         responseWriter.write(CRUMB_SEPERATOR);

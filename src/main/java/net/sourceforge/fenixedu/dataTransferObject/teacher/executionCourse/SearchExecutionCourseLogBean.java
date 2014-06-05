@@ -21,15 +21,15 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourseLog.ExecutionCourseLogTypes;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Month;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
@@ -46,11 +46,11 @@ public class SearchExecutionCourseLogBean implements Serializable {
     private Collection<ExecutionCourseLog> executionCourseLogs;
 
     public String getEnumerationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(name);
+        return BundleUtil.getString(Bundle.ENUMERATION, name);
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
+        return BundleUtil.getString(Bundle.APPLICATION, name);
     }
 
     public SearchExecutionCourseLogBean(ExecutionCourse executionCourse) {

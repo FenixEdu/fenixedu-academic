@@ -21,7 +21,9 @@
  */
 package net.sourceforge.fenixedu.domain.finalDegreeWork;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public enum CandidacyAttributionType {
     // order is important (it is used to return the most relevant element)
@@ -32,7 +34,7 @@ public enum CandidacyAttributionType {
     }
 
     public String getDescription() {
-        return BundleUtil.getMessageFromModuleOrApplication("Application", this.getClass().getSimpleName() + "." + this + "."
+        return BundleUtil.getString(Bundle.APPLICATION, this.getClass().getSimpleName() + "." + this + "."
                 + "description");
     }
 
@@ -41,6 +43,6 @@ public enum CandidacyAttributionType {
     }
 
     public String getSimpleLabel() {
-        return BundleUtil.getEnumName(this);
+        return BundleUtil.getString(Bundle.ENUMERATION, name());
     }
 }

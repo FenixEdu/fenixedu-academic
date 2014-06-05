@@ -45,9 +45,11 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.rendererExtensions.controllers.CopyCheckBoxValuesController;
@@ -258,7 +260,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
         String label = buildCurriculumGroupLabel(curriculumGroup, executionSemester);
         if (concluded) {
-            label = label.concat(" - ").concat(getRenderer().applicationResources.getString("label.curriculum.cycle.concluded"));
+            label = label.concat(" - ").concat(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.cycle.concluded"));
         }
 
         return label;
@@ -273,7 +275,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
         if (getRenderer().isEncodeGroupRules()) {
             result.append(" <span title=\"");
-            result.append(getRenderer().applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
+            result.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.credits.legend.creditsConcluded"));
             result.append(" \"> c(");
             result.append(curriculumGroup.getCreditsConcluded(executionSemester.getExecutionYear()));
             result.append(")</span>");
@@ -284,21 +286,21 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
             if (creditsLimit != null) {
                 result.append(" <span title=\"");
-                result.append(getRenderer().applicationResources.getString("label.curriculum.credits.legend.minCredits"));
+                result.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.credits.legend.minCredits"));
                 result.append(" \">m(");
                 result.append(creditsLimit.getMinimumCredits());
                 result.append(")</span>,");
             }
 
             result.append(" <span title=\"");
-            result.append(getRenderer().applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
+            result.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.credits.legend.creditsConcluded"));
             result.append(" \"> c(");
             result.append(curriculumGroup.getCreditsConcluded(executionSemester.getExecutionYear()));
             result.append(")</span>");
 
             if (creditsLimit != null) {
                 result.append(", <span title=\"");
-                result.append(getRenderer().applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
+                result.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.credits.legend.maxCredits"));
                 result.append(" \">M(");
                 result.append(creditsLimit.getMaximumCredits());
                 result.append(")</span>");
@@ -352,7 +354,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
                 CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
                 degreeName +=
-                        " (" + getRenderer().studentResources.getString("label.grade.scale") + " - "
+                        " (" + BundleUtil.getString(Bundle.STUDENT, "label.grade.scale") + " - "
                                 + curricularCourse.getGradeScaleChain().getDescription() + ") ";
             }
 
@@ -371,7 +373,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
                 final StringBuilder ects = new StringBuilder();
                 ects.append(degreeModuleToEvaluate.getEctsCredits()).append(" ")
-                        .append(getRenderer().studentResources.getString("label.credits.abbreviation"));
+                        .append(BundleUtil.getString(Bundle.STUDENT, "label.credits.abbreviation"));
                 ectsCell.setBody(new HtmlText(ects.toString()));
 
                 HtmlTableCell checkBoxCell = htmlTableRow.createCell();
@@ -391,7 +393,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 linkTableCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
 
                 final HtmlActionLink actionLink = new HtmlActionLink();
-                actionLink.setText(getRenderer().studentResources.getString("label.chooseOptionalCurricularCourse"));
+                actionLink.setText(BundleUtil.getString(Bundle.STUDENT, "label.chooseOptionalCurricularCourse"));
                 actionLink.setController(new OptionalCurricularCourseLinkController(degreeModuleToEvaluate));
                 actionLink
                         .setOnClick("$(this).closest('form').find('input[name=\\'method\\']').attr('value', 'prepareChooseOptionalCurricularCourseToEnrol');");
@@ -474,7 +476,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
             }
 
             enrolmentName +=
-                    " (" + getRenderer().studentResources.getString("label.grade.scale") + " - "
+                    " (" + BundleUtil.getString(Bundle.STUDENT, "label.grade.scale") + " - "
                             + curricularCourse.getGradeScaleChain().getDescription() + ") ";
         }
 
@@ -494,7 +496,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         final StringBuilder semester = new StringBuilder();
         semester.append(enrolment.getExecutionPeriod().getSemester().toString());
         semester.append(" ");
-        semester.append(getRenderer().enumerationResources.getString("SEMESTER.ABBREVIATION"));
+        semester.append(BundleUtil.getString(Bundle.ENUMERATION, "SEMESTER.ABBREVIATION"));
         semesterCell.setBody(new HtmlText(semester.toString()));
 
         // Ects
@@ -505,7 +507,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         final double ectsCredits =
                 (enrolment.isBolonhaDegree() && getBolonhaStudentEnrollmentBean().getCurricularRuleLevel().isNormal()) ? enrolment
                         .getAccumulatedEctsCredits(enrolment.getExecutionPeriod()) : enrolment.getEctsCredits();
-        ects.append(ectsCredits).append(" ").append(getRenderer().studentResources.getString("label.credits.abbreviation"));
+        ects.append(ectsCredits).append(" ").append(BundleUtil.getString(Bundle.STUDENT, "label.credits.abbreviation"));
 
         ectsCell.setBody(new HtmlText(ects.toString()));
 
@@ -656,7 +658,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         cell.setClasses("aright");
 
         final HtmlActionLink actionLink = new HtmlActionLink();
-        actionLink.setText(getRenderer().studentResources.getString("label.choose"));
+        actionLink.setText(BundleUtil.getString(Bundle.STUDENT, "label.choose"));
         actionLink.setController(new CycleSelectionLinkController(cycleType));
         actionLink
                 .setOnClick("(function (z){var node = z; while(node.tagName != 'FORM'){ node = node.parentNode; } return node;})(this).method.value='prepareChooseCycleCourseGroupToEnrol';");
