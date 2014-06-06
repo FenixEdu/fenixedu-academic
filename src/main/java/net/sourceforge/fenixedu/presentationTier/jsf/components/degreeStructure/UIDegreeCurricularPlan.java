@@ -358,12 +358,12 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "nobullet mtop05 mbottom2", null);
         writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
 
-        encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM",
+        encodeSubtitleElement(Bundle.ENUMERATION, RegimeType.SEMESTRIAL.toString() + ".ACRONYM",
                 RegimeType.SEMESTRIAL.toString(), null);
-        encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
+        encodeSubtitleElement(Bundle.ENUMERATION, RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
 
-        encodeSubtitleElement("BolonhaManagerResources", "contactLessonHoursAcronym", "contactLessonHours", null);
-        encodeSubtitleElement("BolonhaManagerResources", "autonomousWorkAcronym", "autonomousWork", null);
+        encodeSubtitleElement(Bundle.BOLONHA, "contactLessonHoursAcronym", "contactLessonHours", null);
+        encodeSubtitleElement(Bundle.BOLONHA, "autonomousWorkAcronym", "autonomousWork", null);
 
         StringBuilder explanation = new StringBuilder();
         explanation.append(" (");
@@ -371,7 +371,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         explanation.append(" + ");
         explanation.append(BundleUtil.getString(Bundle.BOLONHA, "autonomousWorkAcronym"));
         explanation.append(")");
-        encodeSubtitleElement("BolonhaManagerResources", "totalLoadAcronym", "totalLoad", explanation);
+        encodeSubtitleElement(Bundle.BOLONHA, "totalLoadAcronym", "totalLoad", explanation);
         writer.endElement("ul");
     }
 
@@ -379,9 +379,9 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("li", this);
         writer.startElement("span", this);
         writer.writeAttribute("style", "color: #888", null);
-        writer.append(BundleUtil.getString(Bundle.APPLICATION, acronym)).append(" - ");
+        writer.append(BundleUtil.getString(bundle, acronym)).append(" - ");
         writer.endElement("span");
-        writer.append(BundleUtil.getString(Bundle.APPLICATION, full));
+        writer.append(BundleUtil.getString(bundle, full));
         if (explanation != null) {
             writer.append(explanation);
         }

@@ -63,13 +63,13 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     @Override
     protected void fillReport() {
 
-        addParameter("certification", BundleUtil.getString(Bundle.ACADEMIC, "label.certification").toUpperCase());
-        addParameter("certificationMessage", BundleUtil.getString(Bundle.ACADEMIC, "label.program.certificate.certification"));
+        addParameter("certification", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.certification").toUpperCase());
+        addParameter("certificationMessage", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.certification"));
         setPersonFields();
         addParametersInformation();
         fillEmployeeFields();
         setFooter(getDocumentRequest());
-        addParameter("enrolment", BundleUtil.getString(Bundle.ACADEMIC, "label.serviceRequests.enrolment"));
+        addParameter("enrolment", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.serviceRequests.enrolment"));
     }
 
     private void addParametersInformation() {
@@ -84,9 +84,9 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
         String labelStudent;
         if (student.isMale()) {
-            labelStudent = BundleUtil.getString(Bundle.ACADEMIC, "label.the.student.male");
+            labelStudent = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.the.student.male");
         } else {
-            labelStudent = BundleUtil.getString(Bundle.ACADEMIC, "label.the.student.female");
+            labelStudent = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.the.student.female");
         }
 
         String coordinatorName = coordinator.getName();
@@ -95,15 +95,15 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
         String institutionName = getInstitutionName().toUpperCase();
 
-        String template = BundleUtil.getString(Bundle.ACADEMIC, "label.program.certificate.personalData.first");
+        String template = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.personalData.first");
         String firstPart =
                 MessageFormat.format(template, coordinatorName, coordinatorGender, adminOfficeUnitName, institutionName,
                         universityName, labelStudent);
         addParameter("firstPart", firstPart);
         addParameter("secondPart", student.getName());
-        addParameter("thirdPart", BundleUtil.getString(Bundle.ACADEMIC, "label.with.number"));
+        addParameter("thirdPart", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.with.number"));
         addParameter("fourthPart", getStudentNumber());
-        addParameter("fifthPart", BundleUtil.getString(Bundle.ACADEMIC, "label.of.male"));
+        addParameter("fifthPart", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.of.male"));
         addParameter("sixthPart", getDegreeDescription());
         addParameter("seventhPart", getProgramsDescription());
 
@@ -139,9 +139,9 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
     private String getProgramsDescription() {
         if (getDocumentRequest().getEnrolmentsSet().size() == 1) {
-            return BundleUtil.getString(Bundle.ACADEMIC, "label.program.certificate.program");
+            return BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.program");
         } else {
-            return MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, "label.program.certificate.programs"), numberOfPrograms());
+            return MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.programs"), numberOfPrograms());
         }
     }
 
@@ -180,19 +180,19 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     }
 
     private void addLabelsToMultiLanguage() {
-        addParameter("enrolment", BundleUtil.getString(Bundle.ACADEMIC, "label.serviceRequests.enrolment"));
-        addParameter("degreeLabel", BundleUtil.getString(Bundle.ACADEMIC, "label.degree"));
-        addParameter("degreeCurricularPlanLabel", BundleUtil.getString(Bundle.ACADEMIC, "label.degreeCurricularPlan"));
-        addParameter("weightLabel", BundleUtil.getString(Bundle.ACADEMIC, "label.set.evaluation.enrolment.weight"));
-        addParameter("contexts", BundleUtil.getString(Bundle.ACADEMIC, "label.contexts"));
-        addParameter("prerequisites", BundleUtil.getString(Bundle.ACADEMIC, "label.prerequisites"));
-        addParameter("objectives", BundleUtil.getString(Bundle.ACADEMIC, "label.objectives"));
-        addParameter("program", BundleUtil.getString(Bundle.ACADEMIC, "label.program"));
-        addParameter("evaluationMethod", BundleUtil.getString(Bundle.ACADEMIC, "label.evaluationMethod"));
-        addParameter("bibliography", BundleUtil.getString(Bundle.ACADEMIC, "label.bibliography"));
-        addParameter("averageGrade", BundleUtil.getString(Bundle.ACADEMIC, "label.average.grade"));
-        addParameter("generalObjectives", BundleUtil.getString(Bundle.ACADEMIC, "label.generalObjectives"));
-        addParameter("operationalObjectives", BundleUtil.getString(Bundle.ACADEMIC, "label.operationalObjectives"));
+        addParameter("enrolment", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.serviceRequests.enrolment"));
+        addParameter("degreeLabel", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.degree"));
+        addParameter("degreeCurricularPlanLabel", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.degreeCurricularPlan"));
+        addParameter("weightLabel", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.set.evaluation.enrolment.weight"));
+        addParameter("contexts", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.contexts"));
+        addParameter("prerequisites", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.prerequisites"));
+        addParameter("objectives", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.objectives"));
+        addParameter("program", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program"));
+        addParameter("evaluationMethod", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.evaluationMethod"));
+        addParameter("bibliography", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.bibliography"));
+        addParameter("averageGrade", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.average.grade"));
+        addParameter("generalObjectives", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.generalObjectives"));
+        addParameter("operationalObjectives", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.operationalObjectives"));
     }
 
     abstract public class ProgramInformation implements Serializable {

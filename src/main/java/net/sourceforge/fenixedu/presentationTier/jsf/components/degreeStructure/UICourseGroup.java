@@ -122,7 +122,7 @@ public class UICourseGroup extends UIDegreeModule {
                 writer.startElement("td", this);
                 writer.writeAttribute("align", "center", null);
                 writer.startElement("i", this);
-                writer.append(BundleUtil.getString(Bundle.BOLONHA, "BolonhaManagerResources", "empty.curricularPlan"));
+                writer.append(BundleUtil.getString(Bundle.BOLONHA, "empty.curricularPlan"));
                 writer.endElement("i");
                 writer.endElement("td");
                 writer.endElement("tr");

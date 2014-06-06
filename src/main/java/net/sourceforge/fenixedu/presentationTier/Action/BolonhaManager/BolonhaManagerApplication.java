@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager;
 
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FacesEntryPoint;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.actions.ForwardAction;
 import org.fenixedu.bennu.portal.StrutsApplication;
@@ -26,18 +27,18 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@StrutsApplication(bundle = "BolonhaManagerResources", path = "bolonha", titleKey = "bolonhaManager", hint = "Bolonha Manager",
+@StrutsApplication(bundle = Bundle.BOLONHA, path = "bolonha", titleKey = "bolonhaManager", hint = "Bolonha Manager",
         accessGroup = "role(BOLONHA_MANAGER)")
 @Mapping(module = "bolonhaManager", path = "/index", parameter = "/bolonhaManager/index.jsp")
 public class BolonhaManagerApplication extends ForwardAction {
 
-    @StrutsApplication(bundle = "BolonhaManagerResources", path = "competence-courses",
+    @StrutsApplication(bundle = Bundle.BOLONHA, path = "competence-courses",
             titleKey = "navigation.competenceCoursesManagement", accessGroup = "role(BOLONHA_MANAGER)", hint = "Bolonha Manager")
     public static class CompetenceCourseManagementApp {
 
     }
 
-    @StrutsApplication(bundle = "BolonhaManagerResources", path = "curricular-plans",
+    @StrutsApplication(bundle = Bundle.BOLONHA, path = "curricular-plans",
             titleKey = "navigation.curricularPlansManagement", accessGroup = "role(BOLONHA_MANAGER)", hint = "Bolonha Manager")
     public static class CurricularPlansManagementApp {
 

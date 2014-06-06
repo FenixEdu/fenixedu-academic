@@ -57,12 +57,13 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
         String universityName = university.getPartyName().getPreferedContent();
 
         PhdDiplomaRequest diplomaRequest = getDocumentRequest();
-        String phdProgramConclusion = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.diploma.pdhProgramConclusion");
+        String phdProgramConclusion =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.diploma.pdhProgramConclusion");
         ExecutionYear conclusionYear = ExecutionYear.readByDateTime(diplomaRequest.getConclusionDate());
         String phdProgramDescription =
                 getDocumentRequest().getPhdIndividualProgramProcess().getPhdProgram().getDegree().getNameI18N(conclusionYear)
                         .getContent(getLanguage());
-        String phdConclusionDate = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.diploma.pdhConclusionDate");
+        String phdConclusionDate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.diploma.pdhConclusionDate");
 
         addParameter("conclusionMessage", phdProgramConclusion);
         addParameter("phdProgram", phdProgramDescription);
@@ -71,31 +72,33 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
                 MessageFormat.format(phdConclusionDate, diplomaRequest.getConclusionDate()
                         .toString(getDatePattern(), getLocale()).toLowerCase()));
 
-        addParameter("documentNumber", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.documentNumber"));
+        addParameter("documentNumber", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.documentNumber"));
         addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
-        addParameter("day", MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.university.actualDate"),
-                universityName, getFormatedCurrentDate()));
+        addParameter("day", MessageFormat.format(
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.university.actualDate"), universityName,
+                getFormatedCurrentDate()));
 
-        addParameter("classificationResult", MessageFormat.format(
-                BundleUtil.getString(Bundle.ACADEMIC, "label.phd.Diploma.classificationResult"), diplomaRequest.getThesisFinalGrade()
-                        .getLocalizedName(getLocale())));
+        addParameter("classificationResult", MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                "label.phd.Diploma.classificationResult"), diplomaRequest.getThesisFinalGrade().getLocalizedName(getLocale())));
         addParameter("dissertationTitle", diplomaRequest.getDissertationThesisTitle());
         addParameter("graduateTitle", diplomaRequest.getGraduateTitle(getLocale()));
 
         if (getUniversity(getDocumentRequest().getRequestDate()) != getUniversity(getDocumentRequest().getConclusionDate()
                 .toDateTimeAtCurrentTime())) {
-            addParameter("UTLDescription", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.UTLDescription"));
-            addParameter("certification", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.phd.certification.UTL"));
+            addParameter("UTLDescription", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.UTLDescription"));
+            addParameter("certification",
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.phd.certification.UTL"));
 
         } else {
             addParameter("UTLDescription", StringUtils.EMPTY);
-            addParameter("certification", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.phd.certification.UL"));
+            addParameter("certification",
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.phd.certification.UL"));
         }
 
-        addParameter("message1", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.message1"));
-        addParameter("message3", BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.message3"));
-        addParameter("phdmessage1", BundleUtil.getString(Bundle.ACADEMIC, "label.phd.diploma.message1"));
+        addParameter("message1", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.message1"));
+        addParameter("message3", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.message3"));
+        addParameter("phdmessage1", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.diploma.message1"));
     }
 
     private String getFormatedCurrentDate() {
@@ -105,9 +108,9 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
     private String getDatePattern() {
         final StringBuilder result = new StringBuilder();
         result.append("dd '");
-        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.of"));
+        result.append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "label.of"));
         result.append("' MMMM '");
-        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.of"));
+        result.append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "label.of"));
         result.append("' yyyy");
         return result.toString();
     }
@@ -127,7 +130,7 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
             throw new DomainException("error.personWithoutParishOfBirth");
         }
 
-        String nationality = BundleUtil.getString(Bundle.ACADEMIC, "diploma.nationality");
+        String nationality = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.nationality");
         addParameter("birthLocale", MessageFormat.format(nationality, country));
 
     }
@@ -151,21 +154,21 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
         String rectorGender, rectorGrant, presidentGender;
 
         if (presidentIst.isMale()) {
-            presidentGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentMale");
+            presidentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentMale");
         } else {
-            presidentGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentFemale");
+            presidentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentFemale");
         }
 
         if (principal.isMale()) {
-            rectorGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.rectorMale");
-            rectorGrant = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentGrantMale");
+            rectorGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.rectorMale");
+            rectorGrant = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentGrantMale");
         } else {
-            rectorGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.rectorFemale");
-            rectorGrant = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.presidentGrantFemale");
+            rectorGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.rectorFemale");
+            rectorGrant = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.presidentGrantFemale");
         }
         addParameter("theRector", rectorGender);
         addParameter("president", MessageFormat.format(presidentGender, institutionUnitName));
-        String firstParagraph = BundleUtil.getString(Bundle.ACADEMIC, "label.diploma.universityPrincipal");
+        String firstParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.diploma.universityPrincipal");
         addParameter("firstParagraph",
                 MessageFormat.format(firstParagraph, rectorGender, universityName, rectorGrant, principal.getValidatedName()));
     }

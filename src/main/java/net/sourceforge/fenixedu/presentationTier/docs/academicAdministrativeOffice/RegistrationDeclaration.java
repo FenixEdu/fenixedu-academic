@@ -59,7 +59,8 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
     @Override
     protected void setDocumentTitle() {
-        addParameter("documentTitle", BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.title.declaration"));
+        addParameter("documentTitle",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.title.declaration"));
     }
 
     @Override
@@ -72,9 +73,9 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
         String studentRegistered;
         if (registration.getStudent().getPerson().isMale()) {
-            studentRegistered = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.maleRegistered");
+            studentRegistered = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.maleRegistered");
         } else {
-            studentRegistered = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.femaleRegistered");
+            studentRegistered = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.femaleRegistered");
         }
 
         fillFirstParagraph(coordinator, adminOfficeUnit, coordinatorTitle);
@@ -93,7 +94,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
 
-        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.firstParagraph");
+        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.firstParagraph");
 
         addParameter(
                 "firstParagraph",
@@ -106,11 +107,11 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
     protected void fillSecondParagraph(Registration registration) {
         String student;
         if (registration.getStudent().getPerson().isMale()) {
-            student = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.theMaleStudent");
+            student = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.theMaleStudent");
         } else {
-            student = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.theFemaleStudent");
+            student = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.theFemaleStudent");
         }
-        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.secondParagraph");
+        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.secondParagraph");
         addParameter("secondParagraph",
                 "      " + MessageFormat.format(stringTemplate, student, registration.getNumber().toString()));
     }
@@ -118,9 +119,9 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
     protected void fillSeventhParagraph(Registration registration, String studentRegistered) {
 
         String situation =
-                BundleUtil.getString(Bundle.ACADEMIC, getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");
 
-        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.seventhParagraph");
+        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.seventhParagraph");
         addParameter("seventhParagraph", MessageFormat.format(stringTemplate, situation,
                 studentRegistered.toUpperCase(getLocale()), getExecutionYear().getYear(), getDegreeDescription()));
     }
