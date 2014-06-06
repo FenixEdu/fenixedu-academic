@@ -64,8 +64,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 @Mapping(path = "/manageClasses", module = "resourceAllocationManager", formBean = "classForm",
         input = "/manageClasses.do?method=listClasses", functionality = ExecutionPeriodDA.class)
-@Forwards({ @Forward(name = "ShowClassList", path = "/resourceAllocationManager/manageClasses_bd.jsp"),
-        @Forward(name = "ShowShiftList", path = "/resourceAllocationManager/manageClasses.do?method=listClasses") })
+@Forwards(@Forward(name = "ShowClassList", path = "/resourceAllocationManager/manageClasses_bd.jsp"))
 @Exceptions(@ExceptionHandling(handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class,
         key = "resources.Action.exceptions.ExistingActionException", scope = "request"))
 public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
@@ -169,7 +168,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
         DeleteClasses.run(classOIDs);
 
-        return mapping.findForward("ShowShiftList");
+        return listClasses(mapping, form, request, response);
 
     }
 
