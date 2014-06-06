@@ -175,9 +175,6 @@ public class Message extends Message_Base {
         for (final ReplyTo replyTo : getReplyTosSet()) {
             replyTo.safeDelete();
         }
-        for (final MessageId messageId : getMessageIdsSet()) {
-            messageId.delete();
-        }
         for (final Email email : getEmailsSet()) {
             email.delete();
         }
@@ -283,17 +280,13 @@ public class Message extends Message_Base {
             Set<Set<String>> destinationBccs) {
         for (final Set<String> bccs : destinationBccs) {
             if (!bccs.isEmpty()) {
-                final Email email =
-                        new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
-                                Collections.EMPTY_SET, Collections.EMPTY_SET, bccs, getSubject(), getBody(), getHtmlBody());
-                email.setMessage(this);
+                new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
+                        Collections.EMPTY_SET, Collections.EMPTY_SET, bccs, this);
             }
         }
         if (!tos.isEmpty() || !ccs.isEmpty()) {
-            final Email email =
-                    new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person), tos, ccs,
-                            Collections.EMPTY_SET, getSubject(), getBody(), getHtmlBody());
-            email.setMessage(this);
+            new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person), tos, ccs,
+                    Collections.EMPTY_SET, this);
         }
         setRootDomainObjectFromPendingRelation(null);
         setSent(new DateTime());
@@ -411,16 +404,6 @@ public class Message extends Message_Base {
     @Deprecated
     public boolean hasAnyCcs() {
         return !getCcsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.MessageId> getMessageIds() {
-        return getMessageIdsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMessageIds() {
-        return !getMessageIdsSet().isEmpty();
     }
 
     @Deprecated

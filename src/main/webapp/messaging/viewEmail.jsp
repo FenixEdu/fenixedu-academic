@@ -32,7 +32,7 @@
 <logic:present name="message">
 
 
-	<logic:empty name="message" property="messageIds">
+	<logic:empty name="message" property="emails">
 	
 		<p class="mtop15">
 			<html:link page="/viewSentEmails.do?method=resubmit" paramId="messagesId" paramName="message" paramProperty="externalId">
@@ -105,20 +105,6 @@
 		<span>
 			The following information is only visible to users with the role MANAGER
 		</span>
-		<logic:notEmpty name="message" property="messageIds">
-			<h3>
-				<bean:message bundle="MESSAGING_RESOURCES" key="message.email.sent.message.ids"/>
-			</h3>
-			<p>
-				<logic:iterate id="messageId" name="message" property="messageIds">
-					<bean:write name="messageId" property="id"/>
-					<logic:present name="messageId" property="sendTime">
-						<bean:write name="messageId" property="sendTime"/>
-					</logic:present>
-					<br/>
-				</logic:iterate>
-			</p>
-		</logic:notEmpty>
 			<logic:iterate id="utilEmail" name="message" property="emails">
 				<h4>
 					<bean:write name="utilEmail" property="externalId"/>
@@ -138,15 +124,6 @@
 					<logic:present name="utilEmail" property="confirmedAddresses">
 						<bean:write name="utilEmail" property="confirmedAddresses"/>
 					</logic:present>
-				</p>
-				<h5>
-					Report:
-				</h5>
-				<p>
-					<logic:iterate id="messageTransportResult" name="utilEmail" property="messageTransportResult">
-						<bean:write name="messageTransportResult" property="description"/>
-						<br/>
-					</logic:iterate>
 				</p>
 			</logic:iterate>
 	</logic:present>
