@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
 
 public abstract class ThesisServiceWithMailNotification {
 
@@ -51,7 +52,7 @@ public abstract class ThesisServiceWithMailNotification {
     }
 
     protected String getMessage(String key, Object... args) {
-        return getMessage(key, new Locale("pt"), args);
+        return getMessage(key, I18N.getLocale(), args);
     }
 
     protected String getMessage(String key, Locale locale, String... args) {
