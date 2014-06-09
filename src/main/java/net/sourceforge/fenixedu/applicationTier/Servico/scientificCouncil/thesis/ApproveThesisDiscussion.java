@@ -110,14 +110,14 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
         Calendar today = Calendar.getInstance(locale);
         String currentPersonName = currentPerson.getNickname();
 
-        return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, institutionName,
+        return getMessage(locale, BODY_KEY, year, degreeName, studentName, studentNumber, institutionName,
                 "" + today.get(Calendar.DAY_OF_MONTH), today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale),
                 "" + today.get(Calendar.YEAR), currentPersonName);
     }
 
     @Override
     protected String getSubject(Thesis thesis) {
-        return getMessage(SUBJECT_KEY, thesis.getTitle().getContent());
+        return getMessage(I18N.getLocale(), SUBJECT_KEY, thesis.getTitle().getContent());
     }
 
     // Service Invokers migrated from Berserk
