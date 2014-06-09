@@ -153,7 +153,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
                 "" + today.get(Calendar.YEAR), sender, currentPersonName);
     }
 
-    private int includeFlag(String value) {
+    private Integer includeFlag(String value) {
         return value == null ? FIELD_OFF : FIELD_ON;
     }
 
@@ -209,27 +209,26 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         MultiLanguageString subject =
                 new MultiLanguageString().with(MultiLanguageString.pt,
                         getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.pt)).with(
-                                MultiLanguageString.en,
-                                getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.en));
+                        MultiLanguageString.en,
+                        getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.en));
 
         MultiLanguageString body =
                 new MultiLanguageString().with(MultiLanguageString.pt,
                         getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.pt)).with(
-                                MultiLanguageString.en, getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.en));
+                        MultiLanguageString.en, getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.en));
 
         announcement.setSubject(subject);
         announcement.setBody(body);
     }
 
-    private String getAnnouncementSubject(Thesis thesis, String key, Locale language) {
-        return getMessage(key, new Locale(language.toString()), thesis.getStudent().getPerson().getName());
+    private String getAnnouncementSubject(Thesis thesis, String key, Locale locale) {
+        return getMessage(key, locale, thesis.getStudent().getPerson().getName());
     }
 
-    private String getAnnouncementBody(Thesis thesis, String key, Locale language) {
-        return getMessage(key, new Locale(language.toString()), thesis.getStudent().getPerson().getName(),
-                getDate(thesis.getProposedDiscussed()), hasPlace(thesis), thesis.getProposedPlace(),
-                hasTime(thesis.getProposedDiscussed()), getTime(thesis.getProposedDiscussed()),
-                getString(thesis.getTitle(), language));
+    private String getAnnouncementBody(Thesis thesis, String key, Locale locale) {
+        return getMessage(key, locale, thesis.getStudent().getPerson().getName(), getDate(thesis.getProposedDiscussed()),
+                hasPlace(thesis), thesis.getProposedPlace(), hasTime(thesis.getProposedDiscussed()),
+                getTime(thesis.getProposedDiscussed()), getString(thesis.getTitle(), locale));
     }
 
     private Integer hasPlace(Thesis thesis) {
