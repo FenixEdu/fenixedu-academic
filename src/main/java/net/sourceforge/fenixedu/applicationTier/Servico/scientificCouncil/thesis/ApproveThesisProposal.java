@@ -153,7 +153,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
                 "" + today.get(Calendar.YEAR), sender, currentPersonName);
     }
 
-    private Integer includeFlag(String value) {
+    private int includeFlag(String value) {
         return value == null ? FIELD_OFF : FIELD_ON;
     }
 
@@ -231,7 +231,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
                 getTime(thesis.getProposedDiscussed()), getString(thesis.getTitle(), locale));
     }
 
-    private Integer hasPlace(Thesis thesis) {
+    private int hasPlace(Thesis thesis) {
         String place = thesis.getProposedPlace();
         return place == null || place.trim().length() == 0 ? 0 : 1;
     }
@@ -240,7 +240,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         return String.format(new Locale("pt"), "%tR", dateTime.toDate());
     }
 
-    private Integer hasTime(DateTime proposedDiscussed) {
+    private int hasTime(DateTime proposedDiscussed) {
         if (proposedDiscussed.getHourOfDay() == 0 && proposedDiscussed.getMinuteOfHour() == 0) {
             return 0;
         } else {
