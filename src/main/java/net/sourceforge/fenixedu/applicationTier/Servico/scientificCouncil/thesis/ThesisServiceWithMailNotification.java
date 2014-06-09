@@ -18,6 +18,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
@@ -35,6 +36,7 @@ import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
 
 public abstract class ThesisServiceWithMailNotification {
 
@@ -50,8 +52,13 @@ public abstract class ThesisServiceWithMailNotification {
         new Message(sender, null, getRecipients(thesis), getSubject(thesis), getMessage(thesis), "");
     }
 
-    protected String getMessage(final Locale locale, final String key, final String... args) {
-        return BundleUtil.getString(Bundle.MESSAGING, locale, key, args);
+    protected String getMessage(String key, Object... args) {
+        return getMessage(I18N.getLocale(), key, args);
+    }
+
+    protected String getMessage(Locale locale, String key, Object... args) {
+        String template = BundleUtil.getString(Bundle.MESSAGING, locale, key);
+        return MessageFormat.format(template, args);
     }
 
     private Set<Recipient> getRecipients(Thesis thesis) {

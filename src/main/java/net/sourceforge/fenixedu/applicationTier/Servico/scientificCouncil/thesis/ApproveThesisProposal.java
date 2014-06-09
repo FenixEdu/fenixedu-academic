@@ -143,18 +143,18 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         String sender =
                 thesis.isCoordinator() ? getMessage(locale, COORDINATOR_SENDER) : getMessage(locale, COUNCIL_MEMBER_SENDER);
 
-        Calendar today = Calendar.getInstance(locale);
+                Calendar today = Calendar.getInstance(locale);
 
-        return getMessage(locale, BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
-                Integer.toString(includeFlag(vowel1Name)), vowel1Name, vowel1Affiliation,
-                Integer.toString(includeFlag(vowel2Name)), vowel2Name, vowel2Affiliation,
-                Integer.toString(includeFlag(vowel3Name)), vowel3Name, vowel3Affiliation,
-                Integer.toString(includeFlag(vowel4Name)), vowel4Name, vowel4Affiliation,
-                Integer.toString(includeFlag(orientatorName)), orientatorName, orientatorAffiliation,
-                Integer.toString(includeFlag(coorientatorName)), coorientatorName, coorientatorAffiliation, dateMessage,
-                discussedDate, institutionName, "" + today.get(Calendar.DAY_OF_MONTH),
-                today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale), "" + today.get(Calendar.YEAR), sender,
-                currentPersonName);
+                return getMessage(locale, BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
+                        Integer.toString(includeFlag(vowel1Name)), vowel1Name, vowel1Affiliation,
+                        Integer.toString(includeFlag(vowel2Name)), vowel2Name, vowel2Affiliation,
+                        Integer.toString(includeFlag(vowel3Name)), vowel3Name, vowel3Affiliation,
+                        Integer.toString(includeFlag(vowel4Name)), vowel4Name, vowel4Affiliation,
+                        Integer.toString(includeFlag(orientatorName)), orientatorName, orientatorAffiliation,
+                        Integer.toString(includeFlag(coorientatorName)), coorientatorName, coorientatorAffiliation, dateMessage,
+                        discussedDate, institutionName, "" + today.get(Calendar.DAY_OF_MONTH),
+                        today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale), "" + today.get(Calendar.YEAR), sender,
+                        currentPersonName);
     }
 
     private int includeFlag(String value) {
@@ -213,29 +213,29 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         MultiLanguageString subject =
                 new MultiLanguageString().with(MultiLanguageString.pt,
                         getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.pt)).with(
-                        MultiLanguageString.en,
-                        getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.en));
+                                MultiLanguageString.en,
+                                getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.en));
 
         MultiLanguageString body =
                 new MultiLanguageString().with(MultiLanguageString.pt,
                         getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.pt)).with(
-                        MultiLanguageString.en, getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.en));
+                                MultiLanguageString.en, getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.en));
 
         announcement.setSubject(subject);
         announcement.setBody(body);
     }
 
-    private String getAnnouncementSubject(Thesis thesis, String key, Locale language) {
-        return getMessage(language, key, thesis.getStudent().getPerson().getName());
+    private String getAnnouncementSubject(Thesis thesis, String key, Locale locale) {
+        return getMessage(key, locale, thesis.getStudent().getPerson().getName());
     }
 
-    private String getAnnouncementBody(Thesis thesis, String key, Locale language) {
-        return getMessage(language, key, thesis.getStudent().getPerson().getName(), getDate(thesis.getProposedDiscussed()),
-                hasPlace(thesis).toString(), thesis.getProposedPlace(), hasTime(thesis.getProposedDiscussed()).toString(),
-                getTime(thesis.getProposedDiscussed()), getString(thesis.getTitle(), language));
+    private String getAnnouncementBody(Thesis thesis, String key, Locale locale) {
+        return getMessage(key, locale, thesis.getStudent().getPerson().getName(), getDate(thesis.getProposedDiscussed()),
+                hasPlace(thesis), thesis.getProposedPlace(), hasTime(thesis.getProposedDiscussed()),
+                getTime(thesis.getProposedDiscussed()), getString(thesis.getTitle(), locale));
     }
 
-    private Integer hasPlace(Thesis thesis) {
+    private int hasPlace(Thesis thesis) {
         String place = thesis.getProposedPlace();
         return place == null || place.trim().length() == 0 ? 0 : 1;
     }
@@ -244,7 +244,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         return String.format(new Locale("pt"), "%tR", dateTime.toDate());
     }
 
-    private Integer hasTime(DateTime proposedDiscussed) {
+    private int hasTime(DateTime proposedDiscussed) {
         if (proposedDiscussed.getHourOfDay() == 0 && proposedDiscussed.getMinuteOfHour() == 0) {
             return 0;
         } else {
