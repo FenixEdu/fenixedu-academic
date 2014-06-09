@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.webServices.jersey.api;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,10 +31,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
+import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
@@ -46,6 +49,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.StreamingOutput;
 
 import net.fortuna.ical4j.model.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
@@ -145,12 +149,15 @@ import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixRoomEvent;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSchedule;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace;
 
+import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.spaces.domain.BlueprintFile;
 import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.services.SpaceBlueprintsDWGProcessor;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -235,7 +242,7 @@ public class FenixAPIv1 {
 
     /**
      * It will return name, istid, campus, email, photo and contacts
-     * 
+     *
      * @summary Personal Information
      * @return only public contacts and photo are available
      * @servicetag PERSONAL_SCOPE
@@ -287,7 +294,7 @@ public class FenixAPIv1 {
 
     /**
      * Person courses (enrolled if student and teaching if teacher)
-     * 
+     *
      * @summary Person courses
      * @param sem
      *            selected semester ("1" | "2")
@@ -445,7 +452,7 @@ public class FenixAPIv1 {
     /**
      * calendar of all written evaluations (tests and exams). Available for
      * students and teachers.
-     * 
+     *
      * @summary Evaluations calendar
      * @param format
      *            ("calendar" or "json")
@@ -497,7 +504,7 @@ public class FenixAPIv1 {
 
     /**
      * calendar of all lessons of students and teachers
-     * 
+     *
      * @summary Classes calendar
      * @param format
      *            ("calendar" or "json")
@@ -522,7 +529,7 @@ public class FenixAPIv1 {
 
     /**
      * Complete curriculum (for students)
-     * 
+     *
      * @summary Curriculum
      * @servicetag CURRICULAR_SCOPE
      */
@@ -613,7 +620,7 @@ public class FenixAPIv1 {
 
     /**
      * Information about gratuity payments (payed and not payed)
-     * 
+     *
      * @summary Gratuity payments
      * @return
      * @servicetag PAYMENTS_SCOPE
@@ -662,7 +669,7 @@ public class FenixAPIv1 {
 
     /**
      * Written evaluations for students
-     * 
+     *
      * @summary Evaluations
      * @return enrolled and not enrolled student's evaluations
      * @servicetag EVALUATIONS_SCOPE
@@ -708,7 +715,7 @@ public class FenixAPIv1 {
     /**
      * Enrols in evaluation represented by oid if enrol is "yes". unenrols
      * evaluation if enrol is "no".
-     * 
+     *
      * @summary evaluation enrollment
      * @param oid
      *            evaluations id
@@ -780,7 +787,7 @@ public class FenixAPIv1 {
 
     /**
      * generic information about the institution
-     * 
+     *
      * @summary Information about the institution
      * @return news and events rss
      */
@@ -794,7 +801,7 @@ public class FenixAPIv1 {
 
     /**
      * Academic Terms
-     * 
+     *
      * @summary Lists all academic terms
      * @return all the academic terms available to be used in other endpoints as academicTerm query parameter.
      */
@@ -816,7 +823,7 @@ public class FenixAPIv1 {
 
     /***
      * DEGREES
-     * 
+     *
      */
     private List<String> getTeacherPublicMail(Teacher teacher) {
         final List<String> emails = new ArrayList<>();
@@ -844,11 +851,11 @@ public class FenixAPIv1 {
 
     /**
      * All information about degrees available
-     * 
+     *
      * @summary All degrees
      * @param academicTerm
      * @see academicTerms
-     * 
+     *
      */
     @GET
     @Produces(JSON_UTF8)
@@ -962,9 +969,9 @@ public class FenixAPIv1 {
     }
 
     /**
-     * 
+     *
      * Retrieves information about degree with id
-     * 
+     *
      * @summary Degree information
      * @param oid
      *            degree id
@@ -992,7 +999,7 @@ public class FenixAPIv1 {
 
     /**
      * Courses for degree with id
-     * 
+     *
      * @summary Courses for specific degree
      * @param oid
      *            degree id
@@ -1047,7 +1054,7 @@ public class FenixAPIv1 {
 
     /**
      * Detailed information about course
-     * 
+     *
      * @summary Course information by id
      * @param oid
      *            course id
@@ -1129,7 +1136,7 @@ public class FenixAPIv1 {
 
     /**
      * Retrieve groups for course given by oid
-     * 
+     *
      * @summary Course groups by course oid
      * @param oid
      *            course id
@@ -1154,7 +1161,7 @@ public class FenixAPIv1 {
 
     /**
      * All students for course by id
-     * 
+     *
      * @summary Course students
      * @param oid
      *            course id
@@ -1170,10 +1177,10 @@ public class FenixAPIv1 {
     }
 
     /**
-     * 
+     *
      * Returns evaluations for course by id (Test, Exams, Project, AdHoc,
      * OnlineTest)
-     * 
+     *
      * @summary Course evaluations
      * @param oid
      * @return
@@ -1291,7 +1298,7 @@ public class FenixAPIv1 {
 
     /**
      * All lessons and lesson period of course by id
-     * 
+     *
      * @summary Lesson schedule of course by id
      * @param oid
      * @return
@@ -1307,7 +1314,7 @@ public class FenixAPIv1 {
 
     /**
      * Campus spaces
-     * 
+     *
      * @summary All campus
      * @return
      */
@@ -1327,7 +1334,7 @@ public class FenixAPIv1 {
 
     /**
      * Space information regarding space type (Campus, Building, Floor or Room)
-     * 
+     *
      * @param oid
      * @param day
      *            ("dd/mm/yyyy")
@@ -1346,62 +1353,59 @@ public class FenixAPIv1 {
         return FenixSpace.getSpace(space);
     }
 
-//    /**
-//     * Returns the blueprint of this space
-//     * 
-//     * @param oid
-//     * @param day
-//     *            ("dd/mm/yyyy")
-//     * @return
-//     */
-//    @GET
-//    @Path("spaces/{id}/blueprint")
-//    @FenixAPIPublic
-//    public Response spaceBlueprint(@PathParam("id") String oid, final @QueryParam("format") String format) {
-//
-//        final boolean isDwgFormat = format != null && format.equals("dwg");
-//        final Space space = getDomainObject(oid, Space.class);
-//        Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
-//        mostRecentBlueprint = (mostRecentBlueprint == null) ? space.getSuroundingSpaceMostRecentBlueprint() : mostRecentBlueprint;
-//        StreamingOutput stream;
-//
-//        if (mostRecentBlueprint != null) {
-//            if (isDwgFormat) {
-//                final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
-//                final InputStream inputStream = new ByteArrayInputStream(blueprintFile.getContentFile().getBytes());
-//                stream = new StreamingOutput() {
-//
-//                    @Override
-//                    public void write(OutputStream output) throws IOException, WebApplicationException {
-//                        Streams.copy(inputStream, output, false);
-//                    }
-//                };
-//            } else {
-//                final Blueprint blueprint = mostRecentBlueprint;
-//                stream = new StreamingOutput() {
-//                    @Override
-//                    public void write(OutputStream os) throws IOException, WebApplicationException {
-//                        SpaceInformation spaceInformation = space.getSpaceInformation();
-//                        Boolean isSuroundingSpaceBlueprint = true;
-//                        Boolean isToViewOriginalSpaceBlueprint = false;
-//                        Boolean viewBlueprintNumbers = true;
-//                        Boolean isToViewIdentifications = true;
-//                        Boolean isToViewDoorNumbers = false;
-//                        BigDecimal scalePercentage = new BigDecimal(100);
-////                        ManageSpaceBlueprintsDA.writeBlueprint(spaceInformation, isSuroundingSpaceBlueprint,
-////                                isToViewOriginalSpaceBlueprint, viewBlueprintNumbers, isToViewIdentifications,
-////                                isToViewDoorNumbers, scalePercentage, blueprint, os);
-//                        os.flush();
-//                    }
-//                };
-//            }
-//            final String contentType = isDwgFormat ? "application/dwg" : "image/jpeg";
-//            final String filename = space.getExternalId() + (isDwgFormat ? ".dwg" : ".jpg");
-//            return Response.ok(stream, contentType).header("Content-Disposition", "attachment; filename=" + filename).build();
-//        }
-//
-//        return Response.noContent().build();
-//    }
+    /**
+     * Returns the blueprint of this space
+     *
+     * @param oid
+     * @param day
+     *            ("dd/mm/yyyy")
+     * @return
+     */
+    @GET
+    @Path("spaces/{id}/blueprint")
+    @FenixAPIPublic
+    public Response spaceBlueprint(@PathParam("id") String oid, final @QueryParam("format") String format) {
+
+        final boolean isDwgFormat = format != null && format.equals("dwg");
+        final Space space = getDomainObject(oid, Space.class);
+        StreamingOutput stream;
+
+        final Optional<BlueprintFile> optional = space.getBlueprintFile();
+        if (optional.isPresent()) {
+            if (isDwgFormat) {
+                final InputStream inputStream = optional.get().getStream();
+                stream = new StreamingOutput() {
+                    @Override
+                    public void write(OutputStream output) throws IOException, WebApplicationException {
+                        Streams.copy(inputStream, output, false);
+                    }
+                };
+            } else {
+                stream = new StreamingOutput() {
+                    @Override
+                    public void write(OutputStream os) throws IOException, WebApplicationException {
+                        Boolean isToViewOriginalSpaceBlueprint = false;
+                        Boolean viewBlueprintNumbers = true;
+                        Boolean isToViewIdentifications = true;
+                        Boolean isToViewDoorNumbers = false;
+                        BigDecimal scalePercentage = new BigDecimal(100);
+                        DateTime now = new DateTime();
+                        try {
+                            SpaceBlueprintsDWGProcessor.writeBlueprint(space, now, isToViewOriginalSpaceBlueprint,
+                                    viewBlueprintNumbers, isToViewIdentifications, isToViewDoorNumbers, scalePercentage, os);
+                        } catch (UnavailableException e) {
+                            throw newApplicationError(Status.BAD_REQUEST, "problem found", "problem found");
+                        }
+                        os.flush();
+                    }
+                };
+            }
+            final String contentType = isDwgFormat ? "application/dwg" : "image/jpeg";
+            final String filename = space.getExternalId() + (isDwgFormat ? ".dwg" : ".jpg");
+            return Response.ok(stream, contentType).header("Content-Disposition", "attachment; filename=" + filename).build();
+        }
+        return Response.noContent().build();
+    }
 
     private FenixSpace.Room getFenixRoom(Space room, java.util.Calendar rightNow) {
 
@@ -1574,7 +1578,7 @@ public class FenixAPIv1 {
 
     /**
      * information about the domain model implemented by this application
-     * 
+     *
      * @summary Representation of the Domain Model
      * @return domain model
      */

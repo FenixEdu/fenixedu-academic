@@ -30,8 +30,14 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class FenixAbout {
 
@@ -63,7 +69,9 @@ public class FenixAbout {
 
     String institutionName = null;
     String institutionUrl = null;
-    List<FenixRSSFeed> rssFeeds = new ArrayList<>();
+
+    List<FenixRSSFeed> rssPtFeed = new ArrayList<>();
+
     String currentAcademicTerm;
     Set<String> languages;
     String language;
@@ -76,8 +84,9 @@ public class FenixAbout {
             institutionUrl = unit.getDefaultWebAddressUrl();
         }
         currentAcademicTerm = ExecutionSemester.readActualExecutionSemester().getQualifiedName();
-        rssFeeds.add(new FenixRSSFeed("News", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrl()));
-        rssFeeds.add(new FenixRSSFeed("Events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrl()));
+        rssPtFeed.add(new FenixRSSFeed("News", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlPt()));
+        rssPtFeed.add(new FenixRSSFeed("Events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlPt()));
+
         languages = FluentIterable.from(CoreConfiguration.supportedLocales()).transform(new Function<Locale, String>() {
 
             @Override
@@ -102,7 +111,28 @@ public class FenixAbout {
     }
 
     public List<FenixRSSFeed> getRssFeeds() {
-        return rssFeeds;
+        return rssPtFeed;
+    }
+
+    @JsonRawValue
+    public String getRss() {
+
+        final JsonObject jObjPt = new JsonObject();
+        final JsonObject jObjEn = new JsonObject();
+        final JsonObject jArr = new JsonObject();
+
+        jObjPt.addProperty("news", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlPt());
+        jObjPt.addProperty("events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlPt());
+
+        jObjEn.addProperty("news", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlEn());
+        jObjEn.addProperty("events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlEn());
+
+        jArr.add("pt-PT", jObjPt);
+        jArr.add("en-GB", jObjEn);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonElement je = new JsonParser().parse(jArr.toString());
+        return gson.toJson(je).replaceAll("\n", "\n  ");
     }
 
     public String getCurrentAcademicTerm() {

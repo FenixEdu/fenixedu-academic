@@ -28,8 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Map.Entry;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
@@ -200,7 +200,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 BundleUtil.getString(Bundle.ENUMERATION, getLocale(), Bennu.getInstance().getInstitutionUnit().getType()
                         .getName())
                         + SINGLE_SPACE
-                        + BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "diploma.supplement.of")
+                        + BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.of")
                         + SINGLE_SPACE + institutionsUniversityUnit.getName());
         if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE)) {
             addParameter("languages", BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "pt"));
