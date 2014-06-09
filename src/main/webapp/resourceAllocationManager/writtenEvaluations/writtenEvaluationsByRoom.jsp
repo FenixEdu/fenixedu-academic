@@ -26,6 +26,17 @@
 
 <fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication$WrittenEvaluationsByRoom" />
 
+<link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
+<style type="text/css">
+.table {
+	page-break-inside: avoid;
+}
+.tablebb {
+	page-break-inside: avoid;
+	page-break-before: always;
+}
+</style>
+
 <f:view>
 			
 	<script type="text/javascript">
@@ -205,9 +216,8 @@
 				
 	<fc:dataRepeater value="#{writtenEvaluationsByRoom.writtenEvaluationCalendarLinksEntryList}" var="calendarLinks" rowIndexVar="index">
 		<h:panelGroup>
-
 			<h:outputText rendered="#{index == 0}" value="<table class='tstyle4 tdcenter'>" escape="false"/>
-			<h:outputText rendered="#{index > 0}" value="<table class='tstyle4 tdcenter break-before'>" escape="false"/>			
+			<h:outputText rendered="#{index > 0}" value="<table class='tstyle4 tdcenter tablebb'>" escape="false"/>			
 			<h:outputText value="<tr>" escape="false"/>
 				<h:outputText value="<th>#{bundle['property.room.name']}</th>" escape="false"/>
 				<h:outputText value="<th>#{bundle['property.room.building']}</th>" escape="false"/>
