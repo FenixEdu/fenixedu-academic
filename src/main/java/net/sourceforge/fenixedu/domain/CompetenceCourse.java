@@ -170,24 +170,25 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public void createBibliographicReference(String year, String title, String authors, String reference, String url,
             BibliographicReferenceType type) {
         checkIfCanEdit(false);
-        getBibliographicReferences().createBibliographicReference(year, title, authors, reference, url, type);
-        getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+        CompetenceCourseInformation info = getMostRecentCompetenceCourseInformation();
+        info.setBibliographicReferences(info.getBibliographicReferences().with(year, title, authors, reference, url, type));
     }
 
-    public void editBibliographicReference(Integer oid, String year, String title, String authors, String reference, String url,
-            BibliographicReferenceType type) {
-        getBibliographicReferences().editBibliographicReference(oid, year, title, authors, reference, url, type);
-        getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+    public void editBibliographicReference(Integer index, String year, String title, String authors, String reference,
+            String url, BibliographicReferenceType type) {
+        CompetenceCourseInformation info = getMostRecentCompetenceCourseInformation();
+        info.setBibliographicReferences(info.getBibliographicReferences().replacing(index, year, title, authors, reference, url,
+                type));
     }
 
-    public void deleteBibliographicReference(Integer oid) {
-        getBibliographicReferences().deleteBibliographicReference(oid);
-        getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+    public void deleteBibliographicReference(Integer index) {
+        CompetenceCourseInformation info = getMostRecentCompetenceCourseInformation();
+        info.setBibliographicReferences(info.getBibliographicReferences().without(index));
     }
 
     public void switchBibliographicReferencePosition(Integer oldPosition, Integer newPosition) {
-        getBibliographicReferences().switchBibliographicReferencePosition(oldPosition, newPosition);
-        getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+        CompetenceCourseInformation info = getMostRecentCompetenceCourseInformation();
+        info.setBibliographicReferences(info.getBibliographicReferences().movingBibliographicReference(oldPosition, newPosition));
     }
 
     private void fillFields(String code, String name) {

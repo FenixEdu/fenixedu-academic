@@ -73,7 +73,7 @@ public class UIFenixCalendar extends UIInput {
                 if (begin.get(Calendar.MONTH) == end.get(Calendar.MONTH)) {
                     encodeMonthTable(writer, context, "MONTH" + begin.get(Calendar.MONTH), begin, end);
                 } else {
-                    boolean isFirst = true;
+//                    boolean isFirst = true;
                     for (; begin.before(end); setToFirstDayOfNextMonth(begin)) {
                         Calendar endPeriod = Calendar.getInstance();
                         endPeriod.setTime(begin.getTime());
@@ -83,11 +83,11 @@ public class UIFenixCalendar extends UIInput {
                             endPeriod.setTime(end.getTime());
                         }
 
-                        if (isFirst) {
-                            isFirst = false;
-                        } else {
-                            writer.append("<br style='page-break-after:always;'/>");
-                        }
+//                        if (isFirst) {
+//                            isFirst = false;
+//                        } else {
+//                            writer.append("<br style='page-break-after:always;'/>");
+//                        }
 
                         encodeMonthTable(writer, context, "MONTH" + begin.get(Calendar.MONTH), begin, endPeriod);
                     }
@@ -138,7 +138,6 @@ public class UIFenixCalendar extends UIInput {
             throws IOException {
         writer.startElement("table", this);
         writer.writeAttribute("class", "table table-bordered", null);
-        writer.writeAttribute("style", "max-width: 90%", null);
         // writer.writeAttribute("class", "fenixCalendar breakafter", null);
         // writer.writeAttribute("name", getFieldKey(context, key), null);
 

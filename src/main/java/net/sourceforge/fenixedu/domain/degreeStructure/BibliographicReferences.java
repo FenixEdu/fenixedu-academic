@@ -26,63 +26,81 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.apache.commons.lang.StringUtils;
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 
 public class BibliographicReferences implements Serializable {
-    private List<BibliographicReference> bibliographicReferencesList;
+    private static final long serialVersionUID = 1489616281219374804L;
+
+    private final List<BibliographicReference> bibliographicReferences;
+
+    public BibliographicReferences() {
+        this.bibliographicReferences = ImmutableList.of();
+    }
+
+    public BibliographicReferences(List<BibliographicReference> refs) {
+        this.bibliographicReferences = ImmutableList.copyOf(refs);
+    }
 
     public SortedSet<BibliographicReference> getBibliographicReferencesSortedByOrder() {
-        final SortedSet<BibliographicReference> bibliographicReferences = new TreeSet<BibliographicReference>();
-        bibliographicReferences.addAll(getBibliographicReferencesList());
-        return bibliographicReferences;
+        return new TreeSet<BibliographicReference>(bibliographicReferences);
     }
 
     public List<BibliographicReference> getBibliographicReferencesList() {
-        if (this.bibliographicReferencesList == null) {
-            this.bibliographicReferencesList = new ArrayList<BibliographicReference>();
-        }
-        return this.bibliographicReferencesList;
+        return bibliographicReferences;
     }
 
     public int getBibliographicReferencesListCount() {
-        return getBibliographicReferencesList().size();
+        return bibliographicReferences.size();
     }
 
     public BibliographicReference getBibliographicReference(int oid) {
-        return getBibliographicReferencesList().get(oid);
+        return bibliographicReferences.get(oid);
     }
 
-    public void createBibliographicReference(String year, String title, String authors, String reference, String url,
+    public BibliographicReferences with(String year, String title, String authors, String reference, String url,
             BibliographicReferenceType type) {
-        getBibliographicReferencesList().add(
-                new BibliographicReference(year, title, authors, reference, url, type, getBibliographicReferencesListCount()));
+        List<BibliographicReference> refs = new ArrayList<BibliographicReference>(bibliographicReferences);
+        refs.add(new BibliographicReference(year, title, authors, reference, url, type, refs.size()));
+        return new BibliographicReferences(refs);
     }
 
-    public void createBibliographicReference(String year, String title, String authors, String reference, String url,
+    public BibliographicReferences with(String year, String title, String authors, String reference, String url,
             BibliographicReferenceType type, int order) {
-        getBibliographicReferencesList().add(new BibliographicReference(year, title, authors, reference, url, type, order));
+        List<BibliographicReference> refs = new ArrayList<BibliographicReference>(bibliographicReferences);
+        refs.add(order, new BibliographicReference(year, title, authors, reference, url, type, order));
+        return new BibliographicReferences(refs);
     }
 
-    public void editBibliographicReference(int oid, String year, String title, String authors, String reference, String url,
+    public BibliographicReferences replacing(int index, String year, String title, String authors, String reference, String url,
             BibliographicReferenceType type) {
-        getBibliographicReferencesList().get(oid).edit(year, title, authors, reference, url, type);
+        List<BibliographicReference> refs = new ArrayList<BibliographicReference>(bibliographicReferences);
+        refs.set(index, new BibliographicReference(year, title, authors, reference, url, type, index));
+        return new BibliographicReferences(refs);
     }
 
-    public void deleteBibliographicReference(int oid) {
-        removeBibliographicReference(oid);
-        reOrderBibliographicReferences();
+    public BibliographicReferences without(int index) {
+        List<BibliographicReference> refs = new ArrayList<BibliographicReference>(bibliographicReferences);
+        refs.remove(index);
+        reOrderBibliographicReferences(refs);
+        return new BibliographicReferences(refs);
     }
 
-    public void switchBibliographicReferencePosition(int oldPosition, int newPosition) {
+    public BibliographicReferences movingBibliographicReference(int oldPosition, int newPosition) {
         try {
             if (validPositions(oldPosition, newPosition)) {
                 final BibliographicReference bibliographicReference = getBibliographicReference(oldPosition);
-                removeBibliographicReference(oldPosition);
-                getBibliographicReferencesList().add(newPosition, bibliographicReference);
-                reOrderBibliographicReferences();
+                List<BibliographicReference> refs = new ArrayList<BibliographicReference>(bibliographicReferences);
+                refs.remove(oldPosition);
+                refs.add(newPosition, bibliographicReference);
+                reOrderBibliographicReferences(refs);
+                return new BibliographicReferences(refs);
+            } else {
+                return this;
             }
         } catch (IndexOutOfBoundsException e) {
             throw new DomainException("bibliographicReferences.invalid.reference.positions");
@@ -96,109 +114,73 @@ public class BibliographicReferences implements Serializable {
         return true;
     }
 
-    private BibliographicReference removeBibliographicReference(int oid) {
-        return getBibliographicReferencesList().remove(oid);
-    }
-
-    private void reOrderBibliographicReferences() {
-        for (int i = 0; i < getBibliographicReferencesListCount(); i++) {
-            getBibliographicReference(i).setOrder(i);
+    private static void reOrderBibliographicReferences(List<BibliographicReference> refs) {
+        for (int i = 0; i < refs.size(); i++) {
+            refs.set(i, refs.get(i).withOrder(i));
         }
     }
 
     public static class BibliographicReference implements Comparable<BibliographicReference>, Serializable {
-        private String year;
+        private static final long serialVersionUID = 7998864914358693747L;
 
-        private String title;
+        private final String year;
 
-        private String authors;
+        private final String title;
 
-        private String reference;
+        private final String authors;
 
-        private String url;
+        private final String reference;
 
-        private BibliographicReferenceType type;
+        private final String url;
 
-        private int order;
+        private final BibliographicReferenceType type;
+
+        private final int order;
 
         public BibliographicReference(String year, String title, String authors, String reference, String url,
                 BibliographicReferenceType type, int order) {
-            if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(authors)) {
-                setInformation(year, title, authors, reference, url, type, order);
+            if (Strings.isNullOrEmpty(title) || Strings.isNullOrEmpty(authors)) {
+                throw new IllegalArgumentException("Title and author cannot be empty!");
             }
+            this.year = year;
+            this.title = title;
+            this.authors = authors;
+            this.reference = reference;
+            this.url = url;
+            this.type = type;
+            this.order = order;
         }
 
-        public void edit(String year, String title, String authors, String reference, String url, BibliographicReferenceType type) {
-            if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(authors)) {
-                setInformation(year, title, authors, reference, url, type, getOrder());
-            }
-        }
-
-        private void setInformation(String year, String title, String authors, String reference, String url,
-                BibliographicReferenceType type, int order) {
-            setYear(year);
-            setTitle(title);
-            setAuthors(authors);
-            setReference(reference);
-            setUrl(url);
-            setType(type);
-            setOrder(order);
+        public BibliographicReference withOrder(int newOrder) {
+            return new BibliographicReference(year, title, authors, reference, url, type, newOrder);
         }
 
         public String getAuthors() {
             return authors;
         }
 
-        public void setAuthors(String authors) {
-            this.authors = authors;
-        }
-
         public String getReference() {
             return reference;
-        }
-
-        public void setReference(String reference) {
-            this.reference = reference;
         }
 
         public String getTitle() {
             return title;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
         public BibliographicReferenceType getType() {
             return type;
-        }
-
-        public void setType(BibliographicReferenceType type) {
-            this.type = type;
         }
 
         public String getUrl() {
             return url == null || url.length() == 0 || url.equalsIgnoreCase("http://") ? null : url;
         }
 
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
         public String getYear() {
             return year;
         }
 
-        public void setYear(String year) {
-            this.year = year;
-        }
-
         public int getOrder() {
             return order;
-        }
-
-        public void setOrder(Integer order) {
-            this.order = order;
         }
 
         @Override
@@ -237,27 +219,11 @@ public class BibliographicReferences implements Serializable {
     }
 
     public List<BibliographicReference> getMainBibliographicReferences() {
-        List<BibliographicReference> result = new ArrayList<BibliographicReference>();
-
-        for (BibliographicReference bibliographicReference : getBibliographicReferencesList()) {
-            if (bibliographicReference.isMain()) {
-                result.add(bibliographicReference);
-            }
-        }
-
-        return result;
+        return bibliographicReferences.stream().filter(BibliographicReference::isMain).collect(Collectors.toList());
     }
 
     public List<BibliographicReference> getSecondaryBibliographicReferences() {
-        List<BibliographicReference> result = new ArrayList<BibliographicReference>();
-
-        for (BibliographicReference bibliographicReference : getBibliographicReferencesList()) {
-            if (bibliographicReference.isSecondary()) {
-                result.add(bibliographicReference);
-            }
-        }
-
-        return result;
+        return bibliographicReferences.stream().filter(BibliographicReference::isSecondary).collect(Collectors.toList());
     }
 
 }

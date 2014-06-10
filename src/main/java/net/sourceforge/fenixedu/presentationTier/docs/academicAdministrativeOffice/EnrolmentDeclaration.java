@@ -59,16 +59,16 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
         String student, studentEnrolment;
         if (registration.getStudent().getPerson().isMale()) {
-            student = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.theMaleStudent");
+            student = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.theMaleStudent");
             studentEnrolment =
-                    BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.enrolment.declaration.maleEnrolment");
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.enrolment.declaration.maleEnrolment");
         } else {
-            student = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.theFemaleStudent");
+            student = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.theFemaleStudent");
             studentEnrolment =
-                    BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.enrolment.declaration.femaleEnrolment");
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.enrolment.declaration.femaleEnrolment");
         }
 
-        addParameter("documentTitle", BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.title.declaration"));
+        addParameter("documentTitle", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.title.declaration"));
         addParameter("documentPurpose", getDocumentPurpose());
         fillFirstParagraph(adminOfficeUnit, coordinatorTitle, coordinator);
         fillSecondParagraph(registration, student);
@@ -81,12 +81,12 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
         String situation = "";
         if (getDocumentRequest().hasExecutionYear()) {
             situation =
-                    BundleUtil.getString(Bundle.ACADEMIC,
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                             getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");
         }
 
-        String executionYear = BundleUtil.getString(Bundle.ACADEMIC, "message.declaration.registration.execution.year.prefix");
-        String stringTemplate1 = BundleUtil.getString(Bundle.ACADEMIC, "message.academicDocument.enrolment.declaration");
+        String executionYear = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "message.declaration.registration.execution.year.prefix");
+        String stringTemplate1 = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "message.academicDocument.enrolment.declaration");
         addParameter("thirdParagraph", MessageFormat.format(stringTemplate1, situation, studentEnrolment, executionYear,
                 getDocumentRequest().getExecutionYear().getYear().toString(), getCurricularYear(), getDegreeDescription(),
                 numberEnrolments, getApprovementInfo()));
@@ -98,7 +98,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
         String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
-        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.firstParagraph");
+        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.firstParagraph");
 
         addParameter(
                 "firstParagraph",
@@ -110,7 +110,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
     protected void fillSecondParagraph(Registration registration, String student) {
 
-        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.secondParagraph");
+        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.secondParagraph");
         addParameter("secondParagraph",
                 "      " + MessageFormat.format(stringTemplate, student, registration.getNumber().toString()));
     }
@@ -142,8 +142,8 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
             final Integer curricularYear =
                     Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(getExecutionYear()));
 
-            result.append(BundleUtil.getString(Bundle.ENUMERATION, curricularYear.toString() + ".ordinal").toUpperCase());
-            result.append(BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.enrolment.declaration.curricularYear"));
+            result.append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), curricularYear.toString() + ".ordinal").toUpperCase());
+            result.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.enrolment.declaration.curricularYear"));
         }
 
         return result.toString();
@@ -160,16 +160,16 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
             final boolean transition = registration.isTransition(executionYear);
 
             if (registration.isFirstTime(executionYear) && !transition) {
-                result.append(BundleUtil.getString(Bundle.ACADEMIC,
+                result.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), 
                         "message.academicDocument.enrolment.declaration.approvement.firstTime"));
             } else {
                 final Registration registrationToInspect = transition ? registration.getSourceRegistration() : registration;
                 if (registrationToInspect.hasApprovement(executionYear.getPreviousExecutionYear())) {
-                    result.append(BundleUtil.getString(Bundle.ACADEMIC,
+                    result.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), 
                             "message.academicDocument.enrolment.declaration.approvement.have")
                             + executionYear.getPreviousExecutionYear().getYear());
                 } else {
-                    result.append(BundleUtil.getString(Bundle.ACADEMIC,
+                    result.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), 
                             "message.academicDocument.enrolment.declaration.approvement.notHave")
                             + executionYear.getPreviousExecutionYear().getYear());
                 }
@@ -184,12 +184,12 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
         final EnrolmentDeclarationRequest enrolmentDeclarationRequest = (EnrolmentDeclarationRequest) getDocumentRequest();
 
         if (enrolmentDeclarationRequest.getDocumentPurposeType() != null) {
-            result.append(BundleUtil.getString(Bundle.ACADEMIC, "documents.declaration.valid.purpose")).append(SINGLE_SPACE);
+            result.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.declaration.valid.purpose")).append(SINGLE_SPACE);
             if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.OTHER
                     && !StringUtils.isEmpty(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription())) {
                 result.append(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription().toUpperCase());
             } else {
-                result.append(BundleUtil.getString(Bundle.ENUMERATION, enrolmentDeclarationRequest.getDocumentPurposeType().name())
+                result.append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), enrolmentDeclarationRequest.getDocumentPurposeType().name())
                         .toUpperCase());
             }
             result.append(".");

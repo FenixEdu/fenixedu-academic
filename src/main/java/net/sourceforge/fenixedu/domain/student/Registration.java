@@ -1942,7 +1942,7 @@ public class Registration extends Registration_Base {
         final DegreeType degreeType = degree.getDegreeType();
         if (getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
             res.append(cycleType.getDescription(locale)).append(",");
-            res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC,"label.of.the.male")).append(" ");
+            res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.of.the.male")).append(" ");
         }
 
         if (!isEmptyDegree() && !degreeType.isEmpty()) {
@@ -1952,7 +1952,7 @@ public class Registration extends Registration_Base {
             if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
                 res.append(" (").append(cycleType.getDescription(locale)).append(")");
             }
-            res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC,"label.in")).append(" ");
+            res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.in")).append(" ");
         }
 
         res.append(degree.getFilteredName(executionYear, locale).toUpperCase());

@@ -59,20 +59,21 @@ public class PhdRegistryDiploma extends RegistryDiploma {
         setFirstParagraph(request);
         setSecondParagraph(person, request);
 
-        addParameter("thirdParagraph", BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.phdThirdParagraph"));
+        addParameter("thirdParagraph",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdThirdParagraph"));
 
         String dateWord[] = getDateByWords(request.getConclusionDate());
 
-        String fourthParagraph = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.phdfourthParagraph");
+        String fourthParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdfourthParagraph");
 
         addParameter("fourthParagraph", MessageFormat.format(fourthParagraph, dateWord[0], dateWord[1], dateWord[2]));
 
         String fifthParagraph;
         if (getUniversity(new DateTime()) != getUniversity(getDocumentRequest().getConclusionDate().toDateTimeAtCurrentTime())) {
-            fifthParagraph = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.phdFifthParagraph.UTL");
-            addParameter("by", BundleUtil.getString(Bundle.ACADEMIC, "label.by.university"));
+            fifthParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdFifthParagraph.UTL");
+            addParameter("by", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.by.university"));
         } else {
-            fifthParagraph = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.phdFifthParagraph");
+            fifthParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdFifthParagraph");
             addParameter("university", "");
             addParameter("by", "");
         }
@@ -97,9 +98,9 @@ public class PhdRegistryDiploma extends RegistryDiploma {
 
         String studentGender;
         if (person.isMale()) {
-            studentGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.studentHolderMale");
+            studentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.studentHolderMale");
         } else {
-            studentGender = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.studentHolderFemale");
+            studentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.studentHolderFemale");
         }
 
         String country;
@@ -112,9 +113,9 @@ public class PhdRegistryDiploma extends RegistryDiploma {
 
         PhdRegistryDiplomaRequest phdRequest = getDocumentRequest();
 
-        String secondParagraph = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.registryDiploma.phdSecondParagraph");
+        String secondParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdSecondParagraph");
         addParameter("secondParagraph", MessageFormat.format(secondParagraph, studentGender,
-                BundleUtil.getString(Bundle.ENUMERATION, person.getIdDocumentType().getName()), person.getDocumentIdNumber(), country,
+                BundleUtil.getString(Bundle.ENUMERATION, getLocale(), person.getIdDocumentType().getName()), person.getDocumentIdNumber(), country,
                 phdRequest.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(getLanguage())));
     }
 

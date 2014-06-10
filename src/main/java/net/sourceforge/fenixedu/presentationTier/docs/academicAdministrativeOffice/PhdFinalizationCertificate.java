@@ -76,15 +76,15 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         StringBuilder builder1 = new StringBuilder();
 
         if (getLanguage().equals(MultiLanguageString.pt)) {
-            builder1.append(BundleUtil.getString(Bundle.ACADEMIC, "label.with")).append(SINGLE_SPACE);
+            builder1.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.with")).append(SINGLE_SPACE);
         }
 
-        builder1.append(BundleUtil.getString(Bundle.ACADEMIC, "label.phd.finalization.certificate.identity.card"));
-        builder1.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, "label.number.short"));
+        builder1.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.finalization.certificate.identity.card"));
+        builder1.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.number.short"));
         builder1.append(SINGLE_SPACE).append(person.getDocumentIdNumber());
 
         StringBuilder builder2 = new StringBuilder();
-        builder2.append(BundleUtil.getString(Bundle.ACADEMIC, "documents.birthLocale"));
+        builder2.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.birthLocale"));
         builder2.append(SINGLE_SPACE).append(getBirthLocale(person, false));
 
         if (getDocumentRequest().getDocumentRequestType().equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
@@ -104,10 +104,10 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     protected void setNationality(final Person person) {
         StringBuilder builder = new StringBuilder();
         if (getLanguage().equals(MultiLanguageString.pt)) {
-            builder.append(BundleUtil.getString(Bundle.ACADEMIC, "label.and")).append(SINGLE_SPACE);
+            builder.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.and")).append(SINGLE_SPACE);
         }
 
-        builder.append(BundleUtil.getString(Bundle.ACADEMIC, "documents.nationality.one"));
+        builder.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.nationality.one"));
         final String nationality = person.getCountry().getFilteredNationality(getLocale());
         builder.append(SINGLE_SPACE).append(nationality.toUpperCase()).append(SINGLE_SPACE);
 
@@ -141,19 +141,20 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         String student;
 
         if (phdIndividualProgramProcess.getStudent().getPerson().isMale()) {
-            student = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.maleStudent");
+            student = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.maleStudent");
         } else {
-            student = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.femaleStudent");
+            student = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.femaleStudent");
         }
         StringBuilder studentNumber = new StringBuilder();
-        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.footer.studentNumber");
+        String stringTemplate =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.studentNumber");
         studentNumber.append(MessageFormat.format(stringTemplate, student, phdIndividualProgramProcess.getStudent().getNumber()
                 .toString()));
         studentNumber.append("/D");
         addParameter("studentNumber", studentNumber.toString());
 
         StringBuilder documentNumber = new StringBuilder();
-        stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, "label.serviceRequestNumberYear");
+        stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.serviceRequestNumberYear");
         documentNumber.append(stringTemplate);
         documentNumber.append(": ");
         documentNumber.append(documentRequest.getServiceRequestNumberYear());
@@ -167,7 +168,8 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
 
-        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.declaration.firstParagraph");
+        String stringTemplate =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.firstParagraph");
 
         addParameter(
                 "firstParagraph",
@@ -176,12 +178,14 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
                                 adminOfficeName.toUpperCase(getLocale()), institutionName.toUpperCase(getLocale()),
                                 universityName.toUpperCase(getLocale())));
 
-        addParameter("certificate", BundleUtil.getString(Bundle.ACADEMIC, "message.phd.finalization.certificate.certifies.that"));
+        addParameter("certificate",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "message.phd.finalization.certificate.certifies.that"));
     }
 
     private void addProgrammeInfo() {
         PhdIndividualProgramProcess phdIndividualProgramProcess = getDocumentRequest().getPhdIndividualProgramProcess();
-        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.finalization.certificate.concluded.in");
+        String stringTemplate =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.finalization.certificate.concluded.in");
         String conclusionDate =
                 MessageFormat.format(stringTemplate, phdIndividualProgramProcess.getConclusionDate().toString("dd/MM/yyyy"));
         addParameter("conclusionDate", conclusionDate);
@@ -194,8 +198,9 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
         StringBuilder builder = new StringBuilder();
         builder.append(
-                BundleUtil.getString(Bundle.ACADEMIC, "message.phd.finalization.certificate.made.thesis.presentation.on.doctoral.grade"))
-                .append(":").append(SINGLE_SPACE);
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                        "message.phd.finalization.certificate.made.thesis.presentation.on.doctoral.grade")).append(":")
+                .append(SINGLE_SPACE);
 
         builder.append(phdIndividualProgramProcess.getPhdProgram().getName().getContent(getLanguage()).toUpperCase());
 
@@ -217,13 +222,12 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         String thesisFinalGrade = phdIndividualProgramProcess.getFinalGrade().getLocalizedName(getLocale());
 
         if (phdIndividualProgramProcess.isBolonha() && phdIndividualProgramProcess.hasRegistryDiplomaRequest()) {
-            return String
-                    .format(BundleUtil.getString(Bundle.ACADEMIC, 
-                            "message.phd.finalization.info.thesis.grade.approved.by.jury.registry.diploma"), thesisFinalGrade,
-                            phdIndividualProgramProcess.getRegistryDiplomaRequest().getRegistryCode().getCode());
+            return String.format(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                    "message.phd.finalization.info.thesis.grade.approved.by.jury.registry.diploma"), thesisFinalGrade,
+                    phdIndividualProgramProcess.getRegistryDiplomaRequest().getRegistryCode().getCode());
         } else {
-            return String.format(BundleUtil.getString(Bundle.ACADEMIC, "message.phd.finalization.info.thesis.grade.approved.by.jury"),
-                    thesisFinalGrade);
+            return String.format(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                    "message.phd.finalization.info.thesis.grade.approved.by.jury"), thesisFinalGrade);
         }
     }
 
@@ -233,9 +237,13 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         String genderPrefix;
 
         if (person.isMale()) {
-            genderPrefix = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.finalization.certificate.father.prefix.for.male");
+            genderPrefix =
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                            "label.phd.finalization.certificate.father.prefix.for.male");
         } else {
-            genderPrefix = BundleUtil.getString(Bundle.ACADEMIC, "label.phd.finalization.certificate.father.prefix.for.female");
+            genderPrefix =
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                            "label.phd.finalization.certificate.father.prefix.for.female");
         }
 
         StringBuilder builder = new StringBuilder();
@@ -245,8 +253,9 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         addParameter("fatherName", FenixStringTools.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
         builder = new StringBuilder();
-        builder.append(BundleUtil.getString(Bundle.ACADEMIC, "label.phd.finalization.certificate.mother.prefix.for.female")).append(
-                SINGLE_SPACE);
+        builder.append(
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.finalization.certificate.mother.prefix.for.female"))
+                .append(SINGLE_SPACE);
         builder.append(person.getNameOfMother().toUpperCase());
         addParameter("motherName", FenixStringTools.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 

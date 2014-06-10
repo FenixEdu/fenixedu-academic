@@ -50,11 +50,7 @@ public abstract class ThesisServiceWithMailNotification {
         new Message(sender, null, getRecipients(thesis), getSubject(thesis), getMessage(thesis), "");
     }
 
-    protected String getMessage(String key, Object... args) {
-        return getMessage(key, new Locale("pt"), args);
-    }
-
-    protected String getMessage(String key, Locale locale, String... args) {
+    protected String getMessage(final Locale locale, final String key, final String... args) {
         return BundleUtil.getString(Bundle.MESSAGING, locale, key, args);
     }
 

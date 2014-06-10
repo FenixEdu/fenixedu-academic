@@ -39,8 +39,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-import net.sourceforge.fenixedu.domain.util.email.MessageId;
-import net.sourceforge.fenixedu.domain.util.email.MessageTransportResult;
+import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -75,24 +74,14 @@ public class Email extends Email_Base {
         return SESSION;
     }
 
-    public Email() {
+    private Email() {
         super();
         setRootDomainObject(Bennu.getInstance());
         setRootDomainObjectFromEmailQueue(getRootDomainObject());
     }
 
-    public Email(final String fromName, final String fromAddress, final String subject, final String body, String... toAddresses) {
-        this(fromName, fromAddress, null, Arrays.asList(toAddresses), null, null, subject, body);
-    }
-
     public Email(final String fromName, final String fromAddress, final String[] replyTos, final Collection<String> toAddresses,
-            final Collection<String> ccAddresses, final Collection<String> bccAddresses, final String subject, final String body) {
-        this(fromName, fromAddress, replyTos, toAddresses, ccAddresses, bccAddresses, subject, body, null);
-    }
-
-    public Email(final String fromName, final String fromAddress, final String[] replyTos, final Collection<String> toAddresses,
-            final Collection<String> ccAddresses, final Collection<String> bccAddresses, final String subject, final String body,
-            final String htmlBody) {
+            final Collection<String> ccAddresses, final Collection<String> bccAddresses, final Message message) {
         this();
         setFromName(fromName);
         setFromAddress(fromAddress);
@@ -100,16 +89,23 @@ public class Email extends Email_Base {
         setToAddresses(new EmailAddressList(toAddresses));
         setCcAddresses(new EmailAddressList(ccAddresses));
         setBccAddresses(new EmailAddressList(bccAddresses));
-        setSubject(subject);
-        setBody(body);
-        setHtmlBody(htmlBody);
+        setMessage(message);
+    }
+
+    public String getBody() {
+        return getMessage().getBody();
+    }
+
+    public String getSubject() {
+        return getMessage().getSubject();
+    }
+
+    public String getHtmlBody() {
+        return getMessage().getHtmlBody();
     }
 
     public void delete() {
         setMessage(null);
-        for (final MessageTransportResult messageTransportResult : getMessageTransportResultSet()) {
-            messageTransportResult.delete();
-        }
         setRootDomainObjectFromEmailQueue(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
@@ -132,7 +128,7 @@ public class Email extends Email_Base {
     }
 
     private void logProblem(final String description) {
-        new MessageTransportResult(this, null, description);
+        LOG.warn("Sending of email {} failed. Description: {}", this.getExternalId(), description);
     }
 
     private void logProblem(final MessagingException e) {
@@ -262,7 +258,7 @@ public class Email extends Email_Base {
 
             addRecipientsAux();
 
-            new MessageId(getMessage(), getMessageID());
+            LOG.info("Sending email {} with message id {}", email.getExternalId(), getMessageID());
 
             Transport.send(this);
 
@@ -388,10 +384,8 @@ public class Email extends Email_Base {
         if (recipients != null && recipients.length > 0) {
             for (final Address address : recipients) {
                 final String[] replyTos = getReplyTos() == null ? null : getReplyTos().toArray();
-                final Email email =
-                        new Email(getFromName(), getFromAddress(), replyTos, Collections.EMPTY_SET, Collections.EMPTY_SET,
-                                Collections.singleton(address.toString()), getSubject(), getBody(), getHtmlBody());
-                email.setMessage(getMessage());
+                new Email(getFromName(), getFromAddress(), replyTos, Collections.EMPTY_SET, Collections.EMPTY_SET,
+                        Collections.singleton(address.toString()), getMessage());
                 // addresses.add(address.toString());
             }
         }
@@ -442,16 +436,6 @@ public class Email extends Email_Base {
     @Override
     public void setFromName(final String fromName) {
         super.setFromName(fromName.replace(",", ""));
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.MessageTransportResult> getMessageTransportResult() {
-        return getMessageTransportResultSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMessageTransportResult() {
-        return !getMessageTransportResultSet().isEmpty();
     }
 
     @Deprecated

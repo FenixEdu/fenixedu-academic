@@ -52,24 +52,30 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
         final Integer civilYear = ((IRSDeclarationRequest) getDocumentRequest()).getYear();
 
         addParameter("registration", registration);
-        addParameter("documentTitle", BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.title.declaration"));
+        addParameter("documentTitle",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.title.declaration"));
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
         String socialSecurityNumber = Bennu.getInstance().getInstitutionUnit().getSocialSecurityNumber().toString();
 
-        String stringTemplate1 = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.irs.declaration.firstParagraph");
+        String stringTemplate1 =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.firstParagraph");
         addParameter(
                 "firstParagraph",
                 MessageFormat.format(stringTemplate1, institutionName.toUpperCase(getLocale()),
                         universityName.toUpperCase(getLocale())));
 
-        String stringTemplate2 = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.irs.declaration.secondParagraph");
+        String stringTemplate2 =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.secondParagraph");
         addParameter("secondParagraph", MessageFormat.format(stringTemplate2, socialSecurityNumber));
         addParameter("socialSecurityNumber", socialSecurityNumber);
-        addParameter("thirdParagraph", BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.irs.declaration.thirdParagraph"));
+        addParameter("thirdParagraph",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.thirdParagraph"));
 
-        addParameter("sixthParagraph", BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.irs.declaration.sixthParagraph"));
-        addParameter("seventhParagraph", BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.irs.declaration.seventhParagraph"));
+        addParameter("sixthParagraph",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.sixthParagraph"));
+        addParameter("seventhParagraph",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.seventhParagraph"));
 
         setPersonFields(registration, person);
 
@@ -85,14 +91,16 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
         addParameter("name", FenixStringTools.multipleLineRightPad(name, LINE_LENGTH, END_CHAR));
 
         final String registrationNumber = registration.getNumber().toString();
-        String fourthParagraph = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.irs.declaration.fourthParagraph");
+        String fourthParagraph =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.fourthParagraph");
         addParameter("fourthParagraph", fourthParagraph);
         int fourthParagraphLength = fourthParagraph.length();
         addParameter("registrationNumber",
                 FenixStringTools.multipleLineRightPad(registrationNumber, LINE_LENGTH - fourthParagraphLength, END_CHAR));
 
         final String documentIdNumber = person.getDocumentIdNumber().toString();
-        String fifthParagraph = BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.irs.declaration.fifthParagraph");
+        String fifthParagraph =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.fifthParagraph");
         addParameter("fifthParagraph", fifthParagraph);
         int fithParagraphLength = fifthParagraph.length();
         addParameter("documentIdNumber",
@@ -106,14 +114,16 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
         final StringBuilder eventTypes = new StringBuilder();
         final StringBuilder payedAmounts = new StringBuilder();
         if (!gratuityPayedAmount.isZero()) {
-            eventTypes.append("- ").append(BundleUtil.getString(Bundle.ENUMERATION, EventType.GRATUITY.getQualifiedName()))
+            eventTypes.append("- ")
+                    .append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), EventType.GRATUITY.getQualifiedName()))
                     .append(LINE_BREAK);
             payedAmounts.append("*").append(gratuityPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
         }
 
         if (!othersPayedAmount.isZero()) {
-            eventTypes.append(BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.irs.declaration.eighthParagraph")).append(
-                    LINE_BREAK);
+            eventTypes.append(
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.eighthParagraph"))
+                    .append(LINE_BREAK);
             payedAmounts.append("*").append(othersPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
         }
         addParameter("eventTypes", eventTypes.toString());
@@ -121,7 +131,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
         Money totalPayedAmount = othersPayedAmount.add(gratuityPayedAmount);
         addParameter("totalPayedAmount", "*" + totalPayedAmount.toString() + "Eur");
-        addParameter("total", BundleUtil.getString(Bundle.ACADEMIC, "label.academicDocument.irs.declaration.total"));
+        addParameter("total", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.total"));
 
     }
 

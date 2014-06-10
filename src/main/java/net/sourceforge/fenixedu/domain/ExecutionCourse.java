@@ -489,82 +489,41 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     // Delete Method
-
     public void delete() {
         if (canBeDeleted()) {
-
-            if (hasSender()) {
-                getSender().getRecipientsSet().clear();
-                setSender(null);
-            }
-
-            if (hasSite()) {
-                getSite().delete();
-            }
-
-            if (hasBoard()) {
-                getBoard().delete();
-            }
-
-            for (; !getMetadatas().isEmpty(); getMetadatas().iterator().next().delete()) {
-                ;
-            }
-            for (; !getExportGroupings().isEmpty(); getExportGroupings().iterator().next().delete()) {
-                ;
-            }
-            for (; !getGroupingSenderExecutionCourse().isEmpty(); getGroupingSenderExecutionCourse().iterator().next().delete()) {
-                ;
-            }
-            for (; !getCourseLoads().isEmpty(); getCourseLoads().iterator().next().delete()) {
-                ;
-            }
-            for (; !getProfessorships().isEmpty(); getProfessorships().iterator().next().delete()) {
-                ;
-            }
-            for (; !getLessonPlannings().isEmpty(); getLessonPlannings().iterator().next().delete()) {
-                ;
-            }
-            for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().iterator().next().delete()) {
-                ;
-            }
-            for (; !getAttends().isEmpty(); getAttends().iterator().next().delete()) {
-                ;
-            }
-            for (; !getForuns().isEmpty(); getForuns().iterator().next().delete()) {
-                ;
-            }
-            for (; !getExecutionCourseLogs().isEmpty(); getExecutionCourseLogs().iterator().next().delete()) {
-                ;
-            }
-
-            removeFinalEvaluations();
-            getAssociatedCurricularCourses().clear();
-            getNonAffiliatedTeachers().clear();
-            setVigilantGroup(null);
-            setExecutionPeriod(null);
+            disconnect();
             setRootDomainObject(null);
             super.deleteDomainObject();
-
         } else {
             throw new DomainException("error.execution.course.cant.delete");
         }
     }
 
-    private void removeFinalEvaluations() {
-        final Iterator<Evaluation> iterator = getAssociatedEvaluationsSet().iterator();
-        while (iterator.hasNext()) {
-            final Evaluation evaluation = iterator.next();
-            if (evaluation.isFinal()) {
-                iterator.remove();
-                evaluation.delete();
-            } else {
-                throw new DomainException("error.ExecutionCourse.cannot.remove.non.final.evaluation");
+    public void remove() {
+        try {
+            hasPersistentGroups();
+        } catch (Exception e) {
+            try {
+                hasRemovableRelations();
+            } catch (Exception e2) {
+                throw e2;
             }
+            disconnect();
+            return;
         }
+        delete();
     }
 
     public boolean canBeDeleted() {
 
+        hasRemovableRelations();
+
+        hasPersistentGroups();
+
+        return true;
+    }
+
+    private void hasRemovableRelations() {
         if (hasAnyAssociatedInquiriesCourses()) {
             throw new DomainException("error.execution.course.cant.delete");
         }
@@ -619,7 +578,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 throw new DomainException("error.execution.course.cant.delete");
             }
         }
+    }
 
+    private void hasPersistentGroups() {
         if (!getStudentGroupSet().isEmpty()) {
             throw new DomainException("error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl");
         }
@@ -629,7 +590,71 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (!getTeacherGroupSet().isEmpty()) {
             throw new DomainException("error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl");
         }
-        return true;
+    }
+
+    private void disconnect() {
+        if (hasSender()) {
+            getSender().getRecipientsSet().clear();
+            setSender(null);
+        }
+
+        if (hasSite()) {
+            getSite().delete();
+        }
+
+        if (hasBoard()) {
+            getBoard().delete();
+        }
+
+        for (; !getMetadatas().isEmpty(); getMetadatas().iterator().next().delete()) {
+            ;
+        }
+        for (; !getExportGroupings().isEmpty(); getExportGroupings().iterator().next().delete()) {
+            ;
+        }
+        for (; !getGroupingSenderExecutionCourse().isEmpty(); getGroupingSenderExecutionCourse().iterator().next().delete()) {
+            ;
+        }
+        for (; !getCourseLoads().isEmpty(); getCourseLoads().iterator().next().delete()) {
+            ;
+        }
+        for (; !getProfessorships().isEmpty(); getProfessorships().iterator().next().delete()) {
+            ;
+        }
+        for (; !getLessonPlannings().isEmpty(); getLessonPlannings().iterator().next().delete()) {
+            ;
+        }
+        for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().iterator().next().delete()) {
+            ;
+        }
+        for (; !getAttends().isEmpty(); getAttends().iterator().next().delete()) {
+            ;
+        }
+        for (; !getForuns().isEmpty(); getForuns().iterator().next().delete()) {
+            ;
+        }
+        for (; !getExecutionCourseLogs().isEmpty(); getExecutionCourseLogs().iterator().next().delete()) {
+            ;
+        }
+
+        removeFinalEvaluations();
+        getAssociatedCurricularCourses().clear();
+        getNonAffiliatedTeachers().clear();
+        setVigilantGroup(null);
+        setExecutionPeriod(null);
+    }
+
+    private void removeFinalEvaluations() {
+        final Iterator<Evaluation> iterator = getAssociatedEvaluationsSet().iterator();
+        while (iterator.hasNext()) {
+            final Evaluation evaluation = iterator.next();
+            if (evaluation.isFinal()) {
+                iterator.remove();
+                evaluation.delete();
+            } else {
+                throw new DomainException("error.ExecutionCourse.cannot.remove.non.final.evaluation");
+            }
+        }
     }
 
     private boolean hasOnlyFinalEvaluations() {

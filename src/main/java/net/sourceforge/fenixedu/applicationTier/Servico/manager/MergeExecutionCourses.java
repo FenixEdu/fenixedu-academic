@@ -151,7 +151,7 @@ public class MergeExecutionCourses {
 
         executionCourseTo.copyLessonPlanningsFrom(executionCourseFrom);
 
-        executionCourseFrom.delete();
+        executionCourseFrom.remove();
     }
 
     private void copyVigilantGroups(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
