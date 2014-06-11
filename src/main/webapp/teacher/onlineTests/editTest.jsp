@@ -23,6 +23,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<jsp:include page="/includeMathJax.jsp" />
 <h2><bean:message key="title.editTest"/></h2>
 <table>
 	<tr>

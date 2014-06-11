@@ -23,7 +23,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>	
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-
+<jsp:include page="/includeMathJax.jsp" />
 <%
 response.setHeader("Cache-Control","no-cache");
 response.setHeader("Pragma","no-cache");

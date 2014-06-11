@@ -24,6 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ page import="org.fenixedu.bennu.core.security.Authenticate" %>
+<jsp:include page="/includeMathJax.jsp" />
 
 <h2 class="mbottom15"><bean:message key="link.tests"/></h2>
 <logic:present name="tests">

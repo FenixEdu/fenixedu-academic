@@ -24,9 +24,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
+<jsp:include page="/includeMathJax.jsp" />
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
-						
+
 <logic:present name="announcements">
 	<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 	<bean:define id="extraParameters" name="extraParameters" />
