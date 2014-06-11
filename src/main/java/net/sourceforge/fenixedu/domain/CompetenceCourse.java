@@ -28,6 +28,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -55,6 +56,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -537,6 +539,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public String getProgram() {
         return getProgram(null);
+    }
+
+    public LocalizedString getLocalizedEvaluationMethod(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return new LocalizedString(Locale.getDefault(), information.getEvaluationMethod()).with(Locale.ENGLISH, information.getEvaluationMethodEn());
     }
 
     public String getEvaluationMethod(final ExecutionSemester period) {
