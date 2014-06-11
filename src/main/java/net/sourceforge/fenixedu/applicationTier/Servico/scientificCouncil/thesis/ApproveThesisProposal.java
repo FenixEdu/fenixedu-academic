@@ -225,17 +225,17 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         announcement.setBody(body);
     }
 
-    private String getAnnouncementSubject(Thesis thesis, String key, Locale language) {
-        return getMessage(language, key, thesis.getStudent().getPerson().getName());
+    private String getAnnouncementSubject(Thesis thesis, String key, Locale locale) {
+        return getMessage(key, locale, thesis.getStudent().getPerson().getName());
     }
 
-    private String getAnnouncementBody(Thesis thesis, String key, Locale language) {
-        return getMessage(language, key, thesis.getStudent().getPerson().getName(), getDate(thesis.getProposedDiscussed()),
-                hasPlace(thesis).toString(), thesis.getProposedPlace(), hasTime(thesis.getProposedDiscussed()).toString(),
-                getTime(thesis.getProposedDiscussed()), getString(thesis.getTitle(), language));
+    private String getAnnouncementBody(Thesis thesis, String key, Locale locale) {
+        return getMessage(key, locale, thesis.getStudent().getPerson().getName(), getDate(thesis.getProposedDiscussed()),
+                hasPlace(thesis), thesis.getProposedPlace(), hasTime(thesis.getProposedDiscussed()),
+                getTime(thesis.getProposedDiscussed()), getString(thesis.getTitle(), locale));
     }
 
-    private Integer hasPlace(Thesis thesis) {
+    private int hasPlace(Thesis thesis) {
         String place = thesis.getProposedPlace();
         return place == null || place.trim().length() == 0 ? 0 : 1;
     }
@@ -244,7 +244,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         return String.format(new Locale("pt"), "%tR", dateTime.toDate());
     }
 
-    private Integer hasTime(DateTime proposedDiscussed) {
+    private int hasTime(DateTime proposedDiscussed) {
         if (proposedDiscussed.getHourOfDay() == 0 && proposedDiscussed.getMinuteOfHour() == 0) {
             return 0;
         } else {
