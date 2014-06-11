@@ -87,6 +87,7 @@ import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -2100,6 +2101,22 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return result;
+    }
+
+    public String getLocalizedEvaluationMethodText() {
+        final EvaluationMethod evaluationMethod = getEvaluationMethod();
+        if (evaluationMethod != null) {
+            final MultiLanguageString evaluationElements = evaluationMethod.getEvaluationElements();
+            return evaluationElements.getContent();
+        }
+        for (final CompetenceCourse competenceCourse : getCompetenceCourses()) {
+            final LocalizedString lstring = competenceCourse.getLocalizedEvaluationMethod(getExecutionPeriod());
+            final String competenceEvaluationMethod = lstring.getContent();
+            if (competenceEvaluationMethod != null) {
+                return competenceEvaluationMethod;
+            }
+        }
+        return "";
     }
 
     public String getEvaluationMethodText() {
