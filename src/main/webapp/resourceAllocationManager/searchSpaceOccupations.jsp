@@ -15,7 +15,6 @@
 <em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="label.search.spaces.events" bundle="SPACE_RESOURCES"/></h2>
 
-<logic:present role="role(SPACE_MANAGER)">
 	 
 	<logic:present name="startAfterEnd">
 		<span class="error">
@@ -118,4 +117,3 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
-</logic:present>
