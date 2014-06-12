@@ -1,7 +1,5 @@
 /* general.css - 01.2006 by João Alfaiate @ Fenix */
-
 /* File sections: Headings, Anchors, Show Info, Info Blocks, Lists, Tables, Tree, Feedback, Forms, Misc Classes, Specific, To Replace, To Organize, Old (general properties waiting to be merged) */
-
 
 /********************
 	Typography
@@ -50,8 +48,6 @@
 	font-weight: normal;
 	font-style: normal;
 }
-
-
 
 /* ----------------------
 ------ Headings --------
@@ -2892,4 +2888,13 @@ float: right;
 }
 #popup_prompt {
 	margin: .5em 0em;
+}
+
+.otherLanguage {
+	color: graytext !important;
+	font-size: 75% !important;
+}
+div.announcement div.ann_body span.otherLanguage {
+	color: graytext !important;
+	font-size: 75% !important;
 }
