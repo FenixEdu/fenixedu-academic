@@ -9,7 +9,7 @@
 	<parameter name="checkSum" class="java.lang.String" isForPrompting="false"/>
 	<field name="gradeValue" class="java.lang.String"/>
 	<field name="examDate" class="java.util.Date"/>
-	<field name="enrolmentEvaluationType" class="java.lang.Object"/>
+	<field name="enrolmentEvaluationType.numericDescription" class="java.lang.String"/>
 	<field name="enrolment.studentCurricularPlan.student.person.name" class="java.lang.String"/>
 	<field name="enrolment.studentCurricularPlan.student.number" class="java.lang.Integer"/>
 	<group name="dummy">
@@ -275,7 +275,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_RESOURCE_BUNDLE}.getString($F{enrolmentEvaluationType}.toString())]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{enrolmentEvaluationType.numericDescription}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-9" x="459" y="2" width="34" height="19"/>
