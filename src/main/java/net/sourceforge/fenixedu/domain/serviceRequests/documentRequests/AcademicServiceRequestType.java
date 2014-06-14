@@ -92,7 +92,7 @@ public enum AcademicServiceRequestType {
     }
 
     public String localizedName(Locale locale) {
-        return BundleUtil.getString(Bundle.ENUMERATION, locale, getName());
+        return BundleUtil.getString(Bundle.ENUMERATION, locale, getQualifiedName());
     }
 
     protected String localizedName() {

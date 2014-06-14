@@ -227,7 +227,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-        addParameter("bundle", ResourceBundle.getBundle(getBundle(), I18N.getLocale()));
+        addParameter("bundle", ResourceBundle.getBundle(getBundle(), getLocale()));
         addParameter("documentRequest", getDocumentRequest());
         addParameter("registration", getRegistration());
 
