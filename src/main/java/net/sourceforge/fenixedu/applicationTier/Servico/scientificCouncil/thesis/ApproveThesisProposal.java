@@ -144,14 +144,13 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
                 thesis.isCoordinator() ? getMessage(locale, COORDINATOR_SENDER) : getMessage(locale, COUNCIL_MEMBER_SENDER);
 
         Calendar today = Calendar.getInstance(locale);
-
         return getMessage(locale, BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
-                Integer.toString(includeFlag(vowel1Name)), vowel1Name, vowel1Affiliation,
-                Integer.toString(includeFlag(vowel2Name)), vowel2Name, vowel2Affiliation,
-                Integer.toString(includeFlag(vowel3Name)), vowel3Name, vowel3Affiliation,
-                Integer.toString(includeFlag(vowel4Name)), vowel4Name, vowel4Affiliation,
-                Integer.toString(includeFlag(orientatorName)), orientatorName, orientatorAffiliation,
-                Integer.toString(includeFlag(coorientatorName)), coorientatorName, coorientatorAffiliation, dateMessage,
+                includeFlag(vowel1Name), vowel1Name, vowel1Affiliation,
+                includeFlag(vowel2Name), vowel2Name, vowel2Affiliation,
+                includeFlag(vowel3Name), vowel3Name, vowel3Affiliation,
+                includeFlag(vowel4Name), vowel4Name, vowel4Affiliation,
+                includeFlag(orientatorName), orientatorName, orientatorAffiliation,
+                includeFlag(coorientatorName), coorientatorName, coorientatorAffiliation, dateMessage,
                 discussedDate, institutionName, "" + today.get(Calendar.DAY_OF_MONTH),
                 today.getDisplayName(Calendar.MONTH, Calendar.LONG, locale), "" + today.get(Calendar.YEAR), sender,
                 currentPersonName);

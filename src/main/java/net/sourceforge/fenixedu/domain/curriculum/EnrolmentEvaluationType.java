@@ -81,4 +81,9 @@ public enum EnrolmentEvaluationType {
     public String getDescription() {
         return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
     }
+
+    public String getNumericDescription() {
+        return BundleUtil.getString(Bundle.REPORTS, name());
+    }
+
 }
