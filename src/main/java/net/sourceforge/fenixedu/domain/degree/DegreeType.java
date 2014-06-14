@@ -89,7 +89,7 @@ public enum DegreeType {
             final StringBuilder result = new StringBuilder(localizedName(locale));
 
             final String remove =
-                    " (" + Integer.toString(getYears()) + " " + BundleUtil.getString(Bundle.APPLICATION, "years") + ")";
+                    " (" + Integer.toString(getYears()) + " " + BundleUtil.getString(Bundle.APPLICATION, locale, "years") + ")";
 
             if (result.toString().contains(remove)) {
                 result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
@@ -856,10 +856,10 @@ public enum DegreeType {
         case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
             return result.toString();
         case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-            result.append(BundleUtil.getString(Bundle.ACADEMIC, "degree.DegreeType.prefix.one")).append(" ");
+            result.append(BundleUtil.getString(Bundle.ACADEMIC, locale, "degree.DegreeType.prefix.one")).append(" ");
             return result.toString();
         default:
-            final String string = BundleUtil.getString(Bundle.ACADEMIC, "degree.DegreeType.prefix.two");
+            final String string = BundleUtil.getString(Bundle.ACADEMIC, locale, "degree.DegreeType.prefix.two");
             result.append(string).append(string.isEmpty() ? StringUtils.EMPTY : " ");
             return result.toString();
         }
@@ -881,7 +881,7 @@ public enum DegreeType {
     final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
         if (getQualifiesForGraduateTitle()) {
             if (cycleType == null) {
-                return BundleUtil.getString(Bundle.ENUMERATION, qualifiedName() + GRADUATE_TITLE_SUFFIX);
+                return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName() + GRADUATE_TITLE_SUFFIX);
             }
 
             if (cycleTypes().isEmpty()) {
@@ -892,7 +892,7 @@ public enum DegreeType {
                 throw new DomainException("DegreeType.doesnt.have.such.cycle.type");
             }
 
-            return BundleUtil.getString(Bundle.ENUMERATION, qualifiedName() + (isComposite() ? "." + cycleType.name() : StringUtils.EMPTY)
+            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName() + (isComposite() ? "." + cycleType.name() : StringUtils.EMPTY)
                     + GRADUATE_TITLE_SUFFIX);
         }
 
