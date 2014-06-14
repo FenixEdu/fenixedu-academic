@@ -26,6 +26,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+
+import org.apache.struts.action.ActionError;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -35,9 +38,8 @@ import pt.ist.fenixframework.FenixFramework;
 public class TeacherAttributeFinalDegreeWork {
 
     @Atomic
-    public static Boolean run(String selectedGroupProposalOID) throws FenixServiceException {
+    public static ActionError run(String selectedGroupProposalOID) throws FenixServiceException {
         final GroupProposal groupProposal = FenixFramework.getDomainObject(selectedGroupProposalOID);
-
         if (groupProposal != null) {
             final Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
             final FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
@@ -45,7 +47,8 @@ public class TeacherAttributeFinalDegreeWork {
             if (proposal != null && group != null) {
                 final Proposal proposalAttributedToGroup = group.getProposalAttributedByTeacher();
                 if (proposalAttributedToGroup != null && proposalAttributedToGroup != proposal) {
-                    throw new GroupAlreadyAttributed(proposalAttributedToGroup.getProposalNumber().toString());
+
+                    return new ActionError("error.message.GroupAlreadyAttributed", proposalAttributedToGroup.getProposalNumber());
                 }
 
                 if (proposal.getGroupAttributedByTeacher() == null || proposal.getGroupAttributedByTeacher() != group) {
@@ -61,31 +64,7 @@ public class TeacherAttributeFinalDegreeWork {
                 }
             }
         }
-        return Boolean.TRUE;
-    }
-
-    public static class GroupAlreadyAttributed extends FenixServiceException {
-
-        public GroupAlreadyAttributed() {
-            super();
-        }
-
-        public GroupAlreadyAttributed(int errorType) {
-            super(errorType);
-        }
-
-        public GroupAlreadyAttributed(String s) {
-            super(s);
-        }
-
-        public GroupAlreadyAttributed(Throwable cause) {
-            super(cause);
-        }
-
-        public GroupAlreadyAttributed(String message, Throwable cause) {
-            super(message, cause);
-        }
-
+        return null;
     }
 
 }

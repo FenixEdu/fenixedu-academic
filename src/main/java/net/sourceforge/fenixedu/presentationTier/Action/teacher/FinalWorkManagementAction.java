@@ -50,7 +50,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNum
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.ReadFinalDegreeWorkProposalHeadersByTeacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.SubmitFinalWorkProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork.GroupAlreadyAttributed;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear.ProposalAlreadyTransposed;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear.ProposalPeriodNotDefined;
@@ -85,7 +84,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherFinalWorkApp;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
-import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -109,8 +107,6 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -139,8 +135,6 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "NotAuthorized", path = "/student/notAuthorized_bd.jsp"),
         @Forward(name = "print", path = "/teacher/printFinalDegreeWorkProposal_bd.jsp"),
         @Forward(name = "listProposals", path = "/teacher/listProposals_bd.jsp") })
-@Exceptions(@ExceptionHandling(handler = FenixErrorExceptionHandler.class, key = "error.message.GroupAlreadyAttributed",
-        type = GroupAlreadyAttributed.class, scope = "request"))
 public class FinalWorkManagementAction extends FenixDispatchAction {
 
     public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -412,7 +406,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
         InfoScheduleing infoScheduleing = null;
         try {
-
             infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(infoExecutionDegree.getExecutionDegree());
             if (infoScheduleing == null || infoScheduleing.getStartOfProposalPeriod() == null
                     || infoScheduleing.getEndOfProposalPeriod() == null
@@ -778,9 +771,13 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
         if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
 
-            TeacherAttributeFinalDegreeWork.run(selectedGroupProposalOID);
+            ActionError error = TeacherAttributeFinalDegreeWork.run(selectedGroupProposalOID);
+            if (error != null) {
+                ActionErrors actionErrors = new ActionErrors();
+                actionErrors.add(error.getKey(), error);
+                saveErrors(request, actionErrors);
+            }
         }
-
         return mapping.findForward("sucess");
     }
 
