@@ -382,7 +382,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         List<Person> persons = new ArrayList<Person>();
         persons.add(person);
 
-        byte[] data = ReportsUtils.exportToPdfFileAsByteArray("parkingManager.parkingCard", parameters, null, persons);
+        byte[] data = ReportsUtils.exportToPdfFileAsByteArray("parkingManager.parkingCard", parameters, persons);
         response.setContentType("application/pdf");
         response.addHeader("Content-Disposition", "attachment; filename=cartao.pdf");
         response.setContentLength(data.length);

@@ -9,7 +9,7 @@
 
     <groupId>pt.ist</groupId>
     <artifactId>fenix-parking</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <inceptionYear>2014</inceptionYear>
 
     <name>Fenix Parking</name>
@@ -43,7 +43,7 @@
         <connection>scm:git:git@github.com:ist-dsi/fenix-parking.git</connection>
         <developerConnection>scm:git:git@github.com:ist-dsi/fenix-parking.git</developerConnection>
         <url>http://fenixedu.org</url>
-        <tag>v1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
@@ -94,7 +94,7 @@
         <dependency>
             <groupId>pt.ist</groupId>
             <artifactId>fenix</artifactId>
-            <version>3.0.0</version>
+            <version>3.3.2</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
