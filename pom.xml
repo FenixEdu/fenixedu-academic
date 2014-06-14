@@ -94,7 +94,7 @@
         <dependency>
             <groupId>pt.ist</groupId>
             <artifactId>fenix</artifactId>
-            <version>3.0.0</version>
+            <version>3.3.2</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
