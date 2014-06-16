@@ -74,7 +74,7 @@ public enum AcademicServiceRequestType {
     }
 
     public String getQualifiedName() {
-        return AcademicServiceRequestType.class.getSimpleName() + "." + name();
+        return AcademicServiceRequestType.class.getName() + "." + name();
     }
 
     public String getFullyQualifiedName() {

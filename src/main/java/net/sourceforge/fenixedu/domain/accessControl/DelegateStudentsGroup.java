@@ -62,6 +62,17 @@ public class DelegateStudentsGroup extends FenixGroup {
     }
 
     @Override
+    public String getPresentationNameBundle() {
+        return "resources.DelegateResources";
+    }
+
+    @Override
+    public String getPresentationNameKey() {
+        return "label." + getClass().getSimpleName() + "." + type.getName()
+                + (delegateFunction.getPerson().getStudent() != null ? "" : ".coordinator");
+    }
+
+    @Override
     public Set<User> getMembers() {
         Set<User> users = new HashSet<>();
 
