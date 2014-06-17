@@ -21,9 +21,6 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -35,8 +32,6 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.renderers.DataProvider;
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -48,34 +43,13 @@ public class InquiryDefinitionPeriodBean implements Serializable {
     private DateTime begin;
     private DateTime end;
     private MultiLanguageString message;
-    private Locale selectedLanguage;
-    private Locale previousLanguage;
     private ExecutionSemester executionPeriod;
     private InquiryResponsePeriodType responsePeriodType;
     private boolean changedLanguage = false;
 
     public InquiryDefinitionPeriodBean() {
         setMessage(new MultiLanguageString());
-        setSelectedLanguage(MultiLanguageString.pt);
         setResponsePeriodType(InquiryResponsePeriodType.STUDENT);
-    }
-
-    public String getDisplayMessage() {
-        if (getMessage() == null) {
-            return null;
-        }
-        return getMessage().getContent(getSelectedLanguage());
-    }
-
-    public void setDisplayMessage(String displayMessage) {
-        if (getMessage() == null) {
-            setMessage(new MultiLanguageString());
-        }
-        if (isChangedLanguage()) {
-            setMessage(getMessage().with(getPreviousLanguage(), displayMessage));
-        } else {
-            setMessage(getMessage().with(getSelectedLanguage(), displayMessage));
-        }
     }
 
     public DateTime getBegin() {
@@ -118,19 +92,6 @@ public class InquiryDefinitionPeriodBean implements Serializable {
         this.responsePeriodType = responsePeriodType;
     }
 
-    public void setSelectedLanguage(Locale selectedLanguage) {
-        setChangedLanguage(false);
-        this.previousLanguage = this.selectedLanguage;
-        if (this.selectedLanguage != null && this.selectedLanguage != selectedLanguage) {
-            setChangedLanguage(true);
-        }
-        this.selectedLanguage = selectedLanguage;
-    }
-
-    public Locale getSelectedLanguage() {
-        return selectedLanguage;
-    }
-
     public void setChangedLanguage(boolean changedLanguage) {
         this.changedLanguage = changedLanguage;
     }
@@ -139,38 +100,12 @@ public class InquiryDefinitionPeriodBean implements Serializable {
         return changedLanguage;
     }
 
-    public Locale getPreviousLanguage() {
-        return previousLanguage;
-    }
-
     public void setInquiryTemplate(InquiryTemplate inquiryTemplate) {
         this.inquiryTemplate = inquiryTemplate;
     }
 
     public InquiryTemplate getInquiryTemplate() {
         return inquiryTemplate;
-    }
-
-    public static class InquiryPeriodLanguageProvider implements DataProvider {
-
-        @Override
-        public Object provide(Object source, Object currentValue) {
-            List<Locale> languages = new ArrayList<Locale>();
-            languages.add(MultiLanguageString.pt);
-            languages.add(MultiLanguageString.en);
-            return languages;
-        }
-
-        @Override
-        public Converter getConverter() {
-            return new Converter() {
-                @Override
-                public Object convert(Class type, Object value) {
-                    return new Locale.Builder().setLanguageTag((String) value).build();
-
-                }
-            };
-        }
     }
 
     @Atomic

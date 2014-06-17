@@ -46,7 +46,7 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
 
     public int getNumberOfQuestions() {
         int count = 0;
-        for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
             for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
                 if (groupQuestion.isCheckbox()) {
                     count++;
@@ -60,7 +60,7 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
 
     public int getNumberOfRequiredQuestions() {
         int count = 0;
-        for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
             for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
                 if (groupQuestion.isCheckbox() && groupQuestion.getRequired()) {
                     count++;
@@ -89,11 +89,6 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
         default:
             return null;
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryBlock> getInquiryBlocks() {
-        return getInquiryBlocksSet();
     }
 
     @Deprecated

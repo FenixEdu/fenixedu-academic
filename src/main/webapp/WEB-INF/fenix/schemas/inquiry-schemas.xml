@@ -62,12 +62,7 @@
 		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryDefinitionPeriodBean" bundle="INQUIRIES_RESOURCES">
 	<slot name="begin"/>
 	<slot name="end"/>
-	<slot name="selectedLanguage" layout="menu-select-postback">
-		<property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryDefinitionPeriodBean$InquiryPeriodLanguageProvider" />
-		<property name="nullOptionHidden" value="true"/>
-		<property name="destination" value="postBack"/>
-	</slot>
-	<slot name="displayMessage" layout="rich-text">
+	<slot name="message" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="100"/>
    		<property name="rows" value="30"/>
