@@ -220,7 +220,7 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
         }
 
         Set<InquiryBlockDTO> delegateInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocksSet()) {
             delegateInquiryBlocks.add(new InquiryBlockDTO(inquiryDelegateAnswer, inquiryBlock));
         }
 

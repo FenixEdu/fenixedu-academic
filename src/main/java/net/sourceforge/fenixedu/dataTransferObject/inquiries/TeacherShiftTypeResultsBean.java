@@ -49,7 +49,7 @@ public class TeacherShiftTypeResultsBean implements Serializable {
         StudentTeacherInquiryTemplate inquiryTemplate =
                 StudentTeacherInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
         setBlockResults(new ArrayList<BlockResultsSummaryBean>());
-        for (InquiryBlock inquiryBlock : inquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : inquiryTemplate.getInquiryBlocksSet()) {
             getBlockResults().add(new BlockResultsSummaryBean(inquiryBlock, inquiryResults, person, personCategory));
         }
         Collections.sort(getBlockResults(), new BeanComparator("inquiryBlock.blockOrder"));
