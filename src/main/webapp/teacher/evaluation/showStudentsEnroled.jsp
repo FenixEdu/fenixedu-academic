@@ -85,6 +85,11 @@
 			
 		<h:outputText value="</table>" escape="false" />
 		
+		<h:outputText value="<p>" escape="false" />
+			<fc:commandLink action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['link.goBack']}" />
+		<h:outputText value="</p>" escape="false" />
+		<h:outputText value="<br/>" escape="false" />
+		
 		<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.writtenEvaluationEnrolments}">
 
 			<h:graphicImage id="image" alt="Excel" url="/images/excel.gif" />
@@ -125,12 +130,11 @@
 				</fc:dataRepeater>
 				
 			<h:outputText value="</table>" escape="false" />
-			
-		</h:panelGroup>
 
-		<h:outputText value="<p>" escape="false" />
-			<h:commandButton alt="#{htmlAltBundle['commandButton.goBack']}" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['link.goBack']}" styleClass="inputButton"  />
-		<h:outputText value="</p>" escape="false" />
+			<h:outputText value="<p>" escape="false" />
+				<fc:commandLink action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['link.goBack']}" />
+			<h:outputText value="</p>" escape="false" />
+		</h:panelGroup>
 	</h:form>
 </f:view>
 
