@@ -26,9 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -78,8 +76,8 @@ import org.apache.struts.util.LabelValueBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
-import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
@@ -643,9 +641,7 @@ public class ExercisesManagementAction extends ExecutionCourseBaseAction {
             return doForward(request, "addExerciseVariation");
         }
 
-        final UploadedFile xmlZipFile =
-                ((Hashtable<String, UploadedFile>) request
-                        .getAttribute(RequestWrapperFilter.FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE)).get("xmlZipFile");
+        final UploadedFile xmlZipFile = RenderersRequestProcessorImpl.getUploadedFile("xmlZipFile");
         if (xmlZipFile == null || xmlZipFile.getSize() == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");
             return doForward(request, "addExerciseVariation");
@@ -686,18 +682,7 @@ public class ExercisesManagementAction extends ExecutionCourseBaseAction {
             return doForward(request, "insertNewExercise");
         }
 
-        final UploadedFile xmlZipFile =
-                ((Hashtable<String, UploadedFile>) request
-                        .getAttribute(RequestWrapperFilter.FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE)).get("xmlZipFile");
-        for (final Entry<String, UploadedFile> entry : ((Hashtable<String, UploadedFile>) request
-                .getAttribute(RequestWrapperFilter.FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE)).entrySet()) {
-            logger.info(entry.getKey() + " " + entry.getValue());
-            logger.info("   " + entry.getValue().getName());
-            logger.info("   " + entry.getValue().getContentType());
-            logger.info("   " + entry.getValue().getSize());
-            logger.info("   " + entry.getValue().getInputStream());
-            logger.info("   " + entry.getValue().getFileData());
-        }
+        final UploadedFile xmlZipFile = RenderersRequestProcessorImpl.getUploadedFile("xmlZipFile");
         if (xmlZipFile == null || xmlZipFile.getFileData() == null || xmlZipFile.getFileData().length == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");
             return doForward(request, "insertNewExercise");
