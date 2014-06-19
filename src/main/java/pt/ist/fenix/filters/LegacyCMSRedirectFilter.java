@@ -14,7 +14,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter({ "/departments/*", "/ccad/*", "/ccad" })
+@WebFilter({ "/departments/*", "/ccad/*", "/ccad", "/assembleiaEscola/*", "/assembleiaEscola", "/cgq/*", "/cgq", "/CCBE/*",
+        "/CCBE", "/npgfc/*", "/npgfc", "/RecursosHumanos/*", "/RecursosHumanos", "/conselhoEscola/*", "/conselhoEscola" })
 public class LegacyCMSRedirectFilter implements Filter {
 
     private final Map<String, String> map = new HashMap<>();
@@ -23,6 +24,12 @@ public class LegacyCMSRedirectFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         map.put("departments", "/departamentos");
         map.put("ccad", "/units/2482491971449");
+        map.put("assembleiaEscola", "/units/2482491887286");
+        map.put("cgq", "/units/2482492473777");
+        map.put("CCBE", "/units/2482492045984");
+        map.put("npgfc", "/units/2482492000046");
+        map.put("RecursosHumanos", "/units/2482491891565");
+        map.put("conselhoEscola", "/units/2482491886913");
     }
 
     @Override
