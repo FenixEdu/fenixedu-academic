@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter("/departments/*")
+@WebFilter({ "/departments/*", "/ccad/*", "/ccad" })
 public class LegacyCMSRedirectFilter implements Filter {
 
     private final Map<String, String> map = new HashMap<>();
@@ -22,6 +22,7 @@ public class LegacyCMSRedirectFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         map.put("departments", "/departamentos");
+        map.put("ccad", "/units/2482491971449");
     }
 
     @Override
@@ -30,9 +31,13 @@ public class LegacyCMSRedirectFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         String[] parts = req.getRequestURI().substring(req.getContextPath().length() + 1).split("/", 2);
-        if (parts.length > 1 && map.containsKey(parts[0])) {
+        if (map.containsKey(parts[0])) {
             resp.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-            resp.setHeader("Location", req.getContextPath() + map.get(parts[0]) + "/" + parts[1]);
+            if (parts.length > 1) {
+                resp.setHeader("Location", req.getContextPath() + map.get(parts[0]) + "/" + parts[1]);
+            } else {
+                resp.setHeader("Location", req.getContextPath() + map.get(parts[0]));
+            }
         } else {
             chain.doFilter(request, response);
         }
