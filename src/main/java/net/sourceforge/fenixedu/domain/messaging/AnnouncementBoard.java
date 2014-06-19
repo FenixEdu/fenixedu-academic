@@ -191,10 +191,12 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         final User user = Authenticate.getUser();
         final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
         for (Announcement announcement : getAnnouncementSet()) {
+            Group approvers = announcement.getAnnouncementBoard().getApprovers();
+            Person creator = announcement.getCreator();
             if (announcement.isActive()
                     && announcement.getVisible()
-                    && (announcement.getApproved() || (user != null && (announcement.getCreator().equals(user.getPerson()) || announcement
-                            .getAnnouncementBoard().getApprovers().isMember(user))))) {
+                    && (announcement.getApproved() || (user != null && ((creator != null && creator.equals(user.getPerson())) || (approvers != null && approvers
+                            .isMember(user)))))) {
                 activeAnnouncements.add(announcement);
             }
         }
@@ -320,7 +322,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public boolean hasApprover(Person person) {
-        return (isPublicToApprove() || (person != null && getApprovers().isMember(person.getUser())));
+        return (isPublicToApprove() || (person != null && getApprovers() != null && getApprovers().isMember(person.getUser())));
     }
 
     public boolean hasManager(Person person) {
