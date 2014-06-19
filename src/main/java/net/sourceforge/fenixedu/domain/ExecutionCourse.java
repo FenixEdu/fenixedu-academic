@@ -1689,7 +1689,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public String getNome() {
-        if (I18N.getLocale().equals(MultiLanguageString.en) && hasAnyAssociatedCurricularCourses()) {
+        if (I18N.getLocale().getLanguage().equals("en") && hasAnyAssociatedCurricularCourses()) {
             final StringBuilder stringBuilder = new StringBuilder();
 
             final Set<String> names = new HashSet<String>();
