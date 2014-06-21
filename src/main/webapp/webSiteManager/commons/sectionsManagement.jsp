@@ -100,12 +100,11 @@
         <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
     
-    <% String treeId = "sectionsTree." + contextParam + "." + contextParamValue; %>
     
     <div class="section1">
         <fr:view name="site" property="orderedAssociatedSections">
             <fr:layout name="tree">
-                <fr:property name="treeId" value="<%= treeId %>"/>
+                <fr:property name="expandable" value="true" />
                 <fr:property name="fieldId" value="sections-order"/>
                 
 	             <fr:property name="eachLayout" value="values"/>

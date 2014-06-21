@@ -106,12 +106,10 @@
         <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
     
-    <% String treeId = "sectionsTree." + contextParam + "." + contextParamValue; %>
-    
     <div class="section1">
         <fr:view name="site" property="orderedAssociatedSections">
             <fr:layout name="tree">
-                <fr:property name="treeId" value="<%= treeId %>"/>
+                <fr:property name="expandable" value="true" />
                 <fr:property name="fieldId" value="sections-order"/>
                 
 	             <fr:property name="eachLayout" value="values"/>
@@ -135,22 +133,7 @@
             <fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.externalId}&" + context  + "#item-${externalId}"%>"/>
             <fr:destination name="functionality.view" path="<%= actionName + "?method=sections&siteID=" + siteId + "&functionalityID=${externalId}&" + context  + "#content-${externalId}"%>"/>
         </fr:view>
-
-		<p class="mtop15">
-	    <fr:form action="<%= actionName + "?method=sections&amp;" + context %>">
-	        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
-	            <bean:message key="button.sections.order.save" bundle="SITE_RESOURCES"/>
-	        </html:button>
-	        <html:submit>
-	            <bean:message key="button.sections.order.reset" bundle="SITE_RESOURCES"/>
-	        </html:submit>
-	    </fr:form>
-	    </p>
     </div>
-    
-<p style="color: #888;">
-	<em><bean:message key="message.section.reorder.tip" bundle="SITE_RESOURCES"/></em>
-</p>
 </logic:notEmpty>
 
 <!-- Functionalities -->
