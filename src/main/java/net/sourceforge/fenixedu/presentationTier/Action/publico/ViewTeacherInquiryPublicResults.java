@@ -65,7 +65,7 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 
         ExecutionSemester executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
         ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
-        Collection<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
+        Collection<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocksSet();
 
         GroupResultsSummaryBean teacherGroupResultsSummaryBean =
                 getGeneralResults(inquiryResults, resultBlocks, GroupResultType.TEACHER_RESULTS);
@@ -77,7 +77,7 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
         StudentTeacherInquiryTemplate teacherInquiryTemplate =
                 StudentTeacherInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
         List<BlockResultsSummaryBean> blockResultsSummaryBeans = new ArrayList<BlockResultsSummaryBean>();
-        for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocksSet()) {
             blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, inquiryResults, null, null));
         }
         Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));

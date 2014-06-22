@@ -77,7 +77,7 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
 
         Set<InquiryBlockDTO> coordinatorInquiryBlocks =
                 new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-        for (InquiryBlock inquiryBlock : coordinatorInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : coordinatorInquiryTemplate.getInquiryBlocksSet()) {
             coordinatorInquiryBlocks.add(new InquiryBlockDTO(inquiryCoordinatorAnswer, inquiryBlock));
         }
 
@@ -98,7 +98,7 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
         InquiryRegentAnswer inquiryRegentAnswer = professorship.getInquiryRegentAnswer();
 
         Set<InquiryBlockDTO> regentInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-        for (InquiryBlock inquiryBlock : regentInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : regentInquiryTemplate.getInquiryBlocksSet()) {
             regentInquiryBlocks.add(new InquiryBlockDTO(inquiryRegentAnswer, inquiryBlock));
         }
 
@@ -120,7 +120,7 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
         InquiryTeacherAnswer inquiryTeacherAnswer = professorship.getInquiryTeacherAnswer();
 
         Set<InquiryBlockDTO> teacherInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-        for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocksSet()) {
             teacherInquiryBlocks.add(new InquiryBlockDTO(inquiryTeacherAnswer, inquiryBlock));
         }
 
@@ -151,7 +151,7 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
         }
 
         Set<InquiryBlockDTO> delegateInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocksSet()) {
             delegateInquiryBlocks.add(new InquiryBlockDTO(inquiryDelegateAnswer, inquiryBlock));
         }
 

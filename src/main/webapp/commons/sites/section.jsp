@@ -107,15 +107,13 @@
     <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context + "&amp;sectionID=" + sectionId %>">
         <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
-    
-    <% String treeId = "subSectionTree" + site.getExternalId(); %>
             
     <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
         <fr:view name="site" property="orderedAssociatedSections">
             <fr:layout name="tree">
-                <fr:property name="treeId" value="<%= treeId %>"/>
+                <fr:property name="expandable" value="true" />
                 <fr:property name="fieldId" value="sections-order"/>
-                
+
 	             <fr:property name="eachLayout" value="values"/>
                 <fr:property name="childrenFor(Section)" value="everythingForTree"/>
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
@@ -137,22 +135,7 @@
             <fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.externalId}&" + context  + "#item-${externalId}"%>"/>
         	<fr:destination name="functionality.view" path="<%= actionName + "?method=section&siteID=" + siteId + "&sectionID=${section.externalId}&" + context  + "#content-${externalId}"%>"/>
         </fr:view>
-
-		<p class="mtop15">
-		    <fr:form action="<%= actionName + "?method=section&amp;" + context + "&amp;sectionID=" + sectionId %>">
-		        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
-		            <bean:message key="button.sections.order.save" bundle="SITE_RESOURCES"/>
-		        </html:button>
-		        <html:submit>
-		            <bean:message key="button.sections.order.reset" bundle="SITE_RESOURCES"/>
-		        </html:submit>
-		    </fr:form>
-	    </p>
     </div>
-    
-	<p style="color: #888;">
-		<em><bean:message key="message.section.reorder.tip" bundle="SITE_RESOURCES"/></em>
-	</p>
     
 </logic:notEmpty>
 

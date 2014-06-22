@@ -36,8 +36,7 @@
 	<fr:edit id="inquiryResponsePeriod" name="definitionPeriodBean" schema="net.sourceforge.fenixedu.domain.inquiry.SelectInquiryResponsePeriod.edit">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
-			<fr:destination name="postBack" path="/defineResponsePeriods.do?method=prepare"/>
-			<fr:destination name="cancel" path="/defineResponsePeriods.do?method=prepare"/>
+			<fr:destination name="postBack" path="/defineResponsePeriods.do?method=changeSemester"/>
 	   	</fr:layout>	    	
 	</fr:edit>
 	<html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
@@ -56,8 +55,6 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
 	 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-				<fr:destination name="postBack" path="/defineResponsePeriods.do?method=changeLanguage"/>
-				<fr:destination name="cancel" path="/defineResponsePeriods.do?method=prepare"/>
 		   	</fr:layout>	    	
 		</fr:edit>
 	</logic:notPresent>

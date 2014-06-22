@@ -66,7 +66,7 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
     }
 
     private void canBeDeleted() {
-        for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
             for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
                 for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
                     for (QuestionAnswer questionAnswer : inquiryQuestion.getQuestionAnswers()) {

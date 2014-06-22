@@ -75,7 +75,7 @@ public class DelegateInquiryBean implements Serializable {
         CurricularCourseInquiryTemplate courseInquiryTemplate =
                 CurricularCourseInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
         setCurricularBlockResults(new ArrayList<BlockResultsSummaryBean>());
-        for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocksSet()) {
             getCurricularBlockResults().add(
                     new BlockResultsSummaryBean(inquiryBlock, results, person, ResultPersonCategory.DELEGATE));
         }
@@ -106,7 +106,7 @@ public class DelegateInquiryBean implements Serializable {
             ExecutionCourse executionCourse, InquiryDelegateAnswer inquiryDelegateAnswer) {
         setDelegateInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
         setInquiryDelegateAnswer(inquiryDelegateAnswer);
-        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocksSet()) {
             getDelegateInquiryBlocks().add(new InquiryBlockDTO(inquiryDelegateAnswer, inquiryBlock));
         }
     }

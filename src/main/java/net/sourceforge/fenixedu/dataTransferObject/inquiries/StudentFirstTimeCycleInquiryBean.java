@@ -66,7 +66,7 @@ public class StudentFirstTimeCycleInquiryBean implements Serializable {
         setPhdProcess(phdProcess);
         setStudentInquiryTemplate(studentInquiryTemplate);
         setStudentInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
-        for (InquiryBlock inquiryBlock : studentInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : studentInquiryTemplate.getInquiryBlocksSet()) {
             getStudentInquiryBlocks().add(new InquiryBlockDTO(inquiryBlock));
         }
 

@@ -59,7 +59,7 @@ public class CoordinatorInquiryBean implements Serializable {
             InquiryCoordinatorAnswer inquiryCoordinatorAnswer) {
         setCoordinatorInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
         setInquiryCoordinatorAnswer(inquiryCoordinatorAnswer);
-        for (InquiryBlock inquiryBlock : coordinatorInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : coordinatorInquiryTemplate.getInquiryBlocksSet()) {
             getCoordinatorInquiryBlocks().add(new InquiryBlockDTO(inquiryCoordinatorAnswer, inquiryBlock));
         }
     }
