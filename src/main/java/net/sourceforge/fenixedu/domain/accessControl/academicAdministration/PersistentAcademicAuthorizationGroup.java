@@ -341,8 +341,9 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
         for (PersistentAccessGroup group : Bennu.getInstance().getPersistentAccessGroupSet()) {
             if (group instanceof PersistentAcademicAuthorizationGroup) {
                 PersistentAcademicAuthorizationGroup academicGroup = (PersistentAcademicAuthorizationGroup) group;
-                if (academicGroup.getOperation().equals(operation) && academicGroup.getFullProgramSet().containsAll(programs)
-                        && academicGroup.getOfficeSet().containsAll(offices)) {
+                if (academicGroup.getOperation().equals(operation)
+                        && academicGroup.getFullProgramSet().containsAll(nullToEmptySet(programs))
+                        && academicGroup.getOfficeSet().containsAll(nullToEmptySet(offices))) {
                     members.addAll(academicGroup.getElements());
                 }
             }

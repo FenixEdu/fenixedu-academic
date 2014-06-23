@@ -73,9 +73,9 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
         setBeanData(request, definitionPeriodBean);
         request.setAttribute("definitionPeriodBean", definitionPeriodBean);
 
-        return new ActionForward("/defineResponsePeriods.do?method=prepare&executionSemesterID="
+        return redirect("/defineResponsePeriods.do?method=prepare&executionSemesterID="
                 + definitionPeriodBean.getExecutionPeriod().getExternalId() + "&inquiryType="
-                + definitionPeriodBean.getResponsePeriodType().toString(), true);
+                + definitionPeriodBean.getResponsePeriodType().toString(), request);
     }
 
     private InquiryDefinitionPeriodBean getInquiryBean(HttpServletRequest request) {
