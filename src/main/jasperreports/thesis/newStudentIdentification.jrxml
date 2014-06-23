@@ -168,6 +168,9 @@
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA["reports/thesis/thesisReport_keywords.jasper"]]></subreportExpression>
 			</subreport>
+			<break type="Page">
+				<reportElement x="0" y="91"	width="425"	height="0"/>
+			</break>
 			<textField isBlankWhenNull="false">
 				<reportElement key="abstractPt-title" positionType="Float" x="0" y="92" width="425" height="17"/>
 				<box>
