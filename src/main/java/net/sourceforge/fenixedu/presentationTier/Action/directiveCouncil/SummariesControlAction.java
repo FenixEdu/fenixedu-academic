@@ -622,17 +622,17 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
         spreadsheet.newHeaderRow();
 
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.semester"));
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.department"), 10000);
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.course"), 10000);
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.lessons"));
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.lessons.summaries"));
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.lessons.summaries.percentage"));
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.lessons.notTaught.summaries"));
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.lessons.notTaught.summaries.percentage"));
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.professorName"), 10000);
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.professorUsername"));
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION,  "label.excel.professorEmail"), 10000);
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.semester"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.department"), 10000);
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.course"), 10000);
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.lessons"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.lessons.summaries"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.lessons.summaries.percentage"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.lessons.notTaught.summaries"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.lessons.notTaught.summaries.percentage"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.professorName"), 10000);
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.professorUsername"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.professorEmail"), 10000);
     }
 
 }
