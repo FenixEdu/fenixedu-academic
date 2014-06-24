@@ -173,6 +173,11 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     }
 
     @Atomic
+    public void editGraduateTitleSuffix(MultiLanguageString graduateTitleSuffix) {
+        setGraduateTitleSuffix(graduateTitleSuffix);
+    }
+
+    @Atomic
     public CycleCourseGroupInformation createCycleCourseGroupInformation(final ExecutionYear executionYear,
             String graduatedTitle, String graduatedTitleEn) {
         if (getCycleCourseGroupInformationByExecutionYear(executionYear) != null) {

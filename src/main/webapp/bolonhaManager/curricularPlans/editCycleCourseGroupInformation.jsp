@@ -33,8 +33,37 @@
 	<h:outputFormat value="<h2>#{bolonhaBundle['edit.param']} </h2>" escape="false">
 		<f:param value="#{bolonhaBundle['courseGroup']}"/>
 	</h:outputFormat>
-	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 	
+	<h:form>
+		<h:outputText escape="false" value="<input alt='input.courseGroupID' id='courseGroupSuffixID' name='courseGroupID' type='hidden' value='#{CycleCourseGroupInformationManagement.courseGroupID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.executionYearID' id='executionYearSuffixID' name='executionYearID' type='hidden' value='#{CycleCourseGroupInformationManagement.executionYearID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanSuffixID' name='degreeCurricularPlanID' type='hidden' value='#{CycleCourseGroupInformationManagement.degreeCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.contextID' id='contextSuffixID' name='contextID' type='hidden' value='#{CycleCourseGroupInformationManagement.contextID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.organizeBy' id='organizeBySuffix' name='organizeBy' type='hidden' value='#{CycleCourseGroupInformationManagement.organizeBy}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.showRules' id='showRulesSuffix' name='showRules' type='hidden' value='#{CycleCourseGroupInformationManagement.showRules}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.hideCourses' id='hideCoursesSuffix' name='hideCourses' type='hidden' value='#{CycleCourseGroupInformationManagement.hideCourses}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.action' id='actionSuffix' name='action' type='hidden' value='#{CycleCourseGroupInformationManagement.action}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.toOrder' id='toOrderSuffix' name='toOrder' type='hidden' value='#{CycleCourseGroupInformationManagement.toOrder}'/>"/>
+
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat4'>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitleSuffix']} (pt) : </label>" escape="false"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.suffixName']}" id="suffixName" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.graduatedTitleSuffix}"/>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitleSuffix']} (en):</label>" escape="false"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.suffixNameEn']}" id="suffixNameEn" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.graduatedTitleSuffixEn}"/>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="</fieldset></div>" escape="false"/>	
+
+		<h:outputText value="<p>" escape="false"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{bolonhaBundle['save']}"
+			action="#{CycleCourseGroupInformationManagement.editGraduatedTitleSuffix}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
+			action="editCurricularPlanStructure"/>	
+		<h:outputText value="</p>" escape="false"/>
+	</h:form>
+
+	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>	
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CycleCourseGroupInformationManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.executionYearID' id='executionYearID' name='executionYearID' type='hidden' value='#{CycleCourseGroupInformationManagement.executionYearID}'/>"/>
@@ -47,7 +76,7 @@
 		<h:outputText escape="false" value="<input alt='input.toOrder' id='toOrder' name='toOrder' type='hidden' value='#{CycleCourseGroupInformationManagement.toOrder}'/>"/>
 
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat2'>" escape="false"/>
 
 		
 		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.executionYear']}:</label> " escape="false"/>		
@@ -121,48 +150,48 @@
 	
 	<h:panelGroup rendered="#{!empty CycleCourseGroupInformationManagement.information}">
 
-	<h:form>
-		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CycleCourseGroupInformationManagement.degreeCurricularPlanID}'/>"/>
-		<h:outputText escape="false" value="<input alt='input.executionYearID' id='executionYearID' name='executionYearID' type='hidden' value='#{CycleCourseGroupInformationManagement.executionYearID}'/>"/>
-		<h:outputText escape="false" value="<input alt='input.courseGroupID' id='courseGroupID' name='courseGroupID' type='hidden' value='#{CycleCourseGroupInformationManagement.courseGroupID}'/>"/>
-		<h:outputText escape="false" value="<input alt='input.contextID' id='contextID' name='contextID' type='hidden' value='#{CycleCourseGroupInformationManagement.contextID}'/>"/>
-		<h:outputText escape="false" value="<input alt='input.organizeBy' id='organizeBy' name='organizeBy' type='hidden' value='#{CycleCourseGroupInformationManagement.organizeBy}'/>"/>
-		<h:outputText escape="false" value="<input alt='input.showRules' id='showRules' name='showRules' type='hidden' value='#{CycleCourseGroupInformationManagement.showRules}'/>"/>
-		<h:outputText escape="false" value="<input alt='input.hideCourses' id='hideCourses' name='hideCourses' type='hidden' value='#{CycleCourseGroupInformationManagement.hideCourses}'/>"/>
-		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CycleCourseGroupInformationManagement.action}'/>"/>
-		<h:outputText escape="false" value="<input alt='input.toOrder' id='toOrder' name='toOrder' type='hidden' value='#{CycleCourseGroupInformationManagement.toOrder}'/>"/>
-		<h:outputText escape="false" value="<input alt='input.cycleCourseGroupInformationId' id='informationId' name='informationId' type='hidden' value='#{CycleCourseGroupInformationManagement.informationId}'/>"/>
-		
-		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
-
-		
-		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.executionYear']}:</label> " escape="false"/>		
-		<h:selectOneMenu value="#{CycleCourseGroupInformationManagement.editInformationExecutionYearId}">
-			<f:selectItems value="#{CycleCourseGroupInformationManagement.executionYearItems}" />
-		</h:selectOneMenu>
-		<h:outputText value="</p>" escape="false"/>
-		
-		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitle']} (pt):</label>" escape="false"/>
-		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.editGraduatedTitle}"/>
-		<h:message for="name" styleClass="error0"/>
-		<h:outputText value="</p>" escape="false"/>
-		
-		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitle']} (en):</label>" escape="false"/>
-		<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" required="true" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.editGraduatedTitleEn}"/>
-		<h:message for="nameEn" styleClass="error0"/>
-		<h:outputText value="</p>" escape="false"/>
-		
-
-		<h:outputText value="</fieldset></div>" escape="false"/>	
+		<h:form>
+			<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CycleCourseGroupInformationManagement.degreeCurricularPlanID}'/>"/>
+			<h:outputText escape="false" value="<input alt='input.executionYearID' id='executionYearID' name='executionYearID' type='hidden' value='#{CycleCourseGroupInformationManagement.executionYearID}'/>"/>
+			<h:outputText escape="false" value="<input alt='input.courseGroupID' id='courseGroupID' name='courseGroupID' type='hidden' value='#{CycleCourseGroupInformationManagement.courseGroupID}'/>"/>
+			<h:outputText escape="false" value="<input alt='input.contextID' id='contextID' name='contextID' type='hidden' value='#{CycleCourseGroupInformationManagement.contextID}'/>"/>
+			<h:outputText escape="false" value="<input alt='input.organizeBy' id='organizeBy' name='organizeBy' type='hidden' value='#{CycleCourseGroupInformationManagement.organizeBy}'/>"/>
+			<h:outputText escape="false" value="<input alt='input.showRules' id='showRules' name='showRules' type='hidden' value='#{CycleCourseGroupInformationManagement.showRules}'/>"/>
+			<h:outputText escape="false" value="<input alt='input.hideCourses' id='hideCourses' name='hideCourses' type='hidden' value='#{CycleCourseGroupInformationManagement.hideCourses}'/>"/>
+			<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CycleCourseGroupInformationManagement.action}'/>"/>
+			<h:outputText escape="false" value="<input alt='input.toOrder' id='toOrder' name='toOrder' type='hidden' value='#{CycleCourseGroupInformationManagement.toOrder}'/>"/>
+			<h:outputText escape="false" value="<input alt='input.cycleCourseGroupInformationId' id='informationId' name='informationId' type='hidden' value='#{CycleCourseGroupInformationManagement.informationId}'/>"/>
 			
-		<h:outputText value="<p>" escape="false"/>
-		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{bolonhaBundle['save']}"
-			action="#{CycleCourseGroupInformationManagement.editCourseGroupInformation}"/>
-		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
-			action="editCurricularPlanStructure"/>	
-		<h:outputText value="</p>" escape="false"/>
-	</h:form>	
+			<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+			<h:outputText value="<fieldset class='lfloat2'>" escape="false"/>
+
+			
+			<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.executionYear']}:</label> " escape="false"/>		
+			<h:selectOneMenu value="#{CycleCourseGroupInformationManagement.editInformationExecutionYearId}">
+				<f:selectItems value="#{CycleCourseGroupInformationManagement.executionYearItems}" />
+			</h:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+			
+			<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitle']} (pt):</label>" escape="false"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.editGraduatedTitle}"/>
+			<h:message for="name" styleClass="error0"/>
+			<h:outputText value="</p>" escape="false"/>
+			
+			<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitle']} (en):</label>" escape="false"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" required="true" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.editGraduatedTitleEn}"/>
+			<h:message for="nameEn" styleClass="error0"/>
+			<h:outputText value="</p>" escape="false"/>
+			
+
+			<h:outputText value="</fieldset></div>" escape="false"/>	
+				
+			<h:outputText value="<p>" escape="false"/>
+			<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{bolonhaBundle['save']}"
+				action="#{CycleCourseGroupInformationManagement.editCourseGroupInformation}"/>
+			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
+				action="editCurricularPlanStructure"/>	
+			<h:outputText value="</p>" escape="false"/>
+		</h:form>	
 
 	</h:panelGroup>
 	
