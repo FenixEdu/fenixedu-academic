@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%--
 
     Copyright © 2002 Instituto Superior Técnico
@@ -649,107 +648,172 @@
 		</fr:layout>
 	</fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
-		<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
+		<bean:message key="button.update.nickname" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:submit>
 </fr:form>
 
-<!--  -->
-Pode dividir em dois grupos: Nomes Proprios e Apelidos. <br> 
-<div style="float: left;">
+<!------------- Partial Names ------------------>
+<link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
+<script src='http://codepen.io/assets/libs/fullpage/jquery_and_jqueryui.js'></script>
 <%
 	final Person p = (Person) person;
 	final String[] nameParts = p.getName().split(" ");
-	final int size = (2 < nameParts.length) ? 2 : nameParts.length;
+	final int init_pos = (p.getGivenNames() == null ) ? 0 : p.getGivenNames().split(" ").length - 1;
+	final String notdef = BundleUtil.getStringFromResourceBundle(Bundle, "email.convoke.subject");
+	final String givenNames = (p.getGivenNames() == null ) ? "": p.getGivenNames();
+	final String familyNames = (p.getGivenNames() == null  ? "": p.getFamilyNames();
 %>
-<select id="givenNamesBox" size="5" width="25">
-<%
-	int i;
-	for(i = 0; i < size; i++) {
-	    String name = nameParts[i];
-%>
-		<option value="<%= name %>"> <%= name %></option>
-<%	    
+
+<style >
+#slider .ui-slider-range { 
+	background: #009ee3; 
+}
+
+#slider .ui-slider-handle { 
+	border-color: transparent; 
+	background: transparent;
+	outline: none;
+	
+}
+
+#sliderIMG {
+    position:absolute;
+    margin: -5px 0px 0px -15px;
+}
+
+.test {
+	width: 42px;
+	height:10px;
+	color: red;
+}
+
+.partialName {
+    padding-right: 15px;
+    padding-bottom: 5px;
+	display:table-cell;
+}
+</style>
+
+<script>
+$(function() {
+	var names = [];
+	var slider_values = $.makeArray($('.partialName').map(function(i,e){return $(e).position().left + $(e).width() - 10}));
+	
+	<%
+	for(int i = 0; i < nameParts.length; i++) {
+	%>
+		names.push( "<%= nameParts[i] %>" );
+	<%
 	}
-%>
-</select>
-</div>
-<div style="float: left;">
-<input type="image" 
-	style="vertical-align:middle"  
-	src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Circle_arrow_right_font_awesome.svg/512px-Circle_arrow_right_font_awesome.svg.png" 
-	width="25" height="25" onclick="partitionInGivenBox('givenNamesBox','familyNamesBox')"/>
-<br>
-<input type="image" 
-	style="vertical-align:middle" 
-	src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Circle_arrow_left_font_awesome.svg/512px-Circle_arrow_left_font_awesome.svg.png" 
-	width="25" height="25" onclick="partitionInFamilyBox('familyNamesBox','givenNamesBox')"/>
-</div>
-<div style="float: left;">
-<select id="familyNamesBox" size="5" width="25">
-<%	
-	for(; i < nameParts.length; i++) {
-	    String name = nameParts[i];
-%>
-	<option value="<%= name %>"> <%= name %></option>
-<%
+	%>
+    var last_i = -1;
+	var slider = $( "#slider" ).slider({
+	      range: "min",
+	      min: 0,
+	      max: $('.partialName').last().position().left + $('.partialName').last().width(),
+	      slide: function( event, ui ) {
+	        var i = findSelectedNames(ui.value);
+	        $('#GNames').text(names.slice(0,i).toString().replace(/\,/g, ' '));
+	        $('#FNames').text(names.slice(i).toString().replace(/\,/g, ' '));
+	        slider.slider('value', slider_values[i-1]);
+	        $("#sliderIMG").css('left', $('.ui-slider-handle').position().left);
+			if(last_i != i) {
+				last_i = i;
+				$.post($('#saveNames').attr('href'), { given: $('#GNames').text(), family: $('#FNames').text()  });
+		    }
+	    	return false;
+	      }
+	});
+	function findSelectedNames(value) {
+	    var i;
+	    for(i = 1; i < slider_values.length; i++) {
+	    	if(value < slider_values[i]) {
+	        	break;
+	        }
+	    }
+	    console.log(i);
+	    return i;
 	}
-%> 
+});
 
-</select>
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<script type="text/javascript" >
-function partitionInFamilyBox(fromSelectBoxName, toSelectBoxName) 
-{
-	var fromSelectBox = document.getElementById(fromSelectBoxName);
-	var toSelectBox = document.getElementById(toSelectBoxName);
-	var fromIndex = fromSelectBox.selectedIndex;
-	for(var i = 0; i <= fromIndex; i++) {
-		switchElement(fromSelectBox,0,toSelectBox, toSelectBox.length);
-	}
-}
+$(document).ready(function(){
+	//slider
+	$('#slider').width($('.partialName').last().position().left + $('.partialName').last().width());
+	$('#slider').slider('value', $('#name<%= init_pos %>').position().left + $('#name<%= init_pos %>').width() - 10);
+	//image
+	$('#sliderIMG').height($('.ui-slider-handle').height() * 1.5);
+	$('#sliderIMG').width($('.ui-slider-handle').width() * 1.5);
+    $("#sliderIMG").css('top', $('.ui-slider-handle').position().top);
+    $('#sliderIMG').css('left',$('#name<%= init_pos %>').position().left + $('#name<%= init_pos %>').width() - 10);
+});
 
-function partitionInGivenBox(fromSelectBoxName, toSelectBoxName) 
-{
-	var fromSelectBox = document.getElementById(fromSelectBoxName);
-	var toSelectBox = document.getElementById(toSelectBoxName);
-	var fromIndex = fromSelectBox.selectedIndex;
-	for(var i = fromSelectBox.length-1; i >= fromIndex; i--) {
-		switchElement(fromSelectBox,i,toSelectBox, 0);
-	}
-}
-
-function switchElement(fromSelectBox,fromIndex,toSelectBox, toIndex)
-{
-	var name = removeElement(fromSelectBox,fromIndex);
-	addElement(toSelectBox, toIndex, name);
-}
-
-function removeElement(selectBox,index)
-{
-	var deletedEl = selectBox[index].innerHTML;
-	selectBox.remove(index);
-	return deletedEl;
-}
-
-function addElement(selectBox, toIndex, newName)
-{
-	var option = document.createElement("option");
-	option.text = newName;
-	selectBox.add(option,selectBox[toIndex]);
-}
 </script>
-<!--  -->
+
+<br>
+<p><bean:message key="label.partialNames" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
+
+<table class="tstyle2 thleft thlight mtop15 thwhite">
+	<tr>
+		<th><bean:message key="label.givenNames"/>:</th>
+		<td > <span id="GNames"><%= (p.getGivenNames() == null) ? : %></span> </td>
+	</tr>
+	<tr>
+		<th><bean:message key="label.familyNames" />:</th>
+		<td ><span id="FNames"><%= p.getFamilyNames() %></span></td>
+	</tr>
+</table>
+
+<div class="partialNameSelector">
+<%
+	int name_size = 0;
+	for(int idx = 0; idx < nameParts.length; idx++) {
+%>
+	<div class="partialName" id="name<%= idx %>"><span><%= nameParts[idx] %></span></div>
+<%
+}
+%>
+<div id="slider" style="overflow-y:visible;">
+	<img src="<%= request.getContextPath() %>/images/text_slider.png" id="sliderIMG"/>
+</div>
+</div>
+<a class="hide btn btn-primary" href="${pageContext.request.contextPath}/person/partyContacts.do?method=savePartialNames" id="saveNames">
+	<bean:message key="button.update.partialName" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+</a>
+	
+<!-- End Division of Names -->
 
 
-<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+<fr:view name="LOGGED_USER_ATTRIBUTE" property="person">
+	<fr:schema type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">
+	    <fr:slot name="name" key="label.person.name">
+	        <fr:property name="size" value="50"/>
+	    </fr:slot> 
+	   <fr:slot name="gender" key="label.person.sex" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	    <fr:slot name="idDocumentType" key="label.person.identificationDocumentType">
+	        <fr:property name="excludedValues" value="CITIZEN_CARD" />
+	    </fr:slot>
+	    <fr:slot name="documentIdNumber" key="label.person.identificationDocumentNumber"/>
+	    <fr:slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace"/> 
+	    <fr:slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate"/>
+	    <fr:slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate"/>
+	    <fr:slot name="socialSecurityNumber" key="label.person.contributorNumber"/>
+	    <fr:slot name="profession" key="label.person.occupation"/>
+	    <fr:slot name="maritalStatus" key="label.person.maritalStatus"/>
+	    <fr:slot name="dateOfBirthYearMonthDay" key="label.person.birth"/>
+	    <fr:slot name="country" layout="menu-select" key="label.person.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
+	        <fr:property name="format" value="${countryNationality}"/>
+	        <fr:property name="sortBy" value="name=asc" />
+	        <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	    </fr:slot> 
+	    <fr:slot name="countryOfBirth" layout="menu-select" key="label.person.countryOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+	        <fr:property name="format" value="${name}"/>
+	        <fr:property name="sortBy" value="name=asc" />
+	        <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	    </fr:slot>
+	    <fr:slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
+	    <fr:slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
+	    <fr:slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
+	</fr:schema>
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight mtop15 thwhite"/>
 	</fr:layout>	

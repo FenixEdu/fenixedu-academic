@@ -209,9 +209,11 @@
 		<property name="size" value="50"/>
 	</slot>
 </schema>
+
 <schema name="net.sourceforge.fenixedu.domain.Person.contact.info.email" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="email"/>
 </schema>
+
 <schema name="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">
 	<slot name="name" key="label.person.name">
 		<property name="size" value="50"/>
@@ -253,6 +255,7 @@
 	<slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
 	<setter signature="setIdentificationAndNames(documentIdNumber,idDocumentType,name,givenNames,familyNames)"/>
 </schema>
+
 <schema name="net.sourceforge.fenixedu.domain.Person.personal.info" extends="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames" type="net.sourceforge.fenixedu.domain.Person" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
 
