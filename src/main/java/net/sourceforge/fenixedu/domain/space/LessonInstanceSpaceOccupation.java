@@ -50,11 +50,11 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
         super();
 
-        Occupation allocation =
-                SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(allocatableSpace, LessonInstanceSpaceOccupation.class);
-        if (allocation != null) {
-            throw new DomainException("error.LessonInstanceSpaceOccupation.occupation.for.this.space.already.exists");
-        }
+//        Occupation allocation =
+//                SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(allocatableSpace, lesson);
+//        if (allocation != null) {
+//            throw new DomainException("error.LessonInstanceSpaceOccupation.occupation.for.this.space.already.exists");
+//        }
 
         setResource(allocatableSpace);
     }

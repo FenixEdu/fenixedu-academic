@@ -191,9 +191,9 @@ public class LessonInstance extends LessonInstance_Base {
 
     private void lessonInstanceSpaceOccupationManagement(Space space) {
         if (space != null) {
+            final Lesson lesson = getLesson();
             LessonInstanceSpaceOccupation instanceSpaceOccupation =
-                    (LessonInstanceSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(space,
-                            LessonInstanceSpaceOccupation.class);
+                    (LessonInstanceSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(space, lesson);
 
             instanceSpaceOccupation =
                     instanceSpaceOccupation == null ? new LessonInstanceSpaceOccupation(space) : instanceSpaceOccupation;

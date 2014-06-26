@@ -408,8 +408,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public void removeRoomOccupation(Space room) {
         if (hasOccupationForRoom(room)) {
             WrittenEvaluationSpaceOccupation occupation =
-                    (WrittenEvaluationSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(room,
-                            WrittenEvaluationSpaceOccupation.class);
+                    (WrittenEvaluationSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(room, this);
             removeWrittenEvaluationSpaceOccupations(occupation);
         }
     }
@@ -430,8 +429,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         if (!hasOccupationForRoom(room)) {
 
             WrittenEvaluationSpaceOccupation occupation =
-                    (WrittenEvaluationSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(room,
-                            WrittenEvaluationSpaceOccupation.class);
+                    (WrittenEvaluationSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(room, this);
 
             occupation = occupation == null ? new WrittenEvaluationSpaceOccupation(room) : occupation;
             occupation.edit(this);
@@ -495,9 +493,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         this.setEnrollmentBeginTimeDate(enrolmentBeginTime);
         this.setEnrollmentEndTimeDate(enrolmentEndTime);
         for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
-            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
-                    "log.executionCourse.evaluation.generic.edited.enrolment", getPresentationName(), ec.getName(),
-                    ec.getDegreePresentationString());
+            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.evaluation.generic.edited.enrolment",
+                    getPresentationName(), ec.getName(), ec.getDegreePresentationString());
         }
     }
 

@@ -2,6 +2,120 @@
 
 This file contains the steps required to update from one version to another. The following sections represent the steps required to update from the previous to that version. 
 
+## Migrating from 2.x to 3.5 or greater
+
+In addition to every step indicated in the 2.2.x to 3.0 migration instructions, you must also run the following script to fix problems with the space migration.
+If this script is not run, the application will still work, but the presentation of space occupations will only be rational for new occupations.
+This script can be run on a running application with concurrent operations.
+
+    ```java
+	package pt.ist.fenix;
+	
+	import java.util.Set;
+	
+	import net.sourceforge.fenixedu.domain.Evaluation;
+	import net.sourceforge.fenixedu.domain.Lesson;
+	import net.sourceforge.fenixedu.domain.LessonInstance;
+	import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+	import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
+	import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
+	
+	import org.fenixedu.bennu.core.domain.Bennu;
+	import org.fenixedu.bennu.scheduler.custom.CustomTask;
+	import org.fenixedu.spaces.domain.Space;
+	
+	public class SeperateInstanceSpaceOccupations extends CustomTask {
+	
+	    @Override
+	    public void runTask() throws Exception {
+	        int count = 0;
+	        for (final Lesson lesson : Bennu.getInstance().getLessonsSet()) {
+	            if (++count % 100 == 0) {
+	                taskLog("Processed %s lessons\n", count);
+	            }
+	            final Set<LessonInstance> instances = lesson.getLessonInstancesSet();
+	            if (!instances.isEmpty()) {
+	                for (final LessonInstance instance : instances) {
+	                    final LessonInstanceSpaceOccupation occupation = instance.getLessonInstanceSpaceOccupation();
+	                    if (occupation != null && !isExclusive(occupation, lesson)) {
+	                        final Space space = occupation.getSpace();
+	                        if (space != null) {
+	                            final LessonInstanceSpaceOccupation exclusiveOccupation = findExclusiveOccupation(lesson, occupation.getSpace());
+	                            occupation.removeLessonInstances(instance);
+	                            exclusiveOccupation.addLessonInstances(instance);
+	                            if (occupation.getLessonInstancesSet().isEmpty()) {
+	                                occupation.delete();
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	
+	        count = 0;
+	        for (final Evaluation evaluation : Bennu.getInstance().getEvaluationsSet()) {
+	            if (++count % 100 == 0) {
+	                taskLog("Processed %s evaluations\n", count);
+	            }
+	            if (evaluation instanceof WrittenEvaluation) {
+	                final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
+	                for (final WrittenEvaluationSpaceOccupation occupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) {
+	                    if (!isExclusive(occupation, writtenEvaluation)) {
+	                        final Space space = occupation.getSpace();
+	                        if (space != null) {
+	                            final WrittenEvaluationSpaceOccupation exclusiveOccupation = findExclusiveOccupation(writtenEvaluation, space);
+	                            occupation.removeWrittenEvaluations(writtenEvaluation);
+	                            exclusiveOccupation.addWrittenEvaluations(writtenEvaluation);
+	                            if (occupation.getWrittenEvaluationsSet().isEmpty()) {
+	                                occupation.delete();
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	
+	    private LessonInstanceSpaceOccupation findExclusiveOccupation(final Lesson lesson, final Space space) {
+	        for (final LessonInstance instance : lesson.getLessonInstancesSet()) {
+	            final LessonInstanceSpaceOccupation occupation = instance.getLessonInstanceSpaceOccupation();
+	            if (occupation != null && occupation.getSpace() == space && isExclusive(occupation, lesson)) {
+	                return occupation;
+	            }
+	        }
+	        return new LessonInstanceSpaceOccupation(space);
+	    }
+	
+	    private WrittenEvaluationSpaceOccupation findExclusiveOccupation(final WrittenEvaluation evaluation, final Space space) {
+	        for (final WrittenEvaluationSpaceOccupation occupation : evaluation.getWrittenEvaluationSpaceOccupationsSet()) {
+	            if (occupation.getSpace() == space && isExclusive(occupation, evaluation)) {
+	                return occupation;
+	            }
+	        }
+	        return new WrittenEvaluationSpaceOccupation(space);
+	    }
+	
+	    private boolean isExclusive(final LessonInstanceSpaceOccupation occupation, final Lesson lesson) {
+	        for (final LessonInstance instance : occupation.getLessonInstancesSet()) {
+	            if (instance.getLesson() != lesson) {
+	                return false;
+	            }
+	        }
+	        return true;
+	    }
+	
+	    private boolean isExclusive(final WrittenEvaluationSpaceOccupation occupation, final WrittenEvaluation evaluation) {
+	        for (final WrittenEvaluation otherEvaluation : occupation.getWrittenEvaluationsSet()) {
+	            if (otherEvaluation != evaluation) {
+	                return false;
+	            }
+	        }
+	        return true;
+	    }
+	
+	}
+    ```
+
 
 ## Migrating from 2.2.x to 3.0
 

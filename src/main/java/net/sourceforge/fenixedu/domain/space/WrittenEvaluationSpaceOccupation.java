@@ -49,12 +49,12 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 
         super();
 
-        Occupation allocation =
-                SpaceUtils
-                .getFirstOccurrenceOfResourceAllocationByClass(allocatableSpace, WrittenEvaluationSpaceOccupation.class);
-        if (allocation != null) {
-            throw new DomainException("error.WrittenEvaluationSpaceOccupation.occupation.for.this.space.already.exists");
-        }
+//        Occupation allocation =
+//                SpaceUtils
+//                .getFirstOccurrenceOfResourceAllocationByClass(allocatableSpace, WrittenEvaluationSpaceOccupation.class);
+//        if (allocation != null) {
+//            throw new DomainException("error.WrittenEvaluationSpaceOccupation.occupation.for.this.space.already.exists");
+//        }
 
         setResource(allocatableSpace);
     }
