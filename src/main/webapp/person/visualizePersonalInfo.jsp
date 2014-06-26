@@ -18,6 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@ page import="org.fenixedu.bennu.core.i18n.BundleUtil" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Person" %>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -659,9 +660,6 @@
 	final Person p = (Person) person;
 	final String[] nameParts = p.getName().split(" ");
 	final int init_pos = (p.getGivenNames() == null ) ? 0 : p.getGivenNames().split(" ").length - 1;
-	final String notdef = BundleUtil.getStringFromResourceBundle(Bundle, "email.convoke.subject");
-	final String givenNames = (p.getGivenNames() == null ) ? "": p.getGivenNames();
-	final String familyNames = (p.getGivenNames() == null  ? "": p.getFamilyNames();
 %>
 
 <style >
@@ -713,13 +711,17 @@ $(function() {
 	      max: $('.partialName').last().position().left + $('.partialName').last().width(),
 	      slide: function( event, ui ) {
 	        var i = findSelectedNames(ui.value);
-	        $('#GNames').text(names.slice(0,i).toString().replace(/\,/g, ' '));
-	        $('#FNames').text(names.slice(i).toString().replace(/\,/g, ' '));
+			var GNames = names.slice(0,i).toString().replace(/\,/g, ' ');
+			var FNames = names.slice(i).toString().replace(/\,/g, ' ');
 	        slider.slider('value', slider_values[i-1]);
 	        $("#sliderIMG").css('left', $('.ui-slider-handle').position().left);
 			if(last_i != i) {
 				last_i = i;
-				$.post($('#saveNames').attr('href'), { given: $('#GNames').text(), family: $('#FNames').text()  });
+				$.post($('#saveNames').attr('href'), { given: GNames, family: FNames  })
+					.done(function() {
+					        $('#GNames').text(GNames);
+					        $('#FNames').text(FNames);							
+						});
 		    }
 	    	return false;
 	      }
@@ -731,7 +733,6 @@ $(function() {
 	        	break;
 	        }
 	    }
-	    console.log(i);
 	    return i;
 	}
 });
@@ -755,11 +756,11 @@ $(document).ready(function(){
 <table class="tstyle2 thleft thlight mtop15 thwhite">
 	<tr>
 		<th><bean:message key="label.givenNames"/>:</th>
-		<td > <span id="GNames"><%= (p.getGivenNames() == null) ? : %></span> </td>
+		<td > <span id="GNames">${person.givenNames}</span> </td>
 	</tr>
 	<tr>
 		<th><bean:message key="label.familyNames" />:</th>
-		<td ><span id="FNames"><%= p.getFamilyNames() %></span></td>
+		<td ><span id="FNames">${person.familyNames}</span></td>
 	</tr>
 </table>
 
@@ -776,7 +777,7 @@ $(document).ready(function(){
 	<img src="<%= request.getContextPath() %>/images/text_slider.png" id="sliderIMG"/>
 </div>
 </div>
-<a class="hide btn btn-primary" href="${pageContext.request.contextPath}/person/partyContacts.do?method=savePartialNames" id="saveNames">
+<a class="hide btn btn-primary" href="${pageContext.request.contextPath}/person/partyContacts.do?method=saveNamesDivision" id="saveNames">
 	<bean:message key="button.update.partialName" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 </a>
 	
