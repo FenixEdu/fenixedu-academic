@@ -18,7 +18,6 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page import="org.fenixedu.bennu.core.i18n.BundleUtil" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Person" %>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
