@@ -314,7 +314,7 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
         request.setAttribute("bean", bean);
         RenderUtils.invalidateViewState("period");
         request.setAttribute("period", period);
-        RenderUtils.invalidateViewState("period");
+        RenderUtils.invalidateViewState("quirks");
         request.setAttribute("quirks", quirks);
         return mapping.findForward("addPhdProgramPostingRule");
     }

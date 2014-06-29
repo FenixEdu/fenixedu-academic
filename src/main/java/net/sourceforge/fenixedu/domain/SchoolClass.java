@@ -41,7 +41,8 @@ public class SchoolClass extends SchoolClass_Base {
 
         @Override
         public int compare(SchoolClass o1, SchoolClass o2) {
-            return o1.getNome().compareTo(o2.getNome());
+            final int i = o1.getNome().compareTo(o2.getNome());
+            return i == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : i;
         }
 
     };

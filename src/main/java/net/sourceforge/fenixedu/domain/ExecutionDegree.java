@@ -33,6 +33,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
@@ -1362,6 +1364,12 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.SchoolClass> getSchoolClasses() {
         return getSchoolClassesSet();
+    }
+
+    public java.util.SortedSet<net.sourceforge.fenixedu.domain.SchoolClass> getSortedSchoolClasses() {
+        final SortedSet<SchoolClass> result = new TreeSet<>(SchoolClass.COMPARATOR_BY_NAME);
+        result.addAll(getSchoolClassesSet());
+        return result;
     }
 
     @Deprecated

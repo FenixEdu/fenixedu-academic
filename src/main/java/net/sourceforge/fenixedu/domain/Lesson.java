@@ -263,7 +263,7 @@ public class Lesson extends Lesson_Base {
                 } else {
                     LessonInstanceSpaceOccupation allocation =
                             (LessonInstanceSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(newRoom,
-                                    LessonInstanceSpaceOccupation.class);
+                                    this);
                     allocation.edit(lessonInstance);
                 }
             }
@@ -643,7 +643,7 @@ public class Lesson extends Lesson_Base {
     private YearMonthDay getValidBeginDate(YearMonthDay startDate) {
         YearMonthDay lessonBegin =
                 startDate.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat())
-                .toYearMonthDay();
+                        .toYearMonthDay();
         if (lessonBegin.isBefore(startDate)) {
             lessonBegin = lessonBegin.plusDays(NUMBER_OF_DAYS_IN_WEEK);
         }
@@ -833,21 +833,21 @@ public class Lesson extends Lesson_Base {
             final int dayIncrement =
                     getFrequency() == FrequencyType.BIWEEKLY ? FrequencyType.WEEKLY.getNumberOfDays() : getFrequency()
                             .getNumberOfDays();
-                    boolean shouldAdd = true;
-                    while (true) {
-                        if (isDayValid(startDateToSearch, lessonCampus)) {
-                            if (getFrequency() != FrequencyType.BIWEEKLY || shouldAdd) {
-                                if (!isHoliday(startDateToSearch, lessonCampus)) {
-                                    result.add(startDateToSearch);
-                                }
-                            }
-                            shouldAdd = !shouldAdd;
-                        }
-                        startDateToSearch = startDateToSearch.plusDays(dayIncrement);
-                        if (startDateToSearch.isAfter(endDateToSearch)) {
-                            break;
+            boolean shouldAdd = true;
+            while (true) {
+                if (isDayValid(startDateToSearch, lessonCampus)) {
+                    if (getFrequency() != FrequencyType.BIWEEKLY || shouldAdd) {
+                        if (!isHoliday(startDateToSearch, lessonCampus)) {
+                            result.add(startDateToSearch);
                         }
                     }
+                    shouldAdd = !shouldAdd;
+                }
+                startDateToSearch = startDateToSearch.plusDays(dayIncrement);
+                if (startDateToSearch.isAfter(endDateToSearch)) {
+                    break;
+                }
+            }
         }
         return result;
     }
@@ -1178,8 +1178,8 @@ public class Lesson extends Lesson_Base {
                 intervals.add(new Interval(day.toLocalDate().toDateTime(
                         new LocalTime(getBeginHourMinuteSecond().getHour(), getBeginHourMinuteSecond().getMinuteOfHour(),
                                 getBeginHourMinuteSecond().getSecondOfMinute())), day.toLocalDate().toDateTime(
-                                        new LocalTime(getEndHourMinuteSecond().getHour(), getEndHourMinuteSecond().getMinuteOfHour(),
-                                                getEndHourMinuteSecond().getSecondOfMinute()))));
+                        new LocalTime(getEndHourMinuteSecond().getHour(), getEndHourMinuteSecond().getMinuteOfHour(),
+                                getEndHourMinuteSecond().getSecondOfMinute()))));
             }
         }
         return intervals;

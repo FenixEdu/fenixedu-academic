@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -210,10 +211,43 @@ public class SpaceUtils {
         return Space.getSpaces().filter(space -> name.equals(space.getName())).findFirst().get();
     }
 
+    @Deprecated // TODO : remove this stuff in fenix v4 
     public static Occupation getFirstOccurrenceOfResourceAllocationByClass(Space space, Class<? extends Occupation> clazz) {
         if (clazz != null) {
             for (Occupation resourceAllocation : space.getOccupationSet()) {
                 if (resourceAllocation.getClass().equals(clazz)) {
+                    return resourceAllocation;
+                }
+            }
+        }
+        return null;
+    }
+
+    // This method is a hack because of a bad refactor. The new Occupation API does not allow sharing of occupation for different events.
+    // TODO : remove this stuff in fenix v4 after refactor is complete.
+    public static Occupation getFirstOccurrenceOfResourceAllocationByClass(final Space space, final WrittenEvaluation evaluation) {
+        for (final Occupation resourceAllocation : space.getOccupationSet()) {
+            if (resourceAllocation instanceof WrittenEvaluationSpaceOccupation) {
+                final WrittenEvaluationSpaceOccupation evaluationSpaceOccupation =
+                        (WrittenEvaluationSpaceOccupation) resourceAllocation;
+                final Set<WrittenEvaluation> evaluations = evaluationSpaceOccupation.getWrittenEvaluationsSet();
+                if (!evaluations.isEmpty() && evaluations.iterator().next() == evaluation) {
+                    return resourceAllocation;
+                }
+            }
+        }
+        return null;
+    }
+
+    // This method is a hack because of a bad refactor. The new Occupation API does not allow sharing of occupation for different events.
+    // TODO : remove this stuff in fenix v4 after refactor is complete.
+    public static Occupation getFirstOccurrenceOfResourceAllocationByClass(final Space space, final Lesson lesson) {
+        for (final Occupation resourceAllocation : space.getOccupationSet()) {
+            if (resourceAllocation instanceof LessonInstanceSpaceOccupation) {
+                final LessonInstanceSpaceOccupation lessonInstanceSpaceOccupation =
+                        (LessonInstanceSpaceOccupation) resourceAllocation;
+                final Set<LessonInstance> instancesSet = lessonInstanceSpaceOccupation.getLessonInstancesSet();
+                if (!instancesSet.isEmpty() && instancesSet.iterator().next().getLesson() == lesson) {
                     return resourceAllocation;
                 }
             }

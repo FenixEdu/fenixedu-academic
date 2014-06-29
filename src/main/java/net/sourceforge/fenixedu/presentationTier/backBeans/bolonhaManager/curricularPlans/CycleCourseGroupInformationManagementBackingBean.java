@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CycleCourseGroupInformationManagementBackingBean extends CurricularCourseManagementBackingBean {
 
@@ -41,6 +42,9 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
     private String informationId;
     private String editGraduatedTitle;
     private String editGraduatedTitleEn;
+
+    private String graduatedTitleSuffix;
+    private String graduatedTitleSuffixEn;
 
     private String editInformationExecutionYearId;
 
@@ -77,8 +81,25 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
         setEditGraduatedTitle(information.getGraduatedTitlePt());
         setEditGraduatedTitleEn(information.getGraduatedTitleEn());
         setEditInformationExecutionYearId(information.getExecutionYear().getExternalId());
+        setGraduatedTitle("");
+        setGraduatedTitleEn("");
 
         return "";
+    }
+
+    public String editGraduatedTitleSuffix() {
+        CycleCourseGroup courseGroup = getCourseGroup(getCourseGroupID());
+        MultiLanguageString graduateTitleSuffix =
+                new MultiLanguageString(MultiLanguageString.pt, this.graduatedTitleSuffix).with(MultiLanguageString.en,
+                        this.graduatedTitleSuffixEn);
+        try {
+            courseGroup.editGraduateTitleSuffix(graduateTitleSuffix);
+            this.addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "cycleCourseGroupInformationEdit"));
+            return "editCurricularPlanStructure";
+        } catch (DomainException e) {
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
+            return "";
+        }
     }
 
     public String editCourseGroupInformation() {
@@ -179,4 +200,27 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
         return FenixFramework.getDomainObject(getEditInformationExecutionYearId());
     }
 
+    public String getGraduatedTitleSuffix() {
+        CycleCourseGroup courseGroup = getCourseGroup(getCourseGroupID());
+        if (courseGroup.getGraduateTitleSuffix() != null) {
+            return courseGroup.getGraduateTitleSuffix().getContent(MultiLanguageString.pt);
+        }
+        return graduatedTitleSuffix;
+    }
+
+    public void setGraduatedTitleSuffix(String graduatedTitleSuffix) {
+        this.graduatedTitleSuffix = graduatedTitleSuffix;
+    }
+
+    public String getGraduatedTitleSuffixEn() {
+        CycleCourseGroup courseGroup = getCourseGroup(getCourseGroupID());
+        if (courseGroup.getGraduateTitleSuffix() != null) {
+            return courseGroup.getGraduateTitleSuffix().getContent(MultiLanguageString.en);
+        }
+        return graduatedTitleSuffixEn;
+    }
+
+    public void setGraduatedTitleSuffixEn(String graduatedTitleSuffixEn) {
+        this.graduatedTitleSuffixEn = graduatedTitleSuffixEn;
+    }
 }

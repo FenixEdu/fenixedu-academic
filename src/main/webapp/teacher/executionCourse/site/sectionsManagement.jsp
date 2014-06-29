@@ -120,9 +120,9 @@
 				<fr:property name="imageFor(TemplatedSectionInstance)" value="/images/icon-institutional.gif"/>
 
 				<fr:property name="schemaFor(Item)" value="site.item.name"/>
-                <fr:property name="childrenFor(Item)" value="fileContentSet"/>
+                <fr:property name="childrenFor(Item)" value="sortedFiles"/>
 
-				<fr:property name="schemaFor(FileContent)" value="item.file.filename"/>
+				<fr:property name="schemaFor(FileContent)" value="site.item.file.basic"/>
 				<fr:property name="imageFor(FileContent)" value="/images/icon-attachment.gif"/>
 				
 				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>

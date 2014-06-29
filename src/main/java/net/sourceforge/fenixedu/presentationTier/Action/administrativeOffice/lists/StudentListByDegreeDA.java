@@ -668,7 +668,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     protected static String getResourceMessage(String key) {
-        return BundleUtil.getString(Bundle.ACADEMIC, "academicAdminOffice", key);
+        return BundleUtil.getString(Bundle.ACADEMIC, key);
     }
 
     protected Set<CycleType> getAdministratedCycleTypes() {
