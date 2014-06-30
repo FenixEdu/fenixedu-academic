@@ -56,13 +56,13 @@
 <script src="https://rawgithub.com/timrwood/moment/2.0.0/moment.js"></script>
 <script type="text/javascript">
 	function changeStartWeek(lessonPeriodStartDate) {
-		var startWeekValue = $('input[name="newBeginDateWeek"]').attr("value") - 1;
+		var startWeekValue = $('input[name="newBeginDateWeek"]').val() - 1;
 		var lessonPeriodStartMoment = moment(lessonPeriodStartDate, "YYYY-MM-DD HH:mm:ss");
 		var newDate = lessonPeriodStartMoment.add('weeks', startWeekValue);
 		$('input[name="newBeginDate"]').val(newDate.format("DD/MM/YYYY"));
 	};
 	function changeEndWeek(lessonPeriodStartDate, lessonPeriodEndDate) {
-		var startWeekValue = $('input[name="newEndDateWeek"]').attr("value") - 1;
+		var startWeekValue = $('input[name="newEndDateWeek"]').val() - 1;
 		var lessonPeriodStartMoment = moment(lessonPeriodStartDate, "YYYY-MM-DD HH:mm:ss");
 		var lessonPeriodEndMoment = moment(lessonPeriodEndDate, "YYYY-MM-DD HH:mm:ss");
 		var newDate = lessonPeriodStartMoment.add('weeks', startWeekValue).add('days', 6);
@@ -73,7 +73,7 @@
 	};
 	function changeStartDate(lessonPeriodStartDate) {
 		var lessonPeriodStartMoment = moment(lessonPeriodStartDate, "YYYY-MM-DD HH:mm:ss");
-		var startDateValue = $('input[name="newBeginDate"]').attr("value") + "00:00:00";
+		var startDateValue = $('input[name="newBeginDate"]').val() + "00:00:00";
 		var startDateMoment = moment(startDateValue, "DD/MM/YYYY HH:mm:ss");
 		var weeks = startDateMoment.diff(lessonPeriodStartMoment, 'weeks') + 1;
 		$('input[name="newBeginDateWeek"]').val(weeks);
@@ -81,7 +81,7 @@
 	function changeEndDate(lessonPeriodStartDate, lessonPeriodEndDate) {
 		var lessonPeriodStartMoment = moment(lessonPeriodStartDate, "YYYY-MM-DD HH:mm:ss");
 		var lessonPeriodEndMoment = moment(lessonPeriodEndDate, "YYYY-MM-DD HH:mm:ss");
-		var endDateValue = $('input[name="newEndDate"]').attr("value") + "00:00:00";
+		var endDateValue = $('input[name="newEndDate"]').val() + "00:00:00";
 		var endDateMoment = moment(endDateValue, "DD/MM/YYYY HH:mm:ss");
 		var weeks = endDateMoment.diff(lessonPeriodStartMoment, 'weeks') + 1;
 		$('input[name="newEndDateWeek"]').val(weeks);
