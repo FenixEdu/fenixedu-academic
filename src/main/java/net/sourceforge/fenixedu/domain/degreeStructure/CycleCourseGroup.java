@@ -95,6 +95,13 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
     }
 
+    final public String getGraduateTitleSuffix(final ExecutionYear executionYear, final Locale locale) {
+        if (getMostRecentCycleCourseGroupInformation(executionYear) != null) {
+            return getMostRecentCycleCourseGroupInformation(executionYear).getGraduateTitleSuffix().getContent(locale);
+        }
+        return null;
+    }
+
     public boolean isFirstCycle() {
         return getCycleType() == CycleType.FIRST_CYCLE;
     }
@@ -173,8 +180,15 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     }
 
     @Atomic
+    @Deprecated
     public void editGraduateTitleSuffix(MultiLanguageString graduateTitleSuffix) {
         setGraduateTitleSuffix(graduateTitleSuffix);
+    }
+
+    @Override
+    @Deprecated
+    public MultiLanguageString getGraduateTitleSuffix() {
+        return super.getGraduateTitleSuffix();
     }
 
     @Atomic

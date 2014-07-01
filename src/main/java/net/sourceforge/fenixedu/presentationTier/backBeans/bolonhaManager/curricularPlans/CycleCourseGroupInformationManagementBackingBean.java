@@ -31,6 +31,8 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+import com.google.common.base.Strings;
+
 public class CycleCourseGroupInformationManagementBackingBean extends CurricularCourseManagementBackingBean {
 
     private String courseGroupID;
@@ -105,12 +107,18 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
     public String editCourseGroupInformation() {
         try {
             CycleCourseGroupInformation information = getInformation();
+            if (!fieldsAreValid()) {
+                this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.blabla"));
+                return "";
+            }
             information.edit(getEditInformationExecutionYear(), getEditGraduatedTitle(), getEditGraduatedTitleEn());
 
             this.addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "cycleCourseGroupInformationEdit"));
 
             setEditGraduatedTitle("");
             setEditGraduatedTitleEn("");
+            setGraduatedTitleSuffix("");
+            setGraduatedTitleSuffixEn("");
             setEditInformationExecutionYearId(null);
 
             return "editCurricularPlanStructure";
@@ -118,6 +126,14 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
             this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";
         }
+    }
+
+    private boolean fieldsAreValid() {
+        if ((!Strings.isNullOrEmpty(getEditGraduatedTitle()) && !Strings.isNullOrEmpty(getEditGraduatedTitleEn()))
+                || (!Strings.isNullOrEmpty(getGraduatedTitleSuffix()) && !Strings.isNullOrEmpty(getGraduatedTitleSuffixEn()))) {
+            return true;
+        }
+        return false;
     }
 
     /* GETTERS AND SETTERS */

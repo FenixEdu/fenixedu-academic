@@ -52,8 +52,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
 public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaRequest, IRectorateSubmissionBatchDocumentEntry {
 
     public DiplomaRequest() {
@@ -524,19 +522,18 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
         result.append(degreeType.getGraduateTitle(cycleType, getLanguage()));
         final RegistrationConclusionBean registrationConclusionBean =
                 new RegistrationConclusionBean(getRegistration(), getCycleCurriculumGroup());
-        ExecutionYear executionYear = registrationConclusionBean.getConclusionYear();
-        final String degreeFilteredName = degree.getFilteredName(executionYear, getLanguage());
+        ExecutionYear conclusionYear = registrationConclusionBean.getConclusionYear();
+        final String degreeFilteredName = degree.getFilteredName(conclusionYear, getLanguage());
         result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, getLanguage(), "label.in"));
 
-        List<DegreeCurricularPlan> degreeCurricularPlansForYear = getDegree().getDegreeCurricularPlansForYear(executionYear);
+        List<DegreeCurricularPlan> degreeCurricularPlansForYear = getDegree().getDegreeCurricularPlansForYear(conclusionYear);
         if (degreeCurricularPlansForYear.size() == 1) {
             DegreeCurricularPlan dcp = degreeCurricularPlansForYear.iterator().next();
             CycleCourseGroup cycleCourseGroup = dcp.getCycleCourseGroup(cycleType);
             if (cycleCourseGroup != null) {
-                final MultiLanguageString mls = cycleCourseGroup.getGraduateTitleSuffix();
-                final String suffix = mls == null ? null : mls.getContent(getLanguage());
-                if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
-                    result.append(" ").append(suffix);
+                String graduateTitleSuffix = cycleCourseGroup.getGraduateTitleSuffix(conclusionYear, getLanguage());
+                if (!StringUtils.isEmpty(graduateTitleSuffix) && !degreeFilteredName.contains(graduateTitleSuffix.trim())) {
+                    result.append(" ").append(graduateTitleSuffix);
                     result.append(" ").append("-");
                 }
             }

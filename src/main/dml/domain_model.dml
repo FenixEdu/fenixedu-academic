@@ -2845,6 +2845,7 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 	
 	class degreeStructure.CycleCourseGroupInformation  {
 		MultiLanguageString graduatedTitle;
+		LocalizedString graduateTitleSuffix;
 	}
 	
     class finalDegreeWork.FinalDegreeWorkGroup  {

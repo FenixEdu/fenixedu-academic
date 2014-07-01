@@ -34,7 +34,7 @@
 		<f:param value="#{bolonhaBundle['courseGroup']}"/>
 	</h:outputFormat>
 
-	<h:form>
+	<%--<h:form>
 		<h:outputText escape="false" value="<input alt='input.courseGroupID' id='courseGroupSuffixID' name='courseGroupID' type='hidden' value='#{CycleCourseGroupInformationManagement.courseGroupID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.executionYearID' id='executionYearSuffixID' name='executionYearID' type='hidden' value='#{CycleCourseGroupInformationManagement.executionYearID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanSuffixID' name='degreeCurricularPlanID' type='hidden' value='#{CycleCourseGroupInformationManagement.degreeCurricularPlanID}'/>"/>
@@ -47,12 +47,7 @@
 
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<fieldset class='lfloat4'>" escape="false"/>
-		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitleSuffix']} (pt) : </label>" escape="false"/>
-		<h:inputText alt="#{htmlAltBundle['inputText.suffixName']}" id="suffixName" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.graduatedTitleSuffix}"/>
-		<h:outputText value="</p>" escape="false"/>
-		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitleSuffix']} (en):</label>" escape="false"/>
-		<h:inputText alt="#{htmlAltBundle['inputText.suffixNameEn']}" id="suffixNameEn" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.graduatedTitleSuffixEn}"/>
-		<h:outputText value="</p>" escape="false"/>
+		
 		<h:outputText value="</fieldset></div>" escape="false"/>	
 
 		<h:outputText value="<p>" escape="false"/>
@@ -61,7 +56,7 @@
 		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
 			action="editCurricularPlanStructure"/>	
 		<h:outputText value="</p>" escape="false"/>
-	</h:form>
+	</h:form>--%>
 
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
@@ -86,15 +81,18 @@
 		<h:outputText value="</p>" escape="false"/>
 		
 		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitle']} (pt):</label>" escape="false"/>
-		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.graduatedTitle}"/>
-		<h:message for="name" styleClass="error0"/>
-		<h:outputText value="</p>" escape="false"/>
-		
+		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.graduatedTitle}"/>
+		<h:outputText value="</p>" escape="false"/>		
 		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitle']} (en):</label>" escape="false"/>
-		<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" required="true" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.graduatedTitleEn}"/>
-		<h:message for="nameEn" styleClass="error0"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.graduatedTitleEn}"/>
 		<h:outputText value="</p>" escape="false"/>
 		
+		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitleSuffix']} (pt) : </label>" escape="false"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.suffixName']}" id="suffixName" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.graduatedTitleSuffix}"/>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['cycleCourseGroupInformation.graduatedTitleSuffix']} (en):</label>" escape="false"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.suffixNameEn']}" id="suffixNameEn" size="60" maxlength="100" value="#{CycleCourseGroupInformationManagement.graduatedTitleSuffixEn}"/>
+		<h:outputText value="</p>" escape="false"/>
 
 		<h:outputText value="</fieldset></div>" escape="false"/>	
 			
