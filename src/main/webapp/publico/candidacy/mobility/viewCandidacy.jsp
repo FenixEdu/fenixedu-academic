@@ -361,15 +361,13 @@
 	
 	<logic:equal name="individualCandidacyProcess" property="studentAccepted" value="true">
 	<logic:notEmpty name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement" >
-		<fr:view name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement">
-			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile" bundle="CANDIDATE_RESOURCES">
-				<%-- <fr:slot name="filename" key="label.document.file.name" /> --%>
-				<fr:slot name="this" key="label.document.file.link" layout="link"/>
-			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
-			</fr:layout>
-		</fr:view>
+		<bean:define id="fileOid" type="java.lang.String" name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement.externalId"/>
+
+		<p class="mbottom05">
+			<html:link page="<%= mappingPath + ".do?method=retrieveApprovedLearningAgreement&agreementId=" + fileOid + "&hash=" + request.getParameter("hash") %>">
+				<bean:write name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement.filename"/>
+			</html:link>
+		</p>
 	</logic:notEmpty>
 	</logic:equal>
 

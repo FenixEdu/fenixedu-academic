@@ -264,6 +264,9 @@ public class Lesson extends Lesson_Base {
                     LessonInstanceSpaceOccupation allocation =
                             (LessonInstanceSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(newRoom,
                                     this);
+                    if (allocation == null) {
+                        allocation = new LessonInstanceSpaceOccupation(newRoom);
+                    }
                     allocation.edit(lessonInstance);
                 }
             }

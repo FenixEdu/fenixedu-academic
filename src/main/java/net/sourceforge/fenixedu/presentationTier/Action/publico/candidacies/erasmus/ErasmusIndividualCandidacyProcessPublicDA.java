@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandid
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
@@ -65,7 +66,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.Refa
 import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.LearningAgreementDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.stork.AttributesManagement;
 import net.sourceforge.fenixedu.util.stork.SPUtil;
@@ -77,6 +77,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -866,6 +867,30 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
         response.flushBuffer();
         return mapping.findForward("");
+    }
+
+    public ActionForward retrieveApprovedLearningAgreement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final ApprovedLearningAgreementDocumentFile file = getDomainObject(request, "agreementId");
+        final String hash = request.getParameter("hash");
+
+        final MobilityIndividualApplicationProcess process = file.getProcess();
+        final DegreeOfficePublicCandidacyHashCode candidacyHashCode = process.getCandidacyHashCode();
+        if (candidacyHashCode.getValue().equals(hash)) {
+            final byte[] content = file.getContent();
+            response.setContentLength(content.length);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", "attachment; filename=" + file.getFilename());
+
+            final ServletOutputStream writer = response.getOutputStream();
+            writer.write(content);
+            writer.flush();
+            writer.close();
+
+            response.flushBuffer();   
+        }
+
+        return null;
     }
 
     @Override

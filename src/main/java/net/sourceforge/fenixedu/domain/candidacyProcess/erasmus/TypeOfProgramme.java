@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -31,11 +30,11 @@ public enum TypeOfProgramme {
     }
 
     public String getQualifiedName() {
-        return AcademicServiceRequestType.class.getSimpleName() + "." + name();
+        return TypeOfProgramme.class.getSimpleName() + "." + name();
     }
 
     public String getFullyQualifiedName() {
-        return AcademicServiceRequestType.class.getName() + "." + name();
+        return TypeOfProgramme.class.getName() + "." + name();
     }
 
     public String getDescription() {
