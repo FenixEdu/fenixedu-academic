@@ -18,6 +18,8 @@
  */
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
@@ -31,7 +33,7 @@ public class ErasmusVacancyBean implements java.io.Serializable {
 
     private UniversityUnit university;
     private Country country;
-    private Degree degree;
+    private List<Degree> degrees;
 
     private Integer numberOfVacancies;
 
@@ -68,12 +70,12 @@ public class ErasmusVacancyBean implements java.io.Serializable {
         this.country = country;
     }
 
-    public Degree getDegree() {
-        return degree;
+    public List<Degree> getDegrees() {
+        return degrees;
     }
 
-    public void setDegree(Degree degree) {
-        this.degree = degree;
+    public void setDegrees(List<Degree> degrees) {
+        this.degrees = degrees;
     }
 
     public Integer getNumberOfVacancies() {
