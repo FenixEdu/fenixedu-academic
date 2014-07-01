@@ -332,7 +332,7 @@
         <dependency>
             <groupId>org.fenixedu</groupId>
             <artifactId>fenixedu-spaces</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>com.github.axet</groupId>
