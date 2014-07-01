@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.commons.curriculumHistoric;
 
 import java.io.Serializable;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -27,13 +26,11 @@ import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class InfoEnrolmentHistoricReport implements Serializable {
-
-    final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
 
     private Enrolment enrolment;
 
@@ -75,13 +72,13 @@ public class InfoEnrolmentHistoricReport implements Serializable {
 
         final Grade grade = latestEnrolmentEvaluation.getGrade();
         if (!latestEnrolmentEvaluation.isFinal()) {
-            return bundle.getString("msg.enrolled");
+            return BundleUtil.getString(Bundle.ENUMERATION, "msg.enrolled");
         } else if (grade.isEmpty() || grade.isNotEvaluated()) {
-            return bundle.getString("msg.notEvaluated");
+            return BundleUtil.getString(Bundle.ENUMERATION, "msg.notEvaluated");
         } else if (grade.isNotApproved()) {
-            return bundle.getString("msg.notApproved");
+            return BundleUtil.getString(Bundle.ENUMERATION, "msg.notApproved");
         } else if (!grade.isNumeric() && grade.isApproved()) {
-            return bundle.getString("msg.approved");
+            return BundleUtil.getString(Bundle.ENUMERATION, "msg.approved");
         } else {
             return grade.getValue();
         }
@@ -92,12 +89,12 @@ public class InfoEnrolmentHistoricReport implements Serializable {
             final Grade grade = getEnrolment().getGrade();
 
             if (grade.getGradeScale() == GradeScale.TYPEAP) {
-                return bundle.getString("msg.approved");
+                return BundleUtil.getString(Bundle.ENUMERATION, "msg.approved");
             } else {
                 return grade.getValue();
             }
         } else {
-            return bundle.getString(getEnrolment().getEnrollmentState().name());
+            return BundleUtil.getString(Bundle.ENUMERATION, getEnrolment().getEnrollmentState().name());
         }
     }
 

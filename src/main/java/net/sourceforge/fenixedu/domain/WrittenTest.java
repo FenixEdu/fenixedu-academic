@@ -27,7 +27,9 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -38,13 +40,13 @@ import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.predicates.WrittenTestPredicates;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -251,7 +253,7 @@ public class WrittenTest extends WrittenTest_Base {
         }
 
         for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
-            EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
+            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
                     "log.executionCourse.evaluation.generic.edited.rooms", getPresentationName(), ec.getName(),
                     ec.getDegreePresentationString());
         }
@@ -259,21 +261,13 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     @Override
-    public boolean canBeAssociatedToRoom(Space room) {
-        for (Occupation resourceAllocation : SpaceUtils.getResourceAllocationsForCheck(room)) {
-            if (resourceAllocation instanceof EventSpaceOccupation) {
-                EventSpaceOccupation eventSpaceOccupation = (EventSpaceOccupation) resourceAllocation;
-                if (!(eventSpaceOccupation instanceof LessonInstanceSpaceOccupation)
-                        && !(eventSpaceOccupation instanceof LessonSpaceOccupation)) {
-                    if (eventSpaceOccupation.alreadyWasOccupiedIn(getBeginningDateTime().toYearMonthDay(), getEndDateTime()
-                            .toYearMonthDay(), getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(),
-                            null, null, null)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
+    public boolean canBeAssociatedToRoom(Space space) {
+        Set<Class<? extends EventSpaceOccupation>> classes = new HashSet<>();
+        classes.add(LessonSpaceOccupation.class);
+        classes.add(LessonInstanceSpaceOccupation.class);
+
+        return SpaceUtils.isFree(space, getBeginningDateTime().toYearMonthDay(), getEndDateTime().toYearMonthDay(),
+                getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(), null, null, null, classes);
     }
 
     public boolean canTeacherRemoveRoom(ExecutionSemester executionSemester, Teacher teacher, Space room) {
@@ -302,7 +296,7 @@ public class WrittenTest extends WrittenTest_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.written.test") + " "
+        return BundleUtil.getString(Bundle.APPLICATION, "label.written.test") + " "
                 + getDescription();
     }
 

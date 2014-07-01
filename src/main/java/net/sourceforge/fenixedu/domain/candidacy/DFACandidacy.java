@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -33,8 +32,9 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurric
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
 public class DFACandidacy extends DFACandidacy_Base {
@@ -120,8 +120,8 @@ public class DFACandidacy extends DFACandidacy_Base {
 
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale()).getString("label.dfaCandidacy")
-                + " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
+        return BundleUtil.getString(Bundle.CANDIDATE, "label.dfaCandidacy") + " - "
+                + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
                 + getExecutionDegree().getExecutionYear().getYear();
     }
 

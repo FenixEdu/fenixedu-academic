@@ -26,6 +26,17 @@
 
 <fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication$WrittenEvaluationsByRoom" />
 
+<link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
+<style type="text/css">
+.table {
+	page-break-inside: avoid;
+}
+.tablebb {
+	page-break-inside: avoid;
+	page-break-before: always;
+}
+</style>
+
 <f:view>
 			
 	<script type="text/javascript">
@@ -165,25 +176,25 @@
 						<f:facet name="header">
 							<h:outputText value="#{bundle['property.room.name']}"/>
 						</f:facet>
-						<h:outputText value="#{room.spaceInformation.identification}"/>
+						<h:outputText value="#{room.name}"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{bundle['property.room.building']}"/>
 						</f:facet>
-						<h:outputText value="#{room.x.spaceInformation.name}"/>
+						<h:outputText value="#{room.edificio}"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{bundle['property.room.floor']}"/>
 						</f:facet>
-						<h:outputText value="#{room.spaceFloor.spaceInformation.presentationName}"/>
+						<h:outputText value="#{room.piso}"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="#{bundle['property.room.type']}"/>
 						</f:facet>
-						<h:outputText value="#{room.tipo.name}" rendered="#{room.tipo != null}"/>
+						<h:outputText value="#{room.tipo}" rendered="#{room.tipo != null}"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
@@ -205,9 +216,8 @@
 				
 	<fc:dataRepeater value="#{writtenEvaluationsByRoom.writtenEvaluationCalendarLinksEntryList}" var="calendarLinks" rowIndexVar="index">
 		<h:panelGroup>
-
 			<h:outputText rendered="#{index == 0}" value="<table class='tstyle4 tdcenter'>" escape="false"/>
-			<h:outputText rendered="#{index > 0}" value="<table class='tstyle4 tdcenter break-before'>" escape="false"/>			
+			<h:outputText rendered="#{index > 0}" value="<table class='tstyle4 tdcenter tablebb'>" escape="false"/>			
 			<h:outputText value="<tr>" escape="false"/>
 				<h:outputText value="<th>#{bundle['property.room.name']}</th>" escape="false"/>
 				<h:outputText value="<th>#{bundle['property.room.building']}</th>" escape="false"/>

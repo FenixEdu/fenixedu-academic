@@ -52,6 +52,7 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -67,7 +68,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class EditGroupShift {
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
+    private static final MessageResources messages = MessageResources.getMessageResources(Bundle.GLOBAL);
 
     @Atomic
     public static Boolean run(String studentGroupID, String groupingID, String newShiftID, String username)

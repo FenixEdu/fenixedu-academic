@@ -43,10 +43,11 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -130,12 +131,12 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         try {
             CreateCourseGroup.run(getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn(),
                     getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
-            addInfoMessage(bolonhaBundle.getString("courseGroupCreated"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupCreated"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
-            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (final DomainException e) {
-            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "";
     }
@@ -144,15 +145,15 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         try {
             EditCourseGroup.run(getCourseGroupID(), getContextID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
                     getFinalEndExecutionPeriodID());
-            addInfoMessage(bolonhaBundle.getString("courseGroupEdited"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupEdited"));
             return "editCurricularPlanStructure";
         } catch (final IllegalDataAccessException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
-            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (final DomainException e) {
-            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "";
     }
@@ -160,15 +161,15 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String deleteCourseGroup() {
         try {
             DeleteContextFromDegreeModule.run(getCourseGroupID(), getContextID());
-            addInfoMessage(bolonhaBundle.getString("courseGroupDeleted"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupDeleted"));
             return "editCurricularPlanStructure";
         } catch (final IllegalDataAccessException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
-            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (final DomainException e) {
-            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "";
     }
@@ -179,16 +180,16 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
             checkCourseGroup();
             AddContextToCourseGroup.run(getCourseGroup(getCourseGroupID()), getCourseGroup(getParentCourseGroupID()),
                     getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
-            addInfoMessage(bolonhaBundle.getString("courseGroupAssociated"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupAssociated"));
             return "editCurricularPlanStructure";
         } catch (FenixActionException e) {
-            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (FenixServiceException e) {
-            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (DomainException e) {
-            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         } catch (Exception e) {
-            this.addErrorMessage(bolonhaBundle.getString("general.error"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "general.error"));
             return "editCurricularPlanStructure";
         }
         return "";
@@ -200,7 +201,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 
     public String getIfBranchShowType() {
         if (isBranch()) {
-            return "<p class=\"mtop25\">" + BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "branchType") + ": "
+            return "<p class=\"mtop25\">" + BundleUtil.getString(Bundle.BOLONHA, "branchType") + ": "
                     + "<em><strong>"
                     + ((BranchCourseGroup) getCourseGroup()).getBranchType().getDescription(I18N.getLocale())
                     + "</strong></em>" + "</p>";
@@ -224,7 +225,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
             }
         }
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(this.NO_SELECTION_STRING, bolonhaBundle.getString("choose")));
+        result.add(0, new SelectItem(this.NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
@@ -235,12 +236,12 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String orderCourseGroup() {
         try {
             OrderDegreeModule.run(getContextID(), getPosition());
-            addInfoMessage(bolonhaBundle.getString("courseGroupMoved"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupMoved"));
             return "editCurricularPlanStructure";
         } catch (DomainException e) {
-            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            this.addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         } catch (Exception e) {
-            this.addErrorMessage(bolonhaBundle.getString("general.error"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "general.error"));
             return "editCurricularPlanStructure";
         }
         return "";

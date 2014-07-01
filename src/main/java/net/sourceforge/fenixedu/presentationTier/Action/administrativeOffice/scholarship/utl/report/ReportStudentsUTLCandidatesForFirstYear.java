@@ -18,8 +18,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -114,34 +112,32 @@ public class ReportStudentsUTLCandidatesForFirstYear extends ReportStudentsUTLCa
         sheet.createRow(0);
         sheet.createRow(1);
 
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "institutionCode"), 0);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "institutionName"), 1);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "candidacyNumber"), 2);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "studentNumberForPrint"), 3);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "studentName"), 4);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "documentTypeName"), 5);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "documentNumber"), 6);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeCode"), 7);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeName"), 8);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeTypeName"), 9);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "code"), 10);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "firstEnrolmentOnCurrentExecutionYear"), 11);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "gratuityAmount"), 12);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfMonthsExecutionYear"), 13);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "firstMonthOfPayment"), 14);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCETQualification"), 15);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeQualificationOwner"), 16);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "masterQualificationOwner"), 17);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "phdQualificationOwner"), 18);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCollegeQualification"), 19);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "observations"), 20);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "regime"), 21);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfDegreeCurricularYears"), 22);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.count"), 23);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledECTS"), 24);
-        addHeaderCell(sheet, getHeaderInBundle(bundle, "nif"), 25);
+        addHeaderCell(sheet, getHeaderInBundle("institutionCode"), 0);
+        addHeaderCell(sheet, getHeaderInBundle("institutionName"), 1);
+        addHeaderCell(sheet, getHeaderInBundle("candidacyNumber"), 2);
+        addHeaderCell(sheet, getHeaderInBundle("studentNumberForPrint"), 3);
+        addHeaderCell(sheet, getHeaderInBundle("studentName"), 4);
+        addHeaderCell(sheet, getHeaderInBundle("documentTypeName"), 5);
+        addHeaderCell(sheet, getHeaderInBundle("documentNumber"), 6);
+        addHeaderCell(sheet, getHeaderInBundle("degreeCode"), 7);
+        addHeaderCell(sheet, getHeaderInBundle("degreeName"), 8);
+        addHeaderCell(sheet, getHeaderInBundle("degreeTypeName"), 9);
+        addHeaderCell(sheet, getHeaderInBundle("code"), 10);
+        addHeaderCell(sheet, getHeaderInBundle("firstEnrolmentOnCurrentExecutionYear"), 11);
+        addHeaderCell(sheet, getHeaderInBundle("gratuityAmount"), 12);
+        addHeaderCell(sheet, getHeaderInBundle("numberOfMonthsExecutionYear"), 13);
+        addHeaderCell(sheet, getHeaderInBundle("firstMonthOfPayment"), 14);
+        addHeaderCell(sheet, getHeaderInBundle("ownerOfCETQualification"), 15);
+        addHeaderCell(sheet, getHeaderInBundle("degreeQualificationOwner"), 16);
+        addHeaderCell(sheet, getHeaderInBundle("masterQualificationOwner"), 17);
+        addHeaderCell(sheet, getHeaderInBundle("phdQualificationOwner"), 18);
+        addHeaderCell(sheet, getHeaderInBundle("ownerOfCollegeQualification"), 19);
+        addHeaderCell(sheet, getHeaderInBundle("observations"), 20);
+        addHeaderCell(sheet, getHeaderInBundle("regime"), 21);
+        addHeaderCell(sheet, getHeaderInBundle("numberOfDegreeCurricularYears"), 22);
+        addHeaderCell(sheet, getHeaderInBundle("ingression.year.on.cycle.studies.count"), 23);
+        addHeaderCell(sheet, getHeaderInBundle("numberOfEnrolledECTS"), 24);
+        addHeaderCell(sheet, getHeaderInBundle("nif"), 25);
 
     }
 

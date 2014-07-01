@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -62,7 +61,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrappe
 import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -70,6 +69,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -1757,8 +1757,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     public String getModuleTypeName() {
-        ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE);
-        return enumerationResources.getString(this.getClass().getName());
+        return BundleUtil.getString(Bundle.ENUMERATION, this.getClass().getName());
     }
 
     @ConsistencyPredicate

@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain.phd.thesis.meeting;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
@@ -36,8 +35,10 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThe
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SubmitThesisMeetingMinutes;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Base {
 
@@ -106,7 +107,7 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
 
     @Override
     public String getDisplayName() {
-        return ResourceBundle.getBundle("resources/PhdResources").getString(getClass().getSimpleName());
+        return BundleUtil.getString(Bundle.PHD, getClass().getSimpleName());
     }
 
     @Override

@@ -33,7 +33,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperator;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class CompositeRulesManagementBackingBean extends CurricularRulesManagementBackingBean {
 
@@ -100,7 +103,7 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
         if (endExecutionPeriodItemsForCompositeRule == null) {
             endExecutionPeriodItemsForCompositeRule = new UISelectItems();
             final List<SelectItem> values = new ArrayList<SelectItem>(readExecutionPeriodItems());
-            values.add(0, new SelectItem(NO_SELECTION_STRING, bolonhaResources.getString("opened")));
+            values.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "opened")));
             endExecutionPeriodItemsForCompositeRule.setValue(values);
         }
         return endExecutionPeriodItemsForCompositeRule;
@@ -116,11 +119,11 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
             setSelectedCurricularRuleIDs(null);
             getCurricularRuleItems().setValue(readCurricularRulesLabels());
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "";
     }

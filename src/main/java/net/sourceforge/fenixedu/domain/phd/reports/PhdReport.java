@@ -18,7 +18,7 @@
  */
 package net.sourceforge.fenixedu.domain.phd.reports;
 
-import java.util.ResourceBundle;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -27,6 +27,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -65,8 +66,7 @@ public abstract class PhdReport {
         } else if (value instanceof YearMonthDay) {
             return ((YearMonthDay) value).toString("dd/MM/yyyy");
         } else if (value instanceof Boolean) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-            return bundle.getString(((Boolean) value) ? "label.yes" : "label.no");
+            return BundleUtil.getString(Bundle.ACADEMIC, ((Boolean) value) ? "label.yes" : "label.no");
         }
 
         return value.toString();

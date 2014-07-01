@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -32,6 +31,10 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EvenOddRule extends EvenOddRule_Base {
@@ -102,8 +105,8 @@ public class EvenOddRule extends EvenOddRule_Base {
     }
 
     public String getEvenOddString() {
-        return new MultiLanguageString(MultiLanguageString.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
-                new Locale("pt", "PT")).getString("label." + (getEven() ? "even" : "odd"))).toString();
+        return new MultiLanguageString(MultiLanguageString.pt, BundleUtil.getString(Bundle.ACADEMIC, new Locale("pt", "PT"),
+                "label." + (getEven() ? "even" : "odd"))).toString();
     }
 
     @Deprecated

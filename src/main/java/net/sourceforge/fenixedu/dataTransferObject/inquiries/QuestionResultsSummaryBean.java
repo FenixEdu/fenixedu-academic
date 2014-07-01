@@ -33,7 +33,8 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -155,7 +156,7 @@ public class QuestionResultsSummaryBean implements Serializable {
         switch (inquiryResultComment.getPersonCategory()) {
         case DELEGATE:
             YearDelegate yearDelegate = getYearDelegate(inquiryResultComment);
-            return BundleUtil.getStringFromResourceBundle("resources.InquiriesResources", "label.commentHeader.delegate",
+            return BundleUtil.getString(Bundle.INQUIRIES, "label.commentHeader.delegate",
                     new String[] { yearDelegate.getCurricularYear().getYear().toString(),
                             yearDelegate.getRegistration().getDegree().getSigla() });
         case TEACHER:
@@ -163,9 +164,9 @@ public class QuestionResultsSummaryBean implements Serializable {
             if (inquiryResultComment.getInquiryResult().getProfessorship().getResponsibleFor()) {
                 teacherHeaderLabel = "label.commentHeader.teacherResponsible";
             }
-            return BundleUtil.getStringFromResourceBundle("resources.InquiriesResources", teacherHeaderLabel);
+            return BundleUtil.getString(Bundle.INQUIRIES, teacherHeaderLabel);
         case REGENT:
-            return BundleUtil.getStringFromResourceBundle("resources.InquiriesResources", "label.commentHeader.responsible",
+            return BundleUtil.getString(Bundle.INQUIRIES, "label.commentHeader.responsible",
                     new String[] { inquiryResultComment.getPerson().getName() });
         default:
             break;

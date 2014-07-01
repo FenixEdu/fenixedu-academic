@@ -851,11 +851,6 @@
 	</slot>
 </schema>
 
-<schema name="SibsPaymentsReportBean.search" type="net.sourceforge.fenixedu.presentationTier.Action.manager.accounting.reports.ExportSibsPaymentsReport$SibsPaymentsReportBean" bundle="MANAGER_RESOURCES">
-	<slot name="year" key="label.reports.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="month" key="label.reports.month" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-</schema>
-
 <schema name="SIBSPaymentFileUpload" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.SIBSPaymentsDA$UploadBean" bundle="MANAGER_RESOURCES">
 	<slot name="inputStream" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="fileNameSlot" value="filename"/>

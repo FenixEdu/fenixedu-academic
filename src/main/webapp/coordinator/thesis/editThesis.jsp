@@ -412,7 +412,7 @@
 <h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.vowels" bundle="APPLICATION_RESOURCES"/></h4>
 
 <bean:size id="vowelsSize" name="thesis" property="vowels"/>
-<logic:lessThan name="vowelsSize" value="3">
+<logic:lessThan name="vowelsSize" value="4">
     <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=vowel&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
         <bean:message key="link.coordinator.thesis.edit.addVowel" bundle="APPLICATION_RESOURCES"/>
     </html:link>

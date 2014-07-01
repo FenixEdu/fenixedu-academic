@@ -22,15 +22,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_Base {
@@ -104,7 +104,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
     }
 
     public String getEnumerationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(name);
+        return BundleUtil.getString(Bundle.ENUMERATION, name);
     }
 
     public PostingRule findPostingRuleBy(EventType eventType, DateTime startDate, DateTime endDate) {

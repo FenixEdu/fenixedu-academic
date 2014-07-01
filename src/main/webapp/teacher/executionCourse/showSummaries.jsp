@@ -24,6 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
+<jsp:include page="/includeMathJax.jsp" />
 
 <logic:present name="showSummariesBean">
 	<h2><bean:message key="label.summaries.management"/></h2>

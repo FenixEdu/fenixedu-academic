@@ -36,13 +36,14 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication.ExternalApplicationsApp;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2Filter;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
@@ -266,13 +267,13 @@ public class ExternalAppsDA extends FenixDispatchAction {
         final InputStream resourceAsStream = getClass().getResourceAsStream("/api/serviceAgreement.html");
         if (resourceAsStream == null) {
             return BundleUtil
-                    .getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "oauthapps.default.service.agreement");
+                    .getString(Bundle.APPLICATION, "oauthapps.default.service.agreement");
         }
         try {
             return new String(ByteStreams.toByteArray(resourceAsStream));
         } catch (IOException e) {
             return BundleUtil
-                    .getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "oauthapps.default.service.agreement");
+                    .getString(Bundle.APPLICATION, "oauthapps.default.service.agreement");
         }
     }
 

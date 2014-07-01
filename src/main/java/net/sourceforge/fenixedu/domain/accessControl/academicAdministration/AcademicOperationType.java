@@ -20,7 +20,10 @@ package net.sourceforge.fenixedu.domain.accessControl.academicAdministration;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 public enum AcademicOperationType implements IPresentableEnum {
@@ -178,6 +181,6 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        return BundleUtil.getEnumName(this);
+        return BundleUtil.getString(Bundle.ENUMERATION, getClass().getName() + "." + name());
     }
 }

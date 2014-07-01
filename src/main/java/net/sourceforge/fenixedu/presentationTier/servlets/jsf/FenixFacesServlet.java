@@ -39,6 +39,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
@@ -72,7 +74,7 @@ public class FenixFacesServlet implements Servlet {
     @Override
     public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
         try {
-            facesServlet.service(request, response);
+            facesServlet.service(RequestWrapperFilter.getFenixHttpServletRequestWrapper((HttpServletRequest) request), response);
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
             handleException(request, response, e);

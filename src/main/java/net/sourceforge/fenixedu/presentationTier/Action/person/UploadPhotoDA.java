@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +30,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.U
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
@@ -39,7 +39,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -67,14 +67,13 @@ public class UploadPhotoDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         request.setAttribute("photo", new PhotographUploadBean());
-        request.setAttribute("phroperCaption", bundle.getString("phroper.caption"));
-        request.setAttribute("phroperSubCaption", bundle.getString("phroper.subCaption"));
-        request.setAttribute("phroperButtonCaption", bundle.getString("phroper.buttonCaption"));
-        request.setAttribute("phroperLoadingCaption", bundle.getString("phroper.loadingCaption"));
-        request.setAttribute("buttonClean", bundle.getString("button.clean"));
-        request.setAttribute("buttonRevert", bundle.getString("button.phroper.revert"));
+        request.setAttribute("phroperCaption", BundleUtil.getString(Bundle.APPLICATION, "phroper.caption"));
+        request.setAttribute("phroperSubCaption", BundleUtil.getString(Bundle.APPLICATION, "phroper.subCaption"));
+        request.setAttribute("phroperButtonCaption", BundleUtil.getString(Bundle.APPLICATION, "phroper.buttonCaption"));
+        request.setAttribute("phroperLoadingCaption", BundleUtil.getString(Bundle.APPLICATION, "phroper.loadingCaption"));
+        request.setAttribute("buttonClean", BundleUtil.getString(Bundle.APPLICATION, "button.clean"));
+        request.setAttribute("buttonRevert", BundleUtil.getString(Bundle.APPLICATION, "button.phroper.revert"));
         return mapping.findForward("upload");
     }
 

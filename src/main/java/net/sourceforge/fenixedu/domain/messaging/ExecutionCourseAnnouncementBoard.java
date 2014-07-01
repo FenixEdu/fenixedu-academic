@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.groups.Group;
 
@@ -156,28 +157,28 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 
     @Override
     public void logCreate(Announcement announcement) {
-        ContentManagementLog.createLog(this.getExecutionCourse(), "resources.MessagingResources",
+        ContentManagementLog.createLog(this.getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.content.announcement.added", announcement.getName().getContent(), this.getExecutionCourse()
                         .getNome(), this.getExecutionCourse().getDegreePresentationString());
     }
 
     @Override
     public void logEdit(Announcement announcement) {
-        ContentManagementLog.createLog(this.getExecutionCourse(), "resources.MessagingResources",
+        ContentManagementLog.createLog(this.getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.content.announcement.edited", announcement.getName().getContent(), this.getExecutionCourse()
                         .getNome(), this.getExecutionCourse().getDegreePresentationString());
     }
 
     @Override
     public void logRemove(Announcement announcement) {
-        ContentManagementLog.createLog(this.getExecutionCourse(), "resources.MessagingResources",
+        ContentManagementLog.createLog(this.getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.content.announcement.removed", announcement.getName().getContent(), this
                         .getExecutionCourse().getNome(), this.getExecutionCourse().getDegreePresentationString());
     }
 
     @Override
     public void logAddFile(FileContent attachment) {
-        ContentManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+        ContentManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.content.file.added", attachment.getDisplayName(), getExecutionCourse().getNome(),
                 getExecutionCourse().getDegreePresentationString());
     }

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -36,8 +35,9 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class UIDegreeCurricularPlan extends UIInput {
     public static final String COMPONENT_TYPE =
@@ -177,7 +177,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("td", this);
         writer.writeAttribute("align", "center", null);
         writer.startElement("i", this);
-        writer.append(this.getBundleValue("BolonhaManagerResources", info));
+        writer.append(BundleUtil.getString(Bundle.BOLONHA, info));
         writer.endElement("i");
         writer.endElement("td");
         writer.endElement("tr");
@@ -286,7 +286,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     private void encodeSumsLoadFooterElement(List<Double> sums, String acronym, int order) throws IOException {
         writer.startElement("span", this);
         writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("BolonhaManagerResources", acronym)).append("-");
+        writer.append(BundleUtil.getString(Bundle.BOLONHA, acronym)).append("-");
         writer.endElement("span");
         writer.append(String.valueOf(sums.get(order))).append(" ");
     }
@@ -301,22 +301,17 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
         writer.writeAttribute("align", "center", null);
         writer.startElement("i", this);
-        writer.append(this.getBundleValue("BolonhaManagerResources", "no.associated.curricular.courses.to.year"));
+        writer.append(BundleUtil.getString(Bundle.BOLONHA, "no.associated.curricular.courses.to.year"));
         writer.endElement("i");
         writer.endElement("td");
         writer.endElement("tr");
-    }
-
-    private String getBundleValue(String bundleName, String bundleKey) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, I18N.getLocale());
-        return bundle.getString(bundleKey);
     }
 
     private void encodeLink(String page, String aditionalParameters, boolean blank, String... bundleKeys) throws IOException {
         writer.startElement("a", this);
         encodeLinkHref(page, aditionalParameters, blank);
         for (String bundleKey : bundleKeys) {
-            writer.write(this.getBundleValue("BolonhaManagerResources", bundleKey));
+            writer.write(BundleUtil.getString(Bundle.BOLONHA, bundleKey));
         }
         writer.endElement("a");
     }
@@ -355,7 +350,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("p", this);
         writer.writeAttribute("class", "mtop2 mbottom05", null);
         writer.startElement("em", this);
-        writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
+        writer.append(BundleUtil.getString(Bundle.BOLONHA, "subtitle")).append(":\n");
         writer.endElement("em");
         writer.endElement("p");
 
@@ -363,20 +358,20 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "nobullet mtop05 mbottom2", null);
         writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
 
-        encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM",
+        encodeSubtitleElement(Bundle.ENUMERATION, RegimeType.SEMESTRIAL.toString() + ".ACRONYM",
                 RegimeType.SEMESTRIAL.toString(), null);
-        encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
+        encodeSubtitleElement(Bundle.ENUMERATION, RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
 
-        encodeSubtitleElement("BolonhaManagerResources", "contactLessonHoursAcronym", "contactLessonHours", null);
-        encodeSubtitleElement("BolonhaManagerResources", "autonomousWorkAcronym", "autonomousWork", null);
+        encodeSubtitleElement(Bundle.BOLONHA, "contactLessonHoursAcronym", "contactLessonHours", null);
+        encodeSubtitleElement(Bundle.BOLONHA, "autonomousWorkAcronym", "autonomousWork", null);
 
         StringBuilder explanation = new StringBuilder();
         explanation.append(" (");
-        explanation.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym"));
+        explanation.append(BundleUtil.getString(Bundle.BOLONHA, "contactLessonHoursAcronym"));
         explanation.append(" + ");
-        explanation.append(this.getBundleValue("BolonhaManagerResources", "autonomousWorkAcronym"));
+        explanation.append(BundleUtil.getString(Bundle.BOLONHA, "autonomousWorkAcronym"));
         explanation.append(")");
-        encodeSubtitleElement("BolonhaManagerResources", "totalLoadAcronym", "totalLoad", explanation);
+        encodeSubtitleElement(Bundle.BOLONHA, "totalLoadAcronym", "totalLoad", explanation);
         writer.endElement("ul");
     }
 
@@ -384,9 +379,9 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("li", this);
         writer.startElement("span", this);
         writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue(bundle, acronym)).append(" - ");
+        writer.append(BundleUtil.getString(bundle, acronym)).append(" - ");
         writer.endElement("span");
-        writer.append(this.getBundleValue(bundle, full));
+        writer.append(BundleUtil.getString(bundle, full));
         if (explanation != null) {
             writer.append(explanation);
         }

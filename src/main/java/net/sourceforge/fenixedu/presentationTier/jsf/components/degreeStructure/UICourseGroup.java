@@ -26,6 +26,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class UICourseGroup extends UIDegreeModule {
 
@@ -119,7 +122,7 @@ public class UICourseGroup extends UIDegreeModule {
                 writer.startElement("td", this);
                 writer.writeAttribute("align", "center", null);
                 writer.startElement("i", this);
-                writer.append(this.getBundleValue("BolonhaManagerResources", "empty.curricularPlan"));
+                writer.append(BundleUtil.getString(Bundle.BOLONHA, "empty.curricularPlan"));
                 writer.endElement("i");
                 writer.endElement("td");
                 writer.endElement("tr");

@@ -20,14 +20,14 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class MDCandidacy extends MDCandidacy_Base {
 
@@ -38,8 +38,8 @@ public class MDCandidacy extends MDCandidacy_Base {
 
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale()).getString("label.mdCandidacy")
-                + " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
+        return BundleUtil.getString(Bundle.CANDIDATE, "label.mdCandidacy") + " - "
+                + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
                 + getExecutionDegree().getExecutionYear().getYear();
     }
 

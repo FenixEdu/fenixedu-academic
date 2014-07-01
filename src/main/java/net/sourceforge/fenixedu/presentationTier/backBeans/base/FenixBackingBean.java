@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.base;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -97,14 +96,6 @@ public class FenixBackingBean {
         return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getContextPath();
     }
 
-    public ResourceBundle getResourceBundle(String bundleName) {
-        return ResourceBundle.getBundle(bundleName, FacesContext.getCurrentInstance().getViewRoot().getLocale());
-    }
-
-    public ResourceBundle getResourceBundle(String bundleName, Locale locale) {
-        return ResourceBundle.getBundle(bundleName, locale);
-    }
-
     public UIViewState getViewState() {
         if (this.viewState == null) {
             this.viewState = new UIViewState();
@@ -170,16 +161,6 @@ public class FenixBackingBean {
         return parameterValue;
     }
 
-    protected String getFormatedMessage(final String bundleName, final String key, final String... args) {
-        final ResourceBundle bundle = getResourceBundle(bundleName);
-        String message = bundle.getString(key);
-        return formatMessage(message, args);
-    }
-
-    protected String getFormatedMessage(final ResourceBundle bundle, final String key, final String... args) {
-        return formatMessage(bundle.getString(key), args);
-    }
-
     private String formatMessage(String message, final String... args) {
         if (message != null && args != null) {
             for (int i = 0; args.length > i; i++) {
@@ -188,21 +169,6 @@ public class FenixBackingBean {
             }
         }
         return message;
-    }
-
-    protected void addErrorMessages(final ResourceBundle bundle, final String key, final String... args) {
-        String message = bundle.getString(key);
-        if (message != null) {
-            int indexOfManyArgs = message.indexOf("{...}");
-            if (args != null && indexOfManyArgs != -1) {
-                addErrorMessage(message.substring(0, indexOfManyArgs));
-                for (final String arg : args) {
-                    addErrorMessage(arg);
-                }
-            } else {
-                addErrorMessage(formatMessage(message, args));
-            }
-        }
     }
 
     protected Double getAndHoldDoubleParameter(final String parameterName) {

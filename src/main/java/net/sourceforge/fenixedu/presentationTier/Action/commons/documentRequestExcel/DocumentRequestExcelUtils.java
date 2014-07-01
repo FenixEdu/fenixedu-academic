@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.documentRequest
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -39,9 +38,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServi
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
@@ -109,9 +108,8 @@ public class DocumentRequestExcelUtils {
             @Override
             protected void makeLine(AcademicServiceRequest request) {
                 IDocumentRequest document = (IDocumentRequest) request;
-                ResourceBundle enumeration = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
                 addCell("Código", document.getRegistryCode().getCode());
-                addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
+                addCell("Tipo de Documento", BundleUtil.getString(Bundle.ENUMERATION, document.getDocumentRequestType().name()));
                 CycleType cycle = null;
                 switch (document.getDocumentRequestType()) {
                 case REGISTRY_DIPLOMA_REQUEST:
@@ -126,11 +124,11 @@ public class DocumentRequestExcelUtils {
                 default:
                     addCell("Ciclo", null);
                 }
-                addCell("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
+                addCell("Ciclo", cycle != null ? BundleUtil.getString(Bundle.ENUMERATION, cycle.name()) : null);
 
                 if (document.isRequestForRegistration()) {
                     addCell("Tipo de Curso",
-                            enumeration.getString(((RegistrationAcademicServiceRequest) document).getDegreeType().name()));
+                            BundleUtil.getString(Bundle.ENUMERATION, ((RegistrationAcademicServiceRequest) document).getDegreeType().name()));
                 } else if (document.isRequestForPhd()) {
                     addCell("Tipo de Estudos", "Programa doutoral");
                 }

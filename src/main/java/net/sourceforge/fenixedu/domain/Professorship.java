@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -125,7 +126,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
             executionCourse.moveSummariesFromTeacherToProfessorship(person.getTeacher(), professorShip);
         }
 
-        ProfessorshipManagementLog.createLog(professorShip.getExecutionCourse(), "resources.MessagingResources",
+        ProfessorshipManagementLog.createLog(professorShip.getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.professorship.added", professorShip.getPerson().getPresentationName(), professorShip
                         .getExecutionCourse().getNome(), professorShip.getExecutionCourse().getDegreePresentationString());
         return professorShip;
@@ -133,7 +134,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public void delete() {
         if (canBeDeleted()) {
-            ProfessorshipManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+            ProfessorshipManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
                     "log.executionCourse.professorship.removed", getPerson().getPresentationName(), getExecutionCourse()
                             .getNome(), getExecutionCourse().getDegreePresentationString());
             setExecutionCourse(null);

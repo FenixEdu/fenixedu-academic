@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -36,11 +35,13 @@ import net.sourceforge.fenixedu.domain.log.EnrolmentEvaluationLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -685,15 +686,13 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     private static final String NORMAL_TYPE_SECOND_SEASON_DESCRIPTION =
             "label.curriculum.validation.normal.type.second.season.description";
 
-    private static final ResourceBundle academicResources = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-
     public String getEnrolmentEvaluationTypeDescription() {
         if (EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
                 && CurriculumValidationEvaluationPhase.FIRST_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
-            return academicResources.getString(NORMAL_TYPE_FIRST_SEASON_DESCRIPTION);
+            return BundleUtil.getString(Bundle.ACADEMIC, NORMAL_TYPE_FIRST_SEASON_DESCRIPTION);
         } else if (EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
                 && CurriculumValidationEvaluationPhase.SECOND_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
-            return academicResources.getString(NORMAL_TYPE_SECOND_SEASON_DESCRIPTION);
+            return BundleUtil.getString(Bundle.ACADEMIC, NORMAL_TYPE_SECOND_SEASON_DESCRIPTION);
         }
 
         return this.getEnrolmentEvaluationType().getDescription();

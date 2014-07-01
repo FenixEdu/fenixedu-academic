@@ -21,10 +21,11 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Arrays;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,7 +78,7 @@ public class AuthScope extends AuthScope_Base {
     }
 
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "oauthapps.label.app.scope." + getName());
+        return BundleUtil.getString(Bundle.APPLICATION, "oauthapps.label.app.scope." + getName());
     }
 
     @Atomic(mode = TxMode.WRITE)

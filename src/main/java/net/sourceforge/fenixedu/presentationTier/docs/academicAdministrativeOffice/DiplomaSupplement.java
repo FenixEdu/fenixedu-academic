@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
@@ -52,10 +53,12 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivit
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -79,8 +82,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
-        addParameter("bundle", getResourceBundle());
-
+        addParameter("bundle", ResourceBundle.getBundle(getBundle(), getLocale()));
         addParameter("name", StringFormatter.prettyPrint(getDocumentRequest().getPerson().getName().trim()));
 
         // Group 1
@@ -126,12 +128,13 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     protected void fillGroup5() {
         final StringBuilder access = new StringBuilder();
         if (getDocumentRequest().getRequestedCycle() == CycleType.THIRD_CYCLE) {
-            access.append(getResourceBundle().getString("diploma.supplement.five.one.three"));
+            access.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.five.one.three"));
         } else {
             String degreeDesignation = getDegreeDesignation();
-            access.append(getResourceBundle().getString("diploma.supplement.five.one.one")).append(SINGLE_SPACE);
+            access.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.five.one.one")).append(
+                    SINGLE_SPACE);
             access.append(degreeDesignation).append(SINGLE_SPACE);
-            access.append(getResourceBundle().getString("diploma.supplement.five.one.two"));
+            access.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.five.one.two"));
         }
         addParameter("accessToHigherLevelOfEducation", access.toString());
         addProfessionalStatus();
@@ -142,13 +145,14 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         addProgrammeRequirements(degreeDesignation);
         addEntriesParameters();
-        addParameter("classificationSystem", getResourceBundle().getString("diploma.supplement.four.four.one"));
+        addParameter("classificationSystem",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.four.four.one"));
         addParameter("finalAverage", getDocumentRequest().getFinalAverage());
 
         String finalAverageQualified = getDocumentRequest().getFinalAverageQualified(getLocale());
 
         if (finalAverageQualified != null) {
-            addParameter("finalAverageQualified", getResourceBundle().getString(finalAverageQualified));
+            addParameter("finalAverageQualified", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), finalAverageQualified));
         }
 
         EctsGraduationGradeConversionTable table = getDocumentRequest().getGraduationConversionTable();
@@ -163,14 +167,16 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     protected void fillGroup3() {
-        addParameter("qualificationLevel",
-                getResourceBundle().getString("diploma.supplement.qualification." + getDocumentRequest().getRequestedCycle()));
+        addParameter(
+                "qualificationLevel",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.qualification."
+                        + getDocumentRequest().getRequestedCycle()));
         addParameter("years", getDocumentRequest().getNumberOfCurricularYears());
         addParameter("semesters", getDocumentRequest().getNumberOfCurricularSemesters());
         addParameter(
                 "weeksOfStudyPerYear",
-                getResourceBundle().getString(
-                        "diploma.supplement.weeksOfStudyPerYear." + getDocumentRequest().getRequestedCycle()));
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.weeksOfStudyPerYear."
+                        + getDocumentRequest().getRequestedCycle()));
         addParameter("ectsCredits", getDocumentRequest().getEctsCredits());
     }
 
@@ -185,20 +191,24 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         addParameter("universityName", institutionsUniversityUnit.getName());
         addParameter(
                 "universityStatus",
-                portugueseEnumerationBundle.getString(AcademicalInstitutionType.class.getSimpleName() + "."
+                BundleUtil.getString(Bundle.ENUMERATION, getLocale(), AcademicalInstitutionType.class.getSimpleName() + "."
                         + institutionsUniversityUnit.getInstitutionType().getName()));
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
-        addParameter("institutionStatus",
-                portugueseEnumerationBundle.getString(Bennu.getInstance().getInstitutionUnit().getType().getName())
-                        + SINGLE_SPACE + this.portugueseAcademicBundle.getString("diploma.supplement.of") + SINGLE_SPACE
-                        + institutionsUniversityUnit.getName());
+        addParameter(
+                "institutionStatus",
+                BundleUtil.getString(Bundle.ENUMERATION, getLocale(), Bennu.getInstance().getInstitutionUnit().getType()
+                        .getName())
+                        + SINGLE_SPACE
+                        + BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.of")
+                        + SINGLE_SPACE + institutionsUniversityUnit.getName());
         if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE)) {
-            addParameter("languages", getEnumerationBundle().getString("pt"));
+            addParameter("languages", BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "pt"));
         } else {
-            addParameter("languages",
-                    getEnumerationBundle().getString("pt") + SINGLE_SPACE
-                            + getResourceBundle().getString("label.and").toLowerCase() + SINGLE_SPACE
-                            + getEnumerationBundle().getString("en"));
+            addParameter(
+                    "languages",
+                    BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "pt") + SINGLE_SPACE
+                            + BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.and").toLowerCase() + SINGLE_SPACE
+                            + BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "en"));
         }
         return degreeDesignation;
     }
@@ -222,8 +232,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 StringFormatter.prettyPrint(person.getCountry().getCountryNationality().getContent(getLanguage())));
         addParameter(
                 "documentIdType",
-                applyMessageArguments(getResourceBundle().getString("diploma.supplement.one.five.one"), getEnumerationBundle()
-                        .getString(person.getIdDocumentType().getName())));
+                applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.one.five.one"),
+                        BundleUtil.getString(Bundle.ENUMERATION, getLocale(), person.getIdDocumentType().getName())));
         addParameter("documentIdNumber", person.getDocumentIdNumber());
 
         addParameter("registrationNumber", getDocumentRequest().getRegistrationNumber());
@@ -251,8 +261,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     private void addProgrammeRequirements(String graduateDegree) {
         String labelThe =
-                getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE) ? getResourceBundle().getString(
-                        "label.the.female") : getResourceBundle().getString("label.the.male");
+                getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE) ? BundleUtil.getString(Bundle.ACADEMIC,
+                        getLocale(), "label.the.female") : BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.the.male");
         long ectsCredits = getDocumentRequest().getEctsCredits();
         DegreeOfficialPublication dr = getDocumentRequest().getDegreeOfficialPublication();
 
@@ -266,27 +276,25 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         if (getDocumentRequest().isRequestForPhd()) {
             programmeRequirements =
-                    applyMessageArguments(
-                            getResourceBundle()
-                                    .getString(
-                                            "diploma.supplement.four.two.programmerequirements.template.noareas.with.official.publication"),
+                    applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                            "diploma.supplement.four.two.programmerequirements.template.noareas.with.official.publication"),
                             labelThe, graduateDegree, Long.toString(ectsCredits), officialPublication);
         } else if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE)
                 || dr.getSpecializationAreaSet().size() == 0) {
             programmeRequirements =
-                    applyMessageArguments(
-                            getResourceBundle().getString("diploma.supplement.four.two.programmerequirements.template.noareas"),
-                            labelThe, graduateDegree, Long.toString(ectsCredits));
+                    applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                            "diploma.supplement.four.two.programmerequirements.template.noareas"), labelThe, graduateDegree,
+                            Long.toString(ectsCredits));
         } else {
             List<String> areas = new ArrayList<String>();
             for (DegreeSpecializationArea area : dr.getSpecializationAreaSet()) {
                 areas.add(area.getName().getContent(getLanguage()));
             }
             programmeRequirements =
-                    applyMessageArguments(
-                            getResourceBundle().getString("diploma.supplement.four.two.programmerequirements.template.withareas"),
-                            labelThe, graduateDegree, Long.toString(ectsCredits), Integer.toString(areas.size()),
-                            StringUtils.join(areas, "; "), officialPublication);
+                    applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                            "diploma.supplement.four.two.programmerequirements.template.withareas"), labelThe, graduateDegree,
+                            Long.toString(ectsCredits), Integer.toString(areas.size()), StringUtils.join(areas, "; "),
+                            officialPublication);
         }
         programmeRequirements = programmeRequirements.substring(0, 1).toUpperCase() + programmeRequirements.substring(1);
         addParameter("programmeRequirements", programmeRequirements);
@@ -296,19 +304,24 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         String professionalStatus;
 
         if (!getDocumentRequest().getRequestedCycle().equals(CycleType.SECOND_CYCLE)) {
-            professionalStatus = getResourceBundle().getString("diploma.supplement.professionalstatus.notapplicable");
+            professionalStatus =
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.professionalstatus.notapplicable");
         } else {
             DiplomaSupplementRequest request = (DiplomaSupplementRequest) getDocumentRequest();
             String degreeSigla = request.getRegistration().getDegree().getSigla();
 
             if (degreeSigla.equals("MA")) {
                 professionalStatus =
-                        getResourceBundle().getString("diploma.supplement.professionalstatus.credited.arquitect.withintership");
+                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                                "diploma.supplement.professionalstatus.credited.arquitect.withintership");
             } else if (degreeSigla.equals("MMA") || degreeSigla.equals("MQ") || degreeSigla.equals("MUOT")
                     || degreeSigla.equals("MPOT") || degreeSigla.equals("MFarm")) {
-                professionalStatus = getResourceBundle().getString("diploma.supplement.professionalstatus.notapplicable");
+                professionalStatus =
+                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.professionalstatus.notapplicable");
             } else {
-                professionalStatus = getResourceBundle().getString("diploma.supplement.professionalstatus.credited.engineer");
+                professionalStatus =
+                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                                "diploma.supplement.professionalstatus.credited.engineer");
             }
         }
         addParameter("professionalStatus", professionalStatus);
@@ -328,19 +341,22 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             }
             for (Entry<ExtraCurricularActivityType, List<ExtraCurricularActivity>> entry : activityMap.entrySet()) {
                 StringBuilder activityText = new StringBuilder();
-                activityText.append(getResourceBundle().getString("diploma.supplement.six.one.extracurricularactivity.heading"));
+                activityText.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                        "diploma.supplement.six.one.extracurricularactivity.heading"));
                 activityText.append(SINGLE_SPACE);
                 activityText.append(entry.getKey().getName().getContent(getLanguage()));
                 activityText.append(SINGLE_SPACE);
                 List<String> activityTimings = new ArrayList<String>();
                 for (ExtraCurricularActivity activity : entry.getValue()) {
-                    activityTimings.add(getResourceBundle().getString(
+                    activityTimings.add(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                             "diploma.supplement.six.one.extracurricularactivity.time.heading")
                             + SINGLE_SPACE
                             + activity.getStart().toString("MM-yyyy")
                             + SINGLE_SPACE
-                            + getResourceBundle().getString("diploma.supplement.six.one.extracurricularactivity.time.separator")
-                            + SINGLE_SPACE + activity.getEnd().toString("MM-yyyy"));
+                            + BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                                    "diploma.supplement.six.one.extracurricularactivity.time.separator")
+                            + SINGLE_SPACE
+                            + activity.getEnd().toString("MM-yyyy"));
                 }
                 activityText.append(StringUtils.join(activityTimings, ", "));
                 activities.add(activityText.toString());
@@ -348,7 +364,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             addParameter("extraCurricularActivities", StringUtils.join(activities, '\n') + ".");
         } else {
             addParameter("extraCurricularActivities",
-                    getResourceBundle().getString("diploma.supplement.six.one.extracurricularactivity.none"));
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.six.one.extracurricularactivity.none"));
         }
     }
 
@@ -422,9 +438,9 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             DateTime processingDate = computeProcessingDateToLockECTSTableUse();
             if (entry instanceof IEnrolment) {
                 IEnrolment enrolment = (IEnrolment) entry;
-                this.type = getEnumerationBundle().getString(enrolment.getEnrolmentTypeName());
+                this.type = BundleUtil.getString(Bundle.ENUMERATION, getLocale(), enrolment.getEnrolmentTypeName());
                 this.duration =
-                        getResourceBundle().getString(
+                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                                 enrolment.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
 
                 this.ectsScale =
@@ -432,9 +448,9 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                                 processingDate).getValue();
             } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
                 Dismissal dismissal = (Dismissal) entry;
-                this.type = getEnumerationBundle().getString(dismissal.getEnrolmentTypeName());
+                this.type = BundleUtil.getString(Bundle.ENUMERATION, getLocale(), dismissal.getEnrolmentTypeName());
                 this.duration =
-                        getResourceBundle().getString(
+                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                                 dismissal.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
                 this.ectsScale = dismissal.getEctsGrade(processingDate).getValue();
             } else {

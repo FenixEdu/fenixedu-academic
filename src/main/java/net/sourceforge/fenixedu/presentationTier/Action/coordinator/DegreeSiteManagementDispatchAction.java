@@ -69,6 +69,7 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "createItem", path = "/commons/sites/createItem.jsp"),
         @Forward(name = "viewDescriptionCurricularPlan", path = "/coordinator/degreeSite/viewDescriptionCurricularPlan.jsp"),
         @Forward(name = "editFile", path = "/commons/sites/editFile.jsp"),
+        @Forward(name = "addInstitutionSection", path = "/commons/sites/addInstitutionSection.jsp"),
         @Forward(name = "editItem", path = "/commons/sites/editItem.jsp") })
 public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
 

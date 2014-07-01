@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.util.MessageResources;
 
@@ -53,7 +54,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class GroupStudentEnrolment {
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
+    private static final MessageResources messages = MessageResources.getMessageResources(Bundle.GLOBAL);
 
     @Atomic
     public static Boolean run(String studentGroupCode, String username) throws FenixServiceException {

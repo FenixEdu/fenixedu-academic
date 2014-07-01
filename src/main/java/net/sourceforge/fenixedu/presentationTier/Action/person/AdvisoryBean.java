@@ -23,6 +23,7 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.util.MessageResources;
 import org.joda.time.Interval;
@@ -31,7 +32,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class AdvisoryBean {
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
+    private static final MessageResources messages = MessageResources.getMessageResources(Bundle.GLOBAL);
 
     private static final Locale locale = new Locale("pt");
 

@@ -21,7 +21,9 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class SummaryTeacherBean implements Serializable {
 
@@ -63,7 +65,7 @@ public class SummaryTeacherBean implements Serializable {
         if (getProfessorship() != null) {
             return getProfessorship().getPerson().getName();
         } else if (getOthers()) {
-            return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.others");
+            return BundleUtil.getString(Bundle.APPLICATION, "label.others");
         }
         return "";
     }

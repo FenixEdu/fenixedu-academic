@@ -277,7 +277,7 @@
 			<logic:notEqual name="numberOfLessons" value="0">
 	        	<td class="listClasses" rowspan="<%= pageContext.findAttribute("numberOfLessons") %>">
 			</logic:notEqual>
-              		<html:link page="<%= "/manageShifts.do?method=deleteShift&amp;page=0&amp;"
+              		<html:link page="<%= "/deleteShifts.do?method=deleteShift&amp;page=0&amp;"
                							+ PresentationConstants.SHIFT_OID
 			  							+ "="
                				   			+ pageContext.findAttribute("infoShiftOID")

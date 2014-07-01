@@ -25,7 +25,6 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew;
 
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.jsp.PageContext;
 
@@ -61,11 +60,10 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
     @Override
     public StringBuilder render(Locale locale, PageContext pageContext) {
         StringBuilder strBuffer = new StringBuilder("");
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.PublicDegreeInformation", locale);
         strBuffer.append("<table class='examMapContainer' cellspacing='0' cellpadding='3' width='95%'>");
         strBuffer.append("<tr>");
         strBuffer.append("<td>");
-        renderExamsMapForRoom(strBuffer, pageContext, bundle);
+        renderExamsMapForRoom(strBuffer, pageContext);
         strBuffer.append("</td>");
         strBuffer.append("</tr>");
         strBuffer.append("</table>");
@@ -78,7 +76,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         return strBuffer;
     }
 
-    private void renderExamsMapForRoom(StringBuilder strBuffer, PageContext pageContext, ResourceBundle bundle) {
+    private void renderExamsMapForRoom(StringBuilder strBuffer, PageContext pageContext) {
         strBuffer.append("<table class='examMap' cellspacing='0' cellpadding='3' width='95%'>");
 
         strBuffer.append("<tr>");
@@ -87,7 +85,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 
         for (int week = 0; week < numberOfWeks; week++) {
             strBuffer.append("<tr>");
-            renderLabelsForRowOfDays(strBuffer, week, pageContext, bundle);
+            renderLabelsForRowOfDays(strBuffer, week, pageContext);
             strBuffer.append("</tr>\r\n");
             strBuffer.append("<tr>");
             renderExamsForRowOfDays(strBuffer, week, pageContext);
@@ -120,7 +118,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         }
     }
 
-    private void renderLabelsForRowOfDays(StringBuilder strBuffer, int week, PageContext pageContext, ResourceBundle bundle) {
+    private void renderLabelsForRowOfDays(StringBuilder strBuffer, int week, PageContext pageContext) {
         for (int slot = 0; slot < daysOfWeek.length; slot++) {
             ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(week * daysOfWeek.length + slot);
 

@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandid
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
@@ -64,7 +65,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForwa
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.LearningAgreementDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.stork.AttributesManagement;
 import net.sourceforge.fenixedu.util.stork.SPUtil;
@@ -76,6 +77,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -867,6 +869,30 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         return mapping.findForward("");
     }
 
+    public ActionForward retrieveApprovedLearningAgreement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final ApprovedLearningAgreementDocumentFile file = getDomainObject(request, "agreementId");
+        final String hash = request.getParameter("hash");
+
+        final MobilityIndividualApplicationProcess process = file.getProcess();
+        final DegreeOfficePublicCandidacyHashCode candidacyHashCode = process.getCandidacyHashCode();
+        if (candidacyHashCode.getValue().equals(hash)) {
+            final byte[] content = file.getContent();
+            response.setContentLength(content.length);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", "attachment; filename=" + file.getFilename());
+
+            final ServletOutputStream writer = response.getOutputStream();
+            writer.write(content);
+            writer.flush();
+            writer.close();
+
+            response.flushBuffer();   
+        }
+
+        return null;
+    }
+
     @Override
     public ActionForward continueCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
@@ -1161,10 +1187,10 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
                 (MobilityIndividualApplicationProcessBean) individualCandidacyProcessBean;
 
         // Email intro and error message 
-        sb.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.intro"));
+        sb.append(BundleUtil.getString(Bundle.CANDIDATE, "error.mobility.report.mail.intro"));
         sb.append("\n");
         sb.append("\nError message: ");
-        sb.append(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, exception.getKey(),
+        sb.append(BundleUtil.getString(Bundle.APPLICATION, exception.getKey(),
                 exception.getArgs()));
         sb.append("\n");
 
@@ -1217,7 +1243,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
         // Exception details
         sb.append("\n");
-        sb.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.stacktrace"));
+        sb.append(BundleUtil.getString(Bundle.CANDIDATE, "error.mobility.report.mail.stacktrace"));
         sb.append("\n");
         sb.append("\nException key: ");
         sb.append(exception.getKey());
@@ -1237,7 +1263,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         // Email construction and sending
         String errorReportAddress = Installation.getInstance().getInstituitionalEmailAddress("nmci");
         String errorReportSubject =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.subject",
+                BundleUtil.getString(Bundle.CANDIDATE, "error.mobility.report.mail.subject",
                         Unit.getInstitutionAcronym());
         String errorReportBody = sb.toString();
 

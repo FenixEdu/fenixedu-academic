@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -29,7 +28,9 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
@@ -47,8 +48,7 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale()).getString("label.phd") + " - "
-                + getDegreeInformation();
+        return BundleUtil.getString(Bundle.PHD, I18N.getLocale(), "label.phd") + " - " + getDegreeInformation();
     }
 
     private String getDegreeInformation() {

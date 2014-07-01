@@ -24,7 +24,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -139,7 +140,7 @@ public class WebAddress extends WebAddress_Base {
     @Override
     public void logEditAux(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact,
             String newValue, String typeKey) {
-        final String infoLabel = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, typeKey);
+        final String infoLabel = BundleUtil.getString(Bundle.APPLICATION, typeKey);
 
         boolean oldValueDiffersFromNew = false;
         if (valueChanged) {
@@ -150,12 +151,12 @@ public class WebAddress extends WebAddress_Base {
 
         if (propertiesChanged && !valueChanged) {
             // only properties were changed
-            PersonInformationLog.createLog(person, "resources.MessagingResources", "log.personInformation.contact.generic.edit",
+            PersonInformationLog.createLog(person, Bundle.MESSAGING, "log.personInformation.contact.generic.edit",
                     infoLabel, this.getPresentationValue(), person.getIstUsername());
         } else if (valueChanged) {
             if (oldValueDiffersFromNew) {
                 // value was changed
-                PersonInformationLog.createLog(person, "resources.MessagingResources",
+                PersonInformationLog.createLog(person, Bundle.MESSAGING,
                         "log.personInformation.contact.generic.edit.values", infoLabel, getPrevPartyContact()
                                 .getPresentationValue(), this.getPresentationValue(), person.getIstUsername());
             }

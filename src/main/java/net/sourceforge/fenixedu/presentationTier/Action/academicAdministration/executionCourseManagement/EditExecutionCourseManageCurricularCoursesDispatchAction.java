@@ -48,7 +48,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -144,7 +145,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         }
 
         List<LabelValueBean> degrees = new ArrayList<LabelValueBean>();
-        degrees.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.RendererResources",
+        degrees.add(new LabelValueBean(BundleUtil.getString(Bundle.RENDERER,
                 "renderers.menu.default.title"), ""));
 
         Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());

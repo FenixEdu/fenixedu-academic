@@ -21,13 +21,13 @@ package net.sourceforge.fenixedu.dataTransferObject.coordinator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeLog;
 import net.sourceforge.fenixedu.domain.DegreeLog.DegreeLogTypes;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
@@ -44,11 +44,11 @@ public class SearchDegreeLogBean implements Serializable {
     private Collection<DegreeLog> degreeLogs;
 
     public String getEnumerationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(name);
+        return BundleUtil.getString(Bundle.ENUMERATION, name);
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
+        return BundleUtil.getString(Bundle.APPLICATION, name);
     }
 
     public SearchDegreeLogBean(Degree degree) {

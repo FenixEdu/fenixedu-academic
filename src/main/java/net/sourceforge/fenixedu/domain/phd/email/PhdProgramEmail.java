@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.phd.email;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -30,10 +29,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -91,18 +90,16 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
 
     @Atomic
     static public void validateEmailBean(PhdProgramEmailBean bean) {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
-
         if (bean.getSelectedElements().isEmpty() && StringUtils.isEmpty(bean.getBccs())) {
-            throw new DomainException(resourceBundle.getString("error.email.validation.no.recipients"));
+            throw new DomainException(BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.no.recipients"));
         }
 
         if (StringUtils.isEmpty(bean.getSubject())) {
-            throw new DomainException(resourceBundle.getString("error.email.validation.subject.empty"));
+            throw new DomainException(BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.subject.empty"));
         }
 
         if (StringUtils.isEmpty(bean.getMessage())) {
-            throw new DomainException(resourceBundle.getString("error.email.validation.message.empty"));
+            throw new DomainException(BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.message.empty"));
         }
 
     }

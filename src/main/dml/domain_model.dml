@@ -4835,13 +4835,10 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 
     class util.Email  {
         EmailAddressList bccAddresses;
-        String body;
-        String htmlBody;
         EmailAddressList ccAddresses;
         String fromAddress;
         String fromName;
         EmailAddressList replyTos;
-        String subject;
         EmailAddressList toAddresses;
         EmailAddressList confirmedAddresses;
         EmailAddressList failedAddresses;
@@ -4854,16 +4851,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         DateTime created;
         DateTime sent;
         String bccs;
-    }
-
-    class util.email.MessageTransportResult  {
-    	Integer code;
-    	String description;
-    }
-
-    class util.email.MessageId  {
-        String id;
-        DateTime sendTime;
     }
 
     class util.email.Recipient  {
@@ -15589,13 +15576,6 @@ relation RootDomainObjectUtilEmailMessage {
     }
 }
 
-relation RootDomainObjectUtilEmailMessageId {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    util.email.MessageId playsRole utilEmailMessageIds {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectUtilEmailRecipient {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     util.email.Recipient playsRole utilEmailRecipients {
@@ -15618,13 +15598,6 @@ relation RootDomainObjectSystemSender {
 relation UtilEmailSenderUtilEmailMessage {
     util.email.Sender playsRole sender;
     util.email.Message playsRole messages {
-        multiplicity *;
-    }
-}
-
-relation UtilEmailMessageIdUtilEmailMessage {
-    util.email.Message playsRole message;
-    util.email.MessageId playsRole messageIds {
         multiplicity *;
     }
 }
@@ -16578,23 +16551,9 @@ relation RootDomainObjectTeacherCredits {
 		multiplicity *;
 	}
 }
-relation RootDomainObjectMessageTransportResult {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	util.email.MessageTransportResult playsRole messageTransportResult {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectEmailQueue {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectFromEmailQueue;
 	util.Email playsRole emailQueue {
-		multiplicity *;
-	}
-}
-
-relation FenixEmailMessageTransportResult {
-	util.Email playsRole email;
-	util.email.MessageTransportResult playsRole messageTransportResult {
 		multiplicity *;
 	}
 }

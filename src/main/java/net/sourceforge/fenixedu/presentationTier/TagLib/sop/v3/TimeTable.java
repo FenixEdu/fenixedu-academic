@@ -52,7 +52,7 @@ public class TimeTable {
 
     /**
      * Constructor TimeTable.
-     * 
+     *
      * @param numberOfHours
      * @param numberOfDays
      */
@@ -76,7 +76,7 @@ public class TimeTable {
 
     /**
      * Method getDiaSemanaLabel.
-     * 
+     *
      * @param day
      */
     private String getDiaSemanaLabel(int day, Locale locale, PageContext pageContext) {
@@ -109,7 +109,7 @@ public class TimeTable {
 
     /**
      * This method will break infoLesson in minute slots.
-     * 
+     *
      * @param infoLesson
      */
     public void addLesson(InfoShowOccupation infoShowOccupation) {
@@ -133,7 +133,7 @@ public class TimeTable {
 
     /**
      * Method getInfoLessonWrapper.
-     * 
+     *
      * @param infoLesson
      */
     private InfoLessonWrapper getInfoLessonWrapper(InfoShowOccupation infoShowOccupation) {
@@ -147,7 +147,7 @@ public class TimeTable {
 
     /**
      * Method getTimeTableSlot.
-     * 
+     *
      * @param dayIndex
      * @param hourIndex
      * @return TimeTableSlot
@@ -199,7 +199,7 @@ public class TimeTable {
 
     /**
      * Method getMinutes.
-     * 
+     *
      * @param calendar
      * @return int
      */
@@ -213,7 +213,7 @@ public class TimeTable {
 
     /**
      * Returns the timeTableGrid.
-     * 
+     *
      * @return TimeTableSlot[][]
      */
     public TimeTableSlot[][] getTimeTableGrid() {
@@ -222,7 +222,7 @@ public class TimeTable {
 
     /**
      * Returns the numberOfDays.
-     * 
+     *
      * @return Integer
      */
     public Integer getNumberOfDays() {
@@ -231,7 +231,7 @@ public class TimeTable {
 
     /**
      * Returns the numberOfHours.
-     * 
+     *
      * @return Integer
      */
     public Integer getNumberOfHours() {
@@ -240,7 +240,7 @@ public class TimeTable {
 
     /**
      * Method getDayColumn.
-     * 
+     *
      * @param dayIndex
      * @return DayColumn
      */
@@ -250,7 +250,7 @@ public class TimeTable {
 
     /**
      * Returns the minimumHourInMinutes.
-     * 
+     *
      * @return int
      */
     public int getMinimumHourInMinutes() {
@@ -259,7 +259,7 @@ public class TimeTable {
 
     /**
      * Returns the slotSize.
-     * 
+     *
      * @return Integer
      */
     public Integer getSlotSize() {

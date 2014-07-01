@@ -19,10 +19,10 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
@@ -31,7 +31,7 @@ public enum ErasmusApplyForSemesterType implements IPresentableEnum {
     FIRST_SEMESTER, SECOND_SEMESTER;
 
     protected String localizedName(Locale locale) {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(fullQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, locale, fullQualifiedName());
     }
 
     protected String qualifiedName() {

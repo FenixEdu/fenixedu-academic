@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -54,7 +55,7 @@ public class CoordinatorResultsBean extends GlobalCommentsResultsBean {
         setCurricularBlockResults(new ArrayList<BlockResultsSummaryBean>());
         List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
         if (results != null && results.size() > 5) {
-            for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocks()) {
+            for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocksSet()) {
                 getCurricularBlockResults().add(new BlockResultsSummaryBean(inquiryBlock, results, person, getPersonCategory()));
             }
         }
@@ -93,8 +94,8 @@ public class CoordinatorResultsBean extends GlobalCommentsResultsBean {
     }
 
     public void qucResultsLog() {
-        QUCResultsLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
-                "resources.MessagingResources", "log.degree.qucresults.comment", getExecutionDegree().getDegree()
-                        .getPresentationName(), getExecutionCourse().getNameI18N().getContent());
+        QUCResultsLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(), Bundle.MESSAGING,
+                "log.degree.qucresults.comment", getExecutionDegree().getDegree().getPresentationName(), getExecutionCourse()
+                        .getNameI18N().getContent());
     }
 }

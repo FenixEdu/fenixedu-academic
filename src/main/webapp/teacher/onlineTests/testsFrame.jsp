@@ -23,6 +23,7 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:include page="/includeMathJax.jsp" />
 
 <div class="row">
 	<nav class="col-lg-2" id="context">

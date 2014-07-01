@@ -25,6 +25,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
+<jsp:include page="/includeMathJax.jsp" />
 
 <html:xhtml/>
 
@@ -106,15 +107,13 @@
     <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context + "&amp;sectionID=" + sectionId %>">
         <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
-    
-    <% String treeId = "subSectionTree" + site.getExternalId(); %>
             
     <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
         <fr:view name="site" property="orderedAssociatedSections">
             <fr:layout name="tree">
-                <fr:property name="treeId" value="<%= treeId %>"/>
+                <fr:property name="expandable" value="true" />
                 <fr:property name="fieldId" value="sections-order"/>
-                
+
 	             <fr:property name="eachLayout" value="values"/>
                 <fr:property name="childrenFor(Section)" value="everythingForTree"/>
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
@@ -123,9 +122,9 @@
 				<fr:property name="imageFor(TemplatedSectionInstance)" value="/images/icon-institutional.gif"/>
 
 				<fr:property name="schemaFor(Item)" value="site.item.name"/>
-                <fr:property name="childrenFor(Item)" value="fileContentSet"/>
+                <fr:property name="childrenFor(Item)" value="sortedFiles"/>
 
-				<fr:property name="schemaFor(FileContent)" value="item.file.filename"/>
+				<fr:property name="schemaFor(FileContent)" value="site.item.file.basic"/>
 				<fr:property name="imageFor(FileConten)" value="/images/icon-attachment.gif"/>
 
                 <fr:property name="current" value="<%= sectionId.toString() %>"/>
@@ -136,22 +135,7 @@
             <fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.externalId}&" + context  + "#item-${externalId}"%>"/>
         	<fr:destination name="functionality.view" path="<%= actionName + "?method=section&siteID=" + siteId + "&sectionID=${section.externalId}&" + context  + "#content-${externalId}"%>"/>
         </fr:view>
-
-		<p class="mtop15">
-		    <fr:form action="<%= actionName + "?method=section&amp;" + context + "&amp;sectionID=" + sectionId %>">
-		        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
-		            <bean:message key="button.sections.order.save" bundle="SITE_RESOURCES"/>
-		        </html:button>
-		        <html:submit>
-		            <bean:message key="button.sections.order.reset" bundle="SITE_RESOURCES"/>
-		        </html:submit>
-		    </fr:form>
-	    </p>
     </div>
-    
-	<p style="color: #888;">
-		<em><bean:message key="message.section.reorder.tip" bundle="SITE_RESOURCES"/></em>
-	</p>
     
 </logic:notEmpty>
 
@@ -425,7 +409,7 @@
 	                    		<th><bean:message key="label.section.item.file.availability" bundle="SITE_RESOURCES"/></th>
 	                    		<th><bean:message key="label.section.item.file.options" bundle="SITE_RESOURCES"/></th>
                     		</tr>
-                        	<logic:iterate id="fileItem" name="item" property="fileContentSet" type="net.sourceforge.fenixedu.domain.FileContent">
+                        	<logic:iterate id="fileItem" name="item" property="sortedFiles" type="net.sourceforge.fenixedu.domain.FileContent">
 							<tr>
 								<td>
 	                        		<bean:define id="downloadUrl">
@@ -567,7 +551,7 @@
 	                    		<th><bean:message key="label.section.item.file.availability" bundle="SITE_RESOURCES"/></th>
 	                    		<th><bean:message key="label.section.item.file.options" bundle="SITE_RESOURCES"/></th>
                     		</tr>
-                        	<logic:iterate id="fileItem" name="section" property="fileContentSet" type="net.sourceforge.fenixedu.domain.FileContent">
+                        	<logic:iterate id="fileItem" name="section" property="sortedFiles" type="net.sourceforge.fenixedu.domain.FileContent">
 							<tr>
 								<td>
 	                        		<bean:define id="downloadUrl">

@@ -40,7 +40,8 @@ import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -199,12 +200,12 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
 
     public Spreadsheet getSelectedCandidateSpreadSheet(final OutboundMobilityCandidacyPeriod period) {
         final String filename =
-                BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                BundleUtil.getString(Bundle.ACADEMIC,
                         "label.mobility.outbound.period.export.selected.candiadates.filename");
 
         final Spreadsheet spreadsheetCandidates = new Spreadsheet(filename);
         final Spreadsheet spreadsheetOtherCurricularInfo =
-                spreadsheetCandidates.addSpreadsheet(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                spreadsheetCandidates.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC,
                         "label.other.curricular.info"));
         for (final OutboundMobilityCandidacySubmission submission : getOutboundMobilityCandidacySubmissionSet()) {
             final OutboundMobilityCandidacy candidacy = submission.getSelectedCandidacy();
@@ -281,7 +282,7 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     private String getString(final String key, final String... args) {
-        return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", key, args);
+        return BundleUtil.getString(Bundle.ACADEMIC, key, args);
     }
 
     @Atomic

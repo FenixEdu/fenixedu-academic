@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RegistrationStatePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -249,7 +250,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
             }
 
             net.sourceforge.fenixedu.domain.student.RegistrationStateLog.createRegistrationStateLog(getRegistration(),
-                    "resources.MessagingResources", "log.registration.registrationstate.removed",
+                    Bundle.MESSAGING, "log.registration.registrationstate.removed",
                     getStateType().getDescription(), getRemarks());
             setRegistration(null);
             setResponsiblePerson(null);
@@ -351,7 +352,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
                 throw new DomainException("error.cannot.add.registrationState.incoherentState");
             }
             net.sourceforge.fenixedu.domain.student.RegistrationStateLog.createRegistrationStateLog(getRegistration(),
-                    "resources.MessagingResources", "log.registration.registrationstate.added", getStateType().getDescription(),
+                    Bundle.MESSAGING, "log.registration.registrationstate.added", getStateType().getDescription(),
                     getRemarks());
             return createdState;
         }

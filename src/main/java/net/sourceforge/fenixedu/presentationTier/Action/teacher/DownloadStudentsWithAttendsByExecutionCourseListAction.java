@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -42,13 +41,13 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -125,7 +124,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
         for (final ShiftType shiftType : shiftTypes) {
             fileContents +=
                     SHIFT
-                            + ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(
+                            + BundleUtil.getString(Bundle.ENUMERATION, 
                                     shiftType.getName()) + SEPARATOR;
         }
 
@@ -142,7 +141,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
                                 .getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionPeriod()) + SEPARATOR;
             }
             fileContents +=
-                    ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(
+                    BundleUtil.getString(Bundle.ENUMERATION, 
                             attends.getAttendsStateType().getQualifiedName())
                             + SEPARATOR;
             fileContents += attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getName() + SEPARATOR;

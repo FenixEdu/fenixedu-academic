@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -167,7 +168,7 @@ public class WriteMarks {
             throw new FenixServiceMultipleException(exceptionList);
         }
 
-        EvaluationManagementLog.createLog(executionCourse, "resources.MessagingResources",
+        EvaluationManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.evaluation.generic.edited.marks", evaluation.getPresentationName(),
                 executionCourse.getName(), executionCourse.getDegreePresentationString());
     }

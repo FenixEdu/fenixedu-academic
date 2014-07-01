@@ -30,8 +30,10 @@ import net.sf.jasperreports.engine.JRPrintPage;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class StudentThesisIdentificationDocument extends ThesisDocument {
@@ -52,7 +54,7 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
             addParameter("thesisSubtitle", neverNull(file.getSubTitle()));
             addParameter("thesisLanguage", getLanguage(file));
         } else {
-            addParameter("thesisTitle", EMPTY_STR);
+            addParameter("thesisTitle", thesis.getTitle().getContent());
             addParameter("thesisSubtitle", EMPTY_STR);
             addParameter("thesisLanguage", EMPTY_STR);
         }
@@ -98,7 +100,7 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
             return EMPTY_STR;
         }
 
-        return getEnumerationBundle().getString(language.getLanguage());
+        return BundleUtil.getString(Bundle.ENUMERATION, language.getLanguage());
     }
 
     private List<String> splitKeywords(String keywords) {
@@ -135,7 +137,7 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
         private static LineProcessor instance = new LineProcessor();
 
         private static String[][] FIELD_LINE_MAP = { { "textField-title", "13", "line-title-2" },
-                { "textField-subtitle", "13", "line-subtitle-2" } };
+            { "textField-subtitle", "13", "line-subtitle-2" } };
 
         private static float LINE_DISTANCE = 11.5f;
 

@@ -18,8 +18,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.docs.phd.registration;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
@@ -28,8 +26,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -42,8 +42,6 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
     public PhdSchoolRegistrationDeclarationDocument(final PhdIndividualProgramProcess process) {
         this.process = process;
-
-        setResourceBundle(ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale()));
         fillReport();
     }
 
@@ -76,7 +74,7 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
     private String getRegistrationStateLabel() {
         final Gender gender = getPerson().getGender();
-        return gender == Gender.MALE ? getMessage("label.phd.schoolRegistrationDeclaration.registered.male") : getMessage("label.phd.schoolRegistrationDeclaration.registered.female");
+        return gender == Gender.MALE ? BundleUtil.getString(Bundle.PHD, "label.phd.schoolRegistrationDeclaration.registered.male") : BundleUtil.getString(Bundle.PHD, "label.phd.schoolRegistrationDeclaration.registered.female");
     }
 
     private Person getPerson() {
@@ -93,10 +91,6 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
     private boolean hasRegistration() {
         return process.hasRegistration();
-    }
-
-    private String getMessage(final String key) {
-        return getResourceBundle().getString(key);
     }
 
     @Override

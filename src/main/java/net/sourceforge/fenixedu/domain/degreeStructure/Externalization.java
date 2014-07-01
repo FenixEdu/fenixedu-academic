@@ -21,7 +21,9 @@
  */
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -68,12 +70,12 @@ public class Externalization {
     }
 
     private static BibliographicReferences read(String source) {
-        final BibliographicReferences bibliographicReferences = new BibliographicReferences();
-        fillBibliographicReferences(bibliographicReferences, source);
-        return bibliographicReferences;
+        List<BibliographicReference> refs = new ArrayList<>();
+        fillBibliographicReferences(refs, source);
+        return new BibliographicReferences(refs);
     }
 
-    private static void fillBibliographicReferences(final BibliographicReferences bibliographicReferences, final String source) {
+    private static void fillBibliographicReferences(List<BibliographicReference> refs, final String source) {
         final int indexOfSep1 = source.indexOf(ELEMENT_SEPARATOR);
         final int indexOfSep2 = source.indexOf(ELEMENT_SEPARATOR, indexOfSep1 + ELEMENT_SEPARATOR.length());
         final int indexOfSep3 = source.indexOf(ELEMENT_SEPARATOR, indexOfSep2 + ELEMENT_SEPARATOR.length());
@@ -83,19 +85,18 @@ public class Externalization {
         final int temp = source.indexOf(NEW_LINE, indexOfSep6 + ELEMENT_SEPARATOR.length());
         final int indexOfSep7 = temp < 0 ? source.length() : temp;
 
-        bibliographicReferences
-                .createBibliographicReference(
-                        source.substring(0, indexOfSep1),
-                        source.substring(indexOfSep1 + ELEMENT_SEPARATOR.length(), indexOfSep2),
-                        source.substring(indexOfSep2 + ELEMENT_SEPARATOR.length(), indexOfSep3),
-                        source.substring(indexOfSep3 + ELEMENT_SEPARATOR.length(), indexOfSep4),
-                        source.substring(indexOfSep4 + ELEMENT_SEPARATOR.length(), indexOfSep5),
-                        source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6).equals("null") ? BibliographicReferenceType.MAIN : BibliographicReferenceType
-                                .valueOf(source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6)), Integer
-                                .valueOf(source.substring(indexOfSep6 + ELEMENT_SEPARATOR.length(), indexOfSep7)));
+        refs.add(new BibliographicReference(
+                source.substring(0, indexOfSep1),
+                source.substring(indexOfSep1 + ELEMENT_SEPARATOR.length(), indexOfSep2),
+                source.substring(indexOfSep2 + ELEMENT_SEPARATOR.length(), indexOfSep3),
+                source.substring(indexOfSep3 + ELEMENT_SEPARATOR.length(), indexOfSep4),
+                source.substring(indexOfSep4 + ELEMENT_SEPARATOR.length(), indexOfSep5),
+                source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6).equals("null") ? BibliographicReferenceType.MAIN : BibliographicReferenceType
+                        .valueOf(source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6)), Integer.valueOf(source
+                        .substring(indexOfSep6 + ELEMENT_SEPARATOR.length(), indexOfSep7))));
 
         if (indexOfSep7 + NEW_LINE.length() < source.length()) {
-            fillBibliographicReferences(bibliographicReferences, source.substring(indexOfSep7 + NEW_LINE.length()));
+            fillBibliographicReferences(refs, source.substring(indexOfSep7 + NEW_LINE.length()));
         }
     }
 

@@ -26,7 +26,6 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import javax.faces.component.UISelectItems;
@@ -66,7 +65,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -74,14 +73,12 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
-    private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
-    private final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
     private final Integer NO_SELECTION = 0;
 
     private String selectedDepartmentUnitID = null;
@@ -339,8 +336,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getPeriods() {
         final List<SelectItem> result = new ArrayList<SelectItem>(2);
-        result.add(new SelectItem(Integer.valueOf(2), bolonhaResources.getString("yes")));
-        result.add(new SelectItem(Integer.valueOf(1), bolonhaResources.getString("no")));
+        result.add(new SelectItem(Integer.valueOf(2), BundleUtil.getString(Bundle.BOLONHA, "yes")));
+        result.add(new SelectItem(Integer.valueOf(1), BundleUtil.getString(Bundle.BOLONHA, "no")));
         return result;
     }
 
@@ -699,12 +696,12 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
             if (!isCompetenceCourseLevelValid()) {
                 valid = false;
-                addErrorMessage(bolonhaResources.getString("error.mustSetCompetenceCourseLevel"));
+                addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.mustSetCompetenceCourseLevel"));
             }
 
             if (!isCompetenceCourseTypeValid()) {
                 valid = false;
-                addErrorMessage(bolonhaResources.getString("error.mustSetCompetenceCourseType"));
+                addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.mustSetCompetenceCourseType"));
             }
 
             if (valid) {
@@ -717,11 +714,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
                 return "setCompetenceCourseLoad";
             }
         } catch (IllegalDataAccessException e) {
-            addErrorMessage(bolonhaResources.getString("error.creatingCompetenceCourse"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.creatingCompetenceCourse"));
         } catch (ExistingCompetenceCourseInformationException e) {
-            addErrorMessage(getFormatedMessage(bolonhaResources, e.getKey(), e.getArgs()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getKey(), e.getArgs()));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         }
         return "";
     }
@@ -731,9 +728,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setCompetenceCourseLoad();
             return "setCompetenceCourseAdditionalInformation";
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         }
         return "";
     }
@@ -743,9 +740,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setCompetenceCourseAdditionalInformation();
             return "competenceCoursesManagement";
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         }
         return "";
     }
@@ -758,16 +755,16 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
                 return "editCompetenceCourseMainPage";
 
             } else {
-                addErrorMessage(bolonhaResources.getString("error.mustSetCompetenceCourseLevel"));
+                addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.mustSetCompetenceCourseLevel"));
             }
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.editingCompetenceCourse"));
         } catch (ExistingCompetenceCourseInformationException e) {
-            addErrorMessage(getFormatedMessage(bolonhaResources, e.getKey(), e.getArgs()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getKey(), e.getArgs()));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "";
     }
@@ -777,9 +774,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setCompetenceCourseLoad();
             return "editCompetenceCourseMainPage";
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         }
         return "";
     }
@@ -789,9 +786,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setCompetenceCourseAdditionalInformation();
             return "editCompetenceCourseMainPage";
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         }
         return "";
     }
@@ -811,12 +808,12 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
 
             DeleteCompetenceCourse.run(getCompetenceCourseID());
-            addInfoMessage(bolonhaResources.getString("competenceCourseDeleted"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "competenceCourseDeleted"));
             return "competenceCoursesManagement";
         } catch (IllegalDataAccessException e) {
-            addErrorMessage(bolonhaResources.getString("error.deletingCompetenceCourse"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.deletingCompetenceCourse"));
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "";
     }
@@ -826,11 +823,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             EditCompetenceCourse.runEditCompetenceCourse(getCompetenceCourseID(), getYear(), getTitle(), getAuthor(),
                     getReference(), BibliographicReferenceType.valueOf(getType()), getUrl());
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.creatingBibliographicReference"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.creatingBibliographicReference"));
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         setBibliographicReferenceID(-1);
         return "";
@@ -841,11 +838,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             EditCompetenceCourse.runEditCompetenceCourse(getCompetenceCourseID(), getBibliographicReferenceID(), getYear(),
                     getTitle(), getAuthor(), getReference(), BibliographicReferenceType.valueOf(getType()), getUrl());
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.editingBibliographicReference"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.editingBibliographicReference"));
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         setBibliographicReferenceID(-1);
         return "";
@@ -859,11 +856,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             EditCompetenceCourse.runEditCompetenceCourse(getCompetenceCourseID(), getBibliographicReferenceIDToDelete());
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.deletingBibliographicReference"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.deletingBibliographicReference"));
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         setBibliographicReferenceID(-1);
         return "";
@@ -881,11 +878,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             EditCompetenceCourse.runEditCompetenceCourse(getCompetenceCourseID(), getOldPosition(), getNewPosition());
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.switchBibliographicReferencePositions"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.switchBibliographicReferencePositions"));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         setBibliographicReferenceID(-1);
         return "";
@@ -903,11 +900,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             EditCompetenceCourse.runEditCompetenceCourse(getCompetenceCourseID(), changed);
             return "";
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "";
     }
@@ -951,7 +948,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             }
         }
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
+        result.add(0, new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
@@ -981,7 +978,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             }
         }
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
+        result.add(0, new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
@@ -1021,7 +1018,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             }
         }
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
+        result.add(0, new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
@@ -1046,18 +1043,17 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             if (getCompetenceCourse() == null || readCompetenceCourseGroupUnitToTransferTo() == null
                     || getExecutionSemester() == null) {
-                addErrorMessage(scouncilBundle.getString("error.transferingCompetenceCourse"));
+                addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.transferingCompetenceCourse"));
                 return "competenceCoursesManagement";
             }
             getCompetenceCourse().transfer((CompetenceCourseGroupUnit) readCompetenceCourseGroupUnitToTransferTo(),
-                    getExecutionSemester(),
-                    BundleUtil.getMessageFromModuleOrApplication("ScientificCouncil", "transfer.done.by.scientific.council"),
+                    getExecutionSemester(), BundleUtil.getString(Bundle.SCIENTIFIC, "transfer.done.by.scientific.council"),
                     AccessControl.getPerson());
 
         } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "competenceCoursesManagement";
     }
@@ -1205,11 +1201,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             EditCompetenceCourse.runEditCompetenceCourse(getCompetenceCourseID(), getAcronym());
             return "editCompetenceCourseMainPage";
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (DomainException e) {
-            addErrorMessages(domainResources, e.getMessage(), e.getArgs());
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage(), e.getArgs()));
         }
         return "";
     }

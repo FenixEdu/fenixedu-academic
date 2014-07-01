@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -33,8 +32,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -146,7 +147,7 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     private String getMessageFromResource(String key) {
-        return ResourceBundle.getBundle("resources.PhdResources", getLanguage()).getString(key);
+        return BundleUtil.getString(Bundle.PHD, getLanguage(), key);
     }
 
     private String getDateFormat() {

@@ -22,7 +22,6 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
@@ -37,10 +36,11 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmountPerUnitPR_Base {
@@ -159,8 +159,7 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
 
     public String getMaximumAmountDescription() {
         if (Money.ZERO.equals(this.getMaximumAmount())) {
-            return ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE).getString(
-                    "label.base.amount.plus.units.with.no.maximum.value");
+            return BundleUtil.getString(Bundle.APPLICATION, "label.base.amount.plus.units.with.no.maximum.value");
         }
 
         return this.getMaximumAmount().getAmountAsString();

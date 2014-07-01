@@ -44,7 +44,6 @@ import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
 
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.User.UserPresentationStrategy;
 import org.fenixedu.bennu.core.rest.Healthcheck;
@@ -238,9 +237,6 @@ public class FenixInitializer implements ServletContextListener {
                 if ((uri.indexOf("/teacher/executionCourseForumManagement.do") >= 0 || uri
                         .indexOf("/student/viewExecutionCourseForuns.do") >= 0)
                         && request.getQueryString().indexOf("method=viewThread") >= 0) {
-                    return false;
-                }
-                if (ServletFileUpload.isMultipartContent(request)) {
                     return false;
                 }
                 if (uri.indexOf("notAuthorized.do") >= 0) {

@@ -25,7 +25,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -71,10 +72,10 @@ public class GenericApplication extends GenericApplication_Base {
 
     public void sendEmailForApplication() {
         final String subject =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.application.email.subject",
+                BundleUtil.getString(Bundle.CANDIDATE, "label.application.email.subject",
                         getGenericApplicationPeriod().getTitle().getContent());
         final String body =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.application.email.body",
+                BundleUtil.getString(Bundle.CANDIDATE, "label.application.email.body",
                         getApplicationNumber(), generateConfirmationLink(),
                         getGenericApplicationPeriod().getTitle().getContent(), Unit.getInstitutionAcronym());
         new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);

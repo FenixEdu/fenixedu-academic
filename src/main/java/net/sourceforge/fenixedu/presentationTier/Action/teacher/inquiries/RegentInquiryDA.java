@@ -210,7 +210,7 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
         InquiryTeacherAnswer inquiryTeacherAnswer = professorship.getInquiryTeacherAnswer();
 
         Set<InquiryBlockDTO> teacherInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-        for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocksSet()) {
             teacherInquiryBlocks.add(new InquiryBlockDTO(inquiryTeacherAnswer, inquiryBlock));
         }
 
@@ -240,7 +240,7 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
         }
 
         Set<InquiryBlockDTO> delegateInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocksSet()) {
             delegateInquiryBlocks.add(new InquiryBlockDTO(inquiryDelegateAnswer, inquiryBlock));
         }
 

@@ -22,7 +22,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,14 +40,14 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.ViewStudentsPerformanceGridDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -103,31 +102,34 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
                 new SheetData<PerformanceGridLine>(performanceGridTable.getPerformanceGridTableLines()) {
                     @Override
                     protected void makeLine(PerformanceGridLine item) {
-                        final ResourceBundle bundle =
-                                ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
                         Registration registration = item.getRegistration();
-                        addCell(bundle.getString("label.studentNumber"), registration.getNumber());
-                        addCell(bundle.getString("label.name"), registration.getPerson().getName());
-                        addCell(bundle.getString("label.entryPhase"), registration.getEntryPhase() != null ? registration
-                                .getEntryPhase().ordinal() + 1 : null);
-                        addCell(bundle.getString("label.entryGrade"), registration.getEntryGrade());
-                        addCell(bundle.getString("label.aritmeticAverage"), item.getAritmeticAverage());
-                        addCell(bundle.getString("label.approvedRatio"), (short) 2,
-                                bundle.getString("label.first.semester.short"), (short) 1, item.getApprovedRatioFirstSemester()
-                                        + " %", (short) 1);
-                        addCell(bundle.getString("label.second.semester.short"), item.getApprovedRatioSecondSemester() + " %");
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.studentNumber"), registration.getNumber());
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.name"), registration.getPerson().getName());
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.entryPhase"),
+                                registration.getEntryPhase() != null ? registration.getEntryPhase().ordinal() + 1 : null);
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.entryGrade"), registration.getEntryGrade());
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.aritmeticAverage"), item.getAritmeticAverage());
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.approvedRatio"), (short) 2,
+                                BundleUtil.getString(Bundle.APPLICATION, "label.first.semester.short"), (short) 1,
+                                item.getApprovedRatioFirstSemester() + " %", (short) 1);
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.second.semester.short"),
+                                item.getApprovedRatioSecondSemester() + " %");
                         ExecutionYear monitoringYear = performanceGridTable.getMonitoringYear();
                         int yearCount = item.getStudentPerformanceByYear().size();
                         for (int year = 0; year < yearCount; year++) {
-                            addCell(MessageFormat.format(bundle.getString("label.performanceGrid.year.tutorated"), year + 1,
-                                    monitoringYear.getName()), (short) 2, bundle.getString("label.first.semester.short"),
-                                    (short) 1, addSemesterCell(item, monitoringYear, year, 1, true), (short) 1);
-                            addCell(bundle.getString("label.second.semester.short"),
+                            addCell(MessageFormat.format(
+                                    BundleUtil.getString(Bundle.APPLICATION, "label.performanceGrid.year.tutorated"), year + 1,
+                                    monitoringYear.getName()), (short) 2, BundleUtil.getString(Bundle.APPLICATION,
+                                    "label.first.semester.short"), (short) 1,
+                                    addSemesterCell(item, monitoringYear, year, 1, true), (short) 1);
+                            addCell(BundleUtil.getString(Bundle.APPLICATION, "label.second.semester.short"),
                                     addSemesterCell(item, monitoringYear, year, 2, true));
-                            addCell(MessageFormat.format(bundle.getString("label.performanceGrid.year.notTutorated"), year + 1),
-                                    (short) 2, bundle.getString("label.first.semester.short"), (short) 1,
+                            addCell(MessageFormat
+                                    .format(BundleUtil.getString(Bundle.APPLICATION, "label.performanceGrid.year.notTutorated"),
+                                            year + 1),
+                                    (short) 2, BundleUtil.getString(Bundle.APPLICATION, "label.first.semester.short"), (short) 1,
                                     addSemesterCell(item, monitoringYear, year, 1, false), (short) 1);
-                            addCell(bundle.getString("label.second.semester.short"),
+                            addCell(BundleUtil.getString(Bundle.APPLICATION, "label.second.semester.short"),
                                     addSemesterCell(item, monitoringYear, year, 2, false));
                         }
                     }

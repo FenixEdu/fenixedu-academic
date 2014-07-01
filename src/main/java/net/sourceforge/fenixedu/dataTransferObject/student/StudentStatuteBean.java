@@ -22,15 +22,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.SeniorStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -86,8 +85,8 @@ public class StudentStatuteBean implements Serializable {
     }
 
     public String getDescription() {
-        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-        return bundle.getString(getStatuteType().getDeclaringClass().getSimpleName() + "." + getStatuteType().name())
+        return BundleUtil.getString(Bundle.ENUMERATION, getStatuteType().getDeclaringClass().getSimpleName() + "."
+                + getStatuteType().name())
                 + (studentStatute instanceof SeniorStatute ? (" ("
                         + ((SeniorStatute) studentStatute).getRegistration().getDegree().getPresentationName() + ") ") : "");
     }

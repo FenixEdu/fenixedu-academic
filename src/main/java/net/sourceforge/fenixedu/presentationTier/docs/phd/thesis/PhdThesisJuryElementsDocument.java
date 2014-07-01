@@ -20,15 +20,15 @@ package net.sourceforge.fenixedu.presentationTier.docs.phd.thesis;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class PhdThesisJuryElementsDocument extends FenixReport {
@@ -88,27 +88,27 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
             builder.append(element.getCategory());
 
             if (!StringUtils.isEmpty(element.getWorkLocation())) {
-                builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.keyword.of")).append(" ")
+                builder.append(" ").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.keyword.of")).append(" ")
                         .append(element.getWorkLocation());
             }
 
             if (!StringUtils.isEmpty(element.getInstitution())) {
-                builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.keyword.of")).append(" ")
+                builder.append(" ").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.keyword.of")).append(" ")
                         .append(element.getInstitution());
             }
 
             if (element.getExpert()) {
-                builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.expert"));
+                builder.append(" ").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.expert"));
             }
 
             builder.append(";");
 
             if (element.isAssistantGuiding()) {
-                builder.append(" (").append(getMessage("label.phd.thesis.jury.elements.document.assistantGuiding")).append(")");
+                builder.append(" (").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.assistantGuiding")).append(")");
             } else if (element.isMainGuiding()) {
-                builder.append(" (").append(getMessage("label.phd.thesis.jury.elements.document.guiding")).append(")");
+                builder.append(" (").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.guiding")).append(")");
             } else if (element.getReporter()) {
-                builder.append(" - ").append(getMessage("label.phd.thesis.jury.elements.document.reporter"));
+                builder.append(" - ").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.reporter"));
             }
 
             return builder.toString();
@@ -116,14 +116,6 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 
         public String getDescription() {
             return description;
-        }
-
-        private String getMessage(String key) {
-            return getBundle().getString(key);
-        }
-
-        protected ResourceBundle getBundle() {
-            return ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         }
 
     }

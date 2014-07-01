@@ -34,7 +34,8 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.OccupationPeriodReference;
 import net.sourceforge.fenixedu.domain.OccupationPeriodType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.date.IntervalTools;
 
 import org.fenixedu.commons.i18n.I18N;
@@ -168,7 +169,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
     public String getDatesString() {
         if (intervals.size() == 0 || occupationPeriod == null) {
-            return BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources",
+            return BundleUtil.getString(Bundle.RESOURCE_ALLOCATION,
                     "label.periods.no.dates");
         }
 

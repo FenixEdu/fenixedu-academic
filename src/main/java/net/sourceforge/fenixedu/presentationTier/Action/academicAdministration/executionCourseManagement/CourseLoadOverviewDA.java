@@ -27,7 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExecutionsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -72,7 +73,7 @@ public class CourseLoadOverviewDA extends FenixDispatchAction {
         response.setHeader(
                 "Content-disposition",
                 "attachment; filename="
-                        + BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                        + BundleUtil.getString(Bundle.ACADEMIC,
                                 "label.course.load.inconsistency.filename") + ".xls");
 
         try {

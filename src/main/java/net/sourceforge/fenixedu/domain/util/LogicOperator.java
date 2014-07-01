@@ -21,12 +21,10 @@
  */
 package net.sourceforge.fenixedu.domain.util;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public enum LogicOperator {
 
@@ -41,7 +39,7 @@ public enum LogicOperator {
     }
 
     public String getLocalizedName() {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(name());
+        return BundleUtil.getString(Bundle.ENUMERATION, name());
     }
 
     public boolean isAND() {

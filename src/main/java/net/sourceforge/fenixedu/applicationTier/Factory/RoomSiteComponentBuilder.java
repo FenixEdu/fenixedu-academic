@@ -55,8 +55,8 @@ import org.joda.time.YearMonthDay;
 
 /**
  * @author Jo�o Mota
- * 
- * 
+ *
+ *
  */
 public class RoomSiteComponentBuilder {
 
@@ -105,7 +105,10 @@ public class RoomSiteComponentBuilder {
         // isCurrentUserRoomManager(room);
 
         final YearMonthDay weekStartYearMonthDay = YearMonthDay.fromCalendarFields(startDay);
-        final YearMonthDay weekEndYearMonthDay = YearMonthDay.fromCalendarFields(endDay).minusDays(1);
+        final YearMonthDay weekEndYearMonthDay = YearMonthDay.fromCalendarFields(endDay);
+
+        final Interval search =
+                new Interval(weekStartYearMonthDay.toDateTimeAtMidnight(), weekEndYearMonthDay.toDateTimeAtMidnight());
 
         for (final Occupation roomOccupation : room.getOccupationSet()) {
 
@@ -123,7 +126,9 @@ public class RoomSiteComponentBuilder {
                 getLessonInstanceOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, lessonInstances);
             } else {
                 for (Interval interval : roomOccupation.getIntervals()) {
-                    infoShowOccupations.add(new InfoOccupation(roomOccupation, interval));
+                    if (search.overlaps(interval)) {
+                        infoShowOccupations.add(new InfoOccupation(roomOccupation, interval));
+                    }
                 }
             }
         }

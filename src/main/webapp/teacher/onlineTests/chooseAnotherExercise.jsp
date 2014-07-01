@@ -23,10 +23,11 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<jsp:include page="/includeMathJax.jsp" />
 <h2><bean:message key="title.showAvailableQuestionsForChange" /></h2>
 
 <logic:present name="metadataList">
-	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+	<bean:define id="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>" />
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<logic:present name="successfulChanged">
@@ -51,7 +52,7 @@
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeStudentTestQuestion" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.distributedTestCode" property="distributedTestCode" value="<%=(pageContext.findAttribute("distributedTestCode")).toString()%>" />
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCode" property="studentCode" value="<%=(pageContext.findAttribute("studentCode")).toString()%>" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.questionCode" property="questionCode" value="<%=(pageContext.findAttribute("questionCode")).toString()%>" />
 			<logic:present name="deleteVariation">

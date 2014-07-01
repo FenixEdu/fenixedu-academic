@@ -21,6 +21,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +39,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -165,16 +167,43 @@ public class SpaceUtils {
     public static boolean isFree(Space space, YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime,
             HourMinuteSecond endTime, DiaSemana dayOfWeek, FrequencyType frequency, Boolean dailyFrequencyMarkSaturday,
             Boolean dailyFrequencyMarkSunday) {
+        return isFree(space, startDate, endDate, startTime, endTime, dayOfWeek, frequency, dailyFrequencyMarkSaturday,
+                dailyFrequencyMarkSunday, null);
+    }
+
+    public static boolean isFree(Space space, YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime,
+            HourMinuteSecond endTime, DiaSemana dayOfWeek, FrequencyType frequency, Boolean dailyFrequencyMarkSaturday,
+            Boolean dailyFrequencyMarkSunday, Set<Class<? extends EventSpaceOccupation>> eventSpaceOccupationClassesToSkip) {
+        List<Interval> intervals = null;
+
+        if (eventSpaceOccupationClassesToSkip == null) {
+            eventSpaceOccupationClassesToSkip = Collections.emptySet();
+        }
 
         for (Occupation spaceOccupation : getResourceAllocationsForCheck(space)) {
             if (spaceOccupation instanceof EventSpaceOccupation) {
+                if (eventSpaceOccupationClassesToSkip.contains(spaceOccupation.getClass())) {
+                    continue;
+                }
                 EventSpaceOccupation occupation = (EventSpaceOccupation) spaceOccupation;
                 if (occupation.alreadyWasOccupiedIn(startDate, endDate, startTime, endTime, dayOfWeek, frequency,
                         dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday)) {
                     return false;
                 }
             }
+
+            if (spaceOccupation.getClass().equals(Occupation.class)) {
+                if (intervals == null) {
+                    intervals =
+                            EventSpaceOccupation.generateEventSpaceOccupationIntervals(startDate, endDate, startTime, endTime,
+                                    frequency, dayOfWeek, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday, null, null);
+                }
+                if (spaceOccupation.overlaps(intervals)) {
+                    return false;
+                }
+            }
         }
+
         return true;
     }
 
@@ -182,10 +211,43 @@ public class SpaceUtils {
         return Space.getSpaces().filter(space -> name.equals(space.getName())).findFirst().get();
     }
 
+    @Deprecated // TODO : remove this stuff in fenix v4 
     public static Occupation getFirstOccurrenceOfResourceAllocationByClass(Space space, Class<? extends Occupation> clazz) {
         if (clazz != null) {
             for (Occupation resourceAllocation : space.getOccupationSet()) {
                 if (resourceAllocation.getClass().equals(clazz)) {
+                    return resourceAllocation;
+                }
+            }
+        }
+        return null;
+    }
+
+    // This method is a hack because of a bad refactor. The new Occupation API does not allow sharing of occupation for different events.
+    // TODO : remove this stuff in fenix v4 after refactor is complete.
+    public static Occupation getFirstOccurrenceOfResourceAllocationByClass(final Space space, final WrittenEvaluation evaluation) {
+        for (final Occupation resourceAllocation : space.getOccupationSet()) {
+            if (resourceAllocation instanceof WrittenEvaluationSpaceOccupation) {
+                final WrittenEvaluationSpaceOccupation evaluationSpaceOccupation =
+                        (WrittenEvaluationSpaceOccupation) resourceAllocation;
+                final Set<WrittenEvaluation> evaluations = evaluationSpaceOccupation.getWrittenEvaluationsSet();
+                if (!evaluations.isEmpty() && evaluations.iterator().next() == evaluation) {
+                    return resourceAllocation;
+                }
+            }
+        }
+        return null;
+    }
+
+    // This method is a hack because of a bad refactor. The new Occupation API does not allow sharing of occupation for different events.
+    // TODO : remove this stuff in fenix v4 after refactor is complete.
+    public static Occupation getFirstOccurrenceOfResourceAllocationByClass(final Space space, final Lesson lesson) {
+        for (final Occupation resourceAllocation : space.getOccupationSet()) {
+            if (resourceAllocation instanceof LessonInstanceSpaceOccupation) {
+                final LessonInstanceSpaceOccupation lessonInstanceSpaceOccupation =
+                        (LessonInstanceSpaceOccupation) resourceAllocation;
+                final Set<LessonInstance> instancesSet = lessonInstanceSpaceOccupation.getLessonInstancesSet();
+                if (!instancesSet.isEmpty() && instancesSet.iterator().next().getLesson() == lesson) {
                     return resourceAllocation;
                 }
             }

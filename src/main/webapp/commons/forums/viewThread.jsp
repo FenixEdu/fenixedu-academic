@@ -25,6 +25,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp" %>
+<jsp:include page="/includeMathJax.jsp" />
 
 <logic:present name="forum">
 	<bean:define id="forumId" name="forum" property="externalId" />

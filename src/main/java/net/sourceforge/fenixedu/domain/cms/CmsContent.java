@@ -19,9 +19,12 @@
 package net.sourceforge.fenixedu.domain.cms;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Section;
@@ -34,9 +37,6 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.StringNormalizer;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 
 public class CmsContent extends CmsContent_Base implements Comparable<CmsContent> {
 
@@ -106,12 +106,8 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
     }
 
     public Collection<FileContent> getVisibleFiles() {
-        return Collections2.filter(getFileContentSet(), new Predicate<FileContent>() {
-            @Override
-            public boolean apply(FileContent input) {
-                return input.getVisible();
-            }
-        });
+        return getFileContentSet().stream().sorted(Comparator.comparing(FileContent::getDisplayName))
+                .filter(FileContent::getVisible).collect(Collectors.toList());
     }
 
     protected void appendFullPath(StringBuilder builder) {
@@ -186,12 +182,9 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
         }
     }
 
-    public void shiftRight(Collection<? extends CmsContent> contents, Integer order) {
-        for (CmsContent content : contents) {
-            if (content.getOrder() >= order) {
-                content.setOrder(content.getOrder() + 1);
-            }
-        }
+    public List<FileContent> getSortedFiles() {
+        return getFileContentSet().stream().sorted(Comparator.comparing(FileContent::getDisplayName))
+                .collect(Collectors.toList());
     }
 
 }

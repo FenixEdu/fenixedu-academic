@@ -23,7 +23,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +39,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.nape.NapeApplication.NapeCandidaciesApp;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -47,8 +47,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -139,11 +139,10 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private Spreadsheet buildReport(final List<Over23IndividualCandidacyProcess> over23IndividualCandidacies) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         final Spreadsheet result = new CandidacyReport("candidacies");
 
-        result.setHeaders(new String[] { bundle.getString("label.name"), bundle.getString("label.identificationNumber"),
-                bundle.getString("label.degrees") });
+        result.setHeaders(new String[] { BundleUtil.getString(Bundle.APPLICATION, "label.name"), BundleUtil.getString(Bundle.APPLICATION, "label.identificationNumber"),
+                BundleUtil.getString(Bundle.APPLICATION, "label.degrees") });
 
         for (final Over23IndividualCandidacyProcess candidacy : over23IndividualCandidacies) {
             final Row row = result.addRow();

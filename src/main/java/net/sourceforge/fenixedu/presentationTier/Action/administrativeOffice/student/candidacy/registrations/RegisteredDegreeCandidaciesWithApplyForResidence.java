@@ -22,7 +22,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -31,9 +30,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -112,8 +112,7 @@ public class RegisteredDegreeCandidaciesWithApplyForResidence {
         row.setCell(getPersonalEmailAddress(person));
         row.setCell(getPhone(person));
         row.setCell(getMobilePhone(person));
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
-        row.setCell(bundle.getString(candidacy.getApplyForResidence() ? "label.yes" : "label.no"));
+        row.setCell(BundleUtil.getString(Bundle.ACADEMIC, candidacy.getApplyForResidence() ? "label.yes" : "label.no"));
         row.setCell(candidacy.getNotesAboutResidenceAppliance().replaceAll("\n", " ").replaceAll("\r", " "));
     }
 

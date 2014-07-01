@@ -20,11 +20,10 @@ package net.sourceforge.fenixedu.domain.person;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
@@ -218,7 +217,7 @@ public enum RoleType implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(name());
+        return BundleUtil.getString(Bundle.ENUMERATION, name());
     }
 
 }

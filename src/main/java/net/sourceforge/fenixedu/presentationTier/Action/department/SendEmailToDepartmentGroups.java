@@ -25,7 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
@@ -61,15 +63,17 @@ public class SendEmailToDepartmentGroups extends UnitMailSenderAction {
         if (unit != null) {
             return prepare(mapping, actionForm, request, response);
         }
-        Unit departmentUnit = AccessControl.getPerson().getTeacher().getCurrentWorkingDepartment().getDepartmentUnit();
         Set<Unit> units = new TreeSet<>(Party.COMPARATOR_BY_NAME);
-        units.add(departmentUnit);
+        Unit departmentUnit = getDepartment();
+        if (departmentUnit != null) {
+            units.add(departmentUnit);
 
-        for (Unit subUnit : departmentUnit.getAllSubUnits()) {
-            if (subUnit.isScientificAreaUnit()) {
-                ScientificAreaUnit scientificAreaUnit = (ScientificAreaUnit) subUnit;
-                if (scientificAreaUnit.isCurrentUserMemberOfScientificArea()) {
-                    units.add(scientificAreaUnit);
+            for (Unit subUnit : departmentUnit.getAllSubUnits()) {
+                if (subUnit.isScientificAreaUnit()) {
+                    ScientificAreaUnit scientificAreaUnit = (ScientificAreaUnit) subUnit;
+                    if (scientificAreaUnit.isCurrentUserMemberOfScientificArea()) {
+                        units.add(scientificAreaUnit);
+                    }
                 }
             }
         }
@@ -81,6 +85,19 @@ public class SendEmailToDepartmentGroups extends UnitMailSenderAction {
 
         request.setAttribute("units", units);
         return mapping.findForward("chooseUnit");
+    }
+
+    private Unit getDepartment() {
+        final Person person = AccessControl.getPerson();
+        final Teacher teacher = person.getTeacher();
+        if (teacher != null) {
+            return teacher.getCurrentWorkingDepartment().getDepartmentUnit();
+        }
+        final Employee employee = person.getEmployee();
+        if (employee != null) {
+            return employee.getCurrentWorkingPlace().getDepartmentUnit();
+        }
+        return null;
     }
 
     @Override

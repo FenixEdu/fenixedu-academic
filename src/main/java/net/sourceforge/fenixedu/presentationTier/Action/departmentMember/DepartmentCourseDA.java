@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -40,10 +39,12 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberDepartmentApp;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
@@ -131,15 +132,14 @@ public class DepartmentCourseDA extends FenixDispatchAction {
     private void exportStudentsToExcel(HttpServletResponse response, CurricularCourse curricularCourse,
             ExecutionYear executionYear) throws FenixServiceException {
         try {
-            final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources");
             String filename =
                     String.format("%s_%s_%s.xls", new DateTime().toString("dd-MM-yyyy_HH:mm"),
-                            bundle.getString("label.students"), curricularCourse.getName().replaceAll(" ", "_"));
+                            BundleUtil.getString(Bundle.APPLICATION, "label.students"), curricularCourse.getName().replaceAll(" ", "_"));
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-disposition", "attachment; filename=" + filename);
             ServletOutputStream outputStream = response.getOutputStream();
 
-            final Spreadsheet spreadsheet = new Spreadsheet("-", getStudentsEnroledListHeaders(bundle));
+            final Spreadsheet spreadsheet = new Spreadsheet("-", getStudentsEnroledListHeaders());
             reportInfo(spreadsheet, curricularCourse, executionYear);
 
             spreadsheet.exportToXLSSheet(outputStream);
@@ -151,16 +151,16 @@ public class DepartmentCourseDA extends FenixDispatchAction {
         }
     }
 
-    private List<Object> getStudentsEnroledListHeaders(ResourceBundle bundle) {
+    private List<Object> getStudentsEnroledListHeaders() {
 
         final List<Object> headers = new ArrayList<Object>(8);
-        headers.add(bundle.getString("label.student.number"));
-        headers.add(bundle.getString("label.student.degree"));
-        headers.add(bundle.getString("label.student.curricularCourse"));
-        headers.add(bundle.getString("label.executionYear"));
-        headers.add(bundle.getString("label.student.main.branch"));
-        headers.add(bundle.getString("label.student.minor.branch"));
-        headers.add(bundle.getString("label.student.number.of.enrolments"));
+        headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.student.number"));
+        headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.student.degree"));
+        headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.student.curricularCourse"));
+        headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.executionYear"));
+        headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.student.main.branch"));
+        headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.student.minor.branch"));
+        headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.student.number.of.enrolments"));
         return headers;
     }
 

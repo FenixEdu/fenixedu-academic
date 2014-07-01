@@ -27,8 +27,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -54,11 +52,13 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -1081,17 +1081,17 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 
     private String getDefaultInstitutionName() {
         return MessageFormat
-                .format(ResourceBundle
-                        .getBundle("resources.AcademicAdminOffice", Locale.getDefault())
+                .format(BundleUtil
                         .getString(
+                                Bundle.ACADEMIC,
                                 "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName"),
                         Unit.getInstitutionName().getContent());
     }
 
     private String getDefaultInstitutionCode() {
-        return ResourceBundle
-                .getBundle("resources.AcademicAdminOffice", Locale.getDefault())
+        return BundleUtil
                 .getString(
+                        Bundle.ACADEMIC,
                         "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionCode");
     }
 

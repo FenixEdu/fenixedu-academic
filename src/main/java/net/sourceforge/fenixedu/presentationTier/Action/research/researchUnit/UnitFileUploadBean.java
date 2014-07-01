@@ -20,22 +20,24 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit;
 
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UnionGroup;
 
+import com.google.common.collect.ImmutableSet;
+
 public class UnitFileUploadBean extends UnitFileBean implements Serializable {
 
-    private Unit unit;
+    private final Unit unit;
 
     private String fileName;
     private Long fileSize;
 
-    private Set<Group> permittedGroups;
+    private List<Group> permittedGroups;
     private Group permittedGroup;
 
     transient private InputStream uploadFile;
@@ -43,7 +45,7 @@ public class UnitFileUploadBean extends UnitFileBean implements Serializable {
 
     public UnitFileUploadBean(Unit unit) {
         this.unit = unit;
-        permittedGroups = new HashSet<Group>();
+        permittedGroups = new ArrayList<Group>();
     }
 
     @Override
@@ -92,14 +94,14 @@ public class UnitFileUploadBean extends UnitFileBean implements Serializable {
     }
 
     public Group getUnion() {
-        return UnionGroup.of(getPermittedGroups());
+        return UnionGroup.of(ImmutableSet.copyOf(getPermittedGroups()));
     }
 
-    public Set<Group> getPermittedGroups() {
+    public List<Group> getPermittedGroups() {
         return permittedGroups;
     }
 
-    public void setPermittedGroups(Set<Group> permittedGroups) {
+    public void setPermittedGroups(List<Group> permittedGroups) {
         this.permittedGroups = permittedGroups;
     }
 }

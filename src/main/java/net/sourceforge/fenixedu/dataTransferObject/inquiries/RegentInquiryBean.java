@@ -67,7 +67,7 @@ public class RegentInquiryBean implements Serializable {
 
     private void initRegentInquiry(RegentInquiryTemplate regentInquiryTemplate, Professorship professorship) {
         setRegentInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
-        for (InquiryBlock inquiryBlock : regentInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : regentInquiryTemplate.getInquiryBlocksSet()) {
             getRegentInquiryBlocks().add(new InquiryBlockDTO(getInquiryRegentAnswer(), inquiryBlock));
         }
 
@@ -81,7 +81,7 @@ public class RegentInquiryBean implements Serializable {
             ArrayList<BlockResultsSummaryBean> blockResults = new ArrayList<BlockResultsSummaryBean>();
             List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
             if (results != null && results.size() > 5) {
-                for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocks()) {
+                for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocksSet()) {
                     blockResults.add(new BlockResultsSummaryBean(inquiryBlock, results, person, ResultPersonCategory.REGENT));
                 }
                 Collections.sort(blockResults, new BeanComparator("inquiryBlock.blockOrder"));

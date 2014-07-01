@@ -48,12 +48,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.BolonhaManagerApplication.CompetenceCourseManagementApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -215,8 +216,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                 (CompetenceCourseInformationRequestBean) RenderUtils.getViewState("editVersion").getMetaObject().getObject();
         CreateReferenceBean referenceBean =
                 (CreateReferenceBean) RenderUtils.getViewState("createReference").getMetaObject().getObject();
-        bean.getReferences().createBibliographicReference(referenceBean.getYear(), referenceBean.getTitle(),
-                referenceBean.getAuthors(), referenceBean.getReference(), referenceBean.getUrl(), referenceBean.getType());
+        bean.setReferences(bean.getReferences().with(referenceBean.getYear(), referenceBean.getTitle(),
+                referenceBean.getAuthors(), referenceBean.getReference(), referenceBean.getUrl(), referenceBean.getType()));
         RenderUtils.invalidateViewState("createReference");
         return viewBibliography(mapping, form, request, response);
     }
@@ -247,7 +248,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 
         CompetenceCourseInformationRequestBean bean =
                 (CompetenceCourseInformationRequestBean) RenderUtils.getViewState("editVersion").getMetaObject().getObject();
-        bean.getReferences().deleteBibliographicReference(Integer.valueOf(request.getParameter("index")));
+        bean.setReferences(bean.getReferences().without(Integer.valueOf(request.getParameter("index"))));
         return viewBibliography(mapping, form, request, response);
     }
 
@@ -384,11 +385,10 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
             final ServletOutputStream outputStream = response.getOutputStream();
 
             final Spreadsheet spreadsheet = new Spreadsheet("list");
-            spreadsheet
-                    .setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "competenceCourse"));
-            spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "curricularPlan"));
-            spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "curricularYear"));
-            spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "label.semester"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.BOLONHA, "competenceCourse"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.BOLONHA, "curricularPlan"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.BOLONHA, "curricularYear"));
+            spreadsheet.setHeader(BundleUtil.getString(Bundle.BOLONHA, "label.semester"));
 
             for (final CompetenceCourse competenceCourse : competenceCourses) {
                 if (competenceCourse.getCurricularStage() == CurricularStage.APPROVED) {

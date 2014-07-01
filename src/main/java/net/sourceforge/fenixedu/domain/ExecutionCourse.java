@@ -76,15 +76,18 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ExecutionCoursePredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseManagementBean;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -178,8 +181,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         });
 
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deec");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deargf");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dec");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deft");
         THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deic");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dmat");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("cesidb");
     }
 
     public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester, EntryPhase entryPhase) {
@@ -319,8 +326,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         String ecFrom = executionCourseFrom.getName();
         String ecFromPresentation = executionCourseFrom.getDegreePresentationString();
 
-        ContentManagementLog.createLog(this, "resources.MessagingResources", "log.executionCourse.content.section.import",
-                ecFrom, ecFromPresentation, this.getName(), this.getDegreePresentationString());
+        ContentManagementLog.createLog(this, Bundle.MESSAGING, "log.executionCourse.content.section.import", ecFrom,
+                ecFromPresentation, this.getName(), this.getDegreePresentationString());
     }
 
     public void createEvaluationMethod(final MultiLanguageString evaluationElements) {
@@ -362,17 +369,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         final String type;
         if (optional) {
-            type =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
-                            "option.bibliographicReference.optional");
+            type = BundleUtil.getString(Bundle.APPLICATION, "option.bibliographicReference.optional");
         } else {
-            type =
-                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
-                            "option.bibliographicReference.recommended");
+            type = BundleUtil.getString(Bundle.APPLICATION, "option.bibliographicReference.recommended");
         }
-        CurricularManagementLog.createLog(this, "resources.MessagingResources",
-                "log.executionCourse.curricular.bibliographic.created", type, title, this.getName(),
-                this.getDegreePresentationString());
+        CurricularManagementLog.createLog(this, Bundle.MESSAGING, "log.executionCourse.curricular.bibliographic.created", type,
+                title, this.getName(), this.getDegreePresentationString());
     }
 
     public List<BibliographicReference> copyBibliographicReferencesFrom(final ExecutionCourse executionCourseFrom) {
@@ -492,82 +494,41 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     // Delete Method
-
     public void delete() {
         if (canBeDeleted()) {
-
-            if (hasSender()) {
-                getSender().getRecipientsSet().clear();
-                setSender(null);
-            }
-
-            if (hasSite()) {
-                getSite().delete();
-            }
-
-            if (hasBoard()) {
-                getBoard().delete();
-            }
-
-            for (; !getMetadatas().isEmpty(); getMetadatas().iterator().next().delete()) {
-                ;
-            }
-            for (; !getExportGroupings().isEmpty(); getExportGroupings().iterator().next().delete()) {
-                ;
-            }
-            for (; !getGroupingSenderExecutionCourse().isEmpty(); getGroupingSenderExecutionCourse().iterator().next().delete()) {
-                ;
-            }
-            for (; !getCourseLoads().isEmpty(); getCourseLoads().iterator().next().delete()) {
-                ;
-            }
-            for (; !getProfessorships().isEmpty(); getProfessorships().iterator().next().delete()) {
-                ;
-            }
-            for (; !getLessonPlannings().isEmpty(); getLessonPlannings().iterator().next().delete()) {
-                ;
-            }
-            for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().iterator().next().delete()) {
-                ;
-            }
-            for (; !getAttends().isEmpty(); getAttends().iterator().next().delete()) {
-                ;
-            }
-            for (; !getForuns().isEmpty(); getForuns().iterator().next().delete()) {
-                ;
-            }
-            for (; !getExecutionCourseLogs().isEmpty(); getExecutionCourseLogs().iterator().next().delete()) {
-                ;
-            }
-
-            removeFinalEvaluations();
-            getAssociatedCurricularCourses().clear();
-            getNonAffiliatedTeachers().clear();
-            setVigilantGroup(null);
-            setExecutionPeriod(null);
+            disconnect();
             setRootDomainObject(null);
             super.deleteDomainObject();
-
         } else {
             throw new DomainException("error.execution.course.cant.delete");
         }
     }
 
-    private void removeFinalEvaluations() {
-        final Iterator<Evaluation> iterator = getAssociatedEvaluationsSet().iterator();
-        while (iterator.hasNext()) {
-            final Evaluation evaluation = iterator.next();
-            if (evaluation.isFinal()) {
-                iterator.remove();
-                evaluation.delete();
-            } else {
-                throw new DomainException("error.ExecutionCourse.cannot.remove.non.final.evaluation");
+    public void remove() {
+        try {
+            hasPersistentGroups();
+        } catch (Exception e) {
+            try {
+                hasRemovableRelations();
+            } catch (Exception e2) {
+                throw e2;
             }
+            disconnect();
+            return;
         }
+        delete();
     }
 
     public boolean canBeDeleted() {
 
+        hasRemovableRelations();
+
+        hasPersistentGroups();
+
+        return true;
+    }
+
+    private void hasRemovableRelations() {
         if (hasAnyAssociatedInquiriesCourses()) {
             throw new DomainException("error.execution.course.cant.delete");
         }
@@ -622,7 +583,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 throw new DomainException("error.execution.course.cant.delete");
             }
         }
+    }
 
+    private void hasPersistentGroups() {
         if (!getStudentGroupSet().isEmpty()) {
             throw new DomainException("error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl");
         }
@@ -632,7 +595,71 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (!getTeacherGroupSet().isEmpty()) {
             throw new DomainException("error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl");
         }
-        return true;
+    }
+
+    private void disconnect() {
+        if (hasSender()) {
+            getSender().getRecipientsSet().clear();
+            setSender(null);
+        }
+
+        if (hasSite()) {
+            getSite().delete();
+        }
+
+        if (hasBoard()) {
+            getBoard().delete();
+        }
+
+        for (; !getMetadatas().isEmpty(); getMetadatas().iterator().next().delete()) {
+            ;
+        }
+        for (; !getExportGroupings().isEmpty(); getExportGroupings().iterator().next().delete()) {
+            ;
+        }
+        for (; !getGroupingSenderExecutionCourse().isEmpty(); getGroupingSenderExecutionCourse().iterator().next().delete()) {
+            ;
+        }
+        for (; !getCourseLoads().isEmpty(); getCourseLoads().iterator().next().delete()) {
+            ;
+        }
+        for (; !getProfessorships().isEmpty(); getProfessorships().iterator().next().delete()) {
+            ;
+        }
+        for (; !getLessonPlannings().isEmpty(); getLessonPlannings().iterator().next().delete()) {
+            ;
+        }
+        for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().iterator().next().delete()) {
+            ;
+        }
+        for (; !getAttends().isEmpty(); getAttends().iterator().next().delete()) {
+            ;
+        }
+        for (; !getForuns().isEmpty(); getForuns().iterator().next().delete()) {
+            ;
+        }
+        for (; !getExecutionCourseLogs().isEmpty(); getExecutionCourseLogs().iterator().next().delete()) {
+            ;
+        }
+
+        removeFinalEvaluations();
+        getAssociatedCurricularCourses().clear();
+        getNonAffiliatedTeachers().clear();
+        setVigilantGroup(null);
+        setExecutionPeriod(null);
+    }
+
+    private void removeFinalEvaluations() {
+        final Iterator<Evaluation> iterator = getAssociatedEvaluationsSet().iterator();
+        while (iterator.hasNext()) {
+            final Evaluation evaluation = iterator.next();
+            if (evaluation.isFinal()) {
+                iterator.remove();
+                evaluation.delete();
+            } else {
+                throw new DomainException("error.ExecutionCourse.cannot.remove.non.final.evaluation");
+            }
+        }
     }
 
     private boolean hasOnlyFinalEvaluations() {
@@ -1221,8 +1248,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
         RoleType roleType = RoleType.MANAGER;
-        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), null, RoleGroup.get(roleType),
-                ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
+        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), NobodyGroup.get(),
+                RoleGroup.get(roleType), ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
                 ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC, ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
     }
 
@@ -1666,7 +1693,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public String getNome() {
-        if (I18N.getLocale().equals(MultiLanguageString.en) && hasAnyAssociatedCurricularCourses()) {
+        if (I18N.getLocale().getLanguage().equals("en") && hasAnyAssociatedCurricularCourses()) {
             final StringBuilder stringBuilder = new StringBuilder();
 
             final Set<String> names = new HashSet<String>();
@@ -2078,6 +2105,22 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return result;
+    }
+
+    public String getLocalizedEvaluationMethodText() {
+        final EvaluationMethod evaluationMethod = getEvaluationMethod();
+        if (evaluationMethod != null) {
+            final MultiLanguageString evaluationElements = evaluationMethod.getEvaluationElements();
+            return evaluationElements.getContent();
+        }
+        for (final CompetenceCourse competenceCourse : getCompetenceCourses()) {
+            final LocalizedString lstring = competenceCourse.getLocalizedEvaluationMethod(getExecutionPeriod());
+            final String competenceEvaluationMethod = lstring.getContent();
+            if (competenceEvaluationMethod != null) {
+                return competenceEvaluationMethod;
+            }
+        }
+        return "";
     }
 
     public String getEvaluationMethodText() {
@@ -2649,8 +2692,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 executionCourse.associateCurricularCourse(curricularCourse);
             }
         }
-
-        executionCourse.createSite();
 
         return executionCourse;
     }

@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.domain.phd.reports;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -27,19 +26,19 @@ import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class PhdGuidersReport extends PhdReport {
-    private final ResourceBundle bundle;
     private int rowCounter;
 
     public PhdGuidersReport(HSSFWorkbook workbook) {
         super(workbook);
-        this.bundle = ResourceBundle.getBundle("resources.PhdResources");
         this.rowCounter = 2;
     }
 
@@ -62,9 +61,9 @@ public class PhdGuidersReport extends PhdReport {
     }
 
     private void fillProcess(PhdIndividualProgramProcess process, HSSFSheet sheet) {
-        String guiderRole = this.bundle.getString("label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.guider");
+        String guiderRole = BundleUtil.getString(Bundle.PHD, "label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.guider");
         String assistantGuiderRole =
-                this.bundle.getString("label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.assistantGuider");
+                BundleUtil.getString(Bundle.PHD, "label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.assistantGuider");
 
         for (PhdParticipant phdParticipant : process.getGuidings()) {
             HSSFRow row = sheet.createRow(this.rowCounter++);
@@ -123,7 +122,7 @@ public class PhdGuidersReport extends PhdReport {
     }
 
     private String getHeaderInBundle(String field) {
-        return this.bundle.getString("label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport." + field);
+        return BundleUtil.getString(Bundle.PHD, "label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport." + field);
     }
 
 }

@@ -22,10 +22,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public enum PhdMeetingSchedulingProcessStateType implements PhdProcessStateType {
@@ -50,7 +51,7 @@ public enum PhdMeetingSchedulingProcessStateType implements PhdProcessStateType 
 
     @Override
     public String getLocalizedName(Locale locale) {
-        return ResourceBundle.getBundle("resources.PhdResources", locale).getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.PHD, locale, getQualifiedName());
     }
 
     private String getQualifiedName() {

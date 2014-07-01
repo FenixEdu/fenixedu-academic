@@ -21,6 +21,7 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -114,7 +115,7 @@ public class Coordinator extends Coordinator_Base {
     public static Coordinator createCoordinator(ExecutionDegree executionDegree, Person person, Boolean responsible) {
 
         CoordinationTeamLog.createLog(executionDegree.getDegree(), executionDegree.getExecutionYear(),
-                "resources.MessagingResources", "log.degree.coordinationteam.addmember", person.getPresentationName(),
+                Bundle.MESSAGING, "log.degree.coordinationteam.addmember", person.getPresentationName(),
                 executionDegree.getPresentationName());
 
         return new Coordinator(executionDegree, person, responsible);

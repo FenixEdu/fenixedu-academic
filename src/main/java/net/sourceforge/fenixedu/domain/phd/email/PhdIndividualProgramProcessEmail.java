@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.domain.phd.email;
 
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -28,10 +27,10 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -82,19 +81,17 @@ public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProces
     }
 
     private static String validateEmailBean(PhdIndividualProgramProcessEmailBean bean) {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
-
         if (bean.getParticipantsGroup().isEmpty() && bean.getSelectedParticipants().isEmpty()
                 && StringUtils.isEmpty(bean.getBccs())) {
-            return resourceBundle.getString("error.email.validation.no.recipients");
+            return BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.no.recipients");
         }
 
         if (StringUtils.isEmpty(bean.getSubject())) {
-            return resourceBundle.getString("error.email.validation.subject.empty");
+            return BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.subject.empty");
         }
 
         if (StringUtils.isEmpty(bean.getMessage())) {
-            return resourceBundle.getString("error.email.validation.message.empty");
+            return BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.message.empty");
         }
 
         return null;

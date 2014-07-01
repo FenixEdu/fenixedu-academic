@@ -34,8 +34,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
@@ -53,8 +55,8 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
 
-        addParameter("certification", getResourceBundle().getString("label.certification").toUpperCase());
-        addParameter("certificationMessage", getResourceBundle().getString("label.program.certificate.certification"));
+        addParameter("certification", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.certification").toUpperCase());
+        addParameter("certificationMessage", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.certification"));
         setPersonFields();
         fillEmployeeFields();
         setFooter(getDocumentRequest());
@@ -73,9 +75,9 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
         String labelStudent;
         if (student.isMale()) {
-            labelStudent = getResourceBundle().getString("label.of.student.male");
+            labelStudent = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.of.student.male");
         } else {
-            labelStudent = getResourceBundle().getString("label.of.student.female");
+            labelStudent = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.of.student.female");
         }
 
         String coordinatorName = coordinator.getName();
@@ -84,34 +86,34 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
         String institutionName = getInstitutionName().toUpperCase();
 
-        String template = getResourceBundle().getString("label.courseLoad.personalData.first");
+        String template = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.courseLoad.personalData.first");
         String firstPart =
                 MessageFormat.format(template, coordinatorName, coordinatorGender, adminOfficeUnitName, institutionName,
                         universityName, labelStudent);
         addParameter("firstPart", firstPart);
         addParameter("secondPart", student.getName());
-        addParameter("thirdPart", getResourceBundle().getString("label.with.number"));
+        addParameter("thirdPart", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.with.number"));
         addParameter("fourthPart", getStudentNumber());
-        addParameter("fifthPart", getResourceBundle().getString("label.of.male"));
+        addParameter("fifthPart", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.of.male"));
         addParameter("sixthPart", getDegreeDescription());
-        addParameter("seventhPart", getResourceBundle().getString("label.courseLoad.endMessage"));
+        addParameter("seventhPart", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.courseLoad.endMessage"));
 
         addLabelsToMultiLanguage();
         createCourseLoadsList();
     }
 
     private void addLabelsToMultiLanguage() {
-        addParameter("enrolment", getResourceBundle().getString("label.serviceRequests.enrolment"));
-        addParameter("year", getResourceBundle().getString("label.year"));
-        addParameter("autonomousWork", getResourceBundle().getString("label.autonomousWork"));
-        addParameter("courseLoad", getResourceBundle().getString("label.courseLoad"));
-        addParameter("total", getResourceBundle().getString("label.total.amount"));
-        addParameter("tTotal", getResourceBundle().getString("label.total"));
-        addParameter("lectures", getResourceBundle().getString("label.lectures"));
-        addParameter("practices", getResourceBundle().getString("label.patrice"));
-        addParameter("lecturesPractice", getResourceBundle().getString("label.lecturesPractice"));
-        addParameter("laboratory", getResourceBundle().getString("label.laboratory"));
-        addParameter("dissertations", getResourceBundle().getString("label.courseLoad.dissertations"));
+        addParameter("enrolment", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.serviceRequests.enrolment"));
+        addParameter("year", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.year"));
+        addParameter("autonomousWork", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.autonomousWork"));
+        addParameter("courseLoad", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.courseLoad"));
+        addParameter("total", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.total.amount"));
+        addParameter("tTotal", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.total"));
+        addParameter("lectures", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.lectures"));
+        addParameter("practices", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.patrice"));
+        addParameter("lecturesPractice", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.lecturesPractice"));
+        addParameter("laboratory", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.laboratory"));
+        addParameter("dissertations", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.courseLoad.dissertations"));
     }
 
     @Override

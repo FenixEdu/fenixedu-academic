@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -38,8 +37,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAv
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributesList;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
 public class MobilityIndividualApplicationProcessBean extends IndividualCandidacyProcessBean {
@@ -321,12 +321,11 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
     }
 
     public String getSelectedCourseNameForView() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
         try {
             MobilityQuota quota = determineMobilityQuota();
             return quota.getDegree().getNameI18N().getContent();
         } catch (DomainException e) {
-            return bundle.getString(e.getMessage());
+            return BundleUtil.getString(Bundle.CANDIDATE, e.getMessage());
         }
     }
 

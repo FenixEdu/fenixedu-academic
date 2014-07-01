@@ -91,11 +91,12 @@ public abstract class DebtsFile extends DebtsFile_Base {
 
     protected void appendToErrors(StringBuilder errorsBuilder, String domainObjectId, Throwable e) {
         String message = e.getMessage();
-        String className = e.getStackTrace()[0].getClassName();
-        int codeLine = e.getStackTrace()[0].getLineNumber();
+        final StackTraceElement[] trace = e.getStackTrace();
+        String className = trace.length > 0 ? trace[0].getClassName() : null;
+        int codeLine = trace.length >= 0 ? trace[0].getLineNumber() : -1;
 
         errorsBuilder.append(message).append("[ ").append("domain object externalId - ").append(domainObjectId).append(" : ")
-                .append(className).append(" : ").append(codeLine).append("]");
+                .append(className).append(" : ").append(codeLine).append("]\n");
     }
 
     @Deprecated

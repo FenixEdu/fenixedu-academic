@@ -31,7 +31,9 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
@@ -50,7 +52,7 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
 
     @Override
     public String getDescription() {
-        return getResourceBundle().getString("message.phd.request.reminder.jury.reviews.report.description");
+        return BundleUtil.getString(Bundle.PHD, "message.phd.request.reminder.jury.reviews.report.description");
     }
 
     @Override

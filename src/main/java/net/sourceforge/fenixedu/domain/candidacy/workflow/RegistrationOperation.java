@@ -25,7 +25,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -74,14 +73,12 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     private void associateTutor(Registration registration) {
-        if (getStudentCandidacy().getEntryPhase().equals(EntryPhase.FIRST_PHASE)) {
-            if (!DEGREES_WITHOUT_AUTOMATIC_TUTOR_DISTRIBUTION.contains(registration.getDegree().getSigla())) {
-                Teacher teacher = getAvailableTutorTeacher();
-                if (teacher != null) {
-                    StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
-                    Tutorship.createTutorship(teacher, scp, new LocalDate().getMonthOfYear(),
-                            Tutorship.getLastPossibleTutorshipYear());
-                }
+        if (!DEGREES_WITHOUT_AUTOMATIC_TUTOR_DISTRIBUTION.contains(registration.getDegree().getSigla())) {
+            Teacher teacher = getAvailableTutorTeacher();
+            if (teacher != null) {
+                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+                Tutorship.createTutorship(teacher, scp, new LocalDate().getMonthOfYear(),
+                        Tutorship.getLastPossibleTutorshipYear());
             }
         }
     }

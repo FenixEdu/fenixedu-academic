@@ -88,7 +88,7 @@
 			<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
 				
 				<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.externalId}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.externalId}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}</a>" escape="false"/> 
-				<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{facesContext.externalContext.requestContextPath}/publico/degreeSite/<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.externalId}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.externalId}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseNameEn}</a>" escape="false"/> 			
+				<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.externalId}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.externalId}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseNameEn}</a>" escape="false"/> 			
 											
 				<h:outputText value=" #{publicDegreeInfoBundle['public.degree.information.label.from.masculine']} "/>
 							

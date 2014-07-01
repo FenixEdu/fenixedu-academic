@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +62,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.SituationName;
 
@@ -74,7 +74,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,9 +86,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
- *
+ * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * 
  */
 @Mapping(path = "/editCandidate", module = "masterDegreeAdministrativeOffice",
         input = "/editCandidate.do?method=prepareEdit&error=1", formBean = "changeCandidateForm",
@@ -535,8 +535,7 @@ public class EditCandidateDA extends FenixDispatchAction {
         editCandidateForm.set("motherName", infoPerson.getNomeMae());
 
         if (infoPerson.getInfoPais() == null) {
-            editCandidateForm.set("nationality", ResourceBundle.getBundle("resources.GlobalResources", I18N.getLocale())
-                    .getString("default.nationality"));
+            editCandidateForm.set("nationality", BundleUtil.getString(Bundle.GLOBAL, "default.nationality"));
         } else {
             editCandidateForm.set("nationality", infoPerson.getInfoPais().getNationality());
         }

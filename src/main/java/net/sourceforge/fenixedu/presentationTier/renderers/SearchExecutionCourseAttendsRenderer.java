@@ -18,16 +18,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
@@ -49,11 +47,6 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 
 public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
-
-    private final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE,
-            I18N.getLocale());
-    private final ResourceBundle applicationResources = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE,
-            I18N.getLocale());
 
     private String searchTableClasses;
 
@@ -107,26 +100,26 @@ public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
             HtmlTableRow row2 = htmlTable.createRow();
             HtmlTableCell photoCell = row2.createCell();
             photoCell.setColspan(headerRow.getCells().size());
-            HtmlCheckBox checkBox = new HtmlCheckBox(applicationResources.getString("label.viewPhoto"), bean.getViewPhoto());
+            HtmlCheckBox checkBox = new HtmlCheckBox(BundleUtil.getString(Bundle.APPLICATION, "label.viewPhoto"), bean.getViewPhoto());
             checkBox.bind(getInputContext().getMetaObject(), "viewPhoto");
             photoCell.setBody(checkBox);
 
             HtmlTableRow row3 = htmlTable.createRow();
             HtmlTableCell submitCell = row3.createCell();
             submitCell.setColspan(headerRow.getCells().size());
-            submitCell.setBody(new HtmlSubmitButton(applicationResources.getString("button.selectShift")));
+            submitCell.setBody(new HtmlSubmitButton(BundleUtil.getString(Bundle.APPLICATION, "button.selectShift")));
 
             return htmlTable;
         }
 
         private void createWorkingStudentSearch(HtmlTableRow row, HtmlTableRow headerRow) {
-            headerRow.createCell(applicationResources.getString("label.workingStudents"));
+            headerRow.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.workingStudents"));
 
             HtmlCheckBoxList workingStudentCheckBoxList = new HtmlCheckBoxList();
             for (WorkingStudentSelectionType workingStudentSelectionType : WorkingStudentSelectionType.values()) {
                 HtmlCheckBox option =
                         workingStudentCheckBoxList.addOption(
-                                new HtmlLabel(enumerationResources.getString(workingStudentSelectionType.getQualifiedName())),
+                                new HtmlLabel(BundleUtil.getString(Bundle.ENUMERATION, workingStudentSelectionType.getQualifiedName())),
                                 workingStudentSelectionType.name());
                 option.setChecked(bean.getWorkingStudentTypes().contains(workingStudentSelectionType));
             }
@@ -139,7 +132,7 @@ public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
         }
 
         private void createShiftSearch(HtmlTableRow row, HtmlTableRow headerRow) {
-            headerRow.createCell(applicationResources.getString("label.selectShift"));
+            headerRow.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.selectShift"));
 
             HtmlCheckBoxList shiftCheckBoxList = new HtmlCheckBoxList();
             for (Shift shift : bean.getExecutionCourse().getAssociatedShifts()) {
@@ -158,7 +151,7 @@ public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
         }
 
         private void createDCPSearch(HtmlTableRow row, HtmlTableRow headerRow) {
-            headerRow.createCell(applicationResources.getString("label.attends.courses"));
+            headerRow.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.attends.courses"));
 
             HtmlCheckBoxList dcpCheckBoxList = new HtmlCheckBoxList();
             for (DegreeCurricularPlan degreeCurricularPlan : bean.getExecutionCourse().getAttendsDegreeCurricularPlans()) {
@@ -177,13 +170,13 @@ public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
         }
 
         private void createAttendsStateTypeSearch(HtmlTableRow row, HtmlTableRow headerRow) {
-            headerRow.createCell(applicationResources.getString("label.selectStudents"));
+            headerRow.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.selectStudents"));
 
             HtmlCheckBoxList attendsStateCheckBoxList = new HtmlCheckBoxList();
             for (StudentAttendsStateType attendsStateType : StudentAttendsStateType.values()) {
                 HtmlCheckBox option =
                         attendsStateCheckBoxList.addOption(
-                                new HtmlLabel(enumerationResources.getString(attendsStateType.getQualifiedName())),
+                                new HtmlLabel(BundleUtil.getString(Bundle.ENUMERATION, attendsStateType.getQualifiedName())),
                                 attendsStateType.name());
                 option.setChecked(bean.getAttendsStates().contains(attendsStateType));
             }

@@ -28,10 +28,11 @@ import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -207,8 +208,8 @@ public class Exam extends Exam_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.exam") + " "
-                + BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, getSeason().getKey());
+        return BundleUtil.getString(Bundle.APPLICATION, "label.exam") + " "
+                + BundleUtil.getString(Bundle.APPLICATION, getSeason().getKey());
     }
 
     @Deprecated

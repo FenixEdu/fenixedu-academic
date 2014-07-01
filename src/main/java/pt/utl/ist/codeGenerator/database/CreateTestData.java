@@ -868,8 +868,6 @@ public class CreateTestData {
 
                             curricularCourse.addAssociatedExecutionCourses(executionCourse);
 
-                            executionCourse.createSite();
-
                             createAnnouncementsAndPlanning(executionCourse);
                             createEvaluationMethod(executionCourse);
                             createBibliographicReferences(executionCourse);
@@ -1286,7 +1284,7 @@ public class CreateTestData {
         executionCourse.addAssociatedCurricularCourses(curricularCourse);
         executionCourse.setAvailableForInquiries(Boolean.TRUE);
 
-        final ExecutionCourseSite executionCourseSite = executionCourse.createSite();
+        final ExecutionCourseSite executionCourseSite = executionCourse.getSite();
         executionCourseSite.setInitialStatement("Bla bla bla bla bla bla bla.");
         executionCourseSite.setAlternativeSite("http://www.google.com/");
         executionCourseSite.setIntroduction("Blur blur bla blur ble blur bla.");

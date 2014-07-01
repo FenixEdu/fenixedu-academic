@@ -29,7 +29,7 @@
 <link href="${pageContext.request.contextPath}/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 
 <c:forEach var="degree" items="${degrees}">
-	<c:forEach var="schoolClass" items="${degree.schoolClassesSet}">
+	<c:forEach var="schoolClass" items="${degree.sortedSchoolClasses}">
 		<c:if test="${schoolClass.academicInterval == academicInterval}">
 			<div class="single">
 			<div class="alert alert-warning">

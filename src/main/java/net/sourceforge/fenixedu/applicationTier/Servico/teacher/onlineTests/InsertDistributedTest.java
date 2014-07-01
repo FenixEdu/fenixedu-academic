@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
@@ -185,7 +186,7 @@ public class InsertDistributedTest {
 
             tempDistributedTestId = distributedTest.getExternalId();
 
-            EvaluationManagementLog.createLog(executionCourse, "resources.MessagingResources",
+            EvaluationManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                     "log.executionCourse.evaluation.tests.distribution.created", distributedTest.getTitle(),
                     distributedTest.getEvaluationTitle(), distributedTest.getBeginDateTimeFormatted(), executionCourse.getName(),
                     executionCourse.getDegreePresentationString());

@@ -24,6 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
+<jsp:include page="/includeMathJax.jsp" />
 
 <html:xhtml/>
 
@@ -99,12 +100,11 @@
         <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
     
-    <% String treeId = "sectionsTree." + contextParam + "." + contextParamValue; %>
     
     <div class="section1">
         <fr:view name="site" property="orderedAssociatedSections">
             <fr:layout name="tree">
-                <fr:property name="treeId" value="<%= treeId %>"/>
+                <fr:property name="expandable" value="true" />
                 <fr:property name="fieldId" value="sections-order"/>
                 
 	             <fr:property name="eachLayout" value="values"/>
@@ -115,9 +115,9 @@
 				<fr:property name="imageFor(TemplatedSectionInstance)" value="/images/icon-institutional.gif"/>
 
 				<fr:property name="schemaFor(Item)" value="site.item.name"/>
-                <fr:property name="childrenFor(Item)" value="fileContentSet"/>
+                <fr:property name="childrenFor(Item)" value="sortedFiles"/>
 
-				<fr:property name="schemaFor(FileContent)" value="item.file.filename"/>
+				<fr:property name="schemaFor(FileContent)" value="site.item.file.basic"/>
 				<fr:property name="imageFor(FileContent)" value="/images/icon-attachment.gif"/>
 				
 				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>

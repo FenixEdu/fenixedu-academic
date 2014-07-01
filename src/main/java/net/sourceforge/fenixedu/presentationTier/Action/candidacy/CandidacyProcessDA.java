@@ -23,7 +23,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -45,15 +44,16 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.portal.EntryPoint;
-import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -406,9 +406,9 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     protected String getReportFilename() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
-        return bundle.getString("label.candidacy." + getProcessType().getSimpleName() + ".report.filename") + "_"
-                + new LocalDate().toString("ddMMyyyy") + ".xls";
+        return BundleUtil.getString(Bundle.APPLICATION, "label.candidacy." + getProcessType().getSimpleName()
+                + ".report.filename")
+                + "_" + new LocalDate().toString("ddMMyyyy") + ".xls";
     }
 
     /**
@@ -432,8 +432,8 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
     private void writeCandidaciesReport(HttpServletRequest request, final CandidacyProcess process,
             final ServletOutputStream writer) throws IOException {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", I18N.getLocale());
-        final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("title.candidacies"), getCandidacyHeader());
+        final Spreadsheet spreadsheet =
+                new Spreadsheet(BundleUtil.getString(Bundle.CANDIDATE, "title.candidacies"), getCandidacyHeader());
         HideCancelledCandidaciesBean hideCancelledCandidacies = getHideCancelledCandidaciesValue(request);
 
         for (final IndividualCandidacyProcess individualProcess : process.getChildProcesses()) {
@@ -455,21 +455,20 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
             final IndividualCandidacyProcess individualCandidacyProcess);
 
     protected List<Object> getCandidacyHeader() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", I18N.getLocale());
         final List<Object> result = new ArrayList<Object>();
 
-        result.add(bundle.getString("label.spreadsheet.processCode"));
-        result.add(bundle.getString("label.spreadsheet.name"));
-        result.add(bundle.getString("label.spreadsheet.identificationType"));
-        result.add(bundle.getString("label.spreadsheet.identificationNumber"));
-        result.add(bundle.getString("label.spreadsheet.nationality"));
-        result.add(bundle.getString("label.spreadsheet.precedent.institution"));
-        result.add(bundle.getString("label.spreadsheet.precedent.degree.designation"));
-        result.add(bundle.getString("label.spreadsheet.precedent.degree.conclusion.date"));
-        result.add(bundle.getString("label.spreadsheet.precedent.degree.conclusion.grade"));
-        result.add(bundle.getString("label.spreadsheet.selected.degree"));
-        result.add(bundle.getString("label.spreadsheet.state"));
-        result.add(bundle.getString("label.spreadsheet.verified"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.processCode"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.name"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationType"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationNumber"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.nationality"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.precedent.institution"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.precedent.degree.designation"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.precedent.degree.conclusion.date"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.precedent.degree.conclusion.grade"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.selected.degree"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.state"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.verified"));
 
         return result;
     }

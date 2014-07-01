@@ -40,8 +40,12 @@ public abstract class ExecutionCourseBaseAction extends FenixDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        propageContextIds(request);
+        propageIds(request);
         return super.execute(mapping, actionForm, request, response);
+    }
+
+    protected void propageIds(HttpServletRequest request) {
+        propageContextIds(request);
     }
 
     public static ActionForward forward(HttpServletRequest request, String page) {

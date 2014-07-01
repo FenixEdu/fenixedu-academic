@@ -22,7 +22,6 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -33,8 +32,11 @@ import net.sourceforge.fenixedu.domain.util.email.PersonSender;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
 
 public abstract class ThesisServiceWithMailNotification {
 
@@ -51,14 +53,12 @@ public abstract class ThesisServiceWithMailNotification {
     }
 
     protected String getMessage(String key, Object... args) {
-        return getMessage(key, new Locale("pt"), args);
+        return getMessage(I18N.getLocale(), key, args);
     }
 
-    protected String getMessage(String key, Locale locale, Object... args) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.MessagingResources", locale);
-
-        String message = bundle.getString(key);
-        return MessageFormat.format(message, args);
+    protected String getMessage(Locale locale, String key, Object... args) {
+        String template = BundleUtil.getString(Bundle.MESSAGING, locale, key);
+        return MessageFormat.format(template, args);
     }
 
     private Set<Recipient> getRecipients(Thesis thesis) {

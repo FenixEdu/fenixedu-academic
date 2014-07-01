@@ -57,7 +57,7 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -65,6 +65,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -520,7 +521,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
         String controlCategory = null;
         if (!StringUtils.isEmpty(categoryControl)) {
             summaryControlCategory = SummaryControlCategory.valueOf(categoryControl);
-            controlCategory = getResourceMessage(ENUMERATION_MODULE, summaryControlCategory.toString());
+            controlCategory = BundleUtil.getString(Bundle.ENUMERATION, summaryControlCategory.toString());
         } else {
             controlCategory = "0-100";
         }
@@ -535,7 +536,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
             String date = fmt.print(dt);
 
             final String filename =
-                    getResourceMessage(DEFAULT_MODULE, "link.summaries.control").replaceAll(" ", "_") + "_" + controlCategory
+                    BundleUtil.getString(Bundle.APPLICATION,  "link.summaries.control").replaceAll(" ", "_") + "_" + controlCategory
                             + "_" + sigla + "_" + date + ".xls";
 
             response.setContentType("application/vnd.ms-excel");
@@ -552,7 +553,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
     private void exportToXls(DepartmentSummaryElement departmentSummaryResume, final Department department,
             final ExecutionSemester executionSemester, final OutputStream os) throws IOException {
         final StyledExcelSpreadsheet spreadsheet =
-                new StyledExcelSpreadsheet(getResourceMessage(DEFAULT_MODULE, "link.summaries.control"));
+                new StyledExcelSpreadsheet(BundleUtil.getString(Bundle.APPLICATION,  "link.summaries.control"));
 
         fillSpreadSheet(departmentSummaryResume, department, executionSemester, spreadsheet);
         spreadsheet.getWorkbook().write(os);
@@ -621,20 +622,17 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
         spreadsheet.newHeaderRow();
 
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.semester"));
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.department"), 10000);
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.course"), 10000);
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons"));
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.summaries"));
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.summaries.percentage"));
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.notTaught.summaries"));
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.notTaught.summaries.percentage"));
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorName"), 10000);
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorUsername"));
-        spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorEmail"), 10000);
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.semester"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.department"), 10000);
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.course"), 10000);
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.lessons"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.lessons.summaries"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.lessons.summaries.percentage"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.lessons.notTaught.summaries"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.lessons.notTaught.summaries.percentage"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.professorName"), 10000);
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.professorUsername"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL,  "label.excel.professorEmail"), 10000);
     }
 
-    static private String getResourceMessage(String module, String key) {
-        return BundleUtil.getMessageFromModuleOrApplication(module, key);
-    }
 }

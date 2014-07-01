@@ -28,6 +28,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -55,6 +56,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -170,24 +172,25 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public void createBibliographicReference(String year, String title, String authors, String reference, String url,
             BibliographicReferenceType type) {
         checkIfCanEdit(false);
-        getBibliographicReferences().createBibliographicReference(year, title, authors, reference, url, type);
-        getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+        CompetenceCourseInformation info = getMostRecentCompetenceCourseInformation();
+        info.setBibliographicReferences(info.getBibliographicReferences().with(year, title, authors, reference, url, type));
     }
 
-    public void editBibliographicReference(Integer oid, String year, String title, String authors, String reference, String url,
-            BibliographicReferenceType type) {
-        getBibliographicReferences().editBibliographicReference(oid, year, title, authors, reference, url, type);
-        getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+    public void editBibliographicReference(Integer index, String year, String title, String authors, String reference,
+            String url, BibliographicReferenceType type) {
+        CompetenceCourseInformation info = getMostRecentCompetenceCourseInformation();
+        info.setBibliographicReferences(info.getBibliographicReferences().replacing(index, year, title, authors, reference, url,
+                type));
     }
 
-    public void deleteBibliographicReference(Integer oid) {
-        getBibliographicReferences().deleteBibliographicReference(oid);
-        getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+    public void deleteBibliographicReference(Integer index) {
+        CompetenceCourseInformation info = getMostRecentCompetenceCourseInformation();
+        info.setBibliographicReferences(info.getBibliographicReferences().without(index));
     }
 
     public void switchBibliographicReferencePosition(Integer oldPosition, Integer newPosition) {
-        getBibliographicReferences().switchBibliographicReferencePosition(oldPosition, newPosition);
-        getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+        CompetenceCourseInformation info = getMostRecentCompetenceCourseInformation();
+        info.setBibliographicReferences(info.getBibliographicReferences().movingBibliographicReference(oldPosition, newPosition));
     }
 
     private void fillFields(String code, String name) {
@@ -536,6 +539,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public String getProgram() {
         return getProgram(null);
+    }
+
+    public LocalizedString getLocalizedEvaluationMethod(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return new LocalizedString(Locale.getDefault(), information.getEvaluationMethod()).with(Locale.ENGLISH, information.getEvaluationMethodEn());
     }
 
     public String getEvaluationMethod(final ExecutionSemester period) {

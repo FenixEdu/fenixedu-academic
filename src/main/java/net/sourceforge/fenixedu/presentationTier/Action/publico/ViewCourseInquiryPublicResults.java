@@ -85,7 +85,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
         boolean hasNotRelevantData = executionCourse.hasNotRelevantDataFor(executionDegree);
 
         ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
-        Collection<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
+        Collection<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocksSet();
 
         GroupResultsSummaryBean ucGroupResultsSummaryBean =
                 getGeneralResults(results, resultBlocks, GroupResultType.COURSE_RESULTS);
@@ -111,7 +111,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
         GroupResultsSummaryBean ucEvaluationsGroupBean =
                 getGeneralResults(results, resultBlocks, GroupResultType.COURSE_EVALUATIONS);
         InquiryQuestion estimatedEvaluationQuestion =
-                getEstimatedEvaluationsQuestion(curricularCourseInquiryTemplate.getInquiryBlocks());
+                getEstimatedEvaluationsQuestion(curricularCourseInquiryTemplate.getInquiryBlocksSet());
         QuestionResultsSummaryBean estimatedEvaluationBeanQuestion =
                 new QuestionResultsSummaryBean(estimatedEvaluationQuestion, getResultsForQuestion(results,
                         estimatedEvaluationQuestion), null, null);
@@ -143,7 +143,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
                 CurricularCourseInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
         List<BlockResultsSummaryBean> blockResultsSummaryBeans = new ArrayList<BlockResultsSummaryBean>();
 
-        for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocks()) {
+        for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocksSet()) {
             blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, results, null, null));
         }
         Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));

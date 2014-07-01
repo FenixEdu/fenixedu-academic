@@ -21,11 +21,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.common.base.Joiner;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurno;
@@ -46,7 +48,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -55,7 +57,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -68,17 +70,85 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  *
  */
 @Mapping(path = "/manageShifts", module = "resourceAllocationManager", input = "/manageShifts.do?method=listShifts",
-        formBean = "createShiftForm", functionality = ExecutionPeriodDA.class)
+formBean = "createShiftForm", functionality = ExecutionPeriodDA.class)
 @Forwards({ @Forward(name = "ShowShiftList", path = "/resourceAllocationManager/manageShifts_bd.jsp"),
-        @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift") })
+    @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift") })
 @Exceptions(@ExceptionHandling(handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class,
-        key = "resources.Action.exceptions.ExistingActionException", scope = "request"))
+key = "resources.Action.exceptions.ExistingActionException", scope = "request"))
 public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
     @Mapping(path = "/deleteShifts", module = "resourceAllocationManager", input = "/manageShifts.do?method=listShifts&page=0",
             formBean = "selectMultipleItemsForm", functionality = ExecutionPeriodDA.class)
-    @Forwards(@Forward(name = "ShowShiftList", path = "/resourceAllocationManager/manageShifts.do?method=listShifts"))
     public static class DeleteShiftsDA extends ManageShiftsDA {
+
+        private String getQueryParam(HttpServletRequest request, String name) {
+            return Stream.of(name, (String) request.getAttribute(name)).collect(Collectors.joining("="));
+        }
+
+        private ActionForward redirectToShiftsList(HttpServletRequest request) {
+            String url = Stream.of("/manageShifts.do?method=listShifts&page=0" , getQueryParam(request, PresentationConstants.ACADEMIC_INTERVAL),
+                    getQueryParam(request, PresentationConstants.CURRICULAR_YEAR_OID),
+                    getQueryParam(request, PresentationConstants.EXECUTION_DEGREE_OID)).collect(Collectors.joining("&"));
+
+            return redirect(url , request);
+        }
+
+        public ActionForward deleteShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+
+            ContextUtils.setShiftContext(request);
+
+            InfoShift infoShiftToDelete = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
+
+            try {
+                DeleteShift.run(infoShiftToDelete);
+            } catch (FenixServiceException exception) {
+                ActionErrors actionErrors = new ActionErrors();
+                if (exception.getMessage() != null && exception.getMessage().length() > 0) {
+                    actionErrors.add("errors.deleteshift", new ActionError(exception.getMessage(), exception.getArgs()));
+                } else {
+                    actionErrors.add("errors.deleteshift", new ActionError("error.deleteShift"));
+                }
+                saveErrors(request, actionErrors);
+                return mapping.getInputForward();
+            }
+
+            return redirectToShiftsList(request);
+        }
+
+        public ActionForward deleteShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            DynaActionForm deleteShiftsForm = (DynaActionForm) form;
+            String[] selectedShifts = (String[]) deleteShiftsForm.get("selectedItems");
+
+            if (selectedShifts.length == 0) {
+                ActionErrors actionErrors = new ActionErrors();
+                actionErrors.add("errors.shifts.notSelected", new ActionError("errors.shifts.notSelected"));
+                saveErrors(request, actionErrors);
+                return mapping.getInputForward();
+            }
+
+            final List<String> shiftOIDs = new ArrayList<String>();
+            for (String selectedShift : selectedShifts) {
+                shiftOIDs.add(selectedShift);
+            }
+
+            try {
+                DeleteShifts.run(shiftOIDs);
+            } catch (FenixServiceMultipleException e) {
+                final ActionErrors actionErrors = new ActionErrors();
+
+                for (final DomainException domainException : e.getExceptionList()) {
+                    actionErrors.add(domainException.getMessage(),
+                            new ActionError(domainException.getMessage(), domainException.getArgs()));
+                }
+                saveErrors(request, actionErrors);
+
+                return mapping.getInputForward();
+            }
+
+            return redirectToShiftsList(request);
+        }
     }
 
     public ActionForward listShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -98,10 +168,9 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
         if (infoExecutionCourse != null) {
             final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-            final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
-
             for (final ShiftType shiftType : infoExecutionCourse.getExecutionCourse().getShiftTypes()) {
-                tiposAula.add(new LabelValueBean(bundle.getString(shiftType.getName()), shiftType.name()));
+                tiposAula
+                        .add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, shiftType.getName()), shiftType.name()));
             }
 
             request.setAttribute("tiposAula", tiposAula);
@@ -150,63 +219,6 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
         request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
 
         return mapping.findForward("EditShift");
-    }
-
-    public ActionForward deleteShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        ContextUtils.setShiftContext(request);
-
-        InfoShift infoShiftToDelete = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
-
-        try {
-            DeleteShift.run(infoShiftToDelete);
-        } catch (FenixServiceException exception) {
-            ActionErrors actionErrors = new ActionErrors();
-            if (exception.getMessage() != null && exception.getMessage().length() > 0) {
-                actionErrors.add("errors.deleteshift", new ActionError(exception.getMessage(), exception.getArgs()));
-            } else {
-                actionErrors.add("errors.deleteshift", new ActionError("error.deleteShift"));
-            }
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
-
-        return listShifts(mapping, form, request, response);
-    }
-
-    public ActionForward deleteShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        DynaActionForm deleteShiftsForm = (DynaActionForm) form;
-        String[] selectedShifts = (String[]) deleteShiftsForm.get("selectedItems");
-
-        if (selectedShifts.length == 0) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("errors.shifts.notSelected", new ActionError("errors.shifts.notSelected"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
-
-        final List<String> shiftOIDs = new ArrayList<String>();
-        for (String selectedShift : selectedShifts) {
-            shiftOIDs.add(selectedShift);
-        }
-
-        try {
-            DeleteShifts.run(shiftOIDs);
-        } catch (FenixServiceMultipleException e) {
-            final ActionErrors actionErrors = new ActionErrors();
-
-            for (final DomainException domainException : e.getExceptionList()) {
-                actionErrors.add(domainException.getMessage(),
-                        new ActionError(domainException.getMessage(), domainException.getArgs()));
-            }
-            saveErrors(request, actionErrors);
-
-            return mapping.getInputForward();
-        }
-
-        return mapping.findForward("ShowShiftList");
     }
 
     private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, Exception {

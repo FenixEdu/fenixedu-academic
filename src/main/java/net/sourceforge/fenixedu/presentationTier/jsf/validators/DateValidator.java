@@ -22,7 +22,6 @@
 package net.sourceforge.fenixedu.presentationTier.jsf.validators;
 
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
@@ -30,6 +29,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
+
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * 
@@ -51,11 +54,9 @@ public class DateValidator implements Validator, StateHolder {
         if (value != null) {
             String val = value.toString();
             if (org.apache.commons.validator.DateValidator.getInstance().isValid(val, this.getFormat(), this.getStrict()) == false) {
-                ResourceBundle resourceBundle =
-                        ResourceBundle.getBundle(context.getApplication().getMessageBundle(), context.getViewRoot().getLocale());
-
                 String errorMessage =
-                        MessageFormat.format(resourceBundle.getString(INVALID_DATE), new Object[] { this.getFormat() });
+                        MessageFormat.format(BundleUtil.getString(Bundle.APPLICATION, INVALID_DATE),
+                                new Object[] { this.getFormat() });
 
                 throw new ValidatorException(new FacesMessage(errorMessage));
             }

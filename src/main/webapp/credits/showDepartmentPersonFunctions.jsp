@@ -91,7 +91,7 @@
 							<td align="center">-</td>
 						<% }%>
 						<%-- --%>
-						<td><bean:write name="personFunction" property="credits"/></td>
+						<td><bean:write name="personFunction" property="credits"/>--><bean:write name="personFunction" property="externalId"/></td>
 					</logic:equal>
 					<logic:notEqual name="canShowCredits" value="true">
 						<td/><td/>

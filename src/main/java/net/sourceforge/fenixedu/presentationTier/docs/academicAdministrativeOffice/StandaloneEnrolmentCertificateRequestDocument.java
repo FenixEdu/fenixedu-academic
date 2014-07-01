@@ -30,8 +30,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FenixStringTools;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -82,7 +84,8 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
 
-        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
+        String stringTemplate =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.firstParagraph");
         String coordinatorTitle = getCoordinatorGender(coordinator);
 
         addParameter(
@@ -94,13 +97,16 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
     }
 
     protected void fillSecondParagraph() {
-        addParameter("secondParagraph",
-                "      " + getResourceBundle().getString("label.academicDocument.standaloneEnrolmentCertificate.secondParagraph"));
+        addParameter(
+                "secondParagraph",
+                "      "
+                        + BundleUtil.getString(Bundle.ACADEMIC, getLocale(), 
+                                "label.academicDocument.standaloneEnrolmentCertificate.secondParagraph"));
     }
 
     protected void fillSeventhParagraph() {
         String stringTemplate =
-                getResourceBundle().getString("label.academicDocument.standaloneEnrolmentCertificate.seventhParagraph");
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.standaloneEnrolmentCertificate.seventhParagraph");
         addParameter("seventhParagraph", MessageFormat.format(stringTemplate, getDegreeDescription()));
     }
 
@@ -135,39 +141,42 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
         String student;
 
         if (registration.getStudent().getPerson().isMale()) {
-            student = getResourceBundle().getString("label.academicDocument.declaration.maleStudent");
+            student = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.maleStudent");
         } else {
-            student = getResourceBundle().getString("label.academicDocument.declaration.femaleStudent");
+            student = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.femaleStudent");
         }
         String coordinatorTitle = getCoordinatorGender(coordinator);
 
-        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signer");
+        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.signer");
         addParameter("signer", MessageFormat.format(stringTemplate, coordinatorTitle, adminOfficeName));
 
-        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signerLocation");
+        stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.signerLocation");
         addParameter("signerLocation",
                 MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
 
-        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.studentNumber");
+        stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.studentNumber");
         addParameter("studentNumber", MessageFormat.format(stringTemplate, student, registration.getNumber().toString()));
 
-        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.documentNumber");
+        stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.documentNumber");
         addParameter("documentNumber",
                 MessageFormat.format(stringTemplate, getDocumentRequest().getServiceRequestNumber().toString().trim()));
 
-        addParameter("page", getResourceBundle().getString("label.academicDocument.declaration.footer.page"));
-        addParameter("pageOf", getResourceBundle().getString("label.academicDocument.declaration.footer.pageOf"));
+        addParameter("page", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.page"));
+        addParameter("pageOf", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.pageOf"));
 
-        addParameter("checkedBy", getResourceBundle()
-                .getString("label.academicDocument.standaloneEnrolmentCertificate.checkedBy"));
+        addParameter("checkedBy",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.standaloneEnrolmentCertificate.checkedBy"));
     }
 
     protected void fillPriceTags() {
-        addParameter("priceTagsPrinting", getResourceBundle().getString("label.academicDocument.certificate.printingPriceLabel"));
-        addParameter("priceTagsIssuing", getResourceBundle().getString("label.academicDocument.certificate.issuingPriceLabel"));
+        addParameter("priceTagsPrinting",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.printingPriceLabel"));
+        addParameter("priceTagsIssuing",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.issuingPriceLabel"));
         addParameter("priceTagsFastDelivery",
-                getResourceBundle().getString("label.academicDocument.certificate.fastDeliveryPriceLabel"));
-        addParameter("priceTagsTotal", getResourceBundle().getString("label.academicDocument.certificate.totalsPriceLabel"));
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.fastDeliveryPriceLabel"));
+        addParameter("priceTagsTotal",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.totalsPriceLabel"));
     }
 
 }

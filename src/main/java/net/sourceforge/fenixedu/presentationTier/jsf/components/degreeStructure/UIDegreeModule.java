@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -34,8 +33,10 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public class UIDegreeModule extends UIInput {
@@ -120,11 +121,6 @@ public class UIDegreeModule extends UIInput {
         }
     }
 
-    protected String getBundleValue(String bundleName, String bundleKey) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, I18N.getLocale());
-        return bundle.getString(bundleKey);
-    }
-
     private static final String CODE_NAME_SEPARATOR = " - ";
 
     protected void appendCodeAndName() throws IOException {
@@ -140,7 +136,7 @@ public class UIDegreeModule extends UIInput {
         writer.startElement("a", this);
         encodeLinkHref(page, aditionalParameters, blank);
         for (String bundleKey : bundleKeys) {
-            writer.write(this.getBundleValue("BolonhaManagerResources", bundleKey));
+            writer.write(BundleUtil.getString(Bundle.BOLONHA, bundleKey));
         }
         writer.endElement("a");
     }

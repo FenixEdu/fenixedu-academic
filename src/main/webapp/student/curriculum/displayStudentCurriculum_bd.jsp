@@ -31,6 +31,8 @@
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
 <html:xhtml/>
 
+<link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
+
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>

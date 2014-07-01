@@ -18,9 +18,9 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ResourceBundle;
+import net.sourceforge.fenixedu.util.Bundle;
 
-import net.sourceforge.fenixedu.util.BundleUtil;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public enum ProfessionType {
 
@@ -75,7 +75,7 @@ public enum ProfessionType {
     }
 
     public String getLocalizedName() {
-        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE).getString(getQualifiedName());
+        return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
     }
 
 }

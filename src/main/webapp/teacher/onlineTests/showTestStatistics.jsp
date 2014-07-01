@@ -23,12 +23,12 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<jsp:include page="/includeMathJax.jsp" />
 
 <logic:present name="infoInquiryStatisticsList">
 
 <html:form action="/testDistribution">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showDistributedTests"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
 	<table width="100%" border="0" cellpadding="0" cellspacing="10">
 	<bean:define id="order" value="1"/>
 	<logic:iterate id="infoInquiryStatistic" name="infoInquiryStatisticsList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics" indexId="iterateIndex">

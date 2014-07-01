@@ -55,13 +55,14 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminListingsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -240,7 +241,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             Degree degree = registration.getDegree();
             spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
                     .toString());
-            spreadsheet.addCell(BundleUtil.getEnumName(registrationWithStateForExecutionYearBean.getEnrollmentState()));
+            spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrollmentState().getDescription());
             spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrolmentEvaluationType().getDescription());
             if (detailed) {
                 spreadsheet.addCell(registration.getPerson().hasDefaultEmailAddress() ? registration.getPerson()
@@ -346,7 +347,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     static private String getResourceMessage(String key) {
-        return BundleUtil.getMessageFromModuleOrApplication("academicAdminOffice", key);
+        return BundleUtil.getString(Bundle.ACADEMIC, key);
     }
 
     protected Set<DegreeType> getAdministratedDegreeTypes() {

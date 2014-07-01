@@ -79,11 +79,11 @@ public enum WeekDay {
     }
 
     public String getLabel() {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, name());
+        return org.fenixedu.bennu.core.i18n.BundleUtil.getString(Bundle.ENUMERATION, name());
     }
 
     public String getLabelShort() {
-        return BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, name() + ".short");
+        return org.fenixedu.bennu.core.i18n.BundleUtil.getString(Bundle.ENUMERATION, name() + ".short");
     }
 
 }

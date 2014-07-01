@@ -24,7 +24,6 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curri
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -60,16 +59,15 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
 
 public class CurricularRulesManagementBackingBean extends FenixBackingBean {
-    protected final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
-    protected final ResourceBundle enumerationResources = getResourceBundle("resources/EnumerationResources");
-    protected final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
     protected final String NO_SELECTION_STRING = "-1";
 
     private String degreeModuleID = null;
@@ -159,7 +157,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 if (getDegreeModule().isLeaf()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
                     if (curricularCourse.isOptionalCurricularCourse()) {
-                        result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType
+                        result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
                                 .getName())));
                         break;
                     }
@@ -167,12 +165,12 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
             case DEGREE_MODULES_SELECTION_LIMIT:
                 if (!getDegreeModule().isLeaf()) {
-                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType
+                    result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
                             .getName())));
                 }
                 break;
             case PRECEDENCY_BETWEEN_DEGREE_MODULES:
-                result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType
+                result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
                         .getName())));
                 break;
 
@@ -180,13 +178,13 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             case PRECEDENCY_ENROLED_DEGREE_MODULE:
             case ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR:
                 if (getDegreeModule().isLeaf()) {
-                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType
+                    result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
                             .getName())));
                 }
                 break;
 
             case EXCLUSIVENESS:
-                result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType
+                result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
                         .getName())));
                 break;
 
@@ -194,7 +192,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 if (getDegreeModule().isLeaf()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
                     if (curricularCourse.isOptionalCurricularCourse()) {
-                        result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType
+                        result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
                                 .getName())));
                     }
                 }
@@ -202,13 +200,13 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
             case EVEN_ODD:
                 if (getDegreeModule().isLeaf()) {
-                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType
+                    result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
                             .getName())));
                 }
                 break;
 
             case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
-                result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType
+                result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
                         .getName())));
                 break;
 
@@ -218,7 +216,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         }
 
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(NO_SELECTION_STRING, bolonhaResources.getString("choose")));
+        result.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
@@ -542,12 +540,12 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             for (final Degree degree : allDegrees) {
                 if (degree.isBolonhaDegree() && (bolonhaDegreeType == null || degree.getDegreeType() == bolonhaDegreeType)) {
                     result.add(new SelectItem(degree.getExternalId(), "["
-                            + enumerationResources.getString(degree.getDegreeType().name()) + "] " + degree.getNome()));
+                            + BundleUtil.getString(Bundle.ENUMERATION, degree.getDegreeType().name()) + "] " + degree.getNome()));
                 }
             }
             Collections.sort(result, new BeanComparator("label"));
         }
-        result.add(0, new SelectItem(NO_SELECTION_STRING, bolonhaResources.getString("any.one")));
+        result.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "any.one")));
         return result;
     }
 
@@ -602,7 +600,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         if (endExecutionPeriodItemsForRule == null) {
             endExecutionPeriodItemsForRule = new UISelectItems();
             final List<SelectItem> values = new ArrayList<SelectItem>(readExecutionPeriodItems());
-            values.add(0, new SelectItem(NO_SELECTION_STRING, bolonhaResources.getString("opened")));
+            values.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "opened")));
             endExecutionPeriodItemsForRule.setValue(values);
         }
         return endExecutionPeriodItemsForRule;
@@ -645,7 +643,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             }
             Collections.sort(result, new BeanComparator("label"));
         }
-        result.add(0, new SelectItem(NO_SELECTION_STRING, bolonhaResources.getString("choose")));
+        result.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
@@ -660,7 +658,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             }
             Collections.sort(result, new BeanComparator("label"));
         }
-        result.add(0, new SelectItem(NO_SELECTION_STRING, bolonhaResources.getString("all")));
+        result.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "all")));
         return result;
     }
 
@@ -689,7 +687,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 break;
             }
         }
-        result.add(0, new SelectItem(NO_SELECTION_STRING, bolonhaResources.getString("choose")));
+        result.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
@@ -722,15 +720,15 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                     buildCurricularRuleParametersDTO(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
             return "setCurricularRules";
         } catch (FenixActionException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (NotAuthorizedException e) {
-            addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (NumberFormatException e) {
-            addErrorMessage(bolonhaResources.getString("invalid.minimum.maximum.values"));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "invalid.minimum.maximum.values"));
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "";
     }
@@ -740,9 +738,9 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             EditCurricularRule.run(getCurricularRuleID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
             return "setCurricularRules";
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
         }
         return "";
     }
@@ -750,12 +748,12 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public String deleteCurricularRule() {
         try {
             DeleteCurricularRule.run(getCurricularRuleID());
-            addInfoMessage(bolonhaResources.getString("curricularRule.deleted"));
+            addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "curricularRule.deleted"));
             return "setCurricularRules";
         } catch (FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
         } catch (DomainException e) {
-            addErrorMessage(getFormatedMessage(domainResources, e.getKey(), e.getArgs()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getKey(), e.getArgs()));
         }
         return "";
     }
