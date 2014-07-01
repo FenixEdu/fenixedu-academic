@@ -394,20 +394,25 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     public String getErasmusCandidacyStateDescription() {
         String registeredMessage =
-                getCandidacy().hasRegistration() ? "/" + BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.registered") : "";
+                getCandidacy().hasRegistration() ? "/"
+                        + BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.registered") : "";
         if (isCandidacyCancelled()) {
-            return BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.description.cancelled") + registeredMessage;
+            return BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.description.cancelled")
+                    + registeredMessage;
         }
 
         if (isCandidacyRejected()) {
-            return BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.description.rejected") + registeredMessage;
+            return BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.description.rejected")
+                    + registeredMessage;
         }
 
         if (isCandidacyInStandBy() && isStudentAccepted()) {
-            return BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.description.student.accepted") + registeredMessage;
+            return BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.description.student.accepted")
+                    + registeredMessage;
         }
 
-        return BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.description.student.pending") + registeredMessage;
+        return BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.description.student.pending")
+                + registeredMessage;
     }
 
     @StartActivity
@@ -1014,7 +1019,6 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             if (!process.isStudentAccepted()) {
                 throw new PreConditionNotValidException();
             }
-
         }
 
         @Override
@@ -1024,7 +1028,8 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                     (MobilityApplicationPeriod) process.getCandidacyProcess().getCandidacyPeriod();
 
             MobilityEmailTemplate emailTemplateFor =
-                    candidacyPeriod.getEmailTemplateFor(MobilityEmailTemplateType.CANDIDATE_ACCEPTED);
+                    candidacyPeriod.getEmailTemplateFor(process.getMobilityProgram(),
+                            MobilityEmailTemplateType.CANDIDATE_ACCEPTED);
 
             emailTemplateFor.sendEmailFor(process.getCandidacyHashCode());
 
