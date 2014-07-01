@@ -166,6 +166,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     public CycleCourseGroupInformation getMostRecentCycleCourseGroupInformation(final ExecutionYear executionYear) {
         CycleCourseGroupInformation mostRecent = null;
 
+        //TODO verificar se o campo que se quer é null ou não, agora com 2 campos a lógica muda aqui um bocadinho
         for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformation()) {
             if (cycleInformation.getExecutionYear().isAfter(executionYear)) {
                 continue;
