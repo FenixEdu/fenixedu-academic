@@ -105,7 +105,7 @@ public class RoomSiteComponentBuilder {
         // isCurrentUserRoomManager(room);
 
         final YearMonthDay weekStartYearMonthDay = YearMonthDay.fromCalendarFields(startDay);
-        final YearMonthDay weekEndYearMonthDay = YearMonthDay.fromCalendarFields(endDay).minusDays(1);
+        final YearMonthDay weekEndYearMonthDay = YearMonthDay.fromCalendarFields(endDay);
 
         final Interval search =
                 new Interval(weekStartYearMonthDay.toDateTimeAtMidnight(), weekEndYearMonthDay.toDateTimeAtMidnight());
