@@ -363,7 +363,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
         @Override
         public Converter getConverter() {
-            return new DomainObjectKeyConverter();
+            return null;
         }
 
     }
