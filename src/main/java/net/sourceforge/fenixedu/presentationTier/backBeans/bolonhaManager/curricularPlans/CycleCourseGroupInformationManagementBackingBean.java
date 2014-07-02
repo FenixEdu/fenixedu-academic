@@ -63,13 +63,15 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
         try {
             CycleCourseGroup courseGroup = getCourseGroup(getCourseGroupID());
             courseGroup.createCycleCourseGroupInformation(getInformationExecutionYear(), getGraduatedTitle(),
-                    getGraduatedTitleEn());
+                    getGraduatedTitleEn(), getGraduatedTitleSuffix(), getGraduatedTitleSuffixEn());
 
             this.addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "cycleCourseGroupInformationAdded"));
 
             setInformationExecutionYearId(null);
             setGraduatedTitle("");
             setGraduatedTitleEn("");
+            setGraduatedTitleSuffix("");
+            setGraduatedTitleSuffixEn("");
 
             return "editCurricularPlanStructure";
         } catch (DomainException e) {
@@ -89,6 +91,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
         return "";
     }
 
+    //TODO
     public String editGraduatedTitleSuffix() {
         CycleCourseGroup courseGroup = getCourseGroup(getCourseGroupID());
         MultiLanguageString graduateTitleSuffix =

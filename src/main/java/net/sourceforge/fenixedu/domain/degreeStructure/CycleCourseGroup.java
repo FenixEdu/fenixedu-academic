@@ -71,33 +71,33 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
     final public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
 
-        if (getMostRecentCycleCourseGroupInformation(executionYear) != null) {
-            return getMostRecentCycleCourseGroupInformation(executionYear).getGraduatedTitle().getContent(locale);
+        CycleCourseGroupInformation recentCycleCourseGroupInformation =
+                getMostRecentCycleCourseGroupInformation(executionYear, false);
+        if (recentCycleCourseGroupInformation != null) {
+            return recentCycleCourseGroupInformation.getGraduatedTitle().getContent(locale);
         } else {
             final StringBuilder result = new StringBuilder();
-
             result.append(getDegreeType().getGraduateTitle(getCycleType(), locale));
 
             final String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
             result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, locale, "label.in"));
 
-            final MultiLanguageString mls = getGraduateTitleSuffix();
-            final String suffix = mls == null ? null : mls.getContent(locale);
+            final String suffix = getGraduateTitleSuffix(executionYear, locale);
             if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
                 result.append(" ").append(suffix);
                 result.append(" ").append("-");
             }
 
             result.append(" ").append(degreeFilteredName);
-
             return result.toString();
         }
-
     }
 
     final public String getGraduateTitleSuffix(final ExecutionYear executionYear, final Locale locale) {
-        if (getMostRecentCycleCourseGroupInformation(executionYear) != null) {
-            return getMostRecentCycleCourseGroupInformation(executionYear).getGraduateTitleSuffix().getContent(locale);
+        CycleCourseGroupInformation courseGroupInformationForSuffix =
+                getMostRecentCycleCourseGroupInformation(executionYear, true);
+        if (courseGroupInformationForSuffix != null) {
+            return courseGroupInformationForSuffix.getGraduateTitleSuffix().getContent(locale);
         }
         return null;
     }
@@ -147,14 +147,14 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
     public List<CycleCourseGroupInformation> getCycleCourseGroupInformationOrderedByExecutionYear() {
         List<CycleCourseGroupInformation> groupInformationList =
-                new ArrayList<CycleCourseGroupInformation>(getCycleCourseGroupInformation());
+                new ArrayList<CycleCourseGroupInformation>(getCycleCourseGroupInformationSet());
         Collections.sort(groupInformationList, CycleCourseGroupInformation.COMPARATOR_BY_EXECUTION_YEAR);
 
         return groupInformationList;
     }
 
     public CycleCourseGroupInformation getCycleCourseGroupInformationByExecutionYear(final ExecutionYear executionYear) {
-        for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformation()) {
+        for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformationSet()) {
             if (cycleInformation.getExecutionYear() == executionYear) {
                 return cycleInformation;
             }
@@ -163,21 +163,31 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
         return null;
     }
 
-    public CycleCourseGroupInformation getMostRecentCycleCourseGroupInformation(final ExecutionYear executionYear) {
+    public CycleCourseGroupInformation getMostRecentCycleCourseGroupInformation(final ExecutionYear executionYear,
+            boolean isForSuffix) {
         CycleCourseGroupInformation mostRecent = null;
 
         //TODO verificar se o campo que se quer é null ou não, agora com 2 campos a lógica muda aqui um bocadinho
-        for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformation()) {
+        for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformationSet()) {
             if (cycleInformation.getExecutionYear().isAfter(executionYear)) {
                 continue;
             }
 
-            if ((mostRecent == null) || cycleInformation.getExecutionYear().isAfter(mostRecent.getExecutionYear())) {
+            if (isInformationPresent(isForSuffix, cycleInformation)
+                    && ((mostRecent == null) || cycleInformation.getExecutionYear().isAfter(mostRecent.getExecutionYear()))) {
                 mostRecent = cycleInformation;
             }
         }
 
         return mostRecent;
+    }
+
+    private boolean isInformationPresent(boolean isForSuffix, CycleCourseGroupInformation cycleInformation) {
+        if (isForSuffix) {
+            return cycleInformation.getGraduateTitleSuffix() != null;
+        } else {
+            return cycleInformation.getGraduatedTitle() != null;
+        }
     }
 
     @Atomic
@@ -194,17 +204,12 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
     @Atomic
     public CycleCourseGroupInformation createCycleCourseGroupInformation(final ExecutionYear executionYear,
-            String graduatedTitle, String graduatedTitleEn) {
+            String graduatedTitle, String graduatedTitleEn, String graduatedTitleSuffix, String graduatedTitleSuffixEn) {
         if (getCycleCourseGroupInformationByExecutionYear(executionYear) != null) {
             throw new DomainException("cycle.course.group.information.exists.in.execution.year");
         }
 
         return new CycleCourseGroupInformation(this, executionYear, graduatedTitle, graduatedTitleEn);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroupInformation> getCycleCourseGroupInformation() {
-        return getCycleCourseGroupInformationSet();
     }
 
     @Deprecated

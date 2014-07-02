@@ -19,11 +19,13 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.Comparator;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -46,12 +48,15 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
     }
 
     public CycleCourseGroupInformation(final CycleCourseGroup cycleCourseGroup, final ExecutionYear executionYear,
-            String graduatedTitle, String graduatedTitleEn) {
+            String graduatedTitle, String graduatedTitleEn, String graduatedTitleSuffix, String graduatedTitleSuffixEn) {
         this();
 
         setExecutionYear(executionYear);
         setCycleCourseGroup(cycleCourseGroup);
-        setGraduatedTitle(new MultiLanguageString(MultiLanguageString.pt, graduatedTitle).with(MultiLanguageString.en, graduatedTitleEn));
+        setGraduatedTitle(new MultiLanguageString(MultiLanguageString.pt, graduatedTitle).with(MultiLanguageString.en,
+                graduatedTitleEn));
+        setGraduateTitleSuffix(new LocalizedString(Locale.getDefault(), graduatedTitleSuffix).with(Locale.ENGLISH,
+                graduatedTitleSuffixEn));
         checkParameters();
     }
 
@@ -78,7 +83,8 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
         this.setExecutionYear(editExecutionYear);
         MultiLanguageString mls = this.getGraduatedTitle();
 
-        this.setGraduatedTitle(mls.with(MultiLanguageString.pt, editGraduatedTitle).with(MultiLanguageString.en, editGraduatedTitleEn));
+        this.setGraduatedTitle(mls.with(MultiLanguageString.pt, editGraduatedTitle).with(MultiLanguageString.en,
+                editGraduatedTitleEn));
         checkParameters();
     }
 
