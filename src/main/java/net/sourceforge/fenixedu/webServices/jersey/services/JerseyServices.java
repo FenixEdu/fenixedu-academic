@@ -189,7 +189,7 @@ public class JerseyServices {
         for (final User user : Bennu.getInstance().getUserSet()) {
             Person person = user.getPerson();
             if (!StringUtils.isEmpty(user.getUsername()) && person != null
-                    && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
+                    && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER) || person.isPhdStudent())) {
                 researchUnitMap.put(user, new HashSet<Unit>());
             }
         }
