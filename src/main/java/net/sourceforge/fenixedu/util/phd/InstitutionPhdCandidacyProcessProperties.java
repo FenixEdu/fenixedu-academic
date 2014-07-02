@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.util.phd;
 import java.util.Locale;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 
 import org.apache.commons.lang.StringUtils;
@@ -46,15 +45,15 @@ public class InstitutionPhdCandidacyProcessProperties {
     }
 
     static public String getPublicCandidacyAccessLink(final Locale locale) {
-        return getConfiguration().phdInstitutionPublicCandidacyAccessLink().get(readCountryCode(locale));
+        return getConfiguration().phdInstitutionPublicCandidacyAccessLink().get(readLanguageCode(locale));
     }
 
     static public String getPublicCandidacySubmissionLink(final Locale locale) {
-        return getConfiguration().phdInstitutionPublicCandidacySubmissionLink().get(readCountryCode(locale));
+        return getConfiguration().phdInstitutionPublicCandidacySubmissionLink().get(readLanguageCode(locale));
     }
 
     static public String getPublicCandidacyRefereeFormLink(final Locale locale) {
-        return getConfiguration().phdInstitutionPublicCandidacyRefereeFormLink().get(readCountryCode(locale));
+        return getConfiguration().phdInstitutionPublicCandidacyRefereeFormLink().get(readLanguageCode(locale));
     }
 
     static public String getPhdExternalAccessLink() {
@@ -64,33 +63,22 @@ public class InstitutionPhdCandidacyProcessProperties {
     static public String getPublicCandidacyAccessLink(PhdProgramPublicCandidacyHashCode candidacyProcessHashCode,
             final Locale locale) {
 
-        String countryCode = readCountryCode(locale);
-
-        String url =
-                String.format("%s?hash=%s&locale=", getPublicCandidacyAccessLink(locale), candidacyProcessHashCode.getValue());
-
-        if ("PT".equals(countryCode)) {
-            return url + "pt_PT";
-        } else if ("EN".equals(countryCode)) {
-            return url + "en_EN";
-        }
-
-        throw new DomainException("unable to build url");
+        return String.format("%s?hash=", getPublicCandidacyAccessLink(locale), candidacyProcessHashCode.getValue());
     }
 
     public static ConfigurationProperties getConfiguration() {
         return ConfigurationInvocationHandler.getConfiguration(ConfigurationProperties.class);
     }
 
-    static private String readCountryCode(final Locale locale) {
+    static private String readLanguageCode(final Locale locale) {
         String country = locale.getCountry();
         String language = locale.getLanguage();
 
         String result = null;
-        if (!StringUtils.isEmpty(country)) {
-            result = country.toUpperCase();
-        } else if (!StringUtils.isEmpty(language)) {
+        if (!StringUtils.isEmpty(language)) {
             result = language.toUpperCase();
+        } else if (!StringUtils.isEmpty(country)) {
+            result = country.toUpperCase();
         }
 
         if (!StringUtils.isEmpty(result)) {
