@@ -202,6 +202,9 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     public ActionForward createIdentification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+        if (bean == null) {
+            return prepareCreateIdentification(mapping, form, request, response);
+        }
         final PhdProgramPublicCandidacyHashCode hashCode =
                 PhdProgramPublicCandidacyHashCode.getOrCreatePhdProgramCandidacyHashCode(bean.getEmail());
 
