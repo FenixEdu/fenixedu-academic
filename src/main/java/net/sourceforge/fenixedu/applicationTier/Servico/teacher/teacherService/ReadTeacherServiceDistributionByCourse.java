@@ -208,6 +208,7 @@ public class ReadTeacherServiceDistributionByCourse {
             }
 
             String teacherExternalId = teacher.getExternalId();
+            String teacherUsername = teacher.getPerson().getUsername();
             String teacherName = teacher.getPerson().getName();
 
             DecimalFormat df = new DecimalFormat("#.##");
@@ -224,7 +225,7 @@ public class ReadTeacherServiceDistributionByCourse {
                 teacherBelongsToDepartment = true;
             }
 
-            dto.addTeacherToExecutionCourse(executionCourse.getExternalId(), teacherExternalId, teacherName,
+            dto.addTeacherToExecutionCourse(executionCourse.getExternalId(), teacherExternalId, teacherUsername, teacherName,
                     teacherRequiredHours, teacherLecturedTime, teacherBelongsToDepartment);
         }
 
