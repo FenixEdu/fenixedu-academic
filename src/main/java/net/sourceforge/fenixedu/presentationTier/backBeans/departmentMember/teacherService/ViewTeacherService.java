@@ -404,7 +404,6 @@ public class ViewTeacherService extends FenixBackingBean {
                 if (!teacher.getTeacherOfDepartment()) {
                     spreadsheet.addCell(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.hours"));
                 }
-                //spreadsheet.mergeCells(spreadsheet.getRow().getRowNum(), spreadsheet.getRow().getRowNum(), 0, teacherColumns - 1);
             }
 
         }
