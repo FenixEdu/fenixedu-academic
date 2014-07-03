@@ -258,8 +258,8 @@
 												<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
 													<fr:slot name="selectedSpace" key="label.person.place" layout="menu-select">
 														<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance$PlaceProvider" />
-														<fr:property name="sortBy" value="presentationName" />
-														<fr:property name="format" value="\${presentationName}" />
+														<fr:property name="sortBy" value="name" />
+														<fr:property name="format" value="\${name}" />
 														<fr:property name="defaultText" value="label.space.libraryResourceNone" />
 														<fr:property name="bundle" value="LIBRARY_RESOURCES" />
 														<fr:property name="key" value="true" />
