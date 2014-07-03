@@ -2349,8 +2349,9 @@
 </schema> 
 
 <schema name="ErasmusIndividualCandidacyProcess.university.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="selectedMobilityProgram" key="label.mobility.program" layout="menu-select" read-only="true">
-		<property name="format" value="${registrationAgreement}" />
+	<slot name="selectedMobilityProgram" key="label.mobility.program" layout="menu-select-postback">
+		<property name="format" value="${name}" />
+		<property name="destination" value="chooseMobilityProgramPostback"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.MobilityProgramProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
@@ -2771,15 +2772,29 @@
 	</slot>	
 </schema>
 
-<schema name="ErasmusVacancy.insert.choose.degree" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="degree" key="label.erasmus.degree" layout="menu-select" >
-		<property name="format" value="${presentationName}" />
+<schema name="ErasmusVacancy.modify.choosen.degree" type = "net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean"  bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="degree" key="label.eramsus.candidacy.choosed.degree" layout="menu-select" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreesProvider" />
+		<property name="format" value="${presentationName}"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+</schema>
+
+<schema name="ErasmusVacancy.insert.choose.degree" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="degrees" key="label.erasmus.degree" layout="option-select" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreesProvider" />
+		<property name="eachSchema" value="ErasmusVacancy.degree.name" />
+		<property name="eachLayout" value="values"/>
+		<property name="classes" value="nobullet noindent"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="numberOfVacancies" key="label.erasmus.insertVacancy.number.vacancies">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
+</schema>
+
+<schema name="ErasmusVacancy.degree.name" type="net.sourceforge.fenixedu.domain.Degree">
+	<slot name="presentationName" />
 </schema>
 
 <schema name="MobilityCoordinator.list" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator" bundle="ACADEMIC_OFFICE_RESOURCES">

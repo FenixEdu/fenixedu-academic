@@ -23,7 +23,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -40,13 +39,10 @@ public class MobilityProgramProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        MobilityStudentDataBean bean = (MobilityStudentDataBean) source;
         Set<MobilityProgram> mobilityPrograms =
                 new TreeSet<MobilityProgram>(MobilityProgram.COMPARATOR_BY_REGISTRATION_AGREEMENT);
         for (MobilityAgreement agreement : Bennu.getInstance().getMobilityAgreementsSet()) {
-            if (agreement.getUniversityUnit() == bean.getSelectedUniversity()) {
-                mobilityPrograms.add(agreement.getMobilityProgram());
-            }
+            mobilityPrograms.add(agreement.getMobilityProgram());
         }
         return mobilityPrograms;
     }
