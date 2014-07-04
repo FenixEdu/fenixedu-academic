@@ -86,13 +86,14 @@
    		var className = '#empty' + field;
    		var classNameInvalid = '#invalid' + field;
    		var fieldValue = $('textarea[name$="' + fieldName + '"]').val();
+   		var lineBreaks = fieldValue.split(/\n/).length;
    		if (!fieldValue) {
    			$(className).show();
    			$(classNameInvalid).hide();
    			return false; 
    		} else { 
    			$(className).hide(); 
-   			if(fieldValue.length > 92) {
+   			if(fieldValue.length > (101 - lineBreaks)) {
    				$(classNameInvalid).show();
    				return false;
    			} else {
