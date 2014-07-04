@@ -21,6 +21,7 @@
 <%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationRecommendationBean"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation"%>
+<%@page import="net.sourceforge.fenixedu.domain.person.IDDocumentType" %>
 <%@page import="org.apache.struts.action.ActionMessages"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplication"%>
@@ -42,6 +43,7 @@
 <bean:define id="unsavedChangesMessage" type="java.lang.String"><bean:message bundle="CANDIDATE_RESOURCES" key="label.application.unsaved.changes"/></bean:define>
 
 <script src="https://rawgithub.com/timrwood/moment/2.0.0/moment.js"></script>
+<script src="https://cdn.rawgit.com/AfonsoFGarcia/Portuguese-ID-Validator/v1.1.1/validator.js"></script>
 <script>
 	var fieldChanged = false;
 
@@ -79,11 +81,83 @@
    		}
    	}
 
+   	function validateTextAreaField(field) {
+   		var fieldName = "<%= GenericApplication.class.getName() + ":" + genericApplication.getExternalId() %>" + ":" + field;
+   		var className = '#empty' + field;
+   		var classNameInvalid = '#invalid' + field;
+   		var fieldValue = $('textarea[name$="' + fieldName + '"]').val();
+   		if (!fieldValue) {
+   			$(className).show();
+   			$(classNameInvalid).hide();
+   			return false; 
+   		} else { 
+   			$(className).hide(); 
+   			if(fieldValue.length > 92) {
+   				$(classNameInvalid).show();
+   				return false;
+   			} else {
+   				$(classNameInvalid).hide();
+   				return true;
+   			}
+   		}
+   	}
+   	
    	function validateInputField(field) {
    		var fieldName = "<%= GenericApplication.class.getName() + ":" + genericApplication.getExternalId() %>" + ":" + field;
    		var className = '#empty' + field;
    		var fieldValue = $('input[name$="' + fieldName + '"]').val();
    		if (!fieldValue) { $(className).show(); return false; } else { $(className).hide(); return true; }
+   	}
+   	
+   	function validateIDField(field) {
+   		var fieldName = "<%= GenericApplication.class.getName() + ":" + genericApplication.getExternalId() %>" + ":" + field;
+   		var typeFieldName = "<%= GenericApplication.class.getName() + ":" + genericApplication.getExternalId() %>" + ":idDocumentType";
+   		var classNameEmpty = '#empty' + field;
+   		var classNameInvalid = '#invalid' + field;
+   		var classNameInvalidFormat = '#invalidFormat' + field;
+   		var fieldValue = $('input[name$="' + fieldName + '"]').val();
+   		var typeFieldValue = $('select[name$="' + typeFieldName + '"]').val();
+   		if (!fieldValue) {
+   			$(classNameEmpty).show();
+   			return false;
+   		} else {
+   			$(classNameEmpty).hide();
+   			if(typeFieldValue == "<%= IDDocumentType.IDENTITY_CARD.getName() %>") {
+   				var result = checkBI(fieldValue);
+   				if(result == 1) {
+   					$(classNameInvalid).hide();
+   					$(classNameInvalidFormat).hide();
+   					return true;
+   				} else if (result == 0) {
+   					$(classNameInvalid).show();
+   					$(classNameInvalidFormat).hide();
+   					return false;
+   				} else {
+   					$(classNameInvalid).hide();
+   					$(classNameInvalidFormat).show();
+   					return false;
+   				}
+   			} else if(typeFieldValue == "<%= IDDocumentType.CITIZEN_CARD.getName() %>") {
+   				var result = checkCC(fieldValue);
+   				if(result == 1) {
+   					$(classNameInvalid).hide();
+   					$(classNameInvalidFormat).hide();
+   					return true;
+   				} else if (result == 0) {
+   					$(classNameInvalid).show();
+   					$(classNameInvalidFormat).hide();
+   					return false;
+   				} else {
+   					$(classNameInvalid).hide();
+   					$(classNameInvalidFormat).show();
+   					return false;
+   				}
+   			} else {
+   				$(classNameInvalid).hide();
+				$(classNameInvalidFormat).hide();
+   				return true;
+   			}	
+   		}
    	}
 
    	function validateSelectField(field) {
@@ -97,19 +171,28 @@
    		var fieldName = "<%= GenericApplication.class.getName() + ":" + genericApplication.getExternalId() %>" + ":" + field;
    		var classNameEmpty = '#empty' + field;
    		var classNameFormat = '#badDateFormat' + field;
+   		var classNameInvalid = '#invalid' + field;
    		var fieldValue = $('input[name$="' + fieldName + '"]').val();
    		var regExp = /^\d{2}\/\d{2}\/\d{4}$/;
    		if (!fieldValue) {
    			$(classNameEmpty).show();
    			$(classNameFormat).hide();
+   			$(classNameInvalid).hide();
    			return false;
    		} else {
    			$(classNameEmpty).hide();
-   			if (regExp.test(fieldValue) && moment(fieldValue, "DD/MM/YYYY").isValid() && moment(fieldValue, "DD/MM/YYYY").isBefore(moment()) ) {
+   			if (regExp.test(fieldValue) && moment(fieldValue, "DD/MM/YYYY").isValid()) {
    				$(classNameFormat).hide();
-   				return true;
+   				if(moment(fieldValue, "DD/MM/YYYY").isBefore(moment())) {
+   					$(classNameInvalid).hide();
+   					return true;
+   				} else {
+   					$(classNameInvalid).show();
+   					return false;	
+   				}
    			} else {
    				$(classNameFormat).show();
+   				$(classNameInvalid).hide();
    				return false;
    			}
    		}
@@ -120,11 +203,11 @@
    		if (!validateInputField("name")) { allIsOk = false; };
    		if (!validateSelectField("gender")) { allIsOk = false; };
    		if (!validateDateField("dateOfBirthYearMonthDay")) { allIsOk = false; };
-   		if (!validateInputField("documentIdNumber")) { allIsOk = false; };
+   		if (!validateIDField("documentIdNumber")) { allIsOk = false; };
    		if (!validateSelectField("idDocumentType")) { allIsOk = false; };
    		if (!validateSelectField("nationality")) { allIsOk = false; };
    		// if (!validateInputField("fiscalCode")) { allIsOk = false; };
-   		if (!validateInputField("address")) { allIsOk = false; };
+   		if (!validateTextAreaField("address")) { allIsOk = false; };
    		if (!validateInputField("areaCode")) { allIsOk = false; };
    		if (!validateInputField("area")) { allIsOk = false; };
    		if (!validatePhoneField("telephoneContact")) { allIsOk = false; };
@@ -292,6 +375,7 @@
 					</fr:edit>
 					<div id="emptydateOfBirthYearMonthDay" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
 					<div id="badDateFormatdateOfBirthYearMonthDay" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.the.correct.format.is"/> dd/MM/yyyy</div>
+					<div id="invaliddateOfBirthYearMonthDay" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.invalid.date"/></div>
 				</logic:present>
 				<logic:notPresent name="uploadBean">
 					<%= genericApplication.getDateOfBirthYearMonthDay() == null ? "" : genericApplication.getDateOfBirthYearMonthDay().toString("dd/MM/yyyy") %>
@@ -333,6 +417,8 @@
 						<fr:destination name="cancel" path="<%= callbackUrl %>" />
 					</fr:edit>
 					<div id="emptydocumentIdNumber" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+					<div id="invalidFormatdocumentIdNumber" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.invalid.format.document"/></div>
+					<div id="invaliddocumentIdNumber" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.invalid.document"/></div>
 					<div id="emptyidDocumentType" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
 				</logic:present>
 				<logic:notPresent name="uploadBean">
@@ -410,12 +496,13 @@
 				<logic:present name="uploadBean">
 					<fr:edit id="genericApplicationFormGenderAddress" name="application">
 						<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod">
-							<fr:slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+							<fr:slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="longText">
 								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 									<fr:property name="type" value="character"/>
 									<fr:property name="length" value="100"/>
 								</fr:validator>			 	
-								<fr:property name="size" value="50" />
+								<fr:property name="columns" value="45"/>
+								<fr:property name="rows" value="8"/>
 								<fr:property name="maxLength" value="100" />
 							</fr:slot>
 						</fr:schema>
@@ -426,9 +513,10 @@
 						<fr:destination name="cancel" path="<%= callbackUrl %>" />
 					</fr:edit>
 					<div id="emptyaddress" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+					<div id="invalidaddress" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.invalid.address"/></div>
 				</logic:present>
 				<logic:notPresent name="uploadBean">
-					<%= genericApplication.getAddress() %>
+					<%= genericApplication.getAddress().replace("\n", "<br>") %>
 				</logic:notPresent>				
 			</td>
 		</tr>
@@ -474,6 +562,10 @@
 						<fr:destination name="invalid" path="<%= callbackUrl %>" />
 						<fr:destination name="cancel" path="<%= callbackUrl %>" />
 					</fr:edit>
+					<html:img page="/images/icon_help.gif" module="" titleKey="label.areaCode.help" bundle="CANDIDATE_RESOURCES" onclick="toggleById('#areaCodeHelpExplanation');"/>
+					<div id="areaCodeHelpExplanation" class="infoop4" style="display: none;">
+						<pre><bean:message key="label.areaCode.help" bundle="CANDIDATE_RESOURCES"/></pre>
+					</div>
 					<div id="emptyareaCode" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
 					<div id="emptyarea" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
 				</logic:present>
@@ -509,7 +601,7 @@
 						<fr:destination name="cancel" path="<%= callbackUrl %>" />
 					</fr:edit>
 					<div id="emptytelephoneContact" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
-					<div id="invalidtelephoneContact" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+					<div id="invalidtelephoneContact" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.invalid.telephone"/></div>
 				</logic:present>
 				<logic:notPresent name="uploadBean">
 					<%= genericApplication.getTelephoneContact() %>
