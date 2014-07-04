@@ -29,26 +29,16 @@ import net.sourceforge.fenixedu.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
-import com.google.common.base.Strings;
 
 public class CycleCourseGroupInformationManagementBackingBean extends CurricularCourseManagementBackingBean {
 
     private String courseGroupID;
     private String informationExecutionYearId;
 
-    private String graduatedTitle;
-    private String graduatedTitleEn;
-
     private String informationId;
-    private String editGraduatedTitle;
-    private String editGraduatedTitleEn;
 
-    private String graduatedTitleSuffix;
-    private String graduatedTitleSuffixEn;
-
-    private String editInformationExecutionYearId;
+    private String graduateTitleSuffix;
+    private String graduateTitleSuffixEn;
 
     public CycleCourseGroup getCourseGroup(String courseGroupID) {
         return (CycleCourseGroup) FenixFramework.getDomainObject(courseGroupID);
@@ -59,70 +49,34 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
         return courseGroup.getCycleCourseGroupInformationOrderedByExecutionYear();
     }
 
-    public String createCourseGroupInformation() {
-        try {
-            CycleCourseGroup courseGroup = getCourseGroup(getCourseGroupID());
-            courseGroup.createCycleCourseGroupInformation(getInformationExecutionYear(), getGraduatedTitle(),
-                    getGraduatedTitleEn(), getGraduatedTitleSuffix(), getGraduatedTitleSuffixEn());
-
-            this.addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "cycleCourseGroupInformationAdded"));
-
-            setInformationExecutionYearId(null);
-            setGraduatedTitle("");
-            setGraduatedTitleEn("");
-            setGraduatedTitleSuffix("");
-            setGraduatedTitleSuffixEn("");
-
-            return "editCurricularPlanStructure";
-        } catch (DomainException e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
-            return "";
-        }
-    }
-
     public String prepareEditCourseGroupInformation() {
         CycleCourseGroupInformation information = getInformation();
-        setEditGraduatedTitle(information.getGraduatedTitlePt());
-        setEditGraduatedTitleEn(information.getGraduatedTitleEn());
-        setEditInformationExecutionYearId(information.getExecutionYear().getExternalId());
-        setGraduatedTitle("");
-        setGraduatedTitleEn("");
+        setInformationExecutionYearId(information.getExecutionYear().getExternalId());
+        setInformationId(information.getExternalId());
+
+        setGraduateTitleSuffix(information.getGraduateTitleSuffixDefault());
+        setGraduateTitleSuffixEn(information.getGraduateTitleSuffixEn());
 
         return "";
-    }
-
-    //TODO
-    public String editGraduatedTitleSuffix() {
-        CycleCourseGroup courseGroup = getCourseGroup(getCourseGroupID());
-        MultiLanguageString graduateTitleSuffix =
-                new MultiLanguageString(MultiLanguageString.pt, this.graduatedTitleSuffix).with(MultiLanguageString.en,
-                        this.graduatedTitleSuffixEn);
-        try {
-            courseGroup.editGraduateTitleSuffix(graduateTitleSuffix);
-            this.addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "cycleCourseGroupInformationEdit"));
-            return "editCurricularPlanStructure";
-        } catch (DomainException e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
-            return "";
-        }
     }
 
     public String editCourseGroupInformation() {
         try {
             CycleCourseGroupInformation information = getInformation();
-            if (!fieldsAreValid()) {
-                this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.blabla"));
-                return "";
+
+            if (information != null) {
+                information.edit(getInformationExecutionYear(), getGraduateTitleSuffix(), getGraduateTitleSuffixEn());
+            } else {
+                CycleCourseGroup courseGroup = getCourseGroup(getCourseGroupID());
+                courseGroup.createCycleCourseGroupInformation(getInformationExecutionYear(), getGraduateTitleSuffix(),
+                        getGraduateTitleSuffixEn());
             }
-            information.edit(getEditInformationExecutionYear(), getEditGraduatedTitle(), getEditGraduatedTitleEn());
 
             this.addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "cycleCourseGroupInformationEdit"));
 
-            setEditGraduatedTitle("");
-            setEditGraduatedTitleEn("");
-            setGraduatedTitleSuffix("");
-            setGraduatedTitleSuffixEn("");
-            setEditInformationExecutionYearId(null);
+            setGraduateTitleSuffix("");
+            setGraduateTitleSuffixEn("");
+            setInformationExecutionYearId(null);
 
             return "editCurricularPlanStructure";
         } catch (DomainException e) {
@@ -131,31 +85,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
         }
     }
 
-    private boolean fieldsAreValid() {
-        if ((!Strings.isNullOrEmpty(getEditGraduatedTitle()) && !Strings.isNullOrEmpty(getEditGraduatedTitleEn()))
-                || (!Strings.isNullOrEmpty(getGraduatedTitleSuffix()) && !Strings.isNullOrEmpty(getGraduatedTitleSuffixEn()))) {
-            return true;
-        }
-        return false;
-    }
-
     /* GETTERS AND SETTERS */
-
-    public String getGraduatedTitle() {
-        return graduatedTitle;
-    }
-
-    public void setGraduatedTitle(String graduatedTitle) {
-        this.graduatedTitle = graduatedTitle;
-    }
-
-    public String getGraduatedTitleEn() {
-        return graduatedTitleEn;
-    }
-
-    public void setGraduatedTitleEn(String graduatedTitleEn) {
-        this.graduatedTitleEn = graduatedTitleEn;
-    }
 
     @Override
     public String getCourseGroupID() {
@@ -191,55 +121,19 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
         this.informationId = informationId;
     }
 
-    public String getEditGraduatedTitle() {
-        return editGraduatedTitle;
+    public String getGraduateTitleSuffix() {
+        return graduateTitleSuffix;
     }
 
-    public void setEditGraduatedTitle(String editGraduatedTitle) {
-        this.editGraduatedTitle = editGraduatedTitle;
+    public void setGraduateTitleSuffix(String graduateTitleSuffix) {
+        this.graduateTitleSuffix = graduateTitleSuffix;
     }
 
-    public String getEditGraduatedTitleEn() {
-        return editGraduatedTitleEn;
+    public String getGraduateTitleSuffixEn() {
+        return graduateTitleSuffixEn;
     }
 
-    public void setEditGraduatedTitleEn(String editGraduatedTitleEn) {
-        this.editGraduatedTitleEn = editGraduatedTitleEn;
-    }
-
-    public String getEditInformationExecutionYearId() {
-        return editInformationExecutionYearId;
-    }
-
-    public void setEditInformationExecutionYearId(String editExecutionYearId) {
-        this.editInformationExecutionYearId = editExecutionYearId;
-    }
-
-    public ExecutionYear getEditInformationExecutionYear() {
-        return FenixFramework.getDomainObject(getEditInformationExecutionYearId());
-    }
-
-    public String getGraduatedTitleSuffix() {
-        CycleCourseGroup courseGroup = getCourseGroup(getCourseGroupID());
-        if (courseGroup.getGraduateTitleSuffix() != null) {
-            return courseGroup.getGraduateTitleSuffix().getContent(MultiLanguageString.pt);
-        }
-        return graduatedTitleSuffix;
-    }
-
-    public void setGraduatedTitleSuffix(String graduatedTitleSuffix) {
-        this.graduatedTitleSuffix = graduatedTitleSuffix;
-    }
-
-    public String getGraduatedTitleSuffixEn() {
-        CycleCourseGroup courseGroup = getCourseGroup(getCourseGroupID());
-        if (courseGroup.getGraduateTitleSuffix() != null) {
-            return courseGroup.getGraduateTitleSuffix().getContent(MultiLanguageString.en);
-        }
-        return graduatedTitleSuffixEn;
-    }
-
-    public void setGraduatedTitleSuffixEn(String graduatedTitleSuffixEn) {
-        this.graduatedTitleSuffixEn = graduatedTitleSuffixEn;
+    public void setGraduateTitleSuffixEn(String graduateTitleSuffixEn) {
+        this.graduateTitleSuffixEn = graduateTitleSuffixEn;
     }
 }

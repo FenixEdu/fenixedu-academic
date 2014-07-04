@@ -36,7 +36,6 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
 
@@ -71,26 +70,20 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
     final public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
 
-        CycleCourseGroupInformation recentCycleCourseGroupInformation =
-                getMostRecentCycleCourseGroupInformation(executionYear, false);
-        if (recentCycleCourseGroupInformation != null) {
-            return recentCycleCourseGroupInformation.getGraduatedTitle().getContent(locale);
-        } else {
-            final StringBuilder result = new StringBuilder();
-            result.append(getDegreeType().getGraduateTitle(getCycleType(), locale));
+        final StringBuilder result = new StringBuilder();
+        result.append(getDegreeType().getGraduateTitle(getCycleType(), locale));
 
-            final String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
-            result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, locale, "label.in"));
+        final String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
+        result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, locale, "label.in"));
 
-            final String suffix = getGraduateTitleSuffix(executionYear, locale);
-            if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
-                result.append(" ").append(suffix);
-                result.append(" ").append("-");
-            }
-
-            result.append(" ").append(degreeFilteredName);
-            return result.toString();
+        final String suffix = getGraduateTitleSuffix(executionYear, locale);
+        if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
+            result.append(" ").append(suffix);
+            result.append(" ").append("-");
         }
+
+        result.append(" ").append(degreeFilteredName);
+        return result.toString();
     }
 
     final public String getGraduateTitleSuffix(final ExecutionYear executionYear, final Locale locale) {
@@ -167,14 +160,12 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
             boolean isForSuffix) {
         CycleCourseGroupInformation mostRecent = null;
 
-        //TODO verificar se o campo que se quer é null ou não, agora com 2 campos a lógica muda aqui um bocadinho
         for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformationSet()) {
             if (cycleInformation.getExecutionYear().isAfter(executionYear)) {
                 continue;
             }
 
-            if (isInformationPresent(isForSuffix, cycleInformation)
-                    && ((mostRecent == null) || cycleInformation.getExecutionYear().isAfter(mostRecent.getExecutionYear()))) {
+            if ((mostRecent == null) || cycleInformation.getExecutionYear().isAfter(mostRecent.getExecutionYear())) {
                 mostRecent = cycleInformation;
             }
         }
@@ -182,39 +173,14 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
         return mostRecent;
     }
 
-    private boolean isInformationPresent(boolean isForSuffix, CycleCourseGroupInformation cycleInformation) {
-        if (isForSuffix) {
-            return cycleInformation.getGraduateTitleSuffix() != null;
-        } else {
-            return cycleInformation.getGraduatedTitle() != null;
-        }
-    }
-
-    @Atomic
-    @Deprecated
-    public void editGraduateTitleSuffix(MultiLanguageString graduateTitleSuffix) {
-        setGraduateTitleSuffix(graduateTitleSuffix);
-    }
-
-    @Override
-    @Deprecated
-    public MultiLanguageString getGraduateTitleSuffix() {
-        return super.getGraduateTitleSuffix();
-    }
-
     @Atomic
     public CycleCourseGroupInformation createCycleCourseGroupInformation(final ExecutionYear executionYear,
-            String graduatedTitle, String graduatedTitleEn, String graduatedTitleSuffix, String graduatedTitleSuffixEn) {
+            String graduatedTitleSuffix, String graduatedTitleSuffixEn) {
         if (getCycleCourseGroupInformationByExecutionYear(executionYear) != null) {
             throw new DomainException("cycle.course.group.information.exists.in.execution.year");
         }
 
-        return new CycleCourseGroupInformation(this, executionYear, graduatedTitle, graduatedTitleEn);
-    }
-
-    @Deprecated
-    public boolean hasAnyCycleCourseGroupInformation() {
-        return !getCycleCourseGroupInformationSet().isEmpty();
+        return new CycleCourseGroupInformation(this, executionYear, graduatedTitleSuffix, graduatedTitleSuffixEn);
     }
 
     @Deprecated
@@ -235,11 +201,6 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     @Deprecated
     public boolean hasAnyDestinationAffinities() {
         return !getDestinationAffinitiesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasGraduateTitleSuffix() {
-        return getGraduateTitleSuffix() != null;
     }
 
     @Deprecated

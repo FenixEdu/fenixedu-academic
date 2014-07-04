@@ -2836,7 +2836,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 
             class degreeStructure.CycleCourseGroup extends degreeStructure.CourseGroup {
                 CycleType cycleType;
-                MultiLanguageString graduateTitleSuffix;
             }
 
             class degreeStructure.RootCourseGroup extends degreeStructure.CourseGroup {
@@ -2844,7 +2843,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 	
 	
 	class degreeStructure.CycleCourseGroupInformation  {
-		MultiLanguageString graduatedTitle;
 		LocalizedString graduateTitleSuffix;
 	}
 	

@@ -28,7 +28,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.base.Strings;
 
 public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Base {
 
@@ -39,7 +40,6 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
                 public int compare(CycleCourseGroupInformation arg0, CycleCourseGroupInformation arg1) {
                     return arg0.getExecutionYear().isBefore(arg1.getExecutionYear()) ? 1 : -1;
                 }
-
             };
 
     public CycleCourseGroupInformation() {
@@ -48,64 +48,43 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
     }
 
     public CycleCourseGroupInformation(final CycleCourseGroup cycleCourseGroup, final ExecutionYear executionYear,
-            String graduatedTitle, String graduatedTitleEn, String graduatedTitleSuffix, String graduatedTitleSuffixEn) {
+            String graduateTitleSuffix, String graduateTitleSuffixEn) {
         this();
 
         setExecutionYear(executionYear);
         setCycleCourseGroup(cycleCourseGroup);
-        setGraduatedTitle(new MultiLanguageString(MultiLanguageString.pt, graduatedTitle).with(MultiLanguageString.en,
-                graduatedTitleEn));
-        setGraduateTitleSuffix(new LocalizedString(Locale.getDefault(), graduatedTitleSuffix).with(Locale.ENGLISH,
-                graduatedTitleSuffixEn));
-        checkParameters();
-    }
+        checkParameters(graduateTitleSuffix, graduateTitleSuffixEn);
 
-    private void checkParameters() {
-        if (getExecutionYear() == null) {
-            throw new DomainException("cycle.course.group.information.execution.year.cannot.be.empty");
-        }
-
-        if (getCycleCourseGroup() == null) {
-            throw new DomainException("cycle.course.group.information.course.group.cannot.be.empty");
-        }
-    }
-
-    public String getGraduatedTitlePt() {
-        return getGraduatedTitle().getContent(MultiLanguageString.pt);
-    }
-
-    public String getGraduatedTitleEn() {
-        return getGraduatedTitle().getContent(MultiLanguageString.en);
+        setGraduateTitleSuffix(new LocalizedString(Locale.getDefault(), graduateTitleSuffix).with(Locale.ENGLISH,
+                graduateTitleSuffixEn));
     }
 
     @Atomic
-    public void edit(ExecutionYear editExecutionYear, String editGraduatedTitle, String editGraduatedTitleEn) {
-        this.setExecutionYear(editExecutionYear);
-        MultiLanguageString mls = this.getGraduatedTitle();
+    public void edit(ExecutionYear editExecutionYear, String graduateTitleSuffix, String graduateTitleSuffixEn) {
+        setExecutionYear(editExecutionYear);
+        checkParameters(graduateTitleSuffix, graduateTitleSuffixEn);
 
-        this.setGraduatedTitle(mls.with(MultiLanguageString.pt, editGraduatedTitle).with(MultiLanguageString.en,
-                editGraduatedTitleEn));
-        checkParameters();
+        setGraduateTitleSuffix(new LocalizedString(Locale.getDefault(), graduateTitleSuffix).with(Locale.ENGLISH,
+                graduateTitleSuffixEn));
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
+    private void checkParameters(String graduatedTitleSuffix, String graduatedTitleSuffixEn) {
+        if (getExecutionYear() == null) {
+            throw new DomainException("cycle.course.group.information.execution.year.cannot.be.empty");
+        }
+        if (getCycleCourseGroup() == null) {
+            throw new DomainException("cycle.course.group.information.course.group.cannot.be.empty");
+        }
+        if (Strings.isNullOrEmpty(graduatedTitleSuffix) || Strings.isNullOrEmpty(graduatedTitleSuffixEn)) {
+            throw new DomainException("cycle.course.group.information.title.suffix.cannot.be.empty");
+        }
     }
 
-    @Deprecated
-    public boolean hasCycleCourseGroup() {
-        return getCycleCourseGroup() != null;
+    public String getGraduateTitleSuffixDefault() {
+        return getGraduateTitleSuffix() != null ? getGraduateTitleSuffix().getContent(Locale.getDefault()) : "";
     }
 
-    @Deprecated
-    public boolean hasGraduatedTitle() {
-        return getGraduatedTitle() != null;
+    public String getGraduateTitleSuffixEn() {
+        return getGraduateTitleSuffix() != null ? getGraduateTitleSuffix().getContent(Locale.ENGLISH) : "";
     }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
 }
