@@ -5403,6 +5403,7 @@ class candidacy.GenericApplication {
 	String applicationNumber;
 	String email;
 	String confirmationCode;
+	Boolean submitted;
 
 	String name;
     Gender gender;

@@ -38,19 +38,20 @@ import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.Atomic;
 
 @Mapping(path = "/genericApplications", module = "publico")
 @Forwards({ @Forward(name = "genericApplications.listApplicationPeriods", path = "genericApplications.listApplicationPeriods"),
@@ -149,7 +150,9 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         if (application != null && confirmationCode != null && application.getConfirmationCode() != null
                 && application.getConfirmationCode().equals(confirmationCode)) {
             request.setAttribute("application", application);
-            request.setAttribute("uploadBean", new GenericApplicationUploadBean());
+            if (application.getGenericApplicationPeriod().isOpen()) {
+                request.setAttribute("uploadBean", new GenericApplicationUploadBean());
+            }
             request.setAttribute("recommendationBean", new GenericApplicationRecommendationBean());
             return mapping.findForward("genericApplications.confirmEmail");
         }
@@ -172,6 +175,19 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
             HttpServletResponse response) {
         RenderUtils.invalidateViewState();
         request.setAttribute("applicationSaved", Boolean.TRUE);
+        return confirmEmail(mapping, form, request, response);
+    }
+
+    public ActionForward submitApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        RenderUtils.invalidateViewState();
+        final GenericApplication application = getDomainObject(request, "applicationExternalId");
+        final String confirmationCode = (String) getFromRequest(request, "confirmationCode");
+        if (application != null && confirmationCode != null && application.getConfirmationCode() != null
+                && application.getConfirmationCode().equals(confirmationCode)) {
+            application.submitApplication();
+            request.setAttribute("applicationSaved", Boolean.TRUE);
+        }
         return confirmEmail(mapping, form, request, response);
     }
 
@@ -280,6 +296,28 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         return listApplicationPeriods(mapping, form, request, response);
     }
 
+    public ActionForward deleteRecommendationRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        final GenericApplication application = getDomainObject(request, "applicationExternalId");
+        final String confirmationCode = (String) getFromRequest(request, "confirmationCode");
+        final GenericApplicationRecomentation recommendation = getDomainObject(request, "recomentationId");
+        if (application != null && confirmationCode != null && application.getConfirmationCode() != null
+                && application.getConfirmationCode().equals(confirmationCode) && recommendation != null
+                && recommendation.getGenericApplication() == application) {
+            recommendation.sendEmailForRecommendationDelete();
+            removeRecommendationFromApplication(application, recommendation);
+            return confirmEmail(mapping, form, request, response);
+        }
+        request.setAttribute("invalidOrIncorrectConfirmationCode", Boolean.TRUE);
+        return listApplicationPeriods(mapping, form, request, response);
+    }
+
+    @Atomic
+    private void removeRecommendationFromApplication(GenericApplication application,
+            GenericApplicationRecomentation recommendation) {
+        application.removeGenericApplicationRecomentation(recommendation);
+    }
+
     public ActionForward resendRecommendationRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         final GenericApplication application = getDomainObject(request, "applicationExternalId");
@@ -304,8 +342,7 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
             GenericApplicationUploadBean uploadBean = getRenderedObject("uploadBean");
             if (uploadBean == null) {
                 uploadBean = new GenericApplicationUploadBean();
-                uploadBean.setDisplayName(BundleUtil.getString(Bundle.CANDIDATE,
-                        "label.recommendation.document"));
+                uploadBean.setDisplayName(BundleUtil.getString(Bundle.CANDIDATE, "label.recommendation.document"));
             } else {
                 try {
                     final GenericApplicationLetterOfRecomentation file = uploadBean.uploadTo(recomentation);
