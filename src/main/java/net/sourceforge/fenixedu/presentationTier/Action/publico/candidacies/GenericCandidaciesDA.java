@@ -178,6 +178,19 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         return confirmEmail(mapping, form, request, response);
     }
 
+    public ActionForward submitApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        RenderUtils.invalidateViewState();
+        final GenericApplication application = getDomainObject(request, "applicationExternalId");
+        final String confirmationCode = (String) getFromRequest(request, "confirmationCode");
+        if (application != null && confirmationCode != null && application.getConfirmationCode() != null
+                && application.getConfirmationCode().equals(confirmationCode)) {
+            application.submitApplication();
+            request.setAttribute("applicationSaved", Boolean.TRUE);
+        }
+        return confirmEmail(mapping, form, request, response);
+    }
+
     public ActionForward uploadDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final GenericApplicationUploadBean uploadBean = getRenderedObject("genericApplicationDocumentUploadFormFile");

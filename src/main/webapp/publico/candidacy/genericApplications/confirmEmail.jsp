@@ -273,6 +273,23 @@
 	<%= genericApplication.getGenericApplicationPeriod().getDescription() %>
 </div>
 
+<% if (genericApplication.getSubmitted() != null && genericApplication.getSubmitted()) { %>
+	<br/>
+	<div class="infoop5">
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.submitted"/>
+	</div>
+<% } else if (genericApplication.getGenericApplicationPeriod().isOpen()) { %>
+	<br/>
+	<div class="infoop5_1">
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.not.submitted.yet"/>
+	</div>
+<% } else { %>
+	<br/>
+	<div class="infoop5_2">
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.not.submitted"/>
+	</div>
+<% } %>
+
 <logic:present name="applicationSaved">
 	<br/>
 	<div class="infoop5">
@@ -914,6 +931,21 @@
 	</fr:form>
 <% } %>
 </logic:present>
+
+<% if (genericApplication.getSubmitted() == null || !genericApplication.getSubmitted()) { %>
+	<logic:present name="uploadBean">
+		<h3><bean:message key="label.submit.application" bundle="CANDIDATE_RESOURCES"/></h3>
+		
+		<fr:form id="genericApplicationForm" action="/genericApplications.do" encoding="multipart/form-data">
+			<input type="hidden" name="method" value="submitApplication"/>
+			<input type="hidden" name="applicationExternalId" value="<%= genericApplication.getExternalId() %>"/>
+			<input type="hidden" name="confirmationCode" value="<%= genericApplication.getConfirmationCode() %>"/>
+			<html:submit>
+				<bean:message key="button.submit.application" bundle="CANDIDATE_RESOURCES" />
+			</html:submit>
+		</fr:form>
+	</logic:present>
+<% } %>
 
 <logic:present name="uploadBean">
 	<script>

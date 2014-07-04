@@ -240,6 +240,9 @@
 					<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.has.personal.information"/>
 				</th>
 				<th width="150px;">
+					<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.is.submitted"/>
+				</th>
+				<th width="150px;">
 					<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.number.of.documents"/>
 				</th>
 				<th width="150px;">
@@ -266,6 +269,9 @@
 					</td>
 					<td class="center">
 						<bean:message bundle="RENDERER_RESOURCES" key="<%= Boolean.valueOf(genericApplication.isAllPersonalInformationFilled()).toString().toUpperCase() %>"/>
+					</td>
+					<td class="center">
+						<bean:message bundle="RENDERER_RESOURCES" key="<%= Boolean.valueOf((genericApplication.getSubmitted() == null ? false : genericApplication.getSubmitted())).toString().toUpperCase() %>"/>
 					</td>
 					<td class="center">
 						<%= genericApplication.getGenericApplicationFileCount() %>
