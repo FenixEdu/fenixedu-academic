@@ -21,6 +21,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.department;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteBoardsDA;
@@ -33,6 +34,9 @@ public abstract class DepartmentBoardsDA extends UnitSiteBoardsDA {
         if (department != null) {
             request.setAttribute("department", department);
             OldCmsSemanticURLHandler.selectSite(request, department.getDepartmentUnit().getSite());
+        } else {
+            Site site = getDomainObject(request, "siteID");
+            OldCmsSemanticURLHandler.selectSite(request, site);
         }
     }
 
