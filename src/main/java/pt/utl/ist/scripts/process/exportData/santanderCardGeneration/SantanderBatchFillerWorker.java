@@ -147,7 +147,7 @@ public class SantanderBatchFillerWorker {
         if (person.hasStudent()) {
             final List<Registration> activeRegistrations = person.getStudent().getActiveRegistrations();
             for (final Registration registration : activeRegistrations) {
-                if (registration.isBolonha()) {
+                if (registration.isBolonha() && !registration.getDegreeType().isEmpty()) {
                     return true;
                 }
             }
