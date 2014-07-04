@@ -98,7 +98,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
             final InfoGroup infoGroup = InfoGroup.newInfoFromDomain(group);
 
             final ExecutionDegree executionDegree = group.getExecutionDegree();
-            if (!executionDegree.hasScheduling() || executionDegree.getScheduling().getAttributionByTeachers() != Boolean.TRUE) {
+            if (!(executionDegree.getScheduling() != null) || executionDegree.getScheduling().getAttributionByTeachers() != Boolean.TRUE) {
                 return mapping.findForward("NoConfirmationInProcessException");
             }
 

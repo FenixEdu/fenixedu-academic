@@ -721,7 +721,7 @@ public class CreateTestData {
 
         private void createDegreeModuleScopes(final DegreeCurricularPlan degreeCurricularPlan,
                 final CurricularCourse curricularCourse, final int y, final int s) {
-            if (degreeCurricularPlan.hasRoot()) {
+            if (degreeCurricularPlan.getRoot() != null) {
                 createContext(degreeCurricularPlan, curricularCourse, y, s);
             } else {
                 createCurricularCourseScope(degreeCurricularPlan, curricularCourse, y, s);

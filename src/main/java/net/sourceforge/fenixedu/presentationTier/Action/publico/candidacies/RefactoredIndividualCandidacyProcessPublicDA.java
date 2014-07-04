@@ -333,9 +333,9 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     protected boolean isPersonStudentOrEmployeeAndNumberIsCorrect(Person person, String personNumber) {
-        return (person.hasStudent() && person.getStudent().getNumber().toString().equals(personNumber))
-                || (person.hasEmployee() && person.getEmployee().getEmployeeNumber().toString().equals(personNumber))
-                || (!person.hasStudent() && !person.hasEmployee() && StringUtils.isEmpty(personNumber));
+        return (person.getStudent() != null && person.getStudent().getNumber().toString().equals(personNumber))
+                || (person.getEmployee() != null && person.getEmployee().getEmployeeNumber().toString().equals(personNumber))
+                || (!(person.getStudent() != null) && !(person.getEmployee() != null) && StringUtils.isEmpty(personNumber));
     }
 
     public ActionForward executeCreateCandidacyPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm,

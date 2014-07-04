@@ -211,7 +211,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     @Override
     public void addExecutionCourses(ExecutionCourse course) {
-        if (course.hasVigilantGroup()) {
+        if (course.getVigilantGroup() != null) {
             throw new DomainException("vigilancy.error.executionCourseAlreadyInAGroup");
         } else {
             super.addExecutionCourses(course);

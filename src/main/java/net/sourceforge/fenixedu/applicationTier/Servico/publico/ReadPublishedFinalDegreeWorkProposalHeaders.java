@@ -43,7 +43,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeOID);
-        if (executionDegree != null && executionDegree.hasScheduling()) {
+        if (executionDegree != null && executionDegree.getScheduling() != null) {
             final Set<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().findPublishedProposals();
 
             for (final Proposal proposal : finalDegreeWorkProposals) {

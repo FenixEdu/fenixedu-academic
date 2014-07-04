@@ -116,7 +116,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
             }
             final Person person = user.getPerson();
 
-            if (person.hasTeacher()) {
+            if (person.getTeacher() != null) {
                 for (final TeacherAuthorization teacherAuthorization : person.getTeacher().getAuthorizationSet()) {
                     if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
                         final ExternalTeacherAuthorization auth = (ExternalTeacherAuthorization) teacherAuthorization;

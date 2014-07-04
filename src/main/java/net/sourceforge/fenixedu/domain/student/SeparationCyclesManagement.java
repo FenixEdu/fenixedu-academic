@@ -197,7 +197,7 @@ public class SeparationCyclesManagement {
     private boolean isToMoveAttendsFrom(final StudentCurricularPlan oldStudentCurricularPlan,
             final StudentCurricularPlan newStudentCurricularPlan, final Attends attend) {
 
-        if (attend.hasEnrolment()) {
+        if (attend.getEnrolment() != null) {
             return !oldStudentCurricularPlan.hasEnrolments(attend.getEnrolment())
                     && newStudentCurricularPlan.hasEnrolments(attend.getEnrolment());
         }

@@ -37,7 +37,7 @@ public class EditPersonalInformation extends PhdIndividualProgramProcessActivity
         final Person person = process.getPerson();
         if (process.isAllowedToManageProcess(userView)) {
             person.edit((PersonBean) object);
-        } else if (!person.hasAnyPersonRoles() && !person.hasUser() && !person.hasStudent()
+        } else if (person.getPersonRolesSet().isEmpty() && person.getUser() == null && person.getStudent() == null
                 && process.getCandidacyProcess().isPublicCandidacy()) {
             // assuming public candidacy
             person.editPersonWithExternalData((PersonBean) object, true);

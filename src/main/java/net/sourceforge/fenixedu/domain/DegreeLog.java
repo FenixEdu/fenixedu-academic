@@ -63,14 +63,4 @@ public class DegreeLog extends DegreeLog_Base {
         return null;
     }
 
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
 }

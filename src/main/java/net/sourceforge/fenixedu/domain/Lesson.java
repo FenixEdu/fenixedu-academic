@@ -165,7 +165,7 @@ public class Lesson extends Lesson_Base {
 
         refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate, createLessonInstances, maxLessonsPeriod);
 
-        if (wasFinished() && (hasLessonSpaceOccupation() || !hasAnyLessonInstances())) {
+        if (wasFinished() && (getLessonSpaceOccupation() != null || !hasAnyLessonInstances())) {
             throw new DomainException("error.Lesson.empty.period");
         }
 
@@ -193,7 +193,7 @@ public class Lesson extends Lesson_Base {
             throw new DomainException("error.deleteLesson.with.Shift.with.studentGroups", prettyPrint());
         }
 
-        if (isLastLesson && shift.hasAnyStudents()) {
+        if (isLastLesson && !shift.getStudentsSet().isEmpty()) {
             throw new DomainException("error.deleteLesson.with.Shift.with.students", prettyPrint());
         }
 
@@ -207,7 +207,7 @@ public class Lesson extends Lesson_Base {
             period.delete();
         }
 
-        if (hasLessonSpaceOccupation()) {
+        if (getLessonSpaceOccupation() != null) {
             getLessonSpaceOccupation().delete();
         }
 
@@ -298,7 +298,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public boolean wasFinished() {
-        return !hasPeriod();
+        return getPeriod() == null;
     }
 
     public ExecutionCourse getExecutionCourse() {
@@ -310,7 +310,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public Space getSala() {
-        if (hasLessonSpaceOccupation()) {
+        if (getLessonSpaceOccupation() != null) {
             return getLessonSpaceOccupation().getRoom();
         } else if (hasAnyLessonInstances() && wasFinished()) {
             return getLastLessonInstance().getRoom();
@@ -416,10 +416,10 @@ public class Lesson extends Lesson_Base {
         if (day != null) {
             Collection<LessonInstance> lessonInstances = getLessonInstancesSet();
             for (LessonInstance lessonInstance : lessonInstances) {
-                if (lessonInstance.hasSummary() && !lessonInstance.getDay().isBefore(day)) {
+                if (lessonInstance.getSummary() != null && !lessonInstance.getDay().isBefore(day)) {
                     List<LessonInstance> list = result.get(Boolean.TRUE);
                     list.add(lessonInstance);
-                } else if (!lessonInstance.hasSummary() && !lessonInstance.getDay().isBefore(day)) {
+                } else if (!(lessonInstance.getSummary() != null) && !lessonInstance.getDay().isBefore(day)) {
                     List<LessonInstance> list = result.get(Boolean.FALSE);
                     list.add(lessonInstance);
                 }
@@ -437,7 +437,7 @@ public class Lesson extends Lesson_Base {
             OccupationPeriod currentPeriod = getPeriod();
             OccupationPeriod oldFirstPeriod = currentPeriod;
 
-            if (currentPeriod == null || !currentPeriod.hasNextPeriod()) {
+            if (currentPeriod == null || !(currentPeriod.getNextPeriod() != null)) {
                 setPeriod(new OccupationPeriod(newBeginDate, newEndDate));
                 newPeriod = true;
 
@@ -491,7 +491,7 @@ public class Lesson extends Lesson_Base {
             OccupationPeriod newPeriod = new OccupationPeriod(newBeginDate, currentPeriod.getEndYearMonthDay());
             OccupationPeriod newPeriodPointer = newPeriod;
 
-            while (currentPeriod.hasNextPeriod()) {
+            while (currentPeriod.getNextPeriod() != null) {
 
                 if (currentPeriod.getNextPeriod().getStartYearMonthDay().isAfter(newEndDate)) {
                     break;
@@ -518,7 +518,7 @@ public class Lesson extends Lesson_Base {
     }
 
     private void removeLessonSpaceOccupationAndPeriod() {
-        if (hasLessonSpaceOccupation()) {
+        if (getLessonSpaceOccupation() != null) {
             getLessonSpaceOccupation().delete();
         }
         super.setPeriod(null);
@@ -581,7 +581,7 @@ public class Lesson extends Lesson_Base {
         List<Summary> result = new ArrayList<Summary>();
         Collection<LessonInstance> lessonInstances = getLessonInstancesSet();
         for (LessonInstance lessonInstance : lessonInstances) {
-            if (lessonInstance.hasSummary()) {
+            if (lessonInstance.getSummary() != null) {
                 result.add(lessonInstance.getSummary());
             }
         }
@@ -1214,46 +1214,6 @@ public class Lesson extends Lesson_Base {
             }
         }
         return builder.toString();
-    }
-
-    @Deprecated
-    public boolean hasPeriod() {
-        return getPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndHourMinuteSecond() {
-        return getEndHourMinuteSecond() != null;
-    }
-
-    @Deprecated
-    public boolean hasDiaSemana() {
-        return getDiaSemana() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginHourMinuteSecond() {
-        return getBeginHourMinuteSecond() != null;
-    }
-
-    @Deprecated
-    public boolean hasShift() {
-        return getShift() != null;
-    }
-
-    @Deprecated
-    public boolean hasFrequency() {
-        return getFrequency() != null;
-    }
-
-    @Deprecated
-    public boolean hasLessonSpaceOccupation() {
-        return getLessonSpaceOccupation() != null;
     }
 
     private boolean hasAnyLessonInstances() {

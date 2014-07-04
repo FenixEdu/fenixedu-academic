@@ -44,28 +44,8 @@ public class ScientificArea extends ScientificArea_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedCurricularCourses() {
-        return !getAssociatedCurricularCoursesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInScientificArea> getCreditsInScientificAreas() {
         return getCreditsInScientificAreasSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCreditsInScientificAreas() {
-        return !getCreditsInScientificAreasSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
     }
 
 }

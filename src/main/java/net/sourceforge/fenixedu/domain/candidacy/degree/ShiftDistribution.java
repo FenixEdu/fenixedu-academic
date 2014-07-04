@@ -47,7 +47,7 @@ public class ShiftDistribution extends ShiftDistribution_Base {
 
     protected void init(ExecutionYear executionYear) {
         checkParameters(executionYear);
-        if (executionYear.hasShiftDistribution()) {
+        if (executionYear.getShiftDistribution() != null) {
             throw new DomainException("error.candidacy.degree.ShiftDistribution.executionYear.already.has.a.shiftDistribution");
         }
         super.setExecutionYear(executionYear);

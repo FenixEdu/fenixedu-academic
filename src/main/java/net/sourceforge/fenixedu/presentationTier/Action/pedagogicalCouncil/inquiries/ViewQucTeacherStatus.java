@@ -92,7 +92,7 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
                 if (isToAnswer) {
                     boolean hasMandatoryCommentsToMake = professorship.hasMandatoryCommentsToMake();
                     boolean inquiryToAnswer =
-                            !professorship.hasInquiryTeacherAnswer()
+                            !(professorship.getInquiryTeacherAnswer() != null)
                                     || professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(
                                             teacherInquiryTemplate);
                     if (inquiryToAnswer || hasMandatoryCommentsToMake) {

@@ -63,19 +63,4 @@ public class EvaluationMethod extends EvaluationMethod_Base {
         super.setEvaluationElements(evaluationElements);
     }
 
-    @Deprecated
-    public boolean hasExecutionCourse() {
-        return getExecutionCourse() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEvaluationElements() {
-        return getEvaluationElements() != null;
-    }
-
 }

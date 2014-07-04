@@ -42,24 +42,4 @@ public class CreditsInAnySecundaryArea extends CreditsInAnySecundaryArea_Base {
         return 7.5;
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnrolment() {
-        return getEnrolment() != null;
-    }
-
-    @Deprecated
-    public boolean hasGivenCredits() {
-        return getGivenCredits() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentCurricularPlan() {
-        return getStudentCurricularPlan() != null;
-    }
-
 }

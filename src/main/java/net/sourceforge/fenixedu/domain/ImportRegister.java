@@ -33,19 +33,4 @@ public class ImportRegister extends ImportRegister_Base {
         return getImportRegisterLogsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyImportRegisterLogs() {
-        return !getImportRegisterLogsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasRemoteExternalOid() {
-        return getRemoteExternalOid() != null;
-    }
-
 }

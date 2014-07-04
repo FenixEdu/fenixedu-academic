@@ -159,24 +159,24 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public boolean canBeDeleted() {
-        return !hasAnySchoolClasses() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides() && !hasScheduling()
-                && !hasAnyAssociatedFinalDegreeWorkGroups() && !hasAnyAssociatedInquiriesCoursesByCourse()
-                && !hasAnyAssociatedInquiriesCoursesByStudent() && !hasAnyStudentCandidacies()
-                && !hasAnyShiftDistributionEntries();
+        return getSchoolClassesSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty() && getScheduling() == null
+                && getAssociatedFinalDegreeWorkGroupsSet().isEmpty() && getAssociatedInquiriesCoursesByCourseSet().isEmpty()
+                && getAssociatedInquiriesCoursesByStudentSet().isEmpty() && getStudentCandidaciesSet().isEmpty()
+                && getShiftDistributionEntriesSet().isEmpty();
     }
 
     public void delete() {
 
         if (canBeDeleted()) {
 
-            for (; hasAnyCoordinatorsList(); getCoordinatorsList().iterator().next().delete()) {
+            for (; !getCoordinatorsListSet().isEmpty(); getCoordinatorsList().iterator().next().delete()) {
                 ;
             }
-            for (; hasAnyScientificCommissionMembers(); getScientificCommissionMembers().iterator().next().delete()) {
+            for (; !getScientificCommissionMembersSet().isEmpty(); getScientificCommissionMembers().iterator().next().delete()) {
                 ;
             }
 
-            if (hasGratuityValues()) {
+            if (getGratuityValues() != null) {
                 getGratuityValues().delete();
             }
 
@@ -719,7 +719,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public boolean isCoordinationTeamFormed() {
-        return hasAnyCoordinatorsList();
+        return !getCoordinatorsListSet().isEmpty();
     }
 
     public boolean isCoordinationResponsibleChosen() {
@@ -1042,7 +1042,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public Set<Proposal> getProposals() {
-        if (hasScheduling()) {
+        if (getScheduling() != null) {
             return getScheduling().getProposalsSet();
         }
         return Collections.emptySet();
@@ -1267,18 +1267,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyStudentInquiryCourseAnswers() {
-        return !getStudentInquiryCourseAnswersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport> getExecutionDegreeCoursesReports() {
         return getExecutionDegreeCoursesReportsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExecutionDegreeCoursesReports() {
-        return !getExecutionDegreeCoursesReportsSet().isEmpty();
     }
 
     @Deprecated
@@ -1287,18 +1277,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyOutboundMobilityCandidacyContestGroup() {
-        return !getOutboundMobilityCandidacyContestGroupSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse> getAssociatedInquiriesCoursesByCourse() {
         return getAssociatedInquiriesCoursesByCourseSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedInquiriesCoursesByCourse() {
-        return !getAssociatedInquiriesCoursesByCourseSet().isEmpty();
     }
 
     @Deprecated
@@ -1307,18 +1287,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedFinalDegreeWorkGroups() {
-        return !getAssociatedFinalDegreeWorkGroupsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse> getAssociatedInquiriesCoursesByStudent() {
         return getAssociatedInquiriesCoursesByStudentSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedInquiriesCoursesByStudent() {
-        return !getAssociatedInquiriesCoursesByStudentSet().isEmpty();
     }
 
     @Deprecated
@@ -1327,18 +1297,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyShiftDistributionEntries() {
-        return !getShiftDistributionEntriesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer> getInquiryCourseAnswers() {
         return getInquiryCourseAnswersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInquiryCourseAnswers() {
-        return !getInquiryCourseAnswersSet().isEmpty();
     }
 
     @Deprecated
@@ -1347,18 +1307,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyStudentInquiriesCourseResults() {
-        return !getStudentInquiriesCourseResultsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Coordinator> getCoordinatorsList() {
         return getCoordinatorsListSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCoordinatorsList() {
-        return !getCoordinatorsListSet().isEmpty();
     }
 
     @Deprecated
@@ -1373,18 +1323,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnySchoolClasses() {
-        return !getSchoolClassesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer> getInquiryDelegatesAnswers() {
         return getInquiryDelegatesAnswersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInquiryDelegatesAnswers() {
-        return !getInquiryDelegatesAnswersSet().isEmpty();
     }
 
     @Deprecated
@@ -1393,18 +1333,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyOccupationPeriodReferences() {
-        return !getOccupationPeriodReferencesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CoordinatorLog> getCoordinatorLog() {
         return getCoordinatorLogSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCoordinatorLog() {
-        return !getCoordinatorLogSet().isEmpty();
     }
 
     @Deprecated
@@ -1413,18 +1343,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyInquiryResults() {
-        return !getInquiryResultsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Guide> getGuides() {
         return getGuidesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyGuides() {
-        return !getGuidesSet().isEmpty();
     }
 
     @Deprecated
@@ -1433,18 +1353,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyOutboundMobilityCandidacyContest() {
-        return !getOutboundMobilityCandidacyContestSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer> getInquiryCoordinationAnswers() {
         return getInquiryCoordinationAnswersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInquiryCoordinationAnswers() {
-        return !getInquiryCoordinationAnswersSet().isEmpty();
     }
 
     @Deprecated
@@ -1453,18 +1363,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyInquiryGlobalComments() {
-        return !getInquiryGlobalCommentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionSemester> getPublishedExamMaps() {
         return getPublishedExamMapsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPublishedExamMaps() {
-        return !getPublishedExamMapsSet().isEmpty();
     }
 
     @Deprecated
@@ -1473,18 +1373,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyStudentCandidacies() {
-        return !getStudentCandidaciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ScientificCommission> getScientificCommissionMembers() {
         return getScientificCommissionMembersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyScientificCommissionMembers() {
-        return !getScientificCommissionMembersSet().isEmpty();
     }
 
     @Deprecated
@@ -1493,73 +1383,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeCandidates() {
-        return !getMasterDegreeCandidatesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult> getStudentInquiriesTeachingResults() {
         return getStudentInquiriesTeachingResultsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentInquiriesTeachingResults() {
-        return !getStudentInquiriesTeachingResultsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasGratuityValues() {
-        return getGratuityValues() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeCurricularPlan() {
-        return getDegreeCurricularPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasScheduling() {
-        return getScheduling() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionInterval() {
-        return getExecutionInterval() != null;
-    }
-
-    @Deprecated
-    public boolean hasAnotation() {
-        return getAnotation() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndThesisCreationPeriod() {
-        return getEndThesisCreationPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginThesisCreationPeriod() {
-        return getBeginThesisCreationPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasCampus() {
-        return getCampus() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasTemporaryExamMap() {
-        return getTemporaryExamMap() != null;
     }
 
 }

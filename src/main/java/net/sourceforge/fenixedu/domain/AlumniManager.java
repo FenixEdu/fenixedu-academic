@@ -36,7 +36,7 @@ public class AlumniManager {
             throw new DomainException("error.alumni.person.does.not.exist", documentIdNumber);
         }
 
-        if (!person.hasStudent()) {
+        if (!(person.getStudent() != null)) {
             throw new DomainException("error.alumni.person.does.not.have.student.info", documentIdNumber);
         }
 

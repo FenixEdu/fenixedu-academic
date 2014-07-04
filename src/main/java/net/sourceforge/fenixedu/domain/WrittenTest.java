@@ -300,14 +300,4 @@ public class WrittenTest extends WrittenTest_Base {
                 + getDescription();
     }
 
-    @Deprecated
-    public boolean hasDescription() {
-        return getDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasRequestRoomSentDate() {
-        return getRequestRoomSentDate() != null;
-    }
-
 }

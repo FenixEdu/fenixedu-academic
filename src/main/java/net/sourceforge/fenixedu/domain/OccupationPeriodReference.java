@@ -122,34 +122,4 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
         return returnStr.toString();
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasSemester() {
-        return getSemester() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionDegree() {
-        return getExecutionDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasOccupationPeriod() {
-        return getOccupationPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasPeriodType() {
-        return getPeriodType() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurricularYears() {
-        return getCurricularYears() != null;
-    }
-
 }

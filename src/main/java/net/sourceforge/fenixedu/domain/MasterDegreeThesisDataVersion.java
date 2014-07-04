@@ -111,18 +111,8 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     }
 
     @Deprecated
-    public boolean hasAnyExternalAssistentGuiders() {
-        return !getExternalAssistentGuidersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Teacher> getGuiders() {
         return getGuidersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyGuiders() {
-        return !getGuidersSet().isEmpty();
     }
 
     @Deprecated
@@ -131,48 +121,8 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     }
 
     @Deprecated
-    public boolean hasAnyAssistentGuiders() {
-        return !getAssistentGuidersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract> getExternalGuiders() {
         return getExternalGuidersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExternalGuiders() {
-        return !getExternalGuidersSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasMasterDegreeThesis() {
-        return getMasterDegreeThesis() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasResponsibleEmployee() {
-        return getResponsibleEmployee() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastModificationDateTime() {
-        return getLastModificationDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurrentState() {
-        return getCurrentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasDissertationTitle() {
-        return getDissertationTitle() != null;
     }
 
 }

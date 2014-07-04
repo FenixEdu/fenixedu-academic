@@ -417,7 +417,7 @@ public class A3ESDegreeProcess implements Serializable {
                 if (executionCourse.getExecutionPeriod().getExecutionYear()
                         .equals(executionSemester.getExecutionYear().getPreviousExecutionYear())) {
                     for (Attends attends : executionCourse.getAttends()) {
-                        if (attends.hasEnrolment() && attends.getEnrolment().getThesis() != null) {
+                        if (attends.getEnrolment() != null && attends.getEnrolment().getThesis() != null) {
                             for (ThesisEvaluationParticipant thesisEvaluationParticipant : attends.getEnrolment().getThesis()
                                     .getOrientation()) {
                                 if (thesisEvaluationParticipant.getPerson().getTeacher() != null
@@ -513,7 +513,7 @@ public class A3ESDegreeProcess implements Serializable {
                     if (previousExecutionYear.equals(executionCourse.getExecutionPeriod().getExecutionYear())) {
                         if (executionCourse.isDissertation()) {
                             for (Attends attends : executionCourse.getAttends()) {
-                                if (attends.hasEnrolment() && attends.getEnrolment().getThesis() != null) {
+                                if (attends.getEnrolment() != null && attends.getEnrolment().getThesis() != null) {
                                     for (ThesisEvaluationParticipant thesisEvaluationParticipant : attends.getEnrolment()
                                             .getThesis().getOrientation()) {
                                         if (thesisEvaluationParticipant.getPerson().getTeacher() != null

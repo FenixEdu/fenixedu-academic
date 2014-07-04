@@ -42,8 +42,8 @@ public class SearchEmployeesAndTeachers implements AutoCompleteProvider<Person> 
             result = new ArrayList<Person>(Person.findInternalPerson(""));
         } else {
             for (Person person : Person.findInternalPerson(StringNormalizer.normalize(value))) {
-                if ((person.hasTeacher() && person.getTeacher().isActive())
-                        || (person.hasEmployee() && person.getEmployee().isActive())) {
+                if ((person.getTeacher() != null && person.getTeacher().isActive())
+                        || (person.getEmployee() != null && person.getEmployee().isActive())) {
                     result.add(person);
                 }
             }

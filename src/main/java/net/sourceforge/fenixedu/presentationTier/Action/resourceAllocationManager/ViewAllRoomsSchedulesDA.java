@@ -508,7 +508,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
     }
 
     private String hasRoomsAttributed(final Shift shift) {
-        if (!shift.hasAnyAssociatedLessons()) {
+        if (shift.getAssociatedLessonsSet().isEmpty()) {
             return BundleUtil.getString(Bundle.APPLICATION, "label.no");
         }
         for (final Lesson lesson : shift.getAssociatedLessonsSet()) {

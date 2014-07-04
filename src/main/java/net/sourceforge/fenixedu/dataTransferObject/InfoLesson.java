@@ -87,11 +87,11 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
     }
 
     public YearMonthDay getLessonBegin() {
-        return getLesson() != null && getLesson().hasPeriod() ? getLesson().getPeriod().getStartYearMonthDay() : null;
+        return getLesson() != null && getLesson().getPeriod() != null ? getLesson().getPeriod().getStartYearMonthDay() : null;
     }
 
     public YearMonthDay getLessonEnd() {
-        return getLesson() != null && getLesson().hasPeriod() ? getLesson().getPeriod().getLastOccupationPeriodOfNestedPeriods()
+        return getLesson() != null && getLesson().getPeriod() != null ? getLesson().getPeriod().getLastOccupationPeriodOfNestedPeriods()
                 .getEndYearMonthDay() : null;
     }
 

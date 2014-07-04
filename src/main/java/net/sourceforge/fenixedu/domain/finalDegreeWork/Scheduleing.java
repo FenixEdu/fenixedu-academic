@@ -247,7 +247,7 @@ public class Scheduleing extends Scheduleing_Base {
 
     @Atomic
     public static Scheduleing newInstance(ExecutionDegree executionDegree) {
-        if (!executionDegree.hasScheduling()) {
+        if (!(executionDegree.getScheduling() != null)) {
             final Scheduleing scheduling = new Scheduleing();
             executionDegree.setScheduling(scheduling);
             return scheduling;

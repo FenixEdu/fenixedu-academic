@@ -80,7 +80,7 @@ public class GuideDocument extends FenixReport {
         addParameter("documentIdType", this.paymentsManagementDTO.getPerson().getIdDocumentType().getLocalizedName());
         addParameter("documentIdNumber", this.paymentsManagementDTO.getPerson().getDocumentIdNumber());
         addParameter("name", this.paymentsManagementDTO.getPerson().getName());
-        addParameter("studentNumber", this.paymentsManagementDTO.getPerson().hasStudent() ? this.paymentsManagementDTO
+        addParameter("studentNumber", this.paymentsManagementDTO.getPerson().getStudent() != null ? this.paymentsManagementDTO
                 .getPerson().getStudent().getNumber().toString() : null);
 
         addDataSourceElements(buildEntries());

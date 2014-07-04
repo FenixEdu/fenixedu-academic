@@ -87,7 +87,7 @@ public class DelegateSearchBean implements Serializable {
     public DelegateSearchBean(Person person, PersonFunction delegateFunction) {
         this();
         setDelegate(person);
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             Registration registration = person.getStudent().getLastActiveRegistration();
             if (registration != null) {
                 setDegree(registration.getDegree());
@@ -105,7 +105,7 @@ public class DelegateSearchBean implements Serializable {
         this();
         setDelegate(person);
         Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             setDegree(lastActiveRegistration != null ? lastActiveRegistration.getDegree() : null);
             setDegreeType(lastActiveRegistration != null ? lastActiveRegistration.getDegree().getDegreeType() : null);
         }

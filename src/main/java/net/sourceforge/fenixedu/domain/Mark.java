@@ -83,29 +83,4 @@ public class Mark extends Mark_Base {
         return gradeScale.isValid(mark, getEvaluation().getEvaluationType());
     }
 
-    @Deprecated
-    public boolean hasEvaluation() {
-        return getEvaluation() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasMark() {
-        return getMark() != null;
-    }
-
-    @Deprecated
-    public boolean hasAttend() {
-        return getAttend() != null;
-    }
-
-    @Deprecated
-    public boolean hasPublishedMark() {
-        return getPublishedMark() != null;
-    }
-
 }

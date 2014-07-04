@@ -52,7 +52,7 @@ public class PersonSender extends PersonSender_Base {
 
     @Atomic
     public static PersonSender newInstance(final Person person) {
-        return person.hasSender() ? person.getSender() : new PersonSender(person);
+        return person.getSender() != null ? person.getSender() : new PersonSender(person);
     }
 
     @Deprecated

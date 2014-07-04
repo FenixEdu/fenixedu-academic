@@ -234,7 +234,7 @@ public class LibraryAttendance implements Serializable {
                     grantOwnerEnd = currentGrantOwnerContractSituation.getEndDate();
                 }
             }
-            if (person.hasStudent()) {
+            if (person.getStudent() != null) {
                 studentRegistration = person.getStudent().getLastActiveRegistration();
                 if (studentRegistration == null) {
                     alumniRegistration = person.getStudent().getLastConcludedRegistration();

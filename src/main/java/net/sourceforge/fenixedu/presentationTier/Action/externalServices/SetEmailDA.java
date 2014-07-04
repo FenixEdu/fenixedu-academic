@@ -71,7 +71,7 @@ public class SetEmailDA extends FenixDispatchAction {
 
             SetEmail.run(host, ip, password, userUId, email);
             final User user = User.findByUsername(userUId);
-            if (user.getPerson() != null && user.getPerson().hasStudent()) {
+            if (user.getPerson() != null && user.getPerson().getStudent() != null) {
                 final Student student = user.getPerson().getStudent();
                 for (final Registration registration : student.getRegistrationsSet()) {
                     final StudentCandidacy candidacy = registration.getStudentCandidacy();

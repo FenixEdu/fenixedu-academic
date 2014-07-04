@@ -121,39 +121,4 @@ public class ProjectSubmission extends ProjectSubmission_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasProjectSubmissionFile() {
-        return getProjectSubmissionFile() != null;
-    }
-
-    @Deprecated
-    public boolean hasTeacherObservation() {
-        return getTeacherObservation() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasSubmissionDateTime() {
-        return getSubmissionDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasProject() {
-        return getProject() != null;
-    }
-
-    @Deprecated
-    public boolean hasAttends() {
-        return getAttends() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentGroup() {
-        return getStudentGroup() != null;
-    }
-
 }

@@ -332,7 +332,7 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 
             IndividualCandidacyProcess individualCandidacyProcess = bean.getIndividualCandidacyProcess();
 
-            if (individualCandidacyProcess.getPersonalDetails().getPerson().hasStudent()) {
+            if (individualCandidacyProcess.getPersonalDetails().getPerson().getStudent() != null) {
                 bean.setPersonNumber(individualCandidacyProcess.getPersonalDetails().getPerson().getStudent().getNumber()
                         .toString());
             }

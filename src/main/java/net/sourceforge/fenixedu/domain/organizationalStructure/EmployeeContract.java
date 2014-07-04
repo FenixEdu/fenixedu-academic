@@ -67,7 +67,7 @@ public class EmployeeContract extends EmployeeContract_Base {
     @Override
     public void setChildParty(Party childParty) {
         super.setChildParty(childParty);
-        if (!((Person) childParty).hasEmployee()) {
+        if (!(((Person) childParty).getEmployee() != null)) {
             throw new DomainException("error.EmployeeContract.person.not.has.employee");
         }
     }

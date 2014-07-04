@@ -82,7 +82,7 @@ public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAct
         program.setAdministrativeOffice(office);
         if (program instanceof Degree) {
             Degree degree = (Degree) program;
-            if (degree.getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA && degree.hasPhdProgram()) {
+            if (degree.getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA && degree.getPhdProgram() != null) {
                 degree.getPhdProgram().setAdministrativeOffice(office);
             }
         }

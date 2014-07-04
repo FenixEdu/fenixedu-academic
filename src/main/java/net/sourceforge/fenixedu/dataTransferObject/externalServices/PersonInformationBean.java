@@ -91,13 +91,13 @@ public class PersonInformationBean {
 
         setStudentDegrees(new ArrayList<String>());
         setStudentRegistrations(new ArrayList<Registration>());
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
 
             for (Registration registration : person.getStudent().getActiveRegistrations()) {
                 getStudentRegistrations().add(registration);
                 getStudentDegrees().add(registration.getDegree().getPresentationName());
                 for (Attends attend : registration.getAttendsForExecutionPeriod(ExecutionSemester.readActualExecutionSemester())) {
-                    if (attend.hasEnrolment()) {
+                    if (attend.getEnrolment() != null) {
                         getEnrolledCoursesBeans().add(new EnrolledCourseBean(attend));
                     }
                 }
@@ -114,14 +114,14 @@ public class PersonInformationBean {
             }
         }
 
-        if (person.hasTeacher()) {
+        if (person.getTeacher() != null) {
             Department department = person.getTeacher().getCurrentWorkingDepartment();
             if (department != null) {
                 setTeacherDepartment(department);
             }
         }
 
-        if (person.hasEmployee()) {
+        if (person.getEmployee() != null) {
             final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
             if (currentWorkingPlace != null) {
                 setEmployeeUnit(currentWorkingPlace.getName());

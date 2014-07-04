@@ -151,7 +151,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     private void checkIfCanAddCurricularCourseToCourseGroup(final CourseGroup parent, final CurricularCourse curricularCourse,
             final CurricularPeriod curricularPeriod, final ExecutionYear executionYear) {
-        if (curricularCourse.hasCompetenceCourse() && curricularCourse.getCompetenceCourse().isAnual(executionYear)
+        if (curricularCourse.getCompetenceCourse() != null && curricularCourse.getCompetenceCourse().isAnual(executionYear)
                 && !curricularPeriod.hasChildOrderValue(1)) {
             throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
         }

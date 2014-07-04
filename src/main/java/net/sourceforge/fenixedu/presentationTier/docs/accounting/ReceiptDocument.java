@@ -111,7 +111,7 @@ public class ReceiptDocument extends FenixReport {
             addParameter("contributorSocialSecurityNumber", Receipt.GENERIC_CONTRIBUTOR_PARTY_NUMBER);
         }
 
-        addParameter("studentNumber", this.receipt.getPerson().hasStudent() ? this.receipt.getPerson().getStudent().getNumber()
+        addParameter("studentNumber", this.receipt.getPerson().getStudent() != null ? this.receipt.getPerson().getStudent().getNumber()
                 .toString() : null);
 
         addDataSourceElements(buildEntries());

@@ -57,7 +57,7 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
 
     @Override
     protected boolean isToDiscard() {
-        if (hasFireDate()) {
+        if (getFireDate() != null) {
             return true;
         }
 
@@ -76,7 +76,7 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
             return false;
         }
 
-        if (!hasFireDate()) {
+        if (getFireDate() == null) {
             return true;
         }
 

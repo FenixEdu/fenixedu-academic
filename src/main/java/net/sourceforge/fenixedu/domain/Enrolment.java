@@ -329,7 +329,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             attendsIter.remove();
             attends.setEnrolment(null);
 
-            if (!attends.hasAnyAssociatedMarks() && !attends.hasAnyStudentGroups()) {
+            if (attends.getAssociatedMarksSet().isEmpty() && attends.getStudentGroupsSet().isEmpty()) {
                 boolean hasShiftEnrolment = false;
                 for (Shift shift : attends.getExecutionCourse().getAssociatedShifts()) {
                     if (shift.getStudentsSet().contains(registration)) {
@@ -369,16 +369,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     protected void checkRulesToDelete() {
-        if (hasAnyExtraExamRequests()) {
+        if (!getExtraExamRequestsSet().isEmpty()) {
             throw new DomainException("error.Enrolment.has.ExtraExamRequests");
         }
-        if (hasAnyEnrolmentWrappers()) {
+        if (!getEnrolmentWrappersSet().isEmpty()) {
             throw new DomainException("error.Enrolment.is.origin.in.some.Equivalence");
         }
-        if (hasAnyCourseLoadRequests()) {
+        if (!getCourseLoadRequestsSet().isEmpty()) {
             throw new DomainException("error.Enrolment.has.CourseLoadRequests");
         }
-        if (hasAnyProgramCertificateRequests()) {
+        if (!getProgramCertificateRequestsSet().isEmpty()) {
             throw new DomainException("error.Enrolment.has.ProgramCertificateRequests");
         }
     }
@@ -488,7 +488,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             final Iterator<ExecutionCourse> iterator = executionCourses.iterator();
             while (iterator.hasNext()) {
                 final ExecutionCourse each = iterator.next();
-                if (!each.hasAnyExecutionCourseProperties()) {
+                if (each.getExecutionCoursePropertiesSet().isEmpty()) {
                     executionCourse = each;
                 }
             }
@@ -500,7 +500,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             final Attends attend = executionCourse.getAttendsByStudent(registration.getStudent());
             if (attend == null) {
                 addAttends(new Attends(registration, executionCourse));
-            } else if (!attend.hasEnrolment()) {
+            } else if (!(attend.getEnrolment() != null)) {
                 attend.setRegistration(registration);
                 addAttends(attend);
             } else {
@@ -691,7 +691,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public boolean hasImprovementFor(ExecutionSemester executionSemester) {
         for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
-            if (enrolmentEvaluation.isImprovment() && enrolmentEvaluation.hasExecutionPeriod()
+            if (enrolmentEvaluation.isImprovment() && enrolmentEvaluation.getExecutionPeriod() != null
                     && enrolmentEvaluation.getExecutionPeriod().equals(executionSemester)) {
                 return true;
             }
@@ -978,7 +978,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public boolean hasAssociatedMarkSheet(MarkSheetType markSheetType) {
         for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
-            if (enrolmentEvaluation.hasMarkSheet()
+            if (enrolmentEvaluation.getMarkSheet() != null
                     && enrolmentEvaluation.getEnrolmentEvaluationType() == markSheetType.getEnrolmentEvaluationType()) {
                 return true;
             }
@@ -988,7 +988,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public boolean hasAssociatedMarkSheetOrFinalGrade() {
         for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
-            if (enrolmentEvaluation.hasMarkSheet() || enrolmentEvaluation.isFinal()) {
+            if (enrolmentEvaluation.getMarkSheet() != null || enrolmentEvaluation.isFinal()) {
                 return true;
             }
         }
@@ -998,7 +998,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public boolean hasAssociatedMarkSheetOrFinalGrade(MarkSheetType markSheetType) {
         for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
             if (enrolmentEvaluation.getEnrolmentEvaluationType() == markSheetType.getEnrolmentEvaluationType()
-                    && (enrolmentEvaluation.hasMarkSheet() || enrolmentEvaluation.isFinal())) {
+                    && (enrolmentEvaluation.getMarkSheet() != null || enrolmentEvaluation.isFinal())) {
                 return true;
             }
         }
@@ -1008,7 +1008,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public List<EnrolmentEvaluation> getConfirmedEvaluations(MarkSheetType markSheetType) {
         List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>();
         for (EnrolmentEvaluation evaluation : this.getEvaluationsSet()) {
-            if (evaluation.hasMarkSheet() && evaluation.getMarkSheet().getMarkSheetType() == markSheetType
+            if (evaluation.getMarkSheet() != null && evaluation.getMarkSheet().getMarkSheetType() == markSheetType
                     && evaluation.getMarkSheet().isConfirmed()) {
 
                 evaluations.add(evaluation);
@@ -1573,7 +1573,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public boolean hasAnyAssociatedMarkSheetOrFinalGrade() {
         for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
-            if (enrolmentEvaluation.hasMarkSheet() || enrolmentEvaluation.isFinal()) {
+            if (enrolmentEvaluation.getMarkSheet() != null || enrolmentEvaluation.isFinal()) {
                 return true;
             }
         }
@@ -1606,13 +1606,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public boolean canBeSubmittedForOldMarkSheet(EnrolmentEvaluationType enrolmentEvaluationType) {
-        if (enrolmentEvaluationType == EnrolmentEvaluationType.NORMAL && !hasAnyEvaluations()) {
+        if (enrolmentEvaluationType == EnrolmentEvaluationType.NORMAL && getEvaluationsSet().isEmpty()) {
             return true;
         }
 
         for (EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
             if (enrolmentEvaluation.getEnrolmentEvaluationType() == enrolmentEvaluationType
-                    && !enrolmentEvaluation.hasMarkSheet()
+                    && !(enrolmentEvaluation.getMarkSheet() != null)
                     && (enrolmentEvaluation.isTemporary() || (enrolmentEvaluation.isNotEvaluated() && enrolmentEvaluation
                             .getExamDateYearMonthDay() == null))) {
                 return true;
@@ -1727,7 +1727,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
         }
 
-        if (getEnrollmentState().equals(EnrollmentState.APROVED) && !hasAnyEvaluations()) {
+        if (getEnrollmentState().equals(EnrollmentState.APROVED) && getEvaluationsSet().isEmpty()) {
             setEnrollmentState(EnrollmentState.ENROLLED);
         }
     }
@@ -1738,7 +1738,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
         }
 
-        if (!hasAnyEvaluations()) {
+        if (getEvaluationsSet().isEmpty()) {
             setEnrollmentState(EnrollmentState.ENROLLED);
         }
     }
@@ -1771,18 +1771,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Deprecated
-    public boolean hasAnyStandaloneEnrolmentRequests() {
-        return !getStandaloneEnrolmentRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.thesis.Thesis> getTheses() {
         return getThesesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTheses() {
-        return !getThesesSet().isEmpty();
     }
 
     @Deprecated
@@ -1791,18 +1781,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Deprecated
-    public boolean hasAnyExtraExamRequests() {
-        return !getExtraExamRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExtraCurricularCertificateRequest> getExtraCurricularRequests() {
         return getExtraCurricularRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExtraCurricularRequests() {
-        return !getExtraCurricularRequestsSet().isEmpty();
     }
 
     @Deprecated
@@ -1811,18 +1791,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Deprecated
-    public boolean hasAnyProgramCertificateRequests() {
-        return !getProgramCertificateRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
         return getAttendsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAttends() {
-        return !getAttendsSet().isEmpty();
     }
 
     @Deprecated
@@ -1831,18 +1801,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Deprecated
-    public boolean hasAnyEnrolmentWrappers() {
-        return !getEnrolmentWrappersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse> getNotNeedToEnrollCurricularCourses() {
         return getNotNeedToEnrollCurricularCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyNotNeedToEnrollCurricularCourses() {
-        return !getNotNeedToEnrollCurricularCoursesSet().isEmpty();
     }
 
     @Deprecated
@@ -1851,18 +1811,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Deprecated
-    public boolean hasAnyConclusionProcessVersions() {
-        return !getConclusionProcessVersionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea> getCreditsInAnySecundaryAreas() {
         return getCreditsInAnySecundaryAreasSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCreditsInAnySecundaryAreas() {
-        return !getCreditsInAnySecundaryAreasSet().isEmpty();
     }
 
     @Deprecated
@@ -1871,18 +1821,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Deprecated
-    public boolean hasAnyEvaluations() {
-        return !getEvaluationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest> getCourseLoadRequests() {
         return getCourseLoadRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCourseLoadRequests() {
-        return !getCourseLoadRequestsSet().isEmpty();
     }
 
     @Deprecated
@@ -1891,59 +1831,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Deprecated
-    public boolean hasAnyCreditsInScientificAreas() {
-        return !getCreditsInScientificAreasSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest> getExamDateCertificateRequests() {
         return getExamDateCertificateRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExamDateCertificateRequests() {
-        return !getExamDateCertificateRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasIsFirstTime() {
-        return getIsFirstTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnrollmentState() {
-        return getEnrollmentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasIsExtraCurricular() {
-        return getIsExtraCurricular() != null;
-    }
-
-    @Deprecated
-    public boolean hasWeigth() {
-        return getWeigth() != null;
-    }
-
-    @Override
-    @Deprecated
-    public boolean hasExecutionPeriod() {
-        return getExecutionPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentCurricularPlan() {
-        return getStudentCurricularPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnrolmentEvaluationType() {
-        return getEnrolmentEvaluationType() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnrolmentCondition() {
-        return getEnrolmentCondition() != null;
     }
 
 }

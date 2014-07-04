@@ -64,34 +64,4 @@ public class CandidateSituation extends CandidateSituation_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasMasterDegreeCandidate() {
-        return getMasterDegreeCandidate() != null;
-    }
-
-    @Deprecated
-    public boolean hasRemarks() {
-        return getRemarks() != null;
-    }
-
-    @Deprecated
-    public boolean hasDateYearMonthDay() {
-        return getDateYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasSituation() {
-        return getSituation() != null;
-    }
-
-    @Deprecated
-    public boolean hasValidation() {
-        return getValidation() != null;
-    }
-
 }

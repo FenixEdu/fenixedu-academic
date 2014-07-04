@@ -76,12 +76,12 @@ public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
 
         final Set<Coordinator> coordinatorsSet = new HashSet<Coordinator>();
         for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
-            if (executionDegree.hasAnyInquiryResults()) {
+            if (!executionDegree.getInquiryResultsSet().isEmpty()) {
                 for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
                     if (coordinator.getResponsible()
                     // há casos em que a secretária está não só como
                     // coordenadora de curso mas também como responsável...
-                            && coordinator.getPerson().hasTeacher()) {
+                            && coordinator.getPerson().getTeacher() != null) {
                         InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
                         if (coordinatorInquiryTemplate.getShared()) {
                             inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionPeriod);

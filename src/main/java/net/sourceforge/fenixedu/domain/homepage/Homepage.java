@@ -112,7 +112,7 @@ public class Homepage extends Homepage_Base {
     @Override
     public long getQuota() {
         final Person person = getPerson();
-        return person.hasTeacher() ? TEACHER_QUOTA : REGULAR_QUOTA;
+        return person.getTeacher() != null ? TEACHER_QUOTA : REGULAR_QUOTA;
     }
 
     @Override

@@ -128,7 +128,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
     private void drawAnualCurricularCourseRow(final Context context, final HtmlTableRow row, final int level) {
 
         final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-        if (curricularCourse.hasCompetenceCourse()) {
+        if (curricularCourse.getCompetenceCourse() != null) {
 
             if (curricularCourse.getCompetenceCourse().hasOneCourseLoad(getExecutionInterval())) {
                 drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);

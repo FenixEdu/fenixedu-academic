@@ -93,7 +93,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         if (super.getPerson() != null) {
             return super.getPerson();
         }
-        if (hasNext()) {
+        if (getNext() != null) {
             return getNext().getPerson();
         }
         return null;
@@ -163,7 +163,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     public void delete() {
         setRootDomainObject(null);
-        if (hasPendingHolder()) {
+        if (getPendingHolder() != null) {
             setPendingHolder(null);
         }
         setPerson(null);
@@ -267,66 +267,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     private void logState(String keyLabel) {
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(getPerson());
         PersonInformationLog.createLog(getPerson(), Bundle.MESSAGING, keyLabel, personViewed);
-    }
-
-    @Deprecated
-    public boolean hasNext() {
-        return getNext() != null;
-    }
-
-    @Deprecated
-    public boolean hasPendingHolder() {
-        return getPendingHolder() != null;
-    }
-
-    @Deprecated
-    public boolean hasRejector() {
-        return getRejector() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasStateChange() {
-        return getStateChange() != null;
-    }
-
-    @Deprecated
-    public boolean hasState() {
-        return getState() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrevious() {
-        return getPrevious() != null;
-    }
-
-    @Deprecated
-    public boolean hasApprover() {
-        return getApprover() != null;
-    }
-
-    @Deprecated
-    public boolean hasSubmission() {
-        return getSubmission() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhotoType() {
-        return getPhotoType() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
-    @Deprecated
-    public boolean hasContentType() {
-        return getContentType() != null;
     }
 
     public byte[] exportAsJPEG(byte[] photo, Color color) {

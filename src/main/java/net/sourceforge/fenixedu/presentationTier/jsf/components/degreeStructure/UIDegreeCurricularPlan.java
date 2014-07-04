@@ -127,7 +127,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                         hideCourses, reportsAvailable, executionYear, module).encodeBegin(facesContext);
             }
 
-            if (dcp.hasDegreeStructure() && dcp.getDegreeStructure().hasAnyChilds() && !onlyStructure) {
+            if (dcp.getDegreeStructure() != null && dcp.getDegreeStructure().hasAnyChilds() && !onlyStructure) {
                 encodeSubtitles(facesContext);
             }
         }

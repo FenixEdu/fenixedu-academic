@@ -129,7 +129,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
                 logger.info(String.format("Count %s persons", count));
             }
 
-            if (!person.hasStudent()) {
+            if (!(person.getStudent() != null)) {
                 continue;
             }
 
@@ -264,7 +264,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     public Phone getPersonalPhone(final Person person) {
-        if (person.hasStudent() && person.getStudent().hasAlumni()) {
+        if (person.getStudent() != null && person.getStudent().hasAlumni()) {
             return person.getStudent().getAlumni().getPersonalPhone();
         }
 

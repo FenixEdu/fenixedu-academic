@@ -404,7 +404,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
                     && occupationPeriod.getPreviousPeriod() == null
                     && occupationPeriod.getStartYearMonthDay().equals(start)
                     && occupationPeriod.getEndYearMonthDay().equals(end)
-                    && ((!occupationPeriod.hasNextPeriod() && startPart2 == null) || (occupationPeriod.getNextPeriod()
+                    && ((!(occupationPeriod.getNextPeriod() != null) && startPart2 == null) || (occupationPeriod.getNextPeriod()
                             .getStartYearMonthDay().equals(startPart2) && occupationPeriod.getNextPeriod().getEndYearMonthDay()
                             .equals(endPart2)))) {
                 return occupationPeriod;
@@ -535,7 +535,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     public boolean isEqualTo(OccupationPeriod period) {
-        if (hasNextPeriod() && period.hasNextPeriod()) {
+        if (getNextPeriod() != null && period.getNextPeriod() != null) {
             return isEqualTo(period.getStartYearMonthDay(), period.getEndYearMonthDay(), period.getNextPeriod()
                     .getStartYearMonthDay(), period.getNextPeriod().getEndYearMonthDay());
         }
@@ -546,13 +546,13 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         final boolean eqStart = getStartYearMonthDay().equals(start);
         final boolean eqEnd = getEndYearMonthDay().equals(end);
         final boolean eqNextPeriod =
-                hasNextPeriod() ? (getNextPeriod().getStartYearMonthDay().equals(startPart2)
+                getNextPeriod() != null ? (getNextPeriod().getStartYearMonthDay().equals(startPart2)
                         && getNextPeriod().getEndYearMonthDay().equals(endPart2) ? true : false) : true;
         return eqStart && eqEnd && eqNextPeriod;
     }
 
     public YearMonthDay getEndYearMonthDayWithNextPeriods() {
-        return hasNextPeriod() ? getNextPeriod().getEndYearMonthDayWithNextPeriods() : getEndYearMonthDay();
+        return getNextPeriod() != null ? getNextPeriod().getEndYearMonthDayWithNextPeriods() : getEndYearMonthDay();
     }
 
     public String asString() {
@@ -587,13 +587,13 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             final int l = yearMonthDays.length;
             final YearMonthDay[] nextYearMonthDays = new YearMonthDay[l - 2];
             System.arraycopy(yearMonthDays, 2, nextYearMonthDays, 0, l - 2);
-            return hasNextPeriod() && getNextPeriod().matches(nextYearMonthDays);
+            return getNextPeriod() != null && getNextPeriod().matches(nextYearMonthDays);
         }
-        return !hasNextPeriod();
+        return getNextPeriod() == null;
     }
 
     public YearMonthDay[] toYearMonthDays() {
-        if (hasNextPeriod()) {
+        if (getNextPeriod() != null) {
             final YearMonthDay[] nextValue = getNextPeriod().toYearMonthDays();
             final int l = nextValue.length;
             final YearMonthDay[] result = new YearMonthDay[l + 2];
@@ -670,38 +670,8 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     @Deprecated
-    public boolean hasAnyLessons() {
-        return !getLessonsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.OccupationPeriodReference> getExecutionDegrees() {
         return getExecutionDegreesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExecutionDegrees() {
-        return !getExecutionDegreesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasNextPeriod() {
-        return getNextPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasPeriodInterval() {
-        return getPeriodInterval() != null;
-    }
-
-    @Deprecated
-    public boolean hasPreviousPeriod() {
-        return getPreviousPeriod() != null;
     }
 
 }

@@ -100,7 +100,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyExternalEnrolments();
+        return getExternalEnrolmentsSet().isEmpty();
     }
 
     public String getFullPathName() {
@@ -181,31 +181,6 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment> getExternalEnrolments() {
         return getExternalEnrolmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExternalEnrolments() {
-        return !getExternalEnrolmentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnit() {
-        return getUnit() != null;
     }
 
 }

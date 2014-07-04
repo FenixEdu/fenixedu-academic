@@ -135,7 +135,7 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public Boolean getHasSite() {
-        return getExecutionCourse().hasSite();
+        return getExecutionCourse().getSite() != null;
     }
 
     public Integer getNumberOfAttendingStudents() {
@@ -143,7 +143,7 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public String getCourseReportFilled() {
-        return (!getExecutionCourse().hasCourseReport() || getExecutionCourse().getCourseReport().getReport() == null) ? "false" : "true";
+        return (getExecutionCourse().getCourseReport() == null || getExecutionCourse().getCourseReport().getReport() == null) ? "false" : "true";
     }
 
     public String getEqualLoad() {

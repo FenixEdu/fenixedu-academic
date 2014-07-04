@@ -65,24 +65,4 @@ public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base 
         return false;
     }
 
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasWrittenEvaluation() {
-        return getWrittenEvaluation() != null;
-    }
-
-    @Deprecated
-    public boolean hasRoom() {
-        return getRoom() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
 }

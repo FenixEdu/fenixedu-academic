@@ -103,8 +103,8 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
         // before the current one and isn't open and has no results,
         // that means that is not to answer and has no data to see
         if (inquiryTemplate == null
-                || (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && !inquiryTemplate
-                        .getExecutionPeriod().hasAnyInquiryResults())) {
+                || (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && inquiryTemplate
+				.getExecutionPeriod().getInquiryResultsSet().isEmpty())) {
             return forward(request, "/teacher/inquiries/inquiriesClosed.jsp");
         } else if (!inquiryTemplate.isOpen()) {
             request.setAttribute("readMode", "readMode");
@@ -154,7 +154,7 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
             List<TeacherShiftTypeGroupsResumeResult> teacherResults) {
         Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
         InquiryResponseState finalState = InquiryResponseState.COMPLETE;
-        if (professorship.hasInquiryTeacherAnswer()
+        if (professorship.getInquiryTeacherAnswer() != null
                 && professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)) {
             finalState = InquiryResponseState.PARTIALLY_FILLED;
         }
@@ -170,7 +170,7 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
                     teacherResults.add(teacherShiftTypeGroupsResumeResult);
                 }
             }
-        } else if (!professorship.hasInquiryTeacherAnswer()) {
+        } else if (!(professorship.getInquiryTeacherAnswer() != null)) {
             finalState = InquiryResponseState.EMPTY;
         } else if (professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)) {
             finalState = InquiryResponseState.PARTIALLY_FILLED;

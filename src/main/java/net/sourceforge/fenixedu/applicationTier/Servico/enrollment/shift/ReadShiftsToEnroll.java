@@ -68,7 +68,7 @@ public class ReadShiftsToEnroll {
         findShiftsForExecutionCourseShiftTypesFromStudentEnroledShifts(attends, result);
 
         result.setExecutionCourse(attends.getExecutionCourse());
-        result.setEnrolled(attends.hasEnrolment());
+        result.setEnrolled(attends.getEnrolment() != null);
 
         return result;
     }

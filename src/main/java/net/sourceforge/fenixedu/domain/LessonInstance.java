@@ -179,7 +179,7 @@ public class LessonInstance extends LessonInstance_Base {
     }
 
     private boolean canBeDeleted() {
-        return !hasSummary();
+        return getSummary() == null;
     }
 
     @jvstm.cps.ConsistencyPredicate
@@ -240,7 +240,7 @@ public class LessonInstance extends LessonInstance_Base {
     }
 
     public Space getRoom() {
-        return hasLessonInstanceSpaceOccupation() ? getLessonInstanceSpaceOccupation().getRoom() : null;
+        return getLessonInstanceSpaceOccupation() != null ? getLessonInstanceSpaceOccupation().getRoom() : null;
     }
 
     public DiaSemana getDayOfweek() {
@@ -284,41 +284,6 @@ public class LessonInstance extends LessonInstance_Base {
         } else {
             setEndDateTime(new org.joda.time.DateTime(date.getTime()));
         }
-    }
-
-    @Deprecated
-    public boolean hasLessonInstanceSpaceOccupation() {
-        return getLessonInstanceSpaceOccupation() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCourseLoad() {
-        return getCourseLoad() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDateTime() {
-        return getEndDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasLesson() {
-        return getLesson() != null;
-    }
-
-    @Deprecated
-    public boolean hasSummary() {
-        return getSummary() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginDateTime() {
-        return getBeginDateTime() != null;
     }
 
     public Interval getInterval() {

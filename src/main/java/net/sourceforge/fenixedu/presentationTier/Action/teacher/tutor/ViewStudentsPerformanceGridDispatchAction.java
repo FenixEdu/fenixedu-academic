@@ -73,7 +73,7 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
             return;
         }
 
-        if (!person.getTeacher().hasAnyTutorships()) {
+        if (person.getTeacher().getTutorshipsSet().isEmpty()) {
             return;
         }
 

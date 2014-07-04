@@ -82,7 +82,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
     public static List<Group> getPossibleReceivers(Person person) {
         List<Group> groups = new ArrayList<Group>();
         PersonFunction delegateFunction = null;
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             final Student delegate = person.getStudent();
             logger.info("Delegate: " + person.getName());
             final Registration lastRegistration = delegate.getLastActiveRegistration();

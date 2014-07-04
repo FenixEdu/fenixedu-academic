@@ -49,7 +49,7 @@ public class CreateCandidacy {
 
         person.setSocialSecurityNumber(contributorNumber);
 
-        if (!person.hasStudent()) {
+        if (person.getStudent() == null) {
             new Student(person);
         }
 

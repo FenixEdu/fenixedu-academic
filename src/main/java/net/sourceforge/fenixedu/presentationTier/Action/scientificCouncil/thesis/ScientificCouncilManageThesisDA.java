@@ -691,7 +691,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
             }
             if (thesisEvaluationParticipant.hasPerson()) {
                 final Person person = thesisEvaluationParticipant.getPerson();
-                if (person.hasTeacher()) {
+                if (person.getTeacher() != null) {
                     final Teacher teacher = person.getTeacher();
                     numbers.append(teacher.getPerson().getIstUsername());
                 }

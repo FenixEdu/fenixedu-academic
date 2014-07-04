@@ -38,9 +38,4 @@ public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
         super.delete();
     }
 
-    @Deprecated
-    public boolean hasProjectSubmission() {
-        return getProjectSubmission() != null;
-    }
-
 }

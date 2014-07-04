@@ -150,7 +150,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private boolean hasMissingRAIDESInformation(User userView) {
-        return userView.getPerson() != null && userView.getPerson().hasStudent()
+        return userView.getPerson() != null && userView.getPerson().getStudent() != null
                 && userView.getPerson().getStudent().hasAnyMissingPersonalInformation();
     }
 

@@ -67,7 +67,7 @@ public class AlertService {
 
         builder.append("------------------------------------------------------\n");
 
-        if (process.getPerson().hasStudent()) {
+        if (process.getPerson().getStudent() != null) {
             builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "student.number"));
             builder.append(": ").append(process.getPerson().getStudent().getNumber());
         }

@@ -214,7 +214,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     private boolean isCoordinatorOfProcess(User userView) {
-        if (!userView.getPerson().hasTeacher()) {
+        if (!(userView.getPerson().getTeacher() != null)) {
             return false;
         }
 
@@ -780,7 +780,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
                 User userView, Object object) {
-            if (!process.getPersonalDetails().getPerson().hasStudent()) {
+            if (!(process.getPersonalDetails().getPerson().getStudent() != null)) {
                 new Student(process.getPersonalDetails().getPerson(), null);
                 process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.PERSON);
                 process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.CANDIDATE);

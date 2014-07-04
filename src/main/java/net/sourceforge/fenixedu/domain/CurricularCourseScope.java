@@ -111,7 +111,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     }
 
     public Boolean canBeDeleted() {
-        return !hasAnyAssociatedWrittenEvaluations();
+        return getAssociatedWrittenEvaluationsSet().isEmpty();
     }
 
     public void edit(Branch branch, CurricularSemester curricularSemester, Calendar beginDate, Calendar endDate, String Annotation) {
@@ -308,41 +308,6 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getAssociatedWrittenEvaluations() {
         return getAssociatedWrittenEvaluationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedWrittenEvaluations() {
-        return !getAssociatedWrittenEvaluationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBranch() {
-        return getBranch() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurricularSemester() {
-        return getCurricularSemester() != null;
-    }
-
-    @Deprecated
-    public boolean hasAnotation() {
-        return getAnotation() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginYearMonthDay() {
-        return getBeginYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurricularCourse() {
-        return getCurricularCourse() != null;
     }
 
 }

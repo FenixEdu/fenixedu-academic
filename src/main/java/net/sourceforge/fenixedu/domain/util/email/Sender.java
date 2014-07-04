@@ -101,7 +101,7 @@ public class Sender extends Sender_Base {
             }
 
             final Person person = userView.getPerson();
-            if (person != null && person.hasAnyMessages()) {
+            if (person != null && !person.getMessagesSet().isEmpty()) {
                 return true;
             }
 

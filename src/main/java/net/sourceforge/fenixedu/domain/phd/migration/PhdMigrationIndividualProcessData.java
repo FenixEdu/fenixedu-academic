@@ -254,7 +254,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 
         final Person student = personalData.getPerson();
 
-        if (student.hasAnyPhdIndividualProgramProcesses()) {
+        if (!student.getPhdIndividualProgramProcessesSet().isEmpty()) {
             return student.getPhdIndividualProgramProcesses().iterator().next();
         }
 

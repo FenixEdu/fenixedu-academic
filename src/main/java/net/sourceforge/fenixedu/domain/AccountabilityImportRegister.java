@@ -28,9 +28,4 @@ public class AccountabilityImportRegister extends AccountabilityImportRegister_B
         setRemoteExternalOid(remoteExternalOid);
     }
 
-    @Deprecated
-    public boolean hasAccountability() {
-        return getAccountability() != null;
-    }
-
 }

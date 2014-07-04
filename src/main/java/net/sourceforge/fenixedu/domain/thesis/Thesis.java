@@ -553,7 +553,7 @@ public class Thesis extends Thesis_Base {
         if (getEnrolment().isBolonhaDegree()) {
             return competenceCourse.getDepartmentUnit().getDepartment().getRealName();
         }
-        if (competenceCourse.hasAnyDepartments()) {
+        if (!competenceCourse.getDepartmentsSet().isEmpty()) {
             return competenceCourse.getDepartments().iterator().next().getRealName();
         }
         return null;
@@ -584,7 +584,7 @@ public class Thesis extends Thesis_Base {
 
         Person person = AccessControl.getPerson();
 
-        if (!person.hasTeacher()) {
+        if (!(person.getTeacher() != null)) {
             throw new DomainException("thesis.submit.needsTeacher");
         }
 
@@ -904,7 +904,7 @@ public class Thesis extends Thesis_Base {
                 continue;
             }
 
-            if (!evaluation.hasMarkSheet()) {
+            if (!(evaluation.getMarkSheet() != null)) {
                 continue;
             }
 
@@ -1566,7 +1566,7 @@ public class Thesis extends Thesis_Base {
     }
 
     private boolean isInternalPerson(Person person) {
-        return person != null && !person.hasExternalContract() && person.hasTeacher();
+        return person != null && !person.hasExternalContract() && person.getTeacher() != null;
     }
 
     @Override

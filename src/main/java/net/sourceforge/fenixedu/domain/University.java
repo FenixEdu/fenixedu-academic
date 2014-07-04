@@ -38,24 +38,4 @@ public class University extends University_Base {
         return getAssociatedCurricularCoursesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyAssociatedCurricularCourses() {
-        return !getAssociatedCurricularCoursesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
-    }
-
 }

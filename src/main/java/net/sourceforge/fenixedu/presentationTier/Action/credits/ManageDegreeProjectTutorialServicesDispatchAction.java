@@ -50,7 +50,7 @@ public class ManageDegreeProjectTutorialServicesDispatchAction extends FenixDisp
         }
         List<ProjectTutorialServiceBean> projectTutorialServiceBeans = new ArrayList<ProjectTutorialServiceBean>();
         for (Attends attend : professorship.getExecutionCourse().getAttends()) {
-            if (attend.hasEnrolment()) {
+            if (attend.getEnrolment() != null) {
                 ProjectTutorialServiceBean projectTutorialServiceBean = new ProjectTutorialServiceBean(professorship, attend);
                 projectTutorialServiceBeans.add(projectTutorialServiceBean);
             }

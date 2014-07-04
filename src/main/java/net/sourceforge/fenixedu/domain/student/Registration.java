@@ -190,7 +190,7 @@ public class Registration extends Registration_Base {
 
     private Registration(final Person person, final DateTime start, final Integer registrationNumber, final Degree degree) {
         this();
-        setStudent(person.hasStudent() ? person.getStudent() : new Student(person, registrationNumber));
+        setStudent(person.getStudent() != null ? person.getStudent() : new Student(person, registrationNumber));
         setNumber(registrationNumber == null ? getStudent().getNumber() : registrationNumber);
         setStartDate(start.toYearMonthDay());
         setDegree(degree);
@@ -1412,7 +1412,7 @@ public class Registration extends Registration_Base {
 
         if (!StringUtils.isEmpty(studentName)) {
             for (Person person : Person.readPersonsByName(studentName)) {
-                if (person.hasStudent()) {
+                if (person.getStudent() != null) {
                     result.addAll(person.getStudent().getRegistrationsByDegreeTypes(DegreeType.MASTER_DEGREE,
                             DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
                 }
@@ -1421,7 +1421,7 @@ public class Registration extends Registration_Base {
 
         if (!StringUtils.isEmpty(docIdNumber)) {
             for (Person person : Person.readByDocumentIdNumber(docIdNumber)) {
-                if (person.hasStudent()) {
+                if (person.getStudent() != null) {
                     result.addAll(person.getStudent().getRegistrationsByDegreeTypes(DegreeType.MASTER_DEGREE,
                             DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
                 }
@@ -1775,7 +1775,7 @@ public class Registration extends Registration_Base {
     }
 
     public void checkIfHasEnrolmentFor(final Attends attend) {
-        if (attend.hasEnrolment()) {
+        if (attend.getEnrolment() != null) {
             throw new DomainException("errors.student.already.enroled");
         }
     }
@@ -1852,10 +1852,10 @@ public class Registration extends Registration_Base {
 
     public static void checkIngression(Ingression ingression, Person person, DegreeCurricularPlan degreeCurricularPlan) {
         if (ingression == Ingression.RI) {
-            if (person == null || !person.hasStudent()) {
+            if (person == null || !(person.getStudent() != null)) {
                 throw new DomainException("error.registration.preBolonhaSourceDegreeNotFound");
             }
-            if (degreeCurricularPlan.hasEquivalencePlan()) {
+            if (degreeCurricularPlan.getEquivalencePlan() != null) {
                 final Student student = person.getStudent();
                 final Degree sourceDegree = degreeCurricularPlan.getEquivalencePlan().getSourceDegreeCurricularPlan().getDegree();
 
@@ -3305,7 +3305,7 @@ public class Registration extends Registration_Base {
 
     final public boolean hasDissertationThesis() {
         if (getDegreeType() == DegreeType.MASTER_DEGREE) {
-            return getLastStudentCurricularPlan().hasMasterDegreeThesis();
+            return getLastStudentCurricularPlan().getMasterDegreeThesis() != null;
         } else {
             return getDissertationEnrolment() != null && getDissertationEnrolment().getThesis() != null;
         }
@@ -3456,7 +3456,7 @@ public class Registration extends Registration_Base {
     }
 
     public Registration getSourceRegistrationForTransition() {
-        if (!getLastDegreeCurricularPlan().hasEquivalencePlan()) {
+        if (getLastDegreeCurricularPlan().getEquivalencePlan() == null) {
             return null;
         }
         final DegreeCurricularPlanEquivalencePlan equivalencePlan = getLastDegreeCurricularPlan().getEquivalencePlan();
@@ -3979,7 +3979,7 @@ public class Registration extends Registration_Base {
         if (previousExecutionYear.hasNextExecutionYear()) {
             final ExecutionYear executionYear = previousExecutionYear.getNextExecutionYear();
             for (final Attends attends : getAssociatedAttendsSet()) {
-                if (attends.getExecutionYear() == executionYear && attends.hasEnrolment()) {
+                if (attends.getExecutionYear() == executionYear && attends.getEnrolment() != null) {
                     final Enrolment enrolment = attends.getEnrolment();
                     if (enrolment.isDissertation()
                             && enrolment.getDegreeCurricularPlanOfDegreeModule() == executionDegree.getDegreeCurricularPlan()) {

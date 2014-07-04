@@ -71,24 +71,4 @@ public class UnitFileTag extends UnitFileTag_Base {
         return getTaggedFilesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyTaggedFiles() {
-        return !getTaggedFilesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnit() {
-        return getUnit() != null;
-    }
-
 }

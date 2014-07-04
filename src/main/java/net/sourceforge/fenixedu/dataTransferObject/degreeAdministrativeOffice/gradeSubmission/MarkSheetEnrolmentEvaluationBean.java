@@ -252,11 +252,11 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     }
 
     public boolean isEnrolmentBeMarkedAsEnroled() {
-        return !this.getEnrolment().hasAnyEvaluations();
+        return this.getEnrolment().getEvaluationsSet().isEmpty();
     }
 
     public boolean isPossibleToUnEnrolEnrolment() {
-        return !this.getEnrolment().hasAnyEvaluations()
+        return this.getEnrolment().getEvaluationsSet().isEmpty()
                 && this.getEnrolment().getEnrollmentState().equals(EnrollmentState.ENROLLED);
     }
 

@@ -158,7 +158,7 @@ public class Attends extends Attends_Base {
     public void delete() throws DomainException {
         if (canDelete()) {
 
-            for (; hasAnyWeeklyWorkLoads(); getWeeklyWorkLoads().iterator().next().delete()) {
+            for (; !getWeeklyWorkLoadsSet().isEmpty(); getWeeklyWorkLoads().iterator().next().delete()) {
                 ;
             }
 
@@ -192,16 +192,16 @@ public class Attends extends Attends_Base {
         if (hasAnyShiftEnrolments()) {
             throw new DomainException("error.attends.cant.delete");
         }
-        if (hasAnyStudentGroups()) {
+        if (!getStudentGroupsSet().isEmpty()) {
             throw new DomainException("error.attends.cant.delete.has.student.groups");
         }
-        if (hasAnyAssociatedMarks()) {
+        if (!getAssociatedMarksSet().isEmpty()) {
             throw new DomainException("error.attends.cant.delete.has.associated.marks");
         }
-        if (hasAnyProjectSubmissions()) {
+        if (!getProjectSubmissionsSet().isEmpty()) {
             throw new DomainException("error.attends.cant.delete.has.project.submissions");
         }
-        if (hasAnyDegreeProjectTutorialServices()) {
+        if (!getDegreeProjectTutorialServicesSet().isEmpty()) {
             throw new DomainException("error.attends.cant.delete.has.degree.project.tutorial.services");
         }
 
@@ -515,7 +515,7 @@ public class Attends extends Attends_Base {
     }
 
     public StudentAttendsStateType getAttendsStateType() {
-        if (!hasEnrolment()) {
+        if (getEnrolment() == null) {
             return StudentAttendsStateType.NOT_ENROLED;
         }
 
@@ -556,7 +556,7 @@ public class Attends extends Attends_Base {
     }
 
     boolean canMove(final StudentCurricularPlan from, final StudentCurricularPlan to) {
-        if (hasEnrolment()) {
+        if (getEnrolment() != null) {
             return !from.hasEnrolments(getEnrolment()) && to.hasEnrolments(getEnrolment());
         }
         return !getExecutionPeriod().isBefore(to.getStartExecutionPeriod());
@@ -577,18 +577,8 @@ public class Attends extends Attends_Base {
     }
 
     @Deprecated
-    public boolean hasAnyDegreeProjectTutorialServices() {
-        return !getDegreeProjectTutorialServicesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Grouping> getGroupings() {
         return getGroupingsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyGroupings() {
-        return !getGroupingsSet().isEmpty();
     }
 
     @Deprecated
@@ -597,18 +587,8 @@ public class Attends extends Attends_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedMarks() {
-        return !getAssociatedMarksSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
         return getProjectSubmissionLogsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyProjectSubmissionLogs() {
-        return !getProjectSubmissionLogsSet().isEmpty();
     }
 
     @Deprecated
@@ -617,43 +597,8 @@ public class Attends extends Attends_Base {
     }
 
     @Deprecated
-    public boolean hasAnyWeeklyWorkLoads() {
-        return !getWeeklyWorkLoadsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
         return getProjectSubmissionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyProjectSubmissions() {
-        return !getProjectSubmissionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentGroups() {
-        return !getStudentGroupsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasAluno() {
-        return getAluno() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnrolment() {
-        return getEnrolment() != null;
-    }
-
-    @Deprecated
-    public boolean hasDisciplinaExecucao() {
-        return getDisciplinaExecucao() != null;
     }
 
 }

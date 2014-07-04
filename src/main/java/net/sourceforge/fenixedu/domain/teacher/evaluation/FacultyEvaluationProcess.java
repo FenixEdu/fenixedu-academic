@@ -182,7 +182,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
                 final int number = Integer.parseInt(string);
                 if (number > 0) {
                     Employee employee = Employee.readByNumber(new Integer(number));
-                    if (employee != null && employee.hasPerson() && employee.getPerson().hasTeacher()) {
+                    if (employee != null && employee.getPerson() != null && employee.getPerson().getTeacher() != null) {
                         return employee.getPerson();
                     }
                 }

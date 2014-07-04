@@ -240,7 +240,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
         if (person != null) {
             personBean = new PersonBean(person);
 
-            personBean.setStudentNumber(person.hasStudent() ? person.getStudent().getNumber() : choosePersonBean
+            personBean.setStudentNumber(person.getStudent() != null ? person.getStudent().getNumber() : choosePersonBean
                     .getStudentNumber());
 
             if (isEmployeeAndHasCurrentWorkingContract(person)) {

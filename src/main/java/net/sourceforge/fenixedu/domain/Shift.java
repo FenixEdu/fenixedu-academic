@@ -98,7 +98,7 @@ public class Shift extends Shift_Base {
         setLotacao(lotacao);
         executionCourse.setShiftNames();
 
-        if (!hasAnyCourseLoads()) {
+        if (getCourseLoadsSet().isEmpty()) {
             throw new DomainException("error.Shift.empty.courseLoads");
         }
     }
@@ -126,7 +126,7 @@ public class Shift extends Shift_Base {
             newExecutionCourse.setShiftNames();
         }
 
-        if (!hasAnyCourseLoads()) {
+        if (getCourseLoadsSet().isEmpty()) {
             throw new DomainException("error.Shift.empty.courseLoads");
         }
 
@@ -150,13 +150,13 @@ public class Shift extends Shift_Base {
 
             final ExecutionCourse executionCourse = getExecutionCourse();
 
-            for (; hasAnyAssociatedLessons(); getAssociatedLessons().iterator().next().delete()) {
+            for (; !getAssociatedLessonsSet().isEmpty(); getAssociatedLessons().iterator().next().delete()) {
                 ;
             }
-            for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().iterator().next().delete()) {
+            for (; !getAssociatedShiftProfessorshipSet().isEmpty(); getAssociatedShiftProfessorship().iterator().next().delete()) {
                 ;
             }
-            for (; hasAnyShiftDistributionEntries(); getShiftDistributionEntries().iterator().next().delete()) {
+            for (; !getShiftDistributionEntriesSet().isEmpty(); getShiftDistributionEntries().iterator().next().delete()) {
                 ;
             }
 
@@ -238,16 +238,16 @@ public class Shift extends Shift_Base {
     }
 
     public boolean canBeDeleted() {
-        if (hasAnyAssociatedStudentGroups()) {
+        if (!getAssociatedStudentGroupsSet().isEmpty()) {
             throw new DomainException("error.deleteShift.with.studentGroups", getNome());
         }
-        if (hasAnyStudents()) {
+        if (!getStudentsSet().isEmpty()) {
             throw new DomainException("error.deleteShift.with.students", getNome());
         }
-        if (hasAnyAssociatedSummaries()) {
+        if (!getAssociatedSummariesSet().isEmpty()) {
             throw new DomainException("error.deleteShift.with.summaries", getNome());
         }
-        if (hasAnyDegreeTeachingServices()) {
+        if (!getDegreeTeachingServicesSet().isEmpty()) {
             throw new DomainException("error.deleteShift.with.degreeTeachingServices", getNome());
         }
         return true;
@@ -564,7 +564,7 @@ public class Shift extends Shift_Base {
 
     public String getPresentationName() {
         StringBuilder stringBuilder = new StringBuilder(this.getNome());
-        if (this.hasAnyAssociatedLessons()) {
+        if (!this.getAssociatedLessonsSet().isEmpty()) {
             stringBuilder.append(" ( ");
 
             for (Iterator<Lesson> iterator = this.getAssociatedLessonsSet().iterator(); iterator.hasNext();) {
@@ -589,7 +589,7 @@ public class Shift extends Shift_Base {
 
     public String getLessonPresentationString() {
         StringBuilder stringBuilder = new StringBuilder(this.getNome());
-        if (this.hasAnyAssociatedLessons()) {
+        if (!this.getAssociatedLessonsSet().isEmpty()) {
             for (Iterator<Lesson> iterator = this.getAssociatedLessonsSet().iterator(); iterator.hasNext();) {
                 Lesson lesson = iterator.next();
                 stringBuilder.append(" ");
@@ -636,18 +636,8 @@ public class Shift extends Shift_Base {
     }
 
     @Deprecated
-    public boolean hasAnyShiftDistributionEntries() {
-        return !getShiftDistributionEntriesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
         return getAssociatedSummariesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedSummaries() {
-        return !getAssociatedSummariesSet().isEmpty();
     }
 
     @Deprecated
@@ -656,18 +646,8 @@ public class Shift extends Shift_Base {
     }
 
     @Deprecated
-    public boolean hasAnyInquiryCoursesAnswers() {
-        return !getInquiryCoursesAnswersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.StudentGroup> getAssociatedStudentGroups() {
         return getAssociatedStudentGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedStudentGroups() {
-        return !getAssociatedStudentGroupsSet().isEmpty();
     }
 
     @Deprecated
@@ -676,18 +656,8 @@ public class Shift extends Shift_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCourseLoads() {
-        return !getCourseLoadsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ShiftProfessorship> getAssociatedShiftProfessorship() {
         return getAssociatedShiftProfessorshipSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedShiftProfessorship() {
-        return !getAssociatedShiftProfessorshipSet().isEmpty();
     }
 
     @Deprecated
@@ -696,18 +666,8 @@ public class Shift extends Shift_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedLessons() {
-        return !getAssociatedLessonsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ShiftEnrolment> getShiftEnrolments() {
         return getShiftEnrolmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyShiftEnrolments() {
-        return !getShiftEnrolmentsSet().isEmpty();
     }
 
     @Deprecated
@@ -716,18 +676,8 @@ public class Shift extends Shift_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedClasses() {
-        return !getAssociatedClassesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.NonRegularTeachingService> getNonRegularTeachingServices() {
         return getNonRegularTeachingServicesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyNonRegularTeachingServices() {
-        return !getNonRegularTeachingServicesSet().isEmpty();
     }
 
     @Deprecated
@@ -736,43 +686,8 @@ public class Shift extends Shift_Base {
     }
 
     @Deprecated
-    public boolean hasAnyDegreeTeachingServices() {
-        return !getDegreeTeachingServicesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getStudents() {
         return getStudentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudents() {
-        return !getStudentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasShiftGroupingProperties() {
-        return getShiftGroupingProperties() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasComment() {
-        return getComment() != null;
-    }
-
-    @Deprecated
-    public boolean hasLotacao() {
-        return getLotacao() != null;
-    }
-
-    @Deprecated
-    public boolean hasNome() {
-        return getNome() != null;
     }
 
 }

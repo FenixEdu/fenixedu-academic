@@ -155,7 +155,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public Boolean hasAnyJobs() {
-        return getStudent().getPerson().hasAnyJobs();
+        return !getStudent().getPerson().getJobsSet().isEmpty();
     }
 
     public List<Job> getJobs() {
@@ -244,7 +244,7 @@ public class Alumni extends Alumni_Base {
 
         List<Registration> resultRegistrations = new ArrayList<Registration>();
         for (Person person : Person.readPersonsByNameAndRoleType(bean.getName(), RoleType.ALUMNI)) {
-            if (person.hasStudent()) {
+            if (person.getStudent() != null) {
 
                 if (bean.getStudentNumber() == null || person.getStudent().getNumber().equals(bean.getStudentNumber())) {
                     for (Registration registration : (bean.getDegreeType() == null ? person.getStudent().getRegistrations() : person
@@ -301,7 +301,7 @@ public class Alumni extends Alumni_Base {
                 Collection<Person> persons = Person.readByDocumentIdNumber(documentIdNumber);
                 if (!persons.isEmpty()) {
                     Person person = persons.iterator().next();
-                    if (matchStudentNumber(person, studentNumber) && person.hasStudent()) {
+                    if (matchStudentNumber(person, studentNumber) && person.getStudent() != null) {
                         for (Registration registration : person.getStudent().getRegistrations()) {
                             if (registration.isConcluded()) {
                                 resultRegistrations.add(registration);
@@ -391,7 +391,7 @@ public class Alumni extends Alumni_Base {
                 Person person = (Person) contact.getParty();
                 partyRead.add(person);
 
-                if (!person.hasRole(RoleType.ALUMNI) || !person.hasStudent()) {
+                if (!person.hasRole(RoleType.ALUMNI) || !(person.getStudent() != null)) {
                     continue;
                 }
                 for (Registration registration : person.getStudent().getRegistrations()) {
@@ -411,7 +411,7 @@ public class Alumni extends Alumni_Base {
     }
 
     private static boolean matchStudentNumber(Person person, Integer studentNumber) {
-        return studentNumber == null || (person.hasStudent() && person.getStudent().getNumber().equals(studentNumber));
+        return studentNumber == null || (person.getStudent() != null && person.getStudent().getNumber().equals(studentNumber));
     }
 
     public Boolean hasEmailAddress(String emailAddress) {
@@ -510,41 +510,6 @@ public class Alumni extends Alumni_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest> getIdentityRequests() {
         return getIdentityRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyIdentityRequests() {
-        return !getIdentityRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasRegistered() {
-        return getRegistered() != null;
-    }
-
-    @Deprecated
-    public boolean hasIsEmployed() {
-        return getIsEmployed() != null;
-    }
-
-    @Deprecated
-    public boolean hasRegisteredWhen() {
-        return getRegisteredWhen() != null;
-    }
-
-    @Deprecated
-    public boolean hasUrlRequestToken() {
-        return getUrlRequestToken() != null;
     }
 
 }

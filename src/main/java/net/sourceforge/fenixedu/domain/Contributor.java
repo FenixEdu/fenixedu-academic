@@ -47,7 +47,7 @@ public class Contributor extends Contributor_Base {
     }
 
     public void delete() {
-        if (hasAnyGuides()) {
+        if (!getGuidesSet().isEmpty()) {
             throw new DomainException("contributor.cannot.be.deleted");
         }
         setRootDomainObject(null);
@@ -66,31 +66,6 @@ public class Contributor extends Contributor_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Guide> getGuides() {
         return getGuidesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyGuides() {
-        return !getGuidesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasContributorAddress() {
-        return getContributorAddress() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasContributorName() {
-        return getContributorName() != null;
-    }
-
-    @Deprecated
-    public boolean hasContributorNumber() {
-        return getContributorNumber() != null;
     }
 
 }

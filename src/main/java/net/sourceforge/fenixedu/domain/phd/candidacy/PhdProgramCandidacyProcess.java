@@ -432,7 +432,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     private void assertPersonInformation() {
         final Person person = getPerson();
 
-        if (!getPerson().hasStudent()) {
+        if (getPerson().getStudent() == null) {
             new Student(getPerson());
         }
 
@@ -452,7 +452,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         person.addPersonRoleByRoleType(RoleType.STUDENT);
         person.addPersonRoleByRoleType(RoleType.RESEARCHER);
 
-        if (!person.hasPersonalPhoto()) {
+        if (!(person.getPersonalPhoto() != null)) {
             final Photograph photograph = person.getPersonalPhotoEvenIfPending();
             if (photograph != null) {
                 photograph.setState(PhotoState.APPROVED);
@@ -571,7 +571,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public boolean hasActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
-        return getPerson().hasStudent() ? getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan) : false;
+        return getPerson().getStudent() != null ? getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan) : false;
     }
 
     public LocalDate getWhenStartedStudies() {

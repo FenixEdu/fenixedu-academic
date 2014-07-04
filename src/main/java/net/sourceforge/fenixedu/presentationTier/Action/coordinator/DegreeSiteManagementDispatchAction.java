@@ -196,7 +196,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
         String degreeCurricularPlanID = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        if (degreeCurricularPlan.hasAnyExecutionDegrees()) {
+        if (!degreeCurricularPlan.getExecutionDegreesSet().isEmpty()) {
             final User userView = Authenticate.getUser();
             request.setAttribute("executionDegrees", userView.getPerson().getCoordinatedExecutionDegrees(degreeCurricularPlan));
         }

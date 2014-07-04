@@ -97,7 +97,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
             row.setCell(registration.getNumber());
             row.setCell(registration.getName());
             row.setCell(registration.getDegree().getSigla());
-            if (attends.hasEnrolment()) {
+            if (attends.getEnrolment() != null) {
                 final EnrolmentEvaluationType enrolmentEvaluationType = attends.getEnrolmentEvaluationType();
                 row.setCell(enrolmentEvaluationType.getDescription());
             } else {

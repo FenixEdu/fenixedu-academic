@@ -260,9 +260,4 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
         return tutorshipStudentLowPerformanceQueueJob;
     }
 
-    @Deprecated
-    public boolean hasPrescriptionEnum() {
-        return getPrescriptionEnum() != null;
-    }
-
 }

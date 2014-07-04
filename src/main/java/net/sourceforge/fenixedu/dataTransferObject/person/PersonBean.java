@@ -660,7 +660,7 @@ public class PersonBean implements Serializable {
     }
 
     public boolean hasStudent() {
-        return hasPerson() && getPerson().hasStudent();
+        return hasPerson() && getPerson().getStudent() != null;
     }
 
     public Integer getStudentNumber() {

@@ -231,7 +231,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
      */
 
     private List<PersonFunction> getActivePersonFunctionsFor(Person person) {
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             return person.getStudent().getAllActiveDelegateFunctions();
         } else {
             List<PersonFunction> result = new ArrayList<PersonFunction>();
@@ -241,7 +241,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
     }
 
     private List<PersonFunction> getAllPersonFunctionsFor(Person person) {
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             return person.getStudent().getAllDelegateFunctions();
         } else {
             return person.getAllGGAEDelegatePersonFunctions();

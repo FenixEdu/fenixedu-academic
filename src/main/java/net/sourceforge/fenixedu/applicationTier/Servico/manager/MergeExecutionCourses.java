@@ -155,7 +155,7 @@ public class MergeExecutionCourses {
     }
 
     private void copyVigilantGroups(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
-        if (!executionCourseTo.hasVigilantGroup()) {
+        if (!(executionCourseTo.getVigilantGroup() != null)) {
             executionCourseTo.setVigilantGroup(executionCourseFrom.getVigilantGroup());
         }
     }
@@ -254,7 +254,7 @@ public class MergeExecutionCourses {
             final Evaluation evaluation = executionCourseFrom.getAssociatedEvaluations().iterator().next();
             if (evaluation instanceof FinalEvaluation) {
                 final FinalEvaluation finalEvaluationFrom = (FinalEvaluation) evaluation;
-                if (finalEvaluationFrom.hasAnyMarks()) {
+                if (!finalEvaluationFrom.getMarksSet().isEmpty()) {
                     throw new FenixServiceException("Cannot merge execution courses: marks exist for final evaluation.");
                 } else {
                     finalEvaluationFrom.delete();
@@ -315,11 +315,11 @@ public class MergeExecutionCourses {
             if (otherAttends == null) {
                 attends.setDisciplinaExecucao(executionCourseTo);
             } else {
-                if (attends.hasEnrolment() && !otherAttends.hasEnrolment()) {
+                if (attends.getEnrolment() != null && !(otherAttends.getEnrolment() != null)) {
                     otherAttends.setEnrolment(attends.getEnrolment());
-                } else if (otherAttends.hasEnrolment() && !attends.hasEnrolment()) {
+                } else if (otherAttends.getEnrolment() != null && !(attends.getEnrolment() != null)) {
                     // do nothing.
-                } else if (otherAttends.hasEnrolment() && attends.hasEnrolment()) {
+                } else if (otherAttends.getEnrolment() != null && attends.getEnrolment() != null) {
                     throw new FenixServiceException("Unable to merge execution courses. Registration "
                             + attends.getRegistration().getNumber() + " has an enrolment in both.");
                 }

@@ -39,7 +39,7 @@ public class SearchTeachersByNameOrISTID implements AutoCompleteProvider<Teacher
         final Predicate<Person> predicate = new Predicate<Person>() {
             @Override
             public boolean apply(final Person person) {
-                return person.hasTeacher();
+                return person.getTeacher() != null;
             }
         };
         final Collection<Person> people = Person.findPerson(value, size, predicate);

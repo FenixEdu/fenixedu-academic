@@ -80,7 +80,7 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
         ExecutionYear executionYear = year == null ? null : ExecutionYear.readExecutionYearByName(year);
 
         List<Student> students = new ArrayList<Student>();
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             final Student student = person.getStudent();
 
             PersonFunction yearDelegateFunction = null;
@@ -175,7 +175,7 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
 
     private PersonFunction getPersonFunction(final Person person, final ExecutionYear executionYear) {
         PersonFunction delegateFunction = null;
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             final Student student = person.getStudent();
             List<Registration> activeRegistrations = new ArrayList<Registration>(student.getActiveRegistrations());
             Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
@@ -211,12 +211,12 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
 
         final PersonFunction delegateFunction = getPersonFunction(person, executionYear);
         if (delegateFunction != null) {
-            if (person.hasStudent()) {
+            if (person.getStudent() != null) {
                 Set<CurricularCourse> curricularCourses =
                         person.getStudent().getCurricularCoursesResponsibleForByFunctionType(
                                 delegateFunction.getFunction().getFunctionType(), executionYear);
                 return getCurricularCoursesBeans(delegateFunction, curricularCourses);
-            } else if (person.hasAnyCoordinators()) {
+            } else if (!person.getCoordinatorsSet().isEmpty()) {
                 Set<CurricularCourse> curricularCourses =
                         getDegreesCurricularCoursesFromCoordinatorRoles(person.getCoordinators(),
                                 ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate()));

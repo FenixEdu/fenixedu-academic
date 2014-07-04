@@ -67,7 +67,7 @@ public class PhdFinalProofRequestAlert extends PhdFinalProofRequestAlert_Base {
 
     @Override
     protected boolean isToFire() {
-        if (!hasFireDate()) {
+        if (getFireDate() == null) {
             return !new LocalDate()
                     .isBefore(PhdProgramCalendarUtil.addWorkDaysTo(getProcess().getWhenStartedStudies(), MAX_DAYS));
         }

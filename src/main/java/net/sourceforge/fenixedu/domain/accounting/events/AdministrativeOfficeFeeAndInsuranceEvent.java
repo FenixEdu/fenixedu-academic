@@ -174,7 +174,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     private AccountingEventPaymentCode findPaymentCodeInStudentCandidacy() {
-        if (!getPerson().hasStudent()) {
+        if (getPerson().getStudent() == null) {
             return null;
         }
 

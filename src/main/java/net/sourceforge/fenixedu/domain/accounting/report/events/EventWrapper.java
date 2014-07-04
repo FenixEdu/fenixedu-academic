@@ -41,7 +41,7 @@ public class EventWrapper implements Wrapper {
     @Override
     public String getStudentNumber() {
         if (event.getParty().isPerson()) {
-            if (event.getPerson().hasStudent()) {
+            if (event.getPerson().getStudent() != null) {
                 return event.getPerson().getStudent().getNumber().toString();
             }
         }

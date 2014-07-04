@@ -574,7 +574,7 @@ public class MarkSheet extends MarkSheet_Base {
          * This is not common, but if by any reason the rectified marksheet was removed from system and rectified enrolment evaluation
          * was removed too, no enrolment evaluation will be available
          */
-        if (!hasAnyEnrolmentEvaluations()) {
+        if (getEnrolmentEvaluationsSet().isEmpty()) {
             return;
         }
 
@@ -918,7 +918,7 @@ public class MarkSheet extends MarkSheet_Base {
 
             for (EnrolmentEvaluation enrolmentEvaluation : getEnrolmentEvaluationsSet()) {
                 if (enrolmentEvaluations.contains(enrolmentEvaluation)) {
-                    if (enrolmentEvaluation.hasRectification()) {
+                    if (enrolmentEvaluation.getRectification() != null) {
                         throw new DomainException("error.enrolment.evaluation.has.rectification");
                     }
                     removeEvaluationFromMarkSheet(enrolmentEvaluation);
@@ -1025,91 +1025,6 @@ public class MarkSheet extends MarkSheet_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getEnrolmentEvaluations() {
         return getEnrolmentEvaluationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEnrolmentEvaluations() {
-        return !getEnrolmentEvaluationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasResponsibleTeacher() {
-        return getResponsibleTeacher() != null;
-    }
-
-    @Deprecated
-    public boolean hasMarkSheetType() {
-        return getMarkSheetType() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDateDateTime() {
-        return getCreationDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreator() {
-        return getCreator() != null;
-    }
-
-    @Deprecated
-    public boolean hasEvaluationDateDateTime() {
-        return getEvaluationDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasValidator() {
-        return getValidator() != null;
-    }
-
-    @Deprecated
-    public boolean hasConfirmationDateDateTime() {
-        return getConfirmationDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasArchiveInformation() {
-        return getArchiveInformation() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionPeriod() {
-        return getExecutionPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasCheckSum() {
-        return getCheckSum() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrinted() {
-        return getPrinted() != null;
-    }
-
-    @Deprecated
-    public boolean hasMarkSheetState() {
-        return getMarkSheetState() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurricularCourse() {
-        return getCurricularCourse() != null;
-    }
-
-    @Deprecated
-    public boolean hasSubmittedByTeacher() {
-        return getSubmittedByTeacher() != null;
-    }
-
-    @Deprecated
-    public boolean hasReason() {
-        return getReason() != null;
     }
 
 }

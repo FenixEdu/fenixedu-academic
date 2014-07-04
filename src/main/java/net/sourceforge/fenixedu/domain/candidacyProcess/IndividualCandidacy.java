@@ -307,7 +307,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     protected boolean personHasDegree(final Person person, final Degree selectedDegree) {
 
-        if (!person.hasStudent()) {
+        if (!(person.getStudent() != null)) {
             return false;
         }
 
@@ -339,7 +339,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     protected boolean personHasOneOfDegrees(final Person person, final Set<Degree> selectedDegrees) {
-        if (!person.hasStudent()) {
+        if (!(person.getStudent() != null)) {
             return false;
         }
 

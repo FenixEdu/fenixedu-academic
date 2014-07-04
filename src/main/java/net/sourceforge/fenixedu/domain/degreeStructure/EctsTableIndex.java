@@ -154,7 +154,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
     }
 
     protected Grade convertGradeToEcts(CurricularCourse curricularCourse, CurriculumLine curriculumLine, Grade grade) {
-        if (curricularCourse.hasCompetenceCourse()) {
+        if (curricularCourse.getCompetenceCourse() != null) {
             EctsConversionTable table = getEnrolmentTableBy(curricularCourse.getCompetenceCourse());
             if (table != null) {
                 return table.convert(grade);

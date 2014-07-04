@@ -171,34 +171,4 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
         return diaSemana == null ? null : WeekDay.getWeekDay(diaSemana);
     }
 
-    @Deprecated
-    public boolean hasPlace() {
-        return getPlace() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndTimeHourMinuteSecond() {
-        return getEndTimeHourMinuteSecond() != null;
-    }
-
-    @Deprecated
-    public boolean hasProfessorship() {
-        return getProfessorship() != null;
-    }
-
-    @Deprecated
-    public boolean hasStartTimeHourMinuteSecond() {
-        return getStartTimeHourMinuteSecond() != null;
-    }
-
-    @Deprecated
-    public boolean hasWeekDay() {
-        return getWeekDay() != null;
-    }
-
 }

@@ -45,7 +45,7 @@ public class RemoveCoordinators {
                         .getPerson().getPresentationName(), coordinator.getExecutionDegree().getPresentationName());
 
                 coordinator.delete();
-                if (!person.hasAnyCoordinators()) {
+                if (person.getCoordinatorsSet().isEmpty()) {
                     person.removeRoleByType(RoleType.COORDINATOR);
                 }
             }

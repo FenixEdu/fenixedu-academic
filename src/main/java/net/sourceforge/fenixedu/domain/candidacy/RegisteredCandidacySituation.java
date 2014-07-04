@@ -74,9 +74,9 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 
         }
 
-        if (!person.hasStudent() && studentNumber == null) {
+        if (!(person.getStudent() != null) && studentNumber == null) {
             new Student(person);
-        } else if (!person.hasStudent() && studentNumber != null) {
+        } else if (!(person.getStudent() != null) && studentNumber != null) {
             Student.createStudentWithCustomNumber(person, studentNumber);
         }
     }

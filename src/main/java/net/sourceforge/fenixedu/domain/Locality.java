@@ -30,28 +30,8 @@ public class Locality extends Locality_Base {
     }
 
     @Deprecated
-    public boolean hasAnyHolidays() {
-        return !getHolidaysSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<org.fenixedu.spaces.domain.Space> getCampusInformation() {
         return getCampusInformationSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCampusInformation() {
-        return !getCampusInformationSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
     }
 
 }

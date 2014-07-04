@@ -137,7 +137,7 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
         row.setCell(degree.getNome());
         row.setCell(degree.getSigla());
         row.setCell(curricularCourse.getName());
-        row.setCell(curricularCourse.hasCompetenceCourse() ? curricularCourse.getCompetenceCourse().getExternalId() : null);
+        row.setCell(curricularCourse.getCompetenceCourse() != null ? curricularCourse.getCompetenceCourse().getExternalId() : null);
         row.setCell(executionCourse != null ? executionCourse.getExternalId().toString() : "");
         row.setCell(executionPeriod.getExecutionYear().getName());
         row.setCell(degreeModuleScope != null ? degreeModuleScope.getCurricularYear().toString() : "");
@@ -165,7 +165,7 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
         row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TRAINING_PERIOD)));
         row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TUTORIAL_ORIENTATION)));
         row.setCell(executionCourse != null ? executionCourse.getExternalId() : "");
-        row.setCell(curricularCourse.hasCompetenceCourse() ? curricularCourse.getCompetenceCourse().getExternalId() : "");
+        row.setCell(curricularCourse.getCompetenceCourse() != null ? curricularCourse.getCompetenceCourse().getExternalId() : "");
 
         row.setCell(executionCourse != null ? executionCourse.isDissertation() ? "DISS" : executionCourse
                 .getProjectTutorialCourse() ? "A" : "B" : "");

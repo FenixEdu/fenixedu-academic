@@ -41,7 +41,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 
     @Override
     public String getStudentNumber() {
-        if (request.getPerson().hasStudent()) {
+        if (request.getPerson().getStudent() != null) {
             return request.getPerson().getStudent().getNumber().toString();
         }
 

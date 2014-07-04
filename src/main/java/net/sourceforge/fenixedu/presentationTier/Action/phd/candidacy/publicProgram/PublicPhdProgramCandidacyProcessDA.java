@@ -82,7 +82,7 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
         if (person.hasRole(RoleType.EMPLOYEE)) {
             request.setAttribute("canEditPersonalInformation", false);
             addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
-        } else if (person.hasAnyPersonRoles() || person.hasUser() || person.hasStudent()) {
+        } else if (!person.getPersonRolesSet().isEmpty() || person.getUser() != null || person.getStudent() != null) {
             request.setAttribute("canEditPersonalInformation", false);
             addWarningMessage(request, "message.existing.person.data.must.be.updated.in.academic.office");
         } else {

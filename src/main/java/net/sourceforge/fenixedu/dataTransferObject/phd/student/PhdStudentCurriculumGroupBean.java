@@ -60,7 +60,7 @@ public class PhdStudentCurriculumGroupBean extends StudentCurriculumGroupBean {
     private boolean canBeUsed(Collection<CompetenceCourse> collection, Context context) {
         final CurricularCourse course = (CurricularCourse) context.getChildDegreeModule();
         return course.isOptionalCurricularCourse()
-                || (course.hasCompetenceCourse() && collection.contains(course.getCompetenceCourse()));
+                || (course.getCompetenceCourse() != null && collection.contains(course.getCompetenceCourse()));
     }
 
     private Collection<CompetenceCourse> getCompetenceCoursesAvailableToEnrol() {

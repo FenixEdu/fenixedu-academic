@@ -101,24 +101,4 @@ public class UnitFile extends UnitFile_Base {
         return getUnitFileTagsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyUnitFileTags() {
-        return !getUnitFileTagsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasDescription() {
-        return getDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasUploader() {
-        return getUploader() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnit() {
-        return getUnit() != null;
-    }
-
 }

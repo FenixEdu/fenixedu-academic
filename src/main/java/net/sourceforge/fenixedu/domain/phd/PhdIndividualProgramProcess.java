@@ -285,8 +285,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                 result = new Person(bean.getPersonBean());
             } else {
                 if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)
-                        || bean.getPersonBean().getPerson().hasAnyPersonRoles() || bean.getPersonBean().getPerson().hasUser()
-                        || bean.getPersonBean().getPerson().hasStudent() || bean.hasInstitutionId()) {
+                        || !bean.getPersonBean().getPerson().getPersonRolesSet().isEmpty() || bean.getPersonBean().getPerson().getUser() != null
+                        || bean.getPersonBean().getPerson().getStudent() != null || bean.hasInstitutionId()) {
                     result = bean.getPersonBean().getPerson();
                 } else {
                     /*
@@ -1046,8 +1046,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                     result = new Person(bean.getPersonBean());
                 } else {
                     if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)
-                            || bean.getPersonBean().getPerson().hasAnyPersonRoles() || bean.getPersonBean().getPerson().hasUser()
-                            || bean.getPersonBean().getPerson().hasStudent() || bean.hasInstitutionId()) {
+                            || !bean.getPersonBean().getPerson().getPersonRolesSet().isEmpty() || bean.getPersonBean().getPerson().getUser() != null
+                            || bean.getPersonBean().getPerson().getStudent() != null || bean.hasInstitutionId()) {
                         result = bean.getPersonBean().getPerson();
                     } else {
                         /*

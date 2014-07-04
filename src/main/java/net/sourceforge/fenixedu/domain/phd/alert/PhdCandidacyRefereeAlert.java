@@ -86,7 +86,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
     }
 
     private LocalDate calculateStartDate() {
-        return hasFireDate() ? getFireDate().toLocalDate() : getReferee().getPhdProgramCandidacyProcess().getCandidacyDate();
+        return getFireDate() != null ? getFireDate().toLocalDate() : getReferee().getPhdProgramCandidacyProcess().getCandidacyDate();
     }
 
     @Override

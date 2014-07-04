@@ -63,29 +63,4 @@ public class Price extends Price_Base {
         return result;
     }
 
-    @Deprecated
-    public boolean hasDescription() {
-        return getDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrice() {
-        return getPrice() != null;
-    }
-
-    @Deprecated
-    public boolean hasDocumentType() {
-        return getDocumentType() != null;
-    }
-
-    @Deprecated
-    public boolean hasGraduationType() {
-        return getGraduationType() != null;
-    }
-
 }

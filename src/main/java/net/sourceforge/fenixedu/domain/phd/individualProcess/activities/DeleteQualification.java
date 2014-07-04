@@ -46,7 +46,7 @@ public class DeleteQualification extends PhdIndividualProgramProcessActivity {
     }
 
     private boolean canDelete(final Qualification qualification, final PhdIndividualProgramProcess process, final Person person) {
-        if (!qualification.hasCreator()) {
+        if (!(qualification.getCreator() != null)) {
             return process.getCandidacyProcess().isPublicCandidacy();
         }
         final Person creator = qualification.getCreator();

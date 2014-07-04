@@ -71,7 +71,7 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
 
     @Override
     protected boolean isToDiscard() {
-        return hasFireDate() || getProcess().isRegistrationFormalized();
+        return getFireDate() != null || getProcess().isRegistrationFormalized();
     }
 
     @Override

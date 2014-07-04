@@ -109,33 +109,8 @@ public abstract class Evaluation extends Evaluation_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMarks() {
-        return !getMarksSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getAssociatedExecutionCourses() {
         return getAssociatedExecutionCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedExecutionCourses() {
-        return !getAssociatedExecutionCoursesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasPublishmentMessage() {
-        return getPublishmentMessage() != null;
-    }
-
-    @Deprecated
-    public boolean hasGradeScale() {
-        return getGradeScale() != null;
     }
 
 }

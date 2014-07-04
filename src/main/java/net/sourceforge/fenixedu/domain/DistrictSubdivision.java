@@ -110,18 +110,8 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPersonalIngressionsData() {
-        return !getPersonalIngressionsDataSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getSchoolTimePersonalIngressionsData() {
         return getSchoolTimePersonalIngressionsDataSet();
-    }
-
-    @Deprecated
-    public boolean hasAnySchoolTimePersonalIngressionsData() {
-        return !getSchoolTimePersonalIngressionsDataSet().isEmpty();
     }
 
     @Deprecated
@@ -130,18 +120,8 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
     }
 
     @Deprecated
-    public boolean hasAnySchoolTimeIndividualCandidacies() {
-        return !getSchoolTimeIndividualCandidaciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getSchoolTimeStudentCandidacies() {
         return getSchoolTimeStudentCandidaciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnySchoolTimeStudentCandidacies() {
-        return !getSchoolTimeStudentCandidaciesSet().isEmpty();
     }
 
     @Deprecated
@@ -150,38 +130,8 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
     }
 
     @Deprecated
-    public boolean hasAnyIndividualCandidacies() {
-        return !getIndividualCandidaciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacies() {
         return getStudentCandidaciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentCandidacies() {
-        return !getStudentCandidaciesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasDistrict() {
-        return getDistrict() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
     }
 
 }

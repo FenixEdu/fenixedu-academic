@@ -157,7 +157,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     }
 
     private boolean hasRegistration(DegreeCurricularPlan degreeCurricularPlan) {
-        return getPersonalDetails().hasPerson() && getPersonalDetails().getPerson().hasStudent()
+        return getPersonalDetails().hasPerson() && getPersonalDetails().getPerson().getStudent() != null
                 && getPersonalDetails().getPerson().getStudent().hasRegistrationFor(degreeCurricularPlan);
     }
 
