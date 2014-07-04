@@ -1,1 +1,0 @@
-UPDATE DEPARTMENT set ACTIVE = 0 where ID_INTERNAL in (6, 11);

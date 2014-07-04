@@ -1,3 +1,0 @@
-alter table `SCHEDULEING` add column `MAXIMUM_NUMBER_OF_PROPOSALS_PER_PERSON` int(11);
-
-

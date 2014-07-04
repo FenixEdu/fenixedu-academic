@@ -1,3 +1,0 @@
-alter table GRATUITY_VALUES add column PENALTY_APPLICABLE bit;
-
-update GRATUITY_VALUES set PENALTY_APPLICABLE = '1';

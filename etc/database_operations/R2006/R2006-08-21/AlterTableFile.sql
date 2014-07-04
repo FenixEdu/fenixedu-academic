@@ -1,1 +1,0 @@
-alter table FILE change column CONTENT CONTENT longblob null;

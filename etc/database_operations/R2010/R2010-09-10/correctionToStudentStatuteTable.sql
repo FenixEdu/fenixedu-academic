@@ -1,1 +1,0 @@
-update STUDENT_STATUTE set OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.student.StudentStatute' where OJB_CONCRETE_CLASS='';

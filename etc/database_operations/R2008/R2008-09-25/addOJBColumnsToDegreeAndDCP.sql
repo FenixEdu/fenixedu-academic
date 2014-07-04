@@ -1,5 +1,0 @@
-ALTER TABLE DEGREE ADD COLUMN `OJB_CONCRETE_CLASS` varchar(250) NOT NULL default '';
-UPDATE DEGREE SET OJB_CONCRETE_CLASS = "net.sourceforge.fenixedu.domain.Degree";
-
-ALTER TABLE DEGREE_CURRICULAR_PLAN ADD COLUMN `OJB_CONCRETE_CLASS` varchar(250) NOT NULL default '';
-UPDATE DEGREE_CURRICULAR_PLAN SET OJB_CONCRETE_CLASS = "net.sourceforge.fenixedu.domain.DegreeCurricularPlan";

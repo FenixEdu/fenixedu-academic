@@ -1,1 +1,0 @@
-alter table TEACHER_SERVICE_EXEMPTION change column `TYPE` `TYPE` varchar(100) default NULL;

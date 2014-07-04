@@ -1,1 +1,0 @@
-update DEGREE set CODE = '9508' where ID_INTERNAL = '2379';

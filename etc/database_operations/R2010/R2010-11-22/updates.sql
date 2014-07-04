@@ -1,1 +1,0 @@
-create table `EXTERNAL_USER` (`OID` bigint unsigned, `USERNAME` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `PASSWORD_HASH` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_ROOT_DOMAIN_OBJECT)) type=InnoDB, character set latin1;

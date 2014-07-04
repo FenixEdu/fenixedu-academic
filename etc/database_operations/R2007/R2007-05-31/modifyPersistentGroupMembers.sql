@@ -1,1 +1,0 @@
-alter table PERSISTENT_GROUP_MEMBERS add column KEY_UNIT INTEGER(11);

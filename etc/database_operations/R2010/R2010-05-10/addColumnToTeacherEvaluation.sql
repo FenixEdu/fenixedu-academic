@@ -1,1 +1,0 @@
-alter table TEACHER_EVALUATION ADD COLUMN `OJB_CONCRETE_CLASS` varchar(255) default NULL;

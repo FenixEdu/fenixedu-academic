@@ -1,1 +1,0 @@
-update ACCOUNTABILITY set OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract' where OJB_CONCRETE_CLASS like '%EmployeeMailingContract%' or OJB_CONCRETE_CLASS like '%EmployeeWorkingContract%';

@@ -1,1 +1,0 @@
-alter table SPACE_INFORMATION add column VALID_FROM varchar(10) NOT NULL default '';

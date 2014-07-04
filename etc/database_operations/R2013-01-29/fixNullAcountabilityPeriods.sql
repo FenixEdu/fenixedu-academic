@@ -1,1 +1,0 @@
-update ACCOUNTABILITY set BEGIN_DATE = '2010-11-23' where BEGIN_DATE is null;

@@ -1,1 +1,0 @@
-alter table `GIAF_PROFESSIONAL_DATA` add `OID_CAMPUS` bigint unsigned, add index (OID_CAMPUS);

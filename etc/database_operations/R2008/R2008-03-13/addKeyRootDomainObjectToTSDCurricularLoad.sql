@@ -1,1 +1,0 @@
-alter table T_S_D_CURRICULAR_LOAD add column KEY_ROOT_DOMAIN_OBJECT INTEGER default '1'; 

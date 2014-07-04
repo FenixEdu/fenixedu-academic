@@ -1,1 +1,0 @@
-alter table STUDENT add column KEY_DISLOCATED_STUDENT int(11) unsigned default null;

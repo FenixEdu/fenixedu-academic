@@ -1,1 +1,0 @@
-insert into ROLE (ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values ('INTERNATIONAL_RELATION_OFFICE', '/internationalRelatOffice', '/index.do', 'portal.internRelationOffice');  

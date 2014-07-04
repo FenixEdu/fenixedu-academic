@@ -1,5 +1,0 @@
-alter table `FACULTY_EVALUATION_PROCESS` add `ARE_APPROVED_MARKS_PUBLISHED` tinyint(1);
-create table `APPROVED_TEACHER_EVALUATION_PROCESS_MARK` (`OID` bigint unsigned, `APPROVED_EVALUATION_MARK` text, `OID_TEACHER_EVALUATION_PROCES` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `OID_FACULTY_EVALUATION_PROCESS_YEAR` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_TEACHER_EVALUATION_PROCES), index (OID_ROOT_DOMAIN_OBJECT), index (OID_FACULTY_EVALUATION_PROCESS_YEAR)) type=InnoDB, character set latin1;
-create table `FACULTY_EVALUATION_PROCESS_YEAR` (`OID` bigint unsigned, `OID_FACULTY_EVALUATION_PROCESS` bigint unsigned, `YEAR` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_FACULTY_EVALUATION_PROCESS), index (OID_ROOT_DOMAIN_OBJECT)) type=InnoDB, character set latin1;
-
-update FACULTY_EVALUATION_PROCESS set ARE_APPROVED_MARKS_PUBLISHED = 0;

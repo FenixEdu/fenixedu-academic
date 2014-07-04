@@ -1,1 +1,0 @@
-alter table INQUIRIES_COURSE add COLUMN ANSWER_DURATION bigint(20) default NULL;

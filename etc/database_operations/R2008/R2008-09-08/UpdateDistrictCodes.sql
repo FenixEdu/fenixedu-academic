@@ -1,9 +1,0 @@
-update DISTRICT set CODE='01' where CODE='1';
-update DISTRICT set CODE='02' where CODE='2';
-update DISTRICT set CODE='03' where CODE='3';
-update DISTRICT set CODE='04' where CODE='4';
-update DISTRICT set CODE='05' where CODE='5';
-update DISTRICT set CODE='06' where CODE='6';
-update DISTRICT set CODE='07' where CODE='7';
-update DISTRICT set CODE='08' where CODE='8';
-update DISTRICT set CODE='09' where CODE='9';

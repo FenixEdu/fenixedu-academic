@@ -1,1 +1,0 @@
-update ENROLMENT_EVALUATION set GRADE = "" where GRADE IS NULL;

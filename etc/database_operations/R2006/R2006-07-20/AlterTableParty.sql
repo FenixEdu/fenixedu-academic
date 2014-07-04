@@ -1,2 +1,0 @@
-alter table PARTY drop column KEY_SERVICE_AGREEMENT_TEMPLATE;
-alter table PARTY add column KEY_ADMINISTRATIVE_OFFICE int(11) NULL;

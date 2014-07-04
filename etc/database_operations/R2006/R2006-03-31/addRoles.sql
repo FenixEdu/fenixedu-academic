@@ -1,1 +1,0 @@
-insert into ROLE values (null, 'ALUMNI', '/alumni', '/index.do', 'portal.alumni', null, 1);

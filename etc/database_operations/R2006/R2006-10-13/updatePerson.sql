@@ -1,3 +1,0 @@
-alter table PARTY add column NICKNAME varchar(100) default NULL;
-
-update PARTY, HOMEPAGE set PARTY.NICKNAME = HOMEPAGE.NAME where HOMEPAGE.ID_INTERNAL = PARTY.KEY_HOMEPAGE;

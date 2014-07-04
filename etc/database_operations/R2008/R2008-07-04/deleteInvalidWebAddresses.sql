@@ -1,1 +1,0 @@
-delete from PARTY_CONTACT WHERE OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.contacts.WebAddress' AND URL IS NULL;

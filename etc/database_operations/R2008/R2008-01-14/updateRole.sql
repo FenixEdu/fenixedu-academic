@@ -1,1 +1,0 @@
-update ROLE set ROLE.PAGE = "/Página Principal" where ROLE.ROLE_TYPE = 'MANAGER';

@@ -1,1 +1,0 @@
-update CONTENT SET NAME=REPLACE(NAME,"/","-") WHERE NAME LIKE '%/%';

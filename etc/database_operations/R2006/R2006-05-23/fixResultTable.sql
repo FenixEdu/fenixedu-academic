@@ -1,1 +1,0 @@
-alter table RESULT add column  PUBLICATION_STRING varchar(250) default NULL;

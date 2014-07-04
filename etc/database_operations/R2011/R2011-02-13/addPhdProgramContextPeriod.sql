@@ -1,2 +1,0 @@
-alter table `FILE` add index (OID_TEACHER_CREDITS), add index (OID_PHD_MEETING);
-create table `PHD_PROGRAM_CONTEXT_PERIOD` (`OID` bigint unsigned, `END_DATE` timestamp NULL default NULL, `BEGIN_DATE` timestamp NULL default NULL, `OID_PHD_PROGRAM` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_PHD_PROGRAM), index (OID_ROOT_DOMAIN_OBJECT)) type=InnoDB, character set latin1;

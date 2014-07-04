@@ -1,1 +1,0 @@
-alter table GENERIC_APPLICATION_RECOMENTATION add column TITLE text;

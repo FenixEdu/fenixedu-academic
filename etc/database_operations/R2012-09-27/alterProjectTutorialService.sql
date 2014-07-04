@@ -1,1 +1,0 @@
-alter table `TEACHER_SERVICE_ITEM` add `OID_ATTEND` bigint unsigned, add index (OID_ATTEND), add `PERCENTAGE_VALUE` int(11);

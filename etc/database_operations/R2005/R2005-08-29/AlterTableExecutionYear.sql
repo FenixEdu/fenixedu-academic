@@ -1,1 +1,0 @@
-alter table EXECUTION_YEAR add column KEY_INSURANCE_VALUE int(11) unsigned default null;

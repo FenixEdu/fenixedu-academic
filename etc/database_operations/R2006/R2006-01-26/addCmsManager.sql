@@ -1,1 +1,0 @@
-insert into ROLE (ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values ('CMS_MANAGER', '/CMSManager', '/index.do', 'portal.CMSManager');

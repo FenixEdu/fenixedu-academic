@@ -1,4 +1,0 @@
-
-UPDATE PAYMENT_CODE PC SET PC.OID_PERSON = (SELECT S.OID_PERSON FROM STUDENT S WHERE S.OID = PC.OID_STUDENT) WHERE PC.OJB_CONCRETE_CLASS <> "net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode" AND PC.OID_PERSON IS NULL;
-UPDATE PAYMENT_CODE PC SET PC.KEY_PERSON = (SELECT S.KEY_PERSON FROM STUDENT S WHERE S.ID_INTERNAL = PC.KEY_STUDENT) WHERE PC.OJB_CONCRETE_CLASS <> "net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode" AND PC.KEY_PERSON IS NULL;
-

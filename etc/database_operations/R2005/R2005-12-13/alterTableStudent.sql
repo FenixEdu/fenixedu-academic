@@ -1,1 +1,0 @@
-alter table STUDENT add column KEY_SENIOR int(11) default null;

@@ -1,1 +1,0 @@
-alter table ROOM_OCCUPATION add column KEY_WRITTEN_EVALUATION int(11) default null;

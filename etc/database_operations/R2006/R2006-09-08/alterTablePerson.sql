@@ -1,1 +1,0 @@
-alter table PARTY add column INSTITUTIONAL_EMAIL varchar(255);

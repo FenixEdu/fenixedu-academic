@@ -1,1 +1,0 @@
-insert into ACCOUNTABILITY_TYPE values (3, 'ACADEMIC_STRUCTURE', 1);

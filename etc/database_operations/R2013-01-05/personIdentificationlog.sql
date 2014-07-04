@@ -1,1 +1,0 @@
-alter table `DOMAIN_OPERATION_LOG` add `OID_PERSON_VIEWED` bigint unsigned, add index (OID_PERSON_VIEWED);

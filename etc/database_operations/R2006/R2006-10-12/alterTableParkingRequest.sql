@@ -1,1 +1,0 @@
-alter table PARKING_REQUEST add column REQUESTED_AS varchar(50) default null;

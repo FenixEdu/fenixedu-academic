@@ -1,1 +1,0 @@
-insert into ROLE (ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values ('SPACE_MANAGER', '/SpaceManager', '/index.do', 'portal.SpaceManager');

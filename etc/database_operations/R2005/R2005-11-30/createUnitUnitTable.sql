@@ -1,7 +1,0 @@
-CREATE TABLE `UNIT_UNIT` (
-	`ID_INTERNAL` int NOT NULL auto_increment, 
-	`KEY_SUB_UNIT` int NOT NULL,
-	`KEY_PARENT_UNIT` int NOT NULL,
-	`ACK_OPT_LOCK` int(11) default NULL,	
-    PRIMARY KEY (`ID_INTERNAL`)
-)TYPE=InnoDB;

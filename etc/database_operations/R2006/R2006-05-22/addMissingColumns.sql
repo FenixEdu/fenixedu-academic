@@ -1,4 +1,0 @@
-alter table EXECUTION_DEGREE add column KEY_PERIOD_EXAMS_SPECIAL_SEASON int(11) default NULL;
-alter table RESEARCH_PROJECT change column TYPE PROJECT_TYPE varchar(50) default NULL;
-alter table RESEARCH_PROJECT change column ABSTRACT PROJECT_ABSTRACT longtext;
-alter table PAYMENT_TRANSACTION change column TRANSACTION_DATE TRANSACTION_DATE_DATE_TIME timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP; 

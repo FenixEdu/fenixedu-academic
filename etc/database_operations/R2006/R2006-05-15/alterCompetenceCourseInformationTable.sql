@@ -1,1 +1,0 @@
-alter table COMPETENCE_COURSE_INFORMATION add column COMPETENCE_COURSE_LEVEL varchar(100) default NULL;

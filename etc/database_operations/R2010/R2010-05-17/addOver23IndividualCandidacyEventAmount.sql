@@ -1,8 +1,0 @@
-
-
-
--- Inserted at 2010-05-17T16:03:29.150+01:00
-
-alter table `SIBS_PAYMENT_FILE_PROCESS_REPORT` add column `OVER23_INDIVIDUAL_CANDIDACY_EVENT_AMOUNT` text;
-
-

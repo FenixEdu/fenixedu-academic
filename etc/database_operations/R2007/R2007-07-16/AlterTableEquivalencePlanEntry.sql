@@ -1,5 +1,0 @@
-alter table EQUIVALENCE_PLAN_ENTRY add column TRANSITIVE_SOURCE tinyint(1);
-
-update EQUIVALENCE_PLAN_ENTRY set TRANSITIVE_SOURCE = 1;
-
-alter table EQUIVALENCE_PLAN_ENTRY modify TRANSITIVE_SOURCE tinyint(1) not null;

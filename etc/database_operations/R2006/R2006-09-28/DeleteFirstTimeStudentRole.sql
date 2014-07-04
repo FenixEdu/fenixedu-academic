@@ -1,1 +1,0 @@
-delete from ROLE where ROLE_TYPE = 'FIRST_TIME_STUDENT';

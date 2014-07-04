@@ -1,1 +1,0 @@
-alter table ASSIDUOUSNESS_RECORD add column APLICABLE_WEEK_DAYS text NULL;

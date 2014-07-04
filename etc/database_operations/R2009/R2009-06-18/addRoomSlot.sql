@@ -1,1 +1,0 @@
-alter table EVENT add COLUMN ROOM varchar(255);

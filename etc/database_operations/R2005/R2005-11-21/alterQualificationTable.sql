@@ -1,1 +1,0 @@
-alter table QUALIFICATION change column `TYPE` `TYPE` varchar(100) default NULL;

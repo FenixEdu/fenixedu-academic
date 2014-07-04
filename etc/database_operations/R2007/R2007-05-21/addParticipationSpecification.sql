@@ -1,1 +1,0 @@
-alter table RESEARCH_ACTIVITY_PARTICIPATION add column ROLE_MESSAGE longtext; 
