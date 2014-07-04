@@ -55,6 +55,29 @@
    		}
    		$(id).toggle();
 	}
+   	
+   	function validatePhoneField(field) {
+   		var fieldName = "<%= GenericApplication.class.getName() + ":" + genericApplication.getExternalId() %>" + ":" + field;
+   		var emptyClassName = '#empty' + field;
+   		var invalidClassName = '#invalid' + field;
+   		var fieldValue = $('input[name$="' + fieldName + '"]').val();
+   		var regExp = /^\+?\d{4,15}$/;
+   		
+   		if (!fieldValue) {
+   			$(emptyClassName).show();
+   			$(invalidClassName).hide();
+   			return false;
+   		} else {
+   			$(emptyClassName).hide();
+   			if(regExp.test(fieldValue)) {
+   				$(invalidClassName).hide();
+   				return true;
+   			} else {
+   				$(invalidClassName).show();
+   				return false;
+   			}
+   		}
+   	}
 
    	function validateInputField(field) {
    		var fieldName = "<%= GenericApplication.class.getName() + ":" + genericApplication.getExternalId() %>" + ":" + field;
@@ -75,13 +98,14 @@
    		var classNameEmpty = '#empty' + field;
    		var classNameFormat = '#badDateFormat' + field;
    		var fieldValue = $('input[name$="' + fieldName + '"]').val();
+   		var regExp = /^\d{2}\/\d{2}\/\d{4}$/;
    		if (!fieldValue) {
    			$(classNameEmpty).show();
    			$(classNameFormat).hide();
    			return false;
    		} else {
    			$(classNameEmpty).hide();
-   			if (moment(fieldValue, "DD/MM/YYYY").isValid()) {
+   			if (regExp.test(fieldValue) && moment(fieldValue, "DD/MM/YYYY").isValid() && moment(fieldValue, "DD/MM/YYYY").isBefore(moment()) ) {
    				$(classNameFormat).hide();
    				return true;
    			} else {
@@ -103,7 +127,7 @@
    		if (!validateInputField("address")) { allIsOk = false; };
    		if (!validateInputField("areaCode")) { allIsOk = false; };
    		if (!validateInputField("area")) { allIsOk = false; };
-   		if (!validateInputField("telephoneContact")) { allIsOk = false; };
+   		if (!validatePhoneField("telephoneContact")) { allIsOk = false; };
    		return allIsOk;
 	}
 
@@ -485,6 +509,7 @@
 						<fr:destination name="cancel" path="<%= callbackUrl %>" />
 					</fr:edit>
 					<div id="emptytelephoneContact" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
+					<div id="invalidtelephoneContact" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.field.is.required"/></div>
 				</logic:present>
 				<logic:notPresent name="uploadBean">
 					<%= genericApplication.getTelephoneContact() %>
