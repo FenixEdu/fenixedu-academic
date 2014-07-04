@@ -222,12 +222,31 @@
    		var fieldValue = $('input[name$="' + fieldName + '"]').val();
    		if (!fieldValue) { $(className).show(); return false; } else { $(className).hide(); return true; }
    	}
+   	function validateRecommendationEmailField(field) {
+   		var fieldName = "<%= GenericApplicationRecommendationBean.class.getName() + ":" + recommendationBean.hashCode() %>" + ":" + field;
+   		var className = '#emptyRecommendationAllFields';
+   		var classNameSelf = '#selfemail'
+   		var fieldValue = $('input[name$="' + fieldName + '"]').val();
+   		if (!fieldValue) {
+   			$(className).show();
+   			return false;
+   		} else {
+   			$(className).hide();
+   			if (fieldValue == "<%= genericApplication.getEmail() %>") {
+   				$(classNameSelf).show();
+   				return false;
+   			} else {
+   				$(classNameSelf).hide();
+   				return true;
+   			}
+   		}
+   	}
 
    	function validateRecommendationInput() {
    		var allIsOk = true;
    		if (!validateRecommendationInputField("title")) { allIsOk = false; };
    		if (!validateRecommendationInputField("name")) { allIsOk = false; };
-   		if (!validateRecommendationInputField("email")) { allIsOk = false; };
+   		if (!validateRecommendationEmailField("email")) { allIsOk = false; };
    		if (!validateRecommendationInputField("institution")) { allIsOk = false; };
    		return allIsOk;
 	}
@@ -749,6 +768,7 @@
 	<br/>
 <% } else { %>
 <bean:define id="resendRequestUrl">/publico/genericApplications.do?method=resendRecommendationRequest&applicationExternalId=<%= genericApplication.getExternalId() %>&confirmationCode=<%= genericApplication.getConfirmationCode() %></bean:define>
+<bean:define id="deleteRequestUrl">/publico/genericApplications.do?method=deleteRecommendationRequest&applicationExternalId=<%= genericApplication.getExternalId() %>&confirmationCode=<%= genericApplication.getConfirmationCode() %></bean:define>
 <table class="tstyle2 thlight thcenter mtop15">
 	<tr>
 		<th>
@@ -767,6 +787,8 @@
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document"/>
 		</th>
 		<logic:present name="recommendationBean">
+			<th>
+			</th>
 			<th>
 			</th>
 		</logic:present>
@@ -815,6 +837,13 @@
 						</a>
 					<% } %>
 				</td>
+				<td>
+					<% if (!recomentation.hasLetterOfRecomentation()) { %>
+						<a href="<%= request.getContextPath() +  deleteRequestUrl + "&recomentationId=" + recomentation.getExternalId() %>">
+							<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.request.delete"/>
+						</a>
+					<% } %>
+				</td>
 			</logic:present>
 			<logic:notPresent name="recommendationBean">
 				<td>
@@ -848,7 +877,7 @@
 <% } %>
 
 <logic:present name="recommendationBean">
-<% if (genericApplication.getName() != null && genericApplication.getName().length() > 0) { %>
+<% if (genericApplication.getName() != null && genericApplication.getName().length() > 0 && genericApplication.getGenericApplicationPeriod().isOpen()) { %>
 	<a href="#" onclick="toggleByIdWithChangeCheck('#genericApplicationRecommendationForm');">
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.request.recommendation"/>
 	</a>
@@ -877,6 +906,7 @@
 				<fr:property name="classes" value="tstyle2 thcenter mtop15"/>
 			</fr:layout>
 		</fr:edit>
+		<div id="selfemail" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.invalid.self.email"/></div>
 		<div id="emptyRecommendationAllFields" class="error" style="display: none; margin-bottom: 15px;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.all.fields.are.required"/></div>
 		<html:submit onclick="return validateRecommendationInput();">
 			<bean:message key="button.submit" bundle="APPLICATION_RESOURCES" />
