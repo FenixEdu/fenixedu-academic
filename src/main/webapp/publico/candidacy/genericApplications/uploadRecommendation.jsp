@@ -123,7 +123,8 @@
 
 <% if (genericRecomentation.hasLetterOfRecomentation()) { %>
 	<p>
-		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.recommendation.replace"/>
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.recommendation.replace" 
+		arg0="<%= genericRecomentation.getGenericApplication().getName() %>"/>
 	</p>
 <% } %>
 
