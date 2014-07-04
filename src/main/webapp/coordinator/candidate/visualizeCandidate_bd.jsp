@@ -28,7 +28,6 @@
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CandidateOperationDispatchAction" %>
 <%@ page import="net.sourceforge.fenixedu.domain.ApplicationDocumentType"%>
 <bean:define id="personalInfo" name="masterDegreeCandidate" scope="request" property="infoPerson"/>
 <bean:define id="masterDegreeCandidate" name="masterDegreeCandidate" scope="request" type="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate"/>
