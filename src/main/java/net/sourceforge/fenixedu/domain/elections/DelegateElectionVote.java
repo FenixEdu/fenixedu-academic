@@ -53,19 +53,4 @@ public class DelegateElectionVote extends DelegateElectionVote_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasDelegateElection() {
-        return getDelegateElection() != null;
-    }
-
 }

@@ -247,14 +247,4 @@ abstract public class DFAGratuityPR extends DFAGratuityPR_Base implements IGratu
         return getDfaTotalAmount();
     }
 
-    @Deprecated
-    public boolean hasDfaTotalAmount() {
-        return getDfaTotalAmount() != null;
-    }
-
-    @Deprecated
-    public boolean hasDfaPartialAcceptedPercentage() {
-        return getDfaPartialAcceptedPercentage() != null;
-    }
-
 }

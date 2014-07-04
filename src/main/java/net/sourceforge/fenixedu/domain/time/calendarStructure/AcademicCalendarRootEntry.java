@@ -75,7 +75,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     @Override
     public void setTemplateEntry(AcademicCalendarEntry templateEntry) {
         if (templateEntry != null && !getChildEntries().isEmpty()
-                && (!hasTemplateEntry() || !getTemplateEntry().equals(templateEntry))) {
+                && (getTemplateEntry() == null || !getTemplateEntry().equals(templateEntry))) {
             throw new DomainException("error.RootEntry.invalid.templateEntry");
         }
         super.setTemplateEntry(templateEntry);
@@ -95,7 +95,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
         DateTime begin = null;
         Collection<AcademicCalendarEntry> result = null;
 
-        if (!hasTemplateEntry()) {
+        if (getTemplateEntry() == null) {
             result = getChildEntries();
         } else {
             result = getChildEntriesWithTemplateEntries();
@@ -227,16 +227,6 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     @Override
     protected boolean associatedWithDomainEntities() {
         return false;
-    }
-
-    @Deprecated
-    public boolean hasBennuForRootEntries() {
-        return getRootDomainObjectForRootEntries() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennuForDefaultRootEntry() {
-        return getRootDomainObjectForDefaultRootEntry() != null;
     }
 
 }

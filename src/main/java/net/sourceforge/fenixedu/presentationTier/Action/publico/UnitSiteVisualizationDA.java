@@ -185,7 +185,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
         SortedSet<Unit> subunits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
         for (Unit sub : unit.getSubUnits()) {
-            if (sub.hasSite()) {
+            if (sub.getSite() != null) {
                 subunits.add(sub);
 
                 String siteUrl = getSiteUrl(mapping, sub);

@@ -76,11 +76,11 @@ public class ExportDegreeCandidaciesByDegreeForPasswordGeneration extends
                     continue;
                 }
 
-                if (studentCandidacy.hasAnyCandidacySituations()) {
+                if (!studentCandidacy.getCandidacySituationsSet().isEmpty()) {
                     if (studentCandidacy.getActiveCandidacySituationType() == CandidacySituationType.STAND_BY
                             && studentCandidacy.getEntryPhase().equals(getEntryPhase())
                             && !studentCandidacy.getPerson().hasRole(RoleType.STUDENT)
-                            && !studentCandidacy.getPerson().getStudent().hasAnyRegistrations()
+                            && studentCandidacy.getPerson().getStudent().getRegistrationsSet().isEmpty()
                             && !studentCandidacy.getPerson().hasRole(RoleType.EMPLOYEE)) {
                         addPerson(result, executionDegree.getDegree(), studentCandidacy.getPerson());
                     }

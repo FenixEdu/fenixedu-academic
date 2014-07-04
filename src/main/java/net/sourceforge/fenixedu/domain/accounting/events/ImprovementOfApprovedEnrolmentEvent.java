@@ -144,9 +144,4 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
         return getImprovementEnrolmentEvaluationsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyImprovementEnrolmentEvaluations() {
-        return !getImprovementEnrolmentEvaluationsSet().isEmpty();
-    }
-
 }

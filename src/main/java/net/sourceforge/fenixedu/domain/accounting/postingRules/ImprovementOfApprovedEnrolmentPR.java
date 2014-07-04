@@ -160,14 +160,4 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
         }
     }
 
-    @Deprecated
-    public boolean hasFixedAmount() {
-        return getFixedAmount() != null;
-    }
-
-    @Deprecated
-    public boolean hasFixedAmountPenalty() {
-        return getFixedAmountPenalty() != null;
-    }
-
 }

@@ -1284,11 +1284,11 @@ public class Person extends Person_Base {
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyPartyContacts() && !hasAnyChilds() && !hasAnyParents() && getDomainObjectActionLogsSet().isEmpty()
+        return getPartyContactsSet().isEmpty() && getChildsSet().isEmpty() && getParentsSet().isEmpty() && getDomainObjectActionLogsSet().isEmpty()
                 && getExportGroupingReceiversSet().isEmpty() && getPersistentGroupsSet().isEmpty() && getAssociatedQualificationsSet().isEmpty()
                 && getAssociatedAlteredCurriculumsSet().isEmpty() && getEnrolmentEvaluationsSet().isEmpty() && getExportGroupingSendersSet().isEmpty()
                 && getResponsabilityTransactionsSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty() && getEmployee() == null
-                && getTeacher() == null && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyPersonFunctions()
+                && getTeacher() == null && getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty() && !hasAnyPersonFunctions()
                 && (getHomepage() == null || getHomepage().isDeletable()) && getInternalParticipantsSet().isEmpty()
                 && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet().isEmpty();
     }
@@ -2356,6 +2356,11 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
+    public boolean hasAnyStudents() {
+        return getStudentsCount() > 0;
+    }
+
+    @Deprecated
     public int getStudentsCount() {
         return getStudent() != null ? getStudent().getRegistrationsSet().size() : 0;
     }
@@ -2624,6 +2629,11 @@ public class Person extends Person_Base {
             return getDefaultWebAddress().getUrl();
         }
         return null;
+    }
+
+    @Deprecated
+    public boolean hasAvailableWebSite() {
+        return getAvailableWebSite() != null && getAvailableWebSite().booleanValue();
     }
 
     public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(final DegreeCurricularPlan degreeCurricularPlan) {
@@ -3473,7 +3483,7 @@ public class Person extends Person_Base {
             for (final Professorship professorship : getProfessorships(currentTemplate.getExecutionPeriod())) {
                 final boolean isToAnswer = hasToAnswerTeacherInquiry(professorship);
                 if (isToAnswer
-                        && (!(professorship.getInquiryTeacherAnswer() != null)
+                        && (professorship.getInquiryTeacherAnswer() == null
                                 || professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(currentTemplate) || professorship
                                     .hasMandatoryCommentsToMake())) {
                     result.add(professorship.getExecutionCourse());
@@ -3548,7 +3558,7 @@ public class Person extends Person_Base {
                 final boolean isToAnswer = hasToAnswerRegentInquiry(professorship);
                 if (isToAnswer) {
                     allExecutionCourses.add(professorship.getExecutionCourse());
-                    if (!(professorship.getInquiryRegentAnswer() != null)
+                    if (professorship.getInquiryRegentAnswer() == null
                             || professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(currentTemplate)
                             || professorship.hasMandatoryCommentsToMakeAsResponsible()) {
                         result.add(professorship.getExecutionCourse());

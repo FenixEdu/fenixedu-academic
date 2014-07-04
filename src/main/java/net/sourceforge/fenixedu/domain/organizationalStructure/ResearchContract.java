@@ -66,9 +66,4 @@ public abstract class ResearchContract extends ResearchContract_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasExternalContract() {
-        return getExternalContract() != null;
-    }
-
 }

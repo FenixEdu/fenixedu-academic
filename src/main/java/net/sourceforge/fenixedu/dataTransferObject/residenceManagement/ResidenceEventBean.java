@@ -105,7 +105,7 @@ public class ResidenceEventBean implements Serializable {
         }
 
         Student student = Student.readStudentByNumber(Integer.valueOf(userName));
-        if (student == null || !student.hasPerson()) {
+        if (student == null || student.getPerson() == null) {
             statusMessage = "label.error.invalid.student.number";
             return false;
         }

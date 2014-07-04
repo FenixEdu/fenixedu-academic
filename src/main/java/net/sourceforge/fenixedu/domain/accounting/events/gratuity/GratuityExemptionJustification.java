@@ -71,9 +71,4 @@ public class GratuityExemptionJustification extends GratuityExemptionJustificati
         return getGratuityExemptionJustificationType() == GratuityExemptionJustificationType.SOCIAL_SHARE_GRANT_OWNER;
     }
 
-    @Deprecated
-    public boolean hasGratuityExemptionJustificationType() {
-        return getGratuityExemptionJustificationType() != null;
-    }
-
 }

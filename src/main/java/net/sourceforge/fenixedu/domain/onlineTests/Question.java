@@ -79,43 +79,8 @@ public class Question extends Question_Base {
     }
 
     @Deprecated
-    public boolean hasAnyTestQuestions() {
-        return !getTestQuestionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion> getStudentTestsQuestions() {
         return getStudentTestsQuestionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentTestsQuestions() {
-        return !getStudentTestsQuestionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasXmlFile() {
-        return getXmlFile() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasXmlFileName() {
-        return getXmlFileName() != null;
-    }
-
-    @Deprecated
-    public boolean hasVisibility() {
-        return getVisibility() != null;
-    }
-
-    @Deprecated
-    public boolean hasMetadata() {
-        return getMetadata() != null;
     }
 
 }

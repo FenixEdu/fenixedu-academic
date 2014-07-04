@@ -419,7 +419,7 @@ public class Lesson extends Lesson_Base {
                 if (lessonInstance.getSummary() != null && !lessonInstance.getDay().isBefore(day)) {
                     List<LessonInstance> list = result.get(Boolean.TRUE);
                     list.add(lessonInstance);
-                } else if (!(lessonInstance.getSummary() != null) && !lessonInstance.getDay().isBefore(day)) {
+                } else if (lessonInstance.getSummary() == null && !lessonInstance.getDay().isBefore(day)) {
                     List<LessonInstance> list = result.get(Boolean.FALSE);
                     list.add(lessonInstance);
                 }
@@ -437,7 +437,7 @@ public class Lesson extends Lesson_Base {
             OccupationPeriod currentPeriod = getPeriod();
             OccupationPeriod oldFirstPeriod = currentPeriod;
 
-            if (currentPeriod == null || !(currentPeriod.getNextPeriod() != null)) {
+            if (currentPeriod == null || currentPeriod.getNextPeriod() == null) {
                 setPeriod(new OccupationPeriod(newBeginDate, newEndDate));
                 newPeriod = true;
 

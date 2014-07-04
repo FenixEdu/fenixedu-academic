@@ -56,7 +56,7 @@ public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements
 
     @Atomic
     public void delete() {
-        if (!hasAnyCerimonyInquiryPerson()) {
+        if (getCerimonyInquiryPersonSet().isEmpty()) {
             setCerimonyInquiry(null);
             setRootDomainObject(null);
             deleteDomainObject();
@@ -66,31 +66,6 @@ public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson> getCerimonyInquiryPerson() {
         return getCerimonyInquiryPersonSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCerimonyInquiryPerson() {
-        return !getCerimonyInquiryPersonSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasText() {
-        return getText() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCerimonyInquiry() {
-        return getCerimonyInquiry() != null;
-    }
-
-    @Deprecated
-    public boolean hasAnswerOrder() {
-        return getAnswerOrder() != null;
     }
 
 }

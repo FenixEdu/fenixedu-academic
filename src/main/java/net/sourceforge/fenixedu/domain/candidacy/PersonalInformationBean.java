@@ -128,7 +128,7 @@ public class PersonalInformationBean implements Serializable {
     }
 
     public PersonalInformationBean(PrecedentDegreeInformation degreeInfo) {
-        if (degreeInfo.hasPhdIndividualProgramProcess()) {
+        if (degreeInfo.getPhdIndividualProgramProcess() != null) {
             setPhdIndividualProgramProcess(degreeInfo.getPhdIndividualProgramProcess());
         } else {
             setRegistration(degreeInfo.getRegistration());

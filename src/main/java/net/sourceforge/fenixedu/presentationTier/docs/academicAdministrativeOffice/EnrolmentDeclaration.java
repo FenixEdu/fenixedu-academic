@@ -79,7 +79,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
     private void fillthirdthParagraph(Registration registration, Integer numberEnrolments, String studentEnrolment) {
         String situation = "";
-        if (getDocumentRequest().hasExecutionYear()) {
+        if (getDocumentRequest().getExecutionYear() != null) {
             situation =
                     BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                             getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");

@@ -75,39 +75,4 @@ public class CareerWorkshopConfirmation extends CareerWorkshopConfirmation_Base 
         getCareerWorkshopConfirmationEvent().setLastUpdate(timestamp);
     }
 
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasConfirmation() {
-        return getConfirmation() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCareerWorkshopConfirmationEvent() {
-        return getCareerWorkshopConfirmationEvent() != null;
-    }
-
-    @Deprecated
-    public boolean hasConfirmationCode() {
-        return getConfirmationCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasSealStamp() {
-        return getSealStamp() != null;
-    }
-
-    @Deprecated
-    public boolean hasCareerWorkshopApplication() {
-        return getCareerWorkshopApplication() != null;
-    }
-
 }

@@ -142,7 +142,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
             throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degree");
         }
 
-        if (hasRegistration() && getRegistration().getDegree() != selectedDegree) {
+        if (getRegistration() != null && getRegistration().getDegree() != selectedDegree) {
             throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.degree");
         }
 
@@ -164,7 +164,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     }
 
     private void checkParameters(final DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean) {
-        if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
+        if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && getRegistration() != null) {
             throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.state.from.accepted.candidacies");
         }
     }
@@ -212,7 +212,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 
     @Override
     public String getDescription() {
-        return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
+        return getCandidacyProcess().getDisplayName() + (getSelectedDegree() != null ? ": " + getSelectedDegree().getNameI18N() : "");
     }
 
     @Override
@@ -290,26 +290,6 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     @Override
     public void setCandidacyGrade(BigDecimal value) {
         getDegreeCandidacyForGraduatedPersonSeriesGade().setCandidacyGrade(value);
-    }
-
-    @Deprecated
-    public boolean hasCandidacyGrade() {
-        return getCandidacyGrade() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeNature() {
-        return getDegreeNature() != null;
-    }
-
-    @Deprecated
-    public boolean hasSelectedDegree() {
-        return getSelectedDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasAffinity() {
-        return getAffinity() != null;
     }
 
 }

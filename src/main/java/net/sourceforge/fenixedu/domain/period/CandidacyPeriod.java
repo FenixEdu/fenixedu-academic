@@ -126,24 +126,4 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
         return result;
     }
 
-    @Deprecated
-    public boolean hasEnd() {
-        return getEnd() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionInterval() {
-        return getExecutionInterval() != null;
-    }
-
-    @Deprecated
-    public boolean hasStart() {
-        return getStart() != null;
-    }
-
 }

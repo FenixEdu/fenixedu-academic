@@ -114,7 +114,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
     private void fillthirdthParagraph(Registration registration, EnrolmentCertificateRequest request, String student) {
         String situation = "";
-        if (request.hasExecutionYear()) {
+        if (request.getExecutionYear() != null) {
             situation = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");
 
         }

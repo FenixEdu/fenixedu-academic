@@ -59,34 +59,4 @@ public class TeacherServiceNotes extends TeacherServiceNotes_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasServiceExemptionNotes() {
-        return getServiceExemptionNotes() != null;
-    }
-
-    @Deprecated
-    public boolean hasOthersNotes() {
-        return getOthersNotes() != null;
-    }
-
-    @Deprecated
-    public boolean hasMasterDegreeTeachingNotes() {
-        return getMasterDegreeTeachingNotes() != null;
-    }
-
-    @Deprecated
-    public boolean hasFunctionsAccumulation() {
-        return getFunctionsAccumulation() != null;
-    }
-
-    @Deprecated
-    public boolean hasThesisNote() {
-        return getThesisNote() != null;
-    }
-
-    @Deprecated
-    public boolean hasManagementFunctionNotes() {
-        return getManagementFunctionNotes() != null;
-    }
-
 }

@@ -77,7 +77,7 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
 
     public boolean hasPhdProgramFor(final Degree degree) {
         for (final PhdProgram program : getPhdProgramsSet()) {
-            if (program.hasDegree() && program.getDegree().equals(degree)) {
+            if (program.getDegree() != null && program.getDegree().equals(degree)) {
                 return true;
             }
         }
@@ -117,18 +117,8 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPhdPrograms() {
-        return !getPhdProgramsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.ExternalPhdProgram> getExternalPhdPrograms() {
         return getExternalPhdProgramsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExternalPhdPrograms() {
-        return !getExternalPhdProgramsSet().isEmpty();
     }
 
     @Deprecated
@@ -137,33 +127,8 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
     }
 
     @Deprecated
-    public boolean hasAnyThesisSubjects() {
-        return !getThesisSubjectsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getIndividualProgramProcesses() {
         return getIndividualProgramProcessesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyIndividualProgramProcesses() {
-        return !getIndividualProgramProcessesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
     }
 
     public static Set<PhdProgramFocusArea> getActivePhdProgramFocusAreas() {

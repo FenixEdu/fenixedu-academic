@@ -54,19 +54,4 @@ public class StudentDataShareAuthorization extends StudentDataShareAuthorization
         return true;
     }
 
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasSince() {
-        return getSince() != null;
-    }
-
-    @Deprecated
-    public boolean hasAuthorizationChoice() {
-        return getAuthorizationChoice() != null;
-    }
-
 }

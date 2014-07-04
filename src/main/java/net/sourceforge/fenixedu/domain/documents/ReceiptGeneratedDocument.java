@@ -55,9 +55,4 @@ public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
         new ReceiptGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
     }
 
-    @Deprecated
-    public boolean hasSource() {
-        return getSource() != null;
-    }
-
 }

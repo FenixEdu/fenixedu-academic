@@ -75,7 +75,7 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
     }
 
     public boolean isReimbursed() {
-        if (!hasGuideEntry() || getGuideEntry().getReimbursementGuideEntriesSet().size() == 0) {
+        if (getGuideEntry() == null || getGuideEntry().getReimbursementGuideEntriesSet().size() == 0) {
             return false;
         } else {
             for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
@@ -94,16 +94,6 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
         setExecutionYear(null);
         setStudent(null);
         super.delete();
-    }
-
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
     }
 
 }

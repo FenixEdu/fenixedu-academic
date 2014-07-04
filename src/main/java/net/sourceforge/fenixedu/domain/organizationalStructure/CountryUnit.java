@@ -190,9 +190,4 @@ public class CountryUnit extends CountryUnit_Base {
         return getAssociatedCountryUnitFormationsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyAssociatedCountryUnitFormations() {
-        return !getAssociatedCountryUnitFormationsSet().isEmpty();
-    }
-
 }

@@ -241,14 +241,4 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
         return new PhdProgramProcessState(process, type, person, remarks, stateDate);
     }
 
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasProcess() {
-        return getProcess() != null;
-    }
-
 }

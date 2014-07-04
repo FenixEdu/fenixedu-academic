@@ -48,7 +48,7 @@ public class DegreeDesignation extends DegreeDesignation_Base {
 
         List<DegreeDesignation> possibleDesignations = new ArrayList<DegreeDesignation>();
         for (DegreeClassification classification : possibleClassifications) {
-            if (classification.hasAnyDegreeDesignations()) {
+            if (!classification.getDegreeDesignationsSet().isEmpty()) {
                 possibleDesignations.addAll(classification.getDegreeDesignations());
             }
         }
@@ -73,31 +73,6 @@ public class DegreeDesignation extends DegreeDesignation_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Unit> getInstitutionUnit() {
         return getInstitutionUnitSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInstitutionUnit() {
-        return !getInstitutionUnitSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasDescription() {
-        return getDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeClassification() {
-        return getDegreeClassification() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
     }
 
 }

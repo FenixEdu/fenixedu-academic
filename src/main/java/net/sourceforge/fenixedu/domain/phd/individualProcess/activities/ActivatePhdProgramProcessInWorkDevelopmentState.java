@@ -59,7 +59,7 @@ public class ActivatePhdProgramProcessInWorkDevelopmentState extends PhdIndividu
          * registration
          */
 
-        if (!process.hasRegistration()) {
+        if (process.getRegistration() == null) {
             return process;
         }
 

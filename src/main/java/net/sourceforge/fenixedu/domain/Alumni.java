@@ -391,7 +391,7 @@ public class Alumni extends Alumni_Base {
                 Person person = (Person) contact.getParty();
                 partyRead.add(person);
 
-                if (!person.hasRole(RoleType.ALUMNI) || !(person.getStudent() != null)) {
+                if (!person.hasRole(RoleType.ALUMNI) || person.getStudent() == null) {
                     continue;
                 }
                 for (Registration registration : person.getStudent().getRegistrations()) {

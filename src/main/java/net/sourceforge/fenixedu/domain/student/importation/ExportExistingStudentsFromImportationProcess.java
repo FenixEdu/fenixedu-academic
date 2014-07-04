@@ -91,7 +91,7 @@ public class ExportExistingStudentsFromImportationProcess extends ExportExisting
                     continue;
                 }
 
-                if ((person.getStudent() != null && person.getStudent().hasAnyRegistrations()) || person.getTeacher() != null
+                if ((person.getStudent() != null && !person.getStudent().getRegistrationsSet().isEmpty()) || person.getTeacher() != null
                         || person.hasRole(RoleType.TEACHER)) {
                     addRow(spreadsheet, person.getStudent().getNumber().toString(), person.getName(),
                             person.getDocumentIdNumber(), dto.getExecutionDegree(getExecutionYear(),

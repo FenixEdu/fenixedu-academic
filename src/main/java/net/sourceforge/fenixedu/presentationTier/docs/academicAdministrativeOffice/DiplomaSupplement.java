@@ -329,7 +329,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     private void addExtraCurricularActivities() {
         Student student = getDocumentRequest().getStudent();
-        if (student.hasAnyExtraCurricularActivity()) {
+        if (!student.getExtraCurricularActivitySet().isEmpty()) {
             List<String> activities = new ArrayList<String>();
             Map<ExtraCurricularActivityType, List<ExtraCurricularActivity>> activityMap =
                     new HashMap<ExtraCurricularActivityType, List<ExtraCurricularActivity>>();

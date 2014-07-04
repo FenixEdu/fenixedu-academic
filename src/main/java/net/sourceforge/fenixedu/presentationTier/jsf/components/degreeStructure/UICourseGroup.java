@@ -103,8 +103,8 @@ public class UICourseGroup extends UIDegreeModule {
             writer.writeAttribute("style", "width: 70em;", null);
 
             encodeHeader();
-            if (this.courseGroup.hasAnyChildContexts()) {
-                if (this.showRules && this.courseGroup.hasAnyCurricularRules()) {
+            if (!this.courseGroup.getChildContextsSet().isEmpty()) {
+                if (this.showRules && !this.courseGroup.getCurricularRulesSet().isEmpty()) {
                     encodeCurricularRules();
                 }
                 writer.endElement("table");
@@ -154,7 +154,7 @@ public class UICourseGroup extends UIDegreeModule {
         encodeHeader();
 
         if (!this.onlyStructure) {
-            if (this.showRules && this.courseGroup.hasAnyCurricularRules()) {
+            if (this.showRules && !this.courseGroup.getCurricularRulesSet().isEmpty()) {
                 encodeCurricularRules();
             }
 

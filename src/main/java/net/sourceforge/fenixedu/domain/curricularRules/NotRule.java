@@ -70,9 +70,4 @@ public class NotRule extends NotRule_Base {
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
-    @Deprecated
-    public boolean hasWrappedRule() {
-        return getWrappedRule() != null;
-    }
-
 }

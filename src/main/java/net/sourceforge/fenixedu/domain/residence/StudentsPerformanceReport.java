@@ -309,14 +309,4 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         return getStudentsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyStudents() {
-        return !getStudentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasExecutionSemester() {
-        return getExecutionSemester() != null;
-    }
-
 }

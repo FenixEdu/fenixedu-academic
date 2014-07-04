@@ -863,7 +863,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
             return mapping.findForward("createRefereeLetterSuccess");
         }
 
-        if (hashCode.hasLetter()) {
+        if (hashCode.getLetter() != null) {
             request.setAttribute("has-letter", Boolean.TRUE);
             request.setAttribute("letter", hashCode.getLetter());
             return mapping.findForward("createRefereeLetterSuccess");

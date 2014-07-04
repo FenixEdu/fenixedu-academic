@@ -64,7 +64,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     public YearMonthDay getCandidacyStartDate() {
-        if (hasCandidacyPeriod()) {
+        if (getCandidacyPeriod() != null) {
             return getCandidacyPeriod().getStartDate();
         } else {
             return null;
@@ -72,7 +72,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     public YearMonthDay getCandidacyEndDate() {
-        if (hasCandidacyPeriod()) {
+        if (getCandidacyPeriod() != null) {
             return getCandidacyPeriod().getEndDate();
         } else {
             return null;
@@ -99,11 +99,11 @@ public abstract class DelegateElection extends DelegateElection_Base {
      * This method is responsible for deleting the object and all its references
      */
     public void delete() {
-        if (hasCandidacyPeriod()) {
+        if (getCandidacyPeriod() != null) {
             getCandidacyPeriod().delete();
         }
 
-        if (hasAnyVotingPeriod()) {
+        if (!getVotingPeriodSet().isEmpty()) {
             for (DelegateElectionVotingPeriod votingPeriod : getVotingPeriod()) {
                 deleteVotingPeriod(votingPeriod);
             }
@@ -121,11 +121,11 @@ public abstract class DelegateElection extends DelegateElection_Base {
 
     protected void deleteVotingPeriod(DelegateElectionVotingPeriod votingPeriod) {
 
-        for (; votingPeriod.hasAnyVotes(); votingPeriod.getVotes().iterator().next().delete()) {
+        for (; !votingPeriod.getVotesSet().isEmpty(); votingPeriod.getVotes().iterator().next().delete()) {
             ;
         }
 
-        if (hasElectedStudent()) {
+        if (getElectedStudent() != null) {
             setElectedStudent(null);
         }
 
@@ -274,53 +274,8 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     @Deprecated
-    public boolean hasAnyVotingPeriod() {
-        return !getVotingPeriodSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getStudents() {
         return getStudentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudents() {
-        return !getStudentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasAnyCandidates() {
-        return !getCandidatesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasElectedStudent() {
-        return getElectedStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasSentResultsToCandidates() {
-        return getSentResultsToCandidates() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacyPeriod() {
-        return getCandidacyPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
     }
 
 }

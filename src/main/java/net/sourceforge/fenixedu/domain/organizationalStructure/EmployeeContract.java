@@ -77,9 +77,4 @@ public class EmployeeContract extends EmployeeContract_Base {
         return getPerson().getEmployee();
     }
 
-    @Deprecated
-    public boolean hasTeacherContract() {
-        return getTeacherContract() != null;
-    }
-
 }

@@ -99,7 +99,7 @@ public class ReceiptDocument extends FenixReport {
         addParameter("total", this.receipt.getTotalAmount().toPlainString());
 
         addParameter("original", this.original);
-        if (this.receipt.hasContributorParty()) {
+        if (this.receipt.getContributorParty() != null) {
             addParameter("contributorName", this.receipt.getContributorParty().getName());
             addParameter("contributorSocialSecurityNumber", this.receipt.getContributorParty().getSocialSecurityNumber());
             addParameter("contributorAddress", this.receipt.getContributorParty().getAddress());

@@ -136,14 +136,4 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
         return true;
     }
 
-    @Deprecated
-    public boolean hasStudentCurricularPlan() {
-        return getStudentCurricularPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasCycleType() {
-        return getCycleType() != null;
-    }
-
 }

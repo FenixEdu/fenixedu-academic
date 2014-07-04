@@ -56,24 +56,4 @@ public class ProfessionalContractType extends ProfessionalContractType_Base {
         return getGiafProfessionalDataSet();
     }
 
-    @Deprecated
-    public boolean hasAnyGiafProfessionalData() {
-        return !getGiafProfessionalDataSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasGiafId() {
-        return getGiafId() != null;
-    }
-
 }

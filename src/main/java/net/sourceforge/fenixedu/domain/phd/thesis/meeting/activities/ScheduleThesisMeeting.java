@@ -112,7 +112,7 @@ public class ScheduleThesisMeeting extends PhdMeetingSchedulingActivity {
             sendAlertToJuryElement(process.getIndividualProgramProcess(), participant, bean);
         }
 
-        if (!process.hasPresidentJuryElement()) {
+        if (process.getPresidentJuryElement() == null) {
             return;
         }
 

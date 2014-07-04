@@ -39,9 +39,4 @@ public class DegreeCandidacyForGraduatedPersonSeriesGade extends DegreeCandidacy
         deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasCandidacyGrade() {
-        return getCandidacyGrade() != null;
-    }
-
 }

@@ -164,7 +164,7 @@ public class DegreeUnit extends DegreeUnit_Base {
         final List<PersonFunction> delegateFunctions =
                 getAllActiveDelegatePersonFunctionsByFunctionType(FunctionType.DELEGATE_OF_YEAR, null);
         for (PersonFunction delegateFunction : delegateFunctions) {
-            if (delegateFunction.hasCurricularYear() && delegateFunction.getCurricularYear().equals(curricularYear)) {
+            if (delegateFunction.getCurricularYear() != null && delegateFunction.getCurricularYear().equals(curricularYear)) {
                 return delegateFunction;
             }
         }
@@ -375,11 +375,4 @@ public class DegreeUnit extends DegreeUnit_Base {
         }
         return null;
     }
-
-    @Override
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
 }

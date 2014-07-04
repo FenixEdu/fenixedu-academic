@@ -167,19 +167,4 @@ public class ResidenceEvent extends ResidenceEvent_Base {
         return getManagementUnit();
     }
 
-    @Deprecated
-    public boolean hasRoom() {
-        return getRoom() != null;
-    }
-
-    @Deprecated
-    public boolean hasResidenceMonth() {
-        return getResidenceMonth() != null;
-    }
-
-    @Deprecated
-    public boolean hasRoomValue() {
-        return getRoomValue() != null;
-    }
-
 }

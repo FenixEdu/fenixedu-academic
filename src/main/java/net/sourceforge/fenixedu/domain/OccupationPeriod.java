@@ -404,7 +404,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
                     && occupationPeriod.getPreviousPeriod() == null
                     && occupationPeriod.getStartYearMonthDay().equals(start)
                     && occupationPeriod.getEndYearMonthDay().equals(end)
-                    && ((!(occupationPeriod.getNextPeriod() != null) && startPart2 == null) || (occupationPeriod.getNextPeriod()
+                    && ((occupationPeriod.getNextPeriod() == null && startPart2 == null) || (occupationPeriod.getNextPeriod()
                             .getStartYearMonthDay().equals(startPart2) && occupationPeriod.getNextPeriod().getEndYearMonthDay()
                             .equals(endPart2)))) {
                 return occupationPeriod;

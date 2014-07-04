@@ -33,9 +33,4 @@ public class CareerWorkshopConfirmationSpreadsheet extends CareerWorkshopConfirm
         super.delete();
     }
 
-    @Deprecated
-    public boolean hasCareerWorkshopConfirmationEvent() {
-        return getCareerWorkshopConfirmationEvent() != null;
-    }
-
 }

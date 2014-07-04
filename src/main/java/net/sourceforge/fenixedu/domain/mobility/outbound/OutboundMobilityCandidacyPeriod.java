@@ -369,18 +369,8 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     @Deprecated
-    public boolean hasAnyOutboundMobilityCandidacyContest() {
-        return !getOutboundMobilityCandidacyContestSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission> getOutboundMobilityCandidacySubmission() {
         return getOutboundMobilityCandidacySubmissionSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyOutboundMobilityCandidacySubmission() {
-        return !getOutboundMobilityCandidacySubmissionSet().isEmpty();
     }
 
     @Deprecated
@@ -389,33 +379,13 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     @Deprecated
-    public boolean hasAnyCandidatesNotifiedOfSelectionResultsForGroups() {
-        return !getCandidatesNotifiedOfSelectionResultsForGroupsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption> getOutboundMobilityCandidacyPeriodConfirmationOption() {
         return getOutboundMobilityCandidacyPeriodConfirmationOptionSet();
     }
 
     @Deprecated
-    public boolean hasAnyOutboundMobilityCandidacyPeriodConfirmationOption() {
-        return !getOutboundMobilityCandidacyPeriodConfirmationOptionSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup> getConcludedCandidateSelectionGroups() {
         return getConcludedCandidateSelectionGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyConcludedCandidateSelectionGroups() {
-        return !getConcludedCandidateSelectionGroupsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasOptionIntroductoryDestription() {
-        return getOptionIntroductoryDestription() != null;
     }
 
     private OutboundMobilityCandidacyPeriod findPreviousPeriod() {

@@ -55,9 +55,4 @@ public class PersonSender extends PersonSender_Base {
         return person.getSender() != null ? person.getSender() : new PersonSender(person);
     }
 
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
 }

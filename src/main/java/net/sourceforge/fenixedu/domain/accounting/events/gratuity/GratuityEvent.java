@@ -282,9 +282,4 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
         return false;
     }
 
-    @Deprecated
-    public boolean hasStudentCurricularPlan() {
-        return getStudentCurricularPlan() != null;
-    }
-
 }

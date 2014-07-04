@@ -60,7 +60,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
                         if (candidacyProcess != null && candidacyPeriod != null
                                 && candidacyPeriod instanceof Over23CandidacyPeriod) {
-                            if (candidacyPeriod.hasAnyCandidacyProcesses()) {
+                            if (!candidacyPeriod.getCandidacyProcessesSet().isEmpty()) {
                                 throw new DomainException("error.Over23CandidacyProcess.candidacy.period.already.has.process");
                             }
                         }
@@ -193,7 +193,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
                 throw new PreConditionNotValidException();
             }
 
-            if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+            if (process.getCandidacyPeriod() == null || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
                 throw new PreConditionNotValidException();
             }
         }

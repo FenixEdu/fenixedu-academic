@@ -96,34 +96,4 @@ public class StudentTestLog extends StudentTestLog_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasChecksum() {
-        return getChecksum() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasDistributedTest() {
-        return getDistributedTest() != null;
-    }
-
-    @Deprecated
-    public boolean hasDateDateTime() {
-        return getDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasEvent() {
-        return getEvent() != null;
-    }
-
 }

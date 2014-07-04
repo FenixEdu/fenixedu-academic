@@ -29,17 +29,12 @@ public class InquiryRegentAnswer extends InquiryRegentAnswer_Base {
     }
 
     public void delete() {
-        if (hasAnyQuestionAnswers()) {
+        if (!getQuestionAnswersSet().isEmpty()) {
             throw new DomainException("error.inquiryAnswer.questionAnswersAssociated");
         }
         setProfessorship(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
-    }
-
-    @Deprecated
-    public boolean hasProfessorship() {
-        return getProfessorship() != null;
     }
 
 }

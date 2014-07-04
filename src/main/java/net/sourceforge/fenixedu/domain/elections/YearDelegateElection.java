@@ -87,7 +87,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
         if (votingPeriod != null) {
             validatePeriodGivenExecutionYear(getExecutionYear(), votingPeriod);
 
-            if (!hasCandidacyPeriod()) {
+            if (getCandidacyPeriod() == null) {
                 throw new DomainException("error.elections.createVotingPeriod.mustCreateCandidacyPeriod", new String[] {
                         getDegree().getSigla(), getCurricularYear().getYear().toString() });
             }
@@ -119,7 +119,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
     }
 
     public boolean getCanYearDelegateBeElected() {
-        return (getLastVotingPeriod().isCurrentPeriod() || hasElectedStudent() ? false : true);
+        return (getLastVotingPeriod().isCurrentPeriod() || getElectedStudent() != null ? false : true);
     }
 
     /*
@@ -374,11 +374,6 @@ public class YearDelegateElection extends YearDelegateElection_Base {
             }
         });
         return elections;
-    }
-
-    @Deprecated
-    public boolean hasCurricularYear() {
-        return getCurricularYear() != null;
     }
 
 }

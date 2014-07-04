@@ -39,7 +39,7 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
 
     @Override
     public boolean hasCandidacyProcess() {
-        return hasPhdProgramCandidacyProcess();
+        return getPhdProgramCandidacyProcess() != null;
     }
 
     @Override
@@ -113,16 +113,6 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyAlert> getAlerts() {
         return getAlertsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAlerts() {
-        return !getAlertsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasPhdProgramCandidacyProcess() {
-        return getPhdProgramCandidacyProcess() != null;
     }
 
 }

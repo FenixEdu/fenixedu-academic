@@ -70,7 +70,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     @Override
     protected boolean isToDiscard() {
-        return getReferee().hasLetter() || candidacyPeriodIsOver();
+        return getReferee().getLetter() != null || candidacyPeriodIsOver();
     }
 
     private boolean candidacyPeriodIsOver() {
@@ -112,11 +112,6 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
     @Override
     public boolean isSystemAlert() {
         return true;
-    }
-
-    @Deprecated
-    public boolean hasReferee() {
-        return getReferee() != null;
     }
 
 }

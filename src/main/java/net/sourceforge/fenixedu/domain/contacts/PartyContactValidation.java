@@ -109,7 +109,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         if (!isInvalid()) {
             return;
         }
-        if (hasBennu()) {
+        if (getRootDomainObject() != null) {
             setRootDomainObject(null);
         }
 
@@ -117,7 +117,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         setLastChangeDate(new DateTime());
         final PartyContact partyContact = getPartyContact();
         partyContact.getParty().logValidContact(partyContact);
-        if (partyContact.hasPrevPartyContact()) {
+        if (partyContact.getPrevPartyContact() != null) {
             partyContact.getPrevPartyContact().deleteWithoutCheckRules();
         }
 
@@ -128,7 +128,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
     }
 
     private void setNotValidState(PartyContactValidationState state) {
-        if (!hasBennu()) {
+        if (getRootDomainObject() == null) {
             setRootDomainObject(Bennu.getInstance());
         }
         super.setState(state);
@@ -191,46 +191,6 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         if (getToken() == null) {
             triggerValidationProcess();
         }
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasState() {
-        return getState() != null;
-    }
-
-    @Deprecated
-    public boolean hasRequestDate() {
-        return getRequestDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasToBeDefault() {
-        return getToBeDefault() != null;
-    }
-
-    @Deprecated
-    public boolean hasTries() {
-        return getTries() != null;
-    }
-
-    @Deprecated
-    public boolean hasToken() {
-        return getToken() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastChangeDate() {
-        return getLastChangeDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasPartyContact() {
-        return getPartyContact() != null;
     }
 
 }

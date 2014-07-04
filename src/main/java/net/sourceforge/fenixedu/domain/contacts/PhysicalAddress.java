@@ -118,7 +118,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     }
 
     public String getCountryOfResidenceName() {
-        return hasCountryOfResidence() ? getCountryOfResidence().getName() : StringUtils.EMPTY;
+        return getCountryOfResidence() != null ? getCountryOfResidence().getName() : StringUtils.EMPTY;
     }
 
     @Override
@@ -194,46 +194,6 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     @Override
     public void logRefuse(Person person) {
         logRefuseAux(person, "label.partyContacts.PhysicalAddress");
-    }
-
-    @Deprecated
-    public boolean hasParishOfResidence() {
-        return getParishOfResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasAreaCode() {
-        return getAreaCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasAreaOfAreaCode() {
-        return getAreaOfAreaCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasCountryOfResidence() {
-        return getCountryOfResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasArea() {
-        return getArea() != null;
-    }
-
-    @Deprecated
-    public boolean hasAddress() {
-        return getAddress() != null;
-    }
-
-    @Deprecated
-    public boolean hasDistrictSubdivisionOfResidence() {
-        return getDistrictSubdivisionOfResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasDistrictOfResidence() {
-        return getDistrictOfResidence() != null;
     }
 
 }

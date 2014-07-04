@@ -121,9 +121,4 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
         super.disconnect();
     }
 
-    @Deprecated
-    public boolean hasCandidacyHashCode() {
-        return getCandidacyHashCode() != null;
-    }
-
 }

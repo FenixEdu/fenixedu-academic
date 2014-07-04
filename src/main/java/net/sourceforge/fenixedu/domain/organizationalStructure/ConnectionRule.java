@@ -42,24 +42,4 @@ public class ConnectionRule extends ConnectionRule_Base {
         deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasAccountabilityType() {
-        return getAccountabilityType() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasAllowedParentPartyType() {
-        return getAllowedParentPartyType() != null;
-    }
-
-    @Deprecated
-    public boolean hasAllowedChildPartyType() {
-        return getAllowedChildPartyType() != null;
-    }
-
 }

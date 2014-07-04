@@ -1037,11 +1037,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         String filter = getEnrolmentTypeFilter();
 
         for (final Attends attends : getExecutionCourse().getAttendsSet()) {
-            if (!(attends.getEnrolment() != null) || !attends.getEnrolment().isImpossible()) {
+            if (attends.getEnrolment() == null || !attends.getEnrolment().isImpossible()) {
                 if (filter.equals(ENROLMENT_TYPE_FILTER_ALL)) {
                     result.add(attends);
                 } else if (filter.equals(ENROLMENT_TYPE_FILTER_NOT_ENROLLED)) {
-                    if (!(attends.getEnrolment() != null)) {
+                    if (attends.getEnrolment() == null) {
                         result.add(attends);
                     }
                 } else if (attends.getEnrolment() != null) {

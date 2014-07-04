@@ -188,7 +188,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     public boolean isRegistered() {
-        if (hasPhdMigrationIndividualPersonalData()) {
+        if (getPhdMigrationIndividualPersonalData() != null) {
             try {
                 if (getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix()) {
                     return true;
@@ -200,7 +200,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     public boolean isNotRegisteredAndNoSimilarsExist() {
-        if (hasPhdMigrationIndividualPersonalData()) {
+        if (getPhdMigrationIndividualPersonalData() != null) {
             try {
                 if (!getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix()) {
                     return true;
@@ -212,7 +212,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     public boolean isThereAnySimilarRegistration() {
-        if (hasPhdMigrationIndividualPersonalData()) {
+        if (getPhdMigrationIndividualPersonalData() != null) {
             try {
                 getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix();
             } catch (PhdMigrationException e) {
@@ -627,46 +627,6 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         final PhdIndividualProgramProcessBean processBean = new PhdIndividualProgramProcessBean(individualProcess);
         processBean.setStateDate(anullmentDate);
         ExecuteProcessActivity.run(individualProcess, CancelPhdProgramProcess.class.getSimpleName(), processBean);
-    }
-
-    @Deprecated
-    public boolean hasMigrationDate() {
-        return getMigrationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasData() {
-        return getData() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasMigrationStatus() {
-        return getMigrationStatus() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumber() {
-        return getNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdMigrationIndividualPersonalData() {
-        return getPhdMigrationIndividualPersonalData() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdMigrationProcess() {
-        return getPhdMigrationProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasParseLog() {
-        return getParseLog() != null;
     }
 
 }

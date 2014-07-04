@@ -210,43 +210,8 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
     }
 
     @Deprecated
-    public boolean hasAnyOutboundMobilityCandidacy() {
-        return !getOutboundMobilityCandidacySet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegree() {
         return getExecutionDegreeSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExecutionDegree() {
-        return !getExecutionDegreeSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasOutboundMobilityCandidacyContestGroup() {
-        return getOutboundMobilityCandidacyContestGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasMobilityAgreement() {
-        return getMobilityAgreement() != null;
-    }
-
-    @Deprecated
-    public boolean hasOutboundMobilityCandidacyPeriod() {
-        return getOutboundMobilityCandidacyPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasVacancies() {
-        return getVacancies() != null;
     }
 
 }

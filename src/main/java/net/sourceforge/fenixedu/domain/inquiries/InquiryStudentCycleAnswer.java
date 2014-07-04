@@ -36,17 +36,7 @@ public class InquiryStudentCycleAnswer extends InquiryStudentCycleAnswer_Base {
 
     @ConsistencyPredicate
     public boolean checkHasRegistrationOrHasPhd() {
-        return hasRegistration() || hasPhdProcess();
-    }
-
-    @Deprecated
-    public boolean hasRegistration() {
-        return getRegistration() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdProcess() {
-        return getPhdProcess() != null;
+        return getRegistration() != null || getPhdProcess() != null;
     }
 
 }

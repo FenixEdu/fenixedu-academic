@@ -38,14 +38,4 @@ public abstract class DatePeriodBaseCreditLine extends DatePeriodBaseCreditLine_
                 executionSemester.getEndDateYearMonthDay()));
     }
 
-    @Deprecated
-    public boolean hasEnd() {
-        return getEnd() != null;
-    }
-
-    @Deprecated
-    public boolean hasStart() {
-        return getStart() != null;
-    }
-
 }

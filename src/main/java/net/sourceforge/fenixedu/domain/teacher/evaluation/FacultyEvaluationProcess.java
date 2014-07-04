@@ -337,7 +337,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
     public int getApprovedEvaluatedCount() {
         int result = 0;
         for (final TeacherEvaluationProcess teacherEvaluationProcess : getTeacherEvaluationProcessSet()) {
-            if (teacherEvaluationProcess.hasAnyApprovedTeacherEvaluationProcessMark()) {
+            if (!teacherEvaluationProcess.getApprovedTeacherEvaluationProcessMarkSet().isEmpty()) {
                 result++;
             }
         }
@@ -355,43 +355,8 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
     }
 
     @Deprecated
-    public boolean hasAnyTeacherEvaluationProcess() {
-        return !getTeacherEvaluationProcessSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessYear> getFacultyEvaluationProcessYear() {
         return getFacultyEvaluationProcessYearSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyFacultyEvaluationProcessYear() {
-        return !getFacultyEvaluationProcessYearSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasSuffix() {
-        return getSuffix() != null;
-    }
-
-    @Deprecated
-    public boolean hasAutoEvaluationInterval() {
-        return getAutoEvaluationInterval() != null;
-    }
-
-    @Deprecated
-    public boolean hasEvaluationInterval() {
-        return getEvaluationInterval() != null;
-    }
-
-    @Deprecated
-    public boolean hasTitle() {
-        return getTitle() != null;
     }
 
 }

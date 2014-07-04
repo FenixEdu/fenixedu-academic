@@ -127,39 +127,4 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
         return getMemberSet();
     }
 
-    @Deprecated
-    public boolean hasAnyMember() {
-        return !getMemberSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreated() {
-        return getCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreator() {
-        return getCreator() != null;
-    }
-
-    @Deprecated
-    public boolean hasOldGroup() {
-        return getOldGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasNewGroup() {
-        return getNewGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasDeletedBennu() {
-        return getDeletedRootDomainObject() != null;
-    }
-
 }

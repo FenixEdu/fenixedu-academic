@@ -714,24 +714,8 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     }
 
     @Override
-    @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasPresentationDate() {
-        return getPresentationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasPresentationRequestDate() {
-        return getPresentationRequestDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasIndividualProgramProcess() {
-        return getIndividualProgramProcess() != null;
     }
 
 }

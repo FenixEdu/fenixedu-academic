@@ -111,14 +111,4 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
         return false;
     }
 
-    @Deprecated
-    public boolean hasSubject() {
-        return getSubject() != null;
-    }
-
-    @Deprecated
-    public boolean hasPurpose() {
-        return getPurpose() != null;
-    }
-
 }

@@ -56,7 +56,7 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 
-        if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
+        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null) {
             getEvent().cancel(academicServiceRequestBean.getResponsible());
 
         } else if (academicServiceRequestBean.isToConclude()) {
@@ -107,16 +107,6 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
     @Override
     public boolean hasPersonalInfo() {
         return false;
-    }
-
-    @Deprecated
-    public boolean hasSubject() {
-        return getSubject() != null;
-    }
-
-    @Deprecated
-    public boolean hasPurpose() {
-        return getPurpose() != null;
     }
 
 }

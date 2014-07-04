@@ -35,7 +35,7 @@ public abstract class ThesisLibraryOperation extends ThesisLibraryOperation_Base
     }
 
     protected void init(Thesis thesis, Person performer) {
-        if (thesis.hasLastLibraryOperation()) {
+        if (thesis.getLastLibraryOperation() != null) {
             setPrevious(thesis.getLastLibraryOperation());
         }
         super.setThesis(thesis);
@@ -74,31 +74,6 @@ public abstract class ThesisLibraryOperation extends ThesisLibraryOperation_Base
     @Override
     public void setOperation(DateTime operation) {
         throw new UnsupportedOperationException();
-    }
-
-    @Deprecated
-    public boolean hasThesis() {
-        return getThesis() != null;
-    }
-
-    @Deprecated
-    public boolean hasNext() {
-        return getNext() != null;
-    }
-
-    @Deprecated
-    public boolean hasOperation() {
-        return getOperation() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrevious() {
-        return getPrevious() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerformer() {
-        return getPerformer() != null;
     }
 
 }

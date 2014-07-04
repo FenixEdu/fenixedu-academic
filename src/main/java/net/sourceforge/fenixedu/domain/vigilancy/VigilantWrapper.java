@@ -479,44 +479,4 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         return getPerson().getUnavailablePeriodsForGivenYear(getExecutionYear());
     }
 
-    @Deprecated
-    public boolean hasAnyVigilancies() {
-        return !getVigilanciesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasJustification() {
-        return getJustification() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasConvokable() {
-        return getConvokable() != null;
-    }
-
-    @Deprecated
-    public boolean hasPointsWeight() {
-        return getPointsWeight() != null;
-    }
-
-    @Deprecated
-    public boolean hasStartPoints() {
-        return getStartPoints() != null;
-    }
-
-    @Deprecated
-    public boolean hasVigilantGroup() {
-        return getVigilantGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
 }

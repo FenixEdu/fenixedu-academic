@@ -33,38 +33,8 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPhdMigrationIndividualProcessData() {
-        return !getPhdMigrationIndividualProcessDataSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding> getPhdMigrationGuiding() {
         return getPhdMigrationGuidingSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdMigrationGuiding() {
-        return !getPhdMigrationGuidingSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndTime() {
-        return getEndTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDate() {
-        return getCreationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasStartTime() {
-        return getStartTime() != null;
     }
 
 }

@@ -53,9 +53,4 @@ public class TeacherPastService extends TeacherPastService_Base {
         return count;
     }
 
-    @Deprecated
-    public boolean hasCredits() {
-        return getCredits() != null;
-    }
-
 }

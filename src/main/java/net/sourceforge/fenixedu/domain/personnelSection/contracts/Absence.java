@@ -60,44 +60,4 @@ public class Absence extends Absence_Base {
         return getPersonAbsencesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyPersonAbsences() {
-        return !getPersonAbsencesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasIsSabaticalOrEquivalent() {
-        return getIsSabaticalOrEquivalent() != null;
-    }
-
-    @Deprecated
-    public boolean hasGiveCredits() {
-        return getGiveCredits() != null;
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasHasMandatoryCredits() {
-        return getHasMandatoryCredits() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasImportAbsence() {
-        return getImportAbsence() != null;
-    }
-
-    @Deprecated
-    public boolean hasGiafId() {
-        return getGiafId() != null;
-    }
-
 }

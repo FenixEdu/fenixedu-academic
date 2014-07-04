@@ -75,19 +75,4 @@ public abstract class ReplyTo extends ReplyTo_Base {
         return getMessagesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyMessages() {
-        return !getMessagesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasSender() {
-        return getSender() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
 }

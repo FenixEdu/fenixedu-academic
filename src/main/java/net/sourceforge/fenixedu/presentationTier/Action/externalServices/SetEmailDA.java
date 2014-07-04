@@ -76,7 +76,7 @@ public class SetEmailDA extends FenixDispatchAction {
                 for (final Registration registration : student.getRegistrationsSet()) {
                     final StudentCandidacy candidacy = registration.getStudentCandidacy();
                     if (candidacy != null && (candidacy instanceof DegreeCandidacy || candidacy instanceof IMDCandidacy)
-                            && candidacy.getExecutionYear().isCurrent() && candidacy.hasAnyCandidacySituations()) {
+                            && candidacy.getExecutionYear().isCurrent() && !candidacy.getCandidacySituationsSet().isEmpty()) {
                         new PDFGeneratorThread(candidacy.getExternalId(), request.getServerName(), request.getServerPort(),
                                 request.getContextPath(), request.getServletPath()).start();
                     }

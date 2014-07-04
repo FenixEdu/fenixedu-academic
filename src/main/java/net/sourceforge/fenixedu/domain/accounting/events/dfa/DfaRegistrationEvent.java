@@ -171,14 +171,4 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
         return true;
     }
 
-    @Deprecated
-    public boolean hasRegistration() {
-        return getRegistration() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
 }

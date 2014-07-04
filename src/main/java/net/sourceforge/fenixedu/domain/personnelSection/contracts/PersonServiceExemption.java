@@ -60,14 +60,4 @@ public class PersonServiceExemption extends PersonServiceExemption_Base {
         return getServiceExemption().getGiveCredits();
     }
 
-    @Deprecated
-    public boolean hasServiceExemption() {
-        return getServiceExemption() != null;
-    }
-
-    @Deprecated
-    public boolean hasServiceExemptionGiafId() {
-        return getServiceExemptionGiafId() != null;
-    }
-
 }

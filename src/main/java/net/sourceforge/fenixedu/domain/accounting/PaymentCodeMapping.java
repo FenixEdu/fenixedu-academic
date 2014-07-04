@@ -121,7 +121,7 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
     }
 
     public boolean hasOldPaymentCode(final PaymentCode oldCode) {
-        return hasOldPaymentCode() && getOldPaymentCode().equals(oldCode);
+        return getOldPaymentCode() != null && getOldPaymentCode().equals(oldCode);
     }
 
     public boolean has(final ExecutionInterval executionInterval) {
@@ -132,26 +132,6 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
     static public PaymentCodeMapping create(final ExecutionInterval executionInterval, final PaymentCode oldCode,
             final PaymentCode newCode) {
         return new PaymentCodeMapping(executionInterval, oldCode, newCode);
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionInterval() {
-        return getExecutionInterval() != null;
-    }
-
-    @Deprecated
-    public boolean hasOldPaymentCode() {
-        return getOldPaymentCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasNewPaymentCode() {
-        return getNewPaymentCode() != null;
     }
 
 }

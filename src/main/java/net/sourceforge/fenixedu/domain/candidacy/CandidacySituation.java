@@ -176,29 +176,4 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
         deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasCandidacy() {
-        return getCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasSituationDate() {
-        return getSituationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasRemarks() {
-        return getRemarks() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
 }

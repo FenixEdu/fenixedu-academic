@@ -277,7 +277,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
             page.rowStart();
             page.column(thesisSubjectOrder.getSubjectOrder().toString());
             page.column(thesisSubjectOrder.getThesisSubject().getName().getContent());
-            page.column(thesisSubjectOrder.getThesisSubject().hasTeacher() ? thesisSubjectOrder.getThesisSubject().getTeacher()
+            page.column(thesisSubjectOrder.getThesisSubject().getTeacher() != null ? thesisSubjectOrder.getThesisSubject().getTeacher()
                     .getPerson().getName() : "");
             page.rowEnd();
         }
@@ -393,7 +393,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
                 .rowEnd();
 
         page.rowStart().header("Recomendation letter:");
-        if (letter.hasFile()) {
+        if (letter.getFile() != null) {
             page.column(letter.getFile().getDisplayName() + " (file is inside documents zip file)");
         } else {
             page.column("-");
@@ -462,7 +462,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         final PhdIndividualProgramProcess process = hashCode.getIndividualProgramProcess();
         page.h(3, "Phd supervisors (if applicable)", "mtop2");
 
-        if (process.hasAnyGuidings()) {
+        if (!process.getGuidingsSet().isEmpty()) {
             int count = 1;
             for (final PhdParticipant guiding : process.getGuidings()) {
                 page.pStart("mbottom0").strong(String.valueOf(count) + ". ").pEnd();

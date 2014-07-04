@@ -60,9 +60,4 @@ public class ReimbursementTransaction extends ReimbursementTransaction_Base {
         setReimbursementGuideEntry(reimbursementGuideEntry);
     }
 
-    @Deprecated
-    public boolean hasReimbursementGuideEntry() {
-        return getReimbursementGuideEntry() != null;
-    }
-
 }

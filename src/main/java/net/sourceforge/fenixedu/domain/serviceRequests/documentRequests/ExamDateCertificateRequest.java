@@ -139,23 +139,8 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
     }
 
     @Deprecated
-    public boolean hasAnyExams() {
-        return !getExamsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
         return getEnrolmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEnrolments() {
-        return !getEnrolmentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasExecutionPeriod() {
-        return getExecutionPeriod() != null;
     }
 
 }

@@ -82,7 +82,7 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
         // that means that is not to answer and has no data to see
         if (inquiryTemplate == null
                 || (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && inquiryTemplate
-				.getExecutionPeriod().getInquiryResultsSet().isEmpty())) {
+                        .getExecutionPeriod().getInquiryResultsSet().isEmpty())) {
             return forward(request, "/teacher/inquiries/regentInquiryClosed.jsp");
         } else if (!inquiryTemplate.isOpen()) {
             request.setAttribute("readMode", "readMode");
@@ -167,7 +167,7 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
     static InquiryResponseState getFilledState(ExecutionCourse executionCourse, Professorship professorship,
             RegentInquiryTemplate inquiryTemplate) {
         InquiryResponseState finalState = InquiryResponseState.COMPLETE;
-        if (!(professorship.getInquiryRegentAnswer() != null)) {
+        if (professorship.getInquiryRegentAnswer() == null) {
             finalState = InquiryResponseState.EMPTY;
         } else if (professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)
                 || professorship.getPerson().hasMandatoryCommentsToMakeAsRegentInUC(executionCourse)

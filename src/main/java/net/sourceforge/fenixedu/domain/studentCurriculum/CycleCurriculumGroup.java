@@ -218,7 +218,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
             throw new DomainException("error.CycleCurriculumGroup.cycle.is.not.concluded");
         }
 
-        if (hasConclusionProcess()) {
+        if (getConclusionProcess() != null) {
             getConclusionProcess().update(new RegistrationConclusionBean(getRegistration(), this));
         } else {
             CycleConclusionProcess.conclude(new RegistrationConclusionBean(getRegistration(), this));
@@ -276,7 +276,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     public boolean isConclusionProcessed() {
-        return hasConclusionProcess();
+        return getConclusionProcess() != null;
     }
 
     final public YearMonthDay getConclusionDate() {
@@ -386,11 +386,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     public BranchCourseGroup getMinorBranchCourseGroup() {
         return getBranchCourseGroup(BranchType.MINOR);
-    }
-
-    @Deprecated
-    public boolean hasConclusionProcess() {
-        return getConclusionProcess() != null;
     }
 
 }

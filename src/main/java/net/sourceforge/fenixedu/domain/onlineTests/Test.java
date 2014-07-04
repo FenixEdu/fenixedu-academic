@@ -168,39 +168,4 @@ public class Test extends Test_Base {
         return getTestQuestionsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyTestQuestions() {
-        return !getTestQuestionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasInformation() {
-        return getInformation() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasTestScope() {
-        return getTestScope() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastModifiedDateDateTime() {
-        return getLastModifiedDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDateDateTime() {
-        return getCreationDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasTitle() {
-        return getTitle() != null;
-    }
-
 }

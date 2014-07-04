@@ -55,7 +55,7 @@ public class PhdStudentCurricularPlanEnrolmentManager extends StudentCurricularP
 
     private boolean mustValidateCurricularCourses() {
 
-        if (!getRegistration().hasPhdIndividualProgramProcess()) {
+        if (getRegistration().getPhdIndividualProgramProcess() == null) {
             return false;
         }
 

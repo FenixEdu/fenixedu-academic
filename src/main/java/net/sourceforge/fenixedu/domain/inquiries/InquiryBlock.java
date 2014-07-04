@@ -46,7 +46,7 @@ public class InquiryBlock extends InquiryBlock_Base {
         for (; !getInquiryGroupsQuestions().isEmpty(); getInquiryGroupsQuestions().iterator().next().delete()) {
             setRootDomainObject(null);
         }
-        if (hasInquiryQuestionHeader()) {
+        if (getInquiryQuestionHeader() != null) {
             getInquiryQuestionHeader().delete();
         }
         setResultQuestion(null);
@@ -63,43 +63,8 @@ public class InquiryBlock extends InquiryBlock_Base {
     }
 
     @Deprecated
-    public boolean hasAnyInquiries() {
-        return !getInquiriesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion> getInquiryGroupsQuestions() {
         return getInquiryGroupsQuestionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInquiryGroupsQuestions() {
-        return !getInquiryGroupsQuestionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasGroupResultQuestion() {
-        return getGroupResultQuestion() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasResultQuestion() {
-        return getResultQuestion() != null;
-    }
-
-    @Deprecated
-    public boolean hasBlockOrder() {
-        return getBlockOrder() != null;
-    }
-
-    @Deprecated
-    public boolean hasInquiryQuestionHeader() {
-        return getInquiryQuestionHeader() != null;
     }
 
 }

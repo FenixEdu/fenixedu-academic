@@ -312,14 +312,4 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
         return getGiafProfessionalDatasSet();
     }
 
-    @Deprecated
-    public boolean hasAnyGiafProfessionalDatas() {
-        return !getGiafProfessionalDatasSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
 }

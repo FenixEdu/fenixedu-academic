@@ -59,7 +59,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 
     @Override
     public Set<ReplyTo> getReplyTos() {
-        if (!hasAnyReplyTos()) {
+        if (getReplyTosSet().isEmpty()) {
             addReplyTos(new CurrentUserReplyTo());
         }
         return super.getReplyTos();
@@ -158,11 +158,6 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     @Atomic
     public static UnitBasedSender newInstance(Unit unit) {
         return new UnitBasedSender(unit, Sender.getNoreplyMail(), UnitGroup.recursiveWorkers(unit));
-    }
-
-    @Deprecated
-    public boolean hasUnit() {
-        return getUnit() != null;
     }
 
 }

@@ -83,7 +83,7 @@ public class UICurricularCourse extends UIDegreeModule {
 
         encodeCurricularCourse();
 
-        if (this.showRules && this.curricularCourse.hasAnyCurricularRules()) {
+        if (this.showRules && !this.curricularCourse.getCurricularRulesSet().isEmpty()) {
             encodeCurricularRules();
         }
 

@@ -137,24 +137,4 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
         return getVersionsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyVersions() {
-        return !getVersionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastVersion() {
-        return getLastVersion() != null;
-    }
-
-    @Deprecated
-    public boolean hasConclusionYear() {
-        return getConclusionYear() != null;
-    }
-
 }

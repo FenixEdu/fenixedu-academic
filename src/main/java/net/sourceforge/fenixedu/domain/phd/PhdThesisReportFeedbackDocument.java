@@ -75,7 +75,7 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
     }
 
     public boolean isAssignedToProcess() {
-        return hasPhdProgramProcess();
+        return getPhdProgramProcess() != null;
     }
 
     @Override
@@ -86,11 +86,6 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
     @Override
     public PhdProgramProcessDocument getLastVersion() {
         return getJuryElement().getLastFeedbackDocument();
-    }
-
-    @Deprecated
-    public boolean hasJuryElement() {
-        return getJuryElement() != null;
     }
 
 }

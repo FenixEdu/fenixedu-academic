@@ -44,7 +44,7 @@ public class StandaloneIndividualCandidacyPR extends StandaloneIndividualCandida
 
     @Override
     protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        if (!event.hasAnyExemptions()) {
+        if (event.getExemptionsSet().isEmpty()) {
             return amountToPay;
         }
 

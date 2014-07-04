@@ -45,7 +45,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     static public ThesisJuryElement createPresident(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
 
-        if (process.hasPresidentJuryElement()) {
+        if (process.getPresidentJuryElement() != null) {
             throw new DomainException("error.ThesisJuryElement.president.already.exists");
         }
 
@@ -96,14 +96,14 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
          * allow to be President and Jury Member at the same time
          */
         for (final ThesisJuryElement element : participant.getThesisJuryElements()) {
-            if (element.hasProcess() && element.getProcess().equals(process) && !isPresident && !element.isPresident()) {
+            if (element.getProcess() != null && element.getProcess().equals(process) && !isPresident && !element.isPresident()) {
                 throw new DomainException("error.ThesisJuryElement.participant.already.has.jury.element.in.process");
             }
         }
     }
 
     private Integer generateNextElementOrder(final PhdThesisProcess process) {
-        if (!process.hasAnyThesisJuryElements()) {
+        if (process.getThesisJuryElementsSet().isEmpty()) {
             return Integer.valueOf(1);
         }
         return Integer.valueOf(Collections.max(process.getThesisJuryElements(), ThesisJuryElement.COMPARATOR_BY_ELEMENT_ORDER)
@@ -118,7 +118,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     private void checkIfCanBeDeleted() {
-        if (hasAnyFeedbackDocuments()) {
+        if (!getFeedbackDocumentsSet().isEmpty()) {
             throw new DomainException("error.ThesisJuryElement.has.feedback.documents");
         }
     }
@@ -209,11 +209,11 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     public boolean isMainGuiding() {
-        return getParticipant().hasProcessForGuiding();
+        return getParticipant().getProcessForGuiding() != null;
     }
 
     public boolean isAssistantGuiding() {
-        return getParticipant().hasProcessForAssistantGuiding();
+        return getParticipant().getProcessForAssistantGuiding() != null;
     }
 
     public boolean isFor(final PhdThesisProcess process) {
@@ -221,7 +221,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     public PhdThesisReportFeedbackDocument getLastFeedbackDocument() {
-        return hasAnyFeedbackDocuments() ? Collections.max(getFeedbackDocumentsSet(),
+        return !getFeedbackDocumentsSet().isEmpty() ? Collections.max(getFeedbackDocumentsSet(),
                 PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
     }
 
@@ -245,57 +245,12 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     public boolean isPresident() {
-        return hasProcessForPresidentJuryElement();
+        return getProcessForPresidentJuryElement() != null;
     }
 
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument> getFeedbackDocuments() {
         return getFeedbackDocumentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyFeedbackDocuments() {
-        return !getFeedbackDocumentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasProcessForPresidentJuryElement() {
-        return getProcessForPresidentJuryElement() != null;
-    }
-
-    @Deprecated
-    public boolean hasExpert() {
-        return getExpert() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasProcess() {
-        return getProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasParticipant() {
-        return getParticipant() != null;
-    }
-
-    @Deprecated
-    public boolean hasElementOrder() {
-        return getElementOrder() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDate() {
-        return getCreationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasReporter() {
-        return getReporter() != null;
     }
 
 }

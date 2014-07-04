@@ -75,12 +75,12 @@ public class StudentStatuteBean implements Serializable {
     }
 
     public String getBeginPeriodFormatted() {
-        return getStudentStatute() != null && getStudentStatute().hasBeginExecutionPeriod() ? getStudentStatute()
+        return getStudentStatute() != null && getStudentStatute().getBeginExecutionPeriod() != null ? getStudentStatute()
                 .getBeginExecutionPeriod().getQualifiedName() : " ... ";
     }
 
     public String getEndPeriodFormatted() {
-        return getStudentStatute() != null && getStudentStatute().hasEndExecutionPeriod() ? getStudentStatute()
+        return getStudentStatute() != null && getStudentStatute().getEndExecutionPeriod() != null ? getStudentStatute()
                 .getEndExecutionPeriod().getQualifiedName() : " ... ";
     }
 

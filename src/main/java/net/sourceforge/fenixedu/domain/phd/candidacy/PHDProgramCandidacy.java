@@ -53,10 +53,10 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 
     private String getDegreeInformation() {
 
-        if (hasExecutionDegree()) {
+        if (getExecutionDegree() != null) {
             return getDegreeCurricularPlan().getName() + " - " + getExecutionYear().getYear();
 
-        } else if (hasRegistration()) {
+        } else if (getRegistration() != null) {
             return getRegistration().getDegreeCurricularPlanName();
 
         } else if (getCandidacyProcess().hasPhdProgram()) {
@@ -136,11 +136,6 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
         setSchoolTimeDistrictSubDivisionOfResidence(studentCandidacy.getSchoolTimeDistrictSubDivisionOfResidence());
         setCountryOfResidence(studentCandidacy.getCountryOfResidence());
         setDistrictSubdivisionOfResidence(studentCandidacy.getDistrictSubdivisionOfResidence());
-    }
-
-    @Deprecated
-    public boolean hasCandidacyProcess() {
-        return getCandidacyProcess() != null;
     }
 
 }

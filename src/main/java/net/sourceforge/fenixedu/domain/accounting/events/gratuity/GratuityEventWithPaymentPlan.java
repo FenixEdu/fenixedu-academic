@@ -116,7 +116,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     public void configuratePaymentPlan() {
         ensureServiceAgreement();
 
-        if (!hasGratuityPaymentPlan()) {
+        if (getGratuityPaymentPlan() == null) {
             super.setGratuityPaymentPlan(getDegreeCurricularPlanServiceAgreement().getGratuityPaymentPlanFor(
                     getStudentCurricularPlan(), getExecutionYear()));
         }
@@ -340,7 +340,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
             }
 
             AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
-            if (accountingEventPaymentCode.hasAccountingEvent()) {
+            if (accountingEventPaymentCode.getAccountingEvent() != null) {
                 continue;
             }
 
@@ -505,11 +505,11 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     public boolean hasCustomGratuityPaymentPlan() {
-        return hasGratuityPaymentPlan() && getGratuityPaymentPlan().isCustomGratuityPaymentPlan();
+        return getGratuityPaymentPlan() != null && getGratuityPaymentPlan().isCustomGratuityPaymentPlan();
     }
 
     public boolean hasDefaultGratuityPaymentPlan() {
-        return hasGratuityPaymentPlan() && getGratuityPaymentPlan().isDefault();
+        return getGratuityPaymentPlan() != null && getGratuityPaymentPlan().isDefault();
     }
 
     public Money getPayedAmountLessPenalty() {
@@ -556,11 +556,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     @Override
     public boolean isPaymentPlanChangeAllowed() {
         return true;
-    }
-
-    @Deprecated
-    public boolean hasGratuityPaymentPlan() {
-        return getGratuityPaymentPlan() != null;
     }
 
 }

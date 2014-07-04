@@ -218,7 +218,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public boolean isAllowedToManageProcess(User userView) {
         if (userView != null) {
             Set<AcademicProgram> programs =
-                    AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES);
+                    AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                            AcademicOperationType.MANAGE_PHD_PROCESSES);
 
             return programs.contains(this.getPhdProgram());
         } else {
@@ -240,7 +241,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         }
 
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESS_STATE);
+                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                        AcademicOperationType.MANAGE_PHD_PROCESS_STATE);
 
         return programs.contains(this.getPhdProgram());
     }
@@ -285,8 +287,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                 result = new Person(bean.getPersonBean());
             } else {
                 if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)
-                        || !bean.getPersonBean().getPerson().getPersonRolesSet().isEmpty() || bean.getPersonBean().getPerson().getUser() != null
-                        || bean.getPersonBean().getPerson().getStudent() != null || bean.hasInstitutionId()) {
+                        || !bean.getPersonBean().getPerson().getPersonRolesSet().isEmpty()
+                        || bean.getPersonBean().getPerson().getUser() != null || bean.getPersonBean().getPerson().getStudent() != null
+                        || bean.hasInstitutionId()) {
                     result = bean.getPersonBean().getPerson();
                 } else {
                     /*
@@ -449,7 +452,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
         checkParameters(getPerson(), getExecutionYear());
 
-        if (hasCandidacyProcess() && !getCandidacyDate().equals(bean.getCandidacyDate())) {
+        if (getCandidacyProcess() != null && !getCandidacyDate().equals(bean.getCandidacyDate())) {
             getCandidacyProcess().executeActivity(userView,
                     net.sourceforge.fenixedu.domain.phd.candidacy.activities.EditCandidacyDate.class.getSimpleName(),
                     bean.getCandidacyDate());
@@ -722,7 +725,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isCoordinatorForPhdProgram(Person person) {
-        if (!getPhdProgram().hasDegree()) {
+        if (getPhdProgram().getDegree() == null) {
             return false;
         }
 
@@ -774,8 +777,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isRegistrationAvailable() {
-        return hasRegistration()
-                && AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_REGISTRATIONS).contains(getRegistration().getDegree());
+        return getRegistration() != null
+                && AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.MANAGE_REGISTRATIONS).contains(getRegistration().getDegree());
     }
 
     @Override
@@ -792,18 +796,18 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public void cancelDebts(final Person person) {
-        if (hasCandidacyProcess() && !getCandidacyProcess().hasAnyPayments()) {
+        if (getCandidacyProcess() != null && !getCandidacyProcess().hasAnyPayments()) {
             getCandidacyProcess().cancelDebt(person);
         }
 
-        if (hasRegistrationFee() && !getRegistrationFee().hasAnyPayments() && getRegistrationFee().isOpen()) {
+        if (getRegistrationFee() != null && !getRegistrationFee().hasAnyPayments() && getRegistrationFee().isOpen()) {
             getRegistrationFee().cancel(person);
         }
     }
 
     public boolean hasSchoolPartConcluded() {
-        boolean concluded = hasRegistration() && (getRegistration().isSchoolPartConcluded() || getRegistration().isConcluded());
-        return (hasStudyPlan() && getStudyPlan().isExempted()) || concluded;
+        boolean concluded = getRegistration() != null && (getRegistration().isSchoolPartConcluded() || getRegistration().isConcluded());
+        return (getStudyPlan() != null && getStudyPlan().isExempted()) || concluded;
     }
 
     public boolean hasQualificationExamsToPerform() {
@@ -819,7 +823,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean hasSeminarReportDocument() {
-        return hasSeminarProcess() && getSeminarProcess().hasReportDocument();
+        return getSeminarProcess() != null && getSeminarProcess().hasReportDocument();
     }
 
     public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {
@@ -863,20 +867,20 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public Collection<PhdProcessStateType> getAllPhdProcessStateTypes() {
         final Collection<PhdProcessStateType> result = new HashSet<PhdProcessStateType>();
 
-        if (hasCandidacyProcess()) {
+        if (getCandidacyProcess() != null) {
 
             result.add(getCandidacyProcess().getActiveState());
 
-            if (getCandidacyProcess().hasFeedbackRequest()) {
+            if (getCandidacyProcess().getFeedbackRequest() != null) {
                 result.add(getCandidacyProcess().getFeedbackRequest().getActiveState());
             }
         }
 
-        if (hasSeminarProcess()) {
+        if (getSeminarProcess() != null) {
             result.add(getSeminarProcess().getActiveState());
         }
 
-        if (hasThesisProcess()) {
+        if (getThesisProcess() != null) {
             result.add(getThesisProcess().getActiveState());
         }
 
@@ -885,7 +889,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public Collection<CompetenceCourse> getCompetenceCoursesAvailableToEnrol() {
 
-        if (!hasStudyPlan()) {
+        if (getStudyPlan() == null) {
             return Collections.emptySet();
         }
 
@@ -903,7 +907,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             return getLastConclusionProcess().getConclusionDate();
         }
 
-        return hasThesisProcess() ? getThesisProcess().getConclusionDate() : null;
+        return getThesisProcess() != null ? getThesisProcess().getConclusionDate() : null;
     }
 
     public ExecutionYear getConclusionYear() {
@@ -918,12 +922,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean hasCurricularCoursesToEnrol() {
-        return hasStudyPlan() && !getStudyPlan().isExempted() && getStudyPlan().isToEnrolInCurricularCourses();
+        return getStudyPlan() != null && !getStudyPlan().isExempted() && getStudyPlan().isToEnrolInCurricularCourses();
     }
 
     public boolean hasPropaeudeuticsOrExtraEntriesApproved() {
 
-        if (!hasStudyPlan() || !hasRegistration()) {
+        if (getStudyPlan() == null || getRegistration() == null) {
             return false;
         }
 
@@ -974,7 +978,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isConcluded() {
-        return hasThesisProcess() && getThesisProcess().isConcluded();
+        return getThesisProcess() != null && getThesisProcess().isConcluded();
     }
 
     public boolean getHasStartedStudies() {
@@ -1046,8 +1050,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                     result = new Person(bean.getPersonBean());
                 } else {
                     if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)
-                            || !bean.getPersonBean().getPerson().getPersonRolesSet().isEmpty() || bean.getPersonBean().getPerson().getUser() != null
-                            || bean.getPersonBean().getPerson().getStudent() != null || bean.hasInstitutionId()) {
+                            || !bean.getPersonBean().getPerson().getPersonRolesSet().isEmpty()
+                            || bean.getPersonBean().getPerson().getUser() != null || bean.getPersonBean().getPerson().getStudent() != null
+                            || bean.hasInstitutionId()) {
                         result = bean.getPersonBean().getPerson();
                     } else {
                         /*
@@ -1151,7 +1156,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isTransferable() {
-        return getHasStartedStudies() && !hasDestiny();
+        return getHasStartedStudies() && getDestiny() == null;
     }
 
     public boolean isTransferred() {
@@ -1159,7 +1164,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isFromTransferredProcess() {
-        return hasSource();
+        return getSource() != null;
     }
 
     public void transferToAnotherProcess(final PhdIndividualProgramProcess destiny, final Person responsible, String remarks) {
@@ -1167,13 +1172,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             throw new DomainException("phd.PhdIndividualProgramProcess.cannot.be.transferred");
         }
 
-        if (hasRegistration() && getRegistration().isConcluded()) {
+        if (getRegistration() != null && getRegistration().isConcluded()) {
             throw new DomainException("phd.PhdIndividualProgramProcess.source.registration.is.concluded");
         }
 
         this.createState(PhdIndividualProgramProcessState.TRANSFERRED, getPerson(), remarks);
 
-        if (hasRegistration() && getRegistration().isActive()) {
+        if (getRegistration() != null && getRegistration().isActive()) {
             RegistrationStateCreator.createState(getRegistration(), responsible, new DateTime(),
                     RegistrationStateType.INTERNAL_ABANDON);
         }
@@ -1321,7 +1326,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public String getGraduateTitle(Locale locale) {
-        StringBuilder stringBuilder = new StringBuilder(BundleUtil.getString(Bundle.PHD, locale, "label.phd.graduated.title.in")).append(" ");
+        StringBuilder stringBuilder =
+                new StringBuilder(BundleUtil.getString(Bundle.PHD, locale, "label.phd.graduated.title.in")).append(" ");
         stringBuilder.append(getPhdProgram().getName().getContent(locale));
 
         return stringBuilder.toString();
@@ -1425,17 +1431,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
-        return hasPhdProgram() ? getPhdProgram().getAdministrativeOffice() : null;
+        return getPhdProgram() != null ? getPhdProgram().getAdministrativeOffice() : null;
     }
 
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreeInformations() {
         return getPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPrecedentDegreeInformations() {
-        return !getPrecedentDegreeInformationsSet().isEmpty();
     }
 
     @Override
@@ -1445,7 +1446,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     @Override
-    @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
     }
@@ -1456,18 +1456,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     @Deprecated
-    public boolean hasAnyPhdIndividualProgramProcessEmails() {
-        return !getPhdIndividualProgramProcessEmailsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdAlert> getAlerts() {
         return getAlertsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAlerts() {
-        return !getAlertsSet().isEmpty();
     }
 
     @Deprecated
@@ -1476,18 +1466,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     @Deprecated
-    public boolean hasAnyPhdConclusionProcesses() {
-        return !getPhdConclusionProcessesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent> getPhdGratuityEvents() {
         return getPhdGratuityEventsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdGratuityEvents() {
-        return !getPhdGratuityEventsSet().isEmpty();
     }
 
     @Deprecated
@@ -1496,18 +1476,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     @Deprecated
-    public boolean hasAnyParticipants() {
-        return !getParticipantsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail> getPhdProgramEmail() {
         return getPhdProgramEmailSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdProgramEmail() {
-        return !getPhdProgramEmailSet().isEmpty();
     }
 
     @Deprecated
@@ -1516,18 +1486,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     @Deprecated
-    public boolean hasAnyAssistantGuidings() {
-        return !getAssistantGuidingsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdParticipant> getGuidings() {
         return getGuidingsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyGuidings() {
-        return !getGuidingsSet().isEmpty();
     }
 
     @Deprecated
@@ -1536,153 +1496,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     @Deprecated
-    public boolean hasAnyThesisSubjectOrders() {
-        return !getThesisSubjectOrdersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage> getAlertMessages() {
         return getAlertMessagesSet();
     }
 
     @Deprecated
-    public boolean hasAnyAlertMessages() {
-        return !getAlertMessagesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest> getPhdAcademicServiceRequests() {
         return getPhdAcademicServiceRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdAcademicServiceRequests() {
-        return !getPhdAcademicServiceRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasThesisProcess() {
-        return getThesisProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasRegistration() {
-        return getRegistration() != null;
-    }
-
-    @Deprecated
-    public boolean hasThesisTitleEn() {
-        return getThesisTitleEn() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdIndividualProcessNumber() {
-        return getPhdIndividualProcessNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasRegistrationFee() {
-        return getRegistrationFee() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdConfigurationIndividualProgramProcess() {
-        return getPhdConfigurationIndividualProgramProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasDestiny() {
-        return getDestiny() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenFormalizedRegistration() {
-        return getWhenFormalizedRegistration() != null;
-    }
-
-    @Deprecated
-    public boolean hasQualificationExamsPerformed() {
-        return getQualificationExamsPerformed() != null;
-    }
-
-    @Deprecated
-    public boolean hasSeminarProcess() {
-        return getSeminarProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasQualificationExamsRequired() {
-        return getQualificationExamsRequired() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacyProcess() {
-        return getCandidacyProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasExternalPhdProgram() {
-        return getExternalPhdProgram() != null;
-    }
-
-    @Deprecated
-    public boolean hasThesisTitle() {
-        return getThesisTitle() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasOtherCollaborationType() {
-        return getOtherCollaborationType() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenStartedStudies() {
-        return getWhenStartedStudies() != null;
-    }
-
-    @Deprecated
-    public boolean hasCollaborationType() {
-        return getCollaborationType() != null;
-    }
-
-    @Deprecated
-    public boolean hasSource() {
-        return getSource() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudyPlan() {
-        return getStudyPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdProgramFocusArea() {
-        return getPhdProgramFocusArea() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdProgram() {
-        return getPhdProgram() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
-    @Deprecated
-    public boolean hasInquiryStudentCycleAnswer() {
-        return getInquiryStudentCycleAnswer() != null;
-    }
-
-    @Deprecated
-    public boolean hasThesisRequestFee() {
-        return getThesisRequestFee() != null;
     }
 
 }

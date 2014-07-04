@@ -104,29 +104,4 @@ abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
 
     abstract public boolean isSimilar(PhdStudyPlanEntry entry);
 
-    @Deprecated
-    public boolean hasStudyPlan() {
-        return getStudyPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreatedBy() {
-        return getCreatedBy() != null;
-    }
-
 }

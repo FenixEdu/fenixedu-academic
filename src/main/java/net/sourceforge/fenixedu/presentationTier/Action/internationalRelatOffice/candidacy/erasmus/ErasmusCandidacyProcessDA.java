@@ -213,7 +213,7 @@ public class ErasmusCandidacyProcessDA extends
             HttpServletResponse response) throws FenixServiceException {
         MobilityQuota quota = getDomainObject(request, "vacancyExternalId");
 
-        if (quota.hasAnyApplications()) {
+        if (!quota.getApplicationsSet().isEmpty()) {
             addActionMessage(request, "error.erasmus.vacancy.has.associated.candidacies");
             return prepareExecuteViewMobilityQuota(mapping, form, request, response);
         }

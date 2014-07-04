@@ -101,7 +101,7 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     }
 
     public boolean hasEnrolment(final Enrolment enrolment) {
-        return hasEnrolment() && getEnrolment().equals(enrolment);
+        return getEnrolment() != null && getEnrolment().equals(enrolment);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     }
 
     public String getEnrolmentName() {
-        return hasEnrolment() ? getEnrolment().getName().getContent() : StringUtils.EMPTY;
+        return getEnrolment() != null ? getEnrolment().getName().getContent() : StringUtils.EMPTY;
     }
 
     @Override
@@ -180,11 +180,6 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     @Override
     public boolean hasPersonalInfo() {
         return false;
-    }
-
-    @Deprecated
-    public boolean hasEnrolment() {
-        return getEnrolment() != null;
     }
 
 }

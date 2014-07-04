@@ -225,34 +225,4 @@ public class StudentStatute extends StudentStatute_Base {
         return false;
     }
 
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasStatuteType() {
-        return getStatuteType() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginExecutionPeriod() {
-        return getBeginExecutionPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDate() {
-        return getCreationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndExecutionPeriod() {
-        return getEndExecutionPeriod() != null;
-    }
-
 }

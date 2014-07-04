@@ -191,34 +191,4 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
         return participantBean;
     }
 
-    @Deprecated
-    public boolean hasData() {
-        return getData() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasTeacherNumber() {
-        return getTeacherNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdMigrationProcess() {
-        return getPhdMigrationProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasInstitution() {
-        return getInstitution() != null;
-    }
-
-    @Deprecated
-    public boolean hasParseLog() {
-        return getParseLog() != null;
-    }
-
 }

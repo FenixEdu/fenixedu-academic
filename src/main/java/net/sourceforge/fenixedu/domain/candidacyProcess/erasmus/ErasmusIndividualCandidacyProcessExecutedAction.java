@@ -49,9 +49,4 @@ public class ErasmusIndividualCandidacyProcessExecutedAction extends ErasmusIndi
         return ExecutedActionType.SENT_EMAIL_FOR_MISSING_REQUIRED_DOCUMENTS.equals(getType());
     }
 
-    @Deprecated
-    public boolean hasMobilityIndividualApplicationProcess() {
-        return getMobilityIndividualApplicationProcess() != null;
-    }
-
 }

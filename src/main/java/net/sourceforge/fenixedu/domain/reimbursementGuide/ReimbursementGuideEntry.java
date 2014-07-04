@@ -60,34 +60,4 @@ public class ReimbursementGuideEntry extends ReimbursementGuideEntry_Base {
         setValueBigDecimal(BigDecimal.valueOf(value));
     }
 
-    @Deprecated
-    public boolean hasJustification() {
-        return getJustification() != null;
-    }
-
-    @Deprecated
-    public boolean hasReimbursementTransaction() {
-        return getReimbursementTransaction() != null;
-    }
-
-    @Deprecated
-    public boolean hasReimbursementGuide() {
-        return getReimbursementGuide() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasValueBigDecimal() {
-        return getValueBigDecimal() != null;
-    }
-
-    @Deprecated
-    public boolean hasGuideEntry() {
-        return getGuideEntry() != null;
-    }
-
 }

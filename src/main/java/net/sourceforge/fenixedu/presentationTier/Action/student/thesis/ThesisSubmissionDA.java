@@ -215,7 +215,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
                     return mapping.findForward("thesis-declaration");
                 }
             } else {
-                if (thesis.hasDissertation() || thesis.hasExtendedAbstract()) {
+                if (thesis.getDissertation() != null || thesis.getExtendedAbstract() != null) {
                     request.setAttribute("confirmRejectWithFiles", true);
                     return mapping.findForward("thesis-declaration");
                 } else {

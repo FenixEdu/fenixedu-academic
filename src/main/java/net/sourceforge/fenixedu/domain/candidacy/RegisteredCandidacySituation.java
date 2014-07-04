@@ -74,16 +74,16 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 
         }
 
-        if (!(person.getStudent() != null) && studentNumber == null) {
+        if (person.getStudent() == null && studentNumber == null) {
             new Student(person);
-        } else if (!(person.getStudent() != null) && studentNumber != null) {
+        } else if (person.getStudent() == null && studentNumber != null) {
             Student.createStudentWithCustomNumber(person, studentNumber);
         }
     }
 
     private void createQualification() {
         DFACandidacy dfaCandidacy = (DFACandidacy) getCandidacy();
-        if (dfaCandidacy.hasPrecedentDegreeInformation()) {
+        if (dfaCandidacy.getPrecedentDegreeInformation() != null) {
             Qualification qualification = new Qualification();
             qualification.setPerson(dfaCandidacy.getPerson());
             qualification.setMark(dfaCandidacy.getPrecedentDegreeInformation().getConclusionGrade());

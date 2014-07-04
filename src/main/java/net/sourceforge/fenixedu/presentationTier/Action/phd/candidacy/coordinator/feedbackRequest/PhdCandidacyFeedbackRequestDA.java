@@ -72,7 +72,7 @@ public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
     private void addSharedDocumentTypeNames(HttpServletRequest request) {
         final PhdProgramCandidacyProcess process = getProcess(request);
 
-        if (process.hasFeedbackRequest()) {
+        if (process.getFeedbackRequest() != null) {
 
             final StringBuilder builder = new StringBuilder();
             final Iterator<PhdIndividualProgramDocumentType> iter =
@@ -138,7 +138,7 @@ public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
         try {
             final PhdProgramCandidacyProcess process = getProcess(request);
 
-            if (!process.hasFeedbackRequest()) {
+            if (process.getFeedbackRequest() == null) {
                 CreateNewProcess.run(PhdCandidacyFeedbackRequestProcess.class, getRenderedObject("feedbackRequestBean"));
             } else {
                 ExecuteProcessActivity.run(getProcess(request).getFeedbackRequest(), EditSharedDocumentTypes.class,

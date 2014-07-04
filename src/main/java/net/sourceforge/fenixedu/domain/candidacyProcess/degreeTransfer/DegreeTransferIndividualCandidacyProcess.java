@@ -90,7 +90,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
     @Override
     protected void checkParameters(CandidacyProcess candidacyProcess) {
-        if (candidacyProcess == null || !candidacyProcess.hasCandidacyPeriod()) {
+        if (candidacyProcess == null || candidacyProcess.getCandidacyPeriod() == null) {
             throw new DomainException("error.DegreeTransferIndividualCandidacyProcess.invalid.candidacy.process");
         }
     }

@@ -172,7 +172,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     @Override
     protected void checkParameters(final CandidacyProcess process) {
-        if (process == null || !process.hasCandidacyPeriod()) {
+        if (process == null || process.getCandidacyPeriod() == null) {
             throw new DomainException("error.SecondCycleIndividualCandidacyProcess.invalid.candidacy.process");
         }
     }
@@ -214,7 +214,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     private boolean isCoordinatorOfProcess(User userView) {
-        if (!(userView.getPerson().getTeacher() != null)) {
+        if (userView.getPerson().getTeacher() == null) {
             return false;
         }
 
@@ -394,7 +394,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     public String getErasmusCandidacyStateDescription() {
         String registeredMessage =
-                getCandidacy().hasRegistration() ? "/"
+                getCandidacy().getRegistration() != null ? "/"
                         + BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.registered") : "";
         if (isCandidacyCancelled()) {
             return BundleUtil.getString(Bundle.CANDIDATE, "label.erasmus.candidacy.state.description.cancelled")
@@ -780,7 +780,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
                 User userView, Object object) {
-            if (!(process.getPersonalDetails().getPerson().getStudent() != null)) {
+            if (process.getPersonalDetails().getPerson().getStudent() == null) {
                 new Student(process.getPersonalDetails().getPerson(), null);
                 process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.PERSON);
                 process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.CANDIDATE);
@@ -1171,7 +1171,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 throw new PreConditionNotValidException();
             }
 
-            if (process.getCandidacy().hasRegistration()) {
+            if (process.getCandidacy().getRegistration() != null) {
                 throw new PreConditionNotValidException();
             }
 
@@ -1198,7 +1198,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 throw new PreConditionNotValidException();
             }
 
-            if (!process.getCandidacy().hasRegistration()) {
+            if (process.getCandidacy().getRegistration() == null) {
                 throw new PreConditionNotValidException();
             }
 
@@ -1371,43 +1371,13 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     @Deprecated
-    public boolean hasAnyAlert() {
-        return !getAlertSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessExecutedAction> getExecutedActions() {
         return getExecutedActionsSet();
     }
 
     @Deprecated
-    public boolean hasAnyExecutedActions() {
-        return !getExecutedActionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction> getErasmusCandidacyProcessExecutedAction() {
         return getErasmusCandidacyProcessExecutedActionSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyErasmusCandidacyProcessExecutedAction() {
-        return !getErasmusCandidacyProcessExecutedActionSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasValidatedByMobilityCoordinator() {
-        return getValidatedByMobilityCoordinator() != null;
-    }
-
-    @Deprecated
-    public boolean hasValidatedByGri() {
-        return getValidatedByGri() != null;
-    }
-
-    @Deprecated
-    public boolean hasPersonalFieldsFromStork() {
-        return getPersonalFieldsFromStork() != null;
     }
 
 }

@@ -80,9 +80,4 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
         return new AnnualIRSDeclarationDocument(addressee, operator, buildFilename(addressee, year), content, year);
     }
 
-    @Deprecated
-    public boolean hasYear() {
-        return getYear() != null;
-    }
-
 }

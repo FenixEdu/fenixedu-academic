@@ -42,7 +42,7 @@ public abstract class AcademicEvent extends AcademicEvent_Base {
 
     @Override
     public boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice) {
-        return (!hasAdministrativeOffice() || getAdministrativeOffice() == administrativeOffice);
+        return (getAdministrativeOffice() == null || getAdministrativeOffice() == administrativeOffice);
     }
 
     @Override
@@ -67,11 +67,6 @@ public abstract class AcademicEvent extends AcademicEvent_Base {
     @Override
     public Unit getOwnerUnit() {
         return getAdministrativeOffice().getUnit();
-    }
-
-    @Deprecated
-    public boolean hasAdministrativeOffice() {
-        return getAdministrativeOffice() != null;
     }
 
 }

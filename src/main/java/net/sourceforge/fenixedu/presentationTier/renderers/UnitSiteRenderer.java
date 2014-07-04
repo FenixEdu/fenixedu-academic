@@ -185,7 +185,7 @@ public class UnitSiteRenderer extends OutputRenderer {
         }
 
         private boolean unitHasSite(Unit unit) {
-            return (unit.isDegreeUnit()) ? unit.getDegree().getSite() != null : unit.hasSite();
+            return (unit.isDegreeUnit()) ? unit.getDegree().getSite() != null : unit.getSite() != null;
         }
 
         private String resolveUnitURL(Unit unit) {

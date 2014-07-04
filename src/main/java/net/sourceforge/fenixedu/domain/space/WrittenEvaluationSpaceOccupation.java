@@ -84,7 +84,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyWrittenEvaluations();
+        return getWrittenEvaluationsSet().isEmpty();
     }
 
     @Override
@@ -169,7 +169,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 
     @Override
     public String getPresentationString() {
-        if (!hasAnyWrittenEvaluations()) {
+        if (getWrittenEvaluationsSet().isEmpty()) {
             return StringUtils.EMPTY;
         }
         final WrittenEvaluation eval = getWrittenEvaluations().iterator().next();
@@ -179,11 +179,6 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getWrittenEvaluations() {
         return getWrittenEvaluationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyWrittenEvaluations() {
-        return !getWrittenEvaluationsSet().isEmpty();
     }
 
     @Override

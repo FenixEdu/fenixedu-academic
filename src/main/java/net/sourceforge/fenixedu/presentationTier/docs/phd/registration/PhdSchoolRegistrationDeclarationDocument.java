@@ -90,7 +90,7 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
     }
 
     private boolean hasRegistration() {
-        return process.hasRegistration();
+        return process.getRegistration() != null;
     }
 
     @Override

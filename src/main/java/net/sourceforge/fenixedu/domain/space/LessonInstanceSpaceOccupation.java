@@ -91,7 +91,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyLessonInstances();
+        return getLessonInstancesSet().isEmpty();
     }
 
     @Override
@@ -178,7 +178,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
     @Override
     public String getPresentationString() {
-        if (hasAnyLessonInstances()) {
+        if (!getLessonInstancesSet().isEmpty()) {
             return getLessonInstances().iterator().next().getLesson().getShift().getExecutionCourse().getSigla();
         }
         return getClass().getName();
@@ -187,11 +187,6 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.LessonInstance> getLessonInstances() {
         return getLessonInstancesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyLessonInstances() {
-        return !getLessonInstancesSet().isEmpty();
     }
 
     @Override

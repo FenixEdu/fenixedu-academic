@@ -52,9 +52,4 @@ public class ThesisLibraryPendingOperation extends ThesisLibraryPendingOperation
         return null;
     }
 
-    @Deprecated
-    public boolean hasPendingComment() {
-        return getPendingComment() != null;
-    }
-
 }

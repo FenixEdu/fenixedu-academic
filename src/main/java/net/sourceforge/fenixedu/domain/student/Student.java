@@ -565,13 +565,13 @@ public class Student extends Student_Base {
 
     public void delete() {
 
-        for (; hasAnyStudentDataByExecutionYear(); getStudentDataByExecutionYear().iterator().next().delete()) {
+        for (; !getStudentDataByExecutionYearSet().isEmpty(); getStudentDataByExecutionYear().iterator().next().delete()) {
             ;
         }
         for (; !getRegistrations().isEmpty(); getRegistrations().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyVotes(); getVotes().iterator().next().delete()) {
+        for (; !getVotesSet().isEmpty(); getVotes().iterator().next().delete()) {
             ;
         }
 
@@ -1720,7 +1720,7 @@ public class Student extends Student_Base {
     }
 
     public boolean getActiveAlumni() {
-        return hasAlumni();
+        return getAlumni() != null;
     }
 
     public Attends getAttends(final ExecutionCourse executionCourse) {
@@ -1823,7 +1823,7 @@ public class Student extends Student_Base {
     public void setNumber(final Integer number) {
         super.setNumber(number);
 
-        if (hasStudentNumber()) {
+        if (getStudentNumber() != null) {
             if (number != null) {
                 getStudentNumber().setNumber(number);
             } else {
@@ -2069,10 +2069,10 @@ public class Student extends Student_Base {
 
     public boolean hasFirstTimeCycleInquiryToRespond() {
         for (Registration registration : getActiveRegistrations()) {
-            if (!registration.getDegreeType().isEmpty() && !registration.hasInquiryStudentCycleAnswer()
+            if (!registration.getDegreeType().isEmpty() && registration.getInquiryStudentCycleAnswer() == null
                     && registration.isFirstTime()) {
-                if (registration.hasPhdIndividualProgramProcess()
-                        && registration.getPhdIndividualProgramProcess().hasInquiryStudentCycleAnswer()) {
+                if (registration.getPhdIndividualProgramProcess() != null
+                        && registration.getPhdIndividualProgramProcess().getInquiryStudentCycleAnswer() != null) {
                     return false;
                 }
                 return true;
@@ -2080,9 +2080,9 @@ public class Student extends Student_Base {
         }
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
-            if (!phdProcess.hasInquiryStudentCycleAnswer() && isValidAndActivePhdProcess(phdProcess)) {
-                if (phdProcess.hasRegistration()) {
-                    if (phdProcess.getRegistration().hasInquiryStudentCycleAnswer()) {
+            if (phdProcess.getInquiryStudentCycleAnswer() == null && isValidAndActivePhdProcess(phdProcess)) {
+                if (phdProcess.getRegistration() != null) {
+                    if (phdProcess.getRegistration().getInquiryStudentCycleAnswer() != null) {
                         return false;
                     } else {
                         if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
@@ -2105,18 +2105,8 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasAnyRegistrations() {
-        return !getRegistrationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod> getStudentsInquiriesExecutionPeriods() {
         return getStudentsInquiriesExecutionPeriodsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentsInquiriesExecutionPeriods() {
-        return !getStudentsInquiriesExecutionPeriodsSet().isEmpty();
     }
 
     @Deprecated
@@ -2125,18 +2115,8 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasAnyDelegateElections() {
-        return !getDelegateElectionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit> getExecutionCourseAudits() {
         return getExecutionCourseAuditsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExecutionCourseAudits() {
-        return !getExecutionCourseAuditsSet().isEmpty();
     }
 
     @Deprecated
@@ -2145,18 +2125,8 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasAnyVotes() {
-        return !getVotesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear> getStudentDataByExecutionYear() {
         return getStudentDataByExecutionYearSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentDataByExecutionYear() {
-        return !getStudentDataByExecutionYearSet().isEmpty();
     }
 
     @Deprecated
@@ -2165,18 +2135,8 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasAnyStudentDataShareAuthorization() {
-        return !getStudentDataShareAuthorizationSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod> getVotingPeriodForNewRoundElections() {
         return getVotingPeriodForNewRoundElectionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyVotingPeriodForNewRoundElections() {
-        return !getVotingPeriodForNewRoundElectionsSet().isEmpty();
     }
 
     @Deprecated
@@ -2185,18 +2145,8 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasAnyInquiriesStudentExecutionPeriods() {
-        return !getInquiriesStudentExecutionPeriodsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.scholarship.report.UTLScholarshipReport> getUtlScholarshipReport() {
         return getUtlScholarshipReportSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyUtlScholarshipReport() {
-        return !getUtlScholarshipReportSet().isEmpty();
     }
 
     @Deprecated
@@ -2205,18 +2155,8 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasAnyElectedElections() {
-        return !getElectedElectionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentStatute> getStudentStatutes() {
         return getStudentStatutesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentStatutes() {
-        return !getStudentStatutesSet().isEmpty();
     }
 
     @Deprecated
@@ -2225,18 +2165,8 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPersonalIngressionsData() {
-        return !getPersonalIngressionsDataSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry> getStudentsInquiryRegistries() {
         return getStudentsInquiryRegistriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentsInquiryRegistries() {
-        return !getStudentsInquiryRegistriesSet().isEmpty();
     }
 
     @Deprecated
@@ -2245,18 +2175,8 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasAnyReports() {
-        return !getReportsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication> getCareerWorkshopApplications() {
         return getCareerWorkshopApplicationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCareerWorkshopApplications() {
-        return !getCareerWorkshopApplicationsSet().isEmpty();
     }
 
     @Deprecated
@@ -2265,18 +2185,8 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCareerWorkshopConfirmations() {
-        return !getCareerWorkshopConfirmationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity> getExtraCurricularActivity() {
         return getExtraCurricularActivitySet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExtraCurricularActivity() {
-        return !getExtraCurricularActivitySet().isEmpty();
     }
 
     @Deprecated
@@ -2285,43 +2195,8 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasAnyElectionsWithStudentCandidacies() {
-        return !getElectionsWithStudentCandidaciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod> getElectionsWithVotingStudents() {
         return getElectionsWithVotingStudentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyElectionsWithVotingStudents() {
-        return !getElectionsWithVotingStudentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumber() {
-        return getNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentNumber() {
-        return getStudentNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasAlumni() {
-        return getAlumni() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
     }
 
 }

@@ -373,8 +373,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private Boolean getCanBeDeleted() {
         return canDeleteRoot() && getStudentCurricularPlansSet().isEmpty() && getCurricularCourseEquivalencesSet().isEmpty()
-                && getEnrolmentPeriodsSet().isEmpty() && getCurricularCoursesSet().isEmpty() && getExecutionDegreesSet().isEmpty() && getAreasSet().isEmpty()
-                && canDeleteServiceAgreement() && !getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty();
+                && getEnrolmentPeriodsSet().isEmpty() && getCurricularCoursesSet().isEmpty()
+                && getExecutionDegreesSet().isEmpty() && getAreasSet().isEmpty() && canDeleteServiceAgreement()
+                && !getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty();
     }
 
     private boolean canDeleteRoot() {
@@ -382,8 +383,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private boolean canDeleteServiceAgreement() {
-        return getServiceAgreementTemplate() == null || !getServiceAgreementTemplate().hasAnyPostingRules()
-                && !getServiceAgreementTemplate().hasAnyServiceAgreements();
+        return getServiceAgreementTemplate() == null || getServiceAgreementTemplate().getPostingRulesSet().isEmpty()
+                && getServiceAgreementTemplate().getServiceAgreementsSet().isEmpty();
     }
 
     public void delete() {

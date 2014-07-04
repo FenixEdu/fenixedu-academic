@@ -226,7 +226,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
             List<Registration> path = new ArrayList<Registration>();
             path.add(current);
             Registration source;
-            if (current.hasSourceRegistration()
+            if (current.getSourceRegistration() != null
                     && (!(source = current.getSourceRegistration()).isBolonha() || isValidSourceLink(source))) {
                 path.addAll(getFullRegistrationPath(source));
             }

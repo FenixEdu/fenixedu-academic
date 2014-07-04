@@ -47,7 +47,7 @@ public class AbandonIndividualProgramProcess extends PhdIndividualProgramProcess
         PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.ABANDON, userView.getPerson(),
                 "", stateDate);
 
-        if (process.hasRegistration() && process.getRegistration().isActive()) {
+        if (process.getRegistration() != null && process.getRegistration().isActive()) {
             RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), stateDate,
                     RegistrationStateType.EXTERNAL_ABANDON);
         }

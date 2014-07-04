@@ -36,7 +36,7 @@ public class DepartmentSite extends DepartmentSite_Base {
     public DepartmentSite(DepartmentUnit unit) {
         super();
 
-        if (unit.hasSite()) {
+        if (unit.getSite() != null) {
             throw new DomainException("site.department.unit.already.has.site");
         }
 

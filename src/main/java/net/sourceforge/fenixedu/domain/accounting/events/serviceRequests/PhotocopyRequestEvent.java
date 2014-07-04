@@ -56,7 +56,7 @@ public class PhotocopyRequestEvent extends PhotocopyRequestEvent_Base {
         if (!StringUtils.isEmpty(getAcademicServiceRequest().getPurpose())) {
             labelFormatter.appendLabel(" (").appendLabel(getAcademicServiceRequest().getPurpose()).appendLabel(")");
         }
-        if (getAcademicServiceRequest().hasExecutionYear()) {
+        if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }
         return labelFormatter;

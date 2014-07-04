@@ -293,7 +293,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     final protected boolean printPriceParameters(final CertificateRequest certificateRequest) {
         return certificateRequest.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING
-                && !certificateRequest.isFree() || certificateRequest.hasEvent();
+                && !certificateRequest.isFree() || certificateRequest.getEvent() != null;
     }
 
     protected void addIntroParameters() {

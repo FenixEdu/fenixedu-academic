@@ -96,7 +96,7 @@
 	 			<%= RoleType.TEACHER.getLocalizedName() %>
 	 		</th>
 	 		<td>
-	 			<% if (person.hasEmployee()) { %>
+	 			<% if (person.getEmployee() != null) { %>
 	 					<%= person.getEmployee().getEmployeeNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
@@ -112,7 +112,7 @@
 	 			<%= RoleType.RESEARCHER.getLocalizedName() %>
 	 		</th>
 	 		<td>
-	 			<% if (person.hasEmployee()) { %>
+	 			<% if (person.getEmployee() != null) { %>
 	 					<%= person.getEmployee().getEmployeeNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
@@ -128,7 +128,7 @@
 	 			<%= RoleType.EMPLOYEE.getLocalizedName() %>
 	 		</th>
 	 		<td>
-	 			<% if (person.hasEmployee()) { %>
+	 			<% if (person.getEmployee() != null) { %>
 	 					<%= person.getEmployee().getEmployeeNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
@@ -144,7 +144,7 @@
 	 			<%= RoleType.GRANT_OWNER.getLocalizedName() %>
 	 		</th>
 	 		<td>
-	 			<% if (person.hasEmployee() && person.hasRole(RoleType.GRANT_OWNER)) { %>
+	 			<% if (person.getEmployee() != null && person.hasRole(RoleType.GRANT_OWNER)) { %>
 	 					<%= person.getEmployee().getEmployeeNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
@@ -160,7 +160,7 @@
 	 			<%= RoleType.STUDENT.getLocalizedName() %>
 	 		</th>
 	 		<td>
-	 			<% if (person.hasStudent()) { %>
+	 			<% if (person.getStudent() != null) { %>
 	 					<%= person.getStudent().getNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>

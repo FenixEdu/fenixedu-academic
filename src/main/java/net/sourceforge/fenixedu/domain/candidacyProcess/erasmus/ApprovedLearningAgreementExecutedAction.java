@@ -53,9 +53,4 @@ public class ApprovedLearningAgreementExecutedAction extends ApprovedLearningAgr
         return ExecutedActionType.SENT_EMAIL_ACCEPTED_STUDENT.equals(getType());
     }
 
-    @Deprecated
-    public boolean hasApprovedLearningAgreement() {
-        return getApprovedLearningAgreement() != null;
-    }
-
 }

@@ -224,9 +224,4 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
         return getPhdProgramsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyPhdPrograms() {
-        return !getPhdProgramsSet().isEmpty();
-    }
-
 }

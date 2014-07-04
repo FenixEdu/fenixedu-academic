@@ -138,14 +138,4 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
         return getPhdProgramCandidacyProcessesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyPhdProgramCandidacyProcesses() {
-        return !getPhdProgramCandidacyProcessesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
 }

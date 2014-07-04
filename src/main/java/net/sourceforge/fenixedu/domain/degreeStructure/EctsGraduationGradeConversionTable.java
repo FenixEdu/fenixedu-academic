@@ -33,14 +33,4 @@ public abstract class EctsGraduationGradeConversionTable extends EctsGraduationG
         setPercentages(percentages);
     }
 
-    @Deprecated
-    public boolean hasPercentages() {
-        return getPercentages() != null;
-    }
-
-    @Deprecated
-    public boolean hasCycle() {
-        return getCycle() != null;
-    }
-
 }

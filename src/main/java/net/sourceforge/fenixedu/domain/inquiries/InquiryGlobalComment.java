@@ -60,39 +60,4 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
         return getInquiryResultCommentsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyInquiryResultComments() {
-        return !getInquiryResultCommentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasCommentOnTeacher() {
-        return getCommentOnTeacher() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionCourse() {
-        return getExecutionCourse() != null;
-    }
-
-    @Deprecated
-    public boolean hasTeacher() {
-        return getTeacher() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionDegree() {
-        return getExecutionDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionSemester() {
-        return getExecutionSemester() != null;
-    }
-
 }

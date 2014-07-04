@@ -99,9 +99,4 @@ public abstract class DebtsFile extends DebtsFile_Base {
                 .append(className).append(" : ").append(codeLine).append("]\n");
     }
 
-    @Deprecated
-    public boolean hasErrors() {
-        return getErrors() != null;
-    }
-
 }

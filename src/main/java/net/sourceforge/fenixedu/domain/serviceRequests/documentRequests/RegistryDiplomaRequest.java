@@ -165,14 +165,14 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
                 getDiplomaSupplement().process();
             }
         } else if (academicServiceRequestBean.isToConclude()) {
-            if (!isFree() && !hasEvent() && !isPayedUponCreation()) {
+            if (!isFree() && getEvent() == null && !isPayedUponCreation()) {
                 RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
             }
             if (getRegistration().isBolonha() && getDiplomaSupplement().isConcludedSituationAccepted()) {
                 getDiplomaSupplement().conclude();
             }
         } else if (academicServiceRequestBean.isToCancelOrReject()) {
-            if (hasEvent()) {
+            if (getEvent() != null) {
                 getEvent().cancel(academicServiceRequestBean.getResponsible());
             }
             if (getRegistration().isBolonha() && academicServiceRequestBean.isToCancel()) {
@@ -311,16 +311,6 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
     @Override
     public boolean isProgrammeLinkVisible() {
         return getRegistration().isAllowedToManageRegistration();
-    }
-
-    @Deprecated
-    public boolean hasRequestedCycle() {
-        return getRequestedCycle() != null;
-    }
-
-    @Deprecated
-    public boolean hasDiplomaSupplement() {
-        return getDiplomaSupplement() != null;
     }
 
 }

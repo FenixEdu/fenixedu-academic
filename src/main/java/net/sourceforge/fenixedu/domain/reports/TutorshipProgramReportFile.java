@@ -113,7 +113,7 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
                             row.setCell(Integer.toString(aprovalCounter));
                             row.setCell(registration.getEntryGrade() != null ? registration.getEntryGrade().toString() : StringUtils.EMPTY);
                             Boolean dislocated = null;
-                            if (registration.hasStudentCandidacy()) {
+                            if (registration.getStudentCandidacy() != null) {
                                 dislocated = registration.getStudentCandidacy().getDislocatedFromPermanentResidence();
                             }
 

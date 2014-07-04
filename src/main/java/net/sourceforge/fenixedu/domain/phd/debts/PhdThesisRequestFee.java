@@ -48,7 +48,7 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
             throw new DomainException("error.PhdThesisRequestFee.process.cannot.be.null", args);
         }
 
-        if (process.hasThesisRequestFee()) {
+        if (process.getThesisRequestFee() != null) {
             throw new DomainException("error.PhdThesisRequestFee.process.already.has.thesis.fee");
         }
     }
@@ -77,11 +77,6 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
     @Override
     public boolean isPhdThesisRequestFee() {
         return true;
-    }
-
-    @Deprecated
-    public boolean hasProcess() {
-        return getProcess() != null;
     }
 
 }

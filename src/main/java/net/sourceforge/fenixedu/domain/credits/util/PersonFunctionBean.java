@@ -248,7 +248,7 @@ public class PersonFunctionBean implements Serializable {
     }
 
     private boolean intersectsSemester(PersonFunction personFunction) {
-        if (personFunction.hasExecutionInterval()) {
+        if (personFunction.getExecutionInterval() != null) {
             return personFunction.getExecutionInterval().equals(getExecutionSemester());
         }
         return personFunction.belongsToPeriod(getExecutionSemester().getBeginDateYearMonthDay(), getExecutionSemester()

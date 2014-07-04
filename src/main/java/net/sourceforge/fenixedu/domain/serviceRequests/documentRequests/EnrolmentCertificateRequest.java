@@ -94,7 +94,6 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
         return extraCurricular;
     }
 
-
     final public Collection<Enrolment> getPropaedeuticEntriesToReport() {
         final Collection<Enrolment> propaedeutic = new HashSet<Enrolment>();
         for (final Enrolment entry : getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear())) {
@@ -118,11 +117,6 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     @Override
     public CertificateRequestEvent getEvent() {
         return (CertificateRequestEvent) super.getEvent();
-    }
-
-    @Deprecated
-    public boolean hasDetailed() {
-        return getDetailed() != null;
     }
 
 }

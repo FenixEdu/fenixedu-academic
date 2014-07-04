@@ -68,7 +68,7 @@ public class SearchPaymentCodesByExecutionYear implements AutoCompleteProvider<P
 
         Collection<IndividualCandidacyProcess> childProcesses = candidacyProcessByExecutionInterval.getChildProcesses();
         for (IndividualCandidacyProcess individualCandidacyProcess : childProcesses) {
-            if (!individualCandidacyProcess.getCandidacy().hasEvent()) {
+            if (individualCandidacyProcess.getCandidacy().getEvent() == null) {
                 continue;
             }
             if (individualCandidacyProcess.getCandidacy().getEvent().getAllPaymentCodes().isEmpty()) {

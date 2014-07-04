@@ -83,19 +83,4 @@ public class InquiryAnswer extends InquiryAnswer_Base {
         return getQuestionAnswersSet();
     }
 
-    @Deprecated
-    public boolean hasAnyQuestionAnswers() {
-        return !getQuestionAnswersSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasResponseDateTime() {
-        return getResponseDateTime() != null;
-    }
-
 }

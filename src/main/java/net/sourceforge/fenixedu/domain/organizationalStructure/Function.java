@@ -117,7 +117,7 @@ public class Function extends Function_Base {
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyAccountabilities() && !hasAnyInherentFunctions() && getPersonsInFunctionGroup() != null;
+        return getAccountabilitiesSet().isEmpty() && getInherentFunctionsSet().isEmpty() && getPersonsInFunctionGroup() != null;
     }
 
     public List<PersonFunction> getPersonFunctions() {
@@ -274,41 +274,6 @@ public class Function extends Function_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Function> getInherentFunctions() {
         return getInherentFunctionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInherentFunctions() {
-        return !getInherentFunctionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasParentInherentFunction() {
-        return getParentInherentFunction() != null;
-    }
-
-    @Deprecated
-    public boolean hasFunctionOrder() {
-        return getFunctionOrder() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginDateYearMonthDay() {
-        return getBeginDateYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDateYearMonthDay() {
-        return getEndDateYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasFunctionType() {
-        return getFunctionType() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnit() {
-        return getUnit() != null;
     }
 
 }

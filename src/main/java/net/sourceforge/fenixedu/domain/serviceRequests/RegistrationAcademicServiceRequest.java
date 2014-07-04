@@ -102,7 +102,7 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
 
     public StudentCurricularPlan getStudentCurricularPlan() {
         final ExecutionYear executionYear =
-                hasExecutionYear() ? getExecutionYear() : ExecutionYear.readByDateTime(getRequestDate());
+                getExecutionYear() != null ? getExecutionYear() : ExecutionYear.readByDateTime(getRequestDate());
         return getRegistration().getStudentCurricularPlan(executionYear);
     }
 
@@ -136,9 +136,7 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
 
     abstract public boolean isAvailableForTransitedRegistrations();
 
-    @Deprecated
     public boolean hasRegistration() {
         return getRegistration() != null;
     }
-
 }

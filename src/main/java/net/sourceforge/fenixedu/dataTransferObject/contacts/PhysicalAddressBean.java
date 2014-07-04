@@ -61,7 +61,7 @@ public class PhysicalAddressBean extends PartyContactBean {
         setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
         setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
         setCountryOfResidence(physicalAddress.getCountryOfResidence());
-        if (physicalAddress.hasPartyContactValidation()) {
+        if (physicalAddress.getPartyContactValidation() != null) {
             final PartyContactValidation partyContactValidation = physicalAddress.getPartyContactValidation();
             final PhysicalAddressValidationBean validationBean =
                     new PhysicalAddressValidationBean((PhysicalAddressValidation) partyContactValidation);

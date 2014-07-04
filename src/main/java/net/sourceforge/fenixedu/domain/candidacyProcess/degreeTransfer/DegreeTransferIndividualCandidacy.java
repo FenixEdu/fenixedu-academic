@@ -133,7 +133,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
             final Ingression ingression) {
 
-        if (hasRegistration()) {
+        if (getRegistration() != null) {
             throw new DomainException("error.IndividualCandidacy.person.with.registration",
                     degreeCurricularPlan.getPresentationName());
         }
@@ -157,7 +157,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     }
 
     private boolean hasRegistration(DegreeCurricularPlan degreeCurricularPlan) {
-        return getPersonalDetails().hasPerson() && getPersonalDetails().getPerson().getStudent() != null
+        return getPersonalDetails().getPerson() != null && getPersonalDetails().getPerson().getStudent() != null
                 && getPersonalDetails().getPerson().getStudent().hasRegistrationFor(degreeCurricularPlan);
     }
 
@@ -243,7 +243,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     }
 
     private void checkParameters(final DegreeTransferIndividualCandidacyResultBean bean) {
-        if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
+        if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && getRegistration() != null) {
             throw new DomainException("error.DegreeTransferIndividualCandidacy.cannot.change.state.from.accepted.candidacies");
         }
     }
@@ -291,7 +291,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 
     @Override
     public String getDescription() {
-        return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
+        return getCandidacyProcess().getDisplayName() + (getSelectedDegree() != null ? ": " + getSelectedDegree().getNameI18N() : "");
     }
 
     @Override
@@ -397,36 +397,6 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     @Override
     public void setSeriesCandidacyGrade(BigDecimal value) {
         getDegreeTransferIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
-    }
-
-    @Deprecated
-    public boolean hasApprovedEctsRate() {
-        return getApprovedEctsRate() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeNature() {
-        return getDegreeNature() != null;
-    }
-
-    @Deprecated
-    public boolean hasSeriesCandidacyGrade() {
-        return getSeriesCandidacyGrade() != null;
-    }
-
-    @Deprecated
-    public boolean hasGradeRate() {
-        return getGradeRate() != null;
-    }
-
-    @Deprecated
-    public boolean hasSelectedDegree() {
-        return getSelectedDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasAffinity() {
-        return getAffinity() != null;
     }
 
 }

@@ -99,9 +99,4 @@ abstract public class PhdAlert extends PhdAlert_Base {
         return administrativeOffice.getUnit().getUnitBasedSenderSet().iterator().next();
     }
 
-    @Deprecated
-    public boolean hasProcess() {
-        return getProcess() != null;
-    }
-
 }

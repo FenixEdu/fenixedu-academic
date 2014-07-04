@@ -55,9 +55,4 @@ public abstract class ServiceAgreementPaymentPlan extends ServiceAgreementPaymen
         return getServiceAgreement().getServiceAgreementTemplate();
     }
 
-    @Deprecated
-    public boolean hasServiceAgreement() {
-        return getServiceAgreement() != null;
-    }
-
 }

@@ -149,7 +149,7 @@ public abstract class PartyContact extends PartyContact_Base {
 
     public void setDefaultContactInformation(final boolean defaultContact) {
         if (!isActiveAndValid()) {
-            if (hasPartyContactValidation()) {
+            if (getPartyContactValidation() != null) {
                 getPartyContactValidation().setToBeDefault(defaultContact);
             }
         } else {
@@ -258,9 +258,9 @@ public abstract class PartyContact extends PartyContact_Base {
             setLastModifiedDate(new DateTime());
             setCurrentPartyContact(null);
             setPrevPartyContact(null);
-            if (hasPartyContactValidation()) {
+            if (getPartyContactValidation() != null) {
                 final PartyContactValidation validation = getPartyContactValidation();
-                if (validation.hasBennu()) {
+                if (validation.getRootDomainObject() != null) {
                     validation.setRootDomainObject(null);
                 }
             }
@@ -307,7 +307,7 @@ public abstract class PartyContact extends PartyContact_Base {
     // 1 1 Valid
 
     public boolean isValid() {
-        return !hasPartyContactValidation() || getPartyContactValidation().isValid();
+        return getPartyContactValidation() == null || getPartyContactValidation().isValid();
     }
 
     public boolean isActiveAndValid() {
@@ -319,13 +319,13 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     public void triggerValidationProcess() {
-        if (hasPartyContactValidation()) {
+        if (getPartyContactValidation() != null) {
             getPartyContactValidation().triggerValidationProcess();
         }
     }
 
     public void triggerValidationProcessIfNeeded() {
-        if (hasPartyContactValidation()) {
+        if (getPartyContactValidation() != null) {
             getPartyContactValidation().triggerValidationProcessIfNeeded();
         }
     }
@@ -333,13 +333,13 @@ public abstract class PartyContact extends PartyContact_Base {
     public abstract boolean hasValue(String value);
 
     public void setValid() {
-        if (hasPartyContactValidation()) {
+        if (getPartyContactValidation() != null) {
             getPartyContactValidation().setValid();
         }
     }
 
     public boolean isValidationCodeGenerated() {
-        if (hasPartyContactValidation()) {
+        if (getPartyContactValidation() != null) {
             return getPartyContactValidation().getToken() != null;
         }
         return false;
@@ -379,14 +379,14 @@ public abstract class PartyContact extends PartyContact_Base {
 
         boolean oldValueDiffersFromNew = false;
         if (valueChanged) {
-            if (hasPrevPartyContact()) {
+            if (getPrevPartyContact() != null) {
                 oldValueDiffersFromNew = getPrevPartyContact().getPresentationValue().compareTo(getPresentationValue()) != 0;
             }
         }
 
         if (propertiesChanged && !valueChanged) {
             // only properties were changed
-            if (hasPrevPartyContact()) {
+            if (getPrevPartyContact() != null) {
                 // editing a contact with pending changes (replacing changes)
                 PersonInformationLog.createLog(person, Bundle.MESSAGING,
                         "log.personInformation.contact.generic.edit.need.valid.newEdit", infoLabel, this.getPresentationValue(),
@@ -406,7 +406,7 @@ public abstract class PartyContact extends PartyContact_Base {
             }
         } else if (valueChanged) {
             // value or physical address was changed
-            if (hasPrevPartyContact()) {
+            if (getPrevPartyContact() != null) {
                 if (getPrevPartyContact().isValid()) {
                     // editing a valid existing contact
                     if (oldValueDiffersFromNew && createdNewContact) {
@@ -458,7 +458,7 @@ public abstract class PartyContact extends PartyContact_Base {
             PersonInformationLog.createLog(person, Bundle.MESSAGING,
                     "log.personInformation.contact.generic.remove", infoLabel, this.getPresentationValue(), personViewed);
         } else {
-            if (!hasPrevPartyContact()) {
+            if (getPrevPartyContact() == null) {
                 // no previous contact = new contact being created
                 PersonInformationLog.createLog(person, Bundle.MESSAGING,
                         "log.personInformation.contact.generic.create.need.valid.canceled", infoLabel,
@@ -488,7 +488,7 @@ public abstract class PartyContact extends PartyContact_Base {
         final String infoLabel = BundleUtil.getString(Bundle.APPLICATION, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
-        if (!hasPrevPartyContact()) {
+        if (getPrevPartyContact() == null) {
             // no previous contact = new contact being created
             PersonInformationLog.createLog(person, Bundle.MESSAGING,
                     "log.personInformation.contact.generic.create.need.valid.accepted", infoLabel, this.getPresentationValue(),
@@ -517,7 +517,7 @@ public abstract class PartyContact extends PartyContact_Base {
         final String infoLabel = BundleUtil.getString(Bundle.APPLICATION, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
-        if (!hasPrevPartyContact()) {
+        if (getPrevPartyContact() == null) {
             // no previous contact = new contact being created
             PersonInformationLog.createLog(person, Bundle.MESSAGING,
                     "log.personInformation.contact.generic.create.need.valid.rejected", infoLabel, this.getPresentationValue(),
@@ -537,76 +537,6 @@ public abstract class PartyContact extends PartyContact_Base {
                                 .getPresentationValue(), this.getPresentationValue(), personViewed);
             }
         }
-    }
-
-    @Deprecated
-    public boolean hasCurrentPartyContact() {
-        return getCurrentPartyContact() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasParty() {
-        return getParty() != null;
-    }
-
-    @Deprecated
-    public boolean hasPartyContactValidation() {
-        return getPartyContactValidation() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastModifiedDate() {
-        return getLastModifiedDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasActive() {
-        return getActive() != null;
-    }
-
-    @Deprecated
-    public boolean hasVisibleToPublic() {
-        return getVisibleToPublic() != null;
-    }
-
-    @Deprecated
-    public boolean hasVisibleToEmployees() {
-        return getVisibleToEmployees() != null;
-    }
-
-    @Deprecated
-    public boolean hasVisibleToTeachers() {
-        return getVisibleToTeachers() != null;
-    }
-
-    @Deprecated
-    public boolean hasVisibleToAlumni() {
-        return getVisibleToAlumni() != null;
-    }
-
-    @Deprecated
-    public boolean hasDefaultContact() {
-        return getDefaultContact() != null;
-    }
-
-    @Deprecated
-    public boolean hasVisibleToStudents() {
-        return getVisibleToStudents() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrevPartyContact() {
-        return getPrevPartyContact() != null;
     }
 
     private static Set<PartyContact> getAllInstancesOf(Class<? extends PartyContact> type) {

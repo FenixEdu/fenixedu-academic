@@ -66,14 +66,4 @@ public class EctsInstitutionByCurricularYearConversionTable extends EctsInstitut
         super.delete();
     }
 
-    @Deprecated
-    public boolean hasCycle() {
-        return getCycle() != null;
-    }
-
-    @Deprecated
-    public boolean hasSchool() {
-        return getSchool() != null;
-    }
-
 }

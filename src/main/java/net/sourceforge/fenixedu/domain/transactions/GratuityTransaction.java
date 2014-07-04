@@ -77,9 +77,4 @@ public class GratuityTransaction extends GratuityTransaction_Base {
         return !date.isBefore(start) && !date.isAfter(end);
     }
 
-    @Deprecated
-    public boolean hasGratuitySituation() {
-        return getGratuitySituation() != null;
-    }
-
 }

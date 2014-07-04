@@ -113,14 +113,4 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
         return new PhdCandidacyFeedbackState(process, type, person, remarks, stateDate);
     }
 
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasProcess() {
-        return getProcess() != null;
-    }
-
 }

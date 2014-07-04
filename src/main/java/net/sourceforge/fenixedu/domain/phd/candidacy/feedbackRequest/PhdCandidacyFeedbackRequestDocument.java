@@ -85,9 +85,4 @@ public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackReq
         return getElement().getLastFeedbackDocument();
     }
 
-    @Deprecated
-    public boolean hasElement() {
-        return getElement() != null;
-    }
-
 }

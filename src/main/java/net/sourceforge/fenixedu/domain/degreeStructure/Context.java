@@ -304,7 +304,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     public boolean isOpen(final ExecutionSemester executionSemester) {
         return getBeginExecutionPeriod().isBeforeOrEquals(executionSemester)
-                && (!hasEndExecutionPeriod() || getEndExecutionPeriod().isAfterOrEquals(executionSemester));
+                && (getEndExecutionPeriod() == null || getEndExecutionPeriod().isAfterOrEquals(executionSemester));
     }
 
     public boolean isOpen(final ExecutionYear executionYear) {
@@ -326,7 +326,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
 
         if (begin.isAfterOrEquals(getBeginExecutionPeriod())) {
-            return !hasEndExecutionPeriod() || begin.isBeforeOrEquals(getEndExecutionPeriod());
+            return getEndExecutionPeriod() == null || begin.isBeforeOrEquals(getEndExecutionPeriod());
         } else {
             return end == null || end.isAfterOrEquals(getBeginExecutionPeriod());
         }
@@ -407,11 +407,11 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public boolean hasChildDegreeModule(final DegreeModule degreeModule) {
-        return hasChildDegreeModule() && getChildDegreeModule().equals(degreeModule);
+        return getChildDegreeModule() != null && getChildDegreeModule().equals(degreeModule);
     }
 
     public boolean hasCurricularPeriod(final CurricularPeriod curricularPeriod) {
-        return hasCurricularPeriod() && getCurricularPeriod().equals(curricularPeriod);
+        return getCurricularPeriod() != null && getCurricularPeriod().equals(curricularPeriod);
     }
 
     public class DegreeModuleScopeContext extends DegreeModuleScope {
@@ -490,46 +490,6 @@ public class Context extends Context_Base implements Comparable<Context> {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getAssociatedWrittenEvaluations() {
         return getAssociatedWrittenEvaluationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedWrittenEvaluations() {
-        return !getAssociatedWrittenEvaluationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasCurricularPeriod() {
-        return getCurricularPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasParentCourseGroup() {
-        return getParentCourseGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginExecutionPeriod() {
-        return getBeginExecutionPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasChildOrder() {
-        return getChildOrder() != null;
-    }
-
-    @Deprecated
-    public boolean hasChildDegreeModule() {
-        return getChildDegreeModule() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndExecutionPeriod() {
-        return getEndExecutionPeriod() != null;
     }
 
 }

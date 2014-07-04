@@ -122,7 +122,7 @@ public class WebAddress extends WebAddress_Base {
 
     @Override
     public void setValid() {
-        if (hasPrevPartyContact()) {
+        if (getPrevPartyContact() != null) {
             getPrevPartyContact().deleteWithoutCheckRules();
         }
     }
@@ -144,7 +144,7 @@ public class WebAddress extends WebAddress_Base {
 
         boolean oldValueDiffersFromNew = false;
         if (valueChanged) {
-            if (hasPrevPartyContact()) {
+            if (getPrevPartyContact() != null) {
                 oldValueDiffersFromNew = getPrevPartyContact().getPresentationValue().compareTo(getPresentationValue()) != 0;
             }
         }

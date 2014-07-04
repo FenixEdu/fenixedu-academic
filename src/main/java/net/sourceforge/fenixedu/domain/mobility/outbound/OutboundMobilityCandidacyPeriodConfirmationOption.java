@@ -50,29 +50,4 @@ public class OutboundMobilityCandidacyPeriodConfirmationOption extends OutboundM
         return getSubmissionsThatSelectedOptionSet();
     }
 
-    @Deprecated
-    public boolean hasAnySubmissionsThatSelectedOption() {
-        return !getSubmissionsThatSelectedOptionSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasOptionValue() {
-        return getOptionValue() != null;
-    }
-
-    @Deprecated
-    public boolean hasOutboundMobilityCandidacyPeriod() {
-        return getOutboundMobilityCandidacyPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasAvailableForCandidates() {
-        return getAvailableForCandidates() != null;
-    }
-
 }

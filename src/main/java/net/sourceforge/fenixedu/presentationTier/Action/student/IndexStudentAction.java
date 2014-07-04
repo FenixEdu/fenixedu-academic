@@ -57,7 +57,7 @@ public class IndexStudentAction extends FenixAction {
             if (person != null) {
                 final Student student = person.getStudent();
                 if (student != null) {
-                    if (student.hasAnyRegistrations()) {
+                    if (!student.getRegistrationsSet().isEmpty()) {
                         final Registration registration = student.getRegistrationsSet().iterator().next();
                         final InfoStudent infoStudent = new InfoStudent(registration);
                         request.setAttribute("infoStudent", infoStudent);

@@ -294,83 +294,8 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     @Deprecated
-    public boolean hasAnyNewPaymentCodeMappings() {
-        return !getNewPaymentCodeMappingsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping> getOldPaymentCodeMappings() {
         return getOldPaymentCodeMappingsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyOldPaymentCodeMappings() {
-        return !getOldPaymentCodeMappingsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenUpdated() {
-        return getWhenUpdated() != null;
-    }
-
-    @Deprecated
-    public boolean hasState() {
-        return getState() != null;
-    }
-
-    @Deprecated
-    public boolean hasStartDate() {
-        return getStartDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasMinAmount() {
-        return getMinAmount() != null;
-    }
-
-    @Deprecated
-    public boolean hasEntityCode() {
-        return getEntityCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentCandidacy() {
-        return getStudentCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasMaxAmount() {
-        return getMaxAmount() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
     }
 
 }

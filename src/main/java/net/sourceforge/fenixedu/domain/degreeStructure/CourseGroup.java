@@ -113,8 +113,8 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public Boolean getCanBeDeleted() {
-        return super.getCanBeDeleted() && !hasAnyChildContexts() && !hasAnyOldCourseGroupChangeRequests()
-                && !hasAnyNewCourseGroupChangeRequests();
+        return super.getCanBeDeleted() && getChildContextsSet().isEmpty() && getOldCourseGroupChangeRequestsSet().isEmpty()
+                && getNewCourseGroupChangeRequestsSet().isEmpty();
     }
 
     @Override
@@ -153,7 +153,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        return hasAnyParentContexts() ? getParentContexts().iterator().next().getParentCourseGroup()
+        return !getParentContextsSet().isEmpty() ? getParentContexts().iterator().next().getParentCourseGroup()
                 .getParentDegreeCurricularPlan() : null;
     }
 
@@ -488,7 +488,7 @@ public class CourseGroup extends CourseGroup_Base {
 
         for (final Context context : this.getChildContextsSet()) {
 
-            if (context.getChildDegreeModule().isLeaf() && context.hasCurricularPeriod()
+            if (context.getChildDegreeModule().isLeaf() && context.getCurricularPeriod() != null
                     && context.getCurricularPeriod().equals(curricularPeriod) && context.isValid(executionSemester)) {
 
                 result.add(context);
@@ -846,18 +846,8 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPreviousEquivalencePlanEntries() {
-        return !getPreviousEquivalencePlanEntriesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getChildContexts() {
         return getChildContextsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyChildContexts() {
-        return !getChildContextsSet().isEmpty();
     }
 
     @Deprecated
@@ -866,28 +856,13 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     @Deprecated
-    public boolean hasAnyParticipatingContextCurricularRules() {
-        return !getParticipatingContextCurricularRulesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest> getOldCourseGroupChangeRequests() {
         return getOldCourseGroupChangeRequestsSet();
     }
 
     @Deprecated
-    public boolean hasAnyOldCourseGroupChangeRequests() {
-        return !getOldCourseGroupChangeRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest> getNewCourseGroupChangeRequests() {
         return getNewCourseGroupChangeRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyNewCourseGroupChangeRequests() {
-        return !getNewCourseGroupChangeRequestsSet().isEmpty();
     }
 
 }

@@ -63,7 +63,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
                         super.beforeAdd(candidacyProcess, candidacyPeriod);
                         if (candidacyProcess != null && candidacyPeriod != null
                                 && candidacyPeriod instanceof DegreeTransferCandidacyPeriod) {
-                            if (candidacyPeriod.hasAnyCandidacyProcesses()) {
+                            if (!candidacyPeriod.getCandidacyProcessesSet().isEmpty()) {
                                 throw new DomainException(
                                         "error.DegreeTransferCandidacyProcess.candidacy.period.already.has.process");
                             }
@@ -188,7 +188,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
                 throw new PreConditionNotValidException();
             }
 
-            if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+            if (process.getCandidacyPeriod() == null || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
                 throw new PreConditionNotValidException();
             }
         }
@@ -212,7 +212,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
                 throw new PreConditionNotValidException();
             }
 
-            if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+            if (process.getCandidacyPeriod() == null || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
                 throw new PreConditionNotValidException();
             }
         }

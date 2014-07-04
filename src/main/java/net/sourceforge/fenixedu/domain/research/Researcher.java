@@ -67,19 +67,4 @@ public class Researcher extends Researcher_Base {
                 .getCurrentPersonContractSituationByCategoryType(CategoryType.RESEARCHER) : null;
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
-    @Deprecated
-    public boolean hasAllowsToBeSearched() {
-        return getAllowsToBeSearched() != null;
-    }
-
 }

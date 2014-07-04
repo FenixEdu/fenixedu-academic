@@ -75,7 +75,7 @@ public enum PhdThesisPredicateContainer implements PredicateContainer<PhdIndivid
         }
 
         private boolean checkState(PhdIndividualProgramProcess process) {
-            return process.getActiveState().isActive() && process.hasThesisProcess();
+            return process.getActiveState().isActive() && process.getThesisProcess() != null;
         }
 
         private boolean checkValue(PhdIndividualProgramProcess process) {

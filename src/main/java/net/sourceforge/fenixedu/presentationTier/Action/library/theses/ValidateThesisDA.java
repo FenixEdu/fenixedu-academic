@@ -95,7 +95,7 @@ public class ValidateThesisDA extends ThesisLibraryDA {
             HttpServletResponse response) throws Exception {
         List<ThesisLibraryOperation> operations = new ArrayList<ThesisLibraryOperation>();
         Thesis thesis = getThesis(request);
-        if (thesis.hasLastLibraryOperation()) {
+        if (thesis.getLastLibraryOperation() != null) {
             ThesisLibraryOperation last = thesis.getLastLibraryOperation();
             do {
                 operations.add(last);

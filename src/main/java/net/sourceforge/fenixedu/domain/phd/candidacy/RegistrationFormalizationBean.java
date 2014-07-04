@@ -68,7 +68,7 @@ public class RegistrationFormalizationBean implements Serializable {
     }
 
     public Collection<Registration> getAvailableRegistrationsToAssociate() {
-        if (!(process.getPerson().getStudent() != null)) {
+        if (process.getPerson().getStudent() == null) {
             return Collections.emptySet();
         }
 

@@ -136,7 +136,7 @@ public class PersonInformationBean {
     private String getContactValue(final PartyContact contact, final boolean checkIfPublic) {
         String value = StringUtils.EMPTY;
         if (contact != null) {
-            if (!checkIfPublic || contact.hasVisibleToPublic()) {
+            if (!checkIfPublic || contact.getVisibleToPublic() != null) {
                 value = contact.getPresentationValue();
             }
         }

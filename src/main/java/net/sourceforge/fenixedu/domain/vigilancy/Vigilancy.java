@@ -269,29 +269,4 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     public abstract int getEstimatedPoints();
 
-    @Deprecated
-    public boolean hasWrittenEvaluation() {
-        return getWrittenEvaluation() != null;
-    }
-
-    @Deprecated
-    public boolean hasStatus() {
-        return getStatus() != null;
-    }
-
-    @Deprecated
-    public boolean hasActive() {
-        return getActive() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasVigilantWrapper() {
-        return getVigilantWrapper() != null;
-    }
-
 }

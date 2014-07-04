@@ -436,7 +436,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public boolean isConclusionProcessed() {
         if (!isBolonhaDegree()) {
-            return getRegistration().hasConclusionProcess();
+            return getRegistration().getConclusionProcess() != null;
         }
 
         if (isEmptyDegree()) {
@@ -547,7 +547,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public void setRegistration(final Registration registration) {
         if (registration != null) {
-            if (registration.hasDegree()) {
+            if (registration.getDegree() != null) {
                 if (!registration.getDegree().getDegreeCurricularPlansSet().contains(getDegreeCurricularPlan())) {
                     throw new DomainException("error.StudentCurricularPlan.setting.registration.with.different.degree");
                 }
@@ -2019,7 +2019,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private void internalCreateFirstTimeStudentEnrolmentsFor(CurriculumGroup curriculumGroup, CurricularPeriod curricularPeriod,
             ExecutionSemester executionSemester, String createdBy) {
 
-        if (curriculumGroup.hasDegreeModule()) {
+        if (curriculumGroup.getDegreeModule() != null) {
             for (final Context context : curriculumGroup.getDegreeModule().getContextsWithCurricularCourseByCurricularPeriod(
                     curricularPeriod, executionSemester)) {
                 new Enrolment(this, curriculumGroup, (CurricularCourse) context.getChildDegreeModule(), executionSemester,
@@ -2027,7 +2027,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
         }
 
-        if (curriculumGroup.hasAnyCurriculumModules()) {
+        if (!curriculumGroup.getCurriculumModulesSet().isEmpty()) {
             for (final CurriculumModule curriculumModule : curriculumGroup.getCurriculumModulesSet()) {
                 if (!curriculumModule.isLeaf()) {
                     internalCreateFirstTimeStudentEnrolmentsFor((CurriculumGroup) curriculumModule, curricularPeriod,

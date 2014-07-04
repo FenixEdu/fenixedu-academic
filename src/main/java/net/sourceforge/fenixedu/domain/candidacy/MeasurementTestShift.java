@@ -129,38 +129,8 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
     }
 
     @Deprecated
-    public boolean hasAnyRooms() {
-        return !getRoomsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.DegreeCurricularPlan> getForDegreeCurricularPlan() {
         return getForDegreeCurricularPlanSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyForDegreeCurricularPlan() {
-        return !getForDegreeCurricularPlanSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasTest() {
-        return getTest() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasDate() {
-        return getDate() != null;
     }
 
 }

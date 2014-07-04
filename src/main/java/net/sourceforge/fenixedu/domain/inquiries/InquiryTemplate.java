@@ -91,34 +91,4 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasAnyInquiryBlocks() {
-        return !getInquiryBlocksSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasInquiryMessage() {
-        return getInquiryMessage() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionPeriod() {
-        return getExecutionPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasResponsePeriodBegin() {
-        return getResponsePeriodBegin() != null;
-    }
-
-    @Deprecated
-    public boolean hasResponsePeriodEnd() {
-        return getResponsePeriodEnd() != null;
-    }
-
 }

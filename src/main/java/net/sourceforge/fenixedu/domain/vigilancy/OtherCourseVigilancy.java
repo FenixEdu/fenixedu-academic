@@ -82,9 +82,4 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
         return getConfirmed();
     }
 
-    @Deprecated
-    public boolean hasConfirmed() {
-        return getConfirmed() != null;
-    }
-
 }

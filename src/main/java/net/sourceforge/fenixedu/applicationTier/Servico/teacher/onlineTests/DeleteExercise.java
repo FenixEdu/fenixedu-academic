@@ -53,7 +53,7 @@ public class DeleteExercise {
             for (TestQuestion testQuestion : testQuestionList) {
                 removeTestQuestionFromTest(testQuestion);
             }
-            if (!question.hasAnyStudentTestsQuestions()) {
+            if (question.getStudentTestsQuestionsSet().isEmpty()) {
                 question.delete();
             } else {
                 question.setVisibility(Boolean.FALSE);

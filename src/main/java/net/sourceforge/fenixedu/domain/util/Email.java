@@ -394,7 +394,7 @@ public class Email extends Email_Base {
 
     @Atomic(mode = TxMode.WRITE)
     public void deliver() {
-        if (!hasAnyRecipients() || (hasMessage() && getMessage().getCreated().plusDays(5).isBeforeNow())) {
+        if (!hasAnyRecipients() || (getMessage() != null && getMessage().getCreated().plusDays(5).isBeforeNow())) {
             setRootDomainObjectFromEmailQueue(null);
         } else {
             final EmailAddressList toAddresses = getToAddresses();
@@ -436,76 +436,6 @@ public class Email extends Email_Base {
     @Override
     public void setFromName(final String fromName) {
         super.setFromName(fromName.replace(",", ""));
-    }
-
-    @Deprecated
-    public boolean hasBccAddresses() {
-        return getBccAddresses() != null;
-    }
-
-    @Deprecated
-    public boolean hasBody() {
-        return getBody() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasMessage() {
-        return getMessage() != null;
-    }
-
-    @Deprecated
-    public boolean hasSubject() {
-        return getSubject() != null;
-    }
-
-    @Deprecated
-    public boolean hasHtmlBody() {
-        return getHtmlBody() != null;
-    }
-
-    @Deprecated
-    public boolean hasConfirmedAddresses() {
-        return getConfirmedAddresses() != null;
-    }
-
-    @Deprecated
-    public boolean hasFailedAddresses() {
-        return getFailedAddresses() != null;
-    }
-
-    @Deprecated
-    public boolean hasFromName() {
-        return getFromName() != null;
-    }
-
-    @Deprecated
-    public boolean hasFromAddress() {
-        return getFromAddress() != null;
-    }
-
-    @Deprecated
-    public boolean hasToAddresses() {
-        return getToAddresses() != null;
-    }
-
-    @Deprecated
-    public boolean hasCcAddresses() {
-        return getCcAddresses() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennuFromEmailQueue() {
-        return getRootDomainObjectFromEmailQueue() != null;
-    }
-
-    @Deprecated
-    public boolean hasReplyTos() {
-        return getReplyTos() != null;
     }
 
 }

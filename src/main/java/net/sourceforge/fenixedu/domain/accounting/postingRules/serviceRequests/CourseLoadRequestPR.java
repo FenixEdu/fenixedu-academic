@@ -71,9 +71,4 @@ public class CourseLoadRequestPR extends CourseLoadRequestPR_Base {
         return ((CertificateRequestEvent) event).isUrgentRequest();
     }
 
-    @Deprecated
-    public boolean hasAmountFirstPage() {
-        return getAmountFirstPage() != null;
-    }
-
 }

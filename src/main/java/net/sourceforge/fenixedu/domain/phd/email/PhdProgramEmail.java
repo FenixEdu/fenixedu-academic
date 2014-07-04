@@ -109,14 +109,4 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
         return getPhdIndividualProgramProcessesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyPhdIndividualProgramProcesses() {
-        return !getPhdIndividualProgramProcessesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasPhdProgram() {
-        return getPhdProgram() != null;
-    }
-
 }

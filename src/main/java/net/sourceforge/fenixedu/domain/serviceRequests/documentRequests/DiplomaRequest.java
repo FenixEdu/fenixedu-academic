@@ -92,7 +92,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
             if (registryRequest == null) {
                 throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
-            } else if (registryRequest.isPayedUponCreation() && registryRequest.hasEvent()
+            } else if (registryRequest.isPayedUponCreation() && registryRequest.getEvent() != null
                     && !registryRequest.getEvent().isPayed()) {
                 throw new DomainException("DiplomaRequest.registration.withoutPayedRegistryRequest");
             }
@@ -216,11 +216,11 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             }
         }
 
-        if (academicServiceRequestBean.isToConclude() && !isFree() && !hasEvent() && !isPayedUponCreation()) {
+        if (academicServiceRequestBean.isToConclude() && !isFree() && getEvent() == null && !isPayedUponCreation()) {
             DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
         }
 
-        if (academicServiceRequestBean.isToCancelOrReject() && hasEvent() && getEvent().isOpen()) {
+        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null && getEvent().isOpen()) {
             getEvent().cancel(academicServiceRequestBean.getResponsible());
         }
     }
@@ -573,11 +573,6 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     @Override
     public boolean isProgrammeLinkVisible() {
         return getRegistration().isAllowedToManageRegistration();
-    }
-
-    @Deprecated
-    public boolean hasRequestedCycle() {
-        return getRequestedCycle() != null;
     }
 
 }

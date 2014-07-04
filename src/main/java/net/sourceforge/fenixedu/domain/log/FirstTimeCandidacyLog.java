@@ -48,14 +48,4 @@ public class FirstTimeCandidacyLog extends FirstTimeCandidacyLog_Base {
         return getFirstTimeCandidacyLogEntrySet();
     }
 
-    @Deprecated
-    public boolean hasAnyFirstTimeCandidacyLogEntry() {
-        return !getFirstTimeCandidacyLogEntrySet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasStudentCandidacy() {
-        return getStudentCandidacy() != null;
-    }
-
 }

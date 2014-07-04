@@ -179,7 +179,7 @@
 	<%
 		for (OccupationPeriod occupationPeriod = ((Lesson) olesson).getPeriod(); occupationPeriod != null; occupationPeriod = occupationPeriod.getNextPeriod()) {
 	%>
-				<% if (occupationPeriod.hasPreviousPeriod()) { %>
+				<% if (occupationPeriod.getPreviousPeriod() != null) { %>
 					<br/>
 				<% } %>
 				<% for (final Interval interval : occupationPeriod.getIntervals()) { %>

@@ -122,7 +122,7 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
 
             process.createState(lastActiveState.getType(), AccessControl.getPerson(), remarks);
 
-            if (process.hasRegistration() && !process.getRegistration().isActive()) {
+            if (process.getRegistration() != null && !process.getRegistration().isActive()) {
                 RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
 
                 RegistrationStateCreator.createState(process.getRegistration(), AccessControl.getPerson(), new DateTime(),
@@ -130,11 +130,6 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
             }
 
         }
-    }
-
-    @Deprecated
-    public boolean hasPhdStudentReingressionRequestDocument() {
-        return getPhdStudentReingressionRequestDocument() != null;
     }
 
 }

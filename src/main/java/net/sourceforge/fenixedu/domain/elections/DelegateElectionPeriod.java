@@ -90,19 +90,4 @@ public abstract class DelegateElectionPeriod extends DelegateElectionPeriod_Base
 
     public abstract boolean isOpenRoundElections();
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasStartDate() {
-        return getStartDate() != null;
-    }
-
 }

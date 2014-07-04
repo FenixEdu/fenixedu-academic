@@ -42,7 +42,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
     public boolean hasVotedStudent(Student student) {
 
         for (DelegateElectionVote vote : getVotes()) {
-            if (vote.hasStudent() && vote.getStudent().equals(student)) {
+            if (vote.getStudent() != null && vote.getStudent().equals(student)) {
                 return true;
             }
         }
@@ -63,7 +63,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
         int nrVotes = 0;
         for (DelegateElectionVote vote : getVotes()) {
             if (vote instanceof DelegateElectionVote) {
-                if (vote.hasStudent() && vote.getStudent().equals(student)) {
+                if (vote.getStudent() != null && vote.getStudent().equals(student)) {
                     nrVotes++;
                 }
             }
@@ -90,7 +90,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
 
         for (DelegateElectionVote vote : getVotes()) {
             totalVoteCount++;
-            if (!vote.hasStudent()) {
+            if (vote.getStudent() == null) {
                 continue;
             }
             student = vote.getStudent();
@@ -131,7 +131,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
 
     @Override
     public boolean isOpenRoundElections() {
-        return isPastPeriod() && hasAnyVotes();
+        return isPastPeriod() && !getVotesSet().isEmpty();
     }
 
     private boolean isRoundElections(int votingPeriod) {
@@ -147,33 +147,13 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
     }
 
     @Deprecated
-    public boolean hasAnyCandidatesForNewRoundElections() {
-        return !getCandidatesForNewRoundElectionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVote> getVotes() {
         return getVotesSet();
     }
 
     @Deprecated
-    public boolean hasAnyVotes() {
-        return !getVotesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getVotingStudents() {
         return getVotingStudentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyVotingStudents() {
-        return !getVotingStudentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasDelegateElection() {
-        return getDelegateElection() != null;
     }
 
 }

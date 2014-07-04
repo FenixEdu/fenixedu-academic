@@ -24,9 +24,4 @@ public class GenericApplicationComment extends GenericApplicationComment_Base {
         super();
     }
 
-    @Deprecated
-    public boolean hasGenericApplication() {
-        return getGenericApplication() != null;
-    }
-
 }

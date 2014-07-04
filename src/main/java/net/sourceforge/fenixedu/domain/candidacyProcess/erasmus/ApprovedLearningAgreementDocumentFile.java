@@ -193,14 +193,4 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
         return getExecutedActionsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyExecutedActions() {
-        return !getExecutedActionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasMobilityIndividualApplication() {
-        return getMobilityIndividualApplication() != null;
-    }
-
 }

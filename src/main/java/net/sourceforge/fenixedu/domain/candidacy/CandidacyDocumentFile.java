@@ -37,9 +37,4 @@ public class CandidacyDocumentFile extends CandidacyDocumentFile_Base {
         super.delete();
     }
 
-    @Deprecated
-    public boolean hasCandidacyDocument() {
-        return getCandidacyDocument() != null;
-    }
-
 }

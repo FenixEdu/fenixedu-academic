@@ -102,9 +102,4 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
         return true;
     }
 
-    @Deprecated
-    public boolean hasMaxDays() {
-        return getMaxDays() != null;
-    }
-
 }

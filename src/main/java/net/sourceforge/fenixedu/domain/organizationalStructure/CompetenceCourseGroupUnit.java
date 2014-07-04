@@ -188,7 +188,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
 
     @Override
     public void delete() {
-        if (hasAnyCompetenceCourseInformations()) {
+        if (!getCompetenceCourseInformationsSet().isEmpty()) {
             throw new DomainException("error.unit.cannot.be.deleted");
         }
         super.delete();
@@ -212,18 +212,8 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCompetenceCourseInformationChangeRequests() {
-        return !getCompetenceCourseInformationChangeRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation> getCompetenceCourseInformations() {
         return getCompetenceCourseInformationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCompetenceCourseInformations() {
-        return !getCompetenceCourseInformationsSet().isEmpty();
     }
 
 }

@@ -263,24 +263,4 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
-    @Deprecated
-    public boolean hasMaximumYear() {
-        return getMaximumYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasDepartmentUnit() {
-        return getDepartmentUnit() != null;
-    }
-
-    @Deprecated
-    public boolean hasMinimumYear() {
-        return getMinimumYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
 }

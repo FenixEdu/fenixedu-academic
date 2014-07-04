@@ -57,24 +57,4 @@ public class ExecutedAction extends ExecutedAction_Base {
         setType(type);
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhoMade() {
-        return getWhoMade() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenOccured() {
-        return getWhenOccured() != null;
-    }
-
 }

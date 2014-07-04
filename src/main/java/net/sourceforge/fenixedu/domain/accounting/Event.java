@@ -1119,68 +1119,8 @@ public abstract class Event extends Event_Base {
     }
 
     @Deprecated
-    public boolean hasAnyDiscounts() {
-        return !getDiscountsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Exemption> getExemptions() {
         return getExemptionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExemptions() {
-        return !getExemptionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasResponsibleForCancel() {
-        return getResponsibleForCancel() != null;
-    }
-
-    @Deprecated
-    public boolean hasEventState() {
-        return getEventState() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEventStateDate() {
-        return getEventStateDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasParty() {
-        return getParty() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreatedBy() {
-        return getCreatedBy() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenSentLetter() {
-        return getWhenSentLetter() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenOccured() {
-        return getWhenOccured() != null;
-    }
-
-    @Deprecated
-    public boolean hasEventType() {
-        return getEventType() != null;
-    }
-
-    @Deprecated
-    public boolean hasCancelJustification() {
-        return getCancelJustification() != null;
     }
 
 }

@@ -24,9 +24,4 @@ public class PhdStudentReingressionRequestDocument extends PhdStudentReingressio
         super();
     }
 
-    @Deprecated
-    public boolean hasPhdStudentReingressionRequest() {
-        return getPhdStudentReingressionRequest() != null;
-    }
-
 }

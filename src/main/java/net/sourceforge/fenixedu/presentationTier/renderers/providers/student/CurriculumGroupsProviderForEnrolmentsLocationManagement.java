@@ -64,7 +64,7 @@ public class CurriculumGroupsProviderForEnrolmentsLocationManagement implements 
             final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
             for (final CycleCurriculumGroup cycle : studentCurricularPlan.getCycleCurriculumGroups()) {
 
-                if (cycle.hasConclusionProcess()) {
+                if (cycle.getConclusionProcess() != null) {
                     continue;
                 }
 

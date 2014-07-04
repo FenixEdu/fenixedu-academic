@@ -174,7 +174,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         dcp.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.SEMESTER)).append("S]\t");
         dcp.append("[B:").append(previousContext.getBeginExecutionPeriod().getBeginDateYearMonthDay());
         dcp.append(" E:")
-                .append(previousContext.hasEndExecutionPeriod() ? previousContext.getEndExecutionPeriod()
+                .append(previousContext.getEndExecutionPeriod() != null ? previousContext.getEndExecutionPeriod()
                         .getEndDateYearMonthDay() : "          ");
         dcp.append("]\t");
         dcp.append(getName()).append("\n");
@@ -200,7 +200,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
         if (isBoxStructure()) {
-            return hasAnyParentContexts() ? getParentContexts().iterator().next().getParentCourseGroup()
+            return !getParentContextsSet().isEmpty() ? getParentContexts().iterator().next().getParentCourseGroup()
                     .getParentDegreeCurricularPlan() : null;
         } else {
             return super.getDegreeCurricularPlan();

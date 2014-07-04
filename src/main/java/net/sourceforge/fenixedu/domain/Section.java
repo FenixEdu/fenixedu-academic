@@ -250,7 +250,7 @@ public class Section extends Section_Base {
 
     @ConsistencyPredicate
     public boolean checkCorrectParent() {
-        return getParent() != null && getSite() == null;
+        return !(getParent() != null && getSite() != null);
     }
 
     @Override

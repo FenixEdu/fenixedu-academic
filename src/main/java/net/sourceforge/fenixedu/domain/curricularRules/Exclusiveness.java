@@ -146,9 +146,4 @@ public class Exclusiveness extends Exclusiveness_Base {
         return new ExclusivenessVerifier();
     }
 
-    @Deprecated
-    public boolean hasExclusiveDegreeModule() {
-        return getExclusiveDegreeModule() != null;
-    }
-
 }

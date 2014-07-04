@@ -113,9 +113,4 @@ public class CycleConclusionProcess extends CycleConclusionProcess_Base {
         return getCycle().getRegistration();
     }
 
-    @Deprecated
-    public boolean hasCycle() {
-        return getCycle() != null;
-    }
-
 }

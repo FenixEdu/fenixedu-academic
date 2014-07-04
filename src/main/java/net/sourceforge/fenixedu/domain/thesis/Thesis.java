@@ -584,7 +584,7 @@ public class Thesis extends Thesis_Base {
 
         Person person = AccessControl.getPerson();
 
-        if (!(person.getTeacher() != null)) {
+        if (person.getTeacher() == null) {
             throw new DomainException("thesis.submit.needsTeacher");
         }
 
@@ -712,11 +712,11 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.confirm.noKeywords");
         }
 
-        if (!hasExtendedAbstract()) {
+        if (getExtendedAbstract() == null) {
             throw new DomainException("thesis.confirm.noExtendedAbstract");
         }
 
-        if (!hasDissertation()) {
+        if (getDissertation() == null) {
             throw new DomainException("thesis.confirm.noDissertation");
         }
 
@@ -743,11 +743,11 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.confirm.noKeywords");
         }
 
-        if (!hasExtendedAbstract()) {
+        if (getExtendedAbstract() == null) {
             throw new DomainException("thesis.confirm.noExtendedAbstract");
         }
 
-        if (!hasDissertation()) {
+        if (getDissertation() == null) {
             throw new DomainException("thesis.confirm.noDissertation");
         }
 
@@ -796,7 +796,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public ThesisLibraryState getLibraryState() {
-        if (hasLastLibraryOperation()) {
+        if (getLastLibraryOperation() != null) {
             return getLastLibraryOperation().getState();
         }
         return ThesisLibraryState.NOT_DEALT;
@@ -810,7 +810,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public String getLibraryReference() {
-        if (hasLastLibraryOperation()) {
+        if (getLastLibraryOperation() != null) {
             return getLastLibraryOperation().getLibraryReference();
         }
         return null;
@@ -824,7 +824,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public Person getLibraryOperationPerformer() {
-        if (hasLastLibraryOperation()) {
+        if (getLastLibraryOperation() != null) {
             return getLastLibraryOperation().getPerformer();
         }
         return null;
@@ -904,7 +904,7 @@ public class Thesis extends Thesis_Base {
                 continue;
             }
 
-            if (!(evaluation.getMarkSheet() != null)) {
+            if (evaluation.getMarkSheet() == null) {
                 continue;
             }
 
@@ -1067,11 +1067,11 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.rejectDeclaration.notAllowed");
         }
 
-        if (hasDissertation()) {
+        if (getDissertation() != null) {
             getDissertation().delete();
         }
 
-        if (hasExtendedAbstract()) {
+        if (getExtendedAbstract() != null) {
             getExtendedAbstract().delete();
         }
     }
@@ -1721,151 +1721,6 @@ public class Thesis extends Thesis_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant> getParticipations() {
         return getParticipationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyParticipations() {
-        return !getParticipationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasConfirmation() {
-        return getConfirmation() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnrolment() {
-        return getEnrolment() != null;
-    }
-
-    @Deprecated
-    public boolean hasSubmission() {
-        return getSubmission() != null;
-    }
-
-    @Deprecated
-    public boolean hasDeclarationAcceptedTime() {
-        return getDeclarationAcceptedTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasDeclarationAccepted() {
-        return getDeclarationAccepted() != null;
-    }
-
-    @Deprecated
-    public boolean hasEvaluation() {
-        return getEvaluation() != null;
-    }
-
-    @Deprecated
-    public boolean hasExtendedAbstract() {
-        return getExtendedAbstract() != null;
-    }
-
-    @Deprecated
-    public boolean hasMark() {
-        return getMark() != null;
-    }
-
-    @Deprecated
-    public boolean hasDocumentsAvailableAfter() {
-        return getDocumentsAvailableAfter() != null;
-    }
-
-    @Deprecated
-    public boolean hasKeywords() {
-        return getKeywords() != null;
-    }
-
-    @Deprecated
-    public boolean hasThesisAbstract() {
-        return getThesisAbstract() != null;
-    }
-
-    @Deprecated
-    public boolean hasRejectionComment() {
-        return getRejectionComment() != null;
-    }
-
-    @Deprecated
-    public boolean hasDiscussed() {
-        return getDiscussed() != null;
-    }
-
-    @Deprecated
-    public boolean hasSite() {
-        return getSite() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreation() {
-        return getCreation() != null;
-    }
-
-    @Deprecated
-    public boolean hasConfirmmedDocuments() {
-        return getConfirmmedDocuments() != null;
-    }
-
-    @Deprecated
-    public boolean hasProposedPlace() {
-        return getProposedPlace() != null;
-    }
-
-    @Deprecated
-    public boolean hasComment() {
-        return getComment() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastLibraryOperation() {
-        return getLastLibraryOperation() != null;
-    }
-
-    @Deprecated
-    public boolean hasTitle() {
-        return getTitle() != null;
-    }
-
-    @Deprecated
-    public boolean hasState() {
-        return getState() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasProposedDiscussed() {
-        return getProposedDiscussed() != null;
-    }
-
-    @Deprecated
-    public boolean hasApproval() {
-        return getApproval() != null;
-    }
-
-    @Deprecated
-    public boolean hasVisibility() {
-        return getVisibility() != null;
-    }
-
-    @Deprecated
-    public boolean hasOrientatorCreditsDistribution() {
-        return getOrientatorCreditsDistribution() != null;
-    }
-
-    @Deprecated
-    public boolean hasDissertation() {
-        return getDissertation() != null;
     }
 
 }

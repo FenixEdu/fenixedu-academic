@@ -143,9 +143,4 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
         return EntryType.CANDIDACY_ENROLMENT_FEE;
     }
 
-    @Deprecated
-    public boolean hasCandidacyProcess() {
-        return getCandidacyProcess() != null;
-    }
-
 }

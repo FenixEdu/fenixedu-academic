@@ -55,14 +55,4 @@ public class DegreeTeachingServiceCorrection extends DegreeTeachingServiceCorrec
         return getProfessorship().getExecutionCourse().getUnitCreditValue().multiply(getCorrection()).doubleValue();
     }
 
-    @Deprecated
-    public boolean hasCorrection() {
-        return getCorrection() != null;
-    }
-
-    @Deprecated
-    public boolean hasProfessorship() {
-        return getProfessorship() != null;
-    }
-
 }

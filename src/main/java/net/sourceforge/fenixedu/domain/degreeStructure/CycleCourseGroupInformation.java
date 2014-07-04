@@ -82,24 +82,4 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
         checkParameters();
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCycleCourseGroup() {
-        return getCycleCourseGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasGraduatedTitle() {
-        return getGraduatedTitle() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
 }

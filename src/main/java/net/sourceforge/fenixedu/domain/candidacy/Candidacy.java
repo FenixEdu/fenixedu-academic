@@ -59,7 +59,7 @@ public abstract class Candidacy extends Candidacy_Base {
     }
 
     public CandidacySituation getActiveCandidacySituation() {
-        return hasAnyCandidacySituations() ? Collections.max(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR) : null;
+        return !getCandidacySituationsSet().isEmpty() ? Collections.max(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR) : null;
     }
 
     public CandidacySituationType getActiveCandidacySituationType() {
@@ -254,38 +254,8 @@ public abstract class Candidacy extends Candidacy_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCandidacyDocuments() {
-        return !getCandidacyDocumentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.CandidacySituation> getCandidacySituations() {
         return getCandidacySituationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCandidacySituations() {
-        return !getCandidacySituationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasStartDate() {
-        return getStartDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumber() {
-        return getNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
     }
 
 }

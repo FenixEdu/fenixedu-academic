@@ -40,7 +40,7 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 
     public ResearchUnitSite(ResearchUnit unit) {
         this();
-        if (unit.hasSite()) {
+        if (unit.getSite() != null) {
             throw new DomainException("site.department.unit.already.has.site");
         }
         if (StringUtils.isEmpty(unit.getAcronym())) {

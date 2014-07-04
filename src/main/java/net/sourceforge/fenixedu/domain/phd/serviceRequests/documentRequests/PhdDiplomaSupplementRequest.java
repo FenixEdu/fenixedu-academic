@@ -252,7 +252,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public boolean isPiggyBackedOnRegistry() {
-        return hasRegistryDiplomaRequest();
+        return getRegistryDiplomaRequest() != null;
     }
 
     public String getThesisFinalGrade(final Locale locale) {
@@ -354,11 +354,6 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
     @Override
     public boolean isProgrammeLinkVisible() {
         return getPhdIndividualProgramProcess().isCurrentUserAllowedToManageProcess();
-    }
-
-    @Deprecated
-    public boolean hasRegistryDiplomaRequest() {
-        return getRegistryDiplomaRequest() != null;
     }
 
 }

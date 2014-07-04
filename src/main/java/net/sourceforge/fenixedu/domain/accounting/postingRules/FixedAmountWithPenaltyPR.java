@@ -59,9 +59,4 @@ public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_
 
     abstract protected boolean hasPenalty(Event event, DateTime when);
 
-    @Deprecated
-    public boolean hasFixedAmountPenalty() {
-        return getFixedAmountPenalty() != null;
-    }
-
 }

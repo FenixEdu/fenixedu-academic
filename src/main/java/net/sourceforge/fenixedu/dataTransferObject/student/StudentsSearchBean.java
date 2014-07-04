@@ -132,7 +132,7 @@ public class StudentsSearchBean implements Serializable {
                 continue;
             }
 
-            if (!student.hasAnyRegistrations()) {
+            if (student.getRegistrationsSet().isEmpty()) {
                 students.add(student);
             }
 

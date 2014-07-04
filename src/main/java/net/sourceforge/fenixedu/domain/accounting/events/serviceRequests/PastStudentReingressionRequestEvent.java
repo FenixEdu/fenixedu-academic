@@ -42,9 +42,4 @@ public class PastStudentReingressionRequestEvent extends PastStudentReingression
         throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
     }
 
-    @Deprecated
-    public boolean hasPastAmount() {
-        return getPastAmount() != null;
-    }
-
 }

@@ -34,24 +34,4 @@ public class FacultyEvaluationProcessYear extends FacultyEvaluationProcessYear_B
         return getApprovedTeacherEvaluationProcessMarkSet();
     }
 
-    @Deprecated
-    public boolean hasAnyApprovedTeacherEvaluationProcessMark() {
-        return !getApprovedTeacherEvaluationProcessMarkSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasYear() {
-        return getYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasFacultyEvaluationProcess() {
-        return getFacultyEvaluationProcess() != null;
-    }
-
 }

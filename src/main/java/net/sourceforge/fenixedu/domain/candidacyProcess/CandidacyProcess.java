@@ -43,15 +43,15 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     }
 
     public ExecutionInterval getCandidacyExecutionInterval() {
-        return hasCandidacyPeriod() ? getCandidacyPeriod().getExecutionInterval() : null;
+        return getCandidacyPeriod() != null ? getCandidacyPeriod().getExecutionInterval() : null;
     }
 
     public DateTime getCandidacyStart() {
-        return hasCandidacyPeriod() ? getCandidacyPeriod().getStart() : null;
+        return getCandidacyPeriod() != null ? getCandidacyPeriod().getStart() : null;
     }
 
     public DateTime getCandidacyEnd() {
-        return hasCandidacyPeriod() ? getCandidacyPeriod().getEnd() : null;
+        return getCandidacyPeriod() != null ? getCandidacyPeriod().getEnd() : null;
     }
 
     public boolean hasStarted() {
@@ -59,11 +59,11 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     }
 
     public boolean hasOpenCandidacyPeriod() {
-        return hasCandidacyPeriod() && getCandidacyPeriod().isOpen();
+        return getCandidacyPeriod() != null && getCandidacyPeriod().isOpen();
     }
 
     public boolean hasOpenCandidacyPeriod(final DateTime date) {
-        return hasCandidacyPeriod() && getCandidacyPeriod().isOpen(date);
+        return getCandidacyPeriod() != null && getCandidacyPeriod().isOpen(date);
     }
 
     public boolean hasState() {
@@ -97,7 +97,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
 
     public static <T extends CandidacyProcess> T getCandidacyProcessByDate(Class<T> clazz, final DateTime date) {
         for (T process : getAllInstancesOf(clazz)) {
-            if (process.hasCandidacyPeriod() && process.getCandidacyPeriod().isOpen(date)) {
+            if (process.getCandidacyPeriod() != null && process.getCandidacyPeriod().isOpen(date)) {
                 return process;
             }
         }
@@ -108,7 +108,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     public static <T extends CandidacyProcess> T getCandidacyProcessByExecutionInterval(Class<T> clazz,
             final ExecutionInterval executionInterval) {
         for (T process : getAllInstancesOf(clazz)) {
-            if (process.hasCandidacyPeriod() && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval())) {
+            if (process.getCandidacyPeriod() != null && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval())) {
                 return process;
             }
         }
@@ -188,23 +188,8 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     }
 
     @Deprecated
-    public boolean hasAnyDegree() {
-        return !getDegreeSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess> getChildProcesses() {
         return getChildProcessesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyChildProcesses() {
-        return !getChildProcessesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasCandidacyPeriod() {
-        return getCandidacyPeriod() != null;
     }
 
     private static <T extends CandidacyProcess> Set<T> getAllInstancesOf(final Class<? extends T> type) {

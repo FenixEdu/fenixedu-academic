@@ -86,7 +86,7 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
     }
 
     public boolean isVacancyAssociatedToAnyCandidacy() {
-        return hasAnyCandidacies();
+        return !getCandidaciesSet().isEmpty();
     }
 
     public void delete() {
@@ -105,36 +105,6 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData> getCandidacies() {
         return getCandidaciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCandidacies() {
-        return !getCandidaciesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumberOfVacancies() {
-        return getNumberOfVacancies() != null;
-    }
-
-    @Deprecated
-    public boolean hasUniversityUnit() {
-        return getUniversityUnit() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacyPeriod() {
-        return getCandidacyPeriod() != null;
     }
 
 }

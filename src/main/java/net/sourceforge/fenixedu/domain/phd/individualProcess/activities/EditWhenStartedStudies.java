@@ -48,7 +48,7 @@ public class EditWhenStartedStudies extends PhdIndividualProgramProcessActivity 
 
         process.setWhenStartedStudies(bean.getWhenStartedStudies());
 
-        if (process.hasRegistration()) {
+        if (process.getRegistration() != null) {
             process.getRegistration().editStartDates(bean.getWhenStartedStudies(),
                     process.getCandidacyProcess().getWhenRatified(), bean.getWhenStartedStudies());
         }

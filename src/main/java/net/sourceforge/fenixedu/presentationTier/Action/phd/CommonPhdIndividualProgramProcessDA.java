@@ -167,7 +167,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
             HttpServletResponse response) {
         RenderUtils.invalidateViewState();
         final PhdIndividualProgramProcess process = getProcess(request);
-        if (process != null && process.hasRegistration()) {
+        if (process != null && process.getRegistration() != null) {
             request.setAttribute("registrationConclusionBean", new PhdRegistrationConclusionBean(process.getRegistration()));
         }
         Collection<PhdParticipant> guidingsList = process.getGuidings();

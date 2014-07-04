@@ -121,44 +121,4 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
         }
     }
 
-    @Deprecated
-    public boolean hasReimbursementGuide() {
-        return getReimbursementGuide() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasState() {
-        return getState() != null;
-    }
-
-    @Deprecated
-    public boolean hasOfficialYearMonthDay() {
-        return getOfficialYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasModificationYearMonthDay() {
-        return getModificationYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasReimbursementGuideState() {
-        return getReimbursementGuideState() != null;
-    }
-
-    @Deprecated
-    public boolean hasRemarks() {
-        return getRemarks() != null;
-    }
-
-    @Deprecated
-    public boolean hasEmployee() {
-        return getEmployee() != null;
-    }
-
 }

@@ -95,9 +95,4 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
         return getPhdMeeting().getLatestDocumentVersion();
     }
 
-    @Deprecated
-    public boolean hasPhdMeeting() {
-        return getPhdMeeting() != null;
-    }
-
 }

@@ -72,7 +72,7 @@ public class PhdConclusionProcess extends PhdConclusionProcess_Base {
             throw new DomainException("error.phd.PhdConclusionProcess.grade.is.required");
         }
 
-        if (process.hasRegistration() && !process.getRegistration().isRegistrationConclusionProcessed()) {
+        if (process.getRegistration() != null && !process.getRegistration().isRegistrationConclusionProcessed()) {
             throw new DomainException("error.phd.PhdConclusionProcess.registration.must.be.concluded.first");
         }
 
@@ -106,51 +106,6 @@ public class PhdConclusionProcess extends PhdConclusionProcess_Base {
         }
 
         return getThesisEctsCredits().add(getStudyPlanEctsCredits());
-    }
-
-    @Deprecated
-    public boolean hasResponsible() {
-        return getResponsible() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudyPlanEctsCredits() {
-        return getStudyPlanEctsCredits() != null;
-    }
-
-    @Deprecated
-    public boolean hasThesisEctsCredits() {
-        return getThesisEctsCredits() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdProcess() {
-        return getPhdProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasConclusionDate() {
-        return getConclusionDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasVersion() {
-        return getVersion() != null;
-    }
-
-    @Deprecated
-    public boolean hasFinalGrade() {
-        return getFinalGrade() != null;
     }
 
 }

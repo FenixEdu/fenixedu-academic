@@ -71,19 +71,4 @@ public abstract class ExemptionJustification extends ExemptionJustification_Base
 
     abstract public LabelFormatter getDescription();
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasExemption() {
-        return getExemption() != null;
-    }
-
-    @Deprecated
-    public boolean hasReason() {
-        return getReason() != null;
-    }
-
 }

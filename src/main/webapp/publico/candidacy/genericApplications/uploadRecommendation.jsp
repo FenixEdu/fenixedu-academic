@@ -91,7 +91,7 @@
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document"/>
 		</td>
 		<td>
-			<% if (genericRecomentation.hasLetterOfRecomentation()) { %>
+			<% if (genericRecomentation.getLetterOfRecomentation() != null) { %>
 				<a href="<%= request.getContextPath() +  "/publico/genericApplications.do?method=downloadRecomendationFile&fileExternalId=" 
 							+ genericRecomentation.getLetterOfRecomentation().getExternalId() + "&confirmationCode=" + genericRecomentation.getConfirmationCode() %>">
 					<%= genericRecomentation.getLetterOfRecomentation().getFilename() %>
@@ -104,7 +104,7 @@
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.size.in.bytes"/>
 		</td>
 		<td>
-			<% if (genericRecomentation.hasLetterOfRecomentation()) { %>
+			<% if (genericRecomentation.getLetterOfRecomentation() != null) { %>
 				<%= genericRecomentation.getLetterOfRecomentation().getSize() %>
 			<% } %>	
 		</td>
@@ -114,14 +114,14 @@
 			<bean:message bundle="CANDIDATE_RESOURCES" key="label.checksum"/>
 		</td>
 		<td style="color: gray;">
-			<% if (genericRecomentation.hasLetterOfRecomentation()) { %>
+			<% if (genericRecomentation.getLetterOfRecomentation() != null) { %>
 				<%= genericRecomentation.getLetterOfRecomentation().getChecksumAlgorithm() %>: <%= genericRecomentation.getLetterOfRecomentation().getChecksum() %>
 			<% } %>
 		</td>
 	</tr>
 </table>
 
-<% if (genericRecomentation.hasLetterOfRecomentation()) { %>
+<% if (genericRecomentation.getLetterOfRecomentation() != null) { %>
 	<p>
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.recommendation.replace" 
 		arg0="<%= genericRecomentation.getGenericApplication().getName() %>"/>

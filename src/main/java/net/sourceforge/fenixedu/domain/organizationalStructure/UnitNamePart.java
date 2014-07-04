@@ -113,19 +113,4 @@ public class UnitNamePart extends UnitNamePart_Base {
         return getUnitNameSet();
     }
 
-    @Deprecated
-    public boolean hasAnyUnitName() {
-        return !getUnitNameSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasNamePart() {
-        return getNamePart() != null;
-    }
-
 }

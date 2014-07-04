@@ -85,9 +85,9 @@ public class PhdProgramEmailBean extends PhdEmailBean {
 
                 @Override
                 public boolean eval(PhdIndividualProgramProcess toEval) {
-                    if (toEval.hasPhdProgram()) {
+                    if (toEval.getPhdProgram() != null) {
                         return getValue().equals(toEval.getPhdProgram());
-                    } else if (toEval.hasPhdProgramFocusArea()) {
+                    } else if (toEval.getPhdProgramFocusArea() != null) {
                         return !CollectionUtils.intersection(Collections.singleton(getValue()),
                                 toEval.getPhdProgramFocusArea().getPhdPrograms()).isEmpty();
                     } else {

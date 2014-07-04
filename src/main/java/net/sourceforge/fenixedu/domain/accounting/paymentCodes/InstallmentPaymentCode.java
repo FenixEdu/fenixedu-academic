@@ -121,9 +121,4 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
         return true;
     }
 
-    @Deprecated
-    public boolean hasInstallment() {
-        return getInstallment() != null;
-    }
-
 }

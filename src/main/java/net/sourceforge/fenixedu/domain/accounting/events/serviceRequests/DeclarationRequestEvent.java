@@ -49,7 +49,7 @@ public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");
-        if (getAcademicServiceRequest().hasExecutionYear()) {
+        if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }
 

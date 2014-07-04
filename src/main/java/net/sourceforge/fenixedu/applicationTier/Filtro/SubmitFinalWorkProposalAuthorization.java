@@ -58,7 +58,8 @@ public class SubmitFinalWorkProposalAuthorization {
 
     private void authorize(final Person person, final Scheduleing scheduleing) throws NotAuthorizedException {
         if (!isCoordinatorOrDepartmentAdminOffice(person, scheduleing)) {
-            if (!person.hasRole(RoleType.TEACHER) && person.getProfessorshipsSet().isEmpty() && !person.hasRole(RoleType.RESEARCHER)) {
+            if (!person.hasRole(RoleType.TEACHER) && person.getProfessorshipsSet().isEmpty()
+                    && !person.hasRole(RoleType.RESEARCHER)) {
                 throw new NotAuthorizedException("finalDegreeWorkProposal.validator.NotAuthorized");
             }
             if (!scheduleing.isInsideProposalSubmissionPeriod()) {

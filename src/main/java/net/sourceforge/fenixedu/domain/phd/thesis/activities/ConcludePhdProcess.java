@@ -40,7 +40,7 @@ public class ConcludePhdProcess extends PhdThesisActivity {
             throw new PreConditionNotValidException();
         }
 
-        if (process.getIndividualProgramProcess().hasRegistration()
+        if (process.getIndividualProgramProcess().getRegistration() != null
                 && !process.getIndividualProgramProcess().getRegistration().isRegistrationConclusionProcessed()) {
             throw new PreConditionNotValidException();
         }

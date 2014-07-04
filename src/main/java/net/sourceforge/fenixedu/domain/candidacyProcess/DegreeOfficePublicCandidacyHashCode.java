@@ -47,7 +47,7 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 
     public boolean isAssociatedWithEmailAndCandidacyProcess(String email, Class<? extends IndividualCandidacyProcess> type,
             CandidacyProcess process, List<Degree> degreeList) {
-        if (email.equals(this.getEmail()) && this.hasIndividualCandidacyProcess()
+        if (email.equals(this.getEmail()) && this.getIndividualCandidacyProcess() != null
                 && !getIndividualCandidacyProcess().isCandidacyCancelled()
                 && this.getIndividualCandidacyProcess().getClass() == type
                 && this.getIndividualCandidacyProcess().getCandidacyProcess() == process) {
@@ -61,7 +61,7 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 
     @Override
     public boolean hasCandidacyProcess() {
-        return hasIndividualCandidacyProcess();
+        return getIndividualCandidacyProcess() != null;
     }
 
     @Override
@@ -245,11 +245,6 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
         }
 
         return null;
-    }
-
-    @Deprecated
-    public boolean hasIndividualCandidacyProcess() {
-        return getIndividualCandidacyProcess() != null;
     }
 
 }

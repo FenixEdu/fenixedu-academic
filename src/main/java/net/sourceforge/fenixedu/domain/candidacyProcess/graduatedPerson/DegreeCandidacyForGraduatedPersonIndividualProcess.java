@@ -93,7 +93,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
     @Override
     protected void checkParameters(final CandidacyProcess candidacyProcess) {
-        if (candidacyProcess == null || !candidacyProcess.hasCandidacyPeriod()) {
+        if (candidacyProcess == null || candidacyProcess.getCandidacyPeriod() == null) {
             throw new DomainException("error.DegreeCandidacyForGraduatedPersonIndividualProcess.invalid.candidacy.process");
         }
     }

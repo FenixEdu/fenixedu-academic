@@ -95,7 +95,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
         Set<String> confirmActions = new HashSet<String>();
         switch (batch.getState()) {
         case UNSENT:
-            if (batch.hasAnyDocumentRequest()) {
+            if (!batch.getDocumentRequestSet().isEmpty()) {
                 confirmActions.add("closeBatch");
             }
             break;

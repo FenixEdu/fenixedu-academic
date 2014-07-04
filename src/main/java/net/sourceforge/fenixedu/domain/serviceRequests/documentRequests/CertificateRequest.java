@@ -122,7 +122,7 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
         }
 
         if (!isFree()) {
-            if (!hasEvent()) {
+            if (getEvent() == null) {
                 createCertificateRequestEvent();
             } else {
                 getEvent().recalculateState(academicServiceRequestBean.getFinalSituationDate());
@@ -194,16 +194,6 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
     @Override
     public boolean hasPersonalInfo() {
         return false;
-    }
-
-    @Deprecated
-    public boolean hasOtherDocumentPurposeTypeDescription() {
-        return getOtherDocumentPurposeTypeDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasDocumentPurposeType() {
-        return getDocumentPurposeType() != null;
     }
 
 }

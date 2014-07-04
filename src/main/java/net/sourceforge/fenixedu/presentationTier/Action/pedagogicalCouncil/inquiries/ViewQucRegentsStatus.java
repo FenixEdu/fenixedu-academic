@@ -90,7 +90,7 @@ public class ViewQucRegentsStatus extends FenixDispatchAction {
                 if (isToAnswer) {
                     boolean hasMandatoryCommentsToMake = professorship.hasMandatoryCommentsToMakeAsResponsible();
                     boolean inquiryToAnswer =
-                            !(professorship.getInquiryRegentAnswer() != null)
+                            professorship.getInquiryRegentAnswer() == null
                                     || professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(regentInquiryTemplate);
                     if (inquiryToAnswer || hasMandatoryCommentsToMake) {
                         RegentBean regentBean = regentsMap.get(person);

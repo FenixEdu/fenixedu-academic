@@ -59,7 +59,7 @@ public class DismissalLog extends DismissalLog_Base {
     public String getDescription() {
         final StringBuilder description = new StringBuilder();
         description.append(getLabel()).append(": ");
-        if (hasDegreeModule()) {
+        if (getDegreeModule() != null) {
             description.append(getDegreeModuleName());
         }
         if (hasCredits()) {

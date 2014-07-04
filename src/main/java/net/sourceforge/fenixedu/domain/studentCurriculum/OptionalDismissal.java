@@ -66,7 +66,7 @@ public class OptionalDismissal extends OptionalDismissal_Base {
     public StringBuilder print(String tabs) {
         final StringBuilder builder = new StringBuilder();
         builder.append(tabs);
-        builder.append("[OD ").append(hasDegreeModule() ? getDegreeModule().getName() : "").append(" ]\n");
+        builder.append("[OD ").append(getDegreeModule() != null ? getDegreeModule().getName() : "").append(" ]\n");
         return builder;
     }
 
@@ -89,11 +89,6 @@ public class OptionalDismissal extends OptionalDismissal_Base {
     @Override
     public boolean isOptional() {
         return true;
-    }
-
-    @Deprecated
-    public boolean hasEctsCredits() {
-        return getEctsCredits() != null;
     }
 
 }

@@ -239,7 +239,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
     }
 
     private String getShiftNames(final StudentCandidacy candidacy) {
-        if (!candidacy.hasRegistration()) {
+        if (candidacy.getRegistration() == null) {
             return " ";
         }
 

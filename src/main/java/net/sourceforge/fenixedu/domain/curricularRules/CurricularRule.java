@@ -119,7 +119,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     }
 
     protected boolean belongsToCompositeRule() {
-        return hasParentCompositeRule();
+        return getParentCompositeRule() != null;
     }
 
     @Override
@@ -170,7 +170,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     @Override
     public boolean isActive() {
-        return !hasEnd() || getEnd().containsDay(new YearMonthDay());
+        return getEnd() == null || getEnd().containsDay(new YearMonthDay());
     }
 
     protected void checkExecutionPeriods(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
@@ -218,45 +218,9 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
         }
     }
 
-    @Deprecated
-    public boolean hasEnd() {
-        return getEnd() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasParentCompositeRule() {
-        return getParentCompositeRule() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeModuleToApplyRule() {
-        return getDegreeModuleToApplyRule() != null;
-    }
-
-    @Deprecated
-    public boolean hasNotRule() {
-        return getNotRule() != null;
-    }
-
-    @Deprecated
-    public boolean hasBegin() {
-        return getBegin() != null;
-    }
-
     @Override
-    @Deprecated
     public boolean hasContextCourseGroup() {
         return getContextCourseGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurricularRuleType() {
-        return getCurricularRuleType() != null;
     }
 
 }

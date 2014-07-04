@@ -55,7 +55,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         setOutboundMobilityCandidacyContest(null);
         setRootDomainObject(null);
         deleteDomainObject();
-        if (submission.hasAnyOutboundMobilityCandidacy()) {
+        if (!submission.getOutboundMobilityCandidacySet().isEmpty()) {
             int i = 0;
             for (final OutboundMobilityCandidacy candidacy : submission.getSortedOutboundMobilityCandidacySet()) {
                 candidacy.setPreferenceOrder(Integer.valueOf(++i));
@@ -135,36 +135,6 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
     public void unselect() {
         setSelected(Boolean.FALSE);
         setSubmissionFromSelectedCandidacy(null);
-    }
-
-    @Deprecated
-    public boolean hasPreferenceOrder() {
-        return getPreferenceOrder() != null;
-    }
-
-    @Deprecated
-    public boolean hasOutboundMobilityCandidacySubmission() {
-        return getOutboundMobilityCandidacySubmission() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasSubmissionFromSelectedCandidacy() {
-        return getSubmissionFromSelectedCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasOutboundMobilityCandidacyContest() {
-        return getOutboundMobilityCandidacyContest() != null;
-    }
-
-    @Deprecated
-    public boolean hasSelected() {
-        return getSelected() != null;
     }
 
 }

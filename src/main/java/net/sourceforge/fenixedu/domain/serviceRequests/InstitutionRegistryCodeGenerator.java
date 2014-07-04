@@ -62,34 +62,4 @@ public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGen
         return getRegistryCodeSet();
     }
 
-    @Deprecated
-    public boolean hasAnyRegistryCode() {
-        return !getRegistryCodeSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurrentSecondCycle() {
-        return getCurrentSecondCycle() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurrentThirdCycle() {
-        return getCurrentThirdCycle() != null;
-    }
-
-    @Deprecated
-    public boolean hasInstitution() {
-        return getInstitution() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurrentFirstCycle() {
-        return getCurrentFirstCycle() != null;
-    }
-
 }

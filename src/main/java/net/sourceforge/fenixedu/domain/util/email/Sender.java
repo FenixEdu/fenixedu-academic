@@ -176,48 +176,13 @@ public class Sender extends Sender_Base {
     }
 
     @Deprecated
-    public boolean hasAnyRecipients() {
-        return !getRecipientsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessages() {
         return getMessagesSet();
     }
 
     @Deprecated
-    public boolean hasAnyMessages() {
-        return !getMessagesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.email.ReplyTo> getReplyTos() {
         return getReplyTosSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyReplyTos() {
-        return !getReplyTosSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasFromName() {
-        return getFromName() != null;
-    }
-
-    @Deprecated
-    public boolean hasFromAddress() {
-        return getFromAddress() != null;
-    }
-
-    @Deprecated
-    public boolean hasMembers() {
-        return getMembers() != null;
     }
 
 }

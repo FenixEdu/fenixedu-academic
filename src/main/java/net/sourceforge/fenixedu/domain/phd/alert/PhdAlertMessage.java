@@ -198,44 +198,4 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         return getPersonsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyPersons() {
-        return !getPersonsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasPersonWhoMarkedAsReaded() {
-        return getPersonWhoMarkedAsReaded() != null;
-    }
-
-    @Deprecated
-    public boolean hasBody() {
-        return getBody() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasReaded() {
-        return getReaded() != null;
-    }
-
-    @Deprecated
-    public boolean hasSubject() {
-        return getSubject() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasProcess() {
-        return getProcess() != null;
-    }
-
 }

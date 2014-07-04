@@ -211,7 +211,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
                 throw new RuntimeException(e);
             }
 
-            if (person.getStudent() != null && person.getStudent().hasAnyRegistrations()) {
+            if (person.getStudent() != null && !person.getStudent().getRegistrationsSet().isEmpty()) {
                 logCandidateIsStudentWithRegistrationAlreadyExists(LOG_WRITER, degreeCandidateDTO, person);
                 continue;
             }
@@ -227,7 +227,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
             person.addPersonRoleByRoleType(RoleType.CANDIDATE);
 
-            if (!(person.getStudent() != null)) {
+            if (person.getStudent() == null) {
                 new Student(person);
                 logCreatedStudent(LOG_WRITER, person.getStudent());
             }
@@ -498,21 +498,6 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacy() {
         return getStudentCandidacySet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentCandidacy() {
-        return !getStudentCandidacySet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasDgesStudentImportationFile() {
-        return getDgesStudentImportationFile() != null;
-    }
-
-    @Deprecated
-    public boolean hasDgesStudentImportationForCampus() {
-        return getDgesStudentImportationForCampus() != null;
     }
 
 }

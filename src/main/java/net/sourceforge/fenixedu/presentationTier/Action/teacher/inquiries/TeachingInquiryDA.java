@@ -104,7 +104,7 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
         // that means that is not to answer and has no data to see
         if (inquiryTemplate == null
                 || (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && inquiryTemplate
-				.getExecutionPeriod().getInquiryResultsSet().isEmpty())) {
+                        .getExecutionPeriod().getInquiryResultsSet().isEmpty())) {
             return forward(request, "/teacher/inquiries/inquiriesClosed.jsp");
         } else if (!inquiryTemplate.isOpen()) {
             request.setAttribute("readMode", "readMode");
@@ -170,7 +170,7 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
                     teacherResults.add(teacherShiftTypeGroupsResumeResult);
                 }
             }
-        } else if (!(professorship.getInquiryTeacherAnswer() != null)) {
+        } else if (professorship.getInquiryTeacherAnswer() == null) {
             finalState = InquiryResponseState.EMPTY;
         } else if (professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)) {
             finalState = InquiryResponseState.PARTIALLY_FILLED;

@@ -72,7 +72,7 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
         Context result = null;
 
         final CurriculumGroup parent = getCurriculumModule().getCurriculumGroup();
-        if (parent.hasDegreeModule()) {
+        if (parent.getDegreeModule() != null) {
             for (final Context context : parent.getDegreeModule().getValidChildContexts(getExecutionPeriod())) {
                 if (context.getChildDegreeModule() == getDegreeModule()) {
                     if (result == null || context.getCurricularYear().intValue() < result.getCurricularYear().intValue()) {
@@ -142,7 +142,7 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
             return true;
         } else {
             final CurriculumGroup curriculumGroup = (CurriculumGroup) getCurriculumModule();
-            return !curriculumGroup.hasAnyCurriculumModules();
+            return curriculumGroup.getCurriculumModulesSet().isEmpty();
         }
     }
 

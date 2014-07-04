@@ -34,9 +34,4 @@ public class ExternalCoEvaluator extends ExternalCoEvaluator_Base {
         return getName();
     }
 
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
 }

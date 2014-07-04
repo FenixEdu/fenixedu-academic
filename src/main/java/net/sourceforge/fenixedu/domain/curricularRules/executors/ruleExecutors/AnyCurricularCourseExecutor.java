@@ -98,10 +98,10 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
                 rule.hasMaximumCredits() ? rule.getMaximumCredits() >= curricularCourseToEnrol.getEctsCredits(executionSemester) : true;
 
         result &=
-                rule.hasDegree() ? rule.getDegree() == degree : rule.hasBolonhaDegreeType() ? degree.getDegreeType() == rule
+                rule.getDegree() != null ? rule.getDegree() == degree : rule.hasBolonhaDegreeType() ? degree.getDegreeType() == rule
                         .getBolonhaDegreeType() : true;
 
-        if (rule.hasDepartmentUnit()) {
+        if (rule.getDepartmentUnit() != null) {
             final DepartmentUnit departmentUnit =
                     curricularCourseToEnrol.getCompetenceCourse().getDepartmentUnit(executionSemester);
             result &= departmentUnit != null && departmentUnit.equals(rule.getDepartmentUnit());

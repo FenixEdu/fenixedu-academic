@@ -399,7 +399,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
                                 continue;
                             }
 
-                            if (((AccountingEventPaymentCode) paymentCode).hasAccountingEvent()) {
+                            if (((AccountingEventPaymentCode) paymentCode).getAccountingEvent() != null) {
                                 continue;
                             }
 
@@ -414,21 +414,6 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
                 }
             }
         }
-    }
-
-    @Deprecated
-    public boolean hasSuccessfulSentDate() {
-        return getSuccessfulSentDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrintedPaymentCodes() {
-        return getPrintedPaymentCodes() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
     }
 
 }

@@ -69,24 +69,4 @@ public class ServiceProviderRegime extends ServiceProviderRegime_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasLastModificationDateDateTime() {
-        return getLastModificationDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasProviderRegimeType() {
-        return getProviderRegimeType() != null;
-    }
-
-    @Deprecated
-    public boolean hasTeacher() {
-        return getTeacher() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
 }

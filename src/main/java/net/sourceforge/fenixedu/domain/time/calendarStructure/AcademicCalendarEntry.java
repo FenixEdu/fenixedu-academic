@@ -369,7 +369,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     public AcademicCalendarEntry getOriginalTemplateEntry() {
-        if (hasTemplateEntry()) {
+        if (getTemplateEntry() != null) {
             return getTemplateEntry().getOriginalTemplateEntry();
         }
         return this;
@@ -381,7 +381,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     public boolean isVirtual() {
-        return super.getBegin() == null && hasTemplateEntry();
+        return super.getBegin() == null && getTemplateEntry() != null;
     }
 
     public EntryState getEntryState() {
@@ -520,7 +520,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     protected List<AcademicCalendarEntry> getChildEntriesWithTemplateEntries(Long instant, List<AcademicCalendarEntry> result,
             DateTime begin, DateTime end, Class<? extends AcademicCalendarEntry> subEntryClass) {
 
-        boolean hasTemplateEntry = hasTemplateEntry();
+        boolean hasTemplateEntry = getTemplateEntry() != null;
         List<AcademicCalendarEntry> templateEntries = hasTemplateEntry ? new ArrayList<AcademicCalendarEntry>() : null;
 
         for (AcademicCalendarEntry subEntry : getChildEntries()) {
@@ -530,7 +530,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
                 result.add(subEntry);
             }
-            if (hasTemplateEntry && subEntry.hasTemplateEntry()) {
+            if (hasTemplateEntry && subEntry.getTemplateEntry() != null) {
                 templateEntries.add(subEntry.getTemplateEntry());
             }
         }
@@ -554,7 +554,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
             getChildEntriesWithTemplateEntries(instant, childrenEntriesList, null, null, subEntryClass);
 
         } else {
-            if (!hasTemplateEntry()) {
+            if (getTemplateEntry() == null) {
                 for (AcademicCalendarEntry subEntry : getChildEntries()) {
                     if (instant == null || subEntry.containsInstant(instant)) {
                         subEntry.getFirstChildEntriesWithTemplateEntries(instant, subEntryClass, parentEntryClass,
@@ -801,53 +801,8 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     @Deprecated
-    public boolean hasAnyBasedEntries() {
-        return !getBasedEntriesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry> getChildEntries() {
         return getChildEntriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyChildEntries() {
-        return !getChildEntriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasParentEntry() {
-        return getParentEntry() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnd() {
-        return getEnd() != null;
-    }
-
-    @Deprecated
-    public boolean hasDescription() {
-        return getDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasTemplateEntry() {
-        return getTemplateEntry() != null;
-    }
-
-    @Deprecated
-    public boolean hasBegin() {
-        return getBegin() != null;
-    }
-
-    @Deprecated
-    public boolean hasTitle() {
-        return getTitle() != null;
     }
 
 }

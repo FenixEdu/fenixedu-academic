@@ -267,10 +267,10 @@ public class Proposal extends Proposal_Base {
 
     public String getOrientatorsAsString() {
         final StringBuilder builder = new StringBuilder();
-        if (hasOrientator()) {
+        if (getOrientator() != null) {
             builder.append(getOrientator().getName());
         }
-        if (hasCoorientator()) {
+        if (getCoorientator() != null) {
             if (builder.length() > 0) {
                 builder.append(", ");
             }
@@ -286,10 +286,10 @@ public class Proposal extends Proposal_Base {
     }
 
     public CandidacyAttributionType getAttributionStatus() {
-        if (hasGroupAttributed()) {
+        if (getGroupAttributed() != null) {
             return CandidacyAttributionType.ATTRIBUTED_BY_CORDINATOR;
         }
-        if (hasGroupAttributedByTeacher()) {
+        if (getGroupAttributedByTeacher() != null) {
             FinalDegreeWorkGroup group = getGroupAttributedByTeacher();
             for (GroupStudent groupStudent : group.getGroupStudents()) {
                 if (groupStudent.getFinalDegreeWorkProposalConfirmation() != this) {
@@ -302,10 +302,10 @@ public class Proposal extends Proposal_Base {
     }
 
     public Collection<GroupStudent> getAttributionGroup() {
-        if (hasGroupAttributed()) {
+        if (getGroupAttributed() != null) {
             return getGroupAttributed().getGroupStudents();
         }
-        if (hasGroupAttributedByTeacher()) {
+        if (getGroupAttributedByTeacher() != null) {
             FinalDegreeWorkGroup group = getGroupAttributedByTeacher();
             for (GroupStudent groupStudent : group.getGroupStudents()) {
                 if (groupStudent.getFinalDegreeWorkProposalConfirmation() != this) {
@@ -404,163 +404,13 @@ public class Proposal extends Proposal_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedGroupStudents() {
-        return !getAssociatedGroupStudentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Branch> getBranches() {
         return getBranchesSet();
     }
 
     @Deprecated
-    public boolean hasAnyBranches() {
-        return !getBranchesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal> getGroupProposals() {
         return getGroupProposalsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyGroupProposals() {
-        return !getGroupProposalsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasDescription() {
-        return getDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasProposalNumber() {
-        return getProposalNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasCompanionMail() {
-        return getCompanionMail() != null;
-    }
-
-    @Deprecated
-    public boolean hasCompanyAdress() {
-        return getCompanyAdress() != null;
-    }
-
-    @Deprecated
-    public boolean hasGroupAttributed() {
-        return getGroupAttributed() != null;
-    }
-
-    @Deprecated
-    public boolean hasObservations() {
-        return getObservations() != null;
-    }
-
-    @Deprecated
-    public boolean hasLocation() {
-        return getLocation() != null;
-    }
-
-    @Deprecated
-    public boolean hasDeliverable() {
-        return getDeliverable() != null;
-    }
-
-    @Deprecated
-    public boolean hasCompanyName() {
-        return getCompanyName() != null;
-    }
-
-    @Deprecated
-    public boolean hasRequirements() {
-        return getRequirements() != null;
-    }
-
-    @Deprecated
-    public boolean hasTitle() {
-        return getTitle() != null;
-    }
-
-    @Deprecated
-    public boolean hasFraming() {
-        return getFraming() != null;
-    }
-
-    @Deprecated
-    public boolean hasOrientatorsCreditsPercentage() {
-        return getOrientatorsCreditsPercentage() != null;
-    }
-
-    @Deprecated
-    public boolean hasStatus() {
-        return getStatus() != null;
-    }
-
-    @Deprecated
-    public boolean hasMinimumNumberOfGroupElements() {
-        return getMinimumNumberOfGroupElements() != null;
-    }
-
-    @Deprecated
-    public boolean hasCompanionName() {
-        return getCompanionName() != null;
-    }
-
-    @Deprecated
-    public boolean hasUrl() {
-        return getUrl() != null;
-    }
-
-    @Deprecated
-    public boolean hasCoorientatorsCreditsPercentage() {
-        return getCoorientatorsCreditsPercentage() != null;
-    }
-
-    @Deprecated
-    public boolean hasMaximumNumberOfGroupElements() {
-        return getMaximumNumberOfGroupElements() != null;
-    }
-
-    @Deprecated
-    public boolean hasObjectives() {
-        return getObjectives() != null;
-    }
-
-    @Deprecated
-    public boolean hasOrientator() {
-        return getOrientator() != null;
-    }
-
-    @Deprecated
-    public boolean hasGroupAttributedByTeacher() {
-        return getGroupAttributedByTeacher() != null;
-    }
-
-    @Deprecated
-    public boolean hasCoorientator() {
-        return getCoorientator() != null;
-    }
-
-    @Deprecated
-    public boolean hasScheduleing() {
-        return getScheduleing() != null;
-    }
-
-    @Deprecated
-    public boolean hasCompanionPhone() {
-        return getCompanionPhone() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeType() {
-        return getDegreeType() != null;
     }
 
 }

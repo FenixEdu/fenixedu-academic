@@ -198,9 +198,4 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
         return getRequestSet();
     }
 
-    @Deprecated
-    public boolean hasAnyRequest() {
-        return !getRequestSet().isEmpty();
-    }
-
 }

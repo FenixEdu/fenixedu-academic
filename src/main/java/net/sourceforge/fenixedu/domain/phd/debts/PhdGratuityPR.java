@@ -200,28 +200,8 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPhdGratuityPaymentPeriods() {
-        return !getPhdGratuityPaymentPeriodsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPriceQuirk> getPhdGratuityPriceQuirks() {
         return getPhdGratuityPriceQuirksSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdGratuityPriceQuirks() {
-        return !getPhdGratuityPriceQuirksSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasGratuity() {
-        return getGratuity() != null;
-    }
-
-    @Deprecated
-    public boolean hasFineRate() {
-        return getFineRate() != null;
     }
 
 }

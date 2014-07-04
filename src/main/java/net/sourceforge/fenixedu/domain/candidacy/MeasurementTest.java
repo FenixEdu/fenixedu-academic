@@ -125,29 +125,4 @@ public class MeasurementTest extends MeasurementTest_Base {
         return getShiftsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyShifts() {
-        return !getShiftsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasEntryPhase() {
-        return getEntryPhase() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCampus() {
-        return getCampus() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
 }

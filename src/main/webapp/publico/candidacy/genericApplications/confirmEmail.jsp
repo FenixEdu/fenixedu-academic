@@ -685,14 +685,14 @@
 			</td>
 			<logic:present name="recommendationBean">
 				<td>
-					<% if (recomentation.hasLetterOfRecomentation()) { %>
+					<% if (recomentation.getLetterOfRecomentation() != null) { %>
 						<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document.submitted"/>
 					<% } else { %>
 						<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document.request.sent"/>
 					<% } %>
 				</td>
 				<td>
-					<% if (!recomentation.hasLetterOfRecomentation()) { %>
+					<% if (!recomentation.getLetterOfRecomentation() != null) { %>
 						<a href="<%= request.getContextPath() +  resendRequestUrl + "&recomentationId=" + recomentation.getExternalId() %>">
 							<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.request.resend"/>
 						</a>
@@ -701,24 +701,24 @@
 			</logic:present>
 			<logic:notPresent name="recommendationBean">
 				<td>
-					<% if (recomentation.hasLetterOfRecomentation()) { %>
+					<% if (recomentation.getLetterOfRecomentation() != null) { %>
 						<a href="<%= request.getContextPath() +  "/publico/genericApplications.do?method=downloadRecomendationFile&fileExternalId=" + recomentation.getLetterOfRecomentation().getExternalId() %>">
 							<%= recomentation.getLetterOfRecomentation().getFilename() %>
 						</a>
 					<% } %>
 				</td>
 				<td style="text-align: right;">
-					<% if (recomentation.hasLetterOfRecomentation()) { %>
+					<% if (recomentation.getLetterOfRecomentation() != null) { %>
 						<%= recomentation.getLetterOfRecomentation().getSize() %>
 					<% } %>	
 				</td>
 				<td style="text-align: right;">
-					<% if (recomentation.hasLetterOfRecomentation()) { %>
+					<% if (recomentation.getLetterOfRecomentation() != null) { %>
 						<%= recomentation.getLetterOfRecomentation().getUploadTime().toLocalDateTime().toString("yyyy-MM-dd HH:mm") %>
 					<% } %>	
 				</td>
 				<td style="color: gray;">
-					<% if (recomentation.hasLetterOfRecomentation()) { %>
+					<% if (recomentation.getLetterOfRecomentation() != null) { %>
 						<%= recomentation.getLetterOfRecomentation().getChecksumAlgorithm() %>: <%= recomentation.getLetterOfRecomentation().getChecksum() %>
 					<% } %>
 				</td>

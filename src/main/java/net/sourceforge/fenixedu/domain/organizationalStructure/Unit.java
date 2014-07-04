@@ -194,7 +194,7 @@ public class Unit extends Unit_Base {
             getParents().iterator().next().delete();
         }
 
-        if (hasSite()) {
+        if (getSite() != null) {
             getSite().delete();
         }
 
@@ -216,14 +216,14 @@ public class Unit extends Unit_Base {
     }
 
     private boolean canBeDeleted() {
-        return (!hasAnyParents() || (getParentsSet().size() == 1 && getParentUnits().size() == 1)) && !hasAnyChilds()
-                && !hasAnyFunctions() && !hasAnyVigilantGroups() && !hasAnyAssociatedNonAffiliatedTeachers()
-                && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyExternalCurricularCourses()
-                && !hasUnitServiceAgreementTemplate() && getBoardsSet().isEmpty() && (!hasSite() || getSite().isDeletable())
-                && !hasAnyOwnedReceipts() && !hasAnyPrecedentDegreeInformations()
-                && !hasAnyCandidacyPrecedentDegreeInformations() && !hasAnyExamCoordinators()
-                && !hasAnyExternalRegistrationDatas() && !hasAnyFiles() && !hasAnyPersistentGroups()
-                && !hasAnyExternalCourseLoadRequests() && !hasAnyExternalProgramCertificateRequests()
+        return (getParentsSet().isEmpty() || (getParentsSet().size() == 1 && getParentUnits().size() == 1)) && getChildsSet().isEmpty()
+                && getFunctionsSet().isEmpty() && getVigilantGroupsSet().isEmpty() && getAssociatedNonAffiliatedTeachersSet().isEmpty()
+                && getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty() && getExternalCurricularCoursesSet().isEmpty()
+                && getUnitServiceAgreementTemplate() == null && getBoardsSet().isEmpty() && (getSite() == null || getSite().isDeletable())
+                && getOwnedReceiptsSet().isEmpty() && getPrecedentDegreeInformationsSet().isEmpty()
+                && getCandidacyPrecedentDegreeInformationsSet().isEmpty() && getExamCoordinatorsSet().isEmpty()
+                && getExternalRegistrationDatasSet().isEmpty() && getFilesSet().isEmpty() && getPersistentGroupsSet().isEmpty()
+                && getExternalCourseLoadRequestsSet().isEmpty() && getExternalProgramCertificateRequestsSet().isEmpty()
                 && !getUnitGroupSet().isEmpty();
     }
 
@@ -712,7 +712,7 @@ public class Unit extends Unit_Base {
      * @See UnitMailSenderAction
      */
     public UnitBasedSender getOneUnitBasedSender() {
-        if (hasAnyUnitBasedSender()) {
+        if (!getUnitBasedSenderSet().isEmpty()) {
             return getUnitBasedSender().iterator().next();
         } else {
             return UnitBasedSender.newInstance(this);
@@ -1097,7 +1097,7 @@ public class Unit extends Unit_Base {
     }
 
     public boolean isSiteAvailable() {
-        return hasSite();
+        return getSite() != null;
     }
 
     public List<UnitFile> getAccessibileFiles(Person person) {
@@ -1463,18 +1463,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyUnitBasedSender() {
-        return !getUnitBasedSenderSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
         return getExamCoordinatorsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExamCoordinators() {
-        return !getExamCoordinatorsSet().isEmpty();
     }
 
     @Deprecated
@@ -1483,18 +1473,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedBaseFormations() {
-        return !getAssociatedBaseFormationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsCycleGraduationGradeConversionTable> getEctsGraduationGradeConversionTables() {
         return getEctsGraduationGradeConversionTablesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEctsGraduationGradeConversionTables() {
-        return !getEctsGraduationGradeConversionTablesSet().isEmpty();
     }
 
     @Deprecated
@@ -1503,18 +1483,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyUnitFileTags() {
-        return !getUnitFileTagsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getDestinationPrecedentDegreeInformations() {
         return getDestinationPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyDestinationPrecedentDegreeInformations() {
-        return !getDestinationPrecedentDegreeInformationsSet().isEmpty();
     }
 
     @Deprecated
@@ -1523,18 +1493,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyOwnedReceipts() {
-        return !getOwnedReceiptsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup> getVigilantGroups() {
         return getVigilantGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyVigilantGroups() {
-        return !getVigilantGroupsSet().isEmpty();
     }
 
     @Deprecated
@@ -1543,18 +1503,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyDestinationExternalPrecedentDegreeInformations() {
-        return !getDestinationExternalPrecedentDegreeInformationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionConversionTable> getEctsInstitutionConversionTables() {
         return getEctsInstitutionConversionTablesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEctsInstitutionConversionTables() {
-        return !getEctsInstitutionConversionTablesSet().isEmpty();
     }
 
     @Deprecated
@@ -1563,18 +1513,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPersistentGroups() {
-        return !getPersistentGroupsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getTransitionPrecedentDegreeInformations() {
         return getTransitionPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTransitionPrecedentDegreeInformations() {
-        return !getTransitionPrecedentDegreeInformationsSet().isEmpty();
     }
 
     @Deprecated
@@ -1583,18 +1523,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyFiles() {
-        return !getFilesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionByCurricularYearConversionTable> getEctsCourseConversionTables() {
         return getEctsCourseConversionTablesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEctsCourseConversionTables() {
-        return !getEctsCourseConversionTablesSet().isEmpty();
     }
 
     @Deprecated
@@ -1603,18 +1533,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedNonAffiliatedTeachers() {
-        return !getAssociatedNonAffiliatedTeachersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.FunctionalityPrinters> getFunctionalityPrinters() {
         return getFunctionalityPrintersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyFunctionalityPrinters() {
-        return !getFunctionalityPrintersSet().isEmpty();
     }
 
     @Deprecated
@@ -1623,18 +1543,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyDegreeDesignation() {
-        return !getDegreeDesignationSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreeInformations() {
         return getPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPrecedentDegreeInformations() {
-        return !getPrecedentDegreeInformationsSet().isEmpty();
     }
 
     @Deprecated
@@ -1643,18 +1553,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedFormations() {
-        return !getAssociatedFormationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest> getExternalProgramCertificateRequests() {
         return getExternalProgramCertificateRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExternalProgramCertificateRequests() {
-        return !getExternalProgramCertificateRequestsSet().isEmpty();
     }
 
     @Deprecated
@@ -1663,18 +1563,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyExternalCurricularCourses() {
-        return !getExternalCurricularCoursesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.ExternalRegistrationData> getExternalRegistrationDatas() {
         return getExternalRegistrationDatasSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExternalRegistrationDatas() {
-        return !getExternalRegistrationDatasSet().isEmpty();
     }
 
     @Deprecated
@@ -1683,18 +1573,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCandidacies() {
-        return !getCandidaciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation> getCandidacyPrecedentDegreeInformations() {
         return getCandidacyPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCandidacyPrecedentDegreeInformations() {
-        return !getCandidacyPrecedentDegreeInformationsSet().isEmpty();
     }
 
     @Deprecated
@@ -1703,18 +1583,8 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyExternalCourseLoadRequests() {
-        return !getExternalCourseLoadRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Person> getAllowedPeopleToUploadFiles() {
         return getAllowedPeopleToUploadFilesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAllowedPeopleToUploadFiles() {
-        return !getAllowedPeopleToUploadFilesSet().isEmpty();
     }
 
     @Deprecated
@@ -1723,119 +1593,13 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPersonalIngressionsData() {
-        return !getPersonalIngressionsDataSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacies() {
         return getStudentCandidaciesSet();
     }
 
     @Deprecated
-    public boolean hasAnyStudentCandidacies() {
-        return !getStudentCandidaciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Function> getFunctions() {
         return getFunctionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyFunctions() {
-        return !getFunctionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBeginDateYearMonthDay() {
-        return getBeginDateYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnitName() {
-        return getUnitName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennuForExternalInstitutionUnit() {
-        return getRootDomainObjectForExternalInstitutionUnit() != null;
-    }
-
-    @Deprecated
-    public boolean hasSite() {
-        return getSite() != null;
-    }
-
-    @Deprecated
-    public boolean hasRegistryCodeGenerator() {
-        return getRegistryCodeGenerator() != null;
-    }
-
-    @Override
-    @Deprecated
-    public boolean hasAdministrativeOffice() {
-        return getAdministrativeOffice() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnitServiceAgreementTemplate() {
-        return getUnitServiceAgreementTemplate() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnitAcronym() {
-        return getUnitAcronym() != null;
-    }
-
-    @Deprecated
-    public boolean hasCampus() {
-        return getCampus() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnitCostCenterCode() {
-        return getUnitCostCenterCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennuForEarthUnit() {
-        return getRootDomainObjectForEarthUnit() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennuForInstitutionUnit() {
-        return getRootDomainObjectForInstitutionUnit() != null;
-    }
-
-    @Deprecated
-    public boolean hasClassification() {
-        return getClassification() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDateYearMonthDay() {
-        return getEndDateYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasAcronym() {
-        return getAcronym() != null;
-    }
-
-    @Deprecated
-    public boolean hasCanBeResponsibleOfSpaces() {
-        return getCanBeResponsibleOfSpaces() != null;
-    }
-
-    @Deprecated
-    public boolean hasIdentificationCardLabel() {
-        return getIdentificationCardLabel() != null;
     }
 
 }

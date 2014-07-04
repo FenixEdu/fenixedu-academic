@@ -85,24 +85,4 @@ public class ResidenceYear extends ResidenceYear_Base {
         return getMonthsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyMonths() {
-        return !getMonthsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasYear() {
-        return getYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnit() {
-        return getUnit() != null;
-    }
-
 }

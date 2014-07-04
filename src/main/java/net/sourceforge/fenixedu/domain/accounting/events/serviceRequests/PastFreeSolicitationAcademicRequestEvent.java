@@ -50,15 +50,10 @@ public class PastFreeSolicitationAcademicRequestEvent extends PastFreeSolicitati
         final LabelFormatter labelFormatter = new LabelFormatter();
 
         labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-        if (getAcademicServiceRequest().hasExecutionYear()) {
+        if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }
         return labelFormatter;
-    }
-
-    @Deprecated
-    public boolean hasPastAmount() {
-        return getPastAmount() != null;
     }
 
 }

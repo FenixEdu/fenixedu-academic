@@ -35,24 +35,4 @@ public class FunctionalityPrinters extends FunctionalityPrinters_Base {
         return getUnitsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyUnits() {
-        return !getUnitsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasKeyPrinters() {
-        return getKeyPrinters() != null;
-    }
-
-    @Deprecated
-    public boolean hasFunctionality() {
-        return getFunctionality() != null;
-    }
-
 }

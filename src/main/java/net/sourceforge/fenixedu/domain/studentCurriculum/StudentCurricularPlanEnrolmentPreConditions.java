@@ -117,7 +117,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         }
 
         final Registration registration = scp.getRegistration();
-        return registration.hasSourceRegistration()
+        return registration.getSourceRegistration() != null
                 && registration.getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(semester);
     }
 

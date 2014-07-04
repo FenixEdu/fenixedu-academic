@@ -34,7 +34,7 @@ public class AssociateRegistration extends PhdProgramCandidacyProcessActivity {
             throw new PreConditionNotValidException();
         }
 
-        if (!process.hasStudyPlan() || process.getIndividualProgramProcess().hasRegistration()) {
+        if (!process.hasStudyPlan() || process.getIndividualProgramProcess().getRegistration() != null) {
             throw new PreConditionNotValidException();
         }
     }

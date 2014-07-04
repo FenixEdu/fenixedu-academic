@@ -44,7 +44,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
         final PhdProgramCandidacyProcess process = getProcess(request);
 
-        if (process.hasFeedbackRequest()) {
+        if (process.getFeedbackRequest() != null) {
 
             final PhdCandidacyFeedbackRequestElement element = process.getFeedbackRequest().getElement(getLoggedPerson(request));
             if (element != null) {

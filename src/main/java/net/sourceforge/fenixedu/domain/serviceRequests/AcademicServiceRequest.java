@@ -70,11 +70,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     public static final Comparator<AcademicServiceRequest> EXECUTION_YEAR_COMPARATOR = new Comparator<AcademicServiceRequest>() {
         @Override
         public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
-            if (!o1.hasExecutionYear() && !o2.hasExecutionYear()) {
+            if (o1.getExecutionYear() == null && o2.getExecutionYear() == null) {
                 return 0;
-            } else if (o1.hasExecutionYear() && !o2.hasExecutionYear()) {
+            } else if (o1.getExecutionYear() != null && o2.getExecutionYear() == null) {
                 return 1;
-            } else if (!o1.hasExecutionYear() && o2.hasExecutionYear()) {
+            } else if (o1.getExecutionYear() == null && o2.getExecutionYear() != null) {
                 return -1;
             }
 
@@ -174,7 +174,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected boolean isPayed() {
-        return !hasEvent() || getEvent().isPayed();
+        return getEvent() == null || getEvent().isPayed();
     }
 
     final public boolean getIsPayed() {
@@ -333,7 +333,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
             ;
         }
         super.setAdministrativeOffice(null);
-        if (hasEvent()) {
+        if (getEvent() != null) {
             getEvent().delete();
         }
         super.setExecutionYear(null);
@@ -379,7 +379,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public AcademicServiceRequestSituation getActiveSituation() {
-        return hasAnyAcademicServiceRequestSituations() ? Collections.min(getAcademicServiceRequestSituations(),
+        return !getAcademicServiceRequestSituationsSet().isEmpty() ? Collections.min(getAcademicServiceRequestSituations(),
                 AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_SITUATION_DATE_AND_ID) : null;
     }
 
@@ -530,7 +530,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     /** This method is overwritten in the subclasses */
     protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
 
-        if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
+        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null) {
             getEvent().cancel(academicServiceRequestBean.getResponsible());
         }
 
@@ -650,7 +650,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public boolean createdByStudent() {
-        return !getSituationByType(AcademicServiceRequestSituationType.NEW).hasCreator();
+        return getSituationByType(AcademicServiceRequestSituationType.NEW).getCreator() == null;
     }
 
     /**
@@ -658,8 +658,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
      */
     @Deprecated
     final public boolean getLoggedPersonCanCancel() {
-        return isCancelledSituationAccepted() && (!isPayable() || !hasEvent() || !isPayed())
-                && (createdByStudent() && !isConcluded() || AcademicAuthorizationGroup.isAuthorized(AccessControl.getPerson(), this));
+        return isCancelledSituationAccepted()
+                && (!isPayable() || getEvent() == null || !isPayed())
+                && (createdByStudent() && !isConcluded() || AcademicAuthorizationGroup.isAuthorized(AccessControl.getPerson(),
+                        this));
     }
 
     final public DateTime getCreationDate() {
@@ -689,7 +691,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public boolean isFor(final ExecutionYear executionYear) {
-        return hasExecutionYear() && getExecutionYear().equals(executionYear);
+        return getExecutionYear() != null && getExecutionYear().equals(executionYear);
     }
 
     abstract public Person getPerson();
@@ -772,7 +774,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public boolean isBatchSet() {
-        return hasRectorateSubmissionBatch();
+        return getRectorateSubmissionBatch() != null;
     }
 
     public abstract AcademicProgram getAcademicProgram();
@@ -783,78 +785,16 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     @Deprecated
-    public boolean hasAnyAcademicServiceRequestSituations() {
-        return !getAcademicServiceRequestSituationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument> getDocument() {
         return getDocumentSet();
     }
 
-    @Deprecated
-    public boolean hasAnyDocument() {
-        return !getDocumentSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasAcademicServiceRequestYear() {
-        return getAcademicServiceRequestYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasRequestDate() {
-        return getRequestDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasEvent() {
-        return getEvent() != null;
-    }
-
-    @Deprecated
-    public boolean hasAdministrativeOffice() {
-        return getAdministrativeOffice() != null;
-    }
-
-    @Deprecated
-    public boolean hasRegistryCode() {
-        return getRegistryCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasRectorateSubmissionBatch() {
-        return getRectorateSubmissionBatch() != null;
-    }
-
-    @Deprecated
-    public boolean hasLanguage() {
-        return getLanguage() != null;
-    }
-
-    @Deprecated
-    public boolean hasUrgentRequest() {
-        return getUrgentRequest() != null;
-    }
-
-    @Deprecated
-    public boolean hasServiceRequestNumber() {
-        return getServiceRequestNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasFreeProcessed() {
-        return getFreeProcessed() != null;
-    }
-
-    @Deprecated
     public boolean hasExecutionYear() {
         return getExecutionYear() != null;
+    }
+
+    public boolean hasRegistryCode() {
+        return getRegistryCode() != null;
     }
 
 }

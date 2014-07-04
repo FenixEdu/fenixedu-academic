@@ -60,7 +60,7 @@ public class FirstTimeCandidacySummaryFileDA extends FenixDispatchAction {
         StudentCandidacy studentCandidacy = findCandidacy(numberBean.getNumber());
         request.setAttribute("candidacy", studentCandidacy);
 
-        if (studentCandidacy != null && studentCandidacy.hasSummaryFile()) {
+        if (studentCandidacy != null && studentCandidacy.getSummaryFile() != null) {
             request.setAttribute("hasPDF", "true");
         }
 

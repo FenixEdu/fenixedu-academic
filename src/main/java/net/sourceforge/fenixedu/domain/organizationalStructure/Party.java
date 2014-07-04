@@ -432,11 +432,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         for (; !getAccounts().isEmpty(); getAccounts().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyPartyContacts(); getPartyContacts().iterator().next().deleteWithoutCheckRules()) {
+        for (; !getPartyContactsSet().isEmpty(); getPartyContacts().iterator().next().deleteWithoutCheckRules()) {
             ;
         }
 
-        if (hasPartySocialSecurityNumber()) {
+        if (getPartySocialSecurityNumber() != null) {
             getPartySocialSecurityNumber().delete();
         }
 
@@ -448,7 +448,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyPayedReceipts();
+        return getPayedReceiptsSet().isEmpty();
     }
 
     public static Party readByContributorNumber(String contributorNumber) {
@@ -456,13 +456,13 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public String getSocialSecurityNumber() {
-        return hasPartySocialSecurityNumber() ? getPartySocialSecurityNumber().getSocialSecurityNumber() : null;
+        return getPartySocialSecurityNumber() != null ? getPartySocialSecurityNumber().getSocialSecurityNumber() : null;
     }
 
     public void setSocialSecurityNumber(String socialSecurityNumber) {
         socialSecurityNumber = StringUtils.trimToNull(socialSecurityNumber);
         if (socialSecurityNumber != null && !StringUtils.isBlank(socialSecurityNumber)) {
-            if (hasPartySocialSecurityNumber()
+            if (getPartySocialSecurityNumber() != null
                     && socialSecurityNumber.equals(getPartySocialSecurityNumber().getSocialSecurityNumber())) {
                 return;
             }
@@ -471,7 +471,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             if (party != null && party != this) {
                 throw new DomainException("error.party.existing.contributor.number");
             } else {
-                if (hasPartySocialSecurityNumber()) {
+                if (getPartySocialSecurityNumber() != null) {
                     getPartySocialSecurityNumber().setSocialSecurityNumber(socialSecurityNumber);
                 } else {
                     new PartySocialSecurityNumber(this, socialSecurityNumber);
@@ -550,14 +550,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
-        return false;
-    }
-
-    public boolean hasAdministrativeOffice() {
-        return false;
-    }
-
-    public boolean hasDegree() {
         return false;
     }
 
@@ -1184,18 +1176,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public boolean hasAnyPartyContacts() {
-        return !getPartyContactsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.documents.GeneratedDocument> getAddressedDocument() {
         return getAddressedDocumentSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAddressedDocument() {
-        return !getAddressedDocumentSet().isEmpty();
     }
 
     @Deprecated
@@ -1204,18 +1186,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public boolean hasAnyChilds() {
-        return !getChildsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Account> getAccounts() {
         return getAccountsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAccounts() {
-        return !getAccountsSet().isEmpty();
     }
 
     @Deprecated
@@ -1224,18 +1196,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public boolean hasAnyEvents() {
-        return !getEventsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup> getPersistentAccessGroup() {
         return getPersistentAccessGroupSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPersistentAccessGroup() {
-        return !getPersistentAccessGroupSet().isEmpty();
     }
 
     @Deprecated
@@ -1244,18 +1206,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public boolean hasAnyPhdGratuityExternalScholarshipExemption() {
-        return !getPhdGratuityExternalScholarshipExemptionSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Invitation> getInvitationAccountabilities() {
         return getInvitationAccountabilitiesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInvitationAccountabilities() {
-        return !getInvitationAccountabilitiesSet().isEmpty();
     }
 
     @Deprecated
@@ -1264,63 +1216,13 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public boolean hasAnyParents() {
-        return !getParentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Guide> getPayedGuides() {
         return getPayedGuidesSet();
     }
 
     @Deprecated
-    public boolean hasAnyPayedGuides() {
-        return !getPayedGuidesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getPayedReceipts() {
         return getPayedReceiptsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPayedReceipts() {
-        return !getPayedReceiptsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasPartyType() {
-        return getPartyType() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasPartySocialSecurityNumber() {
-        return getPartySocialSecurityNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasPartyName() {
-        return getPartyName() != null;
-    }
-
-    @Deprecated
-    public boolean hasPartyImportRegister() {
-        return getPartyImportRegister() != null;
-    }
-
-    @Deprecated
-    public boolean hasNationality() {
-        return getNationality() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennuExternalScholarshipProvider() {
-        return getRootDomainObjectExternalScholarshipProvider() != null;
     }
 
 }

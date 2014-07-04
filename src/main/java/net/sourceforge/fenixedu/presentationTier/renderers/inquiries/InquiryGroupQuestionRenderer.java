@@ -142,11 +142,11 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
                 InquiryQuestionHeader questionHeader = null;
 
-                if (inquiryGroupQuestion.getInquiryGroupQuestion().hasInquiryQuestionHeader()) {
+                if (inquiryGroupQuestion.getInquiryGroupQuestion().getInquiryQuestionHeader() != null) {
                     questionHeader = inquiryGroupQuestion.getInquiryGroupQuestion().getInquiryQuestionHeader();
                     groupHeader = true;
                 }
-                if (inquiryQuestion.getInquiryQuestion().hasInquiryQuestionHeader()) {
+                if (inquiryQuestion.getInquiryQuestion().getInquiryQuestionHeader() != null) {
                     questionHeader = inquiryQuestion.getInquiryQuestion().getInquiryQuestionHeader();
                     groupHeader = false;
                 }

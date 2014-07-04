@@ -61,38 +61,13 @@ public class PartyType extends PartyType_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAllowedChildConnectionRules() {
-        return !getAllowedChildConnectionRulesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule> getAllowedParentConnectionRules() {
         return getAllowedParentConnectionRulesSet();
     }
 
     @Deprecated
-    public boolean hasAnyAllowedParentConnectionRules() {
-        return !getAllowedParentConnectionRulesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Party> getParties() {
         return getPartiesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyParties() {
-        return !getPartiesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
     }
 
 }

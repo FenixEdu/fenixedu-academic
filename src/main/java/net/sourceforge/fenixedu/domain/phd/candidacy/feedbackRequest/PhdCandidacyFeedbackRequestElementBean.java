@@ -89,7 +89,7 @@ public class PhdCandidacyFeedbackRequestElementBean extends PhdParticipantBean {
     public List<PhdParticipant> getExistingParticipants() {
         final List<PhdParticipant> result = new ArrayList<PhdParticipant>();
         for (final PhdParticipant participant : getIndividualProgramProcess().getParticipantsSet()) {
-            if (!participant.hasAnyCandidacyFeedbackRequestElements()) {
+            if (participant.getCandidacyFeedbackRequestElementsSet().isEmpty()) {
                 result.add(participant);
             }
         }

@@ -138,7 +138,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     protected abstract void createIndividualCandidacy(IndividualCandidacyProcessBean bean);
 
     public ExecutionInterval getCandidacyExecutionInterval() {
-        return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
+        return getCandidacyProcess() != null ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
     }
 
     public boolean isFor(final ExecutionInterval executionInterval) {
@@ -146,11 +146,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public DateTime getCandidacyStart() {
-        return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyStart() : null;
+        return getCandidacyProcess() != null ? getCandidacyProcess().getCandidacyStart() : null;
     }
 
     public DateTime getCandidacyEnd() {
-        return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyEnd() : null;
+        return getCandidacyProcess() != null ? getCandidacyProcess().getCandidacyEnd() : null;
     }
 
     public LocalDate getCandidacyDate() {
@@ -158,35 +158,35 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public boolean hasOpenCandidacyPeriod() {
-        return hasCandidacyProcess() && getCandidacyProcess().hasOpenCandidacyPeriod();
+        return getCandidacyProcess() != null && getCandidacyProcess().hasOpenCandidacyPeriod();
     }
 
     public boolean hasOpenCandidacyPeriod(final DateTime date) {
-        return hasCandidacyProcess() && getCandidacyProcess().hasOpenCandidacyPeriod(date);
+        return getCandidacyProcess() != null && getCandidacyProcess().hasOpenCandidacyPeriod(date);
     }
 
     public CandidacyProcessState getState() {
-        return hasCandidacyProcess() ? getCandidacyProcess().getState() : null;
+        return getCandidacyProcess() != null ? getCandidacyProcess().getState() : null;
     }
 
     public boolean isInStandBy() {
-        return hasCandidacyProcess() && getCandidacyProcess().isInStandBy();
+        return getCandidacyProcess() != null && getCandidacyProcess().isInStandBy();
     }
 
     public boolean isSentToJury() {
-        return hasCandidacyProcess() && getCandidacyProcess().isSentToJury();
+        return getCandidacyProcess() != null && getCandidacyProcess().isSentToJury();
     }
 
     public boolean isSentToCoordinator() {
-        return hasCandidacyProcess() && getCandidacyProcess().isSentToCoordinator();
+        return getCandidacyProcess() != null && getCandidacyProcess().isSentToCoordinator();
     }
 
     public boolean isSentToScientificCouncil() {
-        return hasCandidacyProcess() && getCandidacyProcess().isSentToScientificCouncil();
+        return getCandidacyProcess() != null && getCandidacyProcess().isSentToScientificCouncil();
     }
 
     public boolean isPublished() {
-        return hasCandidacyProcess() && getCandidacyProcess().isPublished();
+        return getCandidacyProcess() != null && getCandidacyProcess().isPublished();
     }
 
     protected boolean hasAnyPaymentForCandidacy() {
@@ -214,7 +214,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     private boolean isEventCanceledOrNoEvent() {
-        return !getCandidacy().hasEvent() || getCandidacy().getEvent().isCancelled();
+        return getCandidacy().getEvent() == null || getCandidacy().getEvent().isCancelled();
     }
 
     public boolean isCandidacyInStandBy() {
@@ -262,7 +262,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public boolean hasRegistrationForCandidacy() {
-        return getCandidacy().hasRegistration();
+        return getCandidacy().getRegistration() != null;
     }
 
     @Override
@@ -424,51 +424,6 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     protected void editPrecedentDegreeInformation(IndividualCandidacyProcessBean bean) {
         getCandidacy().editPrecedentDegreeInformation(bean);
 
-    }
-
-    @Deprecated
-    public boolean hasCandidacy() {
-        return getCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasOriginalIndividualCandidacyProcess() {
-        return getOriginalIndividualCandidacyProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasAccessHash() {
-        return getAccessHash() != null;
-    }
-
-    @Deprecated
-    public boolean hasPaymentChecked() {
-        return getPaymentChecked() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacyProcess() {
-        return getCandidacyProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasCopyIndividualCandidacyProcess() {
-        return getCopyIndividualCandidacyProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacyHashCode() {
-        return getCandidacyHashCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasProcessCode() {
-        return getProcessCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasProcessChecked() {
-        return getProcessChecked() != null;
     }
 
     private static Set<IndividualCandidacyProcess> getAllInstancesOf(final Class<? extends IndividualCandidacyProcess> type) {

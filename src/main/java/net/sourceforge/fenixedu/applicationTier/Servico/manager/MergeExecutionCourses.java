@@ -155,7 +155,7 @@ public class MergeExecutionCourses {
     }
 
     private void copyVigilantGroups(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
-        if (!(executionCourseTo.getVigilantGroup() != null)) {
+        if (executionCourseTo.getVigilantGroup() == null) {
             executionCourseTo.setVigilantGroup(executionCourseFrom.getVigilantGroup());
         }
     }
@@ -315,9 +315,9 @@ public class MergeExecutionCourses {
             if (otherAttends == null) {
                 attends.setDisciplinaExecucao(executionCourseTo);
             } else {
-                if (attends.getEnrolment() != null && !(otherAttends.getEnrolment() != null)) {
+                if (attends.getEnrolment() != null && otherAttends.getEnrolment() == null) {
                     otherAttends.setEnrolment(attends.getEnrolment());
-                } else if (otherAttends.getEnrolment() != null && !(attends.getEnrolment() != null)) {
+                } else if (otherAttends.getEnrolment() != null && attends.getEnrolment() == null) {
                     // do nothing.
                 } else if (otherAttends.getEnrolment() != null && attends.getEnrolment() != null) {
                     throw new FenixServiceException("Unable to merge execution courses. Registration "

@@ -80,7 +80,7 @@ public class AlertService {
         builder.append(": ").append(process.getPerson().getName()).append("\n");
 
         builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "phdProgram"));
-        if (process.hasPhdProgram()) {
+        if (process.getPhdProgram() != null) {
             builder.append(": ").append(process.getPhdProgram().getName());
         }
         builder.append("\n");
@@ -88,17 +88,17 @@ public class AlertService {
         builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "activeState"));
         builder.append(": ").append(process.getActiveState().getLocalizedName()).append("\n");
 
-        if (process.hasCandidacyProcess()) {
+        if (process.getCandidacyProcess() != null) {
             builder.append(getMessageFromResource("label.phd.candidacy")).append(": ");
             builder.append(process.getCandidacyProcess().getActiveState().getLocalizedName()).append("\n");
         }
 
-        if (process.hasSeminarProcess()) {
+        if (process.getSeminarProcess() != null) {
             builder.append(getMessageFromResource("label.phd.publicPresentationSeminar")).append(": ");
             builder.append(process.getSeminarProcess().getActiveState().getLocalizedName()).append("\n");
         }
 
-        if (process.hasThesisProcess()) {
+        if (process.getThesisProcess() != null) {
             builder.append(getMessageFromResource("label.phd.thesis")).append(": ");
             builder.append(process.getThesisProcess().getActiveState().getLocalizedName()).append("\n");
         }

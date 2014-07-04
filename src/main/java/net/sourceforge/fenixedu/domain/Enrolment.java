@@ -500,7 +500,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             final Attends attend = executionCourse.getAttendsByStudent(registration.getStudent());
             if (attend == null) {
                 addAttends(new Attends(registration, executionCourse));
-            } else if (!(attend.getEnrolment() != null)) {
+            } else if (attend.getEnrolment() == null) {
                 attend.setRegistration(registration);
                 addAttends(attend);
             } else {
@@ -1182,7 +1182,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public StudentCurricularPlan getStudentCurricularPlan() {
-        return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : super.getStudentCurricularPlan();
+        return getCurriculumGroup() != null ? getCurriculumGroup().getStudentCurricularPlan() : super.getStudentCurricularPlan();
     }
 
     @Override
@@ -1565,7 +1565,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public String getCode() {
-        if (hasDegreeModule()) {
+        if (getDegreeModule() != null) {
             return getDegreeModule().getCode();
         }
         return null;
@@ -1612,7 +1612,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
         for (EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
             if (enrolmentEvaluation.getEnrolmentEvaluationType() == enrolmentEvaluationType
-                    && !(enrolmentEvaluation.getMarkSheet() != null)
+                    && enrolmentEvaluation.getMarkSheet() == null
                     && (enrolmentEvaluation.isTemporary() || (enrolmentEvaluation.isNotEvaluated() && enrolmentEvaluation
                             .getExamDateYearMonthDay() == null))) {
                 return true;

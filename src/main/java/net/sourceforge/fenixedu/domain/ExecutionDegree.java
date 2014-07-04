@@ -797,7 +797,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public List<Registration> getRegistrationsForDegreeCandidacies() {
         final List<Registration> result = new ArrayList<Registration>();
         for (final DegreeCandidacy degreeCandidacy : getDegreeCandidacies()) {
-            if (degreeCandidacy.hasRegistration()) {
+            if (degreeCandidacy.getRegistration() != null) {
                 result.add(degreeCandidacy.getRegistration());
             }
         }
@@ -807,7 +807,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public List<Registration> getRegistrationsForFirstCycleCandidacies() {
         final List<Registration> result = new ArrayList<Registration>();
         for (final StudentCandidacy studentCandidacy : getFirstCycleCandidacies()) {
-            if (studentCandidacy.hasRegistration()) {
+            if (studentCandidacy.getRegistration() != null) {
                 result.add(studentCandidacy.getRegistration());
             }
         }
