@@ -52,9 +52,4 @@ public class ThesisLibraryArchiveOperation extends ThesisLibraryArchiveOperation
         return null;
     }
 
-    @Deprecated
-    public boolean hasLibraryReference() {
-        return getLibraryReference() != null;
-    }
-
 }

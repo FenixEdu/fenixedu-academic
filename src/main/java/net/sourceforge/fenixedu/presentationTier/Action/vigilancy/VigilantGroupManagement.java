@@ -468,7 +468,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             VigilantWrapper selectedVigilantWrapper = bean.getSelectedVigilantWrapper();
             if (selectedVigilantWrapper != null) {
                 vigilantWrappers.remove(selectedVigilantWrapper);
-                if (selectedVigilantWrapper.getPerson().hasIncompatibleVigilant()) {
+                if (selectedVigilantWrapper.getPerson().getIncompatibleVigilant() != null) {
                     Person incompatiblePerson = selectedVigilantWrapper.getPerson();
                     Iterator<VigilantWrapper> iterator = vigilantWrappers.iterator();
 

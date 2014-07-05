@@ -105,39 +105,4 @@ public abstract class File extends File_Base {
         return super.getCreationDate();
     }
 
-    @Deprecated
-    public boolean hasChecksum() {
-        return getChecksum() != null;
-    }
-
-    @Deprecated
-    public boolean hasPermittedGroup() {
-        return getPermittedGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasUploadTime() {
-        return getUploadTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasChecksumAlgorithm() {
-        return getChecksumAlgorithm() != null;
-    }
-
-    @Deprecated
-    public boolean hasDisplayName() {
-        return getDisplayName() != null;
-    }
-
-    @Deprecated
-    public boolean hasFilename() {
-        return getFilename() != null;
-    }
-
-    @Deprecated
-    public boolean hasSize() {
-        return getSize() != null;
-    }
-
 }

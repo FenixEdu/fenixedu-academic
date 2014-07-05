@@ -393,29 +393,4 @@ public abstract class PostingRule extends PostingRule_Base {
         return result;
     }
 
-    @Deprecated
-    public boolean hasServiceAgreementTemplate() {
-        return getServiceAgreementTemplate() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasStartDate() {
-        return getStartDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDate() {
-        return getCreationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasEventType() {
-        return getEventType() != null;
-    }
-
 }

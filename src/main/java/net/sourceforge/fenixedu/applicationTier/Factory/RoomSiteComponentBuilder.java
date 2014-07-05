@@ -143,7 +143,7 @@ public class RoomSiteComponentBuilder {
             YearMonthDay weekEndYearMonthDay, Lesson lesson) {
 
         if (lesson != null
-                && lesson.hasShift()
+                && lesson.getShift() != null
                 && lesson.containsWithoutCheckInstanceDates(new Interval(weekStartYearMonthDay.toDateTimeAtMidnight(),
                         weekEndYearMonthDay.toDateTimeAtMidnight()))) {
             infoShowOccupations.add(InfoLesson.newInfoFromDomain(lesson));

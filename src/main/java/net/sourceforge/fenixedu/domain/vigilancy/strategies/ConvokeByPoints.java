@@ -48,7 +48,7 @@ public class ConvokeByPoints extends Strategy {
         Set<Person> incompatiblePersons = new HashSet<Person>();
         List<UnavailableInformation> unavailableVigilants = new ArrayList<UnavailableInformation>();
 
-        if (writtenEvaluation.hasAnyVigilancies()) {
+        if (!writtenEvaluation.getVigilanciesSet().isEmpty()) {
             incompatiblePersons.addAll(getIncompatiblePersons(writtenEvaluation));
         }
 

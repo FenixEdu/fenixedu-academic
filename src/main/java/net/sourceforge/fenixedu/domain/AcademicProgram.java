@@ -46,14 +46,4 @@ public abstract class AcademicProgram extends AcademicProgram_Base {
         return getAcademicGroupSet();
     }
 
-    @Deprecated
-    public boolean hasAnyAcademicGroup() {
-        return !getAcademicGroupSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasAdministrativeOffice() {
-        return getAdministrativeOffice() != null;
-    }
-
 }

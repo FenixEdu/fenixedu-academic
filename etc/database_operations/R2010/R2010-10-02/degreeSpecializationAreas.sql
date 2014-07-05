@@ -1,1 +1,0 @@
-create table `DEGREE_SPECIALIZATION_AREA` (`OID` bigint unsigned, `NAME` text, `OID_OFFICIAL_PUBLICATION` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_OFFICIAL_PUBLICATION)) type=InnoDB, character set latin1;

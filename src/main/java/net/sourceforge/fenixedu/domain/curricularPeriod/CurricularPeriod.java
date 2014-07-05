@@ -205,7 +205,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     private Float collectParentsWeight(CurricularPeriod period) {
         Float result = Float.valueOf(0);
 
-        if (period.hasParent()) {
+        if (period.getParent() != null) {
             result = period.getParent().getWeight() + collectParentsWeight(period.getParent());
         }
 
@@ -343,38 +343,8 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     }
 
     @Deprecated
-    public boolean hasAnyContexts() {
-        return !getContextsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod> getChilds() {
         return getChildsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyChilds() {
-        return !getChildsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasParent() {
-        return getParent() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeCurricularPlan() {
-        return getDegreeCurricularPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasAcademicPeriod() {
-        return getAcademicPeriod() != null;
     }
 
 }

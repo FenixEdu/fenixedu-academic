@@ -509,7 +509,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         }
 
         if (person == null
-                || !(person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships() || person.hasRole(RoleType.RESEARCHER))) {
+                || !(person.hasRole(RoleType.TEACHER) || !person.getProfessorshipsSet().isEmpty() || person.hasRole(RoleType.RESEARCHER))) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
                     "finalWorkInformationForm.unexistingTeacher"));

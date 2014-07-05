@@ -53,9 +53,4 @@ public class CurricularCourseInquiryTemplate extends CurricularCourseInquiryTemp
         return null;
     }
 
-    @Deprecated
-    public boolean hasCourseType() {
-        return getCourseType() != null;
-    }
-
 }

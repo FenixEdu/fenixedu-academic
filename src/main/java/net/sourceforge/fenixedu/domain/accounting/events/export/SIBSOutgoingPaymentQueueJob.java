@@ -72,9 +72,4 @@ public class SIBSOutgoingPaymentQueueJob extends SIBSOutgoingPaymentQueueJob_Bas
         return getQueueJobNotDoneAndNotCancelled() != null;
     }
 
-    @Deprecated
-    public boolean hasLastSuccessfulSentPaymentFileDate() {
-        return getLastSuccessfulSentPaymentFileDate() != null;
-    }
-
 }

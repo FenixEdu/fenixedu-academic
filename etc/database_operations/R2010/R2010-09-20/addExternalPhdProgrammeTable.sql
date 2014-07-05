@@ -1,4 +1,0 @@
-alter table `STUDENT_STATUTE` add index (OID_REGISTRATION);
-create table `EXTERNAL_PHD_PROGRAM` (`OID` bigint unsigned, `NAME` text, `WHEN_CREATED` timestamp NULL default NULL, `ACRONYM` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, `FOR_COLLABORATION_TYPE` text, primary key (ID_INTERNAL), index (OID), index (OID_ROOT_DOMAIN_OBJECT)) type=InnoDB, character set latin1;
-create table `EXTERNAL_PHD_PROGRAM_PHD_PROGRAM_FOCUS_AREA` (`OID_PHD_PROGRAM_FOCUS_AREA` bigint unsigned, `OID_EXTERNAL_PHD_PROGRAM` bigint unsigned, primary key (OID_PHD_PROGRAM_FOCUS_AREA, OID_EXTERNAL_PHD_PROGRAM), index (OID_PHD_PROGRAM_FOCUS_AREA), index (OID_EXTERNAL_PHD_PROGRAM)) type=InnoDB, character set latin1;
-alter table `PROCESS` add `OID_EXTERNAL_PHD_PROGRAM` bigint unsigned, add index (OID_EXTERNAL_PHD_PROGRAM);

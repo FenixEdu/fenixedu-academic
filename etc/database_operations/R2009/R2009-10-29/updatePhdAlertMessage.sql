@@ -1,3 +1,0 @@
-
-alter table `PHD_ALERT_MESSAGE` add column `WHEN_CREATED` datetime NULL default NULL;
-UPDATE PHD_ALERT_MESSAGE SET WHEN_CREATED = NOW();

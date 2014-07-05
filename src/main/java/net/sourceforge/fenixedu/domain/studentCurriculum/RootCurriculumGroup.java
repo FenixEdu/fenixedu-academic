@@ -170,7 +170,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     }
 
     public boolean hasStudentCurricularPlan() {
-        return hasParentStudentCurricularPlan();
+        return getParentStudentCurricularPlan() != null;
     }
 
     private void createExtraCurriculumGroup() {
@@ -409,11 +409,6 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
             result.addAll(curriculumModule.getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups());
         }
         return result;
-    }
-
-    @Deprecated
-    public boolean hasParentStudentCurricularPlan() {
-        return getParentStudentCurricularPlan() != null;
     }
 
 }

@@ -288,7 +288,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     private boolean isPayedUsingPhases() {
-        return getGratuityValues().hasAnyPaymentPhaseList();
+        return !getGratuityValues().getPaymentPhaseListSet().isEmpty();
     }
 
     private YearMonthDay getEndPaymentDate() {
@@ -333,7 +333,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     private PersonAccount getOrCreatePersonAccount() {
-        return getPerson().hasAssociatedPersonAccount() ? getPerson().getAssociatedPersonAccount() : new PersonAccount(
+        return getPerson().getAssociatedPersonAccount() != null ? getPerson().getAssociatedPersonAccount() : new PersonAccount(
                 getPerson());
     }
 
@@ -391,86 +391,6 @@ public class GratuitySituation extends GratuitySituation_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.transactions.GratuityTransaction> getTransactionList() {
         return getTransactionListSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTransactionList() {
-        return !getTransactionListSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasHasPenaltyExemption() {
-        return getHasPenaltyExemption() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentCurricularPlan() {
-        return getStudentCurricularPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasEmployee() {
-        return getEmployee() != null;
-    }
-
-    @Deprecated
-    public boolean hasExemptionDescription() {
-        return getExemptionDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasExemptionType() {
-        return getExemptionType() != null;
-    }
-
-    @Deprecated
-    public boolean hasPenaltyExemptionDate() {
-        return getPenaltyExemptionDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasTotalValue() {
-        return getTotalValue() != null;
-    }
-
-    @Deprecated
-    public boolean hasGratuityValues() {
-        return getGratuityValues() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenDateTime() {
-        return getWhenDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasPenaltyExemptionEmployee() {
-        return getPenaltyExemptionEmployee() != null;
-    }
-
-    @Deprecated
-    public boolean hasRemainingValue() {
-        return getRemainingValue() != null;
-    }
-
-    @Deprecated
-    public boolean hasExemptionPercentage() {
-        return getExemptionPercentage() != null;
-    }
-
-    @Deprecated
-    public boolean hasPenaltyExemptionJustification() {
-        return getPenaltyExemptionJustification() != null;
-    }
-
-    @Deprecated
-    public boolean hasExemptionValue() {
-        return getExemptionValue() != null;
     }
 
 }

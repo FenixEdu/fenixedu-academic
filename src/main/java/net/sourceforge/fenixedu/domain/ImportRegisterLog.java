@@ -30,19 +30,4 @@ public class ImportRegisterLog extends ImportRegisterLog_Base {
         setInstant(new DateTime());
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasInstant() {
-        return getInstant() != null;
-    }
-
-    @Deprecated
-    public boolean hasImportRegister() {
-        return getImportRegister() != null;
-    }
-
 }

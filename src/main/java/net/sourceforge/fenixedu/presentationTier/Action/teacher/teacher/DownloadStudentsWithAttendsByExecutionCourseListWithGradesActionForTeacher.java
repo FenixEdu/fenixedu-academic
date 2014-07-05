@@ -59,7 +59,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
         final ExecutionCourse executionCourse = getDomainObject(request, "executionCourseOID");
 
         final Spreadsheet spreadsheet = new Spreadsheet(executionCourse.getSigla());
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.number"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.username"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.name"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.degree.code"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION,
@@ -94,10 +94,10 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
         for (final Attends attends : executionCourse.getOrderedAttends()) {
             final Registration registration = attends.getRegistration();
             final Row row = spreadsheet.addRow();
-            row.setCell(registration.getNumber());
+            row.setCell(registration.getPerson().getUsername());
             row.setCell(registration.getName());
             row.setCell(registration.getDegree().getSigla());
-            if (attends.hasEnrolment()) {
+            if (attends.getEnrolment() != null) {
                 final EnrolmentEvaluationType enrolmentEvaluationType = attends.getEnrolmentEvaluationType();
                 row.setCell(enrolmentEvaluationType.getDescription());
             } else {

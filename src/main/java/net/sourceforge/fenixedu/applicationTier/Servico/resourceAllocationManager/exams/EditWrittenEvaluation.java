@@ -82,7 +82,7 @@ public class EditWrittenEvaluation {
             roomsToAssociate = readRooms(roomIDs);
         }
 
-        if (writtenEvaluation.hasAnyVigilancies()
+        if (!writtenEvaluation.getVigilanciesSet().isEmpty()
                 && (writtenEvaluationDate != writtenEvaluation.getDayDate() || timeModificationIsBiggerThanFiveMinutes(
                         writtenEvaluationStartTime, writtenEvaluation.getBeginningDate()))) {
 

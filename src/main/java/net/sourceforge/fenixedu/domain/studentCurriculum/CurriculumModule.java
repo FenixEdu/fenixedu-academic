@@ -102,11 +102,11 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public RootCurriculumGroup getRootCurriculumGroup() {
-        return hasCurriculumGroup() ? getCurriculumGroup().getRootCurriculumGroup() : (RootCurriculumGroup) this;
+        return getCurriculumGroup() != null ? getCurriculumGroup().getRootCurriculumGroup() : (RootCurriculumGroup) this;
     }
 
     public CycleCurriculumGroup getParentCycleCurriculumGroup() {
-        return hasCurriculumGroup() ? getCurriculumGroup().getParentCycleCurriculumGroup() : null;
+        return getCurriculumGroup() != null ? getCurriculumGroup().getParentCycleCurriculumGroup() : null;
     }
 
     public boolean isCycleCurriculumGroup() {
@@ -114,7 +114,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public BranchCurriculumGroup getParentBranchCurriculumGroup() {
-        return hasCurriculumGroup() ? getCurriculumGroup().getParentBranchCurriculumGroup() : null;
+        return getCurriculumGroup() != null ? getCurriculumGroup().getParentBranchCurriculumGroup() : null;
     }
 
     public boolean isBranchCurriculumGroup() {
@@ -204,7 +204,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public boolean parentCurriculumGroupIsNoCourseGroupCurriculumGroup() {
-        return hasCurriculumGroup() && getCurriculumGroup().isNoCourseGroupCurriculumGroup();
+        return getCurriculumGroup() != null && getCurriculumGroup().isNoCourseGroupCurriculumGroup();
     }
 
     public boolean parentAllowAccumulatedEctsCredits() {
@@ -214,7 +214,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
         final Set<ICurricularRule> result =
-                hasCurriculumGroup() ? getCurriculumGroup().getCurricularRules(executionSemester) : new HashSet<ICurricularRule>();
+                getCurriculumGroup() != null ? getCurriculumGroup().getCurricularRules(executionSemester) : new HashSet<ICurricularRule>();
         result.addAll(getDegreeModule().getCurricularRules(executionSemester));
 
         return result;
@@ -549,26 +549,6 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         } else {
             setCreationDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
-    }
-
-    @Deprecated
-    public boolean hasCurriculumGroup() {
-        return getCurriculumGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDateDateTime() {
-        return getCreationDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeModule() {
-        return getDegreeModule() != null;
     }
 
 }

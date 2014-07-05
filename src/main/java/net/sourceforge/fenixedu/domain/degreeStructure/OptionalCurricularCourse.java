@@ -92,18 +92,8 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     }
 
     @Deprecated
-    public boolean hasAnyOptionalEnrolmentLogs() {
-        return !getOptionalEnrolmentLogsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.OptionalEnrolment> getOptionalEnrolments() {
         return getOptionalEnrolmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyOptionalEnrolments() {
-        return !getOptionalEnrolmentsSet().isEmpty();
     }
 
 }

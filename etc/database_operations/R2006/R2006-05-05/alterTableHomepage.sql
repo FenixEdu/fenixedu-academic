@@ -1,1 +1,0 @@
-alter table HOMEPAGE add column SHOW_CURRENT_ATTENDING_EXECUTION_COURSES tinyint(1) NOT NULL default '0';

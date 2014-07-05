@@ -193,14 +193,4 @@ public abstract class Process extends Process_Base implements Comparable<Process
         return getProcessLogsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyProcessLogs() {
-        return !getProcessLogsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
 }

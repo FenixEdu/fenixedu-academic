@@ -35,9 +35,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAd
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.commons.i18n.I18N;
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
     private static final String SIBS_ENTITY_CODE = FenixConfigurationManager.getConfiguration().getSibsEntityCode();
@@ -60,6 +62,10 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
             return forward;
         }
 
+        //TODO remove this when public sites portalization is complete
+        request.setAttribute(Globals.LOCALE_KEY, I18N.getLocale());
+        request.getSession().setAttribute(Globals.LOCALE_KEY, I18N.getLocale());
+
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -75,14 +81,14 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
     }
 
     protected boolean isValidatedByCandidate(final PhdProgramPublicCandidacyHashCode hashCode) {
-        return hashCode.hasPhdProgramCandidacyProcess() && hashCode.getIndividualProgramProcess().isValidatedByCandidate();
+        return hashCode.getPhdProgramCandidacyProcess() != null && hashCode.getIndividualProgramProcess().isValidatedByCandidate();
     }
 
     protected void canEditPersonalInformation(final HttpServletRequest request, final Person person) {
         if (person.hasRole(RoleType.EMPLOYEE)) {
             request.setAttribute("canEditPersonalInformation", false);
             addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
-        } else if (person.hasAnyPersonRoles() || person.hasUser() || person.hasStudent()) {
+        } else if (!person.getPersonRolesSet().isEmpty() || person.getUser() != null || person.getStudent() != null) {
             request.setAttribute("canEditPersonalInformation", false);
             addWarningMessage(request, "message.existing.person.data.must.be.updated.in.academic.office");
         } else {

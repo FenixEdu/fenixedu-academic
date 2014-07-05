@@ -1,1 +1,0 @@
-update STUDENT_CURRICULAR_PLAN  set CLASS_NAME = "net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM", ACK_OPT_LOCK = ACK_OPT_LOCK + 1 where KEY_DEGREE_CURRICULAR_PLAN = 50;

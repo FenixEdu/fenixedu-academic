@@ -74,14 +74,4 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
                 + getConfirmationCode() + "&recommendationExternalId=" + getExternalId();
     }
 
-    @Deprecated
-    public boolean hasGenericApplication() {
-        return getGenericApplication() != null;
-    }
-
-    @Deprecated
-    public boolean hasLetterOfRecomentation() {
-        return getLetterOfRecomentation() != null;
-    }
-
 }

@@ -66,9 +66,4 @@ public class OnlineTest extends OnlineTest_Base {
                 + getDistributedTest().getEvaluationTitle();
     }
 
-    @Deprecated
-    public boolean hasDistributedTest() {
-        return getDistributedTest() != null;
-    }
-
 }

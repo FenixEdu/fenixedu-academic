@@ -284,7 +284,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         row.setCell(graduate.getIdentificationDocumentSeriesNumberValue());
 
         // Nome
-        row.setCell(registration != null ? registration.getName() : process.hasPerson() ? process.getPerson().getName() : "n/a");
+        row.setCell(registration != null ? registration.getName() : process.getPerson() != null ? process.getPerson().getName() : "n/a");
 
         // Sexo
         row.setCell(graduate.getGender().toString());
@@ -648,7 +648,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
                 .getRegistrationAgreement().getName() : "" : "");
 
         // Data de Apresentação Pública da CAT
-        if (process.hasSeminarProcess() && process.getSeminarProcess().getPresentationDate() != null) {
+        if (process.getSeminarProcess() != null && process.getSeminarProcess().getPresentationDate() != null) {
             row.setCell(process.getSeminarProcess().getPresentationDate().toString("dd/MM/yyyy"));
         } else {
             row.setCell("n/a");

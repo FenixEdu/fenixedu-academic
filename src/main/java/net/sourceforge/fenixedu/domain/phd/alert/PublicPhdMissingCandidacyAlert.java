@@ -74,7 +74,7 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
     }
 
     private LocalDate calculateStartDate() {
-        return hasFireDate() ? getFireDate().toLocalDate() : getCandidacyHashCode().getWhenCreated().toLocalDate();
+        return getFireDate() != null ? getFireDate().toLocalDate() : getCandidacyHashCode().getWhenCreated().toLocalDate();
     }
 
     @Override
@@ -119,11 +119,6 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
     protected void disconnect() {
         setCandidacyHashCode(null);
         super.disconnect();
-    }
-
-    @Deprecated
-    public boolean hasCandidacyHashCode() {
-        return getCandidacyHashCode() != null;
     }
 
 }

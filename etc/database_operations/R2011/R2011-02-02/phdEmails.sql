@@ -1,2 +1,0 @@
-create table `PHD_INDIVIDUAL_PROGRAM_PROCESS_PHD_PROGRAM_MESSAGE` (`OID_PHD_INDIVIDUAL_PROGRAM_PROCESS` bigint unsigned, `OID_PHD_PROGRAM_EMAIL` bigint unsigned, primary key (OID_PHD_INDIVIDUAL_PROGRAM_PROCESS, OID_PHD_PROGRAM_EMAIL), index (OID_PHD_INDIVIDUAL_PROGRAM_PROCESS), index (OID_PHD_PROGRAM_EMAIL)) type=InnoDB, character set latin1;
-alter table `ALERT` add `OID_PHD_PROGRAM` bigint unsigned, add `ADDITIONAL_TO` text, add `ADDITIONAL_BCC` text, add index (OID_PHD_PROGRAM);

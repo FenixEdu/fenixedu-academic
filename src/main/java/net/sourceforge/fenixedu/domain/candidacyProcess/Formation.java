@@ -92,24 +92,4 @@ public class Formation extends Formation_Base {
         formatter.close();
     }
 
-    @Deprecated
-    public boolean hasIndividualCandidacy() {
-        return getIndividualCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasConcluded() {
-        return getConcluded() != null;
-    }
-
-    @Deprecated
-    public boolean hasConclusionExecutionYear() {
-        return getConclusionExecutionYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasConclusionGrade() {
-        return getConclusionGrade() != null;
-    }
-
 }

@@ -1,1 +1,0 @@
-delete from STUDENT_STATUTE where date(CREATION_DATE) = '2010-07-09' and hour(CREATION_DATE) > '18';

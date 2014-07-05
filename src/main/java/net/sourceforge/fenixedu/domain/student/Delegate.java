@@ -33,13 +33,13 @@ public class Delegate extends Delegate_Base {
     }
 
     public boolean isActiveForExecutionYear(final ExecutionYear executionYear) {
-        return hasDelegateFunction()
+        return getDelegateFunction() != null
                 && getDelegateFunction().belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
                         executionYear.getEndDateYearMonthDay());
     }
 
     public boolean isActiveForFirstExecutionYear(final ExecutionYear executionYear) {
-        if (hasDelegateFunction() && getDelegateFunction().getBeginDate() != null) {
+        if (getDelegateFunction() != null && getDelegateFunction().getBeginDate() != null) {
             Interval interval =
                     new Interval(getDelegateFunction().getBeginDate().toDateTimeAtMidnight(), getDelegateFunction().getEndDate()
                             .toDateTimeAtMidnight().plusDays(1));
@@ -58,21 +58,6 @@ public class Delegate extends Delegate_Base {
         setRegistration(null);
         setRootDomainObject(null);
         deleteDomainObject();
-    }
-
-    @Deprecated
-    public boolean hasRegistration() {
-        return getRegistration() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasDelegateFunction() {
-        return getDelegateFunction() != null;
     }
 
 }

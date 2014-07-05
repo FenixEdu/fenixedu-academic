@@ -1,1 +1,0 @@
-alter table CRON_SCRIPT_INVOCATION add column LOG longtext;

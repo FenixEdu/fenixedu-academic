@@ -69,9 +69,4 @@ public class SentToExternalEntityAcademicServiceRequestSituation extends SentToE
         return getSentDate();
     }
 
-    @Deprecated
-    public boolean hasSentDate() {
-        return getSentDate() != null;
-    }
-
 }

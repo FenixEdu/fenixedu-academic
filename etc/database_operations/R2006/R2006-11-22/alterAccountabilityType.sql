@@ -1,1 +1,0 @@
-insert into ACCOUNTABILITY_TYPE (TYPE, OJB_CONCRETE_CLASS, NAME, KEY_ROOT_DOMAIN_OBJECT) values ('INVITATION', 'net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType', 'INVITATION', 1);

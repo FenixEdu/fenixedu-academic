@@ -208,29 +208,4 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
         return bean;
     }
 
-    @Deprecated
-    public boolean hasPhdMigrationIndividualProcessData() {
-        return getPhdMigrationIndividualProcessData() != null;
-    }
-
-    @Deprecated
-    public boolean hasData() {
-        return getData() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumber() {
-        return getNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasParseLog() {
-        return getParseLog() != null;
-    }
-
 }

@@ -46,7 +46,7 @@ public class Coordinator extends Coordinator_Base {
             @Override
             public void afterRemove(Person o1, Coordinator o2) {
                 if (o1 != null && o2 != null) {
-                    if (o1.getCoordinatorsSet().size() == 0 && !o1.hasAnyScientificCommissions()) {
+                    if (o1.getCoordinatorsSet().size() == 0 && o1.getScientificCommissionsSet().isEmpty()) {
                         o1.removeRoleByType(RoleType.COORDINATOR);
                     }
                 }
@@ -90,7 +90,7 @@ public class Coordinator extends Coordinator_Base {
     }
 
     private void checkRulesToDelete() {
-        if (hasAnyExecutionDegreeCoursesReports()) {
+        if (!getExecutionDegreeCoursesReportsSet().isEmpty()) {
             for (CoordinatorExecutionDegreeCoursesReport report : getExecutionDegreeCoursesReports()) {
                 if (!report.isEmpty()) {
                     throw new DomainException("error.Coordinator.cannot.delete.because.already.has.written.comments");
@@ -98,7 +98,7 @@ public class Coordinator extends Coordinator_Base {
             }
         }
 
-        if (hasAnyStudentInquiriesCourseResults()) {
+        if (!getStudentInquiriesCourseResultsSet().isEmpty()) {
             throw new DomainException("error.Coordinator.cannot.delete.because.already.has.written.comments");
         }
     }
@@ -114,9 +114,8 @@ public class Coordinator extends Coordinator_Base {
     @Atomic
     public static Coordinator createCoordinator(ExecutionDegree executionDegree, Person person, Boolean responsible) {
 
-        CoordinationTeamLog.createLog(executionDegree.getDegree(), executionDegree.getExecutionYear(),
-                Bundle.MESSAGING, "log.degree.coordinationteam.addmember", person.getPresentationName(),
-                executionDegree.getPresentationName());
+        CoordinationTeamLog.createLog(executionDegree.getDegree(), executionDegree.getExecutionYear(), Bundle.MESSAGING,
+                "log.degree.coordinationteam.addmember", person.getPresentationName(), executionDegree.getPresentationName());
 
         return new Coordinator(executionDegree, person, responsible);
     }
@@ -188,48 +187,13 @@ public class Coordinator extends Coordinator_Base {
     }
 
     @Deprecated
-    public boolean hasAnyExecutionDegreeCoursesReports() {
-        return !getExecutionDegreeCoursesReportsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult> getStudentInquiriesCourseResults() {
         return getStudentInquiriesCourseResultsSet();
     }
 
     @Deprecated
-    public boolean hasAnyStudentInquiriesCourseResults() {
-        return !getStudentInquiriesCourseResultsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer> getInquiryCoordinatorAnswers() {
         return getInquiryCoordinatorAnswersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInquiryCoordinatorAnswers() {
-        return !getInquiryCoordinatorAnswersSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasResponsible() {
-        return getResponsible() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionDegree() {
-        return getExecutionDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
     }
 
 }

@@ -61,7 +61,7 @@ class DegreeCurricularPlanYearsLayout extends DegreeCurricularPlanLayout {
 
     private void drawTopCurricularPeriods(CurricularPeriod curricularPeriod, HtmlTable mainTable, int level) {
 
-        if (!curricularPeriod.hasAnyChilds()) {
+        if (curricularPeriod.getChildsSet().isEmpty()) {
             return;
         }
 

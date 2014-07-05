@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.util.MarkType;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author David Santos
@@ -43,7 +42,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 
     private final DegreeCurricularPlan degreeCurricularPlanDomainReference;
 
-    private final boolean showEnVersion = I18N.getLocale().equals(MultiLanguageString.en);
+    private final boolean showEnVersion = I18N.getLocale().getLanguage().equals("en");
 
     public InfoDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
         degreeCurricularPlanDomainReference = degreeCurricularPlan;

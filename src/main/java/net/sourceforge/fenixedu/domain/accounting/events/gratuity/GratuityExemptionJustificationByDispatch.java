@@ -76,9 +76,4 @@ public class GratuityExemptionJustificationByDispatch extends GratuityExemptionJ
         return labelFormatter;
     }
 
-    @Deprecated
-    public boolean hasGratuityExemptionDispatchDate() {
-        return getGratuityExemptionDispatchDate() != null;
-    }
-
 }

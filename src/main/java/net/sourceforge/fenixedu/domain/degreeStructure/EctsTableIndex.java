@@ -154,7 +154,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
     }
 
     protected Grade convertGradeToEcts(CurricularCourse curricularCourse, CurriculumLine curriculumLine, Grade grade) {
-        if (curricularCourse.hasCompetenceCourse()) {
+        if (curricularCourse.getCompetenceCourse() != null) {
             EctsConversionTable table = getEnrolmentTableBy(curricularCourse.getCompetenceCourse());
             if (table != null) {
                 return table.convert(grade);
@@ -221,26 +221,6 @@ public class EctsTableIndex extends EctsTableIndex_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable> getTable() {
         return getTableSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTable() {
-        return !getTableSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasYear() {
-        return getYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasProcessingDate() {
-        return getProcessingDate() != null;
     }
 
 }

@@ -129,7 +129,7 @@ public class ReadShiftsAndGroups {
         final List<StudentGroup> studentGroups = grouping.readAllStudentGroupsBy(shift);
         Integer capacity;
         if (grouping.getDifferentiatedCapacity()) {
-            if (!shift.hasShiftGroupingProperties()) {
+            if (shift.getShiftGroupingProperties() == null) {
                 new ShiftGroupingProperties(shift, grouping, 0);
             }
             capacity = shift.getShiftGroupingProperties().getCapacity();

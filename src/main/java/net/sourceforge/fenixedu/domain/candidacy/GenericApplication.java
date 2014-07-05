@@ -109,29 +109,4 @@ public class GenericApplication extends GenericApplication_Base {
         }
         return result;
     }
-
-    @Deprecated
-    public boolean hasNationality() {
-        return getNationality() != null;
-    }
-
-    @Deprecated
-    public boolean hasGenericApplicationPeriod() {
-        return getGenericApplicationPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasAnyGenericApplicationComment() {
-        return !getGenericApplicationCommentSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasAnyGenericApplicationRecomentation() {
-        return !getGenericApplicationRecomentationSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasAnyGenericApplicationFileSet() {
-        return !getGenericApplicationFileSet().isEmpty();
-    }
 }

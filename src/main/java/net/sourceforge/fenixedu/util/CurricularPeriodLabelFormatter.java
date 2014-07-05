@@ -36,11 +36,11 @@ public class CurricularPeriodLabelFormatter {
 
     public static String getFullLabelI18N(CurricularPeriod curricularPeriod, boolean abbreviated, Locale locale) {
         StringBuilder result = new StringBuilder();
-        while (curricularPeriod.hasParent()) {
+        while (curricularPeriod.getParent() != null) {
             buildLabel(curricularPeriod, result, abbreviated, locale);
             
             curricularPeriod = curricularPeriod.getParent();
-            if (curricularPeriod.hasParent()) {
+            if (curricularPeriod.getParent() != null) {
                 result.insert(0, ", ");
             }
         }

@@ -33,10 +33,6 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public boolean hasInstitution() {
-        return getInstitution() != null;
-    }
-
     public boolean isInternal() {
         return false;
     }
@@ -50,10 +46,6 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
     abstract protected Integer getConclusionYear();
 
     abstract public LocalDate getConclusionDate();
-
-    public boolean hasConclusionDate() {
-        return getConclusionDate() != null;
-    }
 
     abstract public Unit getInstitution();
 
@@ -79,21 +71,6 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
 
     protected boolean hasOtherSchoolLevel() {
         return getOtherSchoolLevel() != null && !getOtherSchoolLevel().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasCandidacy() {
-        return getCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCountry() {
-        return getCountry() != null;
     }
 
 }

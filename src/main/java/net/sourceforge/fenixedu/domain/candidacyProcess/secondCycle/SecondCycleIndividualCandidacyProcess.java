@@ -112,7 +112,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
     @Override
     protected void checkParameters(final CandidacyProcess process) {
-        if (process == null || !process.hasCandidacyPeriod()) {
+        if (process == null || process.getCandidacyPeriod() == null) {
             throw new DomainException("error.SecondCycleIndividualCandidacyProcess.invalid.candidacy.process");
         }
     }

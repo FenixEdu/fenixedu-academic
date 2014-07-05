@@ -78,7 +78,7 @@ public class PublicPhdMissingCandidacyValidationAlert extends PublicPhdMissingCa
     }
 
     private LocalDate calculateStartDate() {
-        return hasFireDate() ? getFireDate().toLocalDate() : getCandidacyProcess().getWhenCreated().toLocalDate();
+        return getFireDate() != null ? getFireDate().toLocalDate() : getCandidacyProcess().getWhenCreated().toLocalDate();
     }
 
     private PhdProgramCandidacyProcess getCandidacyProcess() {

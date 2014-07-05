@@ -95,7 +95,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 
     @Override
     public CareerWorkshopConfirmationSpreadsheet getConfirmations() {
-        if (hasBennu()) {
+        if (getRootDomainObject() != null) {
             if (getLastUpdate() == null || super.getConfirmations() == null) {
                 generateSpreadsheet();
             }
@@ -196,41 +196,6 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmation> getCareerWorkshopConfirmations() {
         return getCareerWorkshopConfirmationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCareerWorkshopConfirmations() {
-        return !getCareerWorkshopConfirmationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasConfirmations() {
-        return getConfirmations() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginDate() {
-        return getBeginDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastUpdate() {
-        return getLastUpdate() != null;
-    }
-
-    @Deprecated
-    public boolean hasCareerWorkshopApplicationEvent() {
-        return getCareerWorkshopApplicationEvent() != null;
     }
 
 }

@@ -71,7 +71,7 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
 
     @Override
     protected boolean isToDiscard() {
-        return hasFireDate() || getProcess().isRegistrationFormalized();
+        return getFireDate() != null || getProcess().isRegistrationFormalized();
     }
 
     @Override
@@ -100,11 +100,6 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
     @Override
     public boolean isToSendMail() {
         return true;
-    }
-
-    @Deprecated
-    public boolean hasMaxDays() {
-        return getMaxDays() != null;
     }
 
 }

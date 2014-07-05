@@ -89,24 +89,4 @@ public class PersonAccount extends PersonAccount_Base {
         return getTransactionsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyTransactions() {
-        return !getTransactionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasBalance() {
-        return getBalance() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
 }

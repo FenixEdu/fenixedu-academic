@@ -37,11 +37,11 @@ public class PersonInformationLog extends PersonInformationLog_Base {
     }
 
     public String getPersonName() {
-        return hasPerson() ? getPerson().getName() : StringUtils.EMPTY;
+        return getPerson() != null ? getPerson().getName() : StringUtils.EMPTY;
     }
 
     public String getIstUsername() {
-        return hasPerson() ? getPerson().getIstUsername() : StringUtils.EMPTY;
+        return getPerson() != null ? getPerson().getIstUsername() : StringUtils.EMPTY;
     }
 
     private static String generateLabelDescription(String bundle, String key, String... args) {
@@ -63,11 +63,6 @@ public class PersonInformationLog extends PersonInformationLog_Base {
             personViewed = "ID:" + person.getExternalId();
         }
         return personViewed;
-    }
-
-    @Deprecated
-    public boolean hasPersonViewed() {
-        return getPersonViewed() != null;
     }
 
 }

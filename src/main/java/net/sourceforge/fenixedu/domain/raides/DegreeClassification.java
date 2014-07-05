@@ -63,39 +63,4 @@ public class DegreeClassification extends DegreeClassification_Base {
         return getDegreeDesignationsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyDegreeDesignations() {
-        return !getDegreeDesignationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasClassificationOrder() {
-        return getClassificationOrder() != null;
-    }
-
-    @Deprecated
-    public boolean hasDescription1() {
-        return getDescription1() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasAbbreviation() {
-        return getAbbreviation() != null;
-    }
-
-    @Deprecated
-    public boolean hasDescription2() {
-        return getDescription2() != null;
-    }
-
 }

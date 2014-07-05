@@ -77,9 +77,4 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
         return false;
     }
 
-    @Deprecated
-    public boolean hasYear() {
-        return getYear() != null;
-    }
-
 }

@@ -1,1 +1,0 @@
-alter table `FILE` add `HAS_CONFIDENCIAL_INFORMATION` tinyint(1), add `OID_ANNUAL_TEACHING_CREDITS` bigint unsigned, add index (OID_ANNUAL_TEACHING_CREDITS);

@@ -196,7 +196,7 @@
 </table>
 
 <%
-	if (thesis.hasDissertation()) {
+	if (thesis.getDissertation() != null) {
 %>
 <div style="margin-left: 35px; width: 90%;">
 	<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.INTRANET.toString() %>">
@@ -239,7 +239,7 @@
 		<th>
 			<bean:message key="title.scientificCouncil.thesis.evaluation.extendedAbstract"/>
 			<%
-				if (thesis.hasDissertation() && !thesis.areThesisFilesReadable()) {
+				if (thesis.getDissertation() != null && !thesis.areThesisFilesReadable()) {
 			%>
 					&nbsp;&nbsp;&nbsp;
 					<em>
@@ -254,7 +254,7 @@
 		<th>
 			<bean:message key="title.scientificCouncil.thesis.evaluation.dissertation"/>
 			<%
-				if (thesis.hasDissertation() && !thesis.areThesisFilesReadable()) {
+				if (thesis.getDissertation() != null && !thesis.areThesisFilesReadable()) {
 			%>
 					&nbsp;&nbsp;&nbsp;
 					<em>

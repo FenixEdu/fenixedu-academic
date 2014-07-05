@@ -186,18 +186,8 @@ public class Recipient extends Recipient_Base {
     }
 
     @Deprecated
-    public boolean hasAnySenders() {
-        return !getSendersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessagesTos() {
         return getMessagesTosSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMessagesTos() {
-        return !getMessagesTosSet().isEmpty();
     }
 
     @Deprecated
@@ -206,38 +196,8 @@ public class Recipient extends Recipient_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMessagesCcs() {
-        return !getMessagesCcsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessages() {
         return getMessagesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMessages() {
-        return !getMessagesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasMembersSize() {
-        return getMembersSize() != null;
-    }
-
-    @Deprecated
-    public boolean hasMembers() {
-        return getMembers() != null;
-    }
-
-    @Deprecated
-    public boolean hasToName() {
-        return getToName() != null;
     }
 
 }

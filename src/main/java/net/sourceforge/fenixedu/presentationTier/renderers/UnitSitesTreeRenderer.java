@@ -84,7 +84,7 @@ public class UnitSitesTreeRenderer extends TreeRenderer {
     }
 
     protected String getLinkSequenceFor(Unit unit) {
-        if (unit.hasSite()) {
+        if (unit.getSite() != null) {
             return createLinkSequence(getChooseManagersLink());
         } else if (isAllowedToHaveSite(unit)) {
             return createLinkSequence(getCreateSiteLink());
@@ -161,7 +161,7 @@ public class UnitSitesTreeRenderer extends TreeRenderer {
     }
 
     private String getImagePathFor(Unit unit) {
-        if (unit.hasSite()) {
+        if (unit.getSite() != null) {
             return getUnitWithSiteImage();
         } else {
             return getUnitWithoutSiteImage();

@@ -1238,10 +1238,10 @@ public class Person extends Person_Base {
         if (getPersonalPhotoEvenIfRejected() != null) {
             getPersonalPhotoEvenIfRejected().delete();
         }
-        if (hasAssociatedPersonAccount()) {
+        if (getAssociatedPersonAccount() != null) {
             getAssociatedPersonAccount().delete();
         }
-        if (hasHomepage()) {
+        if (getHomepage() != null) {
             getHomepage().delete();
         }
 
@@ -1257,10 +1257,10 @@ public class Person extends Person_Base {
         getPersonRoleOperationLog().clear();
         getGivenRoleOperationLog().clear();
 
-        if (hasStudent()) {
+        if (getStudent() != null) {
             getStudent().delete();
         }
-        if (hasPersonName()) {
+        if (getPersonName() != null) {
             getPersonName().delete();
         }
 
@@ -1278,19 +1278,19 @@ public class Person extends Person_Base {
         setNationality(null);
         setCountryOfBirth(null);
 
-        if (hasResearcher()) {
+        if (getResearcher() != null) {
             getResearcher().delete();
         }
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyPartyContacts() && !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs()
-                && !hasAnyExportGroupingReceivers() && !hasAnyPersistentGroups() && !hasAnyAssociatedQualifications()
-                && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations() && !hasAnyExportGroupingSenders()
-                && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides() && !hasEmployee()
-                && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyPersonFunctions()
-                && (!hasHomepage() || getHomepage().isDeletable()) && !hasAnyInternalParticipants()
-                && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
+        return getPartyContactsSet().isEmpty() && getChildsSet().isEmpty() && getParentsSet().isEmpty() && getDomainObjectActionLogsSet().isEmpty()
+                && getExportGroupingReceiversSet().isEmpty() && getPersistentGroupsSet().isEmpty() && getAssociatedQualificationsSet().isEmpty()
+                && getAssociatedAlteredCurriculumsSet().isEmpty() && getEnrolmentEvaluationsSet().isEmpty() && getExportGroupingSendersSet().isEmpty()
+                && getResponsabilityTransactionsSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty() && getEmployee() == null
+                && getTeacher() == null && getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty() && !hasAnyPersonFunctions()
+                && (getHomepage() == null || getHomepage().isDeletable()) && getInternalParticipantsSet().isEmpty()
+                && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet().isEmpty();
     }
 
     public ExternalContract getExternalContract() {
@@ -2304,7 +2304,7 @@ public class Person extends Person_Base {
     }
 
     private Collection<AnnouncementBoard> getTeacherCurrentExecutionCourseAnnouncementBoards() {
-        if (!hasTeacher()) {
+        if (getTeacher() == null) {
             return Collections.emptyList();
         }
         final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
@@ -2320,7 +2320,7 @@ public class Person extends Person_Base {
     }
 
     private Collection<AnnouncementBoard> getStudentCurrentExecutionCourseAnnouncementBoards() {
-        if (!hasStudent()) {
+        if (getStudent() == null) {
             return Collections.emptyList();
         }
         final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
@@ -2352,7 +2352,7 @@ public class Person extends Person_Base {
 
     @Deprecated
     public Set<Registration> getStudents() {
-        return hasStudent() ? getStudent().getRegistrationsSet() : Collections.<Registration> emptySet();
+        return getStudent() != null ? getStudent().getRegistrationsSet() : Collections.<Registration> emptySet();
     }
 
     @Deprecated
@@ -2362,12 +2362,12 @@ public class Person extends Person_Base {
 
     @Deprecated
     public int getStudentsCount() {
-        return hasStudent() ? getStudent().getRegistrationsSet().size() : 0;
+        return getStudent() != null ? getStudent().getRegistrationsSet().size() : 0;
     }
 
     @Deprecated
     public Set<Registration> getStudentsSet() {
-        return hasStudent() ? getStudent().getRegistrationsSet() : Collections.EMPTY_SET;
+        return getStudent() != null ? getStudent().getRegistrationsSet() : Collections.EMPTY_SET;
     }
 
     @Deprecated
@@ -2622,7 +2622,7 @@ public class Person extends Person_Base {
     }
 
     public String getHomepageWebAddress() {
-        if (hasHomepage() && getHomepage().isHomepageActivated()) {
+        if (getHomepage() != null && getHomepage().isHomepageActivated()) {
             return getHomepage().getFullPath();
         }
         if (isDefaultWebAddressVisible() && getDefaultWebAddress().hasUrl()) {
@@ -2706,7 +2706,7 @@ public class Person extends Person_Base {
     }
 
     public boolean isHomePageAvailable() {
-        return hasHomepage() && getHomepage().getActivated();
+        return getHomepage() != null && getHomepage().getActivated();
     }
 
     public String getFirstAndLastName() {
@@ -3227,7 +3227,7 @@ public class Person extends Person_Base {
     }
 
     public Qualification getLastQualification() {
-        return hasAnyAssociatedQualifications() ? Collections
+        return !getAssociatedQualificationsSet().isEmpty() ? Collections
                 .max(getAssociatedQualifications(), Qualification.COMPARATOR_BY_YEAR) : null;
     }
 
@@ -3431,7 +3431,7 @@ public class Person extends Person_Base {
     }
 
     public boolean isPhdStudent() {
-        return hasAnyPhdIndividualProgramProcesses();
+        return !getPhdIndividualProgramProcessesSet().isEmpty();
     }
 
     public RegistrationProtocol getOnlyRegistrationProtocol() {
@@ -3483,7 +3483,7 @@ public class Person extends Person_Base {
             for (final Professorship professorship : getProfessorships(currentTemplate.getExecutionPeriod())) {
                 final boolean isToAnswer = hasToAnswerTeacherInquiry(professorship);
                 if (isToAnswer
-                        && (!professorship.hasInquiryTeacherAnswer()
+                        && (professorship.getInquiryTeacherAnswer() == null
                                 || professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(currentTemplate) || professorship
                                     .hasMandatoryCommentsToMake())) {
                     result.add(professorship.getExecutionCourse());
@@ -3505,7 +3505,7 @@ public class Person extends Person_Base {
 
         boolean isToAnswer = true;
         if (mandatoryTeachingService) {
-            if (professorship.hasAnyInquiryResults()) {
+            if (!professorship.getInquiryResultsSet().isEmpty()) {
                 return isToAnswer;
             }
 
@@ -3558,7 +3558,7 @@ public class Person extends Person_Base {
                 final boolean isToAnswer = hasToAnswerRegentInquiry(professorship);
                 if (isToAnswer) {
                     allExecutionCourses.add(professorship.getExecutionCourse());
-                    if (!professorship.hasInquiryRegentAnswer()
+                    if (professorship.getInquiryRegentAnswer() == null
                             || professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(currentTemplate)
                             || professorship.hasMandatoryCommentsToMakeAsResponsible()) {
                         result.add(professorship.getExecutionCourse());
@@ -4390,18 +4390,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyForumSubscriptions() {
-        return !getForumSubscriptionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod> getUnavailablePeriods() {
         return getUnavailablePeriodsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyUnavailablePeriods() {
-        return !getUnavailablePeriodsSet().isEmpty();
     }
 
     @Deprecated
@@ -4410,18 +4400,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCoordinatorLogWho() {
-        return !getCoordinatorLogWhoSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Qualification> getUpdatedQualifications() {
         return getUpdatedQualificationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyUpdatedQualifications() {
-        return !getUpdatedQualificationsSet().isEmpty();
     }
 
     @Deprecated
@@ -4430,18 +4410,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCandidacies() {
-        return !getCandidaciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess> getPhdConclusionProcesses() {
         return getPhdConclusionProcessesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdConclusionProcesses() {
-        return !getPhdConclusionProcessesSet().isEmpty();
     }
 
     @Deprecated
@@ -4450,18 +4420,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCreatedExemptions() {
-        return !getCreatedExemptionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup> getOutboundMobilityCandidacyContestGroup() {
         return getOutboundMobilityCandidacyContestGroupSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyOutboundMobilityCandidacyContestGroup() {
-        return !getOutboundMobilityCandidacyContestGroupSet().isEmpty();
     }
 
     @Deprecated
@@ -4470,18 +4430,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyExportGroupingSenders() {
-        return !getExportGroupingSendersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Job> getJobs() {
         return getJobsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyJobs() {
-        return !getJobsSet().isEmpty();
     }
 
     @Deprecated
@@ -4490,18 +4440,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyConclusionProcessVersions() {
-        return !getConclusionProcessVersionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getExportGroupingReceivers() {
         return getExportGroupingReceiversSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExportGroupingReceivers() {
-        return !getExportGroupingReceiversSet().isEmpty();
     }
 
     @Deprecated
@@ -4510,18 +4450,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyErasmusAlert() {
-        return !getErasmusAlertSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument> getUploadedPhdProcessDocuments() {
         return getUploadedPhdProcessDocumentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyUploadedPhdProcessDocuments() {
-        return !getUploadedPhdProcessDocumentsSet().isEmpty();
     }
 
     @Deprecated
@@ -4530,18 +4460,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPersonInformationLogs() {
-        return !getPersonInformationLogsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson> getCerimonyInquiryPerson() {
         return getCerimonyInquiryPersonSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCerimonyInquiryPerson() {
-        return !getCerimonyInquiryPersonSet().isEmpty();
     }
 
     @Deprecated
@@ -4550,18 +4470,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCreatedMarkSheets() {
-        return !getCreatedMarkSheetsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.log.PhdLogEntry> getPhdLogEntries() {
         return getPhdLogEntriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdLogEntries() {
-        return !getPhdLogEntriesSet().isEmpty();
     }
 
     @Deprecated
@@ -4570,18 +4480,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPersonIdentificationDocumentExtraInfo() {
-        return !getPersonIdentificationDocumentExtraInfoSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Qualification> getCreatedQualifications() {
         return getCreatedQualificationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCreatedQualifications() {
-        return !getCreatedQualificationsSet().isEmpty();
     }
 
     @Deprecated
@@ -4590,18 +4490,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCreateJobs() {
-        return !getCreateJobsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.administrativeOffice.curriculumValidation.DocumentPrintRequest> getRequest() {
         return getRequestSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyRequest() {
-        return !getRequestSet().isEmpty();
     }
 
     @Deprecated
@@ -4610,18 +4500,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyRegistrationProtocols() {
-        return !getRegistrationProtocolsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.documents.GeneratedDocument> getProcessedDocument() {
         return getProcessedDocumentSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyProcessedDocument() {
-        return !getProcessedDocumentSet().isEmpty();
     }
 
     @Deprecated
@@ -4630,18 +4510,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyReceipts() {
-        return !getReceiptsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.CandidacySituation> getCandidacySituations() {
         return getCandidacySituationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCandidacySituations() {
-        return !getCandidacySituationsSet().isEmpty();
     }
 
     @Deprecated
@@ -4650,18 +4520,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyApprovedPhoto() {
-        return !getApprovedPhotoSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion> getReceiptsVersions() {
         return getReceiptsVersionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyReceiptsVersions() {
-        return !getReceiptsVersionsSet().isEmpty();
     }
 
     @Deprecated
@@ -4670,18 +4530,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyTeacherEvaluationProcessFromEvaluee() {
-        return !getTeacherEvaluationProcessFromEvalueeSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.email.PhdEmail> getPhdEmail() {
         return getPhdEmailSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdEmail() {
-        return !getPhdEmailSet().isEmpty();
     }
 
     @Deprecated
@@ -4690,18 +4540,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyProfessorshipCreated() {
-        return !getProfessorshipCreatedSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MarkSheet> getConfirmedMarkSheets() {
         return getConfirmedMarkSheetsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyConfirmedMarkSheets() {
-        return !getConfirmedMarkSheetsSet().isEmpty();
     }
 
     @Deprecated
@@ -4710,18 +4550,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyTeacherAuthorizationsRevoked() {
-        return !getTeacherAuthorizationsRevokedSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getEnrolmentEvaluations() {
         return getEnrolmentEvaluationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEnrolmentEvaluations() {
-        return !getEnrolmentEvaluationsSet().isEmpty();
     }
 
     @Deprecated
@@ -4730,18 +4560,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyTeacherCredits() {
-        return !getTeacherCreditsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCode> getPaymentCodes() {
         return getPaymentCodesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPaymentCodes() {
-        return !getPaymentCodesSet().isEmpty();
     }
 
     @Deprecated
@@ -4750,18 +4570,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPersonRoleOperationLog() {
-        return !getPersonRoleOperationLogSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant> getInternalParticipants() {
         return getInternalParticipantsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInternalParticipants() {
-        return !getInternalParticipantsSet().isEmpty();
     }
 
     @Deprecated
@@ -4770,18 +4580,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeCandidates() {
-        return !getMasterDegreeCandidatesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFile> getTeacherEvaluationFile() {
         return getTeacherEvaluationFileSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTeacherEvaluationFile() {
-        return !getTeacherEvaluationFileSet().isEmpty();
     }
 
     @Deprecated
@@ -4790,18 +4590,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyApprovedCompetenceCourseInformationChangeRequests() {
-        return !getApprovedCompetenceCourseInformationChangeRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation> getAcademicServiceRequestSituations() {
         return getAcademicServiceRequestSituationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAcademicServiceRequestSituations() {
-        return !getAcademicServiceRequestSituationsSet().isEmpty();
     }
 
     @Deprecated
@@ -4810,18 +4600,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyDomainOperationLogs() {
-        return !getDomainOperationLogsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup> getCreatedGroup() {
         return getCreatedGroupSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCreatedGroup() {
-        return !getCreatedGroupSet().isEmpty();
     }
 
     @Deprecated
@@ -4830,18 +4610,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyVigilantWrappers() {
-        return !getVigilantWrappersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant> getThesisEvaluationParticipants() {
         return getThesisEvaluationParticipantsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyThesisEvaluationParticipants() {
-        return !getThesisEvaluationParticipantsSet().isEmpty();
     }
 
     @Deprecated
@@ -4850,18 +4620,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCoordinatorLog() {
-        return !getCoordinatorLogSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage> getPhdAlertMessages() {
         return getPhdAlertMessagesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdAlertMessages() {
-        return !getPhdAlertMessagesSet().isEmpty();
     }
 
     @Deprecated
@@ -4870,18 +4630,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyGivenRoleOperationLog() {
-        return !getGivenRoleOperationLogSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNote> getCreditNotes() {
         return getCreditNotesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCreditNotes() {
-        return !getCreditNotesSet().isEmpty();
     }
 
     @Deprecated
@@ -4890,18 +4640,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnySubmittedRectorateSubmissionBatch() {
-        return !getSubmittedRectorateSubmissionBatchSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState> getRegistrationStates() {
         return getRegistrationStatesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyRegistrationStates() {
-        return !getRegistrationStatesSet().isEmpty();
     }
 
     @Deprecated
@@ -4910,18 +4650,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyServiceAgreements() {
-        return !getServiceAgreementsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.transactions.Transaction> getResponsabilityTransactions() {
         return getResponsabilityTransactionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyResponsabilityTransactions() {
-        return !getResponsabilityTransactionsSet().isEmpty();
     }
 
     @Deprecated
@@ -4930,18 +4660,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyThesisLibraryOperation() {
-        return !getThesisLibraryOperationSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.DomainObjectActionLog> getDomainObjectActionLogs() {
         return getDomainObjectActionLogsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyDomainObjectActionLogs() {
-        return !getDomainObjectActionLogsSet().isEmpty();
     }
 
     @Deprecated
@@ -4950,18 +4670,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPhdIndividualProgramProcesses() {
-        return !getPhdIndividualProgramProcessesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit> getCollaboratorIn() {
         return getCollaboratorInSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCollaboratorIn() {
-        return !getCollaboratorInSet().isEmpty();
     }
 
     @Deprecated
@@ -4970,18 +4680,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPersistentGroups() {
-        return !getPersistentGroupsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ExecutedAction> getExecutedActions() {
         return getExecutedActionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExecutedActions() {
-        return !getExecutedActionsSet().isEmpty();
     }
 
     @Deprecated
@@ -4990,18 +4690,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyScientificCommissions() {
-        return !getScientificCommissionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProcessState> getPhdProgramStates() {
         return getPhdProgramStatesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdProgramStates() {
-        return !getPhdProgramStatesSet().isEmpty();
     }
 
     @Deprecated
@@ -5010,18 +4700,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyIdentityRequests() {
-        return !getIdentityRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Role> getPersonRoles() {
         return getPersonRolesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPersonRoles() {
-        return !getPersonRolesSet().isEmpty();
     }
 
     @Deprecated
@@ -5030,18 +4710,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyTeacherCreditsPerson() {
-        return !getTeacherCreditsPersonSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch> getCreatedRectorateSubmissionBatch() {
         return getCreatedRectorateSubmissionBatchSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCreatedRectorateSubmissionBatch() {
-        return !getCreatedRectorateSubmissionBatchSet().isEmpty();
     }
 
     @Deprecated
@@ -5050,18 +4720,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPhdAlertMessagesMarkedAsReaded() {
-        return !getPhdAlertMessagesMarkedAsReadedSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Career> getAssociatedCareers() {
         return getAssociatedCareersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedCareers() {
-        return !getAssociatedCareersSet().isEmpty();
     }
 
     @Deprecated
@@ -5070,18 +4730,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCoordinators() {
-        return !getCoordinatorsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.InternalCoEvaluator> getInternalCoEvaluator() {
         return getInternalCoEvaluatorSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInternalCoEvaluator() {
-        return !getInternalCoEvaluatorSet().isEmpty();
     }
 
     @Deprecated
@@ -5090,18 +4740,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyEnrolmentEvaluationsConfirmations() {
-        return !getEnrolmentEvaluationsConfirmationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment> getInquiryGlobalComments() {
         return getInquiryGlobalCommentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInquiryGlobalComments() {
-        return !getInquiryGlobalCommentsSet().isEmpty();
     }
 
     @Deprecated
@@ -5110,18 +4750,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyUnitsWithUploadPermission() {
-        return !getUnitsWithUploadPermissionSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Guide> getGuides() {
         return getGuidesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyGuides() {
-        return !getGuidesSet().isEmpty();
     }
 
     @Deprecated
@@ -5130,18 +4760,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedQualifications() {
-        return !getAssociatedQualificationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
         return getExamCoordinatorsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExamCoordinators() {
-        return !getExamCoordinatorsSet().isEmpty();
     }
 
     @Deprecated
@@ -5150,18 +4770,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMessages() {
-        return !getMessagesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess> getTeacherEvaluationProcessFromEvaluator() {
         return getTeacherEvaluationProcessFromEvaluatorSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTeacherEvaluationProcessFromEvaluator() {
-        return !getTeacherEvaluationProcessFromEvaluatorSet().isEmpty();
     }
 
     @Deprecated
@@ -5170,18 +4780,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyProfessorships() {
-        return !getProfessorshipsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard> getBookmarkedBoards() {
         return getBookmarkedBoardsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyBookmarkedBoards() {
-        return !getBookmarkedBoardsSet().isEmpty();
     }
 
     @Deprecated
@@ -5190,18 +4790,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedProposalsByCoorientator() {
-        return !getAssociatedProposalsByCoorientatorSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getReceiptsCreated() {
         return getReceiptsCreatedSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyReceiptsCreated() {
-        return !getReceiptsCreatedSet().isEmpty();
     }
 
     @Deprecated
@@ -5210,18 +4800,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyTeacherServiceComment() {
-        return !getTeacherServiceCommentSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
         return getCompetenceCourseInformationChangeRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCompetenceCourseInformationChangeRequests() {
-        return !getCompetenceCourseInformationChangeRequestsSet().isEmpty();
     }
 
     @Deprecated
@@ -5230,18 +4810,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyReceivedRectorateSubmissionBatch() {
-        return !getReceivedRectorateSubmissionBatchSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.UnitSite> getUnitSites() {
         return getUnitSitesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyUnitSites() {
-        return !getUnitSitesSet().isEmpty();
     }
 
     @Deprecated
@@ -5250,18 +4820,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyInquiryCoordinatorsAnswers() {
-        return !getInquiryCoordinatorsAnswersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails> getIndividualCandidacies() {
         return getIndividualCandidaciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyIndividualCandidacies() {
-        return !getIndividualCandidaciesSet().isEmpty();
     }
 
     @Deprecated
@@ -5270,18 +4830,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyUploadedFiles() {
-        return !getUploadedFilesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization> getTeacherAuthorizationsAuthorized() {
         return getTeacherAuthorizationsAuthorizedSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTeacherAuthorizationsAuthorized() {
-        return !getTeacherAuthorizationsAuthorizedSet().isEmpty();
     }
 
     @Deprecated
@@ -5290,18 +4840,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyInquiryResultComments() {
-        return !getInquiryResultCommentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Photograph> getRejectedPhoto() {
         return getRejectedPhotoSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyRejectedPhoto() {
-        return !getRejectedPhotoSet().isEmpty();
     }
 
     @Deprecated
@@ -5310,18 +4850,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyManageableDepartmentCredits() {
-        return !getManageableDepartmentCreditsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Curriculum> getAssociatedAlteredCurriculums() {
         return getAssociatedAlteredCurriculumsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedAlteredCurriculums() {
-        return !getAssociatedAlteredCurriculumsSet().isEmpty();
     }
 
     @Deprecated
@@ -5330,18 +4860,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyJob() {
-        return !getJobSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal> getAssociatedProposalsByOrientator() {
         return getAssociatedProposalsByOrientatorSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedProposalsByOrientator() {
-        return !getAssociatedProposalsByOrientatorSet().isEmpty();
     }
 
     @Deprecated
@@ -5350,203 +4870,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public boolean hasAnyResponsibleForCancelEvent() {
-        return !getResponsibleForCancelEventSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.person.IdDocument> getIdDocuments() {
         return getIdDocumentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyIdDocuments() {
-        return !getIdDocumentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasHomepage() {
-        return getHomepage() != null;
-    }
-
-    @Deprecated
-    public boolean hasUser() {
-        return getUser() != null;
-    }
-
-    @Deprecated
-    public boolean hasTeacher() {
-        return getTeacher() != null;
-    }
-
-    @Deprecated
-    public boolean hasPersonName() {
-        return getPersonName() != null;
-    }
-
-    @Deprecated
-    public boolean hasIncompatibleVigilant() {
-        return getIncompatibleVigilant() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumberOfValidationRequests() {
-        return getNumberOfValidationRequests() != null;
-    }
-
-    @Deprecated
-    public boolean hasDistrictOfBirth() {
-        return getDistrictOfBirth() != null;
-    }
-
-    @Deprecated
-    public boolean hasPersonalPhoto() {
-        return getPersonalPhoto() != null;
-    }
-
-    @Deprecated
-    public boolean hasDisableSendEmails() {
-        return getDisableSendEmails() != null;
-    }
-
-    @Deprecated
-    public boolean hasSender() {
-        return getSender() != null;
-    }
-
-    @Deprecated
-    public boolean hasGivenNames() {
-        return getGivenNames() != null;
-    }
-
-    @Deprecated
-    public boolean hasNickname() {
-        return getNickname() != null;
-    }
-
-    @Deprecated
-    public boolean hasDateOfBirthYearMonthDay() {
-        return getDateOfBirthYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasCountryOfBirth() {
-        return getCountryOfBirth() != null;
-    }
-
-    @Deprecated
-    public boolean hasReplyTo() {
-        return getReplyTo() != null;
-    }
-
-    @Deprecated
-    public boolean hasMaritalStatus() {
-        return getMaritalStatus() != null;
-    }
-
-    @Deprecated
-    public boolean hasNameOfFather() {
-        return getNameOfFather() != null;
-    }
-
-    @Deprecated
-    public boolean hasResearcher() {
-        return getResearcher() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastValidationRequestDate() {
-        return getLastValidationRequestDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasIncompatiblePerson() {
-        return getIncompatiblePerson() != null;
-    }
-
-    @Deprecated
-    public boolean hasExpirationDateOfDocumentIdYearMonthDay() {
-        return getExpirationDateOfDocumentIdYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasProfession() {
-        return getProfession() != null;
-    }
-
-    @Deprecated
-    public boolean hasFamilyNames() {
-        return getFamilyNames() != null;
-    }
-
-    @Deprecated
-    public boolean hasParishOfBirth() {
-        return getParishOfBirth() != null;
-    }
-
-    @Deprecated
-    public boolean hasFiscalCode() {
-        return getFiscalCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasEmployee() {
-        return getEmployee() != null;
-    }
-
-    @Deprecated
-    public boolean hasDistrictSubdivisionOfBirth() {
-        return getDistrictSubdivisionOfBirth() != null;
-    }
-
-    @Deprecated
-    public boolean hasEmissionLocationOfDocumentId() {
-        return getEmissionLocationOfDocumentId() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasAssociatedPersonAccount() {
-        return getAssociatedPersonAccount() != null;
-    }
-
-    @Deprecated
-    public boolean hasIdDocumentType() {
-        return getIdDocumentType() != null;
-    }
-
-    @Deprecated
-    public boolean hasGender() {
-        return getGender() != null;
-    }
-
-    @Deprecated
-    public boolean hasEmissionDateOfDocumentIdYearMonthDay() {
-        return getEmissionDateOfDocumentIdYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasDocumentIdNumber() {
-        return getDocumentIdNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasPersonProfessionalData() {
-        return getPersonProfessionalData() != null;
-    }
-
-    @Deprecated
-    public boolean hasNameOfMother() {
-        return getNameOfMother() != null;
-    }
-
-    @Deprecated
-    public boolean hasEidentifier() {
-        return getEidentifier() != null;
     }
 
     public boolean hasPersonRoles(Role role) {

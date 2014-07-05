@@ -1,1 +1,0 @@
-alter table ENROLMENT_EVALUATION add column KEY_IMPROVEMENT_OF_APPROVED_ENROLMENT_EVENT int(11) default null;

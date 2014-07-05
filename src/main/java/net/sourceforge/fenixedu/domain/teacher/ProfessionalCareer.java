@@ -94,14 +94,4 @@ public class ProfessionalCareer extends ProfessionalCareer_Base {
 
     }
 
-    @Deprecated
-    public boolean hasFunction() {
-        return getFunction() != null;
-    }
-
-    @Deprecated
-    public boolean hasEntity() {
-        return getEntity() != null;
-    }
-
 }

@@ -57,7 +57,7 @@ public class StudentReingressionRequestEvent extends StudentReingressionRequestE
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getRegistration().getLastDegreeCurricularPlan().getName());
         labelFormatter.appendLabel(")");
-        if (getAcademicServiceRequest().hasExecutionYear()) {
+        if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }
 

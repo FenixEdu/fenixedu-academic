@@ -59,7 +59,7 @@ public class RequestCandidacyReview extends PhdProgramCandidacyProcessActivity {
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, User userView, Object object) {
 
         final PhdIndividualProgramProcess mainProcess = process.getIndividualProgramProcess();
-        if (!mainProcess.hasPhdProgram()) {
+        if (mainProcess.getPhdProgram() == null) {
             throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview.invalid.phd.program");
         }
 

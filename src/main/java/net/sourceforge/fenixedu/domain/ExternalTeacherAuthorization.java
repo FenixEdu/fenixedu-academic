@@ -55,44 +55,4 @@ public class ExternalTeacherAuthorization extends ExternalTeacherAuthorization_B
         return teacherAuthorizations;
     }
 
-    @Deprecated
-    public boolean hasCanHaveCard() {
-        return getCanHaveCard() != null;
-    }
-
-    @Deprecated
-    public boolean hasActive() {
-        return getActive() != null;
-    }
-
-    @Deprecated
-    public boolean hasLessonHours() {
-        return getLessonHours() != null;
-    }
-
-    @Deprecated
-    public boolean hasAuthorizer() {
-        return getAuthorizer() != null;
-    }
-
-    @Deprecated
-    public boolean hasRevoker() {
-        return getRevoker() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnactiveTime() {
-        return getUnactiveTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasDepartment() {
-        return getDepartment() != null;
-    }
-
-    @Deprecated
-    public boolean hasCanPark() {
-        return getCanPark() != null;
-    }
-
 }

@@ -1063,7 +1063,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
         request.setAttribute("candidacyBean", bean);
 
-        if (!bean.getCandidacyHashCode().getIndividualProgramProcess().hasAnyGuidings()) {
+        if (bean.getCandidacyHashCode().getIndividualProgramProcess().getGuidingsSet().isEmpty()) {
             bean.setGuidings(createGuidingsMinimumList(bean.getIndividualProgramProcess()));
         } else {
             bean.setGuidings(new ArrayList<PhdParticipantBean>());
@@ -1279,7 +1279,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
             return mapping.findForward("createRefereeLetterSuccess");
         }
 
-        if (hashCode.hasLetter()) {
+        if (hashCode.getLetter() != null) {
             request.setAttribute("has-letter", Boolean.TRUE);
             request.setAttribute("letter", hashCode.getLetter());
             return mapping.findForward("createRefereeLetterSuccess");
@@ -1384,7 +1384,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
     private boolean validateProcess(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
         boolean result = true;
 
-        if (!process.hasPhdProgramFocusArea()) {
+        if (process.getPhdProgramFocusArea() == null) {
             addValidationMessage(request, "message.validation.missing.focus.area");
             result &= false;
         }

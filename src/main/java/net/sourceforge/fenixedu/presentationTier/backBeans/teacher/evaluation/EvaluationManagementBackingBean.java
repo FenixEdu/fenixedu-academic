@@ -1010,7 +1010,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public boolean getExistsADistribution() {
         final Evaluation writtenEvaluation = getEvaluation();
         if (writtenEvaluation != null) {
-            return ((WrittenEvaluation) writtenEvaluation).hasAnyWrittenEvaluationEnrolments();
+            return !((WrittenEvaluation) writtenEvaluation).getWrittenEvaluationEnrolmentsSet().isEmpty();
         }
         return false;
     }
@@ -1037,14 +1037,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         String filter = getEnrolmentTypeFilter();
 
         for (final Attends attends : getExecutionCourse().getAttendsSet()) {
-            if (!attends.hasEnrolment() || !attends.getEnrolment().isImpossible()) {
+            if (attends.getEnrolment() == null || !attends.getEnrolment().isImpossible()) {
                 if (filter.equals(ENROLMENT_TYPE_FILTER_ALL)) {
                     result.add(attends);
                 } else if (filter.equals(ENROLMENT_TYPE_FILTER_NOT_ENROLLED)) {
-                    if (!attends.hasEnrolment()) {
+                    if (attends.getEnrolment() == null) {
                         result.add(attends);
                     }
-                } else if (attends.hasEnrolment()) {
+                } else if (attends.getEnrolment() != null) {
                     if (attends.getEnrolment().getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.valueOf(filter))) {
                         result.add(attends);
                     }
@@ -1058,7 +1058,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public List<Student> getStudentsWithImpossibleEnrolments() {
         final List<Student> result = new ArrayList<Student>();
         for (final Attends attends : getExecutionCourse().getAttendsSet()) {
-            if (attends.hasEnrolment() && attends.getEnrolment().isImpossible()) {
+            if (attends.getEnrolment() != null && attends.getEnrolment().isImpossible()) {
                 final Student student = attends.getEnrolment().getStudentCurricularPlan().getRegistration().getStudent();
                 if (!result.contains(student)) {
                     result.add(student);
@@ -1379,7 +1379,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             final Row newRow = spreadsheet.addRow();
             newRow.setCell(enrolment.getStudent().getNumber().toString());
             newRow.setCell(enrolment.getStudent().getPerson().getName());
-            newRow.setCell(enrolment.hasRoom() ? enrolment.getRoom().getName() : "-");
+            newRow.setCell(enrolment.getRoom() != null ? enrolment.getRoom().getName() : "-");
             newRow.setCell(enrolment.getStudent().getDegree().getNameI18N().getContent());
         }
     }

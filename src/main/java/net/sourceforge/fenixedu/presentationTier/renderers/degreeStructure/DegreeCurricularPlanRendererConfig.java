@@ -102,7 +102,7 @@ public class DegreeCurricularPlanRendererConfig implements Serializable {
     }
 
     private boolean hasAnyExecutionDegree() {
-        return getDegreeCurricularPlan().hasAnyExecutionDegrees();
+        return !getDegreeCurricularPlan().getExecutionDegreesSet().isEmpty();
     }
 
     private Collection<ExecutionDegree> getExecutionDegrees() {

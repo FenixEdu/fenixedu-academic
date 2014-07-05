@@ -58,14 +58,4 @@ public class TeacherAdviseService extends TeacherAdviseService_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasPercentage() {
-        return getPercentage() != null;
-    }
-
-    @Deprecated
-    public boolean hasAdvise() {
-        return getAdvise() != null;
-    }
-
 }

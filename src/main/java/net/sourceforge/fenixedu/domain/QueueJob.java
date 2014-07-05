@@ -65,11 +65,11 @@ public abstract class QueueJob extends QueueJob_Base {
     }
 
     public boolean getIsNotDoneAndCancelled() {
-        return !getDone() && !hasBennuQueueUndone();
+        return !getDone() && getRootDomainObjectQueueUndone() == null;
     }
 
     public boolean getIsNotDoneAndNotCancelled() {
-        return !getDone() && hasBennuQueueUndone();
+        return !getDone() && getRootDomainObjectQueueUndone() != null;
     }
 
     public static List<QueueJob> getLastJobsForClassOrSubClass(final Class<? extends QueueJob> type, int maxSize) {
@@ -99,46 +99,6 @@ public abstract class QueueJob extends QueueJob_Base {
     @Atomic
     public void resend() {
         setRootDomainObjectQueueUndone(Bennu.getInstance());
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasFailedCounter() {
-        return getFailedCounter() != null;
-    }
-
-    @Deprecated
-    public boolean hasRequestDate() {
-        return getRequestDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasJobEndTime() {
-        return getJobEndTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasDone() {
-        return getDone() != null;
-    }
-
-    @Deprecated
-    public boolean hasJobStartTime() {
-        return getJobStartTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennuQueueUndone() {
-        return getRootDomainObjectQueueUndone() != null;
     }
 
 }

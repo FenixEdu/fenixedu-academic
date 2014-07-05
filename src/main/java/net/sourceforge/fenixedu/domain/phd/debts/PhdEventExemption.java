@@ -77,9 +77,4 @@ public class PhdEventExemption extends PhdEventExemption_Base {
         return true;
     }
 
-    @Deprecated
-    public boolean hasValue() {
-        return getValue() != null;
-    }
-
 }

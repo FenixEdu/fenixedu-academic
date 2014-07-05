@@ -99,24 +99,4 @@ public class District extends District_Base {
         return getDistrictSubdivisionsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyDistrictSubdivisions() {
-        return !getDistrictSubdivisionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
-    }
-
 }

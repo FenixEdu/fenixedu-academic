@@ -64,34 +64,4 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
         return getSpecializationAreaSet();
     }
 
-    @Deprecated
-    public boolean hasAnySpecializationArea() {
-        return !getSpecializationAreaSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasOfficialReference() {
-        return getOfficialReference() != null;
-    }
-
-    @Deprecated
-    public boolean hasUniversityReference() {
-        return getUniversityReference() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasPublication() {
-        return getPublication() != null;
-    }
-
-    @Deprecated
-    public boolean hasDgesReference() {
-        return getDgesReference() != null;
-    }
-
 }

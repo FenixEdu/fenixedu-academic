@@ -1,1 +1,0 @@
-alter table PARKING_REQUEST add column LIMITLESS_ACCESS_CARD tinyint(1) NOT NULL default '0';

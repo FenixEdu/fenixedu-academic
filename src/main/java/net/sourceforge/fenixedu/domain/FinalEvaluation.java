@@ -102,7 +102,7 @@ public class FinalEvaluation extends FinalEvaluation_Base {
     }
 
     private void checkRulesToDelete() {
-        if (hasAnyMarks()) {
+        if (!getMarksSet().isEmpty()) {
             throw new DomainException("error.existing.marks");
         }
     }

@@ -87,9 +87,4 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
         return true;
     }
 
-    @Deprecated
-    public boolean hasAcademicServiceRequest() {
-        return getAcademicServiceRequest() != null;
-    }
-
 }

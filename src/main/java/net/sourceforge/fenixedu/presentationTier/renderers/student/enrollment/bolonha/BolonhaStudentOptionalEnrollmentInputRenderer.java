@@ -330,7 +330,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 
         private String getCurricularCoursePresentationName(final CurricularCourse curricularCourse) {
             String departmentName = null;
-            if (curricularCourse.hasCompetenceCourse()) {
+            if (curricularCourse.getCompetenceCourse() != null) {
                 final DepartmentUnit unit = curricularCourse.getCompetenceCourse().getDepartmentUnit();
                 if (unit != null) {
                     departmentName = unit.getName();

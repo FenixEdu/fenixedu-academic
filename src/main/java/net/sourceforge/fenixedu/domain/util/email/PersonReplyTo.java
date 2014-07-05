@@ -49,9 +49,4 @@ public class PersonReplyTo extends PersonReplyTo_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
 }

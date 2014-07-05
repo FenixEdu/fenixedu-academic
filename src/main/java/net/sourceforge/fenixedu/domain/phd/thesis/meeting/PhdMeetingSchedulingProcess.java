@@ -130,7 +130,7 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
 
     public boolean isAnyMinutesDocumentMissing() {
         for (PhdMeeting meeting : getMeetings()) {
-            if (meeting.hasAnyDocuments()) {
+            if (!meeting.getDocumentsSet().isEmpty()) {
                 continue;
             }
 
@@ -152,7 +152,6 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     }
 
     @Override
-    @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
     }
@@ -160,16 +159,6 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting> getMeetings() {
         return getMeetingsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMeetings() {
-        return !getMeetingsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasThesisProcess() {
-        return getThesisProcess() != null;
     }
 
 }

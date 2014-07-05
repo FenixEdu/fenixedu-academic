@@ -117,24 +117,4 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
         return getOldCurricularCoursesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyOldCurricularCourses() {
-        return !getOldCurricularCoursesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasDegreeCurricularPlan() {
-        return getDegreeCurricularPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEquivalentCurricularCourse() {
-        return getEquivalentCurricularCourse() != null;
-    }
-
 }

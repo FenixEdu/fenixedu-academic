@@ -1,1 +1,0 @@
-alter table CONTRACT add column CONTRACT_TYPE varchar(50) default NULL;

@@ -62,12 +62,12 @@ public class PhdFinalProofRequestAlert extends PhdFinalProofRequestAlert_Base {
 
     @Override
     protected boolean isToDiscard() {
-        return getProcess().hasThesisProcess() || !getProcess().getActiveState().isPhdActive();
+        return getProcess().getThesisProcess() != null || !getProcess().getActiveState().isPhdActive();
     }
 
     @Override
     protected boolean isToFire() {
-        if (!hasFireDate()) {
+        if (getFireDate() == null) {
             return !new LocalDate()
                     .isBefore(PhdProgramCalendarUtil.addWorkDaysTo(getProcess().getWhenStartedStudies(), MAX_DAYS));
         }

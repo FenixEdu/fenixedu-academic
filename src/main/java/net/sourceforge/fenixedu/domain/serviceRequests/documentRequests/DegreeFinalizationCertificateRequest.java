@@ -128,7 +128,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
             if (pastDiplomaRequest == null) {
                 checkForRegistryRequest(registration, requestedCycle);
             }
-        } else if (diplomaRequest.isPayedUponCreation() && diplomaRequest.hasEvent() && !diplomaRequest.getEvent().isPayed()) {
+        } else if (diplomaRequest.isPayedUponCreation() && diplomaRequest.getEvent() != null && !diplomaRequest.getEvent().isPayed()) {
             throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedDiplomaRequest");
         }
     }
@@ -137,7 +137,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
         final RegistryDiplomaRequest registryRequest = registration.getRegistryDiplomaRequest(requestedCycle);
         if (registryRequest == null) {
             throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutRegistryRequest");
-        } else if (registryRequest.isPayedUponCreation() && registryRequest.hasEvent() && !registryRequest.getEvent().isPayed()) {
+        } else if (registryRequest.isPayedUponCreation() && registryRequest.getEvent() != null && !registryRequest.getEvent().isPayed()) {
             throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedRegistryRequest");
         }
     }
@@ -177,7 +177,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
             tryConcludeServiceRequest(academicServiceRequestBean);
         }
 
-        if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
+        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null) {
             getEvent().cancel(academicServiceRequestBean.getResponsible());
         }
 
@@ -365,61 +365,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     protected void createCertificateRequestEvent() {
         new DegreeFinalizationCertificateRequestEvent(getAdministrativeOffice(), getRegistration().getPerson(), this);
-    }
-
-    @Deprecated
-    public boolean hasDetailed() {
-        return getDetailed() != null;
-    }
-
-    @Deprecated
-    public boolean hasRequestedCycle() {
-        return getRequestedCycle() != null;
-    }
-
-    @Deprecated
-    public boolean hasIgnoreExternalEntries() {
-        return getIgnoreExternalEntries() != null;
-    }
-
-    @Deprecated
-    public boolean hasBranch() {
-        return getBranch() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudyPlan() {
-        return getStudyPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasInternshipAbolished() {
-        return getInternshipAbolished() != null;
-    }
-
-    @Deprecated
-    public boolean hasIgnoreCurriculumInAdvance() {
-        return getIgnoreCurriculumInAdvance() != null;
-    }
-
-    @Deprecated
-    public boolean hasAverage() {
-        return getAverage() != null;
-    }
-
-    @Deprecated
-    public boolean hasMobilityProgram() {
-        return getMobilityProgram() != null;
-    }
-
-    @Deprecated
-    public boolean hasInternshipApproved() {
-        return getInternshipApproved() != null;
-    }
-
-    @Deprecated
-    public boolean hasTechnicalEngineer() {
-        return getTechnicalEngineer() != null;
     }
 
 }

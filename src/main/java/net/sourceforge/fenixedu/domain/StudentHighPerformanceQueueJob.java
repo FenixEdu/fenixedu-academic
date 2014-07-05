@@ -97,9 +97,4 @@ public class StudentHighPerformanceQueueJob extends StudentHighPerformanceQueueJ
         return "Students_" + new DateTime().toString("yyyy-MM-dd") + ".xls";
     }
 
-    @Deprecated
-    public boolean hasExecutionInterval() {
-        return getExecutionInterval() != null;
-    }
-
 }

@@ -46,7 +46,7 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
     }
 
     public void delete() {
-        if (hasPhdIndividualProgramProcess()) {
+        if (getPhdIndividualProgramProcess() != null) {
             for (ThesisSubjectOrder followingSubjectOrder : getPhdIndividualProgramProcess().getThesisSubjectOrdersSorted()) {
                 if (followingSubjectOrder.getSubjectOrder() > getSubjectOrder()) {
                     followingSubjectOrder.decreaseSubjectOrder();
@@ -69,32 +69,12 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
 
     @ConsistencyPredicate
     public boolean checkHasThesisSubject() {
-        return hasThesisSubject();
+        return getThesisSubject() != null;
     }
 
     @ConsistencyPredicate
     public boolean checkHasPhdIndividualProgramProcess() {
-        return hasPhdIndividualProgramProcess();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasThesisSubject() {
-        return getThesisSubject() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdIndividualProgramProcess() {
         return getPhdIndividualProgramProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasSubjectOrder() {
-        return getSubjectOrder() != null;
     }
 
 }

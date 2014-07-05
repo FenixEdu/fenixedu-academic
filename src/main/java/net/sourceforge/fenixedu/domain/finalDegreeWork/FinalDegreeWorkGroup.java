@@ -75,7 +75,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
         public boolean evaluate(Object object) {
             if (object instanceof FinalDegreeWorkGroup) {
                 FinalDegreeWorkGroup group = (FinalDegreeWorkGroup) object;
-                if (group.isAttributed() && group.hasAnyGroupStudents()) {
+                if (group.isAttributed() && !group.getGroupStudentsSet().isEmpty()) {
                     final Student student = group.getGroupStudentsSet().iterator().next().getRegistration().getStudent();
                     final Degree degree = group.getExecutionDegree().getDegree();
                     ExecutionYear nextExecutionYear = group.getExecutionDegree().getExecutionYear().getNextExecutionYear();
@@ -146,7 +146,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
     }
 
     public CandidacyAttributionType getCandidacyAttributionStatus() {
-        if (hasProposalAttributed()) {
+        if (getProposalAttributed() != null) {
             return CandidacyAttributionType.ATTRIBUTED_BY_CORDINATOR;
         }
         Proposal proposalAttributedByTeacher = getProposalAttributedByTeacher();
@@ -170,7 +170,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
     }
 
     public Proposal getAttributedProposal() {
-        if (hasProposalAttributed()) {
+        if (getProposalAttributed() != null) {
             return getProposalAttributed();
         }
         Proposal proposalAttributedByTeacher = getProposalAttributedByTeacher();
@@ -186,7 +186,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
     }
 
     public boolean isValid() {
-        return hasAnyGroupProposals() || hasProposalAttributed() || hasProposalAttributedByTeacher();
+        return !getGroupProposalsSet().isEmpty() || getProposalAttributed() != null || getProposalAttributedByTeacher() != null;
     }
 
     @Deprecated
@@ -195,38 +195,8 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
     }
 
     @Deprecated
-    public boolean hasAnyGroupStudents() {
-        return !getGroupStudentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal> getGroupProposals() {
         return getGroupProposalsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyGroupProposals() {
-        return !getGroupProposalsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasProposalAttributed() {
-        return getProposalAttributed() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionDegree() {
-        return getExecutionDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasProposalAttributedByTeacher() {
-        return getProposalAttributedByTeacher() != null;
     }
 
 }

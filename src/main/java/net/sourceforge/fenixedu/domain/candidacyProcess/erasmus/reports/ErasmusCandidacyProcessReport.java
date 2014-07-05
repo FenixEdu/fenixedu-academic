@@ -185,9 +185,4 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
                 getRequestDate().toString("dd_MM_yyyy_hh_mm_ss"));
     }
 
-    @Deprecated
-    public boolean hasMobilityApplicationProcess() {
-        return getMobilityApplicationProcess() != null;
-    }
-
 }

@@ -150,7 +150,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-        if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
+        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null) {
             getEvent().cancel(academicServiceRequestBean.getResponsible());
 
         } else if (academicServiceRequestBean.isToProcess()) {

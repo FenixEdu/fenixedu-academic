@@ -324,7 +324,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     }
 
     private boolean hasExecutionYear(final ExecutionYear executionYear) {
-        return hasExecutionYear() && getExecutionYear().equals(executionYear);
+        return getExecutionYear() != null && getExecutionYear().equals(executionYear);
     }
 
     final public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
@@ -370,7 +370,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     }
 
     public boolean isFor(final ExecutionYear executionYear) {
-        return hasExecutionYear() && getExecutionYear().equals(executionYear);
+        return getExecutionYear() != null && getExecutionYear().equals(executionYear);
     }
 
     abstract public ServiceAgreementTemplate getServiceAgreementTemplate();
@@ -381,7 +381,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
             throw new DomainException("error.accounting.PaymentPlan.cannot.delete.with.already.associated.gratuity.events");
         }
 
-        while (hasAnyInstallments()) {
+        while (!getInstallmentsSet().isEmpty()) {
             getInstallments().iterator().next().delete();
         }
 
@@ -409,38 +409,8 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     }
 
     @Deprecated
-    public boolean hasAnyGratuityEventsWithPaymentPlan() {
-        return !getGratuityEventsWithPaymentPlanSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Installment> getInstallments() {
         return getInstallmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInstallments() {
-        return !getInstallmentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasDefaultPlan() {
-        return getDefaultPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
     }
 
 }

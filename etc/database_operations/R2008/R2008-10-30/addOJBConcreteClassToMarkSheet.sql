@@ -1,2 +1,0 @@
-ALTER TABLE MARK_SHEET ADD COLUMN `OJB_CONCRETE_CLASS` varchar(255) NOT NULL default '';
-UPDATE MARK_SHEET SET OJB_CONCRETE_CLASS = "net.sourceforge.fenixedu.domain.MarkSheet";

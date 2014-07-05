@@ -82,7 +82,7 @@ public class Employee extends Employee_Base {
         if (person == null) {
             throw new DomainException("error.employee.no.person");
         }
-        if (person.hasEmployee()) {
+        if (person.getEmployee() != null) {
             throw new DomainException("error.employee.person.already.has.employee");
         }
         super.setPerson(person);
@@ -378,18 +378,8 @@ public class Employee extends Employee_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeThesisDataVersions() {
-        return !getMasterDegreeThesisDataVersionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofVersions() {
         return getMasterDegreeProofVersionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMasterDegreeProofVersions() {
-        return !getMasterDegreeProofVersionsSet().isEmpty();
     }
 
     @Deprecated
@@ -398,18 +388,8 @@ public class Employee extends Employee_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPenaltyExemptionGratuitySituations() {
-        return !getPenaltyExemptionGratuitySituationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getHistoricList() {
         return getHistoricListSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyHistoricList() {
-        return !getHistoricListSet().isEmpty();
     }
 
     @Deprecated
@@ -418,18 +398,8 @@ public class Employee extends Employee_Base {
     }
 
     @Deprecated
-    public boolean hasAnyReimbursementGuideSituations() {
-        return !getReimbursementGuideSituationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.GratuitySituation> getGratuitySituations() {
         return getGratuitySituationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyGratuitySituations() {
-        return !getGratuitySituationsSet().isEmpty();
     }
 
     @Deprecated
@@ -438,53 +408,13 @@ public class Employee extends Employee_Base {
     }
 
     @Deprecated
-    public boolean hasAnyResponsibleEmployeeAssociatedEmployeeHistorics() {
-        return !getResponsibleEmployeeAssociatedEmployeeHistoricsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlan> getStudentCurricularPlans() {
         return getStudentCurricularPlansSet();
     }
 
     @Deprecated
-    public boolean hasAnyStudentCurricularPlans() {
-        return !getStudentCurricularPlansSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.GratuityValues> getGratuityValues() {
         return getGratuityValuesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyGratuityValues() {
-        return !getGratuityValuesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasEmployeeNumber() {
-        return getEmployeeNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasWorkingHours() {
-        return getWorkingHours() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDate() {
-        return getCreationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
     }
 
 }

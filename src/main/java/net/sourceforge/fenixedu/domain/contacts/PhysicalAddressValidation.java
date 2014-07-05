@@ -36,7 +36,7 @@ public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
 
         @Override
         public boolean eval(PartyContactValidation t) {
-            return PREDICATE.eval(t) && ((PhysicalAddressValidation) t).hasFile();
+            return PREDICATE.eval(t) && ((PhysicalAddressValidation) t).getFile() != null;
         }
 
     };
@@ -49,16 +49,6 @@ public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
     @Atomic
     public void setFile(String filename, String displayName, byte[] content) {
         new PhysicalAddressValidationFile(this, filename, displayName, content);
-    }
-
-    @Deprecated
-    public boolean hasDescription() {
-        return getDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasFile() {
-        return getFile() != null;
     }
 
 }

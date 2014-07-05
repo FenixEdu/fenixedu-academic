@@ -159,34 +159,4 @@ public class LessonPlanning extends LessonPlanning_Base {
                 getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
     }
 
-    @Deprecated
-    public boolean hasExecutionCourse() {
-        return getExecutionCourse() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasOrderOfPlanning() {
-        return getOrderOfPlanning() != null;
-    }
-
-    @Deprecated
-    public boolean hasPlanning() {
-        return getPlanning() != null;
-    }
-
-    @Deprecated
-    public boolean hasLessonType() {
-        return getLessonType() != null;
-    }
-
-    @Deprecated
-    public boolean hasTitle() {
-        return getTitle() != null;
-    }
-
 }

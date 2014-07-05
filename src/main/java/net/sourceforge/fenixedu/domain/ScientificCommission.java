@@ -101,11 +101,11 @@ public class ScientificCommission extends ScientificCommission_Base {
             super.afterRemove(commission, person);
 
             if (person != null && commission != null) {
-                if (person.hasAnyCoordinators()) {
+                if (!person.getCoordinatorsSet().isEmpty()) {
                     return;
                 }
 
-                if (person.hasAnyScientificCommissions()) {
+                if (!person.getScientificCommissionsSet().isEmpty()) {
                     return;
                 }
 
@@ -126,26 +126,6 @@ public class ScientificCommission extends ScientificCommission_Base {
         ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
                 Bundle.MESSAGING, "log.degree.scientificcomission.editmember", this.getPerson()
                         .getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionDegree() {
-        return getExecutionDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasContact() {
-        return getContact() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
     }
 
 }

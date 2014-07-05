@@ -1,1 +1,0 @@
-alter table `FILE` add `OID_TEACHER_CREDITS` bigint unsigned;

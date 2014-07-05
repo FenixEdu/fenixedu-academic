@@ -62,33 +62,8 @@ public class MobilityAgreement extends MobilityAgreement_Base {
     }
 
     @Deprecated
-    public boolean hasAnyOutboundMobilityCandidacyContest() {
-        return !getOutboundMobilityCandidacyContestSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota> getMobilityQuotas() {
         return getMobilityQuotasSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMobilityQuotas() {
-        return !getMobilityQuotasSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasUniversityUnit() {
-        return getUniversityUnit() != null;
-    }
-
-    @Deprecated
-    public boolean hasMobilityProgram() {
-        return getMobilityProgram() != null;
     }
 
 }

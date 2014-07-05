@@ -251,7 +251,7 @@ public class Grouping extends Grouping_Base {
     public void createOrEditShiftGroupingProperties(List<InfoShift> infoShifts) {
         for (final InfoShift info : infoShifts) {
             Shift shift = info.getShift();
-            if (shift.hasShiftGroupingProperties()) {
+            if (shift.getShiftGroupingProperties() != null) {
                 shift.getShiftGroupingProperties().setCapacity(info.getGroupCapacity());
             } else {
                 shift.setShiftGroupingProperties(new ShiftGroupingProperties(shift, this, info.getGroupCapacity()));
@@ -528,7 +528,7 @@ public class Grouping extends Grouping_Base {
         final Map<Shift, SortedSet<StudentGroup>> map =
                 new TreeMap<Shift, SortedSet<StudentGroup>>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
         for (final StudentGroup studentGroup : getStudentGroupsSet()) {
-            if (studentGroup.hasShift()) {
+            if (studentGroup.getShift() != null) {
                 final Shift shift = studentGroup.getShift();
                 final SortedSet<StudentGroup> studentGroups;
                 if (map.containsKey(shift)) {
@@ -617,23 +617,8 @@ public class Grouping extends Grouping_Base {
     }
 
     @Deprecated
-    public boolean hasAnyExportGroupings() {
-        return !getExportGroupingsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
         return getAttendsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAttends() {
-        return !getAttendsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentGroups() {
-        return !getStudentGroupsSet().isEmpty();
     }
 
     @Deprecated
@@ -642,83 +627,8 @@ public class Grouping extends Grouping_Base {
     }
 
     @Deprecated
-    public boolean hasAnyProjects() {
-        return !getProjectsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ShiftGroupingProperties> getShiftGroupingProperties() {
         return getShiftGroupingPropertiesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyShiftGroupingProperties() {
-        return !getShiftGroupingPropertiesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasProjectDescription() {
-        return getProjectDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnrolmentPolicy() {
-        return getEnrolmentPolicy() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasIdealCapacity() {
-        return getIdealCapacity() != null;
-    }
-
-    @Deprecated
-    public boolean hasShiftType() {
-        return getShiftType() != null;
-    }
-
-    @Deprecated
-    public boolean hasMaximumCapacity() {
-        return getMaximumCapacity() != null;
-    }
-
-    @Deprecated
-    public boolean hasDifferentiatedCapacity() {
-        return getDifferentiatedCapacity() != null;
-    }
-
-    @Deprecated
-    public boolean hasMinimumCapacity() {
-        return getMinimumCapacity() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnrolmentEndDayDateDateTime() {
-        return getEnrolmentEndDayDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasAutomaticEnrolment() {
-        return getAutomaticEnrolment() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnrolmentBeginDayDateDateTime() {
-        return getEnrolmentBeginDayDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasGroupMaximumNumber() {
-        return getGroupMaximumNumber() != null;
     }
 
 }

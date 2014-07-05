@@ -180,14 +180,4 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
                 amountForInstitutionStudent, amountForExternalStudent);
     }
 
-    @Deprecated
-    public boolean hasAmountForInstitutionStudent() {
-        return getAmountForInstitutionStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasAmountForExternalStudent() {
-        return getAmountForExternalStudent() != null;
-    }
-
 }

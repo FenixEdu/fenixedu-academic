@@ -87,14 +87,4 @@ public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternal
         return getExternalScholarshipPhdGratuityContribuitionEvent().calculateAmountToPay();
     }
 
-    @Deprecated
-    public boolean hasParty() {
-        return getParty() != null;
-    }
-
-    @Deprecated
-    public boolean hasExternalScholarshipPhdGratuityContribuitionEvent() {
-        return getExternalScholarshipPhdGratuityContribuitionEvent() != null;
-    }
-
 }

@@ -40,19 +40,4 @@ public class CandidateEnrolment extends CandidateEnrolment_Base {
         super.deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasMasterDegreeCandidate() {
-        return getMasterDegreeCandidate() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurricularCourse() {
-        return getCurricularCourse() != null;
-    }
-
 }

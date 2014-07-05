@@ -1,1 +1,0 @@
-alter table `JUSTIFICATION_MOTIVE` add column `PROCESSING_IN_CURRENT_MONTH` tinyint(1) default 0;

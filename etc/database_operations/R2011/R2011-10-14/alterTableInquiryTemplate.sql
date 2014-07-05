@@ -1,1 +1,0 @@
-alter table `INQUIRY_TEMPLATE` add `SHARED` tinyint(1);

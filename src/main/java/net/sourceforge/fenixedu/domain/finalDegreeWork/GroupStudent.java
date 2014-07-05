@@ -99,19 +99,4 @@ public class GroupStudent extends GroupStudent_Base {
         super.setStudent(registration);
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasFinalDegreeWorkProposalConfirmation() {
-        return getFinalDegreeWorkProposalConfirmation() != null;
-    }
-
-    @Deprecated
-    public boolean hasFinalDegreeDegreeWorkGroup() {
-        return getFinalDegreeDegreeWorkGroup() != null;
-    }
-
 }

@@ -1,1 +1,0 @@
-alter table DEGREE add column KEY_UNIT int(11) default NULL;

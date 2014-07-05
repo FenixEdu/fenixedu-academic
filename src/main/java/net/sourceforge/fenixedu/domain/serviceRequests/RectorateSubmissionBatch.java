@@ -171,7 +171,7 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
     }
 
     public void delete() {
-        if (hasAnyDocumentRequest()) {
+        if (!getDocumentRequestSet().isEmpty()) {
             throw new DomainException("error.rectorateSubmission.cannotDeleteBatchWithDocuments");
         }
         setCreator(null);
@@ -218,56 +218,6 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getDocumentRequest() {
         return getDocumentRequestSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyDocumentRequest() {
-        return !getDocumentRequestSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasReception() {
-        return getReception() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreation() {
-        return getCreation() != null;
-    }
-
-    @Deprecated
-    public boolean hasState() {
-        return getState() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreator() {
-        return getCreator() != null;
-    }
-
-    @Deprecated
-    public boolean hasAdministrativeOffice() {
-        return getAdministrativeOffice() != null;
-    }
-
-    @Deprecated
-    public boolean hasSubmission() {
-        return getSubmission() != null;
-    }
-
-    @Deprecated
-    public boolean hasReceptor() {
-        return getReceptor() != null;
-    }
-
-    @Deprecated
-    public boolean hasSubmitter() {
-        return getSubmitter() != null;
     }
 
 }

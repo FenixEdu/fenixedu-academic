@@ -65,14 +65,4 @@ abstract public class EnrolmentWrapper extends EnrolmentWrapper_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCredits() {
-        return getCredits() != null;
-    }
-
 }

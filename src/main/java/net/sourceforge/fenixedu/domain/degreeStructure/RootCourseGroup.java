@@ -85,7 +85,7 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 
     @Override
     public Boolean getCanBeDeleted() {
-        return !hasAnyCurriculumModules() && childsCanBeDeleted();
+        return getCurriculumModulesSet().isEmpty() && childsCanBeDeleted();
     }
 
     private boolean childsCanBeDeleted() {
@@ -149,11 +149,6 @@ public class RootCourseGroup extends RootCourseGroup_Base {
     @Override
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
         return Collections.emptySet();
-    }
-
-    @Deprecated
-    public boolean hasParentDegreeCurricularPlan() {
-        return getParentDegreeCurricularPlan() != null;
     }
 
 }

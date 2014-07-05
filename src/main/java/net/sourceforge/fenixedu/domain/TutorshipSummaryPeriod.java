@@ -56,24 +56,4 @@ public class TutorshipSummaryPeriod extends TutorshipSummaryPeriod_Base {
         return interval.containsNow();
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginDate() {
-        return getBeginDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionSemester() {
-        return getExecutionSemester() != null;
-    }
-
 }

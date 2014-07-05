@@ -45,21 +45,6 @@ public class ExternalUser extends ExternalUser_Base {
         return username.equals(getUsername()) && hash(password).equals(getPasswordHash());
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasPasswordHash() {
-        return getPasswordHash() != null;
-    }
-
-    @Deprecated
-    public boolean hasUsername() {
-        return getUsername() != null;
-    }
-
     public static final boolean isExternalUser(final String username) {
         for (final ExternalUser externalUser : Bennu.getInstance().getExternalUserSet()) {
             if (externalUser.getUsername().equals(username)) {

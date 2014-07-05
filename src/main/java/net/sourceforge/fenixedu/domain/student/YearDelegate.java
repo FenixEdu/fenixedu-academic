@@ -98,7 +98,7 @@ public class YearDelegate extends YearDelegate_Base {
 
         final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
         for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
-            if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyInquiryResults()
+            if (executionCourse.getAvailableForInquiries() && !executionCourse.getInquiryResultsSet().isEmpty()
                     && executionCourse.hasAnyEnrolment(executionDegree)) {
                 result.add(executionCourse);
             }
@@ -230,18 +230,8 @@ public class YearDelegate extends YearDelegate_Base {
     }
 
     @Deprecated
-    public boolean hasAnyYearDelegateCourseInquiries() {
-        return !getYearDelegateCourseInquiriesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer> getInquiryDelegateAnswers() {
         return getInquiryDelegateAnswersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInquiryDelegateAnswers() {
-        return !getInquiryDelegateAnswersSet().isEmpty();
     }
 
 }

@@ -1,1 +1,0 @@
-update EVALUATION set GRADE_SCALE='TYPE20' where GRADE_SCALE is null;

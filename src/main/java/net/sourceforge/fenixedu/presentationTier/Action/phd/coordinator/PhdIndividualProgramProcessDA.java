@@ -139,7 +139,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         for (final Coordinator coordinator : getLoggedPerson(request).getCoordinators()) {
-            if (coordinator.getExecutionDegree().getDegree().hasPhdProgram()
+            if (coordinator.getExecutionDegree().getDegree().getPhdProgram() != null
                     && coordinator.getExecutionDegree().getExecutionYear() == currentExecutionYear) {
                 result.add(coordinator.getExecutionDegree().getDegree().getPhdProgram());
             }

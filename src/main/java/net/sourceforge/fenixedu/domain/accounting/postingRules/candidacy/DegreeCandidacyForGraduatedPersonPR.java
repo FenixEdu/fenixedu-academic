@@ -182,14 +182,4 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
                 amountForInstitutionStudent, amountForExternalStudent);
     }
 
-    @Deprecated
-    public boolean hasAmountForInstitutionStudent() {
-        return getAmountForInstitutionStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasAmountForExternalStudent() {
-        return getAmountForExternalStudent() != null;
-    }
-
 }

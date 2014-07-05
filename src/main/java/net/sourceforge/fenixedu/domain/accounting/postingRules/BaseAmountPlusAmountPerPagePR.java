@@ -116,7 +116,7 @@ abstract public class BaseAmountPlusAmountPerPagePR extends BaseAmountPlusAmount
 
     @Override
     protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        if (event.hasAnyExemptions()) {
+        if (!event.getExemptionsSet().isEmpty()) {
             Collection<Exemption> exemptions = event.getExemptionsSet();
 
             for (Exemption exemption : exemptions) {
@@ -136,15 +136,5 @@ abstract public class BaseAmountPlusAmountPerPagePR extends BaseAmountPlusAmount
     abstract protected boolean isUrgent(final Event event);
 
     abstract protected Money getAmountForPages(final Event event);
-
-    @Deprecated
-    public boolean hasBaseAmount() {
-        return getBaseAmount() != null;
-    }
-
-    @Deprecated
-    public boolean hasAmountPerPage() {
-        return getAmountPerPage() != null;
-    }
 
 }

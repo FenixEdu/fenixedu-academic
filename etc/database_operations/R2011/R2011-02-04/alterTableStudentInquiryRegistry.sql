@@ -1,2 +1,0 @@
-alter table STUDENT_INQUIRY_REGISTRY change OID_STUDENT OID_REGISTRATION bigint(20) unsigned DEFAULT NULL;
-alter table `STUDENT_INQUIRY_REGISTRY` add `OID_STUDENT` bigint unsigned, add index (OID_STUDENT);

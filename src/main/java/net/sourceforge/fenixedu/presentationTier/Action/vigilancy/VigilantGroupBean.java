@@ -280,7 +280,7 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
         List<VigilantWrapper> vigilantsWithIncompatiblePerson = new ArrayList<VigilantWrapper>();
 
         for (VigilantWrapper vigilant : vigilants) {
-            if (vigilant.getPerson().hasIncompatibleVigilant()) {
+            if (vigilant.getPerson().getIncompatibleVigilant() != null) {
                 vigilantsWithIncompatiblePerson.add(vigilant);
             }
         }

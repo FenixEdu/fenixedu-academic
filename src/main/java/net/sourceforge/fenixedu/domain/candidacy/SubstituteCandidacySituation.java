@@ -38,9 +38,4 @@ public class SubstituteCandidacySituation extends SubstituteCandidacySituation_B
         return false;
     }
 
-    @Deprecated
-    public boolean hasCandidacyOrder() {
-        return getCandidacyOrder() != null;
-    }
-
 }

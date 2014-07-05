@@ -72,7 +72,7 @@ public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
     }
 
     public boolean getIsDeletable() {
-        return !hasFeaturedDiploma();
+        return getFeaturedDiploma() == null;
     }
 
     @Override
@@ -128,31 +128,6 @@ public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
         setStudent(null);
         setRootDomainObject(null);
         deleteDomainObject();
-    }
-
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasFeaturedDiploma() {
-        return getFeaturedDiploma() != null;
-    }
-
-    @Deprecated
-    public boolean hasActivityInterval() {
-        return getActivityInterval() != null;
     }
 
 }

@@ -87,18 +87,17 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     final public Collection<Enrolment> getExtraCurricularEntriesToReport() {
         final Collection<Enrolment> extraCurricular = new HashSet<Enrolment>();
         for (final Enrolment entry : getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear())) {
-            if (entry.isExtraCurricular() && !entry.hasAnyEnrolmentWrappers()) {
+            if (entry.isExtraCurricular() && entry.getEnrolmentWrappersSet().isEmpty()) {
                 extraCurricular.add(entry);
             }
         }
         return extraCurricular;
     }
 
-
     final public Collection<Enrolment> getPropaedeuticEntriesToReport() {
         final Collection<Enrolment> propaedeutic = new HashSet<Enrolment>();
         for (final Enrolment entry : getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear())) {
-            if (!(entry.isExtraCurricular() && !entry.hasAnyEnrolmentWrappers()) && entry.isPropaedeutic()) {
+            if (!(entry.isExtraCurricular() && entry.getEnrolmentWrappersSet().isEmpty()) && entry.isPropaedeutic()) {
                 propaedeutic.add(entry);
             }
         }
@@ -118,11 +117,6 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     @Override
     public CertificateRequestEvent getEvent() {
         return (CertificateRequestEvent) super.getEvent();
-    }
-
-    @Deprecated
-    public boolean hasDetailed() {
-        return getDetailed() != null;
     }
 
 }

@@ -76,7 +76,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     }
 
     public CareerWorkshopSpreadsheet getApplications() {
-        if (hasBennu()) {
+        if (getRootDomainObject() != null) {
             if (getLastUpdate() == null || getSpreadsheet() == null) {
                 generateSpreadsheet();
             }
@@ -268,46 +268,6 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication> getCareerWorkshopApplications() {
         return getCareerWorkshopApplicationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCareerWorkshopApplications() {
-        return !getCareerWorkshopApplicationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginDate() {
-        return getBeginDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasRelatedInformation() {
-        return getRelatedInformation() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastUpdate() {
-        return getLastUpdate() != null;
-    }
-
-    @Deprecated
-    public boolean hasCareerWorkshopConfirmationEvent() {
-        return getCareerWorkshopConfirmationEvent() != null;
-    }
-
-    @Deprecated
-    public boolean hasSpreadsheet() {
-        return getSpreadsheet() != null;
     }
 
 }

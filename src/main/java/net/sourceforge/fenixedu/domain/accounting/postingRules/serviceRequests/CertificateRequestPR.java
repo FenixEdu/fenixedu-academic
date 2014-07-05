@@ -95,9 +95,4 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
                 getServiceAgreementTemplate(), baseAmount, amountPerUnit, amountPerPage, maximumAmount);
     }
 
-    @Deprecated
-    public boolean hasAmountPerPage() {
-        return getAmountPerPage() != null;
-    }
-
 }

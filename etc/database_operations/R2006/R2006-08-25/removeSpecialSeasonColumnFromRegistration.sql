@@ -1,1 +1,0 @@
-alter table REGISTRATION drop column REGISTRATION.SPECIAL_SEASON;

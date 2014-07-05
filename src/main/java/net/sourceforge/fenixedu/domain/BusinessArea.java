@@ -56,7 +56,7 @@ public class BusinessArea extends BusinessArea_Base {
     public static List<BusinessArea> getParentBusinessAreas() {
         List<BusinessArea> parentAreas = new ArrayList<BusinessArea>();
         for (BusinessArea area : Bennu.getInstance().getBusinessAreasSet()) {
-            if (!area.hasParentArea()) {
+            if (area.getParentArea() == null) {
                 parentAreas.add(area);
             }
         }
@@ -66,7 +66,7 @@ public class BusinessArea extends BusinessArea_Base {
     public static Object getChildBusinessAreas(BusinessArea parentArea) {
         List<BusinessArea> childAreas = new ArrayList<BusinessArea>();
         for (BusinessArea area : Bennu.getInstance().getBusinessAreasSet()) {
-            if (area.hasParentArea() && area.getParentArea().equals(parentArea)) {
+            if (area.getParentArea() != null && area.getParentArea().equals(parentArea)) {
                 childAreas.add(area);
             }
         }
@@ -79,53 +79,13 @@ public class BusinessArea extends BusinessArea_Base {
     }
 
     @Deprecated
-    public boolean hasAnyParentJobs() {
-        return !getParentJobsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.BusinessArea> getChildAreas() {
         return getChildAreasSet();
     }
 
     @Deprecated
-    public boolean hasAnyChildAreas() {
-        return !getChildAreasSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Job> getJobs() {
         return getJobsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyJobs() {
-        return !getJobsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasDescription() {
-        return getDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasParentArea() {
-        return getParentArea() != null;
-    }
-
-    @Deprecated
-    public boolean hasLevel() {
-        return getLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
     }
 
 }

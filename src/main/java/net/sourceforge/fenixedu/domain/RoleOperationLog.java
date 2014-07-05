@@ -42,42 +42,7 @@ public class RoleOperationLog extends RoleOperationLog_Base {
     }
 
     protected Bennu getRootDomainObject() {
-        return hasRole() ? getRole().getRootDomainObject() : null;
-    }
-
-    @Deprecated
-    public boolean hasIstUsername() {
-        return getIstUsername() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhoGrantedIstUsername() {
-        return getWhoGrantedIstUsername() != null;
-    }
-
-    @Deprecated
-    public boolean hasRole() {
-        return getRole() != null;
-    }
-
-    @Deprecated
-    public boolean hasPersonWhoGranted() {
-        return getPersonWhoGranted() != null;
-    }
-
-    @Deprecated
-    public boolean hasOperationType() {
-        return getOperationType() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
-    @Deprecated
-    public boolean hasLogDate() {
-        return getLogDate() != null;
+        return getRole() != null ? getRole().getRootDomainObject() : null;
     }
 
 }

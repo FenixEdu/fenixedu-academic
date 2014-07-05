@@ -118,7 +118,7 @@ public class ResidenceInformationForm extends Form {
     }
 
     private static Country getCountryOfResidenceFromPhysicalAddress(final PhysicalAddress physicalAddress) {
-        return physicalAddress.hasCountryOfResidence() ? physicalAddress.getCountryOfResidence() : Country.readDefault();
+        return physicalAddress.getCountryOfResidence() != null ? physicalAddress.getCountryOfResidence() : Country.readDefault();
     }
 
     public String getAddress() {

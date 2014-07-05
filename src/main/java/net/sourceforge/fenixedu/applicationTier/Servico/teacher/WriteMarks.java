@@ -110,7 +110,7 @@ public class WriteMarks {
     }
 
     private static boolean belongsToActiveExternalCycle(final Attends attend) {
-        if (attend.hasEnrolment()) {
+        if (attend.getEnrolment() != null) {
             final CycleCurriculumGroup cycle = attend.getEnrolment().getParentCycleCurriculumGroup();
             if (cycle != null && cycle.isExternal()) {
                 final Student student = attend.getRegistration().getStudent();
@@ -122,7 +122,7 @@ public class WriteMarks {
 
     private static boolean isActive(final Attends attends) {
         final RegistrationState state;
-        if (attends.hasEnrolment()) {
+        if (attends.getEnrolment() != null) {
             state = attends.getEnrolment().getRegistration().getLastRegistrationState(attends.getExecutionYear());
         } else {
             state = attends.getRegistration().getLastRegistrationState(attends.getExecutionYear());
@@ -140,7 +140,7 @@ public class WriteMarks {
             final Attends attend = findAttend(executionCourse, entry.attendId);
             final String markValue = entry.mark;
 
-            if (attend.hasEnrolment() && attend.getEnrolment().isImpossible()) {
+            if (attend.getEnrolment() != null && attend.getEnrolment().isImpossible()) {
                 exceptionList.add(new DomainException("errors.student.with.impossible.enrolment", attend.getRegistration()
                         .getStudent().getNumber().toString()));
             } else {

@@ -1,2 +1,0 @@
-alter table `CAREER` add column `OID_PERSON` bigint(20) unsigned, add index (`OID_PERSON`), modify `ENTITY` text, modify `FUNCTION` text;
-update CAREER, PARTY, TEACHER set CAREER.OID_PERSON = PARTY.OID where PARTY.OID = TEACHER.OID_PERSON and CAREER.OID_TEACHER = TEACHER.OID;

@@ -211,7 +211,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
     public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
             final Ingression ingression) {
 
-        if (hasRegistration()) {
+        if (getRegistration() != null) {
             throw new DomainException("error.IndividualCandidacy.person.with.registration",
                     degreeCurricularPlan.getPresentationName());
         }
@@ -333,38 +333,8 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
     }
 
     @Deprecated
-    public boolean hasAnyApprovedLearningAgreements() {
-        return !getApprovedLearningAgreementsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
         return getCurricularCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCurricularCourses() {
-        return !getCurricularCoursesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasIdCardAvoidanceOtherReason() {
-        return getIdCardAvoidanceOtherReason() != null;
-    }
-
-    @Deprecated
-    public boolean hasNationalIdCardAvoidanceQuestion() {
-        return getNationalIdCardAvoidanceQuestion() != null;
-    }
-
-    @Deprecated
-    public boolean hasMobilityStudentData() {
-        return getMobilityStudentData() != null;
-    }
-
-    @Deprecated
-    public boolean hasNationalIdCardAvoidanceAnswerDate() {
-        return getNationalIdCardAvoidanceAnswerDate() != null;
     }
 
 }

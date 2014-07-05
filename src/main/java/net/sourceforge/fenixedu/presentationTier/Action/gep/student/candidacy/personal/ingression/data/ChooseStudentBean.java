@@ -84,7 +84,7 @@ public class ChooseStudentBean implements Serializable {
         } else if (!StringUtils.isEmpty(getUsername())) {
             Person person = Person.readPersonByUsername(getUsername());
 
-            if (person != null && person.hasStudent()) {
+            if (person != null && person.getStudent() != null) {
                 result.add(person.getStudent());
             }
 
@@ -92,7 +92,7 @@ public class ChooseStudentBean implements Serializable {
             Collection<Person> personList = Person.readByDocumentIdNumber(getDocumentId());
 
             for (Person person : personList) {
-                if (person.hasStudent()) {
+                if (person.getStudent() != null) {
                     result.add(person.getStudent());
                 }
             }

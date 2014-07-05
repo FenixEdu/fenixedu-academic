@@ -99,64 +99,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
         if (super.getConclusionYear() != null) {
             return super.getConclusionYear();
         }
-        return hasConclusionDate() ? getConclusionDate().getYear() : null;
-    }
-
-    @Deprecated
-    public boolean hasGradeSum() {
-        return getGradeSum() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumberOfEnroledCurricularCourses() {
-        return getNumberOfEnroledCurricularCourses() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnroledEcts() {
-        return getEnroledEcts() != null;
-    }
-
-    @Deprecated
-    public boolean hasSourceInstitution() {
-        return getSourceInstitution() != null;
-    }
-
-    @Override
-    @Deprecated
-    public boolean hasConclusionDate() {
-        return getConclusionDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasApprovedEcts() {
-        return getApprovedEcts() != null;
-    }
-
-    @Override
-    @Deprecated
-    public boolean hasInstitution() {
-        return getInstitution() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumberOfApprovedCurricularCourses() {
-        return getNumberOfApprovedCurricularCourses() != null;
-    }
-
-    @Deprecated
-    public boolean hasConclusionGrade() {
-        return getConclusionGrade() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeDesignation() {
-        return getDegreeDesignation() != null;
-    }
-
-    @Deprecated
-    public boolean hasConclusionYear() {
-        return getConclusionYear() != null;
+        return getConclusionDate() != null ? getConclusionDate().getYear() : null;
     }
 
 }

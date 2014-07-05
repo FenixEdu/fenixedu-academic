@@ -1,1 +1,0 @@
-alter table DEGREE add column PREVAILING_SCIENTIFIC_AREA varchar(100) default NULL;

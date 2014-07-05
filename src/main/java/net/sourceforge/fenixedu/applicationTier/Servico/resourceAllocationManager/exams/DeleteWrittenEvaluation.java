@@ -63,7 +63,7 @@ public class DeleteWrittenEvaluation {
         if (writtenEvaluationToDelete instanceof Exam) {
             disconnectExamCertificateRequests(writtenEvaluationToDelete);
         }
-        if (writtenEvaluationToDelete.hasAnyVigilancies()) {
+        if (!writtenEvaluationToDelete.getVigilanciesSet().isEmpty()) {
             notifyVigilants(writtenEvaluationToDelete);
         }
         writtenEvaluationToDelete.delete();

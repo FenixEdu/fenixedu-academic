@@ -187,63 +187,13 @@ public class Installment extends Installment_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPaymentCodes() {
-        return !getPaymentCodesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption> getInstallmentPenaltyExemptions() {
         return getInstallmentPenaltyExemptionsSet();
     }
 
     @Deprecated
-    public boolean hasAnyInstallmentPenaltyExemptions() {
-        return !getInstallmentPenaltyExemptionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction> getAccountingTransactions() {
         return getAccountingTransactionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAccountingTransactions() {
-        return !getAccountingTransactionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasInstallmentOrder() {
-        return getInstallmentOrder() != null;
-    }
-
-    @Deprecated
-    public boolean hasAmount() {
-        return getAmount() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasStartDate() {
-        return getStartDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasPaymentPlan() {
-        return getPaymentPlan() != null;
     }
 
 }

@@ -52,24 +52,4 @@ public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCa
         deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasOutboundMobilityCandidacySubmission() {
-        return getOutboundMobilityCandidacySubmission() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasGrade() {
-        return getGrade() != null;
-    }
-
-    @Deprecated
-    public boolean hasOutboundMobilityCandidacyContestGroup() {
-        return getOutboundMobilityCandidacyContestGroup() != null;
-    }
-
 }

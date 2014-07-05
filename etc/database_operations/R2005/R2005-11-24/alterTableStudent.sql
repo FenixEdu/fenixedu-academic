@@ -1,3 +1,0 @@
-alter table STUDENT add column ENTRY_GRADE_CLASSIFICATION char(1);
-alter table STUDENT add column APPROVATION_RATIO_CLASSIFICATION char(1);
-alter table STUDENT add column ARITHMETIC_MEAN_CLASSIFICATION char(1);

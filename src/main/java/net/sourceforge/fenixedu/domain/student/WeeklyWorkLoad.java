@@ -82,34 +82,4 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
 
     }
 
-    @Deprecated
-    public boolean hasWeekOffset() {
-        return getWeekOffset() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasContact() {
-        return getContact() != null;
-    }
-
-    @Deprecated
-    public boolean hasOther() {
-        return getOther() != null;
-    }
-
-    @Deprecated
-    public boolean hasAttends() {
-        return getAttends() != null;
-    }
-
-    @Deprecated
-    public boolean hasAutonomousStudy() {
-        return getAutonomousStudy() != null;
-    }
-
 }

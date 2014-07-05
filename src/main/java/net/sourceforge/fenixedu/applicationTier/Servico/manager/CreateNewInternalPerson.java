@@ -52,7 +52,7 @@ public class CreateNewInternalPerson {
     }
 
     private static void createEmployee(final Person person) {
-        if (!person.hasEmployee()) {
+        if (person.getEmployee() == null) {
             final Integer number = Employee.getNextEmployeeNumber();
             new Employee(person, number);
         }

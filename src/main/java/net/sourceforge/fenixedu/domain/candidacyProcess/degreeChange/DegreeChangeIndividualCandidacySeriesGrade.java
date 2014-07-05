@@ -40,19 +40,4 @@ public class DegreeChangeIndividualCandidacySeriesGrade extends DegreeChangeIndi
         deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasApprovedEctsRate() {
-        return getApprovedEctsRate() != null;
-    }
-
-    @Deprecated
-    public boolean hasSeriesCandidacyGrade() {
-        return getSeriesCandidacyGrade() != null;
-    }
-
-    @Deprecated
-    public boolean hasGradeRate() {
-        return getGradeRate() != null;
-    }
-
 }

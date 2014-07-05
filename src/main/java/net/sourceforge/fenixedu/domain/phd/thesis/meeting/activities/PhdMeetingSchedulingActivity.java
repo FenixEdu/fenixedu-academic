@@ -58,7 +58,7 @@ abstract public class PhdMeetingSchedulingActivity extends Activity<PhdMeetingSc
             if (process.isCoordinatorForPhdProgram(person)) {
                 return AlertMessage.get(coordinatorMessage);
 
-            } else if (process.isGuiderOrAssistentGuider(person) || person.hasTeacher()) {
+            } else if (process.isGuiderOrAssistentGuider(person) || person.getTeacher() != null) {
                 return AlertMessage.get(teacherMessage);
             }
         }

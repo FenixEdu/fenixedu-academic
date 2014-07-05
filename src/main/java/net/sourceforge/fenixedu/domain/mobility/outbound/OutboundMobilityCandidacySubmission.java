@@ -150,7 +150,7 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     }
 
     public void select() {
-        if (!hasSelectedCandidacy()) {
+        if (getSelectedCandidacy() == null) {
             for (final OutboundMobilityCandidacy candidacy : getSortedOutboundMobilityCandidacySet()) {
                 if (candidacy.getOutboundMobilityCandidacyContest().hasVacancy()) {
                     candidacy.select();
@@ -190,43 +190,8 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     }
 
     @Deprecated
-    public boolean hasAnyOutboundMobilityCandidacySubmissionGrade() {
-        return !getOutboundMobilityCandidacySubmissionGradeSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy> getOutboundMobilityCandidacy() {
         return getOutboundMobilityCandidacySet();
-    }
-
-    @Deprecated
-    public boolean hasAnyOutboundMobilityCandidacy() {
-        return !getOutboundMobilityCandidacySet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasRegistration() {
-        return getRegistration() != null;
-    }
-
-    @Deprecated
-    public boolean hasConfirmationOption() {
-        return getConfirmationOption() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasSelectedCandidacy() {
-        return getSelectedCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasOutboundMobilityCandidacyPeriod() {
-        return getOutboundMobilityCandidacyPeriod() != null;
     }
 
     private final static BigDecimal AVG_FACTOR = new BigDecimal(1000000000000l);

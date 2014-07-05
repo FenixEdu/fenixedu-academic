@@ -122,7 +122,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     public StringBuilder print(String tabs) {
         final StringBuilder builder = new StringBuilder();
         builder.append(tabs);
-        builder.append("[D ").append(hasDegreeModule() ? getDegreeModule().getName() : "").append(" ");
+        builder.append("[D ").append(getDegreeModule() != null ? getDegreeModule().getName() : "").append(" ");
         builder.append(getEctsCredits()).append(" ects ]\n");
         return builder;
     }
@@ -238,7 +238,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
         final Credits credits = getCredits();
         setCredits(null);
-        if (credits != null && !credits.hasAnyDismissals()) {
+        if (credits != null && credits.getDismissalsSet().isEmpty()) {
             credits.delete();
         }
         super.delete();
@@ -370,11 +370,6 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     @Override
     public String getModuleTypeName() {
         return BundleUtil.getString(Bundle.ENUMERATION, this.getClass().getName());
-    }
-
-    @Deprecated
-    public boolean hasCredits() {
-        return getCredits() != null;
     }
 
 }

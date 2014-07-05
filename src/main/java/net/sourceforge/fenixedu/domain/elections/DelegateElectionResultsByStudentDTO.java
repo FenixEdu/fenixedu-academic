@@ -84,6 +84,6 @@ public class DelegateElectionResultsByStudentDTO extends DataTranferObject {
     }
 
     public boolean getIsElectedStudent() {
-        return (getElection().hasElectedStudent() && getElection().getElectedStudent().equals(getStudent()) ? true : false);
+        return (getElection().getElectedStudent() != null && getElection().getElectedStudent().equals(getStudent()) ? true : false);
     }
 }

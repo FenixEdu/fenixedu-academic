@@ -60,24 +60,4 @@ public class CurricularSemester extends CurricularSemester_Base implements Compa
         return getScopesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyScopes() {
-        return !getScopesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurricularYear() {
-        return getCurricularYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasSemester() {
-        return getSemester() != null;
-    }
-
 }

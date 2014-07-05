@@ -29,7 +29,7 @@ public class ReadStudentSenior {
     @Atomic
     public static Senior run(final Registration registration) {
         check(RolePredicates.STUDENT_PREDICATE);
-        if (registration.hasSenior()) {
+        if (registration.getSenior() != null) {
             return registration.getSenior();
         } else if (registration.isQualifiedForSeniority()) {
             return new Senior(registration);

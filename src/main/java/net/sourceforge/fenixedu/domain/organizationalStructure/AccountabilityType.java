@@ -104,33 +104,8 @@ public class AccountabilityType extends AccountabilityType_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAccountabilities() {
-        return !getAccountabilitiesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule> getConnectionRules() {
         return getConnectionRulesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyConnectionRules() {
-        return !getConnectionRulesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasTypeName() {
-        return getTypeName() != null;
     }
 
 }

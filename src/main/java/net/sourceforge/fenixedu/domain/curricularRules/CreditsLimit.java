@@ -112,14 +112,4 @@ public class CreditsLimit extends CreditsLimit_Base {
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
-    @Deprecated
-    public boolean hasMaximumCredits() {
-        return getMaximumCredits() != null;
-    }
-
-    @Deprecated
-    public boolean hasMinimumCredits() {
-        return getMinimumCredits() != null;
-    }
-
 }

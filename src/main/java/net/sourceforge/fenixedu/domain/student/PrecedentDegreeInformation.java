@@ -162,7 +162,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     }
 
     public String getInstitutionName() {
-        return hasInstitution() ? getInstitution().getName() : null;
+        return getInstitution() != null ? getInstitution().getName() : null;
     }
 
     public ExecutionYear getExecutionYear() {
@@ -240,7 +240,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
     public String getDegreeAndInstitutionName() {
         String institutionName = null;
-        if (hasInstitution()) {
+        if (getInstitution() != null) {
             institutionName = getInstitution().getName();
         } else {
             institutionName = getPrecedentInstitution().getName();
@@ -273,12 +273,12 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void setPersonalIngressionData(PersonalIngressionData personalIngressionData) {
         super.setPersonalIngressionData(personalIngressionData);
 
-        if (personalIngressionData != null && hasRegistration()
+        if (personalIngressionData != null && getRegistration() != null
                 && registrationHasRepeatedPDI(getRegistration(), personalIngressionData.getExecutionYear())) {
             throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
         }
 
-        if (hasPhdIndividualProgramProcess()
+        if (getPhdIndividualProgramProcess() != null
                 && phdProcessHasRepeatedPDI(getPhdIndividualProgramProcess(), personalIngressionData.getExecutionYear())) {
             throw new DomainException("A Phd Process cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
         }
@@ -288,7 +288,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void setRegistration(Registration registration) {
         super.setRegistration(registration);
 
-        if (registration != null && hasPersonalIngressionData()
+        if (registration != null && getPersonalIngressionData() != null
                 && registrationHasRepeatedPDI(registration, getPersonalIngressionData().getExecutionYear())) {
             throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
         }
@@ -298,7 +298,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void setPhdIndividualProgramProcess(PhdIndividualProgramProcess phdIndividualProgramProcess) {
         super.setPhdIndividualProgramProcess(phdIndividualProgramProcess);
 
-        if (phdIndividualProgramProcess != null && hasPersonalIngressionData()
+        if (phdIndividualProgramProcess != null && getPersonalIngressionData() != null
                 && phdProcessHasRepeatedPDI(phdIndividualProgramProcess, getPersonalIngressionData().getExecutionYear())) {
             throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
         }
@@ -340,19 +340,19 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     }
 
     private boolean hasAllRegistrationInformation() {
-        return hasPersonalIngressionData() && hasRegistration();
+        return getPersonalIngressionData() != null && getRegistration() != null;
     }
 
     private boolean hasAllPhdInformation() {
-        return hasPersonalIngressionData() && hasPhdIndividualProgramProcess();
+        return getPersonalIngressionData() != null && getPhdIndividualProgramProcess() != null;
     }
 
     private boolean hasNoPersonalInformation() {
-        return !hasPersonalIngressionData() && !hasRegistration() && !hasPhdIndividualProgramProcess();
+        return getPersonalIngressionData() == null && getRegistration() == null && getPhdIndividualProgramProcess() == null;
     }
 
     private boolean hasAtLeastOneCandidacy() {
-        return hasStudentCandidacy() || hasIndividualCandidacy();
+        return getStudentCandidacy() != null || getIndividualCandidacy() != null;
     }
 
     public boolean isCandidacyInternal() {
@@ -371,166 +371,6 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
         return super.getPrecedentInstitution();
 
-    }
-
-    @Deprecated
-    public boolean hasCandidacyInternal() {
-        return getCandidacyInternal() != null;
-    }
-
-    @Deprecated
-    public boolean hasRegistration() {
-        return getRegistration() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumberOfEnrolmentsInPreviousDegrees() {
-        return getNumberOfEnrolmentsInPreviousDegrees() != null;
-    }
-
-    @Deprecated
-    public boolean hasConclusionDate() {
-        return getConclusionDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrecedentSchoolLevel() {
-        return getPrecedentSchoolLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastModifiedDate() {
-        return getLastModifiedDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasApprovedEcts() {
-        return getApprovedEcts() != null;
-    }
-
-    @Deprecated
-    public boolean hasOtherPrecedentSchoolLevel() {
-        return getOtherPrecedentSchoolLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentCandidacy() {
-        return getStudentCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasConclusionGrade() {
-        return getConclusionGrade() != null;
-    }
-
-    @Deprecated
-    public boolean hasConclusionYear() {
-        return getConclusionYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasSchoolLevel() {
-        return getSchoolLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasOtherSchoolLevel() {
-        return getOtherSchoolLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasPersonalIngressionData() {
-        return getPersonalIngressionData() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumberOfApprovedCurricularCourses() {
-        return getNumberOfApprovedCurricularCourses() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumberOfEnroledCurricularCourses() {
-        return getNumberOfEnroledCurricularCourses() != null;
-    }
-
-    @Deprecated
-    public boolean hasGradeSum() {
-        return getGradeSum() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnroledEcts() {
-        return getEnroledEcts() != null;
-    }
-
-    @Deprecated
-    public boolean hasIndividualCandidacy() {
-        return getIndividualCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasCountry() {
-        return getCountry() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentCurricularPlan() {
-        return getStudentCurricularPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasInstitution() {
-        return getInstitution() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeDesignation() {
-        return getDegreeDesignation() != null;
-    }
-
-    @Deprecated
-    public boolean hasMobilityProgramDuration() {
-        return getMobilityProgramDuration() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrecedentCountry() {
-        return getPrecedentCountry() != null;
-    }
-
-    @Deprecated
-    public boolean hasSourceInstitution() {
-        return getSourceInstitution() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrecedentInstitution() {
-        return getPrecedentInstitution() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdIndividualProgramProcess() {
-        return getPhdIndividualProgramProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrecedentDegreeDesignation() {
-        return getPrecedentDegreeDesignation() != null;
-    }
-
-    @Deprecated
-    public boolean hasCycleType() {
-        return getCycleType() != null;
     }
 
 }

@@ -196,7 +196,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
                 generateDocument();
             }
         } else if (academicServiceRequestBean.isToCancelOrReject()) {
-            if (hasEvent()) {
+            if (getEvent() != null) {
                 getEvent().cancel(academicServiceRequestBean.getResponsible());
             }
         }

@@ -315,7 +315,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final List<DegreeCurricularPlan> toShow = new ArrayList<DegreeCurricularPlan>();
         for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans()) {
             if (degreeCurricularPlan.getDegree().getDegreeType().name().equals(degreeTypeName)
-                    && degreeCurricularPlan.hasAnyExecutionDegrees()) {
+                    && !degreeCurricularPlan.getExecutionDegreesSet().isEmpty()) {
                 toShow.add(degreeCurricularPlan);
             }
         }

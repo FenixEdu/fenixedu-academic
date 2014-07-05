@@ -65,7 +65,7 @@ public class PhdEnrolmentsManagementDA extends PhdProcessDA {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         for (final Coordinator coordinator : getLoggedPerson(request).getCoordinatorsSet()) {
-            if (coordinator.getExecutionDegree().getDegree().hasPhdProgram()
+            if (coordinator.getExecutionDegree().getDegree().getPhdProgram() != null
                     && coordinator.getExecutionDegree().getExecutionYear() == currentExecutionYear) {
                 result.add(coordinator.getExecutionDegree().getDegree().getPhdProgram());
             }

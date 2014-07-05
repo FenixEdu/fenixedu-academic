@@ -1,1 +1,0 @@
-select concat('insert into SPACE set SPACE.NAME = ''', BUILDING.NAME, ''', SPACE.KEY_CAMPUS = ', BUILDING.KEY_CAMPUS, ', SPACE.ID_INTERNAL = ', BUILDING.ID_INTERNAL, ', SPACE.OJB_CONCRETE_CLASS = ''net.sourceforge.fenixedu.domain.space.OldBuilding'';') as "" from BUILDING;

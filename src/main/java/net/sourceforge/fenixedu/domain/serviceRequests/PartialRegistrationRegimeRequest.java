@@ -71,7 +71,7 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
 
     @Override
     protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
-        if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
+        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null) {
             getEvent().cancel(academicServiceRequestBean.getResponsible());
 
         } else if (academicServiceRequestBean.isToConclude()) {

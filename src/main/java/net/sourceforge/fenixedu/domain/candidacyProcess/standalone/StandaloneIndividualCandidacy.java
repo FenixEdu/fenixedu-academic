@@ -141,7 +141,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     }
 
     private void checkParameters(final StandaloneIndividualCandidacyResultBean bean) {
-        if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
+        if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && getRegistration() != null) {
             throw new DomainException("error.StandaloneIndividualCandidacy.cannot.change.state.from.accepted.candidacies");
         }
     }
@@ -150,7 +150,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
             final Ingression ingression) {
 
-        if (hasRegistration()) {
+        if (getRegistration() != null) {
             throw new DomainException("error.IndividualCandidacy.person.with.registration",
                     degreeCurricularPlan.getPresentationName());
         }
@@ -245,11 +245,6 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
         return getCurricularCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCurricularCourses() {
-        return !getCurricularCoursesSet().isEmpty();
     }
 
 }

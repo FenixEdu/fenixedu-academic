@@ -243,7 +243,7 @@ public class OriginInformationForm extends Form {
         final OriginInformationForm form = new OriginInformationForm();
         form.setBirthYear(studentCandidacy.getPerson().getDateOfBirthYearMonthDay().getYear());
         form.setHighSchoolType(studentCandidacy.getHighSchoolType());
-        if (studentCandidacy.hasPrecedentDegreeInformation()) {
+        if (studentCandidacy.getPrecedentDegreeInformation() != null) {
             form.setConclusionGrade(roundUpGrade(studentCandidacy.getPrecedentDegreeInformation().getConclusionGrade()));
             form.setDegreeDesignation(studentCandidacy.getPrecedentDegreeInformation().getDegreeDesignation());
             form.setInstitution(studentCandidacy.getPrecedentDegreeInformation().getInstitution());

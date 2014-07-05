@@ -31,7 +31,7 @@ public class InfoEnrolmentEvaluationWithResponsibleForGrade extends InfoEnrolmen
         super.copyFromDomain(enrolmentEvaluation);
         if (enrolmentEvaluation != null) {
             setInfoPersonResponsibleForGrade(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getPersonResponsibleForGrade()));
-            if (enrolmentEvaluation.hasPerson()) {
+            if (enrolmentEvaluation.getPerson() != null) {
                 setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getPerson()));
             }
         }

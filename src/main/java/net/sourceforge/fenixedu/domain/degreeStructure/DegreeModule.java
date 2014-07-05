@@ -230,14 +230,14 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     protected Boolean getCanBeDeleted() {
-        return !hasAnyCurriculumModules();
+        return getCurriculumModulesSet().isEmpty();
     }
 
     public void deleteContext(Context context) {
         if (getParentContextsSet().contains(context)) {
             context.delete();
         }
-        if (!hasAnyParentContexts()) {
+        if (getParentContextsSet().isEmpty()) {
             delete();
         }
     }
@@ -652,18 +652,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     @Deprecated
-    public boolean hasAnyParticipatingExclusivenessCurricularRules() {
-        return !getParticipatingExclusivenessCurricularRulesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule> getParticipatingPrecedenceCurricularRules() {
         return getParticipatingPrecedenceCurricularRulesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyParticipatingPrecedenceCurricularRules() {
-        return !getParticipatingPrecedenceCurricularRulesSet().isEmpty();
     }
 
     @Deprecated
@@ -672,18 +662,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCurricularRules() {
-        return !getCurricularRulesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getOldEquivalencePlanEntries() {
         return getOldEquivalencePlanEntriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyOldEquivalencePlanEntries() {
-        return !getOldEquivalencePlanEntriesSet().isEmpty();
     }
 
     @Deprecated
@@ -692,18 +672,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     @Deprecated
-    public boolean hasAnyParentContexts() {
-        return !getParentContextsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getNewEquivalencePlanEntries() {
         return getNewEquivalencePlanEntriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyNewEquivalencePlanEntries() {
-        return !getNewEquivalencePlanEntriesSet().isEmpty();
     }
 
     @Deprecated
@@ -712,43 +682,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     @Deprecated
-    public boolean hasAnyCurriculumLineLogs() {
-        return !getCurriculumLineLogsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule> getCurriculumModules() {
         return getCurriculumModulesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCurriculumModules() {
-        return !getCurriculumModulesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasNameEn() {
-        return getNameEn() != null;
-    }
-
-    @Deprecated
-    public boolean hasAcronym() {
-        return getAcronym() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
     }
 
 }

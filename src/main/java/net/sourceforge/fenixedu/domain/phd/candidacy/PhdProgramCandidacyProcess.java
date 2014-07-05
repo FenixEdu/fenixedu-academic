@@ -214,11 +214,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public boolean isPublicCandidacy() {
-        return hasCandidacyHashCode();
+        return getCandidacyHashCode() != null;
     }
 
     public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
-        if (!hasEvent()) {
+        if (getEvent() == null) {
             return null;
         }
 
@@ -226,7 +226,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public boolean hasPaymentCodeToPay() {
-        if (!hasEvent()) {
+        if (getEvent() == null) {
             return false;
         }
         return getEvent().getAssociatedPaymentCode().getMinAmount().isPositive()
@@ -278,11 +278,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public boolean hasAnyPayments() {
-        return hasEvent() && getEvent().hasAnyPayments();
+        return getEvent() != null && getEvent().hasAnyPayments();
     }
 
     public void cancelDebt(final Person responsible) {
-        if (hasEvent() && getEvent().isOpen()) {
+        if (getEvent() != null && getEvent().isOpen()) {
             getEvent().cancel(responsible);
         }
     }
@@ -432,7 +432,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     private void assertPersonInformation() {
         final Person person = getPerson();
 
-        if (!getPerson().hasStudent()) {
+        if (getPerson().getStudent() == null) {
             new Student(getPerson());
         }
 
@@ -452,7 +452,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         person.addPersonRoleByRoleType(RoleType.STUDENT);
         person.addPersonRoleByRoleType(RoleType.RESEARCHER);
 
-        if (!person.hasPersonalPhoto()) {
+        if (person.getPersonalPhoto() == null) {
             final Photograph photograph = person.getPersonalPhotoEvenIfPending();
             if (photograph != null) {
                 photograph.setState(PhotoState.APPROVED);
@@ -461,7 +461,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     private void assertCandidacy(final DegreeCurricularPlan dcp, final ExecutionYear executionYear) {
-        if (!getCandidacy().hasExecutionDegree()) {
+        if (getCandidacy().getExecutionDegree() == null) {
             final ExecutionDegree executionDegree = dcp.getExecutionDegreeByAcademicInterval(executionYear.getAcademicInterval());
             getCandidacy().setExecutionDegree(executionDegree);
         }
@@ -514,7 +514,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     private void assertPhdRegistrationFee() {
-        if (!getIndividualProgramProcess().hasRegistrationFee()) {
+        if (getIndividualProgramProcess().getRegistrationFee() == null) {
             new PhdRegistrationFee(getIndividualProgramProcess());
         }
     }
@@ -563,7 +563,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public boolean hasStudyPlan() {
-        return getIndividualProgramProcess().hasStudyPlan();
+        return getIndividualProgramProcess().getStudyPlan() != null;
     }
 
     public boolean isStudyPlanExempted() {
@@ -571,7 +571,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public boolean hasActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
-        return getPerson().hasStudent() ? getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan) : false;
+        return getPerson().getStudent() != null ? getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan) : false;
     }
 
     public LocalDate getWhenStartedStudies() {
@@ -604,28 +604,13 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     @Deprecated
-    public boolean hasAnyNotifications() {
-        return !getNotificationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter> getRefereeLetters() {
         return getRefereeLettersSet();
     }
 
     @Deprecated
-    public boolean hasAnyRefereeLetters() {
-        return !getRefereeLettersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee> getCandidacyReferees() {
         return getCandidacyRefereesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCandidacyReferees() {
-        return !getCandidacyRefereesSet().isEmpty();
     }
 
     @Override
@@ -635,54 +620,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     @Override
-    @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasWhenRatified() {
-        return getWhenRatified() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacy() {
-        return getCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacyDate() {
-        return getCandidacyDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasEvent() {
-        return getEvent() != null;
-    }
-
-    @Deprecated
-    public boolean hasPublicPhdCandidacyPeriod() {
-        return getPublicPhdCandidacyPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasFeedbackRequest() {
-        return getFeedbackRequest() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacyHashCode() {
-        return getCandidacyHashCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasValidatedByCandidate() {
-        return getValidatedByCandidate() != null;
-    }
-
-    @Deprecated
-    public boolean hasIndividualProgramProcess() {
-        return getIndividualProgramProcess() != null;
     }
 
 }

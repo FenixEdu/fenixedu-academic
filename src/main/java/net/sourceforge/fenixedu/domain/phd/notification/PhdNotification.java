@@ -135,44 +135,4 @@ public class PhdNotification extends PhdNotification_Base {
         return getState() == PhdNotificationState.SENT;
     }
 
-    @Deprecated
-    public boolean hasYear() {
-        return getYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasState() {
-        return getState() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumber() {
-        return getNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreatedBy() {
-        return getCreatedBy() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacyProcess() {
-        return getCandidacyProcess() != null;
-    }
-
 }

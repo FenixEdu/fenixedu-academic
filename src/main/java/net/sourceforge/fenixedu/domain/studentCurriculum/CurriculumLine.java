@@ -144,7 +144,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     @Override
     public StudentCurricularPlan getStudentCurricularPlan() {
-        return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : null;
+        return getCurriculumGroup() != null ? getCurriculumGroup().getStudentCurricularPlan() : null;
     }
 
     @Override
@@ -179,7 +179,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     final public boolean hasCurricularCourse() {
-        return hasDegreeModule();
+        return getDegreeModule() != null;
     }
 
     @Override
@@ -325,10 +325,5 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     abstract public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester);
 
     abstract public String getModuleTypeName();
-
-    @Deprecated
-    public boolean hasUsedInSeparationCycle() {
-        return getUsedInSeparationCycle() != null;
-    }
 
 }

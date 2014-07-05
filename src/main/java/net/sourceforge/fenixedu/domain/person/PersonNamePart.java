@@ -113,19 +113,4 @@ public class PersonNamePart extends PersonNamePart_Base {
         return getPersonNameSet();
     }
 
-    @Deprecated
-    public boolean hasAnyPersonName() {
-        return !getPersonNameSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasNamePart() {
-        return getNamePart() != null;
-    }
-
 }

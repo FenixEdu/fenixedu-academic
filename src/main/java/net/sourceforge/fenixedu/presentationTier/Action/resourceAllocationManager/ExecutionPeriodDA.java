@@ -156,7 +156,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
                     new SearchPerson().run(searchParameters, new SearchPerson.SearchPersonPredicate(searchParameters));
             final Collection<Registration> registrations = new ArrayList<Registration>();
             for (final Person person : people.getCollection()) {
-                if (person.hasStudent()) {
+                if (person.getStudent() != null) {
                     for (final Registration registration : person.getStudent().getRegistrationsSet()) {
                         if (registration.hasAnyActiveState((ExecutionSemester) executionInterval)) {
                             registrations.add(registration);

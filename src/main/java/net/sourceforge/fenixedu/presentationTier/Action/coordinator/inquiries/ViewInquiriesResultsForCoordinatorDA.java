@@ -107,7 +107,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
         ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
         ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionSemester();
         while (oldQucExecutionSemester.isBefore(executionPeriod)) {
-            if (executionPeriod.hasAnyInquiryResults()) {
+            if (!executionPeriod.getInquiryResultsSet().isEmpty()) {
                 return executionPeriod;
             }
             executionPeriod = executionPeriod.getPreviousExecutionPeriod();

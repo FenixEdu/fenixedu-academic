@@ -50,7 +50,7 @@ public class DeleteJobInformation extends PhdIndividualProgramProcessActivity {
     }
 
     private boolean canDelete(final Job job, final Person person) {
-        if (!job.hasCreator()) {
+        if (job.getCreator() == null) {
             return false;
         }
 

@@ -1,1 +1,0 @@
-alter table `PHD_MIGRATION_GUIDING` add `TEACHER_NUMBER` text;

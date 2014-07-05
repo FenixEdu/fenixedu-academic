@@ -266,7 +266,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
     @Override
     public UnitBasedSender getOneUnitBasedSender() {
-        if (hasAnyUnitBasedSender()) {
+        if (!getUnitBasedSenderSet().isEmpty()) {
             return getUnitBasedSender().iterator().next();
         } else {
             return UnitBasedSender.newInstance(this);
@@ -295,13 +295,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         return getParticipatingAnyCurricularCourseCurricularRulesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyParticipatingAnyCurricularCourseCurricularRules() {
-        return !getParticipatingAnyCurricularCourseCurricularRulesSet().isEmpty();
-    }
-
     @Override
-    @Deprecated
     public boolean hasDepartment() {
         return getDepartment() != null;
     }

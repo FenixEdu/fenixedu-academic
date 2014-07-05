@@ -342,7 +342,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     public List<ExecutionCourse> getExecutionCoursesWithNoCurricularCourses() {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
-            if (!executionCourse.hasAnyAssociatedCurricularCourses()) {
+            if (executionCourse.getAssociatedCurricularCoursesSet().isEmpty()) {
                 result.add(executionCourse);
             }
         }
@@ -419,7 +419,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         final List<Attends> attendsList = new ArrayList<Attends>();
         for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
             for (final Attends attends : executionCourse.getAttendsSet()) {
-                if (attends.hasEnrolment()
+                if (attends.getEnrolment() != null
                         && attends.getEnrolment().getDegreeCurricularPlanOfStudent().equals(degreeCurricularPlan)) {
                     attendsList.add(attends);
                 }
@@ -432,7 +432,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         final List<Enrolment> enrolmentsList = new ArrayList<Enrolment>();
         for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
             for (final Attends attends : executionCourse.getAttendsSet()) {
-                if (attends.hasEnrolment()
+                if (attends.getEnrolment() != null
                         && attends.getEnrolment().getDegreeCurricularPlanOfStudent().equals(degreeCurricularPlan)) {
                     enrolmentsList.add(attends.getEnrolment());
                 }
@@ -815,18 +815,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedExecutionCourses() {
-        return !getAssociatedExecutionCoursesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.Credits> getCredits() {
         return getCreditsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCredits() {
-        return !getCreditsSet().isEmpty();
     }
 
     @Deprecated
@@ -835,18 +825,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyInquiryCourseAnswers() {
-        return !getInquiryCourseAnswersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.credits.CreditsPersonFunctionsSharedQueueJob> getCreditsPersonFunctionsSharedQueueJob() {
         return getCreditsPersonFunctionsSharedQueueJobSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCreditsPersonFunctionsSharedQueueJob() {
-        return !getCreditsPersonFunctionsSharedQueueJobSet().isEmpty();
     }
 
     @Deprecated
@@ -855,18 +835,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyEndingStudentStatutes() {
-        return !getEndingStudentStatutesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine> getAssociatedOtherTypeCreditLines() {
         return getAssociatedOtherTypeCreditLinesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedOtherTypeCreditLines() {
-        return !getAssociatedOtherTypeCreditLinesSet().isEmpty();
     }
 
     @Deprecated
@@ -875,18 +845,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyBeginningStudentStatutes() {
-        return !getBeginningStudentStatutesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.SchoolClass> getSchoolClasses() {
         return getSchoolClassesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnySchoolClasses() {
-        return !getSchoolClassesSet().isEmpty();
     }
 
     @Deprecated
@@ -895,18 +855,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyInquiryResponsePeriods() {
-        return !getInquiryResponsePeriodsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherService> getTeacherServices() {
         return getTeacherServicesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTeacherServices() {
-        return !getTeacherServicesSet().isEmpty();
     }
 
     @Deprecated
@@ -915,18 +865,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyCurriculumLineLogs() {
-        return !getCurriculumLineLogsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Advise> getAssociatedStartadvises() {
         return getAssociatedStartadvisesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedStartadvises() {
-        return !getAssociatedStartadvisesSet().isEmpty();
     }
 
     @Deprecated
@@ -935,18 +875,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyEnrolments() {
-        return !getEnrolmentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
         return getCompetenceCourseInformationChangeRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCompetenceCourseInformationChangeRequests() {
-        return !getCompetenceCourseInformationChangeRequestsSet().isEmpty();
     }
 
     @Deprecated
@@ -955,18 +885,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyBeginExecutionPeriodContexts() {
-        return !getBeginExecutionPeriodContextsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCreditsQueueJob> getTeacherCreditsQueueJob() {
         return getTeacherCreditsQueueJobSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTeacherCreditsQueueJob() {
-        return !getTeacherCreditsQueueJobSet().isEmpty();
     }
 
     @Deprecated
@@ -975,18 +895,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedTeacherInstitutionWorkTime() {
-        return !getAssociatedTeacherInstitutionWorkTimeSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry> getStudentsInquiryRegistries() {
         return getStudentsInquiryRegistriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentsInquiryRegistries() {
-        return !getStudentsInquiryRegistriesSet().isEmpty();
     }
 
     @Deprecated
@@ -995,18 +905,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyMarkSheets() {
-        return !getMarkSheetsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getParticipatingEndCurricularRules() {
         return getParticipatingEndCurricularRulesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyParticipatingEndCurricularRules() {
-        return !getParticipatingEndCurricularRulesSet().isEmpty();
     }
 
     @Deprecated
@@ -1015,18 +915,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyEndingSpecialSeason() {
-        return !getEndingSpecialSeasonSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getParticipatingBeginCurricularRules() {
         return getParticipatingBeginCurricularRulesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyParticipatingBeginCurricularRules() {
-        return !getParticipatingBeginCurricularRulesSet().isEmpty();
     }
 
     @Deprecated
@@ -1035,18 +925,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedOldInquiriesTeachersRes() {
-        return !getAssociatedOldInquiriesTeachersResSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesStudentExecutionPeriod> getInquiriesStudentExecutionPeriods() {
         return getInquiriesStudentExecutionPeriodsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInquiriesStudentExecutionPeriods() {
-        return !getInquiriesStudentExecutionPeriodsSet().isEmpty();
     }
 
     @Deprecated
@@ -1055,18 +935,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyPartialRegimeInstallments() {
-        return !getPartialRegimeInstallmentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent> getEnrolmentOutOfPeriodEvents() {
         return getEnrolmentOutOfPeriodEventsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEnrolmentOutOfPeriodEvents() {
-        return !getEnrolmentOutOfPeriodEventsSet().isEmpty();
     }
 
     @Deprecated
@@ -1075,18 +945,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyInquiriesTemplates() {
-        return !getInquiriesTemplatesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse> getAssociatedInquiriesCourses() {
         return getAssociatedInquiriesCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedInquiriesCourses() {
-        return !getAssociatedInquiriesCoursesSet().isEmpty();
     }
 
     @Deprecated
@@ -1095,18 +955,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedOldInquiriesCoursesRes() {
-        return !getAssociatedOldInquiriesCoursesResSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment> getInquiryGlobalComments() {
         return getInquiryGlobalCommentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInquiryGlobalComments() {
-        return !getInquiryGlobalCommentsSet().isEmpty();
     }
 
     @Deprecated
@@ -1115,18 +965,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyStudentsInquiriesExecutionPeriod() {
-        return !getStudentsInquiriesExecutionPeriodSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment> getExternalEnrolments() {
         return getExternalEnrolmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExternalEnrolments() {
-        return !getExternalEnrolmentsSet().isEmpty();
     }
 
     @Deprecated
@@ -1135,18 +975,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedOldInquiriesSummaries() {
-        return !getAssociatedOldInquiriesSummariesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Advise> getAssociatedEndadvises() {
         return getAssociatedEndadvisesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedEndadvises() {
-        return !getAssociatedEndadvisesSet().isEmpty();
     }
 
     @Deprecated
@@ -1155,18 +985,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyInquiryCoordinatorsAnswers() {
-        return !getInquiryCoordinatorsAnswersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentPeriod> getEnrolmentPeriod() {
         return getEnrolmentPeriodSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEnrolmentPeriod() {
-        return !getEnrolmentPeriodSet().isEmpty();
     }
 
     @Deprecated
@@ -1175,18 +995,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyTutorshipSummaries() {
-        return !getTutorshipSummariesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResult> getInquiryResults() {
         return getInquiryResultsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInquiryResults() {
-        return !getInquiryResultsSet().isEmpty();
     }
 
     @Deprecated
@@ -1195,18 +1005,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyEnrolmentEvaluations() {
-        return !getEnrolmentEvaluationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry> getAssociatedInquiriesRegistries() {
         return getAssociatedInquiriesRegistriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedInquiriesRegistries() {
-        return !getAssociatedInquiriesRegistriesSet().isEmpty();
     }
 
     @Deprecated
@@ -1215,18 +1015,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyStudentsPerformanceReports() {
-        return !getStudentsPerformanceReportsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent> getAssociatedTeacherDegreeFinalProjectStudents() {
         return getAssociatedTeacherDegreeFinalProjectStudentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedTeacherDegreeFinalProjectStudents() {
-        return !getAssociatedTeacherDegreeFinalProjectStudentsSet().isEmpty();
     }
 
     @Deprecated
@@ -1235,18 +1025,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyExecutionDegreesExamMaps() {
-        return !getExecutionDegreesExamMapsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest> getBeginningSpecialSeason() {
         return getBeginningSpecialSeasonSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyBeginningSpecialSeason() {
-        return !getBeginningSpecialSeasonSet().isEmpty();
     }
 
     @Deprecated
@@ -1255,18 +1035,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyCompetenceCourseInformations() {
-        return !getCompetenceCourseInformationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.log.FirstYearShiftsCapacityToggleLog> getFirstYearShiftsCapacityToggleLog() {
         return getFirstYearShiftsCapacityToggleLogSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyFirstYearShiftsCapacityToggleLog() {
-        return !getFirstYearShiftsCapacityToggleLogSet().isEmpty();
     }
 
     @Deprecated
@@ -1275,18 +1045,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyExamDateCertificateRequests() {
-        return !getExamDateCertificateRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.OtherService> getOtherServicesCorrections() {
         return getOtherServicesCorrectionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyOtherServicesCorrections() {
-        return !getOtherServicesCorrectionsSet().isEmpty();
     }
 
     @Deprecated
@@ -1295,48 +1055,13 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasAnyTeacherCreditsState() {
-        return !getTeacherCreditsStateSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getEndExecutionPeriodContexts() {
         return getEndExecutionPeriodContextsSet();
     }
 
     @Deprecated
-    public boolean hasAnyEndExecutionPeriodContexts() {
-        return !getEndExecutionPeriodContextsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TeacherAuthorization> getAuthorization() {
         return getAuthorizationSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAuthorization() {
-        return !getAuthorizationSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennuForExecutionPeriod() {
-        return getRootDomainObjectForExecutionPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnrolmentInstructions() {
-        return getEnrolmentInstructions() != null;
-    }
-
-    @Deprecated
-    public boolean hasTutorshipSummaryPeriod() {
-        return getTutorshipSummaryPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
     }
 
 }

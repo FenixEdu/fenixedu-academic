@@ -65,7 +65,7 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
          * Can not have more than one element for the same process
          */
         for (final PhdCandidacyFeedbackRequestElement element : participant.getCandidacyFeedbackRequestElements()) {
-            if (element.hasProcess() && element.getProcess().equals(process)) {
+            if (element.getProcess() != null && element.getProcess().equals(process)) {
                 throw new DomainException(
                         "error.PhdCandidacyFeedbackRequestElement.participant.already.has.jury.element.in.process");
             }
@@ -84,7 +84,7 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     }
 
     private void checkIfCanBeDeleted() {
-        if (hasAnyFeedbackDocuments()) {
+        if (!getFeedbackDocumentsSet().isEmpty()) {
             throw new DomainException("error.PhdCandidacyFeedbackRequestElement.has.feedback.documents");
         }
     }
@@ -100,7 +100,7 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     }
 
     public PhdCandidacyFeedbackRequestDocument getLastFeedbackDocument() {
-        return hasAnyFeedbackDocuments() ? Collections.max(getFeedbackDocumentsSet(),
+        return !getFeedbackDocumentsSet().isEmpty() ? Collections.max(getFeedbackDocumentsSet(),
                 PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
     }
 
@@ -117,7 +117,7 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     }
 
     public boolean isFeedbackSubmitted() {
-        return hasAnyFeedbackDocuments();
+        return !getFeedbackDocumentsSet().isEmpty();
     }
 
     public boolean isFor(PhdCandidacyFeedbackRequestProcess process) {
@@ -143,36 +143,6 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument> getFeedbackDocuments() {
         return getFeedbackDocumentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyFeedbackDocuments() {
-        return !getFeedbackDocumentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasMailBody() {
-        return getMailBody() != null;
-    }
-
-    @Deprecated
-    public boolean hasProcess() {
-        return getProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasParticipant() {
-        return getParticipant() != null;
-    }
-
-    @Deprecated
-    public boolean hasMailSubject() {
-        return getMailSubject() != null;
     }
 
 }

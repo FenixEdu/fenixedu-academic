@@ -488,24 +488,4 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         return QueueJob.getUndoneJobsForClass(GratuityReportQueueJob.class).isEmpty();
     }
 
-    @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginDate() {
-        return getBeginDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
 }

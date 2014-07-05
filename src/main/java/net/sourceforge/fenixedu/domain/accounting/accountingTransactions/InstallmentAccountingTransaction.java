@@ -69,9 +69,4 @@ public class InstallmentAccountingTransaction extends InstallmentAccountingTrans
         super.delete();
     }
 
-    @Deprecated
-    public boolean hasInstallment() {
-        return getInstallment() != null;
-    }
-
 }

@@ -54,7 +54,7 @@ public class ActivatePhdProgramProcessInThesisDiscussionState extends PhdIndivid
          * concluded
          */
 
-        if (!process.hasRegistration()) {
+        if (process.getRegistration() == null) {
             return process;
         }
 

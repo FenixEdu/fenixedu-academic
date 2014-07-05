@@ -56,7 +56,7 @@
 	.savedGrade { font-size: large; color: green; font-weight: bold; }
 
 <%	for (final Registration registration : person.getStudent().getRegistrations()) {
-		if (registration.hasAnyOutboundMobilityCandidacySubmission()) {
+		if (!registration.getOutboundMobilityCandidacySubmissionSet().isEmpty()) {
 			for (final OutboundMobilityCandidacySubmission submission : registration.getOutboundMobilityCandidacySubmissionSet()) {
 %>
 	.<%= "hide" + submission.getExternalId() %> { display: none; }
@@ -220,7 +220,7 @@
 	<input type="hidden" name="mobilityGroupOid" value=""/>
 
 	<logic:iterate id="registration" name="person" property="student.registrations" type="net.sourceforge.fenixedu.domain.student.Registration">
-		<% if (registration.hasAnyOutboundMobilityCandidacySubmission()) { %>
+		<% if (!registration.getOutboundMobilityCandidacySubmissionSet().isEmpty()) { %>
 		
 				<%
 					for (final OutboundMobilityCandidacySubmission submission : registration.getOutboundMobilityCandidacySubmissionSet()) {

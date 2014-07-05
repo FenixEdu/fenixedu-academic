@@ -52,7 +52,7 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
 
         fillDescription(labelFormatter);
 
-        if (getAcademicServiceRequest().hasExecutionYear()) {
+        if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }
 

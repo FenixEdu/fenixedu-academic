@@ -137,7 +137,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     final public boolean canBeDeleted() {
-        return !hasAnyCurriculumModules();
+        return getCurriculumModulesSet().isEmpty();
     }
 
     @Override
@@ -985,7 +985,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @Override
     public boolean isPropaedeutic() {
-        return hasCurriculumGroup() && getCurriculumGroup().isPropaedeutic();
+        return getCurriculumGroup() != null && getCurriculumGroup().isPropaedeutic();
     }
 
     public boolean isExtraCurriculum() {
@@ -1132,11 +1132,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule> getCurriculumModules() {
         return getCurriculumModulesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCurriculumModules() {
-        return !getCurriculumModulesSet().isEmpty();
     }
 
     public boolean hasEnrolmentInCurricularCourseBefore(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {

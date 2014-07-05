@@ -87,7 +87,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     @Override
     protected void checkParameters(final CandidacyProcess process) {
-        if (process == null || !process.hasCandidacyPeriod()) {
+        if (process == null || process.getCandidacyPeriod() == null) {
             throw new DomainException("error.Over23IndividualCandidacyProcess.invalid.candidacy.process");
         }
     }

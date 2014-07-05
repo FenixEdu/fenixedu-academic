@@ -53,29 +53,4 @@ public class ForumSubscription extends ForumSubscription_Base {
         super.setForum(null);
     }
 
-    @Deprecated
-    public boolean hasFavorite() {
-        return getFavorite() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasForum() {
-        return getForum() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
-    @Deprecated
-    public boolean hasReceivePostsByEmail() {
-        return getReceivePostsByEmail() != null;
-    }
-
 }

@@ -1,1 +1,0 @@
-alter table FINAL_DEGREE_WORK_SCHEDULEING add column ATTRIBUTION_BY_TEACHERS tinyint(1) NOT NULL default '0';

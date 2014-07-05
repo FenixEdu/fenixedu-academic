@@ -40,24 +40,4 @@ public class AnnouncementCategory extends AnnouncementCategory_Base {
         return getAnnouncementsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyAnnouncements() {
-        return !getAnnouncementsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
 }

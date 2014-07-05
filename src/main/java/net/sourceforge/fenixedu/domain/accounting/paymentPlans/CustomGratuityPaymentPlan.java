@@ -55,7 +55,7 @@ public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {
                     @Override
                     public void beforeAdd(PaymentPlan paymentPlan, GratuityEventWithPaymentPlan event) {
                         if (paymentPlan != null && event != null) {
-                            if (paymentPlan.isCustomGratuityPaymentPlan() && paymentPlan.hasAnyGratuityEventsWithPaymentPlan()) {
+                            if (paymentPlan.isCustomGratuityPaymentPlan() && !paymentPlan.getGratuityEventsWithPaymentPlanSet().isEmpty()) {
                                 throw new DomainException("error.domain.accounting.PaymentPlan.already.has.gratuityEvent");
                             }
                         }
@@ -85,7 +85,7 @@ public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {
 
     @Override
     public void delete() {
-        while (hasAnyInstallments()) {
+        while (!getInstallmentsSet().isEmpty()) {
             getInstallments().iterator().next().delete();
         }
         getGratuityEventsWithPaymentPlan().clear();

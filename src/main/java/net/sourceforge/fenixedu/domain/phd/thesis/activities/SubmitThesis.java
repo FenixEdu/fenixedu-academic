@@ -62,7 +62,7 @@ public class SubmitThesis extends PhdThesisActivity {
                 process.addDocument(each, userView.getPerson());
 
                 PhdProgram phdProgram = process.getIndividualProgramProcess().getPhdProgram();
-                if (!phdProgram.hasDegree()) {
+                if (phdProgram.getDegree() == null) {
                     continue;
                 }
 

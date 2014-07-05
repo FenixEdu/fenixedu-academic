@@ -53,19 +53,4 @@ public class ResidenceManagementUnit extends ResidenceManagementUnit_Base {
         return getResidenceYearsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyResidenceYears() {
-        return !getResidenceYearsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasResidencePriceTable() {
-        return getResidencePriceTable() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennuForResidenceUnit() {
-        return getRootDomainObjectForResidenceUnit() != null;
-    }
-
 }

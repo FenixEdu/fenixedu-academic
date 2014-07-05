@@ -71,9 +71,4 @@ public class ProgramCertificateRequestPR extends ProgramCertificateRequestPR_Bas
         return ((CertificateRequestEvent) event).isUrgentRequest();
     }
 
-    @Deprecated
-    public boolean hasAmountFirstPage() {
-        return getAmountFirstPage() != null;
-    }
-
 }

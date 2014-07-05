@@ -59,7 +59,7 @@ public class FiliationForm extends Form {
 
     public static FiliationForm createFromPerson(final Person person) {
         final Country nationality = person.getCountry() != null ? person.getCountry() : Country.readDefault();
-        final Country countryOfBirth = person.hasCountryOfBirth() ? person.getCountryOfBirth() : Country.readDefault();
+        final Country countryOfBirth = person.getCountryOfBirth() != null ? person.getCountryOfBirth() : Country.readDefault();
 
         return new FiliationForm(person.getDateOfBirthYearMonthDay(), person.getDistrictOfBirth(),
                 person.getDistrictSubdivisionOfBirth(), person.getNameOfFather(), person.getNameOfMother(), nationality,

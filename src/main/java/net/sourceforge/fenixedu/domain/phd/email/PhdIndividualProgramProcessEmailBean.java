@@ -207,11 +207,11 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
         @Override
         public List<PhdParticipant> getGroupParticipants(PhdIndividualProgramProcess process) {
             List<PhdParticipant> participants = new ArrayList<PhdParticipant>();
-            if (!process.hasThesisProcess()) {
+            if (process.getThesisProcess() == null) {
                 throw new DomainException("phd.individualProcess.does.not.have.thesisProcess");
             }
 
-            if (process.getThesisProcess().hasPresidentJuryElement()) {
+            if (process.getThesisProcess().getPresidentJuryElement() != null) {
                 participants.add(process.getThesisProcess().getPresidentJuryElement().getParticipant());
             }
 
@@ -320,11 +320,11 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
         final Set<PhdEmailParticipantsGroup> groups = new TreeSet<PhdEmailParticipantsGroup>(COMPARATOR_BY_NAME);
 
         groups.add(new PhdEmailParticipantsCoordinatorsGroup());
-        if (getProcess().hasAnyGuidings()) {
+        if (!getProcess().getGuidingsSet().isEmpty()) {
             groups.add(new PhdEmailParticipantsGuidersGroup());
         }
         groups.add(new PhdEmailParticipantsAllGroup());
-        if (getProcess().hasThesisProcess()) {
+        if (getProcess().getThesisProcess() != null) {
             groups.add(new PhdEmailParticipantsJuryMembersGroup());
         }
 
@@ -338,7 +338,7 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
         groups.add(new PhdEmailParticipantsGuidersGroup());
         groups.add(new PhdEmailParticipantsAllGroup());
 
-        if (getProcess().hasThesisProcess()) {
+        if (getProcess().getThesisProcess() != null) {
             groups.add(new PhdEmailParticipantsJuryMembersGroup());
         }
 

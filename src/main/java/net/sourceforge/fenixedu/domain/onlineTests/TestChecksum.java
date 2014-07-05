@@ -24,14 +24,4 @@ public class TestChecksum extends TestChecksum_Base {
         super();
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasChecksumCode() {
-        return getChecksumCode() != null;
-    }
-
 }

@@ -982,16 +982,16 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     private void addThesisPreConditionsInformation(HttpServletRequest request, final PhdIndividualProgramProcess process) {
 
-        request.setAttribute("hasPublicPresentationSeminar", process.hasSeminarProcess());
+        request.setAttribute("hasPublicPresentationSeminar", process.getSeminarProcess() != null);
 
-        if (process.hasSeminarProcess() && !process.getSeminarProcess().isExempted()) {
+        if (process.getSeminarProcess() != null && !process.getSeminarProcess().isExempted()) {
             request.setAttribute("hasPublicPresentationSeminarReport", process.hasSeminarReportDocument());
         }
 
         request.setAttribute("hasSchoolPartConcluded", process.hasSchoolPartConcluded());
         request.setAttribute("hasQualificationExamsToPerform", process.hasQualificationExamsToPerform());
 
-        if (process.hasRegistration() && process.hasStudyPlan() && process.getStudyPlan().hasAnyPropaeudeuticsOrExtraEntries()) {
+        if (process.getRegistration() != null && process.getStudyPlan() != null && process.getStudyPlan().hasAnyPropaeudeuticsOrExtraEntries()) {
             request.setAttribute("hasPropaeudeuticsOrExtraEntriesApproved", process.hasPropaeudeuticsOrExtraEntriesApproved());
         }
     }
@@ -1280,7 +1280,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         if (processData != null) {
             request.setAttribute("processDataBean", processData.getProcessBean());
 
-            if (processData.hasPhdMigrationIndividualPersonalData()) {
+            if (processData.getPhdMigrationIndividualPersonalData() != null) {
                 request.setAttribute("personalDataBean", processData.getPhdMigrationIndividualPersonalData().getPersonalBean());
             }
 
@@ -1314,7 +1314,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         if (processData != null) {
             request.setAttribute("processDataBean", processData.getProcessBean());
 
-            if (processData.hasPhdMigrationIndividualPersonalData()) {
+            if (processData.getPhdMigrationIndividualPersonalData() != null) {
                 request.setAttribute("personalDataBean", processData.getPhdMigrationIndividualPersonalData().getPersonalBean());
             }
 

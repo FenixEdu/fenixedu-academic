@@ -102,19 +102,4 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         return getIndividualCandidacySet();
     }
 
-    @Deprecated
-    public boolean hasAnyIndividualCandidacy() {
-        return !getIndividualCandidacySet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasCandidacyFileType() {
-        return getCandidacyFileType() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacyFileActive() {
-        return getCandidacyFileActive() != null;
-    }
-
 }

@@ -79,7 +79,7 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
 
         final Registration registration = getRegistration(request);
 
-        if (registration != null && !registration.hasPhdIndividualProgramProcess()) {
+        if (registration != null && registration.getPhdIndividualProgramProcess() == null) {
             final ActionMessages actionMessages = new ActionMessages();
             request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
             addActionMessage(request, "label.phd.registration.without.phd.program.process");

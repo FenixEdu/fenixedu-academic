@@ -44,7 +44,7 @@ public class ConcludeIndividualProgramProcess extends PhdIndividualProgramProces
     @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
 
-        if (!process.hasThesisProcess()) {
+        if (process.getThesisProcess() == null) {
             throw new PhdDomainOperationException("error.PhdIndividualProgramProcess.thesis.process.inexistent");
         }
 

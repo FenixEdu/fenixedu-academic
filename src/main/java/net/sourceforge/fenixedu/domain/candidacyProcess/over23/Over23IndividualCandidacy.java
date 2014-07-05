@@ -219,7 +219,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
                 throw new DomainException("error.Over23IndividualCandidacy.invalid.acceptedDegree");
             }
 
-            if (isAccepted() && state != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
+            if (isAccepted() && state != IndividualCandidacyState.ACCEPTED && getRegistration() != null) {
                 throw new DomainException("error.Over23IndividualCandidacy.cannot.change.state.from.accepted.candidacies");
             }
         }

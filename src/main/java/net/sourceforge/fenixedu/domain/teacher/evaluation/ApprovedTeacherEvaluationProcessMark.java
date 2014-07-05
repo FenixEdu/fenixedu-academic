@@ -49,24 +49,4 @@ public class ApprovedTeacherEvaluationProcessMark extends ApprovedTeacherEvaluat
         deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasTeacherEvaluationProces() {
-        return getTeacherEvaluationProces() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasFacultyEvaluationProcessYear() {
-        return getFacultyEvaluationProcessYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasApprovedEvaluationMark() {
-        return getApprovedEvaluationMark() != null;
-    }
-
 }

@@ -47,7 +47,7 @@ public class ShiftDistribution extends ShiftDistribution_Base {
 
     protected void init(ExecutionYear executionYear) {
         checkParameters(executionYear);
-        if (executionYear.hasShiftDistribution()) {
+        if (executionYear.getShiftDistribution() != null) {
             throw new DomainException("error.candidacy.degree.ShiftDistribution.executionYear.already.has.a.shiftDistribution");
         }
         super.setExecutionYear(executionYear);
@@ -90,21 +90,6 @@ public class ShiftDistribution extends ShiftDistribution_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry> getShiftDistributionEntries() {
         return getShiftDistributionEntriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyShiftDistributionEntries() {
-        return !getShiftDistributionEntriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
     }
 
 }

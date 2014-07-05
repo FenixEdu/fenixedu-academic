@@ -202,11 +202,6 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         return getLesson().getShift().getExecutionCourse().getSigla();
     }
 
-    @Deprecated
-    public boolean hasLesson() {
-        return getLesson() != null;
-    }
-
     @Override
     protected boolean overlaps(final Interval interval) {
         for (final Interval lessonInterval : getLesson().getAllLessonIntervalsWithoutInstanceDates()) {

@@ -56,14 +56,4 @@ public class UTLScholarshipReport extends UTLScholarshipReport_Base {
         return getStudentSet();
     }
 
-    @Deprecated
-    public boolean hasAnyStudent() {
-        return !getStudentSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasUtlScholarshipSource() {
-        return getUtlScholarshipSource() != null;
-    }
-
 }

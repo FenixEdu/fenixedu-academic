@@ -132,7 +132,7 @@ public class Tutorship extends Tutorship_Base {
     public void delete() {
         setStudentCurricularPlan(null);
         setTeacher(null);
-        if (hasTutorshipLog()) {
+        if (getTutorshipLog() != null) {
             getTutorshipLog().delete();
         }
         setRootDomainObject(null);
@@ -241,36 +241,6 @@ public class Tutorship extends Tutorship_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummaryRelation> getTutorshipSummaryRelations() {
         return getTutorshipSummaryRelationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTutorshipSummaryRelations() {
-        return !getTutorshipSummaryRelationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasTeacher() {
-        return getTeacher() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasStartDate() {
-        return getStartDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentCurricularPlan() {
-        return getStudentCurricularPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasTutorshipLog() {
-        return getTutorshipLog() != null;
     }
 
 }

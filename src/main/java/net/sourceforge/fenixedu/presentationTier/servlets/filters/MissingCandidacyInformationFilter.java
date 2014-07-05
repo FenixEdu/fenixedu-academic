@@ -59,7 +59,7 @@ public class MissingCandidacyInformationFilter implements Filter {
             return;
         }
 
-        if (AccessControl.getPerson() != null && AccessControl.getPerson().hasStudent()) {
+        if (AccessControl.getPerson() != null && AccessControl.getPerson().getStudent() != null) {
 
             final Boolean validCandidacyInformation =
                     (Boolean) request.getSession().getAttribute(CANDIDACY_INFORMATION_VALID_KEY);

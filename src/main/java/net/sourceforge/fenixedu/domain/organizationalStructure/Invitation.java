@@ -150,9 +150,4 @@ public class Invitation extends Invitation_Base {
         return AccountabilityType.readByType(AccountabilityTypeEnum.INVITATION);
     }
 
-    @Deprecated
-    public boolean hasResponsible() {
-        return getResponsible() != null;
-    }
-
 }

@@ -113,38 +113,13 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeThesisDataVersions() {
-        return !getMasterDegreeThesisDataVersionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofVersions() {
         return getMasterDegreeProofVersionsSet();
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeProofVersions() {
-        return !getMasterDegreeProofVersionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersions() {
         return getConclusionProcessVersionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyConclusionProcessVersions() {
-        return !getConclusionProcessVersionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentCurricularPlan() {
-        return getStudentCurricularPlan() != null;
     }
 
 }

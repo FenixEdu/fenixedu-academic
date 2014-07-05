@@ -40,7 +40,7 @@ public class GratuityEventWrapper implements Wrapper {
 
     @Override
     public String getStudentNumber() {
-        if (event.getPerson().hasStudent()) {
+        if (event.getPerson().getStudent() != null) {
             return event.getPerson().getStudent().getNumber().toString();
         }
 

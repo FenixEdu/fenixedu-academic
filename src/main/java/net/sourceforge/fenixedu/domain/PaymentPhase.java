@@ -96,34 +96,4 @@ public class PaymentPhase extends PaymentPhase_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasGratuityValues() {
-        return getGratuityValues() != null;
-    }
-
-    @Deprecated
-    public boolean hasValue() {
-        return getValue() != null;
-    }
-
-    @Deprecated
-    public boolean hasDescription() {
-        return getDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDateYearMonthDay() {
-        return getEndDateYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasStartDateYearMonthDay() {
-        return getStartDateYearMonthDay() != null;
-    }
-
 }

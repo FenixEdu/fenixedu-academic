@@ -197,7 +197,7 @@ public class SeparationCyclesManagement {
     private boolean isToMoveAttendsFrom(final StudentCurricularPlan oldStudentCurricularPlan,
             final StudentCurricularPlan newStudentCurricularPlan, final Attends attend) {
 
-        if (attend.hasEnrolment()) {
+        if (attend.getEnrolment() != null) {
             return !oldStudentCurricularPlan.hasEnrolments(attend.getEnrolment())
                     && newStudentCurricularPlan.hasEnrolments(attend.getEnrolment());
         }
@@ -553,7 +553,7 @@ public class SeparationCyclesManagement {
         }
         if (!curriculumModule.isLeaf()) {
             final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
-            for (; curriculumGroup.hasAnyCurriculumModules();) {
+            for (; !curriculumGroup.getCurriculumModulesSet().isEmpty();) {
                 deleteCurriculumModules(curriculumGroup.getCurriculumModules().iterator().next());
             }
             curriculumGroup.delete();

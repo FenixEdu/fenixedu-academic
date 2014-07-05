@@ -169,7 +169,7 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     public boolean isPiggyBackedOnRegistry() {
-        return hasRegistryDiplomaRequest();
+        return getRegistryDiplomaRequest() != null;
     }
 
     @Override
@@ -296,21 +296,6 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity> getExtraCurricularActivity() {
         return getExtraCurricularActivitySet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExtraCurricularActivity() {
-        return !getExtraCurricularActivitySet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasRequestedCycle() {
-        return getRequestedCycle() != null;
-    }
-
-    @Deprecated
-    public boolean hasRegistryDiplomaRequest() {
-        return getRegistryDiplomaRequest() != null;
     }
 
 }

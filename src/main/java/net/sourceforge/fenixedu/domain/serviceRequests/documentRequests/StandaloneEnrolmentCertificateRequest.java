@@ -78,7 +78,7 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
         super.internalChangeState(academicServiceRequestBean);
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
-            for (; hasAnyEnrolments();) {
+            for (; !getEnrolmentsSet().isEmpty();) {
                 removeEnrolments(getEnrolments().iterator().next());
             }
         }
@@ -87,11 +87,6 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
         return getEnrolmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEnrolments() {
-        return !getEnrolmentsSet().isEmpty();
     }
 
 }

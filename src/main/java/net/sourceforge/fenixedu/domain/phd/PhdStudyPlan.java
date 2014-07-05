@@ -45,7 +45,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
                     public void beforeAdd(PhdStudyPlan studyPlan, PhdIndividualProgramProcess process) {
 
                         if (studyPlan != null && process != null) {
-                            if (process.hasStudyPlan()) {
+                            if (process.getStudyPlan() != null) {
                                 throw new DomainException(
                                         "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.already.has.study.play");
                             }
@@ -186,7 +186,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     public void delete() {
 
-        for (; hasAnyEntries(); getEntries().iterator().next().delete()) {
+        for (; !getEntriesSet().isEmpty(); getEntries().iterator().next().delete()) {
             ;
         }
 
@@ -199,7 +199,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     }
 
     public boolean isToEnrolInCurricularCourses() {
-        return hasAnyEntries();
+        return !getEntriesSet().isEmpty();
     }
 
     public String getDescription() {
@@ -236,7 +236,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
             }
         }
 
-        return hasAnyEntries();
+        return !getEntriesSet().isEmpty();
     }
 
     private Enrolment findEnrolment(final StudentCurricularPlan scp, final InternalPhdStudyPlanEntry entry) {
@@ -256,41 +256,6 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry> getEntries() {
         return getEntriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEntries() {
-        return !getEntriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasProcess() {
-        return getProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreatedBy() {
-        return getCreatedBy() != null;
-    }
-
-    @Deprecated
-    public boolean hasExempted() {
-        return getExempted() != null;
     }
 
 }

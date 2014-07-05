@@ -456,17 +456,17 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 || registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES
                 || registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES_ERASMUS) {
 
-            if (!registration.hasStudentCandidacy()) {
+            if (registration.getStudentCandidacy() == null) {
                 return EMPTY;
             }
 
             StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
-            if (!studentCandidacy.hasPrecedentDegreeInformation()) {
+            if (studentCandidacy.getPrecedentDegreeInformation() == null) {
                 return EMPTY;
             }
 
             PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
-            if (!precedentDegreeInformation.hasPrecedentInstitution()) {
+            if (precedentDegreeInformation.getPrecedentInstitution() == null) {
                 return EMPTY;
             }
 
@@ -491,17 +491,17 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 || registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES
                 || registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES_ERASMUS) {
 
-            if (!registration.hasStudentCandidacy()) {
+            if (registration.getStudentCandidacy() == null) {
                 return EMPTY;
             }
 
             StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
-            if (!studentCandidacy.hasPrecedentDegreeInformation()) {
+            if (studentCandidacy.getPrecedentDegreeInformation() == null) {
                 return EMPTY;
             }
 
             PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
-            if (!precedentDegreeInformation.hasPrecedentCountry()) {
+            if (precedentDegreeInformation.getPrecedentCountry() == null) {
                 return EMPTY;
             }
 

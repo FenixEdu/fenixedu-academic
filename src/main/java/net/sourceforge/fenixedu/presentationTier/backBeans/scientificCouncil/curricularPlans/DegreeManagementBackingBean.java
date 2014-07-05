@@ -437,7 +437,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         if (lastActiveDegreeCurricularPlan == null) {
             return true;
         }
-        if (!lastActiveDegreeCurricularPlan.hasAnyExecutionDegrees()) {
+        if (lastActiveDegreeCurricularPlan.getExecutionDegreesSet().isEmpty()) {
             return true;
         }
         if (getSelectedExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {

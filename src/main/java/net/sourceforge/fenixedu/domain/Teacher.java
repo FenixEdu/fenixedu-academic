@@ -1387,18 +1387,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyTutorshipIntention() {
-        return !getTutorshipIntentionSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TeacherAuthorization> getAuthorization() {
         return getAuthorizationSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAuthorization() {
-        return !getAuthorizationSet().isEmpty();
     }
 
     @Deprecated
@@ -1407,18 +1397,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyTeacherServices() {
-        return !getTeacherServicesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Orientation> getAssociatedOrientations() {
         return getAssociatedOrientationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedOrientations() {
-        return !getAssociatedOrientationsSet().isEmpty();
     }
 
     @Deprecated
@@ -1427,18 +1407,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyDegreeFinalProjectStudents() {
-        return !getDegreeFinalProjectStudentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime> getInstitutionWorkTimePeriods() {
         return getInstitutionWorkTimePeriodsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInstitutionWorkTimePeriods() {
-        return !getInstitutionWorkTimePeriodsSet().isEmpty();
     }
 
     @Deprecated
@@ -1447,18 +1417,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeCandidates() {
-        return !getMasterDegreeCandidatesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine> getManagementPositions() {
         return getManagementPositionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyManagementPositions() {
-        return !getManagementPositionsSet().isEmpty();
     }
 
     @Deprecated
@@ -1467,18 +1427,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMarkSheets() {
-        return !getMarkSheetsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits> getAnnualTeachingCredits() {
         return getAnnualTeachingCreditsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAnnualTeachingCredits() {
-        return !getAnnualTeachingCreditsSet().isEmpty();
     }
 
     @Deprecated
@@ -1487,18 +1437,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedPublicationsNumbers() {
-        return !getAssociatedPublicationsNumbersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
         return getAssociatedSummariesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedSummaries() {
-        return !getAssociatedSummariesSet().isEmpty();
     }
 
     @Deprecated
@@ -1507,18 +1447,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedCareers() {
-        return !getAssociatedCareersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation> getTeacherPersonalExpectations() {
         return getTeacherPersonalExpectationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTeacherPersonalExpectations() {
-        return !getTeacherPersonalExpectationsSet().isEmpty();
     }
 
     @Deprecated
@@ -1527,18 +1457,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedExternalActivities() {
-        return !getAssociatedExternalActivitiesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit> getExecutionCourseAudits() {
         return getExecutionCourseAuditsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExecutionCourseAudits() {
-        return !getExecutionCourseAuditsSet().isEmpty();
     }
 
     @Deprecated
@@ -1547,18 +1467,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeThesisGuider() {
-        return !getMasterDegreeThesisGuiderSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvises() {
         return getAdvisesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAdvises() {
-        return !getAdvisesSet().isEmpty();
     }
 
     @Deprecated
@@ -1567,18 +1477,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeThesisAssistentGuider() {
-        return !getMasterDegreeThesisAssistentGuiderSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCredits> getTeacherCredits() {
         return getTeacherCreditsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTeacherCredits() {
-        return !getTeacherCreditsSet().isEmpty();
     }
 
     @Deprecated
@@ -1587,18 +1487,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeProofsJury() {
-        return !getMasterDegreeProofsJurySet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Tutorship> getTutorships() {
         return getTutorshipsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTutorships() {
-        return !getTutorshipsSet().isEmpty();
     }
 
     @Deprecated
@@ -1607,18 +1497,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedOldPublications() {
-        return !getAssociatedOldPublicationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup> getAppraiserExpectationEvaluationGroups() {
         return getAppraiserExpectationEvaluationGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAppraiserExpectationEvaluationGroups() {
-        return !getAppraiserExpectationEvaluationGroupsSet().isEmpty();
     }
 
     @Deprecated
@@ -1627,18 +1507,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyThesisSubjects() {
-        return !getThesisSubjectsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes> getAssociatedOldInquiriesTeachersRes() {
         return getAssociatedOldInquiriesTeachersResSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedOldInquiriesTeachersRes() {
-        return !getAssociatedOldInquiriesTeachersResSet().isEmpty();
     }
 
     @Deprecated
@@ -1647,18 +1517,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyTutorshipSummaries() {
-        return !getTutorshipSummariesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator> getMobilityCoordinations() {
         return getMobilityCoordinationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMobilityCoordinations() {
-        return !getMobilityCoordinationsSet().isEmpty();
     }
 
     @Deprecated
@@ -1667,38 +1527,8 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasAnyEvaluatedExpectationEvaluationGroups() {
-        return !getEvaluatedExpectationEvaluationGroupsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine> getOtherTypeCreditLines() {
         return getOtherTypeCreditLinesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyOtherTypeCreditLines() {
-        return !getOtherTypeCreditLinesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasWeeklyOcupation() {
-        return getWeeklyOcupation() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasServiceProviderRegime() {
-        return getServiceProviderRegime() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
     }
 
 }

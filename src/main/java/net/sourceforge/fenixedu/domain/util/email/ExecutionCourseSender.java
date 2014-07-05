@@ -102,9 +102,4 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
         return sender == null ? new ExecutionCourseSender(ec) : sender;
     }
 
-    @Deprecated
-    public boolean hasCourse() {
-        return getCourse() != null;
-    }
-
 }

@@ -219,7 +219,7 @@ public class ListExecutionCourseGroupingsDA extends FenixDispatchAction {
 
             int enrolmentCount = 0;
             for (final Attends attends : executionCourse.getAttendsSet()) {
-                if (attends.hasEnrolment()) {
+                if (attends.getEnrolment() != null) {
                     enrolmentCount++;
                 }
             }

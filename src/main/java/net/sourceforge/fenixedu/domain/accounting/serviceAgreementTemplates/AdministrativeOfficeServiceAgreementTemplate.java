@@ -50,9 +50,4 @@ public class AdministrativeOfficeServiceAgreementTemplate extends Administrative
         return getAdministrativeOfficeSet();
     }
 
-    @Deprecated
-    public boolean hasAnyAdministrativeOffice() {
-        return !getAdministrativeOfficeSet().isEmpty();
-    }
-
 }

@@ -39,8 +39,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
 public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implements IRegistryDiplomaRequest,
         IRectorateSubmissionBatchDocumentEntry {
 
@@ -165,14 +163,14 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
                 getDiplomaSupplement().process();
             }
         } else if (academicServiceRequestBean.isToConclude()) {
-            if (!isFree() && !hasEvent() && !isPayedUponCreation()) {
+            if (!isFree() && getEvent() == null && !isPayedUponCreation()) {
                 RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
             }
             if (getRegistration().isBolonha() && getDiplomaSupplement().isConcludedSituationAccepted()) {
                 getDiplomaSupplement().conclude();
             }
         } else if (academicServiceRequestBean.isToCancelOrReject()) {
-            if (hasEvent()) {
+            if (getEvent() != null) {
                 getEvent().cancel(academicServiceRequestBean.getResponsible());
             }
             if (getRegistration().isBolonha() && academicServiceRequestBean.isToCancel()) {
@@ -255,10 +253,9 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
             DegreeCurricularPlan dcp = degreeCurricularPlansForYear.iterator().next();
             CycleCourseGroup cycleCourseGroup = dcp.getCycleCourseGroup(cycleType);
             if (cycleCourseGroup != null) {
-                final MultiLanguageString mls = cycleCourseGroup.getGraduateTitleSuffix();
-                final String suffix = mls == null ? null : mls.getContent(getLanguage());
-                if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
-                    result.append(" ").append(suffix);
+                String graduateTitleSuffix = cycleCourseGroup.getGraduateTitleSuffix(getConclusionYear(), getLanguage());
+                if (!StringUtils.isEmpty(graduateTitleSuffix) && !degreeFilteredName.contains(graduateTitleSuffix.trim())) {
+                    result.append(" ").append(graduateTitleSuffix);
                     result.append(" ").append("-");
                 }
             }
@@ -311,16 +308,6 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
     @Override
     public boolean isProgrammeLinkVisible() {
         return getRegistration().isAllowedToManageRegistration();
-    }
-
-    @Deprecated
-    public boolean hasRequestedCycle() {
-        return getRequestedCycle() != null;
-    }
-
-    @Deprecated
-    public boolean hasDiplomaSupplement() {
-        return getDiplomaSupplement() != null;
     }
 
 }

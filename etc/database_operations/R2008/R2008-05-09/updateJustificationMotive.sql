@@ -1,1 +1,0 @@
- update JUSTIFICATION_MOTIVE set ACCUMULATE=0 where ACCUMULATE is null;

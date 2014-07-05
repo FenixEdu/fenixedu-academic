@@ -73,19 +73,4 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
         return null;
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasSocialSecurityNumber() {
-        return getSocialSecurityNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasParty() {
-        return getParty() != null;
-    }
-
 }

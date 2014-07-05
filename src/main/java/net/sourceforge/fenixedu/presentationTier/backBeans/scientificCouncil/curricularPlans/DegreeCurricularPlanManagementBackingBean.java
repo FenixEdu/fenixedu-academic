@@ -164,7 +164,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     public List<SelectItem> getCurricularStages() {
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        if (!getDcp().hasAnyExecutionDegrees()) {
+        if (getDcp().getExecutionDegreesSet().isEmpty()) {
             result.add(new SelectItem(CurricularStage.DRAFT.name(), BundleUtil.getString(Bundle.ENUMERATION,
                     CurricularStage.DRAFT.getName())));
         }

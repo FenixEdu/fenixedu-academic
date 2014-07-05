@@ -99,34 +99,4 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
         return getRegistrationsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyRegistrations() {
-        return !getRegistrationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasRoomOrder() {
-        return getRoomOrder() != null;
-    }
-
-    @Deprecated
-    public boolean hasShift() {
-        return getShift() != null;
-    }
-
-    @Deprecated
-    public boolean hasCapacity() {
-        return getCapacity() != null;
-    }
-
 }

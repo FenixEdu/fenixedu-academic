@@ -92,7 +92,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
         commentLink.setText(commentLinkText);
         container.addChild(commentLink);
 
-        if (courseResumeResult.getExecutionCourse().hasExecutionCourseAudit()
+        if (courseResumeResult.getExecutionCourse().getExecutionCourseAudit() != null
                 && courseResumeResult.getExecutionCourse().getExecutionCourseAudit().isProcessAvailable()) {
             container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
             HtmlLink auditLink = new HtmlLink();

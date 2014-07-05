@@ -232,13 +232,13 @@ public class PersonFunction extends PersonFunction_Base {
     @Override
     @Atomic
     public void delete() {
-        if (hasCurricularYear()) {
+        if (getCurricularYear() != null) {
             setCurricularYear(null);
         }
-        if (hasDelegate()) {
+        if (getDelegate() != null) {
             setDelegate(null);
         }
-        if (hasSender()) {
+        if (getSender() != null) {
             setSender(null);
         }
         if (!getDelegateStudentsGroupSet().isEmpty()) {
@@ -263,26 +263,6 @@ public class PersonFunction extends PersonFunction_Base {
             return units.contains(getUnit());
         }
         return false;
-    }
-
-    @Deprecated
-    public boolean hasSender() {
-        return getSender() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurricularYear() {
-        return getCurricularYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionInterval() {
-        return getExecutionInterval() != null;
-    }
-
-    @Deprecated
-    public boolean hasDelegate() {
-        return getDelegate() != null;
     }
 
 }

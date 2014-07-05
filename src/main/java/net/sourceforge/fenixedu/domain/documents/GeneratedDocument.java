@@ -85,19 +85,4 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
 
     };
 
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasOperator() {
-        return getOperator() != null;
-    }
-
-    @Deprecated
-    public boolean hasAddressee() {
-        return getAddressee() != null;
-    }
-
 }

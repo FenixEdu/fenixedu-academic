@@ -52,8 +52,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
 public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaRequest, IRectorateSubmissionBatchDocumentEntry {
 
     public DiplomaRequest() {
@@ -92,7 +90,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
             if (registryRequest == null) {
                 throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
-            } else if (registryRequest.isPayedUponCreation() && registryRequest.hasEvent()
+            } else if (registryRequest.isPayedUponCreation() && registryRequest.getEvent() != null
                     && !registryRequest.getEvent().isPayed()) {
                 throw new DomainException("DiplomaRequest.registration.withoutPayedRegistryRequest");
             }
@@ -216,11 +214,11 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             }
         }
 
-        if (academicServiceRequestBean.isToConclude() && !isFree() && !hasEvent() && !isPayedUponCreation()) {
+        if (academicServiceRequestBean.isToConclude() && !isFree() && getEvent() == null && !isPayedUponCreation()) {
             DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
         }
 
-        if (academicServiceRequestBean.isToCancelOrReject() && hasEvent() && getEvent().isOpen()) {
+        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null && getEvent().isOpen()) {
             getEvent().cancel(academicServiceRequestBean.getResponsible());
         }
     }
@@ -524,19 +522,18 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
         result.append(degreeType.getGraduateTitle(cycleType, getLanguage()));
         final RegistrationConclusionBean registrationConclusionBean =
                 new RegistrationConclusionBean(getRegistration(), getCycleCurriculumGroup());
-        ExecutionYear executionYear = registrationConclusionBean.getConclusionYear();
-        final String degreeFilteredName = degree.getFilteredName(executionYear, getLanguage());
+        ExecutionYear conclusionYear = registrationConclusionBean.getConclusionYear();
+        final String degreeFilteredName = degree.getFilteredName(conclusionYear, getLanguage());
         result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, getLanguage(), "label.in"));
 
-        List<DegreeCurricularPlan> degreeCurricularPlansForYear = getDegree().getDegreeCurricularPlansForYear(executionYear);
+        List<DegreeCurricularPlan> degreeCurricularPlansForYear = getDegree().getDegreeCurricularPlansForYear(conclusionYear);
         if (degreeCurricularPlansForYear.size() == 1) {
             DegreeCurricularPlan dcp = degreeCurricularPlansForYear.iterator().next();
             CycleCourseGroup cycleCourseGroup = dcp.getCycleCourseGroup(cycleType);
             if (cycleCourseGroup != null) {
-                final MultiLanguageString mls = cycleCourseGroup.getGraduateTitleSuffix();
-                final String suffix = mls == null ? null : mls.getContent(getLanguage());
-                if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
-                    result.append(" ").append(suffix);
+                String graduateTitleSuffix = cycleCourseGroup.getGraduateTitleSuffix(conclusionYear, getLanguage());
+                if (!StringUtils.isEmpty(graduateTitleSuffix) && !degreeFilteredName.contains(graduateTitleSuffix.trim())) {
+                    result.append(" ").append(graduateTitleSuffix);
                     result.append(" ").append("-");
                 }
             }
@@ -573,11 +570,6 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     @Override
     public boolean isProgrammeLinkVisible() {
         return getRegistration().isAllowedToManageRegistration();
-    }
-
-    @Deprecated
-    public boolean hasRequestedCycle() {
-        return getRequestedCycle() != null;
     }
 
 }

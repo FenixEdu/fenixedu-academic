@@ -82,7 +82,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
     public static List<Group> getPossibleReceivers(Person person) {
         List<Group> groups = new ArrayList<Group>();
         PersonFunction delegateFunction = null;
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             final Student delegate = person.getStudent();
             logger.info("Delegate: " + person.getName());
             final Registration lastRegistration = delegate.getLastActiveRegistration();
@@ -127,11 +127,6 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
     public static PersonFunctionSender newInstance(PersonFunction personFunction) {
         PersonFunctionSender sender = personFunction.getSender();
         return sender == null ? new PersonFunctionSender(personFunction) : sender;
-    }
-
-    @Deprecated
-    public boolean hasPersonFunction() {
-        return getPersonFunction() != null;
     }
 
 }

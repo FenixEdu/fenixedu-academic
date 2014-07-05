@@ -201,18 +201,8 @@ public class UniversityUnit extends UniversityUnit_Base {
     }
 
     @Deprecated
-    public boolean hasAnyErasmusVacancy() {
-        return !getErasmusVacancySet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement> getMobilityAgreements() {
         return getMobilityAgreementsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMobilityAgreements() {
-        return !getMobilityAgreementsSet().isEmpty();
     }
 
 }

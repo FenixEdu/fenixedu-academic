@@ -52,7 +52,7 @@ public class SeperateExecutionCourse {
     public static ExecutionCourse run(final ExecutionCourse originExecutionCourse, ExecutionCourse destinationExecutionCourse,
             final List<Shift> shiftsToTransfer, final List<CurricularCourse> curricularCourseToTransfer) {
 
-        if (originExecutionCourse.hasAnyInquiryResults()) {
+        if (!originExecutionCourse.getInquiryResultsSet().isEmpty()) {
             throw new DomainException("error.manager.executionCourseManagement.separateCourse.inqueriesPresent");
         }
 

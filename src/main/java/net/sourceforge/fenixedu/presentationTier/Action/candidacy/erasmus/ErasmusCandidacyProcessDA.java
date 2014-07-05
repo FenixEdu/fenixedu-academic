@@ -109,9 +109,9 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
         final MobilityApplicationProcessBean bean = new MobilityApplicationProcessBean(process);
         bean.setForSemester(((MobilityApplicationProcess) process).getForSemester());
         request.setAttribute("candidacyProcessBean", bean);
-        if (map.hasAnyChildProcesses()) {
+        if (!map.getChildProcessesSet().isEmpty()) {
             request.setAttribute("preLoadLevel", "Error");
-        } else if (map.hasAnyCoordinators() || map.getCandidacyPeriod().getMobilityQuotasSet().size() > 0
+        } else if (!map.getCoordinatorsSet().isEmpty() || map.getCandidacyPeriod().getMobilityQuotasSet().size() > 0
                 || map.getCandidacyPeriod().getEmailTemplatesSet().size() > 0) {
             request.setAttribute("preLoadLevel", "Warn");
         } else {

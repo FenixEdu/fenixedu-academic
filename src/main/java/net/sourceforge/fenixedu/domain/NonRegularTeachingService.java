@@ -69,24 +69,4 @@ public class NonRegularTeachingService extends NonRegularTeachingService_Base {
         deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasPercentage() {
-        return getPercentage() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasProfessorship() {
-        return getProfessorship() != null;
-    }
-
-    @Deprecated
-    public boolean hasShift() {
-        return getShift() != null;
-    }
-
 }

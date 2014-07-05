@@ -74,7 +74,7 @@ public class RequestJuryReviews extends PhdThesisActivity {
         }
 
         bean.setThesisProcess(process);
-        if (!process.hasMeetingProcess()) {
+        if (process.getMeetingProcess() == null) {
             Process.createNewProcess(userView, PhdMeetingSchedulingProcess.class, bean);
         }
 

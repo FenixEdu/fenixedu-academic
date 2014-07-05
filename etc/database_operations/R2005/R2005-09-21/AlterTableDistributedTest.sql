@@ -1,1 +1,0 @@
-alter table DISTRIBUTED_TESTS add column KEY_ONLINE_TEST int(11) default null;

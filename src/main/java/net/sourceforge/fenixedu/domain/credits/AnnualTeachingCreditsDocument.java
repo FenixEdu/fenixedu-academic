@@ -58,14 +58,4 @@ public class AnnualTeachingCreditsDocument extends AnnualTeachingCreditsDocument
                 .replaceAll("/", "_");
     }
 
-    @Deprecated
-    public boolean hasHasConfidencialInformation() {
-        return getHasConfidencialInformation() != null;
-    }
-
-    @Deprecated
-    public boolean hasAnnualTeachingCredits() {
-        return getAnnualTeachingCredits() != null;
-    }
-
 }

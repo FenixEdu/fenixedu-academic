@@ -31,7 +31,7 @@ public class CerimonyInquiryPerson extends CerimonyInquiryPerson_Base {
     }
 
     public void delete() {
-        if (!hasCerimonyInquiryAnswer()) {
+        if (getCerimonyInquiryAnswer() == null) {
             setCerimonyInquiry(null);
             setPerson(null);
             setRootDomainObject(null);
@@ -40,32 +40,7 @@ public class CerimonyInquiryPerson extends CerimonyInquiryPerson_Base {
     }
 
     public boolean isPendingResponse() {
-        return !hasCerimonyInquiryAnswer() && getCerimonyInquiry().isOpen();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasComment() {
-        return getComment() != null;
-    }
-
-    @Deprecated
-    public boolean hasCerimonyInquiry() {
-        return getCerimonyInquiry() != null;
-    }
-
-    @Deprecated
-    public boolean hasCerimonyInquiryAnswer() {
-        return getCerimonyInquiryAnswer() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
+        return getCerimonyInquiryAnswer() == null && getCerimonyInquiry().isOpen();
     }
 
 }

@@ -72,7 +72,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
     @Override
     protected void checkParameters(final CandidacyProcess process) {
-        if (process == null || !process.hasCandidacyPeriod()) {
+        if (process == null || process.getCandidacyPeriod() == null) {
             throw new DomainException("error.StandaloneIndividualCandidacyProcess.invalid.candidacy.process");
         }
     }
@@ -237,7 +237,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
                 throw new PreConditionNotValidException();
             }
 
-            if (!process.getCandidacy().hasEvent() || process.getCandidacy().getEvent().isCancelled()) {
+            if (process.getCandidacy().getEvent() == null || process.getCandidacy().getEvent().isCancelled()) {
                 return;
             }
 

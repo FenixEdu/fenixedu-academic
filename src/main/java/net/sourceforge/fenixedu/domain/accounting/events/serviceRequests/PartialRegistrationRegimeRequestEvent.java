@@ -54,7 +54,7 @@ public class PartialRegistrationRegimeRequestEvent extends PartialRegistrationRe
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-        if (getAcademicServiceRequest().hasExecutionYear()) {
+        if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }
         return labelFormatter;

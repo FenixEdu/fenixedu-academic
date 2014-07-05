@@ -58,34 +58,4 @@ public class InquiriesRoom extends InquiriesRoom_Base {
 
     }
 
-    @Deprecated
-    public boolean hasInquiriesCourse() {
-        return getInquiriesCourse() != null;
-    }
-
-    @Deprecated
-    public boolean hasRoom() {
-        return getRoom() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEquipmentQuality() {
-        return getEquipmentQuality() != null;
-    }
-
-    @Deprecated
-    public boolean hasEnvironmentalConditions() {
-        return getEnvironmentalConditions() != null;
-    }
-
-    @Deprecated
-    public boolean hasSpaceAdequation() {
-        return getSpaceAdequation() != null;
-    }
-
 }

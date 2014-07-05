@@ -55,7 +55,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
         if (person.hasStudentCandidacyForExecutionDegree(executionDegree)) {
             StudentCandidacy existentCandidacy = person.getStudentCandidacyForExecutionDegree(executionDegree);
-            if (!existentCandidacy.hasRegistration() || existentCandidacy.getRegistration().getActiveStateType().isActive()) {
+            if (existentCandidacy.getRegistration() == null || existentCandidacy.getRegistration().getActiveStateType().isActive()) {
                 throw new DomainException("error.candidacy.already.created");
             }
         }
@@ -180,7 +180,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
         for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
             if (candidacy instanceof StudentCandidacy) {
                 final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
-                if (studentCandidacy.hasAnyCandidacySituations() && !studentCandidacy.isConcluded()
+                if (!studentCandidacy.getCandidacySituationsSet().isEmpty() && !studentCandidacy.isConcluded()
                         && studentCandidacy.getExecutionDegree() == executionDegree
                         && studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear
                         && studentCandidacy.getEntryPhase() != null && studentCandidacy.getEntryPhase().equals(entryPhase)) {
@@ -200,11 +200,11 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
         setCountryOfResidence(null);
         setDistrictSubdivisionOfResidence(null);
 
-        if (hasGrantOwnerProvider()) {
+        if (getGrantOwnerProvider() != null) {
             setGrantOwnerProvider(null);
         }
 
-        if (hasPrecedentDegreeInformation() && !getPrecedentDegreeInformation().hasStudent()) {
+        if (getPrecedentDegreeInformation() != null && getPrecedentDegreeInformation().getStudent() == null) {
             getPrecedentDegreeInformation().delete();
         }
 
@@ -225,7 +225,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
             for (PaymentCode paymentCode : getAvailablePaymentCodes()) {
                 AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
-                if (accountingEventPaymentCode.isNew() && !accountingEventPaymentCode.hasAccountingEvent()) {
+                if (accountingEventPaymentCode.isNew() && accountingEventPaymentCode.getAccountingEvent() == null) {
                     accountingEventPaymentCode.cancel();
                 }
             }
@@ -254,186 +254,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCode> getAvailablePaymentCodes() {
         return getAvailablePaymentCodesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAvailablePaymentCodes() {
-        return !getAvailablePaymentCodesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasRegistration() {
-        return getRegistration() != null;
-    }
-
-    @Deprecated
-    public boolean hasHighSchoolType() {
-        return getHighSchoolType() != null;
-    }
-
-    @Deprecated
-    public boolean hasMotherSchoolLevel() {
-        return getMotherSchoolLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasGrantOwnerType() {
-        return getGrantOwnerType() != null;
-    }
-
-    @Deprecated
-    public boolean hasDistrictSubdivisionOfResidence() {
-        return getDistrictSubdivisionOfResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentPersonalDataStudentsAssociationAuthorization() {
-        return getStudentPersonalDataStudentsAssociationAuthorization() != null;
-    }
-
-    @Deprecated
-    public boolean hasEntryGrade() {
-        return getEntryGrade() != null;
-    }
-
-    @Deprecated
-    public boolean hasFatherProfessionType() {
-        return getFatherProfessionType() != null;
-    }
-
-    @Deprecated
-    public boolean hasFirstTimeCandidacy() {
-        return getFirstTimeCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudentPersonalDataAuthorizationChoice() {
-        return getStudentPersonalDataAuthorizationChoice() != null;
-    }
-
-    @Deprecated
-    public boolean hasFirstTimeCandidacyLog() {
-        return getFirstTimeCandidacyLog() != null;
-    }
-
-    @Deprecated
-    public boolean hasProfessionalCondition() {
-        return getProfessionalCondition() != null;
-    }
-
-    @Deprecated
-    public boolean hasMotherProfessionType() {
-        return getMotherProfessionType() != null;
-    }
-
-    @Deprecated
-    public boolean hasGrantOwnerProvider() {
-        return getGrantOwnerProvider() != null;
-    }
-
-    @Deprecated
-    public boolean hasMaritalStatus() {
-        return getMaritalStatus() != null;
-    }
-
-    @Deprecated
-    public boolean hasFatherProfessionalCondition() {
-        return getFatherProfessionalCondition() != null;
-    }
-
-    @Deprecated
-    public boolean hasSpouseSchoolLevel() {
-        return getSpouseSchoolLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasNotesAboutResidenceAppliance() {
-        return getNotesAboutResidenceAppliance() != null;
-    }
-
-    @Deprecated
-    public boolean hasSpouseProfessionType() {
-        return getSpouseProfessionType() != null;
-    }
-
-    @Deprecated
-    public boolean hasSummaryFile() {
-        return getSummaryFile() != null;
-    }
-
-    @Deprecated
-    public boolean hasFatherSchoolLevel() {
-        return getFatherSchoolLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasSchoolTimeDistrictSubDivisionOfResidence() {
-        return getSchoolTimeDistrictSubDivisionOfResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasCountryOfResidence() {
-        return getCountryOfResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionDegree() {
-        return getExecutionDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasDislocatedFromPermanentResidence() {
-        return getDislocatedFromPermanentResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasSpouseProfessionalCondition() {
-        return getSpouseProfessionalCondition() != null;
-    }
-
-    @Deprecated
-    public boolean hasIngression() {
-        return getIngression() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumberOfFlunksOnHighSchool() {
-        return getNumberOfFlunksOnHighSchool() != null;
-    }
-
-    @Deprecated
-    public boolean hasContigent() {
-        return getContigent() != null;
-    }
-
-    @Deprecated
-    public boolean hasDgesStudentImportationProcess() {
-        return getDgesStudentImportationProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasPrecedentDegreeInformation() {
-        return getPrecedentDegreeInformation() != null;
-    }
-
-    @Deprecated
-    public boolean hasPlacingOption() {
-        return getPlacingOption() != null;
-    }
-
-    @Deprecated
-    public boolean hasMotherProfessionalCondition() {
-        return getMotherProfessionalCondition() != null;
-    }
-
-    @Deprecated
-    public boolean hasProfessionType() {
-        return getProfessionType() != null;
-    }
-
-    @Deprecated
-    public boolean hasNumberOfCandidaciesToHigherSchool() {
-        return getNumberOfCandidaciesToHigherSchool() != null;
     }
 
 }

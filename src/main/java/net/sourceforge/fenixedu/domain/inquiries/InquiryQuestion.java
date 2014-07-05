@@ -64,7 +64,7 @@ public class InquiryQuestion extends InquiryQuestion_Base {
         for (; !getQuestionConditions().isEmpty(); getQuestionConditions().iterator().next().delete()) {
             ;
         }
-        if (hasInquiryQuestionHeader()) {
+        if (getInquiryQuestionHeader() != null) {
             getInquiryQuestionHeader().delete();
         }
         for (InquiryBlock inquiryBlock : getAssociatedBlocks()) {
@@ -91,7 +91,7 @@ public class InquiryQuestion extends InquiryQuestion_Base {
     }
 
     public boolean hasGroupDependentQuestionCondition() {
-        return getDependentQuestionCondition() != null && getDependentQuestionCondition().hasInquiryGroupQuestion();
+        return getDependentQuestionCondition() != null && getDependentQuestionCondition().getInquiryGroupQuestion() != null;
     }
 
     @Deprecated
@@ -100,18 +100,8 @@ public class InquiryQuestion extends InquiryQuestion_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedBlocks() {
-        return !getAssociatedBlocksSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryBlock> getAssociatedResultBlocks() {
         return getAssociatedResultBlocksSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedResultBlocks() {
-        return !getAssociatedResultBlocksSet().isEmpty();
     }
 
     @Deprecated
@@ -120,98 +110,13 @@ public class InquiryQuestion extends InquiryQuestion_Base {
     }
 
     @Deprecated
-    public boolean hasAnyQuestionAnswers() {
-        return !getQuestionAnswersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResult> getInquiryResults() {
         return getInquiryResultsSet();
     }
 
     @Deprecated
-    public boolean hasAnyInquiryResults() {
-        return !getInquiryResultsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.QuestionCondition> getQuestionConditions() {
         return getQuestionConditionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyQuestionConditions() {
-        return !getQuestionConditionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasQuestionOrder() {
-        return getQuestionOrder() != null;
-    }
-
-    @Deprecated
-    public boolean hasDependentQuestionCondition() {
-        return getDependentQuestionCondition() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasAutofit() {
-        return getAutofit() != null;
-    }
-
-    @Deprecated
-    public boolean hasHasClassification() {
-        return getHasClassification() != null;
-    }
-
-    @Deprecated
-    public boolean hasInquiryQuestionHeader() {
-        return getInquiryQuestionHeader() != null;
-    }
-
-    @Deprecated
-    public boolean hasRequired() {
-        return getRequired() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowRequiredMark() {
-        return getShowRequiredMark() != null;
-    }
-
-    @Deprecated
-    public boolean hasLabel() {
-        return getLabel() != null;
-    }
-
-    @Deprecated
-    public boolean hasNewRow() {
-        return getNewRow() != null;
-    }
-
-    @Deprecated
-    public boolean hasInquiryGroupQuestion() {
-        return getInquiryGroupQuestion() != null;
-    }
-
-    @Deprecated
-    public boolean hasToolTip() {
-        return getToolTip() != null;
-    }
-
-    @Deprecated
-    public boolean hasCheckboxGroupQuestion() {
-        return getCheckboxGroupQuestion() != null;
-    }
-
-    @Deprecated
-    public boolean hasPresentResults() {
-        return getPresentResults() != null;
     }
 
 }

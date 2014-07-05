@@ -105,7 +105,7 @@ public class DegreeInfo extends DegreeInfo_Base {
         if (lastActiveDegreeCurricularPlan == null) {
             return true;
         }
-        if (!lastActiveDegreeCurricularPlan.hasAnyExecutionDegrees()) {
+        if (lastActiveDegreeCurricularPlan.getExecutionDegreesSet().isEmpty()) {
             return true;
         }
         if (getExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
@@ -329,96 +329,6 @@ public class DegreeInfo extends DegreeInfo_Base {
 
         }
         return infos.toJSONString();
-    }
-
-    @Deprecated
-    public boolean hasDescription() {
-        return getDescription() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeInfoCandidacy() {
-        return getDegreeInfoCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasGratuity() {
-        return getGratuity() != null;
-    }
-
-    @Deprecated
-    public boolean hasDriftsSecond() {
-        return getDriftsSecond() != null;
-    }
-
-    @Deprecated
-    public boolean hasAdditionalInfo() {
-        return getAdditionalInfo() != null;
-    }
-
-    @Deprecated
-    public boolean hasMarkMin() {
-        return getMarkMin() != null;
-    }
-
-    @Deprecated
-    public boolean hasOperationalRegime() {
-        return getOperationalRegime() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeInfoFuture() {
-        return getDegreeInfoFuture() != null;
-    }
-
-    @Deprecated
-    public boolean hasSchoolCalendar() {
-        return getSchoolCalendar() != null;
-    }
-
-    @Deprecated
-    public boolean hasLinks() {
-        return getLinks() != null;
-    }
-
-    @Deprecated
-    public boolean hasMarkMax() {
-        return getMarkMax() != null;
-    }
-
-    @Deprecated
-    public boolean hasHistory() {
-        return getHistory() != null;
-    }
-
-    @Deprecated
-    public boolean hasMarkAverage() {
-        return getMarkAverage() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasDriftsFirst() {
-        return getDriftsFirst() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasDriftsInitial() {
-        return getDriftsInitial() != null;
     }
 
 }

@@ -54,9 +54,4 @@ public class InsuranceExemptionJustification extends InsuranceExemptionJustifica
         return labelFormatter;
     }
 
-    @Deprecated
-    public boolean hasJustificationType() {
-        return getJustificationType() != null;
-    }
-
 }

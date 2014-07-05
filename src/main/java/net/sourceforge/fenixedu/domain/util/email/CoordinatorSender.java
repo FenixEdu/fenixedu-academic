@@ -72,9 +72,4 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         return sender == null ? new CoordinatorSender(degree) : sender;
     }
 
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
 }

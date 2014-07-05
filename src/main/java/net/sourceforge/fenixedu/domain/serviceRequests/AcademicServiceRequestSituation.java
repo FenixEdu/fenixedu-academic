@@ -202,39 +202,4 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
         }
     }
 
-    @Deprecated
-    public boolean hasAcademicServiceRequestSituationType() {
-        return getAcademicServiceRequestSituationType() != null;
-    }
-
-    @Deprecated
-    public boolean hasJustification() {
-        return getJustification() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreator() {
-        return getCreator() != null;
-    }
-
-    @Deprecated
-    public boolean hasSituationDate() {
-        return getSituationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasAcademicServiceRequest() {
-        return getAcademicServiceRequest() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDate() {
-        return getCreationDate() != null;
-    }
-
 }

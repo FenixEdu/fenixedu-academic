@@ -56,14 +56,4 @@ public class ErasmusCandidacyProcessExecutedAction extends ErasmusCandidacyProce
         return getSubjectMobilityIndividualApplicationProcessSet();
     }
 
-    @Deprecated
-    public boolean hasAnySubjectMobilityIndividualApplicationProcess() {
-        return !getSubjectMobilityIndividualApplicationProcessSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasMobilityApplicationProcess() {
-        return getMobilityApplicationProcess() != null;
-    }
-
 }

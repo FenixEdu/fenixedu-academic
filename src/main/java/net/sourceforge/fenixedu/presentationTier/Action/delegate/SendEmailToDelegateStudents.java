@@ -155,7 +155,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 
     private PersonFunction getDelegateFunction(ExecutionYear executionYear, final Person person) {
         PersonFunction delegateFunction = null;
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             final Student student = person.getStudent();
             List<Registration> activeRegistrations = new ArrayList<Registration>(student.getActiveRegistrations());
             Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
@@ -222,12 +222,12 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
             ExecutionYear executionYear) {
         List<DelegateCurricularCourseBean> result = new ArrayList<DelegateCurricularCourseBean>();
         if (delegateFunction != null) {
-            if (delegateFunction.getPerson().hasStudent()) {
+            if (delegateFunction.getPerson().getStudent() != null) {
                 Set<CurricularCourse> curricularCourses =
                         delegateFunction.getPerson().getStudent()
                                 .getCurricularCoursesResponsibleForByFunctionType(delegateFunction, executionYear);
                 return getCurricularCoursesBeans(delegateFunction, curricularCourses, executionYear);
-            } else if (delegateFunction.getPerson().hasAnyCoordinators()) {
+            } else if (!delegateFunction.getPerson().getCoordinatorsSet().isEmpty()) {
                 Set<CurricularCourse> curricularCourses =
                         getDegreesCurricularCoursesFromCoordinatorRoles(delegateFunction.getPerson().getCoordinators(),
                                 executionYear);

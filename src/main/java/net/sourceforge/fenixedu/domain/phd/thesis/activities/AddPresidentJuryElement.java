@@ -47,7 +47,7 @@ public class AddPresidentJuryElement extends PhdThesisActivity {
 
         process.checkJuryPresidentNotGuider((PhdThesisJuryElementBean) object);
 
-        if (process.hasPresidentJuryElement()) {
+        if (process.getPresidentJuryElement() != null) {
             process.getPresidentJuryElement().delete();
         }
 

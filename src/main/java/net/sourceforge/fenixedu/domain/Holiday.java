@@ -136,19 +136,4 @@ public class Holiday extends Holiday_Base {
         return false;
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasLocality() {
-        return getLocality() != null;
-    }
-
-    @Deprecated
-    public boolean hasDate() {
-        return getDate() != null;
-    }
-
 }

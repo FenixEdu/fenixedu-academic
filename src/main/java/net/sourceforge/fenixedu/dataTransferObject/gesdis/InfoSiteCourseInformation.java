@@ -255,7 +255,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     public Date getLastModificationDate() {
         final Set<DateTime> dates = new HashSet<DateTime>();
 
-        if (getExecutionCourse().hasCourseReport()) {
+        if (getExecutionCourse().getCourseReport() != null) {
             dates.add(getExecutionCourse().getCourseReport().getLastModificationDateDateTime());
         }
 

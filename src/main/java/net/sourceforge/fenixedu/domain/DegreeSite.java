@@ -71,7 +71,7 @@ public class DegreeSite extends DegreeSite_Base {
     public Unit getUnit() {
         Unit unit = super.getUnit();
         if (unit == null) {
-            if (hasDegree()) {
+            if (getDegree() != null) {
                 unit = getDegree().getUnit();
                 updateUnit(unit);
             }
@@ -82,11 +82,6 @@ public class DegreeSite extends DegreeSite_Base {
     @Atomic
     private void updateUnit(Unit unit) {
         setUnit(unit);
-    }
-
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
     }
 
     @Override

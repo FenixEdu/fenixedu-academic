@@ -1,2 +1,0 @@
-create table `REMOTE_DOMAIN_OBJECT_INDEX` (`OID` bigint unsigned, `OID_REMOTE_SYSTEM` bigint unsigned, `INDEX_PART` text, `OID_PREVIOUS` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_REMOTE_SYSTEM), index (OID_PREVIOUS)) type=InnoDB, character set latin1;
-alter table `REMOTE_DOMAIN_OBJECT` add `OID_REMOTE_DOMAIN_OBJECT_INDEX` bigint unsigned, add index (OID_REMOTE_DOMAIN_OBJECT_INDEX);

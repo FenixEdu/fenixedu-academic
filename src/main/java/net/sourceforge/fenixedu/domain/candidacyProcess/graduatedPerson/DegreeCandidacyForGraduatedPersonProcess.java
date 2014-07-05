@@ -66,7 +66,7 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 
                         if (candidacyProcess != null && candidacyPeriod != null
                                 && candidacyPeriod instanceof DegreeCandidacyForGraduatedPersonCandidacyPeriod) {
-                            if (candidacyPeriod.hasAnyCandidacyProcesses()) {
+                            if (!candidacyPeriod.getCandidacyProcessesSet().isEmpty()) {
                                 throw new DomainException(
                                         "error.DegreeCandidacyForGraduatedPersonProcess.candidacy.period.already.has.process");
                             }
@@ -239,7 +239,7 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
                 throw new PreConditionNotValidException();
             }
 
-            if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+            if (process.getCandidacyPeriod() == null || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
                 throw new PreConditionNotValidException();
             }
         }
@@ -264,7 +264,7 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
                 throw new PreConditionNotValidException();
             }
 
-            if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+            if (process.getCandidacyPeriod() == null || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
                 throw new PreConditionNotValidException();
             }
         }

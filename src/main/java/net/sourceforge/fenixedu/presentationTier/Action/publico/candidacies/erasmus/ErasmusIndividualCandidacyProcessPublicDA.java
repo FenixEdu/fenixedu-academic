@@ -915,19 +915,19 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
         } else if (persons.size() == 1) {
             Person person = persons.iterator().next();
-            if (person.hasEmployee()) {
+            if (person.getEmployee() != null) {
                 addActionMessage("individualCandidacyMessages", request,
                         "mobility.error.person.with.same.identifier.exists.employee");
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
 
-            if (person.hasStudent() && person.getStudent().hasActiveRegistrations()) {
+            if (person.getStudent() != null && person.getStudent().hasActiveRegistrations()) {
                 addActionMessage("individualCandidacyMessages", request,
                         "mobility.error.person.with.same.identifier.exists.active.registration");
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
 
-            if (person.hasStudent() && !person.getStudent().getNumber().toString().equals(bean.getPersonNumber())) {
+            if (person.getStudent() != null && !person.getStudent().getNumber().toString().equals(bean.getPersonNumber())) {
                 addActionMessage("individualCandidacyMessages", request,
                         "mobility.error.person.with.same.identifier.exists.different.student", Unit.getInstitutionAcronym());
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);

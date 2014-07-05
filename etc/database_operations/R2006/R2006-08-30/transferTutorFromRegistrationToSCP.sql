@@ -1,3 +1,0 @@
-alter table STUDENT_CURRICULAR_PLAN add column KEY_ASSOCIATED_TUTOR int(11) NULL;
-alter table TUTOR_SHIP add column KEY_STUDENT_CURRICULAR_PLAN int(11) NULL;
-

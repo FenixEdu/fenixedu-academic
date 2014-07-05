@@ -48,7 +48,7 @@ public class PendingPartyContactBean {
                 return pendingOrValidPhysicalAddresses.iterator().next();
             } else {
                 for (PhysicalAddress physicalAddress : pendingOrValidPhysicalAddresses) {
-                    if (physicalAddress.hasPartyContactValidation()) {
+                    if (physicalAddress.getPartyContactValidation() != null) {
                         if (physicalAddress.getPartyContactValidation().getToBeDefault() != null) {
                             if (physicalAddress.getPartyContactValidation().getToBeDefault()) {
                                 return physicalAddress;

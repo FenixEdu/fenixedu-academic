@@ -78,7 +78,7 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     }
 
     public String getOldCourseGroupOneFullName() {
-        return hasOldCourseGroup() ? getOldCourseGroup().getOneFullName() : StringUtils.EMPTY;
+        return getOldCourseGroup() != null ? getOldCourseGroup().getOneFullName() : StringUtils.EMPTY;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     }
 
     public String getNewCourseGroupOneFullName() {
-        return hasNewCourseGroup() ? getNewCourseGroup().getOneFullName() : StringUtils.EMPTY;
+        return getNewCourseGroup() != null ? getNewCourseGroup().getOneFullName() : StringUtils.EMPTY;
     }
 
     @Override
@@ -154,16 +154,6 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     @Override
     public boolean hasPersonalInfo() {
         return false;
-    }
-
-    @Deprecated
-    public boolean hasOldCourseGroup() {
-        return getOldCourseGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasNewCourseGroup() {
-        return getNewCourseGroup() != null;
     }
 
 }

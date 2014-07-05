@@ -162,9 +162,4 @@ public class CreditsDismissal extends CreditsDismissal_Base {
         return getNoEnrolCurricularCoursesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyNoEnrolCurricularCourses() {
-        return !getNoEnrolCurricularCoursesSet().isEmpty();
-    }
-
 }

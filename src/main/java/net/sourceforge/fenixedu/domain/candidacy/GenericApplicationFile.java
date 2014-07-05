@@ -42,9 +42,4 @@ public class GenericApplicationFile extends GenericApplicationFile_Base {
         super.disconnect();
     }
 
-    @Deprecated
-    public boolean hasGenericApplication() {
-        return getGenericApplication() != null;
-    }
-
 }

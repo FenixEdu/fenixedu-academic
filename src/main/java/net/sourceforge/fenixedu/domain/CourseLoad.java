@@ -81,7 +81,7 @@ public class CourseLoad extends CourseLoad_Base {
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyLessonInstances() && !hasAnyShifts();
+        return getLessonInstancesSet().isEmpty() && getShiftsSet().isEmpty();
     }
 
     public BigDecimal getWeeklyHours() {
@@ -125,43 +125,8 @@ public class CourseLoad extends CourseLoad_Base {
     }
 
     @Deprecated
-    public boolean hasAnyLessonInstances() {
-        return !getLessonInstancesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Shift> getShifts() {
         return getShiftsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyShifts() {
-        return !getShiftsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasExecutionCourse() {
-        return getExecutionCourse() != null;
-    }
-
-    @Deprecated
-    public boolean hasTotalQuantity() {
-        return getTotalQuantity() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnitQuantity() {
-        return getUnitQuantity() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
     }
 
 }

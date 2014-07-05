@@ -137,7 +137,7 @@ public class PhdProgram extends PhdProgram_Base {
     @Override
     @Atomic
     public void delete() {
-        if (hasAnyIndividualProgramProcesses()) {
+        if (!getIndividualProgramProcessesSet().isEmpty()) {
             throw new DomainException("error.PhdProgram.cannot.delete.has.individual.php.program.processes");
         }
 
@@ -149,7 +149,7 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {
-        if (!hasDegree()) {
+        if (getDegree() == null) {
             return Collections.emptySet();
         }
 
@@ -167,7 +167,7 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     public Set<Person> getResponsibleCoordinatorsFor(ExecutionYear executionYear) {
-        if (!hasDegree()) {
+        if (getDegree() == null) {
             return new HashSet<Person>();
         }
 
@@ -284,18 +284,8 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPhdProgramFocusAreas() {
-        return !getPhdProgramFocusAreasSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getIndividualProgramProcesses() {
         return getIndividualProgramProcessesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyIndividualProgramProcesses() {
-        return !getIndividualProgramProcessesSet().isEmpty();
     }
 
     @Deprecated
@@ -304,18 +294,8 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     @Deprecated
-    public boolean hasAnyInstitutionPhdCandidacyPeriod() {
-        return !getInstitutionPhdCandidacyPeriodSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail> getPhdProgramEmails() {
         return getPhdProgramEmailsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdProgramEmails() {
-        return !getPhdProgramEmailsSet().isEmpty();
     }
 
     @Deprecated
@@ -324,58 +304,8 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPhdProgramContextPeriods() {
-        return !getPhdProgramContextPeriodsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramInformation> getPhdProgramInformations() {
         return getPhdProgramInformationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdProgramInformations() {
-        return !getPhdProgramInformationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasServiceAgreementTemplate() {
-        return getServiceAgreementTemplate() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreator() {
-        return getCreator() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegree() {
-        return getDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasAcronym() {
-        return getAcronym() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdProgramUnit() {
-        return getPhdProgramUnit() != null;
     }
 
 }

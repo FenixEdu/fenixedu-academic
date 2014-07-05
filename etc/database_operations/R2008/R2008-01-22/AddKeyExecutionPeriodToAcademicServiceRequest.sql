@@ -1,2 +1,0 @@
-alter table ACADEMIC_SERVICE_REQUEST add column KEY_EXECUTION_PERIOD int(11) null;
-alter table ACADEMIC_SERVICE_REQUEST add index (KEY_EXECUTION_PERIOD);

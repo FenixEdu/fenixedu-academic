@@ -228,7 +228,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
                 getDiplomaSupplement().conclude();
             }
         } else if (academicServiceRequestBean.isToCancelOrReject()) {
-            if (hasEvent()) {
+            if (getEvent() != null) {
                 getEvent().cancel(academicServiceRequestBean.getResponsible());
             }
 
@@ -290,11 +290,6 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
     @Override
     public boolean isProgrammeLinkVisible() {
         return getPhdIndividualProgramProcess().isCurrentUserAllowedToManageProcess();
-    }
-
-    @Deprecated
-    public boolean hasDiplomaSupplement() {
-        return getDiplomaSupplement() != null;
     }
 
 }

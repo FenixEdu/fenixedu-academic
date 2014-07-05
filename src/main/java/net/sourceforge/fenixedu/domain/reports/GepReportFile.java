@@ -183,7 +183,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
             List<Registration> path = new ArrayList<Registration>();
             path.add(current);
             Registration source;
-            if (current.hasSourceRegistration()
+            if (current.getSourceRegistration() != null
                     && (!(source = current.getSourceRegistration()).isBolonha() || isValidSourceLink(source))) {
                 path.addAll(getFullRegistrationPath(source));
             } else if ((source = findSourceRegistrationByEquivalencePlan(current)) != null) {
@@ -218,21 +218,6 @@ public abstract class GepReportFile extends GepReportFile_Base {
             }
         }
         return null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeType() {
-        return getDegreeType() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
     }
 
 }

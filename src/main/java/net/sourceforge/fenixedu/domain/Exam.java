@@ -217,14 +217,4 @@ public class Exam extends Exam_Base {
         return getExamDateCertificateRequestsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyExamDateCertificateRequests() {
-        return !getExamDateCertificateRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasSeason() {
-        return getSeason() != null;
-    }
-
 }

@@ -30,8 +30,8 @@ public class SearchInternalPersonsByNameHavingTeacherOrIsResearcher extends Sear
     protected Collection<PersonName> search(String value, int size) {
         final Collection<PersonName> result = new HashSet<PersonName>();
         for (final PersonName personName : PersonName.findInternalPerson(value, size)) {
-            if (personName.getPerson().hasUser()
-                    && (personName.getPerson().hasTeacher() || personName.getPerson().hasRole(RoleType.RESEARCHER))) {
+            if (personName.getPerson().getUser() != null
+                    && (personName.getPerson().getTeacher() != null || personName.getPerson().hasRole(RoleType.RESEARCHER))) {
                 result.add(personName);
             }
         }

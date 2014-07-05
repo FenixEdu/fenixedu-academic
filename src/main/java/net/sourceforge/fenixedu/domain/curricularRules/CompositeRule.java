@@ -168,14 +168,4 @@ public abstract class CompositeRule extends CompositeRule_Base {
         return getCurricularRulesSet();
     }
 
-    @Deprecated
-    public boolean hasAnyCurricularRules() {
-        return !getCurricularRulesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasCompositeRuleType() {
-        return getCompositeRuleType() != null;
-    }
-
 }

@@ -86,7 +86,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
             builder.append(values.next().getName()).append(values.hasNext() ? ", " : "");
         }
 
-        if (process.hasAnyGuidings()) {
+        if (!process.getGuidingsSet().isEmpty()) {
             builder.insert(0, "(").insert(builder.length(), ")");
         }
 
@@ -100,7 +100,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
     @Override
     protected boolean isToDiscard() {
-        return !getProcess().getActiveState().isActive() || getProcess().hasSeminarProcess();
+        return !getProcess().getActiveState().isActive() || getProcess().getSeminarProcess() != null;
     }
 
     @Override

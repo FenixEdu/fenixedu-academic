@@ -217,19 +217,4 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
         return getExecutionSemestersSet();
     }
 
-    @Deprecated
-    public boolean hasAnyExecutionSemesters() {
-        return !getExecutionSemestersSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasEctsForAmount() {
-        return getEctsForAmount() != null;
-    }
-
-    @Deprecated
-    public boolean hasPenaltyAppliable() {
-        return getPenaltyAppliable() != null;
-    }
-
 }

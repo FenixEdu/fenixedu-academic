@@ -58,9 +58,4 @@ public class InternalEnrolmentWrapper extends InternalEnrolmentWrapper_Base {
         super.delete();
     }
 
-    @Deprecated
-    public boolean hasEnrolment() {
-        return getEnrolment() != null;
-    }
-
 }

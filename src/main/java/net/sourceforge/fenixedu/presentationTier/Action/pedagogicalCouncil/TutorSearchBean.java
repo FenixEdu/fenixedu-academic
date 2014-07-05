@@ -46,7 +46,7 @@ public class TutorSearchBean implements Serializable {
             if (bean.getDepartment() != null) {
                 for (Employee employee : bean.getDepartment().getAllCurrentActiveWorkingEmployees()) {
                     if (employee.getPerson().getTeacher() != null) {
-                        if (!bean.getOnlyTutors() || employee.getPerson().getTeacher().hasAnyTutorships()) {
+                        if (!bean.getOnlyTutors() || !employee.getPerson().getTeacher().getTutorshipsSet().isEmpty()) {
                             teachers.add(employee.getPerson().getTeacher());
                         }
                     }
@@ -54,7 +54,7 @@ public class TutorSearchBean implements Serializable {
             } else {
 
                 for (Teacher teacher : Bennu.getInstance().getTeachersSet()) {
-                    if (!bean.getOnlyTutors() || teacher.hasAnyTutorships()) {
+                    if (!bean.getOnlyTutors() || !teacher.getTutorshipsSet().isEmpty()) {
                         teachers.add(teacher);
                     }
                 }

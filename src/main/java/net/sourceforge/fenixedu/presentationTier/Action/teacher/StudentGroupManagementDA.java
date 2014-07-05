@@ -775,10 +775,10 @@ public class StudentGroupManagementDA extends ExecutionCourseBaseAction {
         if (!grouping.getStudentGroupsSet().isEmpty() && !grouping.getDifferentiatedCapacity()) {
             request.setAttribute("differentiatedCapacityDisable", "true");
         }
-        if (grouping.hasAnyStudentGroups() && grouping.getAutomaticEnrolment() && !infoGroupProperties.getAutomaticEnrolment()) {
+        if (!grouping.getStudentGroupsSet().isEmpty() && grouping.getAutomaticEnrolment() && !infoGroupProperties.getAutomaticEnrolment()) {
             request.setAttribute("notPosibleToRevertChoice", "true");
         }
-        if (grouping.hasAnyStudentGroups() && grouping.getDifferentiatedCapacity()
+        if (!grouping.getStudentGroupsSet().isEmpty() && grouping.getDifferentiatedCapacity()
                 && !infoGroupProperties.getDifferentiatedCapacity()) {
             request.setAttribute("notPosibleToRevertChoice", "true");
         }

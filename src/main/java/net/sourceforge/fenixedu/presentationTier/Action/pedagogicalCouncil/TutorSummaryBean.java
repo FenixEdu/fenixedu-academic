@@ -108,7 +108,7 @@ public class TutorSummaryBean extends TutorSearchBean {
                 for (Employee employee : getDepartment().getAllCurrentActiveWorkingEmployees()) {
                     Teacher teacher = employee.getPerson().getTeacher();
                     if (teacher != null) {
-                        if (teacher.hasAnyTutorships()) {
+                        if (!teacher.getTutorshipsSet().isEmpty()) {
                             for (TutorshipSummary ts : teacher.getTutorshipSummaries()) {
                                 if ((!ts.isActive())) {
                                     result.add(ts);
@@ -121,7 +121,7 @@ public class TutorSummaryBean extends TutorSearchBean {
                 for (Employee employee : getDepartment().getAllCurrentActiveWorkingEmployees()) {
                     Teacher teacher = employee.getPerson().getTeacher();
                     if (teacher != null) {
-                        if (teacher.hasAnyTutorships()) {
+                        if (!teacher.getTutorshipsSet().isEmpty()) {
                             for (TutorshipSummary ts : teacher.getTutorshipSummaries()) {
                                 if ((!ts.isActive()) && ts.getSemester().equals(getExecutionSemester())) {
                                     result.add(ts);

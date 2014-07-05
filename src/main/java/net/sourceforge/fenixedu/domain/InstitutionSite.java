@@ -53,7 +53,7 @@ public class InstitutionSite extends InstitutionSite_Base {
     public static UnitSite initialize() {
         Unit unit = Bennu.getInstance().getInstitutionUnit();
 
-        if (unit.hasSite()) {
+        if (unit.getSite() != null) {
             return unit.getSite();
         } else {
             return new InstitutionSite(unit);

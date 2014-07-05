@@ -71,34 +71,4 @@ public class TeacherCreditsState extends TeacherCreditsState_Base {
         return getTeacherCreditsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyTeacherCredits() {
-        return !getTeacherCreditsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastModifiedDate() {
-        return getLastModifiedDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionSemester() {
-        return getExecutionSemester() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreditState() {
-        return getCreditState() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
 }

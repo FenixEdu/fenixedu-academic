@@ -1,1 +1,0 @@
-alter table `DOMAIN_OBJECT_ACTION_LOG` add `DOMAIN_OBJECT_EXTERNAL_ID` text;

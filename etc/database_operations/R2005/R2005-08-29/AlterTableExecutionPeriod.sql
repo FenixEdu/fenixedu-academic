@@ -1,1 +1,0 @@
-alter table EXECUTION_PERIOD add column KEY_NEXT_EXECUTION_PERIOD int(11) unsigned default null;

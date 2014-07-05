@@ -32,9 +32,4 @@ public class ConcreteReplyTo extends ConcreteReplyTo_Base {
         return getReplyToAddress();
     }
 
-    @Deprecated
-    public boolean hasReplyToAddress() {
-        return getReplyToAddress() != null;
-    }
-
 }

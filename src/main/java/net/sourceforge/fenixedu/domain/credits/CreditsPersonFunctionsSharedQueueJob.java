@@ -52,9 +52,4 @@ public class CreditsPersonFunctionsSharedQueueJob extends CreditsPersonFunctions
         return new QueueJobResult();
     }
 
-    @Deprecated
-    public boolean hasExecutionSemester() {
-        return getExecutionSemester() != null;
-    }
-
 }

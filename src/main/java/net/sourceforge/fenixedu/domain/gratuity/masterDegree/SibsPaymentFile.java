@@ -46,19 +46,4 @@ public class SibsPaymentFile extends SibsPaymentFile_Base {
         return getSibsPaymentFileEntriesSet();
     }
 
-    @Deprecated
-    public boolean hasAnySibsPaymentFileEntries() {
-        return !getSibsPaymentFileEntriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasFilename() {
-        return getFilename() != null;
-    }
-
 }

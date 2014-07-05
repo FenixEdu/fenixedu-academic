@@ -1,1 +1,0 @@
-select concat('insert into WORK_LOCATION values(null, "', AUTHOR.ORGANISATION, '", 1);') as "" from AUTHOR left join WORK_LOCATION on WORK_LOCATION.NAME = AUTHOR.ORGANISATION where WORK_LOCATION.NAME is null and AUTHOR.ORGANISATION is not null group by AUTHOR.ORGANISATION;

@@ -396,9 +396,4 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
         return htmlText.toString();
     }
 
-    @Deprecated
-    public boolean hasTeacherCredits() {
-        return getTeacherCredits() != null;
-    }
-
 }

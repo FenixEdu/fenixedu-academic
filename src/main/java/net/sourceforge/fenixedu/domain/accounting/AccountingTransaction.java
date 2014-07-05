@@ -274,11 +274,11 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     public boolean isAdjustingTransaction() {
-        return hasAdjustedTransaction();
+        return getAdjustedTransaction() != null;
     }
 
     public boolean hasBeenAdjusted() {
-        return hasAnyAdjustmentTransactions();
+        return !getAdjustmentTransactionsSet().isEmpty();
     }
 
     public Entry getEntryFor(final Account account) {
@@ -307,7 +307,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
             ;
         }
 
-        if (hasTransactionDetail()) {
+        if (getTransactionDetail() != null) {
             getTransactionDetail().delete();
         }
 
@@ -352,43 +352,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAdjustmentTransactions() {
-        return !getAdjustmentTransactionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Entry> getEntries() {
         return getEntriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEntries() {
-        return !getEntriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasTransactionDetail() {
-        return getTransactionDetail() != null;
-    }
-
-    @Deprecated
-    public boolean hasAdjustedTransaction() {
-        return getAdjustedTransaction() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEvent() {
-        return getEvent() != null;
-    }
-
-    @Deprecated
-    public boolean hasResponsibleUser() {
-        return getResponsibleUser() != null;
     }
 
 }

@@ -58,11 +58,11 @@ public class PhdMeeting extends PhdMeeting_Base {
     }
 
     public PhdMeetingMinutesDocument getLatestDocumentVersion() {
-        return hasAnyDocuments() ? Collections.max(getDocumentsSet(), PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
+        return !getDocumentsSet().isEmpty() ? Collections.max(getDocumentsSet(), PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
     }
 
     public boolean isDocumentsAvailable() {
-        return hasAnyDocuments();
+        return !getDocumentsSet().isEmpty();
     }
 
     public Integer getVersionOfLatestDocumentVersion() {
@@ -86,31 +86,6 @@ public class PhdMeeting extends PhdMeeting_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingMinutesDocument> getDocuments() {
         return getDocumentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyDocuments() {
-        return !getDocumentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasMeetingPlace() {
-        return getMeetingPlace() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasMeetingProcess() {
-        return getMeetingProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasMeetingDate() {
-        return getMeetingDate() != null;
     }
 
 }

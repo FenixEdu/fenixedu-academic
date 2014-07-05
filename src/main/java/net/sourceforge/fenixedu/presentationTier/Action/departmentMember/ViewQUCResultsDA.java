@@ -233,7 +233,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
                 executionSemester.getEndDateYearMonthDay())) {
             DepartmentTeacherResultsResume departmentTeacherResultsResume = null;
             for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
-                if (professorship.hasAnyInquiryResults()) {
+                if (!professorship.getInquiryResultsSet().isEmpty()) {
                     if (allTeachers || professorship.hasResultsToImprove()) {
                         Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
                         if (!professorshipResults.isEmpty()) {

@@ -1,1 +1,0 @@
-insert into ROLE (ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY) values ('BOLONHA_MANAGER', '/bolonhaManager', '/index.do', 'portal.bolonhaManager');

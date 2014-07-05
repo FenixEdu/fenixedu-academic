@@ -219,7 +219,7 @@
 		%>
 			<%
 				final FinalDegreeWorkGroup finalDegreeWorkGroup = groupStudent.getFinalDegreeDegreeWorkGroup();
-				if (finalDegreeWorkGroup.hasAnyGroupProposals()) {
+				if (!finalDegreeWorkGroup.getGroupProposalsSet().isEmpty()) {
 					final ExecutionDegree executionDegree = finalDegreeWorkGroup.getExecutionDegree();
 					final Proposal attributedProposal = finalDegreeWorkGroup.getProposalAttributed();
 					final Proposal attributedProposalByTeacher = finalDegreeWorkGroup.getProposalAttributedByTeacher();

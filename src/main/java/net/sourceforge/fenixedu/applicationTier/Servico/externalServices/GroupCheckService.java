@@ -333,7 +333,7 @@ public class GroupCheckService {
             return TeacherGroup.get(getDepartment(unitAcronyms), getExecutionYear(groupCheckQuery.year)).isMember(
                     person.getUser());
         } else if (groupCheckQuery.roleType == RoleType.EMPLOYEE) {
-            if (person != null && person.hasEmployee()) {
+            if (person != null && person.getEmployee() != null) {
                 final Department lastDepartmentWorkingPlace =
                         person.getEmployee().getLastDepartmentWorkingPlace(
                                 getExecutionYear(groupCheckQuery.year).getBeginDateYearMonthDay(),
@@ -342,11 +342,11 @@ public class GroupCheckService {
             }
             return false;
         } else {
-            if (person != null && person.hasStudent()) {
+            if (person != null && person.getStudent() != null) {
                 for (final Registration registration : person.getStudent().getRegistrationsSet()) {
                     for (final Enrolment enrolment : registration.getLastStudentCurricularPlan().getEnrolmentsByExecutionYear(
                             getExecutionYear(groupCheckQuery.year))) {
-                        if (enrolment.getCurricularCourse().hasCompetenceCourse()) {
+                        if (enrolment.getCurricularCourse().getCompetenceCourse() != null) {
                             final CompetenceCourse competenceCourse = enrolment.getCurricularCourse().getCompetenceCourse();
                             if (competenceCourse.getDepartmentsSet().contains(getDepartment(unitAcronyms))) {
                                 return true;

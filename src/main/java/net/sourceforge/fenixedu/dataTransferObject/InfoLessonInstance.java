@@ -48,7 +48,7 @@ public class InfoLessonInstance extends InfoShowOccupation {
 
     @Override
     public InfoRoomOccupation getInfoRoomOccupation() {
-        return getLessonInstance().hasLessonInstanceSpaceOccupation() ? InfoRoomOccupation.newInfoFromDomain(getLessonInstance()
+        return getLessonInstance().getLessonInstanceSpaceOccupation() != null ? InfoRoomOccupation.newInfoFromDomain(getLessonInstance()
                 .getLessonInstanceSpaceOccupation()) : null;
     }
 
@@ -69,7 +69,7 @@ public class InfoLessonInstance extends InfoShowOccupation {
 
     @Override
     public InfoShift getInfoShift() {
-        return getLessonInstance().getLesson().hasShift() ? InfoShift.newInfoFromDomain(getLesson().getShift()) : null;
+        return getLessonInstance().getLesson().getShift() != null ? InfoShift.newInfoFromDomain(getLesson().getShift()) : null;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class InfoLessonInstance extends InfoShowOccupation {
     }
 
     public String getShiftTypeCodesPrettyPrint() {
-        if (getLessonInstance().hasCourseLoad()) {
+        if (getLessonInstance().getCourseLoad() != null) {
             return getLessonInstance().getCourseLoad().getType().getSiglaTipoAula();
         } else {
             return getLessonInstance().getLesson().getShift().getShiftTypesCodePrettyPrint();
@@ -86,7 +86,7 @@ public class InfoLessonInstance extends InfoShowOccupation {
     }
 
     public String getShiftTypesPrettyPrint() {
-        if (getLessonInstance().hasCourseLoad()) {
+        if (getLessonInstance().getCourseLoad() != null) {
             return BundleUtil.getString(Bundle.ENUMERATION, getLessonInstance().getCourseLoad()
                     .getType().getName());
         } else {

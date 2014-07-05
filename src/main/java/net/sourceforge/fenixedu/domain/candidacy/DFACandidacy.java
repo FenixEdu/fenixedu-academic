@@ -176,9 +176,4 @@ public class DFACandidacy extends DFACandidacy_Base {
                     .getInstitutionalOrDefaultEmailAddressValue() != null);
     }
 
-    @Deprecated
-    public boolean hasDfaCandidacyEvent() {
-        return getDfaCandidacyEvent() != null;
-    }
-
 }

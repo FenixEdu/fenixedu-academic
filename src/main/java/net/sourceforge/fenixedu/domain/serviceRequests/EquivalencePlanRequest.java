@@ -83,7 +83,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 
     @Override
     protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
-        if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
+        if (academicServiceRequestBean.isToCancelOrReject() && getEvent() != null) {
             getEvent().cancel(academicServiceRequestBean.getResponsible());
 
         } else if (academicServiceRequestBean.isToProcess()) {
@@ -96,7 +96,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 
     @Override
     protected void checkRulesToDelete() {
-        if (hasAnyEquivalencePlanRevisionRequests()) {
+        if (!getEquivalencePlanRevisionRequestsSet().isEmpty()) {
             throw new DomainException("error.AcademicServiceRequest.cannot.be.deleted");
         }
     }
@@ -134,16 +134,6 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest> getEquivalencePlanRevisionRequests() {
         return getEquivalencePlanRevisionRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEquivalencePlanRevisionRequests() {
-        return !getEquivalencePlanRevisionRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasNumberOfEquivalences() {
-        return getNumberOfEquivalences() != null;
     }
 
 }

@@ -60,7 +60,7 @@ public class PastEquivalencePlanRevisionRequestEvent extends PastEquivalencePlan
 
         fillDescription(labelFormatter);
 
-        if (getAcademicServiceRequest().hasExecutionYear()) {
+        if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }
 
@@ -75,11 +75,6 @@ public class PastEquivalencePlanRevisionRequestEvent extends PastEquivalencePlan
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");
-    }
-
-    @Deprecated
-    public boolean hasPastAmount() {
-        return getPastAmount() != null;
     }
 
 }

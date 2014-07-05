@@ -66,9 +66,4 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
         new DocumentRequestGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
     }
 
-    @Deprecated
-    public boolean hasSource() {
-        return getSource() != null;
-    }
-
 }

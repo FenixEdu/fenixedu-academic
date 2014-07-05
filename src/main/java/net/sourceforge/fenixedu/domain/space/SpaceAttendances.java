@@ -31,7 +31,7 @@ public class SpaceAttendances extends SpaceAttendances_Base {
     }
 
     public String getOccupationDesctiption() {
-        if (hasOccupiedLibraryPlace() && SpaceUtils.isRoomSubdivision(getOccupiedLibraryPlace())) {
+        if (getOccupiedLibraryPlace() != null && SpaceUtils.isRoomSubdivision(getOccupiedLibraryPlace())) {
             return getOccupiedLibraryPlace().getName();
         }
         return "-";
@@ -42,7 +42,7 @@ public class SpaceAttendances extends SpaceAttendances_Base {
     }
 
     public void exit(String responsibleUsername) {
-        if (hasOccupiedLibraryPlace()) {
+        if (getOccupiedLibraryPlace() != null) {
             setResponsibleForExitIstUsername(responsibleUsername);
             setExitTime(new DateTime());
             setOccupiedLibraryPlace(null);
@@ -53,41 +53,6 @@ public class SpaceAttendances extends SpaceAttendances_Base {
         setOccupiedLibraryPlace(null);
         setVisitedLibraryPlace(null);
         deleteDomainObject();
-    }
-
-    @Deprecated
-    public boolean hasPersonIstUsername() {
-        return getPersonIstUsername() != null;
-    }
-
-    @Deprecated
-    public boolean hasResponsibleForEntranceIstUsername() {
-        return getResponsibleForEntranceIstUsername() != null;
-    }
-
-    @Deprecated
-    public boolean hasResponsibleForExitIstUsername() {
-        return getResponsibleForExitIstUsername() != null;
-    }
-
-    @Deprecated
-    public boolean hasVisitedLibraryPlace() {
-        return getVisitedLibraryPlace() != null;
-    }
-
-    @Deprecated
-    public boolean hasOccupiedLibraryPlace() {
-        return getOccupiedLibraryPlace() != null;
-    }
-
-    @Deprecated
-    public boolean hasEntranceTime() {
-        return getEntranceTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasExitTime() {
-        return getExitTime() != null;
     }
 
 }

@@ -131,9 +131,4 @@ public class DFAGratuityByEnrolmentsPR extends DFAGratuityByEnrolmentsPR_Base {
                 partialAcceptedPercentage, dfaAmountPerEnrolment);
     }
 
-    @Deprecated
-    public boolean hasDfaAmountPerEnrolment() {
-        return getDfaAmountPerEnrolment() != null;
-    }
-
 }

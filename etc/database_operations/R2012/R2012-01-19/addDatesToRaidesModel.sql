@@ -1,2 +1,0 @@
-alter table `PRECEDENT_DEGREE_INFORMATION` add `LAST_MODIFIED_DATE` timestamp NULL default NULL;
-alter table `PERSONAL_INGRESSION_DATA` add `LAST_MODIFIED_DATE` timestamp NULL default NULL;

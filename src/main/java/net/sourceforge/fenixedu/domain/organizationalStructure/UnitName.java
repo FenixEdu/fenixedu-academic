@@ -347,29 +347,4 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
         return getUnitNamePartSet();
     }
 
-    @Deprecated
-    public boolean hasAnyUnitNamePart() {
-        return !getUnitNamePartSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasIsExternalUnit() {
-        return getIsExternalUnit() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnit() {
-        return getUnit() != null;
-    }
-
 }

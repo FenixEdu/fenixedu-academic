@@ -136,34 +136,4 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
         return result;
     }
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasShiftDistribution() {
-        return getShiftDistribution() != null;
-    }
-
-    @Deprecated
-    public boolean hasDistributed() {
-        return getDistributed() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionDegree() {
-        return getExecutionDegree() != null;
-    }
-
-    @Deprecated
-    public boolean hasShift() {
-        return getShift() != null;
-    }
-
-    @Deprecated
-    public boolean hasAbstractStudentNumber() {
-        return getAbstractStudentNumber() != null;
-    }
-
 }

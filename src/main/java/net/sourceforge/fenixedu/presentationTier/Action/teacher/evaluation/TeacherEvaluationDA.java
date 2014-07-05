@@ -380,7 +380,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
                             if (currentTeacherEvaluation != null && currentTeacherEvaluation.getEvaluationLock() != null) {
                                 evaluatedCount++;
                             }
-                            if (teacherEvaluation.hasAnyApprovedTeacherEvaluationProcessMark()) {
+                            if (!teacherEvaluation.getApprovedTeacherEvaluationProcessMarkSet().isEmpty()) {
                                 approvedEvaluatedCount++;
                             }
                         }
@@ -400,7 +400,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward deleteFacultyEvaluationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final FacultyEvaluationProcess facultyEvaluationProcess = getDomainObject(request, "facultyEvaluationProcessOID");
-        if (facultyEvaluationProcess.hasAnyTeacherEvaluationProcess()) {
+        if (!facultyEvaluationProcess.getTeacherEvaluationProcessSet().isEmpty()) {
             addActionMessage(request, "error.teacher.evaluation.facultyEvaluationProcess.undeletable");
         } else {
             facultyEvaluationProcess.delete();

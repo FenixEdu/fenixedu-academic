@@ -301,7 +301,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         if (!getStudentsConcludedInExecutionYearGroupSet().isEmpty()) {
             throw new DomainException("error.executionYear.cannotDeleteExecutionYearUsedInAccessControl");
         }
-        for (; hasAnyExecutionPeriods(); getExecutionPeriodsSet().iterator().next().delete()) {
+        for (; !getExecutionPeriodsSet().isEmpty(); getExecutionPeriodsSet().iterator().next().delete()) {
             ;
         }
 
@@ -639,18 +639,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyConclusionProcessesConcluded() {
-        return !getConclusionProcessesConcludedSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.export.SIBSOutgoingPaymentFile> getSIBSOutgoingPaymentFiles() {
         return getSIBSOutgoingPaymentFilesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnySIBSOutgoingPaymentFiles() {
-        return !getSIBSOutgoingPaymentFilesSet().isEmpty();
     }
 
     @Deprecated
@@ -659,18 +649,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyDelegateElections() {
-        return !getDelegateElectionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.Formation> getCandidacyFormations() {
         return getCandidacyFormationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCandidacyFormations() {
-        return !getCandidacyFormationsSet().isEmpty();
     }
 
     @Deprecated
@@ -679,18 +659,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyGepReportFile() {
-        return !getGepReportFileSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction> getInsuranceTransactions() {
         return getInsuranceTransactionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyInsuranceTransactions() {
-        return !getInsuranceTransactionsSet().isEmpty();
     }
 
     @Deprecated
@@ -699,18 +669,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyAnnualEvents() {
-        return !getAnnualEventsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation> getTeacherPersonalExpectations() {
         return getTeacherPersonalExpectationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTeacherPersonalExpectations() {
-        return !getTeacherPersonalExpectationsSet().isEmpty();
     }
 
     @Deprecated
@@ -719,18 +679,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyVigilantGroups() {
-        return !getVigilantGroupsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent> getDfaRegistrationEvents() {
         return getDfaRegistrationEventsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyDfaRegistrationEvents() {
-        return !getDfaRegistrationEventsSet().isEmpty();
     }
 
     @Deprecated
@@ -739,18 +689,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyExecutionPeriods() {
-        return !getExecutionPeriodsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode> getMasterDegreeInsurancePaymentCodes() {
         return getMasterDegreeInsurancePaymentCodesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMasterDegreeInsurancePaymentCodes() {
-        return !getMasterDegreeInsurancePaymentCodesSet().isEmpty();
     }
 
     @Deprecated
@@ -759,18 +699,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyRegistrationDataByExecutionYear() {
-        return !getRegistrationDataByExecutionYearSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersionsConcluded() {
         return getConclusionProcessVersionsConcludedSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyConclusionProcessVersionsConcluded() {
-        return !getConclusionProcessVersionsConcludedSet().isEmpty();
     }
 
     @Deprecated
@@ -779,18 +709,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyCycleCourseGroupInformation() {
-        return !getCycleCourseGroupInformationSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.DegreeLog> getDegreeLogs() {
         return getDegreeLogsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyDegreeLogs() {
-        return !getDegreeLogsSet().isEmpty();
     }
 
     @Deprecated
@@ -799,18 +719,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyExpectationEvaluationGroups() {
-        return !getExpectationEvaluationGroupsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.importation.DgesBaseProcess> getDgesBaseProcess() {
         return getDgesBaseProcessSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyDgesBaseProcess() {
-        return !getDgesBaseProcessSet().isEmpty();
     }
 
     @Deprecated
@@ -819,18 +729,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyDegreeInfos() {
-        return !getDegreeInfosSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersionsBegined() {
         return getConclusionProcessVersionsBeginedSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyConclusionProcessVersionsBegined() {
-        return !getConclusionProcessVersionsBeginedSet().isEmpty();
     }
 
     @Deprecated
@@ -839,18 +739,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyTeacherPersonalExpectationPeriods() {
-        return !getTeacherPersonalExpectationPeriodsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getStudents() {
         return getStudentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudents() {
-        return !getStudentsSet().isEmpty();
     }
 
     @Deprecated
@@ -859,18 +749,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyExamCoordinators() {
-        return !getExamCoordinatorsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.alumni.AlumniReportFile> getAlumniReportFiles() {
         return getAlumniReportFilesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAlumniReportFiles() {
-        return !getAlumniReportFilesSet().isEmpty();
     }
 
     @Deprecated
@@ -879,18 +759,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyGratuityReportQueueJobs() {
-        return !getGratuityReportQueueJobsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PublicRelationsStudentListQueueJob> getPublicRelationsStudentListQueueJob() {
         return getPublicRelationsStudentListQueueJobSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPublicRelationsStudentListQueueJob() {
-        return !getPublicRelationsStudentListQueueJobSet().isEmpty();
     }
 
     @Deprecated
@@ -899,18 +769,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyMeasurementTests() {
-        return !getMeasurementTestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob> getEventReportQueueJob() {
         return getEventReportQueueJobSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEventReportQueueJob() {
-        return !getEventReportQueueJobSet().isEmpty();
     }
 
     @Deprecated
@@ -919,18 +779,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyRegistrationRegimes() {
-        return !getRegistrationRegimesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getPhdIndividualProgramProcesses() {
         return getPhdIndividualProgramProcessesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdIndividualProgramProcesses() {
-        return !getPhdIndividualProgramProcessesSet().isEmpty();
     }
 
     @Deprecated
@@ -939,18 +789,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyDepartmentCreditsPools() {
-        return !getDepartmentCreditsPoolsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getPersonalIngressionsData() {
         return getPersonalIngressionsDataSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPersonalIngressionsData() {
-        return !getPersonalIngressionsDataSet().isEmpty();
     }
 
     @Deprecated
@@ -959,18 +799,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyAcademicServiceRequests() {
-        return !getAcademicServiceRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear> getStudentDataByExecutionYear() {
         return getStudentDataByExecutionYearSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentDataByExecutionYear() {
-        return !getStudentDataByExecutionYearSet().isEmpty();
     }
 
     @Deprecated
@@ -979,48 +809,13 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasAnyExecutionDegrees() {
-        return !getExecutionDegreesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR> getPartialRegistrationRegimeRequestPostingRules() {
         return getPartialRegistrationRegimeRequestPostingRulesSet();
     }
 
     @Deprecated
-    public boolean hasAnyPartialRegistrationRegimeRequestPostingRules() {
-        return !getPartialRegistrationRegimeRequestPostingRulesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentPlan> getPaymentPlans() {
         return getPaymentPlansSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPaymentPlans() {
-        return !getPaymentPlansSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasShiftDistribution() {
-        return getShiftDistribution() != null;
-    }
-
-    @Deprecated
-    public boolean hasAnnualCreditsState() {
-        return getAnnualCreditsState() != null;
-    }
-
-    @Deprecated
-    public boolean hasInsuranceValue() {
-        return getInsuranceValue() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennuForExecutionYear() {
-        return getRootDomainObjectForExecutionYear() != null;
     }
 
 }

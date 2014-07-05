@@ -1,1 +1,0 @@
-alter table SPACE_INFORMATION add column DOOR_NUMBER varchar(50) default NULL;

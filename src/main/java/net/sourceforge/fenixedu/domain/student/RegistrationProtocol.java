@@ -108,28 +108,8 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
     }
 
     @Deprecated
-    public boolean hasAnySupervisors() {
-        return !getSupervisorsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getRegistrations() {
         return getRegistrationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyRegistrations() {
-        return !getRegistrationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasRegistrationAgreement() {
-        return getRegistrationAgreement() != null;
     }
 
 }

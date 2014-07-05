@@ -77,14 +77,4 @@ public class TeachingCareer extends TeachingCareer_Base {
         super.setCourseOrPosition(courseOrPosition);
     }
 
-    @Deprecated
-    public boolean hasCategoryName() {
-        return getCategoryName() != null;
-    }
-
-    @Deprecated
-    public boolean hasCourseOrPosition() {
-        return getCourseOrPosition() != null;
-    }
-
 }

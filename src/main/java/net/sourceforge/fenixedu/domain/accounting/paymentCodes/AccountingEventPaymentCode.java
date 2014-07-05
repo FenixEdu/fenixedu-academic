@@ -152,9 +152,4 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
         return true;
     }
 
-    @Deprecated
-    public boolean hasAccountingEvent() {
-        return getAccountingEvent() != null;
-    }
-
 }

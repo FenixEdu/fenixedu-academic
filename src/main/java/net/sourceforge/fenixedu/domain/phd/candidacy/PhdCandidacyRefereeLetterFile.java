@@ -55,9 +55,4 @@ public class PhdCandidacyRefereeLetterFile extends PhdCandidacyRefereeLetterFile
         super.delete();
     }
 
-    @Deprecated
-    public boolean hasLetter() {
-        return getLetter() != null;
-    }
-
 }

@@ -290,7 +290,7 @@ public class RaidesCommonReportFieldsWrapper {
 
         // Nota de Ingresso
         Double entryGrade = null;
-        if (registration.hasStudentCandidacy()) {
+        if (registration.getStudentCandidacy() != null) {
             entryGrade = registration.getStudentCandidacy().getEntryGrade();
         }
 
@@ -298,7 +298,7 @@ public class RaidesCommonReportFieldsWrapper {
 
         // Opção de Ingresso
         Integer placingOption = null;
-        if (registration.hasStudentCandidacy()) {
+        if (registration.getStudentCandidacy() != null) {
             placingOption = registration.getStudentCandidacy().getPlacingOption();
         }
 

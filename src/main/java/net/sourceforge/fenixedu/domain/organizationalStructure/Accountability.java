@@ -111,39 +111,4 @@ public class Accountability extends Accountability_Base {
         return start != null && (end == null || !start.isAfter(end));
     }
 
-    @Deprecated
-    public boolean hasAccountabilityImportRegister() {
-        return getAccountabilityImportRegister() != null;
-    }
-
-    @Deprecated
-    public boolean hasAccountabilityType() {
-        return getAccountabilityType() != null;
-    }
-
-    @Deprecated
-    public boolean hasParentParty() {
-        return getParentParty() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginDate() {
-        return getBeginDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasChildParty() {
-        return getChildParty() != null;
-    }
-
 }

@@ -1,5 +1,0 @@
-
-alter table `COORDINATOR_EXECUTION_DEGREE_COURSES_REPORT` add column `LAST_EDITION_DATE` timestamp NULL default NULL;
-
-
-

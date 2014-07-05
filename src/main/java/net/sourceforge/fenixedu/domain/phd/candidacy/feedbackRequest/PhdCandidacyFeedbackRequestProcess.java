@@ -171,7 +171,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
             if (participant == null) {
                 result.add(PhdParticipant.getUpdatedOrCreate(mainProcess, new PhdParticipantBean().setInternalParticipant(person)));
 
-            } else if (!participant.hasAnyCandidacyFeedbackRequestElements()) {
+            } else if (participant.getCandidacyFeedbackRequestElementsSet().isEmpty()) {
                 result.add(participant);
             }
         }
@@ -461,7 +461,6 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     }
 
     @Override
-    @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
     }
@@ -469,21 +468,6 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement> getElements() {
         return getElementsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyElements() {
-        return !getElementsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasSharedDocuments() {
-        return getSharedDocuments() != null;
-    }
-
-    @Deprecated
-    public boolean hasCandidacyProcess() {
-        return getCandidacyProcess() != null;
     }
 
 }

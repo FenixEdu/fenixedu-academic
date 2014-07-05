@@ -129,16 +129,16 @@ public class AlumniReportFile extends AlumniReportFile_Base {
                 logger.info(String.format("Count %s persons", count));
             }
 
-            if (!person.hasStudent()) {
+            if (person.getStudent() == null) {
                 continue;
             }
 
-            if (getOnlyRegisteredAlumni() && !person.getStudent().hasAlumni()) {
+            if (getOnlyRegisteredAlumni() && person.getStudent().getAlumni() == null) {
                 continue;
             }
 
             if (!getFullReport()
-                    && (!person.getStudent().hasAlumni() || person.getStudent().getAlumni().getUrlRequestToken() == null)) {
+                    && (person.getStudent().getAlumni() == null || person.getStudent().getAlumni().getUrlRequestToken() == null)) {
                 continue;
             }
 
@@ -148,7 +148,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
             addCurriculumDataRow(curriculumData, alumniName, studentNumber, person.getStudent());
             addPersonalDataRow(personalData, alumniName, studentNumber, person, person.getStudent().getAlumni());
 
-            if (person.getStudent().hasAlumni()) {
+            if (person.getStudent().getAlumni() != null) {
                 for (Job job : person.getStudent().getAlumni().getJobs()) {
                     addJobDataRow(jobData, alumniName, studentNumber, job);
                 }
@@ -237,7 +237,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     public PhysicalAddress getLastPersonalAddress(final Person person) {
-        if (person.getStudent().hasAlumni()) {
+        if (person.getStudent().getAlumni() != null) {
             return person.getStudent().getAlumni().getLastPersonalAddress();
         }
 
@@ -247,7 +247,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     public EmailAddress getPersonalEmail(final Person person) {
-        if (person.getStudent().hasAlumni()) {
+        if (person.getStudent().getAlumni() != null) {
             return person.getStudent().getAlumni().getPersonalEmail();
         }
 
@@ -264,7 +264,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     public Phone getPersonalPhone(final Person person) {
-        if (person.hasStudent() && person.getStudent().hasAlumni()) {
+        if (person.getStudent() != null && person.getStudent().getAlumni() != null) {
             return person.getStudent().getAlumni().getPersonalPhone();
         }
 
@@ -387,11 +387,6 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
     public static Boolean canRequestReport() {
         return readPendingJobs().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
     }
 
 }

@@ -454,7 +454,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
         final Person person = process.getPerson();
 
         request.setAttribute("idDocument", process.hasAnyDocuments(PhdIndividualProgramDocumentType.ID_DOCUMENT));
-        request.setAttribute("personalPhoto", process.getPerson().hasPersonalPhoto());
+        request.setAttribute("personalPhoto", process.getPerson().getPersonalPhoto() != null);
         request.setAttribute("healthBulletin", process.hasAnyDocuments(PhdIndividualProgramDocumentType.HEALTH_BULLETIN));
         request.setAttribute("habilitationsCertificates", person.getAssociatedQualificationsSet().size() == process
                 .getDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT));

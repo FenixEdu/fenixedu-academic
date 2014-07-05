@@ -50,9 +50,4 @@ public class QueueJobResultFile extends QueueJobResultFile_Base {
         new QueueJobResultFile(job, person, filename, content);
     }
 
-    @Deprecated
-    public boolean hasJob() {
-        return getJob() != null;
-    }
-
 }

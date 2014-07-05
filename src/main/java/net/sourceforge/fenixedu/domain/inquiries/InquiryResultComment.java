@@ -54,39 +54,4 @@ public class InquiryResultComment extends InquiryResultComment_Base {
         super.deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasInquiryResult() {
-        return getInquiryResult() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasResultOrder() {
-        return getResultOrder() != null;
-    }
-
-    @Deprecated
-    public boolean hasComment() {
-        return getComment() != null;
-    }
-
-    @Deprecated
-    public boolean hasInquiryGlobalComment() {
-        return getInquiryGlobalComment() != null;
-    }
-
-    @Deprecated
-    public boolean hasPersonCategory() {
-        return getPersonCategory() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
 }

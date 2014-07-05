@@ -82,14 +82,4 @@ public class ExternalCourseLoadRequest extends ExternalCourseLoadRequest_Base {
         super.disconnect();
     }
 
-    @Deprecated
-    public boolean hasNumberOfCourseLoads() {
-        return getNumberOfCourseLoads() != null;
-    }
-
-    @Deprecated
-    public boolean hasInstitution() {
-        return getInstitution() != null;
-    }
-
 }

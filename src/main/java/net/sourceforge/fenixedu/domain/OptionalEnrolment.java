@@ -206,9 +206,4 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasOptionalCurricularCourse() {
-        return getOptionalCurricularCourse() != null;
-    }
-
 }

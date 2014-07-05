@@ -100,7 +100,7 @@ public enum PhdIndividualProgramProcessState implements PhdProcessStateType {
             return Arrays.asList(new PhdIndividualProgramProcessState[] { WORK_DEVELOPMENT, NOT_ADMITTED, SUSPENDED, FLUNKED,
                     CANCELLED });
         case WORK_DEVELOPMENT:
-            if (process.hasThesisProcess()) {
+            if (process.getThesisProcess() != null) {
                 return Arrays.asList(new PhdIndividualProgramProcessState[] { THESIS_DISCUSSION, NOT_ADMITTED, SUSPENDED,
                         FLUNKED, CANCELLED, TRANSFERRED, ABANDON });
             } else {

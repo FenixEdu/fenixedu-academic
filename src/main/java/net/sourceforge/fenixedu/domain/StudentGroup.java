@@ -92,9 +92,9 @@ public class StudentGroup extends StudentGroup_Base {
 
         }
         // teacher type of deletion after project submission
-        if (hasAnyProjectSubmissions() && this.getGrouping().isPersonTeacher(AccessControl.getPerson())) {
+        if (!getProjectSubmissionsSet().isEmpty() && this.getGrouping().isPersonTeacher(AccessControl.getPerson())) {
             this.setValid(false);
-        } else if (!hasAnyProjectSubmissions() && !hasAnyAttends()) {
+        } else if (getProjectSubmissionsSet().isEmpty() && getAttendsSet().isEmpty()) {
             setShift(null);
             setGrouping(null);
             setRootDomainObject(null);
@@ -127,53 +127,13 @@ public class StudentGroup extends StudentGroup_Base {
     }
 
     @Deprecated
-    public boolean hasAnyProjectSubmissions() {
-        return !getProjectSubmissionsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
         return getProjectSubmissionLogsSet();
     }
 
     @Deprecated
-    public boolean hasAnyProjectSubmissionLogs() {
-        return !getProjectSubmissionLogsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
         return getAttendsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAttends() {
-        return !getAttendsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasGroupNumber() {
-        return getGroupNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasShift() {
-        return getShift() != null;
-    }
-
-    @Deprecated
-    public boolean hasValid() {
-        return getValid() != null;
-    }
-
-    @Deprecated
-    public boolean hasGrouping() {
-        return getGrouping() != null;
     }
 
 }

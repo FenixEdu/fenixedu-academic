@@ -56,9 +56,4 @@ public class DgesStudentImportationFile extends DgesStudentImportationFile_Base 
         return new DgesStudentImportationFile(contents, filename);
     }
 
-    @Deprecated
-    public boolean hasDgesStudentImportationProcess() {
-        return getDgesStudentImportationProcess() != null;
-    }
-
 }

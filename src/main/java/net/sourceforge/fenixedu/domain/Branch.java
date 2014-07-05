@@ -80,11 +80,11 @@ public class Branch extends Branch_Base {
     }
 
     public Boolean canBeDeleted() {
-        if (this.hasAnyAssociatedFinalDegreeWorkProposals()) {
+        if (!this.getAssociatedFinalDegreeWorkProposalsSet().isEmpty()) {
             throw new DomainException("error.branch.cant.delete");
         }
 
-        if (this.representsCommonBranch() && this.hasAnyScopes()) {
+        if (this.representsCommonBranch() && !this.getScopesSet().isEmpty()) {
             throw new DomainException("error.branch.cant.delete");
         }
 
@@ -184,73 +184,13 @@ public class Branch extends Branch_Base {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedFinalDegreeWorkProposals() {
-        return !getAssociatedFinalDegreeWorkProposalsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseScope> getScopes() {
         return getScopesSet();
     }
 
     @Deprecated
-    public boolean hasAnyScopes() {
-        return !getScopesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlan> getStudentCurricularPlans() {
         return getStudentCurricularPlansSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyStudentCurricularPlans() {
-        return !getStudentCurricularPlansSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeCurricularPlan() {
-        return getDegreeCurricularPlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasSecondaryCredits() {
-        return getSecondaryCredits() != null;
-    }
-
-    @Deprecated
-    public boolean hasNameEn() {
-        return getNameEn() != null;
-    }
-
-    @Deprecated
-    public boolean hasSpecializationCredits() {
-        return getSpecializationCredits() != null;
-    }
-
-    @Deprecated
-    public boolean hasAcronym() {
-        return getAcronym() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasBranchType() {
-        return getBranchType() != null;
     }
 
 }

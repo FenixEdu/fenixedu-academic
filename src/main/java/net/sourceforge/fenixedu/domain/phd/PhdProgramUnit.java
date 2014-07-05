@@ -51,9 +51,4 @@ public class PhdProgramUnit extends PhdProgramUnit_Base {
         super.delete();
     }
 
-    @Deprecated
-    public boolean hasPhdProgram() {
-        return getPhdProgram() != null;
-    }
-
 }

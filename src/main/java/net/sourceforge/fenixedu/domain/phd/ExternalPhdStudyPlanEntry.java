@@ -71,9 +71,4 @@ public class ExternalPhdStudyPlanEntry extends ExternalPhdStudyPlanEntry_Base {
         return getCourseName();
     }
 
-    @Deprecated
-    public boolean hasCourseName() {
-        return getCourseName() != null;
-    }
-
 }

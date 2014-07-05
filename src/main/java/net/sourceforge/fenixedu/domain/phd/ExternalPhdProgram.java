@@ -133,43 +133,8 @@ public class ExternalPhdProgram extends ExternalPhdProgram_Base {
     }
 
     @Deprecated
-    public boolean hasAnyIndividualProgramProcesses() {
-        return !getIndividualProgramProcessesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea> getPhdProgramFocusAreas() {
         return getPhdProgramFocusAreasSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPhdProgramFocusAreas() {
-        return !getPhdProgramFocusAreasSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenCreated() {
-        return getWhenCreated() != null;
-    }
-
-    @Deprecated
-    public boolean hasForCollaborationType() {
-        return getForCollaborationType() != null;
-    }
-
-    @Deprecated
-    public boolean hasAcronym() {
-        return getAcronym() != null;
     }
 
 }

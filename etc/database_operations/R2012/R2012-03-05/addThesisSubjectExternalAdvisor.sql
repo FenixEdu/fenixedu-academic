@@ -1,1 +1,0 @@
-alter table `THESIS_SUBJECT` add `EXTERNAL_ADVISOR_NAME` text;

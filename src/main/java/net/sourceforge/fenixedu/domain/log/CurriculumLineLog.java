@@ -100,39 +100,4 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
         }
     }
 
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasDateDateTime() {
-        return getDateDateTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasWho() {
-        return getWho() != null;
-    }
-
-    @Deprecated
-    public boolean hasAction() {
-        return getAction() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionPeriod() {
-        return getExecutionPeriod() != null;
-    }
-
-    @Deprecated
-    public boolean hasDegreeModule() {
-        return getDegreeModule() != null;
-    }
-
 }

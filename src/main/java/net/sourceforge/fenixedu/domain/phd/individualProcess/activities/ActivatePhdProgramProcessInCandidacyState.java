@@ -50,7 +50,7 @@ public class ActivatePhdProgramProcessInCandidacyState extends PhdIndividualProg
          * 1 - Check if there's no registration 2 - Check if last active state
          * was candidacy
          */
-        if (process.hasRegistration()) {
+        if (process.getRegistration() != null) {
             throw new DomainException("error.PhdIndividualProgramProcess.set.candidacy.state.has.registration");
         }
 

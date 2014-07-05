@@ -122,7 +122,7 @@ public class RegistryCode extends RegistryCode_Base {
         }
 
         for (InstitutionRegistryCodeGenerator generator : Bennu.getInstance().getRegistryCodeGeneratorSet()) {
-            if (!generator.hasInstitution()) {
+            if (generator.getInstitution() == null) {
                 continue;
             }
 
@@ -143,21 +143,6 @@ public class RegistryCode extends RegistryCode_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getDocumentRequest() {
         return getDocumentRequestSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyDocumentRequest() {
-        return !getDocumentRequestSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasRegistryCodeGenerator() {
-        return getRegistryCodeGenerator() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
     }
 
 }

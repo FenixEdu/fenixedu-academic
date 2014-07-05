@@ -173,14 +173,4 @@ public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanE
         return getEntriesToRemoveSet();
     }
 
-    @Deprecated
-    public boolean hasAnyEntriesToRemove() {
-        return !getEntriesToRemoveSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasOldStudentCurricularPlan() {
-        return getOldStudentCurricularPlan() != null;
-    }
-
 }

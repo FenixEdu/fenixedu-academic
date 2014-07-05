@@ -1,1 +1,0 @@
-insert into EXECUTION_YEAR (YEAR, STATE, BEGIN_DATE, END_DATE) values ('2006/2007', 'NO', '2006-08-01', '2007-07-31');

@@ -245,14 +245,4 @@ public abstract class SpecializationDegreeGratuityPR extends SpecializationDegre
         return getSpecializationDegreeTotalAmount();
     }
 
-    @Deprecated
-    public boolean hasSpecializationDegreeTotalAmount() {
-        return getSpecializationDegreeTotalAmount() != null;
-    }
-
-    @Deprecated
-    public boolean hasSpecializationDegreePartialAcceptedPercentage() {
-        return getSpecializationDegreePartialAcceptedPercentage() != null;
-    }
-
 }

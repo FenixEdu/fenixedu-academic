@@ -37,7 +37,7 @@ public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Bas
 
     @Atomic
     public void delete() {
-        if (hasAnyExtraCurricularActivity()) {
+        if (!getExtraCurricularActivitySet().isEmpty()) {
             throw new DomainException("error.extraCurricularActivityTypes.unableToDeleteUsedType", this.getName().getContent());
         }
         setRootDomainObject(null);
@@ -71,21 +71,6 @@ public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Bas
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity> getExtraCurricularActivity() {
         return getExtraCurricularActivitySet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExtraCurricularActivity() {
-        return !getExtraCurricularActivitySet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
     }
 
 }

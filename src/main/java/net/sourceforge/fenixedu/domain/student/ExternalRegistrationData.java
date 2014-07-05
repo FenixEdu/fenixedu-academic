@@ -59,24 +59,4 @@ public class ExternalRegistrationData extends ExternalRegistrationData_Base {
         super.deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasRegistration() {
-        return getRegistration() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasCoordinatorName() {
-        return getCoordinatorName() != null;
-    }
-
-    @Deprecated
-    public boolean hasInstitution() {
-        return getInstitution() != null;
-    }
-
 }

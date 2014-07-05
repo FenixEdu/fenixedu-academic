@@ -118,7 +118,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
      * @return Returns the coorientatorName.
      */
     public String getCoorientatorName() {
-        return getProposal().hasCoorientator() ? getProposal().getCoorientator().getName() : StringUtils.EMPTY;
+        return getProposal().getCoorientator() != null ? getProposal().getCoorientator().getName() : StringUtils.EMPTY;
     }
 
     /**

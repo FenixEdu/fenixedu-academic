@@ -57,7 +57,7 @@ public enum PhdSeminarPredicateContainer implements PredicateContainer<PhdIndivi
             return new PhdSeminarPredicate(PublicPresentationSeminarProcessStateType.REPORT_WAITING_FOR_VALIDATION) {
                 @Override
                 public boolean eval(PhdIndividualProgramProcess process) {
-                    return !process.hasThesisProcess() && super.checkState(process)
+                    return process.getThesisProcess() == null && super.checkState(process)
                             && process.getSeminarProcess().hasState(getValue());
                 }
             };
@@ -76,7 +76,7 @@ public enum PhdSeminarPredicateContainer implements PredicateContainer<PhdIndivi
         }
 
         private boolean checkState(PhdIndividualProgramProcess process) {
-            return process.getActiveState().isActive() && process.hasSeminarProcess();
+            return process.getActiveState().isActive() && process.getSeminarProcess() != null;
         }
 
         private boolean checkValue(PhdIndividualProgramProcess process) {

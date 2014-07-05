@@ -84,14 +84,4 @@ public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
         return this.getName().getContent(MultiLanguageString.pt);
     }
 
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasOfficialPublication() {
-        return getOfficialPublication() != null;
-    }
-
 }

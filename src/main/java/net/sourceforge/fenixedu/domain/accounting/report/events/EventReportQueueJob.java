@@ -330,7 +330,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             return false;
         }
 
-        if (hasForExecutionYear() && getForExecutionYear() != wrapper.getForExecutionYear()) {
+        if (getForExecutionYear() != null && getForExecutionYear() != wrapper.getForExecutionYear()) {
             return false;
         }
 
@@ -904,86 +904,11 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     public boolean isBrokenInThree() {
-        return hasDebts();
+        return getDebts() != null;
     }
 
     public boolean isErrorReportPresent() {
         return getErrorsFile() != null;
-    }
-
-    @Deprecated
-    public boolean hasExportIndividualCandidacyEvents() {
-        return getExportIndividualCandidacyEvents() != null;
-    }
-
-    @Deprecated
-    public boolean hasBeginDate() {
-        return getBeginDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasExportGratuityEvents() {
-        return getExportGratuityEvents() != null;
-    }
-
-    @Deprecated
-    public boolean hasExemptions() {
-        return getExemptions() != null;
-    }
-
-    @Deprecated
-    public boolean hasForDegreeAdministrativeOffice() {
-        return getForDegreeAdministrativeOffice() != null;
-    }
-
-    @Deprecated
-    public boolean hasExportPhdEvents() {
-        return getExportPhdEvents() != null;
-    }
-
-    @Deprecated
-    public boolean hasExportResidenceEvents() {
-        return getExportResidenceEvents() != null;
-    }
-
-    @Deprecated
-    public boolean hasForExecutionYear() {
-        return getForExecutionYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasTransactions() {
-        return getTransactions() != null;
-    }
-
-    @Deprecated
-    public boolean hasForAdministrativeOffice() {
-        return getForAdministrativeOffice() != null;
-    }
-
-    @Deprecated
-    public boolean hasForMasterDegreeAdministrativeOffice() {
-        return getForMasterDegreeAdministrativeOffice() != null;
-    }
-
-    @Deprecated
-    public boolean hasExportAcademicServiceRequestEvents() {
-        return getExportAcademicServiceRequestEvents() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasDebts() {
-        return getDebts() != null;
-    }
-
-    @Deprecated
-    public boolean hasExportOthers() {
-        return getExportOthers() != null;
     }
 
 }

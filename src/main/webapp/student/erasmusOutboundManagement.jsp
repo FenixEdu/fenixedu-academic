@@ -81,7 +81,7 @@
 		)</span>
 	</h2>
 	<logic:iterate id="registration" name="student" property="registrations" type="net.sourceforge.fenixedu.domain.student.Registration">
-		<% if (registration.hasAnyOutboundMobilityCandidacySubmission()) { %>
+		<% if (!registration.getOutboundMobilityCandidacySubmissionSet().isEmpty()) { %>
 		
 				<%
 					for (final OutboundMobilityCandidacySubmission submission : registration.getOutboundMobilityCandidacySubmissionSet()) {
@@ -210,7 +210,7 @@
     	if (candidacyPeriod instanceof OutboundMobilityCandidacyPeriod) {
         	final OutboundMobilityCandidacyPeriod outboundMobilityCandidacyPeriod =
             	    (OutboundMobilityCandidacyPeriod) candidacyPeriod;
-        	if (outboundMobilityCandidacyPeriod.hasAnyOutboundMobilityCandidacyContest()) {
+        	if (!outboundMobilityCandidacyPeriod.getOutboundMobilityCandidacyContestSet().isEmpty()) {
 	        	hasSomeCandidacyPeriod = true;
 %>
 				<h3>

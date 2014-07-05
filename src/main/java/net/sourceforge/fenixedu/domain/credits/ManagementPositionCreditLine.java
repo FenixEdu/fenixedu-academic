@@ -36,19 +36,4 @@ public class ManagementPositionCreditLine extends ManagementPositionCreditLine_B
         super.deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasTeacher() {
-        return getTeacher() != null;
-    }
-
-    @Deprecated
-    public boolean hasCredits() {
-        return getCredits() != null;
-    }
-
-    @Deprecated
-    public boolean hasPosition() {
-        return getPosition() != null;
-    }
-
 }

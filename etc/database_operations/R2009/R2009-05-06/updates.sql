@@ -1,7 +1,0 @@
-
-
-
--- Inserted at 2009-05-05T14:25:50.677+01:00
-
-alter table `SCHEDULEING` add column `MINIMUM_COMPLETED_CREDITS_FIRST_CYCLE` int(11);
-

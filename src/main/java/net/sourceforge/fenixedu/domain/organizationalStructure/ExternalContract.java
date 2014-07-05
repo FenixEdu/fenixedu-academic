@@ -167,28 +167,13 @@ public class ExternalContract extends ExternalContract_Base {
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeThesisExternalAssistentGuider() {
-        return !getMasterDegreeThesisExternalAssistentGuiderSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofsExternalJury() {
         return getMasterDegreeProofsExternalJurySet();
     }
 
     @Deprecated
-    public boolean hasAnyMasterDegreeProofsExternalJury() {
-        return !getMasterDegreeProofsExternalJurySet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisExternalGuider() {
         return getMasterDegreeThesisExternalGuiderSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMasterDegreeThesisExternalGuider() {
-        return !getMasterDegreeThesisExternalGuiderSet().isEmpty();
     }
 
 }

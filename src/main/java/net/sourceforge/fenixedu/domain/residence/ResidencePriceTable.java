@@ -33,29 +33,4 @@ public class ResidencePriceTable extends ResidencePriceTable_Base {
         return getUnitsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyUnits() {
-        return !getUnitsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasDoubleRoomValue() {
-        return getDoubleRoomValue() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasSingleRoomValue() {
-        return getSingleRoomValue() != null;
-    }
-
-    @Deprecated
-    public boolean hasPaymentLimitDay() {
-        return getPaymentLimitDay() != null;
-    }
-
 }

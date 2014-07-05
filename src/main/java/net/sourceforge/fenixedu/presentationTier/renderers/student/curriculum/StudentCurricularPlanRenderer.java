@@ -529,7 +529,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         private StringBuilder createGroupName(final String text, final CurriculumGroup curriculumGroup) {
             final StringBuilder groupName = new StringBuilder(text);
-            if (curriculumGroup != null && curriculumGroup.hasDegreeModule()) {
+            if (curriculumGroup != null && curriculumGroup.getDegreeModule() != null) {
 
                 final CreditsLimit creditsLimit =
                         (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT,

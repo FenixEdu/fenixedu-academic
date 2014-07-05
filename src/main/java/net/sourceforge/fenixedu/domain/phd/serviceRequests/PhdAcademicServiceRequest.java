@@ -75,9 +75,4 @@ abstract public class PhdAcademicServiceRequest extends PhdAcademicServiceReques
         return SpaceUtils.getDefaultCampus();
     }
 
-    @Deprecated
-    public boolean hasPhdIndividualProgramProcess() {
-        return getPhdIndividualProgramProcess() != null;
-    }
-
 }

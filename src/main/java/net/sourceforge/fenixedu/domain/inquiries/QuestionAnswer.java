@@ -37,24 +37,4 @@ public class QuestionAnswer extends QuestionAnswer_Base {
         super.deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasInquiryAnswer() {
-        return getInquiryAnswer() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasAnswer() {
-        return getAnswer() != null;
-    }
-
-    @Deprecated
-    public boolean hasInquiryQuestion() {
-        return getInquiryQuestion() != null;
-    }
-
 }

@@ -38,9 +38,4 @@ public abstract class CreditLine extends CreditLine_Base implements
 
     protected abstract CreditsEvent getCreditEventGenerated();
 
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
 }

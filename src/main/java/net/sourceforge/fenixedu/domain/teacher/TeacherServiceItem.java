@@ -33,14 +33,4 @@ public abstract class TeacherServiceItem extends TeacherServiceItem_Base {
         deleteDomainObject();
     }
 
-    @Deprecated
-    public boolean hasTeacherService() {
-        return getTeacherService() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
 }

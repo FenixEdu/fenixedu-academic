@@ -109,9 +109,4 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
         throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.person");
     }
 
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
 }

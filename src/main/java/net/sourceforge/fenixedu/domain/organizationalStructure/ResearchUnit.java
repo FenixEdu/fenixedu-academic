@@ -222,7 +222,7 @@ public class ResearchUnit extends ResearchUnit_Base {
     @Override
     @Atomic
     public UnitBasedSender getOneUnitBasedSender() {
-        if (hasAnyUnitBasedSender()) {
+        if (!getUnitBasedSenderSet().isEmpty()) {
             return getUnitBasedSender().iterator().next();
         } else {
             return ResearchUnitBasedSender.newInstance(this);
@@ -232,11 +232,6 @@ public class ResearchUnit extends ResearchUnit_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPublicationCollaborators() {
         return getPublicationCollaboratorsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPublicationCollaborators() {
-        return !getPublicationCollaboratorsSet().isEmpty();
     }
 
 }

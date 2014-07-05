@@ -194,10 +194,10 @@ public class StudentFirstTimeCycleInquiryBean implements Serializable {
     }
 
     public boolean hasInquiryStudentCycleAnswer() {
-        if (getRegistration() != null && getRegistration().hasInquiryStudentCycleAnswer()) {
+        if (getRegistration() != null && getRegistration().getInquiryStudentCycleAnswer() != null) {
             return true;
         }
-        if (getPhdProcess() != null && getPhdProcess().hasInquiryStudentCycleAnswer()) {
+        if (getPhdProcess() != null && getPhdProcess().getInquiryStudentCycleAnswer() != null) {
             return true;
         }
         return false;

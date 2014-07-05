@@ -1,1 +1,0 @@
-update  FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME ='net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument' where DOMAIN_CLASS_NAME='net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument';

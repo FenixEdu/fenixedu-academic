@@ -72,11 +72,11 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
     @Override
     public boolean hasCandidacyProcess() {
-        return hasPhdProgramCandidacyProcess();
+        return getPhdProgramCandidacyProcess() != null;
     }
 
     public boolean isLetterAvailable() {
-        return hasLetter();
+        return getLetter() != null;
     }
 
     public PhdIndividualProgramProcess getIndividualProgramProcess() {
@@ -107,7 +107,7 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
     }
 
     private void disconnect() {
-        if (hasLetter()) {
+        if (getLetter() != null) {
             throw new DomainException("error.PhdCandidacyReferee.has.letter");
         }
 
@@ -148,31 +148,6 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdCandidacyRefereeAlert> getAlerts() {
         return getAlertsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAlerts() {
-        return !getAlertsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasLetter() {
-        return getLetter() != null;
-    }
-
-    @Deprecated
-    public boolean hasInstitution() {
-        return getInstitution() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdProgramCandidacyProcess() {
-        return getPhdProgramCandidacyProcess() != null;
     }
 
 }

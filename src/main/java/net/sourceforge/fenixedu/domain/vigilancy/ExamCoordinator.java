@@ -143,34 +143,4 @@ public class ExamCoordinator extends ExamCoordinator_Base {
         return getVigilantGroupsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyVigilantGroups() {
-        return !getVigilantGroupsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasAllowedToCreateGroups() {
-        return getAllowedToCreateGroups() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnit() {
-        return getUnit() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
-    }
-
 }

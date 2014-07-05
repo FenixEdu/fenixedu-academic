@@ -1,1 +1,0 @@
-alter table ALUMNI_IDENTITY_CHECK_REQUEST add column REQUEST_TOKEN varchar(255) null;

@@ -122,19 +122,19 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     private void checkRulesToDelete() {
-        if (hasAnyAcademicServiceRequests()) {
+        if (!getAcademicServiceRequestsSet().isEmpty()) {
             throw new DomainException("error.AdministrativeOffice.cannot.delete");
         }
-        if (hasAnyManagedAcademicProgram()) {
+        if (!getManagedAcademicProgramSet().isEmpty()) {
             throw new DomainException("error.AdministrativeOffice.cannot.delete");
         }
-        if (hasAnyRectorateSubmissionBatch()) {
+        if (!getRectorateSubmissionBatchSet().isEmpty()) {
             throw new DomainException("error.AdministrativeOffice.cannot.delete");
         }
-        if (hasAnyEvents()) {
+        if (!getEventsSet().isEmpty()) {
             throw new DomainException("error.AdministrativeOffice.cannot.delete");
         }
-        if (hasAnyEventReportQueueJob()) {
+        if (!getEventReportQueueJobSet().isEmpty()) {
             throw new DomainException("error.AdministrativeOffice.cannot.delete");
         }
         if (!getAcademicAuthorizationGroupSet().isEmpty()) {
@@ -183,18 +183,8 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     @Deprecated
-    public boolean hasAnyEventReportQueueJob() {
-        return !getEventReportQueueJobSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup> getAcademicGroup() {
         return getAcademicGroupSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAcademicGroup() {
-        return !getAcademicGroupSet().isEmpty();
     }
 
     @Deprecated
@@ -203,18 +193,8 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     @Deprecated
-    public boolean hasAnyRectorateSubmissionBatch() {
-        return !getRectorateSubmissionBatchSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.AcademicProgram> getManagedAcademicProgram() {
         return getManagedAcademicProgramSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyManagedAcademicProgram() {
-        return !getManagedAcademicProgramSet().isEmpty();
     }
 
     @Deprecated
@@ -223,38 +203,8 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     @Deprecated
-    public boolean hasAnyEvents() {
-        return !getEventsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getAcademicServiceRequests() {
         return getAcademicServiceRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAcademicServiceRequests() {
-        return !getAcademicServiceRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasServiceAgreementTemplate() {
-        return getServiceAgreementTemplate() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasAdministrativeOfficeType() {
-        return getAdministrativeOfficeType() != null;
-    }
-
-    @Deprecated
-    public boolean hasUnit() {
-        return getUnit() != null;
     }
 
 }

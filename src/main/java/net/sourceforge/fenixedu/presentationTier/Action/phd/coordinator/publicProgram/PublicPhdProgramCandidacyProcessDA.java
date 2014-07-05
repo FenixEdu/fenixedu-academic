@@ -88,7 +88,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
                 PhdCandidacyPeriod phdCandidacyPeriod = selectPeriodBean.getPhdCandidacyPeriod();
 
-                if (!phdHashCode.hasPhdProgramCandidacyProcess()) {
+                if (phdHashCode.getPhdProgramCandidacyProcess() == null) {
 
                     if (phdCandidacyPeriod.contains(phdHashCode.getWhenCreated())) {
                         statistics.plusTotalRequests();

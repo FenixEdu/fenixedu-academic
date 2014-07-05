@@ -330,7 +330,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public boolean isPresidentJuryElement(final Person person) {
-        return hasPresidentJuryElement() && getPresidentJuryElement().isFor(person);
+        return getPresidentJuryElement() != null && getPresidentJuryElement().isFor(person);
     }
 
     public List<PhdProgramProcessDocument> getThesisDocumentsToFeedback() {
@@ -583,7 +583,6 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     @Override
-    @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
     }
@@ -591,96 +590,6 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement> getThesisJuryElements() {
         return getThesisJuryElementsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyThesisJuryElements() {
-        return !getThesisJuryElementsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasWhenThesisDiscussionRequired() {
-        return getWhenThesisDiscussionRequired() != null;
-    }
-
-    @Deprecated
-    public boolean hasConclusionDate() {
-        return getConclusionDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenJuryValidated() {
-        return getWhenJuryValidated() != null;
-    }
-
-    @Deprecated
-    public boolean hasMeetingProcess() {
-        return getMeetingProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasPresidentJuryElement() {
-        return getPresidentJuryElement() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenJuryDesignated() {
-        return getWhenJuryDesignated() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdJuryElementsRatificationEntity() {
-        return getPhdJuryElementsRatificationEntity() != null;
-    }
-
-    @Deprecated
-    public boolean hasDiscussionPlace() {
-        return getDiscussionPlace() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenFinalThesisRatified() {
-        return getWhenFinalThesisRatified() != null;
-    }
-
-    @Deprecated
-    public boolean hasDiscussionDate() {
-        return getDiscussionDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasIndividualProgramProcess() {
-        return getIndividualProgramProcess() != null;
-    }
-
-    @Deprecated
-    public boolean hasPresidentTitle() {
-        return getPresidentTitle() != null;
-    }
-
-    @Deprecated
-    public boolean hasMeetingDate() {
-        return getMeetingDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasFinalGrade() {
-        return getFinalGrade() != null;
-    }
-
-    @Deprecated
-    public boolean hasRatificationEntityCustomMessage() {
-        return getRatificationEntityCustomMessage() != null;
-    }
-
-    @Deprecated
-    public boolean hasMeetingPlace() {
-        return getMeetingPlace() != null;
-    }
-
-    @Deprecated
-    public boolean hasWhenJuryRequired() {
-        return getWhenJuryRequired() != null;
     }
 
 }

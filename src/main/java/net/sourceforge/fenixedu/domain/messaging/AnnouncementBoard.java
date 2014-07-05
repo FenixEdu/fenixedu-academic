@@ -504,34 +504,4 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         return getBookmarkOwnerSet();
     }
 
-    @Deprecated
-    public boolean hasAnyBookmarkOwner() {
-        return !getBookmarkOwnerSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasWriters() {
-        return getWriters() != null;
-    }
-
-    @Deprecated
-    public boolean hasManagers() {
-        return getManagers() != null;
-    }
-
-    @Deprecated
-    public boolean hasApprovers() {
-        return getApprovers() != null;
-    }
-
-    @Deprecated
-    public boolean hasReaders() {
-        return getReaders() != null;
-    }
-
-    @Deprecated
-    public boolean hasMandatory() {
-        return getMandatory() != null;
-    }
-
 }

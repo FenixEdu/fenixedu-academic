@@ -1,1 +1,0 @@
-select concat('update STUDENT set STUDENT.KEY_SENIOR = ', SENIOR.ID_INTERNAL, ' where STUDENT.ID_INTERNAL = ', SENIOR.KEY_STUDENT, ';') as "" from SENIOR;

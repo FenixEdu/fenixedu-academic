@@ -137,7 +137,7 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
     public void setExecutionYear(ExecutionYear executionYear) {
         super.setExecutionYear(executionYear);
 
-        if (executionYear != null && hasStudent() && studentHasRepeatedPID(getStudent(), executionYear)) {
+        if (executionYear != null && getStudent() != null && studentHasRepeatedPID(getStudent(), executionYear)) {
             throw new DomainException("A Student cannot have two PersonalIngressionData objects for the same ExecutionYear.");
         }
     }
@@ -146,7 +146,7 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
     public void setStudent(Student student) {
         super.setStudent(student);
 
-        if (student != null && hasExecutionYear() && studentHasRepeatedPID(student, getExecutionYear())) {
+        if (student != null && getExecutionYear() != null && studentHasRepeatedPID(student, getExecutionYear())) {
             throw new DomainException("A Student cannot have two PersonalIngressionData objects for the same ExecutionYear.");
         }
     }
@@ -180,12 +180,12 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
 
     @ConsistencyPredicate
     public boolean checkHasExecutionYear() {
-        return hasExecutionYear();
+        return getExecutionYear() != null;
     }
 
     @ConsistencyPredicate
     public boolean checkHasStudent() {
-        return hasStudent();
+        return getStudent() != null;
     }
 
     @ConsistencyPredicate
@@ -196,126 +196,6 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreesInformations() {
         return getPrecedentDegreesInformationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPrecedentDegreesInformations() {
-        return !getPrecedentDegreesInformationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasFatherSchoolLevel() {
-        return getFatherSchoolLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasHighSchoolType() {
-        return getHighSchoolType() != null;
-    }
-
-    @Deprecated
-    public boolean hasSchoolTimeDistrictSubDivisionOfResidence() {
-        return getSchoolTimeDistrictSubDivisionOfResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasMotherSchoolLevel() {
-        return getMotherSchoolLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasGrantOwnerType() {
-        return getGrantOwnerType() != null;
-    }
-
-    @Deprecated
-    public boolean hasCountryOfResidence() {
-        return getCountryOfResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasDislocatedFromPermanentResidence() {
-        return getDislocatedFromPermanentResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasLastModifiedDate() {
-        return getLastModifiedDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasDistrictSubdivisionOfResidence() {
-        return getDistrictSubdivisionOfResidence() != null;
-    }
-
-    @Deprecated
-    public boolean hasSpouseProfessionalCondition() {
-        return getSpouseProfessionalCondition() != null;
-    }
-
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
-    }
-
-    @Deprecated
-    public boolean hasFatherProfessionType() {
-        return getFatherProfessionType() != null;
-    }
-
-    @Deprecated
-    public boolean hasProfessionalCondition() {
-        return getProfessionalCondition() != null;
-    }
-
-    @Deprecated
-    public boolean hasMotherProfessionType() {
-        return getMotherProfessionType() != null;
-    }
-
-    @Deprecated
-    public boolean hasGrantOwnerProvider() {
-        return getGrantOwnerProvider() != null;
-    }
-
-    @Deprecated
-    public boolean hasMaritalStatus() {
-        return getMaritalStatus() != null;
-    }
-
-    @Deprecated
-    public boolean hasSpouseSchoolLevel() {
-        return getSpouseSchoolLevel() != null;
-    }
-
-    @Deprecated
-    public boolean hasMotherProfessionalCondition() {
-        return getMotherProfessionalCondition() != null;
-    }
-
-    @Deprecated
-    public boolean hasFatherProfessionalCondition() {
-        return getFatherProfessionalCondition() != null;
-    }
-
-    @Deprecated
-    public boolean hasProfessionType() {
-        return getProfessionType() != null;
-    }
-
-    @Deprecated
-    public boolean hasSpouseProfessionType() {
-        return getSpouseProfessionType() != null;
-    }
-
-    @Deprecated
-    public boolean hasExecutionYear() {
-        return getExecutionYear() != null;
     }
 
 }

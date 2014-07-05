@@ -54,7 +54,7 @@ public class SkipThesisJuryActivities extends PhdThesisActivity {
         process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(),
                 thesisBean.getRemarks());
 
-        if (!process.hasMeetingProcess()) {
+        if (process.getMeetingProcess() == null) {
             Process.createNewProcess(userView, PhdMeetingSchedulingProcess.class, thesisBean);
         }
 

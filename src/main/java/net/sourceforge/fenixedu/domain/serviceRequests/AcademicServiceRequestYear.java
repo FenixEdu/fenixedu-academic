@@ -62,24 +62,4 @@ public class AcademicServiceRequestYear extends AcademicServiceRequestYear_Base 
         return getAcademicServiceRequestsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyAcademicServiceRequests() {
-        return !getAcademicServiceRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasYear() {
-        return getYear() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasLatestServiceRequestNumber() {
-        return getLatestServiceRequestNumber() != null;
-    }
-
 }

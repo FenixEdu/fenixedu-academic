@@ -33,7 +33,7 @@ public class UnitAcronym extends UnitAcronym_Base {
             @Override
             public void afterRemove(Unit unit, UnitAcronym unitAcronym) {
                 if (unitAcronym != null) {
-                    if (!unitAcronym.hasAnyUnits()) {
+                    if (unitAcronym.getUnitsSet().isEmpty()) {
                         unitAcronym.delete();
                     }
                 }
@@ -62,7 +62,7 @@ public class UnitAcronym extends UnitAcronym_Base {
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyUnits();
+        return getUnitsSet().isEmpty();
     }
 
     public static UnitAcronym readUnitAcronymByAcronym(final String acronym) {
@@ -92,21 +92,6 @@ public class UnitAcronym extends UnitAcronym_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Unit> getUnits() {
         return getUnitsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyUnits() {
-        return !getUnitsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasAcronym() {
-        return getAcronym() != null;
     }
 
 }

@@ -127,7 +127,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                         hideCourses, reportsAvailable, executionYear, module).encodeBegin(facesContext);
             }
 
-            if (dcp.hasDegreeStructure() && dcp.getDegreeStructure().hasAnyChilds() && !onlyStructure) {
+            if (dcp.getDegreeStructure() != null && !dcp.getDegreeStructure().getChildsSet().isEmpty() && !onlyStructure) {
                 encodeSubtitles(facesContext);
             }
         }
@@ -149,11 +149,11 @@ public class UIDegreeCurricularPlan extends UIInput {
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();
 
-        if (!dcp.getRoot().hasAnyChildContexts()) {
+        if (dcp.getRoot().getChildContextsSet().isEmpty()) {
             encodeEmptyCurricularPlanInfo();
         } else {
             CurricularPeriod degreeStructure = dcp.getDegreeStructure();
-            if (degreeStructure == null || !degreeStructure.hasAnyChilds()) {
+            if (degreeStructure == null || degreeStructure.getChildsSet().isEmpty()) {
                 encodeEmptyDegreeStructureInfo();
             } else {
                 for (CurricularPeriod child : degreeStructure.getSortedChilds()) {
@@ -185,7 +185,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     }
 
     private void encodePeriodTable(CurricularPeriod curricularPeriod) throws IOException {
-        if (curricularPeriod.hasAnyChilds()) {
+        if (!curricularPeriod.getChildsSet().isEmpty()) {
             for (CurricularPeriod child : curricularPeriod.getSortedChilds()) {
                 encodePeriodTable(child);
             }

@@ -37,9 +37,4 @@ public class CandidacySummaryFile extends CandidacySummaryFile_Base {
         return UserGroup.of(candidacyStudent.getUser()).or(RoleGroup.get(RoleType.ADMINISTRATOR));
     }
 
-    @Deprecated
-    public boolean hasStudentCandidacy() {
-        return getStudentCandidacy() != null;
-    }
-
 }

@@ -339,7 +339,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
         }
         final Enrolment previous = dissertationEnrolments.last();
         if (previous != null) {
-            if (previous.hasAnyTheses()) {
+            if (!previous.getThesesSet().isEmpty()) {
                 return previous.getThesis();
             } else {
                 dissertationEnrolments.remove(previous);

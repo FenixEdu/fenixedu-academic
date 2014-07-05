@@ -174,7 +174,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     private AccountingEventPaymentCode findPaymentCodeInStudentCandidacy() {
-        if (!getPerson().hasStudent()) {
+        if (getPerson().getStudent() == null) {
             return null;
         }
 
@@ -198,7 +198,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
             }
 
             AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
-            if (accountingEventPaymentCode.hasAccountingEvent()) {
+            if (accountingEventPaymentCode.getAccountingEvent() != null) {
                 continue;
             }
 
@@ -227,7 +227,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
             }
 
             StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
-            if (!studentCandidacy.hasDgesStudentImportationProcess()) {
+            if (studentCandidacy.getDgesStudentImportationProcess() == null) {
                 continue;
             }
 
@@ -504,11 +504,6 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
     public boolean hasInsuranceExemption() {
         return getInsuranceExemption() != null;
-    }
-
-    @Deprecated
-    public boolean hasPaymentEndDate() {
-        return getPaymentEndDate() != null;
     }
 
 }

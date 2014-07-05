@@ -36,7 +36,7 @@ public class AlumniManager {
             throw new DomainException("error.alumni.person.does.not.exist", documentIdNumber);
         }
 
-        if (!person.hasStudent()) {
+        if (person.getStudent() == null) {
             throw new DomainException("error.alumni.person.does.not.have.student.info", documentIdNumber);
         }
 
@@ -99,7 +99,7 @@ public class AlumniManager {
         }
 
         if (!checkAlumni(student)) {
-            if (student.hasAnyRegistrations()) {
+            if (!student.getRegistrationsSet().isEmpty()) {
 
                 for (Registration registration : student.getRegistrations()) {
                     if (registration.isConcluded()) {
@@ -117,7 +117,7 @@ public class AlumniManager {
 
     private boolean checkAlumni(Student alumniStudent) {
 
-        if (alumniStudent.hasAlumni() || alumniStudent.getPerson().hasRole(RoleType.ALUMNI)) {
+        if (alumniStudent.getAlumni() != null || alumniStudent.getPerson().hasRole(RoleType.ALUMNI)) {
             return true;
         }
 
@@ -126,7 +126,7 @@ public class AlumniManager {
 
     private Alumni getAlumni(final Integer studentNumber) {
         final Student student = Student.readStudentByNumber(studentNumber);
-        return student.hasAlumni() ? student.getAlumni() : new Alumni(student);
+        return student.getAlumni() != null ? student.getAlumni() : new Alumni(student);
     }
 
 }

@@ -41,19 +41,4 @@ public class IdDocumentTypeObject extends IdDocumentTypeObject_Base {
         return getIdDocumentsSet();
     }
 
-    @Deprecated
-    public boolean hasAnyIdDocuments() {
-        return !getIdDocumentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasValue() {
-        return getValue() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
 }

@@ -104,7 +104,7 @@ public class RegistrationOperation extends CandidacyOperation {
 
     protected void associateShiftsFor(final Registration registration) {
 
-        if (getExecutionYear().hasShiftDistribution()) {
+        if (getExecutionYear().getShiftDistribution() != null) {
             for (final ShiftDistributionEntry shiftEntry : getExecutionDegree().getNextFreeShiftDistributions()) {
                 shiftEntry.setDistributed(Boolean.TRUE);
                 shiftEntry.getShift().addStudents(registration);

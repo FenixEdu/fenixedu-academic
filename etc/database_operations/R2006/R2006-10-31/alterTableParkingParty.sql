@@ -1,1 +1,0 @@
-alter table PARKING_PARTY add column PHD_NUMBER int(11) default null;

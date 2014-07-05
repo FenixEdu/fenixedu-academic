@@ -59,10 +59,10 @@ public class FirstTimeCycleInquiryDA extends FenixDispatchAction {
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         for (Registration registration : student.getActiveRegistrations()) {
-            if (!registration.getDegreeType().isEmpty() && !registration.hasInquiryStudentCycleAnswer()
+            if (!registration.getDegreeType().isEmpty() && registration.getInquiryStudentCycleAnswer() == null
                     && registration.isFirstTime()) {
-                if (registration.hasPhdIndividualProgramProcess()
-                        && registration.getPhdIndividualProgramProcess().hasInquiryStudentCycleAnswer()) {
+                if (registration.getPhdIndividualProgramProcess() != null
+                        && registration.getPhdIndividualProgramProcess().getInquiryStudentCycleAnswer() != null) {
                     return actionMapping.findForward("firstTimeCyleInquiry");
                 }
                 StudentCycleInquiryTemplate currentTemplate =
@@ -75,9 +75,9 @@ public class FirstTimeCycleInquiryDA extends FenixDispatchAction {
         }
 
         for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
-            if (!phdProcess.hasInquiryStudentCycleAnswer() && student.isValidAndActivePhdProcess(phdProcess)) {
-                if (phdProcess.hasRegistration()) {
-                    if (phdProcess.getRegistration().hasInquiryStudentCycleAnswer()) {
+            if (phdProcess.getInquiryStudentCycleAnswer() == null && student.isValidAndActivePhdProcess(phdProcess)) {
+                if (phdProcess.getRegistration() != null) {
+                    if (phdProcess.getRegistration().getInquiryStudentCycleAnswer() != null) {
                         break;
                     } else {
                         if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {

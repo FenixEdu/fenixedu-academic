@@ -270,7 +270,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public void delete() {
-        if (hasAnyAssociatedCurricularCourses()) {
+        if (!getAssociatedCurricularCoursesSet().isEmpty()) {
             throw new DomainException("mustDeleteCurricularCoursesFirst");
         } else if (this.getCurricularStage().equals(CurricularStage.APPROVED)) {
             throw new DomainException("competenceCourse.approved");
@@ -1005,7 +1005,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     @Override
     public void setCurricularStage(CurricularStage curricularStage) {
         check(this, CompetenceCoursePredicates.editCurricularStagePredicate);
-        if (this.hasAnyAssociatedCurricularCourses() && curricularStage.equals(CurricularStage.DRAFT)) {
+        if (!this.getAssociatedCurricularCoursesSet().isEmpty() && curricularStage.equals(CurricularStage.DRAFT)) {
             throw new DomainException("competenceCourse.has.already.associated.curricular.courses");
         }
         super.setCurricularStage(curricularStage);
@@ -1305,18 +1305,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Deprecated
-    public boolean hasAnyEctsConversionTables() {
-        return !getEctsConversionTablesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
         return getCompetenceCourseInformationChangeRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCompetenceCourseInformationChangeRequests() {
-        return !getCompetenceCourseInformationChangeRequestsSet().isEmpty();
     }
 
     @Deprecated
@@ -1325,18 +1315,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Deprecated
-    public boolean hasAnyDepartments() {
-        return !getDepartmentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation> getCompetenceCourseInformations() {
         return getCompetenceCourseInformationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCompetenceCourseInformations() {
-        return !getCompetenceCourseInformationsSet().isEmpty();
     }
 
     @Deprecated
@@ -1345,48 +1325,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Deprecated
-    public boolean hasAnyPhdStudyPlanEntries() {
-        return !getPhdStudyPlanEntriesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getAssociatedCurricularCourses() {
         return getAssociatedCurricularCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedCurricularCourses() {
-        return !getAssociatedCurricularCoursesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasType() {
-        return getType() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDateYearMonthDay() {
-        return getCreationDateYearMonthDay() != null;
-    }
-
-    @Deprecated
-    public boolean hasCode() {
-        return getCode() != null;
-    }
-
-    @Deprecated
-    public boolean hasCurricularStage() {
-        return getCurricularStage() != null;
     }
 
 }

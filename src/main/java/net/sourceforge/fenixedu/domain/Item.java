@@ -130,16 +130,6 @@ public class Item extends Item_Base {
         return section.getChildrenItemsCount() > 1;
     }
 
-    @Deprecated
-    public boolean hasEnabled() {
-        return getEnabled() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowName() {
-        return getShowName() != null;
-    }
-
     public boolean isDeletable() {
         return true;
     }

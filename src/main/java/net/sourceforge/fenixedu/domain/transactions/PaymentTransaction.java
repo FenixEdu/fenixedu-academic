@@ -84,7 +84,7 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
     public BigDecimal getValueWithAdjustment() {
 
         BigDecimal reimbursedValue = BigDecimal.ZERO;
-        if (hasGuideEntry()) {
+        if (getGuideEntry() != null) {
             for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
                 if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
                     reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
@@ -93,11 +93,6 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
         }
 
         return getValueBigDecimal().subtract(reimbursedValue);
-    }
-
-    @Deprecated
-    public boolean hasGuideEntry() {
-        return getGuideEntry() != null;
     }
 
 }

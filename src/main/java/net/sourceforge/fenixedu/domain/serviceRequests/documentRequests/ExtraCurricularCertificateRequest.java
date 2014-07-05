@@ -74,7 +74,7 @@ public class ExtraCurricularCertificateRequest extends ExtraCurricularCertificat
         super.internalChangeState(academicServiceRequestBean);
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
-            for (; hasAnyEnrolments();) {
+            for (; !getEnrolmentsSet().isEmpty();) {
                 removeEnrolments(getEnrolments().iterator().next());
             }
         }
@@ -83,11 +83,6 @@ public class ExtraCurricularCertificateRequest extends ExtraCurricularCertificat
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
         return getEnrolmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEnrolments() {
-        return !getEnrolmentsSet().isEmpty();
     }
 
 }

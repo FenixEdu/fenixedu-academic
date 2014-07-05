@@ -55,7 +55,7 @@ public class Over23IndividualCandidacyPR extends Over23IndividualCandidacyPR_Bas
 
     @Override
     protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        if (!event.hasAnyExemptions()) {
+        if (event.getExemptionsSet().isEmpty()) {
             return amountToPay;
         }
 

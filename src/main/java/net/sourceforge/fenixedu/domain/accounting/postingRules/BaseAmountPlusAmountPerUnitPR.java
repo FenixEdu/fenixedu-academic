@@ -107,7 +107,7 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
 
     @Override
     protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        if (event.hasAnyExemptions()) {
+        if (!event.getExemptionsSet().isEmpty()) {
             Collection<Exemption> exemptions = event.getExemptions();
 
             for (Exemption exemption : exemptions) {
@@ -163,21 +163,6 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
         }
 
         return this.getMaximumAmount().getAmountAsString();
-    }
-
-    @Deprecated
-    public boolean hasBaseAmount() {
-        return getBaseAmount() != null;
-    }
-
-    @Deprecated
-    public boolean hasMaximumAmount() {
-        return getMaximumAmount() != null;
-    }
-
-    @Deprecated
-    public boolean hasAmountPerUnit() {
-        return getAmountPerUnit() != null;
     }
 
 }

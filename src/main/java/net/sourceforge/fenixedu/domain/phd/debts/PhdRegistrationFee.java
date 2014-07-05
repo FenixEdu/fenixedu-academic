@@ -54,7 +54,7 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
             throw new DomainException("error.PhdRegistrationFee.process.no.registration.formalization.date");
         }
 
-        if (process.hasRegistrationFee()) {
+        if (process.getRegistrationFee() != null) {
             throw new DomainException("error.PhdRegistrationFee.process.already.has.registration.fee");
         }
     }
@@ -97,11 +97,6 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
     @Override
     public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
         return getProcess();
-    }
-
-    @Deprecated
-    public boolean hasProcess() {
-        return getProcess() != null;
     }
 
 }

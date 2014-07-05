@@ -60,9 +60,4 @@ public class GenericApplicationLetterOfRecomentation extends GenericApplicationL
         new Message(Bennu.getInstance().getSystemSender(), getRecomentation().getGenericApplication().getEmail(), subject, body);
     }
 
-    @Deprecated
-    public boolean hasRecomentation() {
-        return getRecomentation() != null;
-    }
-
 }

@@ -105,18 +105,18 @@ public class StudentsSearchBean implements Serializable {
 
         } else if (!StringUtils.isEmpty(getIdentificationNumber()) && getDocumentType() != null) {
             final Person person = Person.readByDocumentIdNumberAndIdDocumentType(getIdentificationNumber(), getDocumentType());
-            if (person != null && person.hasStudent()) {
+            if (person != null && person.getStudent() != null) {
                 students.add(person.getStudent());
             }
         } else if (!StringUtils.isEmpty(getName())) {
             for (final PersonName personName : PersonName.find(getName(), Integer.MAX_VALUE)) {
-                if (personName.getPerson().hasStudent()) {
+                if (personName.getPerson().getStudent() != null) {
                     students.add(personName.getPerson().getStudent());
                 }
             }
         } else if (!StringUtils.isEmpty(getUsername())) {
             User user = User.findByUsername(getUsername());
-            if (user != null && user.getPerson().hasStudent()) {
+            if (user != null && user.getPerson().getStudent() != null) {
                 students.add(user.getPerson().getStudent());
             }
         }
@@ -132,7 +132,7 @@ public class StudentsSearchBean implements Serializable {
                 continue;
             }
 
-            if (!student.hasAnyRegistrations()) {
+            if (student.getRegistrationsSet().isEmpty()) {
                 students.add(student);
             }
 

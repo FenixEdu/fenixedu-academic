@@ -35,7 +35,7 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan {
     protected List run(final ExecutionDegree executionDegree) {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
-        if (executionDegree.hasScheduling()) {
+        if (executionDegree.getScheduling() != null) {
             final Collection<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().getProposals();
 
             for (final Proposal proposal : finalDegreeWorkProposals) {

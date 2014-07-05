@@ -71,7 +71,7 @@
 
 		<bean:define id="bean" name="searchBean" property="searchElementsAsParameters"/>
 		<cp:collectionPages
-			url="/teacher/searchECAttends.do?method=prepare&executionCourseID=${executionCourseID}&viewPhoto=${searchBean.viewPhoto}" 
+			url="/teacher/searchECAttends.do?method=prepare&executionCourseID=${executionCourseID}${searchBean.searchElementsAsParameters}" 
 			pageNumberAttributeName="pageNumber"
 			numberOfPagesAttributeName="numberOfPages"/>
 		<fr:view name="attendsPagesBean">
@@ -81,7 +81,7 @@
 			</fr:layout>
 		</fr:view>
 		<cp:collectionPages
-			url="/teacher/searchECAttends.do?method=prepare&executionCourseID=${executionCourseID}"
+			url="/teacher/searchECAttends.do?method=prepare&executionCourseID=${executionCourseID}${searchBean.searchElementsAsParameters}"
 			pageNumberAttributeName="pageNumber"
 			numberOfPagesAttributeName="numberOfPages"/>
 		<br/>

@@ -94,7 +94,7 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
         super.internalChangeState(academicServiceRequestBean);
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
-            for (; hasAnyEnrolments();) {
+            for (; !getEnrolmentsSet().isEmpty();) {
                 removeEnrolments(getEnrolments().iterator().next());
             }
         }
@@ -111,16 +111,6 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
         return getEnrolmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEnrolments() {
-        return !getEnrolmentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasRequestedCycle() {
-        return getRequestedCycle() != null;
     }
 
 }

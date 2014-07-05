@@ -304,7 +304,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         final CandidacyFilterBean filterBean = new CandidacyFilterBean(CandidacyAttributionType.TOTAL);
         filterBean.setFromRequest(request);
         Set<FinalDegreeWorkGroup> groups;
-        if (executionDegree.hasScheduling()) {
+        if (executionDegree.getScheduling() != null) {
             groups = executionDegree.getScheduling().getAssociatedFinalDegreeWorkGroups();
         } else {
             groups = Collections.emptySet();
@@ -337,7 +337,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
         final ExecutionDegree executionDegree = getExecutionDegree(request);
         Set<FinalDegreeWorkGroup> groups;
-        if (executionDegree.hasScheduling()) {
+        if (executionDegree.getScheduling() != null) {
             groups = executionDegree.getScheduling().getAssociatedFinalDegreeWorkGroups();
         } else {
             groups = Collections.emptySet();
@@ -1025,7 +1025,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             }
         }
         if (person == null || !(person.hasRole(RoleType.TEACHER))
-                || !(person.hasRole(RoleType.RESEARCHER) || !(person.hasAnyProfessorships()))) {
+                || !(person.hasRole(RoleType.RESEARCHER) || !(!person.getProfessorshipsSet().isEmpty()))) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
                     "finalWorkInformationForm.unexistingTeacher"));
