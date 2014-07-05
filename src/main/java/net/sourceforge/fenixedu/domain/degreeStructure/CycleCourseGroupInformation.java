@@ -80,26 +80,6 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
         }
     }
 
-<<<<<<< HEAD
-    public String getGraduatedTitlePt() {
-        return getGraduatedTitle().getContent(MultiLanguageString.pt);
-    }
-
-    public String getGraduatedTitleEn() {
-        return getGraduatedTitle().getContent(MultiLanguageString.en);
-    }
-
-    @Atomic
-    public void edit(ExecutionYear editExecutionYear, String editGraduatedTitle, String editGraduatedTitleEn) {
-        this.setExecutionYear(editExecutionYear);
-        MultiLanguageString mls = this.getGraduatedTitle();
-
-        this.setGraduatedTitle(mls.with(MultiLanguageString.pt, editGraduatedTitle).with(MultiLanguageString.en,
-                editGraduatedTitleEn));
-        checkParameters();
-    }
-
-=======
     public String getGraduateTitleSuffixDefault() {
         return getGraduateTitleSuffix() != null ? getGraduateTitleSuffix().getContent(Locale.getDefault()) : "";
     }
@@ -107,5 +87,4 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
     public String getGraduateTitleSuffixEn() {
         return getGraduateTitleSuffix() != null ? getGraduateTitleSuffix().getContent(Locale.ENGLISH) : "";
     }
->>>>>>> New feature: removed unused slot from CycleCourseGroupInformation and
 }
