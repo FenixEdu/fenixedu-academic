@@ -39,8 +39,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
 public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implements IRegistryDiplomaRequest,
         IRectorateSubmissionBatchDocumentEntry {
 
@@ -255,10 +253,9 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
             DegreeCurricularPlan dcp = degreeCurricularPlansForYear.iterator().next();
             CycleCourseGroup cycleCourseGroup = dcp.getCycleCourseGroup(cycleType);
             if (cycleCourseGroup != null) {
-                final MultiLanguageString mls = cycleCourseGroup.getGraduateTitleSuffix();
-                final String suffix = mls == null ? null : mls.getContent(getLanguage());
-                if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
-                    result.append(" ").append(suffix);
+                String graduateTitleSuffix = cycleCourseGroup.getGraduateTitleSuffix(getConclusionYear(), getLanguage());
+                if (!StringUtils.isEmpty(graduateTitleSuffix) && !degreeFilteredName.contains(graduateTitleSuffix.trim())) {
+                    result.append(" ").append(graduateTitleSuffix);
                     result.append(" ").append("-");
                 }
             }

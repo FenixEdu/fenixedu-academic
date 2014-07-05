@@ -1646,10 +1646,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return isBolonhaDegree() ? getCycleCourseGroup(getDegreeType().getLastOrderedCycleType()) : null;
     }
 
-    public String getGraduateTitle() {
-        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
-    }
-
     public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
         return getGraduateTitle(executionYear, (CycleType) null, locale);
     }
