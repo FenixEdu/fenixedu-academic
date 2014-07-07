@@ -47,7 +47,7 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
         final Student student = bean.getStudent();
         final Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
 
-        for (final Registration registration : student.getRegistrations()) {
+        for (final Registration registration : student.getRegistrationsSet()) {
 
             if (!registration.isBolonha()) {
                 result.addAll(registration.getLastStudentCurricularPlan().getAllCurriculumGroups());

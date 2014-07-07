@@ -115,10 +115,10 @@ public class SchoolUnit extends SchoolUnit_Base {
 
     @Override
     public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
-        final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCourses());
+        final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
         for (Unit subUnit : getSubUnits()) {
             if (subUnit.isDepartmentUnit()) {
-                result.addAll(subUnit.getExternalCurricularCourses());
+                result.addAll(subUnit.getExternalCurricularCoursesSet());
             }
         }
         return result;

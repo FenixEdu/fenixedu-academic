@@ -165,7 +165,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
         }
 
         // Copy all email templates
-        for (MobilityEmailTemplate template : lastProcess.getApplicationPeriod().getEmailTemplates()) {
+        for (MobilityEmailTemplate template : lastProcess.getApplicationPeriod().getEmailTemplatesSet()) {
             MobilityEmailTemplate.create(getApplicationPeriod(), template.getMobilityProgram(), template.getType(),
                     template.getSubject(), template.getBody());
         }
@@ -197,7 +197,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     public List<MobilityIndividualApplicationProcess> getValidErasmusIndividualCandidacies() {
         final List<MobilityIndividualApplicationProcess> result = new ArrayList<MobilityIndividualApplicationProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             final MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) child;
             if (process.isCandidacyValid()) {
                 result.add(process);
@@ -208,7 +208,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     public List<MobilityIndividualApplicationProcess> getValidMobilityIndividualCandidacies(MobilityProgram mobilityProgram) {
         final List<MobilityIndividualApplicationProcess> result = new ArrayList<MobilityIndividualApplicationProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             final MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) child;
             if (process.isCandidacyValid() && process.getMobilityProgram() == mobilityProgram) {
                 result.add(process);
@@ -222,7 +222,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
             return Collections.emptyList();
         }
         final List<MobilityIndividualApplicationProcess> result = new ArrayList<MobilityIndividualApplicationProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             final MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) child;
             if (process.isCandidacyValid() && process.hasCandidacyForSelectedDegree(degree)) {
                 result.add(process);
@@ -234,7 +234,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     public Map<Degree, SortedSet<MobilityIndividualApplicationProcess>> getValidErasmusIndividualCandidaciesByDegree() {
         final Map<Degree, SortedSet<MobilityIndividualApplicationProcess>> result =
                 new TreeMap<Degree, SortedSet<MobilityIndividualApplicationProcess>>(Degree.COMPARATOR_BY_NAME_AND_ID);
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             final MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) child;
             if (process.isCandidacyValid()) {
                 SortedSet<MobilityIndividualApplicationProcess> values = result.get(process.getCandidacySelectedDegree());
@@ -319,7 +319,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     public MobilityIndividualApplicationProcess getProcessByEIdentifier(String eIdentifier) {
         List<MobilityIndividualApplicationProcess> childProcesses =
-                new java.util.ArrayList<MobilityIndividualApplicationProcess>((List) this.getChildProcesses());
+                new java.util.ArrayList<MobilityIndividualApplicationProcess>((List) this.getChildProcessesSet());
 
         for (MobilityIndividualApplicationProcess process : childProcesses) {
             if (eIdentifier.equals(process.getPersonalDetails().getPerson().getEidentifier())) {
@@ -332,7 +332,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     public MobilityIndividualApplicationProcess getOpenProcessByEIdentifier(String eIdentifier) {
         List<MobilityIndividualApplicationProcess> childProcesses =
-                new java.util.ArrayList<MobilityIndividualApplicationProcess>((List) this.getChildProcesses());
+                new java.util.ArrayList<MobilityIndividualApplicationProcess>((List) this.getChildProcessesSet());
 
         for (MobilityIndividualApplicationProcess process : childProcesses) {
             if (process.isCandidacyCancelled()) {
@@ -361,7 +361,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     }
 
     public List<MobilityCoordinator> getErasmusCoordinatorForTeacher(final Teacher teacher) {
-        return new ArrayList<MobilityCoordinator>(CollectionUtils.select(getCoordinators(), new Predicate() {
+        return new ArrayList<MobilityCoordinator>(CollectionUtils.select(getCoordinatorsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -402,7 +402,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     public List<MobilityIndividualApplicationProcess> getProcessesWithNotViewedApprovedLearningAgreements() {
         List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
-        CollectionUtils.select(getChildProcesses(), new Predicate() {
+        CollectionUtils.select(getChildProcessesSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -418,7 +418,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     public List<MobilityIndividualApplicationProcess> getProcessesWithNotViewedAlerts() {
         List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
-        CollectionUtils.select(getChildProcesses(), new Predicate() {
+        CollectionUtils.select(getChildProcessesSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -434,7 +434,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     public List<ErasmusCandidacyProcessReport> getDoneReports() {
         List<ErasmusCandidacyProcessReport> jobList = new ArrayList<ErasmusCandidacyProcessReport>();
 
-        CollectionUtils.select(getErasmusCandidacyProcessReports(), new Predicate() {
+        CollectionUtils.select(getErasmusCandidacyProcessReportsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -446,13 +446,13 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     }
 
     public List<ErasmusCandidacyProcessReport> getUndoneReports() {
-        return new ArrayList(CollectionUtils.subtract(getErasmusCandidacyProcessReports(), getDoneReports()));
+        return new ArrayList(CollectionUtils.subtract(getErasmusCandidacyProcessReportsSet(), getDoneReports()));
     }
 
     public List<ErasmusCandidacyProcessReport> getPendingReports() {
         List<ErasmusCandidacyProcessReport> jobList = new ArrayList<ErasmusCandidacyProcessReport>();
 
-        CollectionUtils.select(getErasmusCandidacyProcessReports(), new Predicate() {
+        CollectionUtils.select(getErasmusCandidacyProcessReportsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -870,21 +870,6 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
             }
         }
         return results;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction> getErasmusCandidacyProcessExecutedAction() {
-        return getErasmusCandidacyProcessExecutedActionSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport> getErasmusCandidacyProcessReports() {
-        return getErasmusCandidacyProcessReportsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator> getCoordinators() {
-        return getCoordinatorsSet();
     }
 
 }

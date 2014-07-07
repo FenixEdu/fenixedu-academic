@@ -58,7 +58,7 @@ public class RemindJuryReviewToReporters extends PhdThesisActivity {
     }
 
     private void remindReporters(PhdThesisProcess process) {
-        for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
+        for (final ThesisJuryElement juryElement : process.getThesisJuryElementsSet()) {
 
             if (!juryElement.getReporter().booleanValue()) {
                 continue;

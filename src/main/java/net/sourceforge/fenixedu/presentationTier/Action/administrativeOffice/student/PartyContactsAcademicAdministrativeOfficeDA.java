@@ -128,7 +128,7 @@ public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsMa
             HttpServletResponse response) {
 
         Person person = getStudent(request).getPerson();
-        Collection<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Collection<PersonInformationLog> logsList = person.getPersonInformationLogsSet();
 
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");

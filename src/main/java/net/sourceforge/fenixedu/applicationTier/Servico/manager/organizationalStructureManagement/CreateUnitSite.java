@@ -52,7 +52,7 @@ public class CreateUnitSite {
     }
 
     private static boolean hasBoard(Unit unit, String name) {
-        for (AnnouncementBoard board : unit.getBoards()) {
+        for (AnnouncementBoard board : unit.getBoardsSet()) {
             if (board.getName().equalInAnyLanguage(name)) {
                 return true;
             }

@@ -39,8 +39,7 @@ public class InfoExamWithRoomOccupations extends InfoExam {
     public void copyFromDomain(Exam exam) {
         super.copyFromDomain(exam);
         if (exam != null) {
-            setWrittenEvaluationSpaceOccupations(copyIRoomOccupation2InfoRoomOccupation(exam
-                    .getWrittenEvaluationSpaceOccupations()));
+            setWrittenEvaluationSpaceOccupations(copyIRoomOccupation2InfoRoomOccupation(exam.getWrittenEvaluationSpaceOccupationsSet()));
         }
     }
 

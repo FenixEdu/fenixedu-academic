@@ -92,9 +92,9 @@ public class RegentInquiryBean implements Serializable {
 
     private void initTeachersResults(Professorship professorship, Person person) {
         setTeachersResultsMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
-        for (Professorship teacherProfessorship : professorship.getExecutionCourse().getProfessorships()) {
+        for (Professorship teacherProfessorship : professorship.getExecutionCourse().getProfessorshipsSet()) {
             ArrayList<TeacherShiftTypeResultsBean> teachersResults = new ArrayList<TeacherShiftTypeResultsBean>();
-            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResultsSet();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
@@ -173,7 +173,7 @@ public class RegentInquiryBean implements Serializable {
                             if (inquiryResultComment == null) {
                                 inquiryResultComment =
                                         new InquiryResultComment(questionResult, person, teacher, questionResultsSummaryBean
-                                                .getQuestionResult().getInquiryResultComments().size() + 1);
+                                        .getQuestionResult().getInquiryResultCommentsSet().size() + 1);
                             }
                             inquiryResultComment.setComment(questionResultsSummaryBean.getEditableComment());
                         }

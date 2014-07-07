@@ -78,7 +78,7 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
     public List<MobilityIndividualApplicationProcess> getStudentApplicationProcesses() {
         List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
 
-        for (MobilityStudentData data : getCandidacies()) {
+        for (MobilityStudentData data : getCandidaciesSet()) {
             processList.add(data.getMobilityIndividualApplication().getCandidacyProcess());
         }
 
@@ -100,11 +100,6 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
         setRootDomainObject(null);
 
         deleteDomainObject();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData> getCandidacies() {
-        return getCandidaciesSet();
     }
 
 }

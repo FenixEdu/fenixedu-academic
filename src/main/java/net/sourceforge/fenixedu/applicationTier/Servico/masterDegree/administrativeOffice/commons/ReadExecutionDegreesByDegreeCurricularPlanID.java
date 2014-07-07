@@ -52,7 +52,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID {
 
         List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
 
-        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
             result.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
         }
 

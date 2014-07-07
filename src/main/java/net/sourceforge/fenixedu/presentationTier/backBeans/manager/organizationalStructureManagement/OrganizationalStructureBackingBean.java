@@ -156,7 +156,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (this.getUnit() != null) {
             List<Function> allNonInherentFunctions = new ArrayList<Function>();
             YearMonthDay currentDate = new YearMonthDay();
-            for (Function function : this.getUnit().getFunctions()) {
+            for (Function function : this.getUnit().getFunctionsSet()) {
                 if (!function.isInherentFunction()
                         && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
                                 .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString()
@@ -174,7 +174,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (this.getUnit() != null) {
             List<Function> allInherentFunctions = new ArrayList<Function>();
             YearMonthDay currentDate = new YearMonthDay();
-            for (Function function : this.getUnit().getFunctions()) {
+            for (Function function : this.getUnit().getFunctionsSet()) {
                 if (function.isInherentFunction()
                         && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
                                 .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString()

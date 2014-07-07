@@ -90,7 +90,7 @@ public class MobilityQuota extends MobilityQuota_Base {
     public List<MobilityIndividualApplicationProcess> getStudentApplicationProcesses() {
         List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
 
-        for (MobilityStudentData data : getApplications()) {
+        for (MobilityStudentData data : getApplicationsSet()) {
             processList.add(data.getMobilityIndividualApplication().getCandidacyProcess());
         }
 
@@ -120,11 +120,6 @@ public class MobilityQuota extends MobilityQuota_Base {
 
     public boolean isAssociatedToApplications() {
         return !getStudentApplicationProcesses().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData> getApplications() {
-        return getApplicationsSet();
     }
 
 }

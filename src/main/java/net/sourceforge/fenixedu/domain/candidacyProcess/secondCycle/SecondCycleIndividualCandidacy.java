@@ -62,11 +62,11 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
         Person person = init(bean, process);
 
-        getSelectedDegrees().addAll(bean.getSelectedDegreeList());
+        getSelectedDegreesSet().addAll(bean.getSelectedDegreeList());
         for (Degree degree : bean.getSelectedDegreeList()) {
             SecondCycleIndividualCandidacySeriesGrade newSCICSeriesGrade = new SecondCycleIndividualCandidacySeriesGrade();
             newSCICSeriesGrade.setDegree(degree);
-            getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+            getIndividualCandidacySeriesGradeSet().add(newSCICSeriesGrade);
         }
 
         setProfessionalStatus(bean.getProfessionalStatus());
@@ -84,7 +84,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
             createDebt(person);
         }
 
-        if (getSelectedDegrees().isEmpty()) {
+        if (getSelectedDegreesSet().isEmpty()) {
             throw new DomainException("This shouldnt happen");
         }
     }
@@ -154,13 +154,13 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     }
 
     private void putSelectedDegrees(final Set<Degree> selectedDegreeList) {
-        for (Degree degree : getSelectedDegrees()) {
+        for (Degree degree : getSelectedDegreesSet()) {
             if (selectedDegreeList.contains(degree)) {
                 if (getSecondCycleIndividualCandidacySeriesGradeForDegree(degree) == null) {
                     SecondCycleIndividualCandidacySeriesGrade newSCICSeriesGrade =
                             new SecondCycleIndividualCandidacySeriesGrade();
                     newSCICSeriesGrade.setDegree(degree);
-                    getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+                    getIndividualCandidacySeriesGradeSet().add(newSCICSeriesGrade);
                 }
             } else {
                 SecondCycleIndividualCandidacySeriesGrade seriesGrade =
@@ -177,11 +177,11 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
             }
         }
 
-        while (!getSelectedDegrees().isEmpty()) {
-            getSelectedDegrees().remove(getSelectedDegrees().iterator().next());
+        while (!getSelectedDegreesSet().isEmpty()) {
+            getSelectedDegreesSet().remove(getSelectedDegreesSet().iterator().next());
         }
 
-        getSelectedDegrees().addAll(selectedDegreeList);
+        getSelectedDegreesSet().addAll(selectedDegreeList);
 
         IndividualCandidacyEvent individualCandidacyEvent = getEvent();
         if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
@@ -195,19 +195,19 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
         }
 
-        if (getSelectedDegrees().isEmpty()) {
+        if (getSelectedDegreesSet().isEmpty()) {
             throw new DomainException("this shouldnt happen");
         }
     }
 
     void editSelectedDegrees(final Set<Degree> selectedDegreeList) {
-        for (Degree degree : getSelectedDegrees()) {
+        for (Degree degree : getSelectedDegreesSet()) {
             if (selectedDegreeList.contains(degree)) {
                 if (getSecondCycleIndividualCandidacySeriesGradeForDegree(degree) == null) {
                     SecondCycleIndividualCandidacySeriesGrade newSCICSeriesGrade =
                             new SecondCycleIndividualCandidacySeriesGrade();
                     newSCICSeriesGrade.setDegree(degree);
-                    getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+                    getIndividualCandidacySeriesGradeSet().add(newSCICSeriesGrade);
                 }
             } else {
                 SecondCycleIndividualCandidacySeriesGrade seriesGrade =
@@ -224,11 +224,11 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
             }
         }
 
-        while (!getSelectedDegrees().isEmpty()) {
-            getSelectedDegrees().remove(getSelectedDegrees().iterator().next());
+        while (!getSelectedDegreesSet().isEmpty()) {
+            getSelectedDegreesSet().remove(getSelectedDegreesSet().iterator().next());
         }
 
-        getSelectedDegrees().addAll(selectedDegreeList);
+        getSelectedDegreesSet().addAll(selectedDegreeList);
 
         IndividualCandidacyEvent individualCandidacyEvent = getEvent();
         if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
@@ -242,7 +242,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
         }
 
-        if (getSelectedDegrees().isEmpty()) {
+        if (getSelectedDegreesSet().isEmpty()) {
             throw new DomainException("this shouldnt happen");
         }
     }
@@ -381,7 +381,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     @Override
     public Collection<Degree> getAllDegrees() {
         List<Degree> result = new ArrayList<Degree>();
-        result.addAll(getSelectedDegrees());
+        result.addAll(getSelectedDegreesSet());
         return result;
     }
 
@@ -410,7 +410,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     }
 
     public SecondCycleIndividualCandidacySeriesGrade getSecondCycleIndividualCandidacySeriesGradeForDegree(Degree degree) {
-        for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGrade()) {
+        for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGradeSet()) {
             if (seriesGrade.getDegree() == degree) {
                 return (SecondCycleIndividualCandidacySeriesGrade) seriesGrade;
             }
@@ -423,7 +423,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
             return null;
         } else {
             if (getIndividualCandidacySeriesGradeSet().size() == 1) {
-                return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegrees().iterator().next());
+                return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegreesSet().iterator().next());
             } else {
                 return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegree());
             }
@@ -511,11 +511,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     @Override
     public void setDegreeNature(Integer value) {
         getSecondCycleIndividualCandidacySeriesGrade().setDegreeNature(value);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Degree> getSelectedDegrees() {
-        return getSelectedDegreesSet();
     }
 
 }

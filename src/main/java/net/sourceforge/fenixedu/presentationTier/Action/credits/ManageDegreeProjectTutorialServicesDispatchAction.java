@@ -49,7 +49,7 @@ public class ManageDegreeProjectTutorialServicesDispatchAction extends FenixDisp
             return mapping.findForward("teacher-not-found");
         }
         List<ProjectTutorialServiceBean> projectTutorialServiceBeans = new ArrayList<ProjectTutorialServiceBean>();
-        for (Attends attend : professorship.getExecutionCourse().getAttends()) {
+        for (Attends attend : professorship.getExecutionCourse().getAttendsSet()) {
             if (attend.getEnrolment() != null) {
                 ProjectTutorialServiceBean projectTutorialServiceBean = new ProjectTutorialServiceBean(professorship, attend);
                 projectTutorialServiceBeans.add(projectTutorialServiceBean);

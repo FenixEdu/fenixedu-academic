@@ -119,7 +119,7 @@ public class EditGroupShift {
     private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
             throws FenixServiceException {
         boolean found = false;
-        Collection studentGroupAttends = studentGroup.getAttends();
+        Collection studentGroupAttends = studentGroup.getAttendsSet();
         Attends attend = null;
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {
@@ -133,7 +133,7 @@ public class EditGroupShift {
 
     private static void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
         final Set<Person> recievers = new HashSet<Person>();
-        for (final Attends attends : studentGroup.getAttends()) {
+        for (final Attends attends : studentGroup.getAttendsSet()) {
             recievers.add(attends.getRegistration().getPerson());
         }
 

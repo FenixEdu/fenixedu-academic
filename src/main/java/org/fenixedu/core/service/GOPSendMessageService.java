@@ -94,7 +94,7 @@ public class GOPSendMessageService implements NotificationService {
         final Set<String> courseNames = new HashSet<String>();
         final Set<String> degreeNames = new HashSet<String>();
         final Set<ExecutionDegree> degrees = new HashSet<ExecutionDegree>();
-        for (ExecutionCourse course : test.getAssociatedExecutionCourses()) {
+        for (ExecutionCourse course : test.getAssociatedExecutionCoursesSet()) {
             courseNames.add(course.getName());
             degreeNames.add(course.getDegreePresentationString());
             degrees.addAll(course.getExecutionDegrees());
@@ -129,7 +129,7 @@ public class GOPSendMessageService implements NotificationService {
         final Set<String> courseNames = new HashSet<String>();
         final Set<String> degreeNames = new HashSet<String>();
         final Set<ExecutionDegree> degrees = new HashSet<ExecutionDegree>();
-        for (ExecutionCourse course : test.getAssociatedExecutionCourses()) {
+        for (ExecutionCourse course : test.getAssociatedExecutionCoursesSet()) {
             courseNames.add(course.getName());
             degreeNames.add(course.getDegreePresentationString());
             degrees.addAll(course.getExecutionDegrees());

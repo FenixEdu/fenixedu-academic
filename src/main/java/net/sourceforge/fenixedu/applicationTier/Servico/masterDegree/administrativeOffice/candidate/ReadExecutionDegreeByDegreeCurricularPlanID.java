@@ -59,7 +59,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
 
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+        executionDegrees = degreeCurricularPlan.getExecutionDegreesSet();
 
         infoExecutionDegreeList = new ArrayList();
 
@@ -93,11 +93,11 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         if (executionYear.equals("")) {
-            return InfoExecutionDegree.newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees().iterator().next());
+            return InfoExecutionDegree.newInfoFromDomain(degreeCurricularPlan.getExecutionDegreesSet().iterator().next());
         }
 
         ExecutionDegree executionDegree =
-                (ExecutionDegree) CollectionUtils.find(degreeCurricularPlan.getExecutionDegrees(), new Predicate() {
+                (ExecutionDegree) CollectionUtils.find(degreeCurricularPlan.getExecutionDegreesSet(), new Predicate() {
 
                     @Override
                     public boolean evaluate(Object arg0) {

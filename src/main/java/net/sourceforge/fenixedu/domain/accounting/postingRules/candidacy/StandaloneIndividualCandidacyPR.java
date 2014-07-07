@@ -48,7 +48,7 @@ public class StandaloneIndividualCandidacyPR extends StandaloneIndividualCandida
             return amountToPay;
         }
 
-        for (Exemption exemption : event.getExemptions()) {
+        for (Exemption exemption : event.getExemptionsSet()) {
             if (exemption.isAcademicEventExemption()) {
                 AcademicEventExemption academicEventExemption = (AcademicEventExemption) exemption;
                 amountToPay = amountToPay.subtract(academicEventExemption.getValue());

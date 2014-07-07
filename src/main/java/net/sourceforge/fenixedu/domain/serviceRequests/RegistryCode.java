@@ -107,7 +107,7 @@ public class RegistryCode extends RegistryCode_Base {
     public Set<CycleType> getAssociatedCycles() {
         Set<CycleType> cycleTypes = new HashSet<CycleType>();
 
-        for (AcademicServiceRequest request : getDocumentRequest()) {
+        for (AcademicServiceRequest request : getDocumentRequestSet()) {
             IRectorateSubmissionBatchDocumentEntry entry = (IRectorateSubmissionBatchDocumentEntry) request;
 
             cycleTypes.add(entry.getRequestedCycle());
@@ -126,7 +126,7 @@ public class RegistryCode extends RegistryCode_Base {
                 continue;
             }
 
-            for (RegistryCode registryCode : generator.getRegistryCode()) {
+            for (RegistryCode registryCode : generator.getRegistryCodeSet()) {
                 if (!registryCode.getAssociatedCycles().contains(cycleType)) {
                     continue;
                 }
@@ -138,11 +138,6 @@ public class RegistryCode extends RegistryCode_Base {
         }
 
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getDocumentRequest() {
-        return getDocumentRequestSet();
     }
 
 }

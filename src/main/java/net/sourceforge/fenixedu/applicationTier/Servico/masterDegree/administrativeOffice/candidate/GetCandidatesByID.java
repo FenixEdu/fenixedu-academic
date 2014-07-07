@@ -61,7 +61,7 @@ public class GetCandidatesByID {
         final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
         infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 
-        Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
+        Iterator situationIterator = masterDegreeCandidate.getSituationsSet().iterator();
         List situations = new ArrayList();
         while (situationIterator.hasNext()) {
             InfoCandidateSituation infoCandidateSituation =

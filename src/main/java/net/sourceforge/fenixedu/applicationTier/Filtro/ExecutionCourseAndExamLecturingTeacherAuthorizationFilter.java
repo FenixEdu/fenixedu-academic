@@ -92,7 +92,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
             if (executionCourse != null && evaluationID != null) {
-                for (Evaluation associatedEvaluation : executionCourse.getAssociatedEvaluations()) {
+                for (Evaluation associatedEvaluation : executionCourse.getAssociatedEvaluationsSet()) {
                     if (associatedEvaluation.getExternalId().equals(evaluationID)) {
                         return true;
                     }

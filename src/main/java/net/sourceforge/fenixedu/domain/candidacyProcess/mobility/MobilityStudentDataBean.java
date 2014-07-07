@@ -319,7 +319,7 @@ public class MobilityStudentDataBean implements Serializable {
             mobilityAgreement = null;
             return;
         }
-        for (MobilityAgreement agreement : selectedMobilityProgram.getMobilityAgreements()) {
+        for (MobilityAgreement agreement : selectedMobilityProgram.getMobilityAgreementsSet()) {
             if (agreement.getUniversityUnit() == getSelectedUniversity()) {
                 mobilityAgreement = agreement;
                 return;

@@ -60,7 +60,7 @@ public class ConfirmAttributionOfFinalDegreeWork {
                     throw new NoAttributionToConfirmException();
                 }
 
-                Collection<GroupStudent> groupStudents = group.getGroupStudents();
+                Collection<GroupStudent> groupStudents = group.getGroupStudentsSet();
                 if (groupStudents != null && !groupStudents.isEmpty()) {
                     for (GroupStudent groupStudent : groupStudents) {
                         if (groupStudent != null && groupStudent.getRegistration().getPerson().getUsername().equals(username)) {

@@ -42,7 +42,7 @@ public class ExecutionDegreesForDegreeCurricularPlan implements DataProvider {
         DegreeCurricularPlan degreeCurricularPlan = executionDegreeBean.getDegreeCurricularPlan();
 
         if (degreeCurricularPlan != null) {
-            result.addAll(degreeCurricularPlan.getExecutionDegrees());
+            result.addAll(degreeCurricularPlan.getExecutionDegreesSet());
         }
 
         return result;

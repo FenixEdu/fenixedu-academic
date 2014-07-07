@@ -85,7 +85,7 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 
         BigDecimal reimbursedValue = BigDecimal.ZERO;
         if (getGuideEntry() != null) {
-            for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
+            for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntriesSet()) {
                 if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
                     reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
                 }

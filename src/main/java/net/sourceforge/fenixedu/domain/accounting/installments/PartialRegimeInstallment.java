@@ -137,7 +137,7 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
     private Set<Enrolment> collectEnrolments(GratuityEvent gratuityEvent) {
         final Set<Enrolment> result = new HashSet<Enrolment>();
 
-        for (final ExecutionSemester executionSemester : getExecutionSemesters()) {
+        for (final ExecutionSemester executionSemester : getExecutionSemestersSet()) {
             for (final CycleCurriculumGroup cycleCurriculumGroup : gratuityEvent.getStudentCurricularPlan()
                     .getCycleCurriculumGroups()) {
                 for (final Enrolment enrolment : cycleCurriculumGroup.getEnrolmentsBy(executionSemester)) {
@@ -180,7 +180,7 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
 
     private String buildExecutionSemesterDescription() {
         final StringBuilder result = new StringBuilder();
-        for (final ExecutionSemester executionSemester : getExecutionSemesters()) {
+        for (final ExecutionSemester executionSemester : getExecutionSemestersSet()) {
             result.append(executionSemester.getName()).append(", ");
         }
 
@@ -193,7 +193,7 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
 
     @Override
     public void delete() {
-        getExecutionSemesters().clear();
+        getExecutionSemestersSet().clear();
         super.delete();
     }
 
@@ -210,11 +210,6 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
 
         super.setEctsForAmount(ectsForAmount);
         super.edit(bean);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionSemester> getExecutionSemesters() {
-        return getExecutionSemestersSet();
     }
 
 }

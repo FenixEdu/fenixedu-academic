@@ -164,7 +164,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
             }
         }
 
-        for (Professorship professorship : courseResumeResult.getExecutionCourse().getProfessorships()) {
+        for (Professorship professorship : courseResumeResult.getExecutionCourse().getProfessorshipsSet()) {
             if (professorship.getInquiryTeacherAnswer() != null) {
                 HtmlLink teacherLink = new HtmlLink();
                 teacherLink.setEscapeAmpersand(false);
@@ -180,7 +180,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
             }
         }
 
-        for (Professorship professorship : courseResumeResult.getExecutionCourse().getProfessorships()) {
+        for (Professorship professorship : courseResumeResult.getExecutionCourse().getProfessorshipsSet()) {
             if (professorship.getInquiryRegentAnswer() != null) {
                 HtmlLink regentLink = new HtmlLink();
                 regentLink.setEscapeAmpersand(false);

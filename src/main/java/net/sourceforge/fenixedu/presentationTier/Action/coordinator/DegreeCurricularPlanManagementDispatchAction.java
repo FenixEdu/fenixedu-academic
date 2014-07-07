@@ -205,7 +205,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         CurricularCourse curricularCourse =
                 (CurricularCourse) FenixFramework.getDomainObject(infoCurricularCourse.getExternalId());
         List<InfoCurricularCourseScope> infoScopes =
-                (List) CollectionUtils.collect(curricularCourse.getScopes(), new Transformer() {
+                (List) CollectionUtils.collect(curricularCourse.getScopesSet(), new Transformer() {
 
                     @Override
                     public Object transform(Object arg0) {

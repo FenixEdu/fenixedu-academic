@@ -43,7 +43,7 @@ public class WrittenEvaluationVigilancyView {
     }
 
     public int getTotalVigilancies() {
-        return getWrittenEvaluation().getVigilancies().size();
+        return getWrittenEvaluation().getVigilanciesSet().size();
     }
 
     public int getVigilanciesFromTeachers() {
@@ -72,7 +72,7 @@ public class WrittenEvaluationVigilancyView {
 
     public List<VigilantWrapper> getCancelledConvokes() {
         List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
-        for (Vigilancy vigilancy : getWrittenEvaluation().getVigilancies()) {
+        for (Vigilancy vigilancy : getWrittenEvaluation().getVigilanciesSet()) {
             if (!vigilancy.isActive()) {
                 vigilants.add(vigilancy.getVigilantWrapper());
             }
@@ -101,7 +101,7 @@ public class WrittenEvaluationVigilancyView {
 
     public List<VigilantWrapper> getAttendedConvokes() {
         List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
-        for (Vigilancy vigilancy : getWrittenEvaluation().getVigilancies()) {
+        for (Vigilancy vigilancy : getWrittenEvaluation().getVigilanciesSet()) {
             if (vigilancy.isAttended()) {
                 vigilants.add(vigilancy.getVigilantWrapper());
             }

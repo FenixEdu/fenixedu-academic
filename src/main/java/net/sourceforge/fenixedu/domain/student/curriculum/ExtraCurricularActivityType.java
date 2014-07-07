@@ -68,9 +68,4 @@ public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Bas
         }
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity> getExtraCurricularActivity() {
-        return getExtraCurricularActivitySet();
-    }
-
 }

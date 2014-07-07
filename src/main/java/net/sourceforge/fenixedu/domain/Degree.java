@@ -317,12 +317,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             degreeInfo.delete();
         }
 
-        for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
+        for (; !getParticipatingAnyCurricularCourseCurricularRulesSet().isEmpty(); getParticipatingAnyCurricularCourseCurricularRulesSet()
                 .iterator().next().delete()) {
             ;
         }
 
-        for (; !getDelegateElectionsSet().isEmpty(); getDelegateElections().iterator().next().delete()) {
+        for (; !getDelegateElectionsSet().isEmpty(); getDelegateElectionsSet().iterator().next().delete()) {
             ;
         }
 
@@ -488,7 +488,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     private List<ExecutionDegree> getInternalExecutionDegrees() {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            result.addAll(degreeCurricularPlan.getExecutionDegrees());
+            result.addAll(degreeCurricularPlan.getExecutionDegreesSet());
         }
         return result;
     }
@@ -540,8 +540,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
             if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
-                for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-                    for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+                for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
+                    for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                         if (executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
                             result.add(course);
                             break;
@@ -563,10 +563,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
             if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
-                for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-                    xpto: for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+                for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
+                    xpto: for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                         if (executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
-                            for (final CurricularCourseScope curricularCourseScope : course.getScopes()) {
+                            for (final CurricularCourseScope curricularCourseScope : course.getScopesSet()) {
                                 if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
                                         .equals(curricularYear)) {
                                     result.add(course);
@@ -584,9 +584,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public List<ExecutionCourse> getExecutionCourses(String curricularCourseAcronym, ExecutionSemester executionSemester) {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
+            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
                 if (course.getAcronym() != null && course.getAcronym().equalsIgnoreCase(curricularCourseAcronym)) {
-                    for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+                    for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                         if (executionSemester == executionCourse.getExecutionPeriod()) {
                             result.add(executionCourse);
                         }
@@ -601,8 +601,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             final ExecutionSemester executionSemester) {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
+                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                     if (executionSemester == executionCourse.getExecutionPeriod()) {
                         for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
                             if (scope.isActiveForExecutionPeriod(executionSemester)
@@ -622,8 +622,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public List<ExecutionCourse> getExecutionCourses(final AcademicInterval academicInterval) {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
+                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                     if (academicInterval.isEqualOrEquivalent(executionCourse.getAcademicInterval())) {
                         for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
                             if (scope.isActiveForAcademicInterval(academicInterval)
@@ -643,8 +643,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public List<ExecutionCourse> getExecutionCourses(final Integer curricularYear, final ExecutionSemester executionSemester) {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
+                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                     if (executionSemester == executionCourse.getExecutionPeriod()) {
                         for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
                             if (scope.isActiveForExecutionPeriod(executionSemester)
@@ -759,7 +759,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public OldInquiriesCoursesRes getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(String code,
             ExecutionSemester executionSemester) {
-        for (OldInquiriesCoursesRes oldInquiriesCoursesRes : this.getAssociatedOldInquiriesCoursesRes()) {
+        for (OldInquiriesCoursesRes oldInquiriesCoursesRes : this.getAssociatedOldInquiriesCoursesResSet()) {
             if (oldInquiriesCoursesRes.getCourseCode().equalsIgnoreCase(code)
                     && oldInquiriesCoursesRes.getExecutionPeriod().equals(executionSemester)) {
                 return oldInquiriesCoursesRes;
@@ -770,7 +770,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public List<OldInquiriesSummary> getOldInquiriesSummariesByExecutionPeriod(ExecutionSemester executionSemester) {
         List<OldInquiriesSummary> result = new ArrayList<OldInquiriesSummary>();
-        for (OldInquiriesSummary oldInquiriesSummary : this.getAssociatedOldInquiriesSummaries()) {
+        for (OldInquiriesSummary oldInquiriesSummary : this.getAssociatedOldInquiriesSummariesSet()) {
             if (oldInquiriesSummary.getExecutionPeriod().equals(executionSemester)) {
                 result.add(oldInquiriesSummary);
             }
@@ -781,7 +781,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public List<OldInquiriesTeachersRes> getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCode(
             ExecutionSemester executionSemester, Integer curricularYear, String courseCode) {
         List<OldInquiriesTeachersRes> result = new ArrayList<OldInquiriesTeachersRes>();
-        for (OldInquiriesTeachersRes oldInquiriesTeachersRes : this.getAssociatedOldInquiriesTeachersRes()) {
+        for (OldInquiriesTeachersRes oldInquiriesTeachersRes : this.getAssociatedOldInquiriesTeachersResSet()) {
             if (oldInquiriesTeachersRes.getExecutionPeriod().equals(executionSemester)
                     && oldInquiriesTeachersRes.getCurricularYear().equals(curricularYear)
                     && oldInquiriesTeachersRes.getCourseCode().equalsIgnoreCase(courseCode)) {
@@ -794,7 +794,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public List<OldInquiriesTeachersRes> getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCodeAndTeacher(
             ExecutionSemester executionSemester, Integer curricularYear, String courseCode, Teacher teacher) {
         List<OldInquiriesTeachersRes> result = new ArrayList<OldInquiriesTeachersRes>();
-        for (OldInquiriesTeachersRes oldInquiriesTeachersRes : this.getAssociatedOldInquiriesTeachersRes()) {
+        for (OldInquiriesTeachersRes oldInquiriesTeachersRes : this.getAssociatedOldInquiriesTeachersResSet()) {
             if (oldInquiriesTeachersRes.getExecutionPeriod().equals(executionSemester)
                     && oldInquiriesTeachersRes.getCurricularYear().equals(curricularYear)
                     && oldInquiriesTeachersRes.getCourseCode().equalsIgnoreCase(courseCode)
@@ -854,12 +854,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public DegreeCurricularPlan getFirstDegreeCurricularPlan() {
-        if (getDegreeCurricularPlans().isEmpty()) {
+        if (getDegreeCurricularPlansSet().isEmpty()) {
             return null;
         }
 
-        DegreeCurricularPlan firstDCP = getDegreeCurricularPlans().iterator().next();
-        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+        DegreeCurricularPlan firstDCP = getDegreeCurricularPlansSet().iterator().next();
+        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
             if (degreeCurricularPlan.getInitialDateYearMonthDay() == null) {
                 continue;
             }
@@ -1148,7 +1148,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
 
             if (executionDegree != null) {
-                return new ArrayList<ScientificCommission>(executionDegree.getScientificCommissionMembers());
+                return new ArrayList<ScientificCommission>(executionDegree.getScientificCommissionMembersSet());
             }
         }
 
@@ -1186,7 +1186,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      */
     final public boolean isCoordinatorInSomeExecutionYear(final Person person) {
         if (person != null) {
-            for (Coordinator coordinator : person.getCoordinators()) {
+            for (Coordinator coordinator : person.getCoordinatorsSet()) {
                 if (coordinator.getExecutionDegree().getDegree() == this) {
                     return true;
                 }
@@ -1202,7 +1202,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
             final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
             if (executionDegree != null) {
-                result.addAll(responsible ? executionDegree.getResponsibleCoordinators() : executionDegree.getCoordinatorsList());
+                result.addAll(responsible ? executionDegree.getResponsibleCoordinators() : executionDegree.getCoordinatorsListSet());
             }
         }
 
@@ -1303,7 +1303,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
 
         for (final DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlansSet()) {
-            for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
+            for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
                 if (studentCurricularPlan.getRegistration() == null) {
                     continue;
                 }
@@ -1339,11 +1339,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public boolean isAnyPublishedThesisAvailable() {
-        for (DegreeCurricularPlan dcp : getDegreeCurricularPlans()) {
+        for (DegreeCurricularPlan dcp : getDegreeCurricularPlansSet()) {
             for (CurricularCourse curricularCourse : dcp.getDissertationCurricularCourses(null)) {
                 List<IEnrolment> enrolments = new ArrayList<IEnrolment>();
 
-                for (CurriculumModule module : curricularCourse.getCurriculumModules()) {
+                for (CurriculumModule module : curricularCourse.getCurriculumModulesSet()) {
                     if (module.isEnrolment()) {
                         enrolments.add((IEnrolment) module);
                     } else if (module.isDismissal()) {
@@ -1375,7 +1375,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      */
     public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYear(ExecutionYear executionYear) {
         List<YearDelegateElection> elections = new ArrayList<YearDelegateElection>();
-        for (DelegateElection election : this.getDelegateElections()) {
+        for (DelegateElection election : this.getDelegateElectionsSet()) {
             if (election instanceof YearDelegateElection && election.getExecutionYear().equals(executionYear)) {
                 elections.add((YearDelegateElection) election);
             }
@@ -1386,7 +1386,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYearAndCurricularYear(ExecutionYear executionYear,
             CurricularYear curricularYear) {
         List<YearDelegateElection> elections = new ArrayList<YearDelegateElection>();
-        for (DelegateElection election : this.getDelegateElections()) {
+        for (DelegateElection election : this.getDelegateElectionsSet()) {
             YearDelegateElection yearDelegateElection = (YearDelegateElection) election;
             if (yearDelegateElection.getExecutionYear().equals(executionYear)
                     && yearDelegateElection.getCurricularYear().equals(curricularYear)) {
@@ -1639,7 +1639,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      *         degree is not final
      */
     public boolean hasPendingThesis() {
-        for (Thesis thesis : getThesis()) {
+        for (Thesis thesis : getThesisSet()) {
             if (!thesis.isFinalThesis()) {
                 return true;
             }
@@ -1686,7 +1686,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public boolean isActive() {
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        for (DegreeCurricularPlan curricularPlan : getDegreeCurricularPlans()) {
+        for (DegreeCurricularPlan curricularPlan : getDegreeCurricularPlansSet()) {
             if (curricularPlan.getExecutionDegreeByYear(currentExecutionYear) != null) {
                 return true;
             }
@@ -1784,146 +1784,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public String getDegreeTypeName() {
         return getDegreeType().getName();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry> getOver23IndividualCandidacyDegreeEntries() {
-        return getOver23IndividualCandidacyDegreeEntriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy> getSelectedSecondCycleIndividualCandidacies() {
-        return getSelectedSecondCycleIndividualCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummary> getTutorshipSummaries() {
-        return getTutorshipSummariesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdStudyPlan> getPhdStudyPlans() {
-        return getPhdStudyPlansSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess> getCandidacyProcess() {
-        return getCandidacyProcessSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getRegistrations() {
-        return getRegistrationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElection> getDelegateElections() {
-        return getDelegateElectionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy> getSelectionSecondCycleIndividualCandidacies() {
-        return getSelectionSecondCycleIndividualCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota> getMobilityQuotas() {
-        return getMobilityQuotasSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator> getCoordinators() {
-        return getCoordinatorsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson> getSelectedDegreeCandidacyForGraduatedPersonCandidacies() {
-        return getSelectedDegreeCandidacyForGraduatedPersonCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeCurricularPlan> getDegreeCurricularPlans() {
-        return getDegreeCurricularPlansSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGrade> getIndividualCandidacySeriesGrade() {
-        return getIndividualCandidacySeriesGradeSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse> getParticipatingAnyCurricularCourseCurricularRules() {
-        return getParticipatingAnyCurricularCourseCurricularRulesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy> getSelectedDegreeChangeIndividualCandidacies() {
-        return getSelectedDegreeChangeIndividualCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeInfo> getDegreeInfos() {
-        return getDegreeInfosSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary> getAssociatedOldInquiriesSummaries() {
-        return getAssociatedOldInquiriesSummariesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsDegreeGraduationGradeConversionTable> getEctsGraduationGradeConversionTables() {
-        return getEctsGraduationGradeConversionTablesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacy> getSelectedDegreeTransferIndividualCandidacies() {
-        return getSelectedDegreeTransferIndividualCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeLog> getDegreeLogs() {
-        return getDegreeLogsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeOfficialPublication> getOfficialPublication() {
-        return getOfficialPublicationSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Department> getDepartments() {
-        return getDepartmentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy> getErasmusVacancy() {
-        return getErasmusVacancySet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.thesis.Thesis> getThesis() {
-        return getThesisSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesCoursesRes> getAssociatedOldInquiriesCoursesRes() {
-        return getAssociatedOldInquiriesCoursesResSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsDegreeByCurricularYearConversionTable> getEctsCourseConversionTables() {
-        return getEctsCourseConversionTablesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy> getAcceptedOver23IndividualCandidacies() {
-        return getAcceptedOver23IndividualCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes> getAssociatedOldInquiriesTeachersRes() {
-        return getAssociatedOldInquiriesTeachersResSet();
     }
 
 }

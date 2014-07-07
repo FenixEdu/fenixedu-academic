@@ -102,7 +102,7 @@ public class ScheduleThesisMeeting extends PhdMeetingSchedulingActivity {
 
     private void notifyJuryElements(final PhdThesisProcess process, final PhdThesisProcessBean bean) {
 
-        for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
+        for (final ThesisJuryElement juryElement : process.getThesisJuryElementsSet()) {
 
             if (!juryElement.isInternal()) {
                 createExternalAccess(juryElement.getParticipant());

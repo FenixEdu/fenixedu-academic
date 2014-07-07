@@ -172,13 +172,8 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
         if (getWrittenEvaluationsSet().isEmpty()) {
             return StringUtils.EMPTY;
         }
-        final WrittenEvaluation eval = getWrittenEvaluations().iterator().next();
+        final WrittenEvaluation eval = getWrittenEvaluationsSet().iterator().next();
         return String.format("(%s) %s", eval.getEvaluationType(), eval.getName());
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getWrittenEvaluations() {
-        return getWrittenEvaluationsSet();
     }
 
     @Override

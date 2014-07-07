@@ -135,7 +135,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                         .contains(getEmployeeDepartmentUnit()))
                 || (this.getUnit().getTopUnits().isEmpty() && !this.getUnit().equals(getEmployeeDepartmentUnit()))) {
             setErrorMessage("error.invalid.unit");
-        } else if (!this.getUnit().getFunctions().contains(this.getFunction())) {
+        } else if (!this.getUnit().getFunctionsSet().contains(this.getFunction())) {
             setErrorMessage("error.invalid.function");
         } else {
 
@@ -394,7 +394,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getValidFunctions() throws FenixServiceException {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
-        for (Function function : this.getUnit().getFunctions()) {
+        for (Function function : this.getUnit().getFunctionsSet()) {
             if (!function.isInherentFunction()
                     && ((this.getPersonFunction() != null && function.equals(this.getPersonFunction().getFunction())) || (this
                             .getPersonFunction() == null && function.isActive(new YearMonthDay())))) {
@@ -440,7 +440,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     private void newSelectItem(ExecutionYear executionYear, List<SelectItem> list) {
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             SelectItem selectItem = new SelectItem();
             selectItem.setValue(executionSemester.getExternalId());
             selectItem.setLabel(executionYear.getYear() + " - " + executionSemester.getSemester() + "º Semestre");
@@ -855,7 +855,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         if (this.inherentFunctions == null) {
             this.inherentFunctions = new ArrayList<Function>();
             for (PersonFunction personFunction : this.getActiveFunctions()) {
-                this.inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());
+                this.inherentFunctions.addAll(personFunction.getFunction().getInherentFunctionsSet());
             }
         }
         return inherentFunctions;

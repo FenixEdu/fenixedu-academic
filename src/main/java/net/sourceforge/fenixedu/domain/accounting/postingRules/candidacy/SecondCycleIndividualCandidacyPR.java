@@ -56,7 +56,7 @@ public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandi
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
         SecondCycleIndividualCandidacyEvent secondCycleEvent = (SecondCycleIndividualCandidacyEvent) event;
         return super.doCalculationForAmountToPay(event, when, applyDiscount).multiply(
-                ((SecondCycleIndividualCandidacy) secondCycleEvent.getIndividualCandidacy()).getSelectedDegrees().size());
+                ((SecondCycleIndividualCandidacy) secondCycleEvent.getIndividualCandidacy()).getSelectedDegreesSet().size());
     }
 
     @Override

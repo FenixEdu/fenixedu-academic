@@ -246,7 +246,7 @@ public class Teacher extends Teacher_Base {
             workingPlaces.addAll(employee.getWorkingPlaces(beginDate, endDate));
         }
 
-        for (TeacherAuthorization ta : getAuthorization()) {
+        for (TeacherAuthorization ta : getAuthorizationSet()) {
 
             if (ta instanceof ExternalTeacherAuthorization && ((ExternalTeacherAuthorization) ta).getActive()
                     && ta.getExecutionSemester().isInTimePeriod(beginDate, endDate)
@@ -357,7 +357,7 @@ public class Teacher extends Teacher_Base {
 
     public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(ExecutionYear executionYear) {
         TeacherPersonalExpectation result = null;
-        Collection<TeacherPersonalExpectation> teacherPersonalExpectations = this.getTeacherPersonalExpectations();
+        Collection<TeacherPersonalExpectation> teacherPersonalExpectations = this.getTeacherPersonalExpectationsSet();
         for (TeacherPersonalExpectation teacherPersonalExpectation : teacherPersonalExpectations) {
             if (teacherPersonalExpectation.getExecutionYear().equals(executionYear)) {
                 result = teacherPersonalExpectation;
@@ -369,7 +369,7 @@ public class Teacher extends Teacher_Base {
 
     public List<Proposal> getFinalDegreeWorksByExecutionYear(ExecutionYear executionYear) {
         List<Proposal> proposalList = new ArrayList<Proposal>();
-        for (Proposal proposal : getPerson().getAssociatedProposalsByOrientator()) {
+        for (Proposal proposal : getPerson().getAssociatedProposalsByOrientatorSet()) {
             if (proposal.getScheduleing().getExecutionDegreesSet().iterator().next().getExecutionYear().equals(executionYear)) {
                 // if it was attributed by the coordinator the proposal is
                 // efective
@@ -383,7 +383,7 @@ public class Teacher extends Teacher_Base {
                     FinalDegreeWorkGroup attributedGroupByTeacher = proposal.getGroupAttributedByTeacher();
                     if (attributedGroupByTeacher != null) {
                         boolean toAdd = false;
-                        for (GroupStudent groupStudent : attributedGroupByTeacher.getGroupStudents()) {
+                        for (GroupStudent groupStudent : attributedGroupByTeacher.getGroupStudentsSet()) {
                             Proposal studentProposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
                             if (studentProposal != null && studentProposal.equals(proposal)) {
                                 toAdd = true;
@@ -403,7 +403,7 @@ public class Teacher extends Teacher_Base {
 
     public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionYear(ExecutionYear executionYear) {
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             executionCourses.addAll(getLecturedExecutionCoursesByExecutionPeriod(executionSemester));
         }
         return executionCourses;
@@ -460,7 +460,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionSemester executionSemester) {
-        return (TeacherService) CollectionUtils.find(getTeacherServices(), new Predicate() {
+        return (TeacherService) CollectionUtils.find(getTeacherServicesSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 TeacherService teacherService = (TeacherService) arg0;
@@ -501,13 +501,13 @@ public class Teacher extends Teacher_Base {
     public List<MasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(ExecutionYear executionYear) {
         List<MasterDegreeThesisDataVersion> guidedThesis = new ArrayList<MasterDegreeThesisDataVersion>();
 
-        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : this.getMasterDegreeThesisGuider()) {
+        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : this.getMasterDegreeThesisGuiderSet()) {
 
             if (masterDegreeThesisDataVersion.getCurrentState().getState() == State.ACTIVE) {
 
                 Collection<ExecutionDegree> executionDegrees =
                         masterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan()
-                                .getDegreeCurricularPlan().getExecutionDegrees();
+                .getDegreeCurricularPlan().getExecutionDegreesSet();
 
                 for (ExecutionDegree executionDegree : executionDegrees) {
                     if (executionDegree.getExecutionYear().equals(executionYear)) {
@@ -524,7 +524,7 @@ public class Teacher extends Teacher_Base {
     public List<MasterDegreeThesisDataVersion> getAllGuidedMasterDegreeThesis() {
         List<MasterDegreeThesisDataVersion> guidedThesis = new ArrayList<MasterDegreeThesisDataVersion>();
 
-        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisGuider()) {
+        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisGuiderSet()) {
             if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                 guidedThesis.add(masterDegreeThesisDataVersion);
             }
@@ -550,7 +550,7 @@ public class Teacher extends Teacher_Base {
     public BigDecimal getMasterDegreeThesesCredits(ExecutionYear executionYear) {
         double totalThesisValue = 0.0;
         if (!executionYear.getYear().equals("2011/2012")) {
-            for (ThesisEvaluationParticipant participant : getPerson().getThesisEvaluationParticipants()) {
+            for (ThesisEvaluationParticipant participant : getPerson().getThesisEvaluationParticipantsSet()) {
                 Thesis thesis = participant.getThesis();
                 if (thesis.isEvaluated()
                         && thesis.hasFinalEnrolmentEvaluation()
@@ -569,7 +569,7 @@ public class Teacher extends Teacher_Base {
         double assistantGuidedTheses = 0.0;
 
         if (!executionYear.getYear().equals("2011/2012")) {
-            for (InternalPhdParticipant internalPhdParticipant : getPerson().getInternalParticipants()) {
+            for (InternalPhdParticipant internalPhdParticipant : getPerson().getInternalParticipantsSet()) {
                 ExecutionYear conclusionYear = internalPhdParticipant.getIndividualProcess().getConclusionYear();
                 if (conclusionYear != null && conclusionYear.equals(previousExecutionYear)) {
                     if (internalPhdParticipant.getProcessForGuiding() != null) {
@@ -589,7 +589,7 @@ public class Teacher extends Teacher_Base {
 
     public BigDecimal getProjectsTutorialsCredits(ExecutionYear executionYear) {
         BigDecimal result = BigDecimal.ZERO;
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionSemester);
             if (teacherService != null) {
                 for (DegreeProjectTutorialService degreeProjectTutorialService : teacherService
@@ -860,7 +860,7 @@ public class Teacher extends Teacher_Base {
         Date executionYearStartDate = executionYear.getBeginDate();
         Date executionYearEndDate = executionYear.getEndDate();
 
-        for (Advise advise : this.getAdvises()) {
+        for (Advise advise : this.getAdvisesSet()) {
             if ((advise.getAdviseType() == adviseType)) {
                 Date adviseStartDate = advise.getStartExecutionPeriod().getBeginDate();
                 Date adviseEndDate = advise.getEndExecutionPeriod().getEndDate();
@@ -880,7 +880,7 @@ public class Teacher extends Teacher_Base {
     public List<Advise> getAdvisesByAdviseType(AdviseType adviseType) {
 
         List<Advise> result = new ArrayList<Advise>();
-        for (Advise advise : this.getAdvises()) {
+        for (Advise advise : this.getAdvisesSet()) {
             if (advise.getAdviseType() == adviseType) {
                 result.add(advise);
             }
@@ -990,7 +990,7 @@ public class Teacher extends Teacher_Base {
             final ExecutionSemester executionSemester) {
         final Set<TeacherDegreeFinalProjectStudent> teacherDegreeFinalProjectStudents =
                 new HashSet<TeacherDegreeFinalProjectStudent>();
-        for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : getDegreeFinalProjectStudents()) {
+        for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : getDegreeFinalProjectStudentsSet()) {
             if (executionSemester == teacherDegreeFinalProjectStudent.getExecutionPeriod()) {
                 teacherDegreeFinalProjectStudents.add(teacherDegreeFinalProjectStudent);
             }
@@ -1000,7 +1000,7 @@ public class Teacher extends Teacher_Base {
 
     public List<ManagementPositionCreditLine> getManagementPositionsFor(ExecutionSemester executionSemester) {
         final List<ManagementPositionCreditLine> result = new ArrayList<ManagementPositionCreditLine>();
-        for (final ManagementPositionCreditLine managementPositionCreditLine : this.getManagementPositions()) {
+        for (final ManagementPositionCreditLine managementPositionCreditLine : this.getManagementPositionsSet()) {
             if (managementPositionCreditLine.getStart().isBefore(executionSemester.getEndDateYearMonthDay())
                     && managementPositionCreditLine.getEnd().isAfter(executionSemester.getBeginDateYearMonthDay())) {
                 result.add(managementPositionCreditLine);
@@ -1097,7 +1097,7 @@ public class Teacher extends Teacher_Base {
         for (Professorship professorship : getProfessorships(executionYear)) {
             Set<Shift> associatedShifts = professorship.getExecutionCourse().getAssociatedShifts();
             for (Shift shift : associatedShifts) {
-                Collection<Lesson> associatedLessons = shift.getAssociatedLessons();
+                Collection<Lesson> associatedLessons = shift.getAssociatedLessonsSet();
                 for (Lesson lesson : associatedLessons) {
                     if (lesson.contains(interval)) {
                         return true;
@@ -1110,7 +1110,7 @@ public class Teacher extends Teacher_Base {
 
     public List<ExpectationEvaluationGroup> getEvaluatedExpectationEvaluationGroups(ExecutionYear executionYear) {
         List<ExpectationEvaluationGroup> result = new ArrayList<ExpectationEvaluationGroup>();
-        for (ExpectationEvaluationGroup expectationEvaluationGroup : getEvaluatedExpectationEvaluationGroups()) {
+        for (ExpectationEvaluationGroup expectationEvaluationGroup : getEvaluatedExpectationEvaluationGroupsSet()) {
             if (expectationEvaluationGroup.getExecutionYear().equals(executionYear)) {
                 result.add(expectationEvaluationGroup);
             }
@@ -1120,7 +1120,7 @@ public class Teacher extends Teacher_Base {
 
     public List<ExpectationEvaluationGroup> getAppraiserExpectationEvaluationGroups(ExecutionYear executionYear) {
         List<ExpectationEvaluationGroup> result = new ArrayList<ExpectationEvaluationGroup>();
-        for (ExpectationEvaluationGroup expectationEvaluationGroup : getAppraiserExpectationEvaluationGroups()) {
+        for (ExpectationEvaluationGroup expectationEvaluationGroup : getAppraiserExpectationEvaluationGroupsSet()) {
             if (expectationEvaluationGroup.getExecutionYear().equals(executionYear)) {
                 result.add(expectationEvaluationGroup);
             }
@@ -1129,7 +1129,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public boolean hasExpectationEvaluatedTeacher(Teacher teacher, ExecutionYear executionYear) {
-        for (ExpectationEvaluationGroup group : getEvaluatedExpectationEvaluationGroups()) {
+        for (ExpectationEvaluationGroup group : getEvaluatedExpectationEvaluationGroupsSet()) {
             if (group.getExecutionYear().equals(executionYear) && group.getEvaluated().equals(teacher)) {
                 return true;
             }
@@ -1182,7 +1182,7 @@ public class Teacher extends Teacher_Base {
 
     public List<Tutorship> getPastTutorships() {
         List<Tutorship> tutorships = new ArrayList<Tutorship>();
-        for (Tutorship tutorship : getTutorships()) {
+        for (Tutorship tutorship : getTutorshipsSet()) {
             if (!tutorship.isActive()) {
                 tutorships.add(tutorship);
             }
@@ -1192,7 +1192,7 @@ public class Teacher extends Teacher_Base {
 
     public List<Tutorship> getActiveTutorships() {
         List<Tutorship> tutorships = new ArrayList<Tutorship>();
-        for (Tutorship tutorship : getTutorships()) {
+        for (Tutorship tutorship : getTutorshipsSet()) {
             if (tutorship.isActive()) {
                 tutorships.add(tutorship);
             }
@@ -1202,7 +1202,7 @@ public class Teacher extends Teacher_Base {
 
     public List<Tutorship> getActiveTutorships(AcademicInterval semester) {
         List<Tutorship> tutorships = new ArrayList<Tutorship>();
-        for (Tutorship tutorship : getTutorships()) {
+        for (Tutorship tutorship : getTutorshipsSet()) {
             if (tutorship.isActive(semester)) {
                 tutorships.add(tutorship);
             }
@@ -1219,7 +1219,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public Integer getNumberOfTutorships() {
-        return this.getTutorships().size();
+        return this.getTutorshipsSet().size();
     }
 
     public boolean canBeTutorOfDepartment(Department department) {
@@ -1232,7 +1232,7 @@ public class Teacher extends Teacher_Base {
     public List<Tutorship> getTutorshipsByStudentsEntryYear(ExecutionYear entryYear) {
         List<Tutorship> tutorships = new ArrayList<Tutorship>();
 
-        for (Tutorship tutorship : this.getTutorships()) {
+        for (Tutorship tutorship : this.getTutorshipsSet()) {
             StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
             ExecutionYear studentEntryYear =
                     ExecutionYear.getExecutionYearByDate(studentCurricularPlan.getRegistration().getStartDate());
@@ -1247,7 +1247,7 @@ public class Teacher extends Teacher_Base {
     public List<Tutorship> getActiveTutorshipsByStudentsEntryYear(ExecutionYear entryYear) {
         List<Tutorship> tutorships = new ArrayList<Tutorship>();
 
-        for (Tutorship tutorship : this.getTutorships()) {
+        for (Tutorship tutorship : this.getTutorshipsSet()) {
             StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
             ExecutionYear studentEntryYear =
                     ExecutionYear.getExecutionYearByDate(studentCurricularPlan.getRegistration().getStartDate());
@@ -1296,15 +1296,15 @@ public class Teacher extends Teacher_Base {
     }
 
     public Collection<Professorship> getProfessorships() {
-        return getPerson().getProfessorships();
+        return getPerson().getProfessorshipsSet();
     }
 
     public Iterator<Professorship> getProfessorshipsIterator() {
-        return getPerson().getProfessorships().iterator();
+        return getPerson().getProfessorshipsSet().iterator();
     }
 
     public TeacherCredits getTeacherCredits(ExecutionSemester executionSemester) {
-        for (TeacherCredits teacherCredits : getTeacherCredits()) {
+        for (TeacherCredits teacherCredits : getTeacherCreditsSet()) {
             if (teacherCredits.getTeacherCreditsState().getExecutionSemester().equals(executionSemester)) {
                 return teacherCredits;
             }
@@ -1313,7 +1313,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public boolean hasTeacherCredits(ExecutionSemester executionSemester) {
-        for (TeacherCredits teacherCredits : getTeacherCredits()) {
+        for (TeacherCredits teacherCredits : getTeacherCreditsSet()) {
             if (teacherCredits.getTeacherCreditsState().getExecutionSemester().equals(executionSemester)) {
                 return true;
             }
@@ -1322,7 +1322,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public boolean hasTeacherAuthorization(ExecutionSemester executionSemester) {
-        for (TeacherAuthorization ta : getAuthorization()) {
+        for (TeacherAuthorization ta : getAuthorizationSet()) {
             if (ta instanceof ExternalTeacherAuthorization && ((ExternalTeacherAuthorization) ta).getActive()
                     && ((ExternalTeacherAuthorization) ta).getExecutionSemester().equals(executionSemester)) {
                 return true;
@@ -1332,7 +1332,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public TeacherAuthorization getTeacherAuthorization(ExecutionSemester executionSemester) {
-        for (TeacherAuthorization ta : getAuthorization()) {
+        for (TeacherAuthorization ta : getAuthorizationSet()) {
             if (ta instanceof ExternalTeacherAuthorization && ((ExternalTeacherAuthorization) ta).getActive()
                     && ((ExternalTeacherAuthorization) ta).getExecutionSemester().equals(executionSemester)) {
                 return ta;
@@ -1346,7 +1346,7 @@ public class Teacher extends Teacher_Base {
     public TeacherAuthorization getLastTeacherAuthorization() {
         LocalDate today = new LocalDate();
         TeacherAuthorization lastTeacherAuthorization = null;
-        for (TeacherAuthorization ta : getAuthorization()) {
+        for (TeacherAuthorization ta : getAuthorizationSet()) {
             if ((lastTeacherAuthorization == null || ta.getExecutionSemester().getEndDateYearMonthDay()
                     .isAfter(lastTeacherAuthorization.getExecutionSemester().getEndDateYearMonthDay()))
                     && ta.getExecutionSemester().getEndDateYearMonthDay().isAfter(today)
@@ -1358,7 +1358,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public boolean isErasmusCoordinator() {
-        return !getMobilityCoordinations().isEmpty();
+        return !getMobilityCoordinationsSet().isEmpty();
     }
 
     public boolean hasTutorshipIntentionFor(ExecutionDegree executionDegree) {
@@ -1373,162 +1373,12 @@ public class Teacher extends Teacher_Base {
 
     public List<ExecutionCourseAudit> getExecutionCourseAudits(ExecutionSemester executionSemester) {
         List<ExecutionCourseAudit> result = new ArrayList<ExecutionCourseAudit>();
-        for (ExecutionCourseAudit executionCourseAudit : getExecutionCourseAudits()) {
+        for (ExecutionCourseAudit executionCourseAudit : getExecutionCourseAuditsSet()) {
             if (executionCourseAudit.getExecutionCourse().getExecutionPeriod() == executionSemester) {
                 result.add(executionCourseAudit);
             }
         }
         return result;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipIntention> getTutorshipIntention() {
-        return getTutorshipIntentionSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherAuthorization> getAuthorization() {
-        return getAuthorizationSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherService> getTeacherServices() {
-        return getTeacherServicesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Orientation> getAssociatedOrientations() {
-        return getAssociatedOrientationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent> getDegreeFinalProjectStudents() {
-        return getDegreeFinalProjectStudentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime> getInstitutionWorkTimePeriods() {
-        return getInstitutionWorkTimePeriodsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeCandidate> getMasterDegreeCandidates() {
-        return getMasterDegreeCandidatesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine> getManagementPositions() {
-        return getManagementPositionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MarkSheet> getMarkSheets() {
-        return getMarkSheetsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits> getAnnualTeachingCredits() {
-        return getAnnualTeachingCreditsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.PublicationsNumber> getAssociatedPublicationsNumbers() {
-        return getAssociatedPublicationsNumbersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
-        return getAssociatedSummariesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Career> getAssociatedCareers() {
-        return getAssociatedCareersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation> getTeacherPersonalExpectations() {
-        return getTeacherPersonalExpectationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.ExternalActivity> getAssociatedExternalActivities() {
-        return getAssociatedExternalActivitiesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit> getExecutionCourseAudits() {
-        return getExecutionCourseAuditsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisGuider() {
-        return getMasterDegreeThesisGuiderSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvises() {
-        return getAdvisesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisAssistentGuider() {
-        return getMasterDegreeThesisAssistentGuiderSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCredits> getTeacherCredits() {
-        return getTeacherCreditsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofsJury() {
-        return getMasterDegreeProofsJurySet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Tutorship> getTutorships() {
-        return getTutorshipsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.OldPublication> getAssociatedOldPublications() {
-        return getAssociatedOldPublicationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup> getAppraiserExpectationEvaluationGroups() {
-        return getAppraiserExpectationEvaluationGroupsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubject> getThesisSubjects() {
-        return getThesisSubjectsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes> getAssociatedOldInquiriesTeachersRes() {
-        return getAssociatedOldInquiriesTeachersResSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummary> getTutorshipSummaries() {
-        return getTutorshipSummariesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator> getMobilityCoordinations() {
-        return getMobilityCoordinationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup> getEvaluatedExpectationEvaluationGroups() {
-        return getEvaluatedExpectationEvaluationGroupsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine> getOtherTypeCreditLines() {
-        return getOtherTypeCreditLinesSet();
     }
 
 }

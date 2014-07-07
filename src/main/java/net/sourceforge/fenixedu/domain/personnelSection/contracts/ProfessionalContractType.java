@@ -51,9 +51,4 @@ public class ProfessionalContractType extends ProfessionalContractType_Base {
         setName(name);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData> getGiafProfessionalData() {
-        return getGiafProfessionalDataSet();
-    }
-
 }

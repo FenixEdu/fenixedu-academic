@@ -304,7 +304,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
         }
 
-        final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSender().iterator().next();
+        final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSenderSet().iterator().next();
         final Recipient recipient = new Recipient(UserGroup.of(getPerson().getUser()));
         new Message(sender, sender.getReplyTos(), recipient.asCollection(), getDescription(), body, "");
     }
@@ -329,7 +329,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected void disconnect() {
-        for (; !getAcademicServiceRequestSituations().isEmpty(); getAcademicServiceRequestSituations().iterator().next().delete()) {
+        for (; !getAcademicServiceRequestSituationsSet().isEmpty(); getAcademicServiceRequestSituationsSet().iterator().next().delete()) {
             ;
         }
         super.setAdministrativeOffice(null);
@@ -379,7 +379,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public AcademicServiceRequestSituation getActiveSituation() {
-        return !getAcademicServiceRequestSituationsSet().isEmpty() ? Collections.min(getAcademicServiceRequestSituations(),
+        return !getAcademicServiceRequestSituationsSet().isEmpty() ? Collections.min(getAcademicServiceRequestSituationsSet(),
                 AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_SITUATION_DATE_AND_ID) : null;
     }
 
@@ -734,11 +734,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
             throw new DomainException("error.serviceRequests.AcademicServiceRequest.cancelled.requests.cannot.be.reverted");
         }
 
-        if (getAcademicServiceRequestSituations().size() <= 1) {
+        if (getAcademicServiceRequestSituationsSet().size() <= 1) {
             throw new DomainException("error.serviceRequests.AcademicServiceRequest.revert.is.requires.more.than.one.state");
         }
 
-        while (getAcademicServiceRequestSituations().size() > 1 && !activeSituation.isProcessing()) {
+        while (getAcademicServiceRequestSituationsSet().size() > 1 && !activeSituation.isProcessing()) {
             activeSituation.delete(false);
             activeSituation = getActiveSituation();
         }
@@ -778,16 +778,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public abstract AcademicProgram getAcademicProgram();
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation> getAcademicServiceRequestSituations() {
-        return getAcademicServiceRequestSituationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument> getDocument() {
-        return getDocumentSet();
-    }
 
     public boolean hasExecutionYear() {
         return getExecutionYear() != null;

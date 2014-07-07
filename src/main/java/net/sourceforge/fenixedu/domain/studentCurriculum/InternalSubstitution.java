@@ -132,7 +132,7 @@ public class InternalSubstitution extends InternalSubstitution_Base {
     private void moveExistingEnrolmentsToExtraCurriculumGroup() {
         final ExtraCurriculumGroup extraCurriculumGroup = ensureExtraCurriculumGroup();
 
-        for (final EnrolmentWrapper wrapper : getEnrolments()) {
+        for (final EnrolmentWrapper wrapper : getEnrolmentsSet()) {
             final Enrolment enrolment = (Enrolment) wrapper.getIEnrolment();
             enrolment.setCurriculumGroup(extraCurriculumGroup);
         }

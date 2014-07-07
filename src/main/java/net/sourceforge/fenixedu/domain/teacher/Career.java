@@ -96,7 +96,7 @@ public abstract class Career extends Career_Base {
 
     public static Collection<Career> readAllByTeacherIdAndCareerType(Person person, CareerType careerType) {
         if (careerType == null) {
-            return person.getAssociatedCareers();
+            return person.getAssociatedCareersSet();
         }
         List<Career> allTeacherCareers = new ArrayList<Career>();
 
@@ -109,7 +109,7 @@ public abstract class Career extends Career_Base {
     }
 
     private static void readCareersByClass(Person person, List<Career> allTeacherCareers, String className) {
-        for (Career career : person.getAssociatedCareers()) {
+        for (Career career : person.getAssociatedCareersSet()) {
             if (career.getClass().getName().equals(className)) {
                 allTeacherCareers.add(career);
             }

@@ -87,7 +87,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
                 .getRegime(), existingInformation.getCompetenceCourseLevel(), existingInformation.getExecutionPeriod(),
                 existingInformation.getCompetenceCourseGroupUnit());
         setCompetenceCourse(existingInformation.getCompetenceCourse());
-        for (CompetenceCourseLoad load : existingInformation.getCompetenceCourseLoads()) {
+        for (CompetenceCourseLoad load : existingInformation.getCompetenceCourseLoadsSet()) {
             CompetenceCourseLoad newLoad = new CompetenceCourseLoad(load);
             addCompetenceCourseLoads(newLoad);
         }
@@ -176,7 +176,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setExecutionPeriod(null);
         setCompetenceCourse(null);
         setCompetenceCourseGroupUnit(null);
-        for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().iterator().next().delete()) {
+        for (; !getCompetenceCourseLoadsSet().isEmpty(); getCompetenceCourseLoadsSet().iterator().next().delete()) {
             ;
         }
         setRootDomainObject(null);
@@ -285,18 +285,18 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     private List<CompetenceCourseLoadBean> getCompetenceCourseLoadBeans(final Integer order) {
 
         if (isSemestrial()) {
-            return Collections.singletonList(new CompetenceCourseLoadBean(getCompetenceCourseLoads().iterator().next()));
+            return Collections.singletonList(new CompetenceCourseLoadBean(getCompetenceCourseLoadsSet().iterator().next()));
         }
 
         if (isAnual()) {
             final List<CompetenceCourseLoadBean> result = new ArrayList<CompetenceCourseLoadBean>();
 
-            for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoadsSet()) {
                 result.add(new CompetenceCourseLoadBean(competenceCourseLoad));
             }
 
             if (getCompetenceCourseLoadsSet().size() == 1) { // hack
-                final CompetenceCourseLoad courseLoad = getCompetenceCourseLoads().iterator().next();
+                final CompetenceCourseLoad courseLoad = getCompetenceCourseLoadsSet().iterator().next();
                 final CompetenceCourseLoadBean courseLoadBean = new CompetenceCourseLoadBean(courseLoad);
                 courseLoadBean.setLoadOrder(courseLoad.getLoadOrder() + 1);
                 result.add(courseLoadBean);
@@ -325,8 +325,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public List<CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequest() {
         final List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<CompetenceCourseInformationChangeRequest>();
-        for (final CompetenceCourseInformationChangeRequest request : this.getCompetenceCourse()
-                .getCompetenceCourseInformationChangeRequests()) {
+        for (final CompetenceCourseInformationChangeRequest request : this.getCompetenceCourse().getCompetenceCourseInformationChangeRequestsSet()) {
             if (request.getExecutionPeriod().equals(this.getExecutionPeriod())) {
                 requests.add(request);
             }
@@ -359,11 +358,6 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public ExecutionYear getExecutionYear() {
         return getExecutionPeriod().getExecutionYear();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad> getCompetenceCourseLoads() {
-        return getCompetenceCourseLoadsSet();
     }
 
 }

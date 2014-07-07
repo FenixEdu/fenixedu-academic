@@ -55,9 +55,4 @@ public class CurricularSemester extends CurricularSemester_Base implements Compa
         return null;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseScope> getScopes() {
-        return getScopesSet();
-    }
-
 }

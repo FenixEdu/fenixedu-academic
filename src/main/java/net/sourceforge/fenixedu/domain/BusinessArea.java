@@ -73,19 +73,4 @@ public class BusinessArea extends BusinessArea_Base {
         return childAreas;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Job> getParentJobs() {
-        return getParentJobsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.BusinessArea> getChildAreas() {
-        return getChildAreasSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Job> getJobs() {
-        return getJobsSet();
-    }
-
 }

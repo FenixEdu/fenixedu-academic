@@ -106,7 +106,7 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
                         new HashMap<AnnualTeachingCredits, ByteArrayOutputStream>();
                 Map<AnnualTeachingCredits, ByteArrayOutputStream> documentsWithoutConfidentionalInformation =
                         new HashMap<AnnualTeachingCredits, ByteArrayOutputStream>();
-                for (AnnualTeachingCredits annualTeachingCredits : annualCreditsState.getAnnualTeachingCredits()) {
+                for (AnnualTeachingCredits annualTeachingCredits : annualCreditsState.getAnnualTeachingCreditsSet()) {
                     try {
                         ByteArrayOutputStream pdfStreamToReturn;
                         pdfStreamToReturn =

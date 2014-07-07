@@ -393,7 +393,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     public List<Formation> getConcludedFormationList() {
-        return new ArrayList<Formation>(CollectionUtils.select(getFormations(), new Predicate() {
+        return new ArrayList<Formation>(CollectionUtils.select(getFormationsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -404,7 +404,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     public List<Formation> getNonConcludedFormationList() {
-        return new ArrayList<Formation>(CollectionUtils.select(getFormations(), new Predicate() {
+        return new ArrayList<Formation>(CollectionUtils.select(getFormationsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -425,20 +425,20 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     public void editFormationEntries(List<FormationBean> formationConcludedBeanList,
             List<FormationBean> formationNonConcludedBeanList) {
         List<Formation> formationsToBeRemovedList = new ArrayList<Formation>();
-        for (final Formation formation : this.getFormations()) {
+        for (final Formation formation : this.getFormationsSet()) {
             if (formation.getConcluded()) {
                 editFormationEntry(formationConcludedBeanList, formationsToBeRemovedList, formation);
             }
         }
 
-        for (final Formation formation : this.getFormations()) {
+        for (final Formation formation : this.getFormationsSet()) {
             if (!formation.getConcluded()) {
                 editFormationEntry(formationNonConcludedBeanList, formationsToBeRemovedList, formation);
             }
         }
 
         for (Formation formation : formationsToBeRemovedList) {
-            this.getFormations().remove(formation);
+            this.getFormationsSet().remove(formation);
             formation.delete();
         }
 
@@ -489,7 +489,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.observations"),
                 StringUtils.isEmpty(getObservations()) ? StringUtils.EMPTY : getObservations());
 
-        for (final Formation formation : getFormations()) {
+        for (final Formation formation : getFormationsSet()) {
             formation.exportValues(result);
         }
 
@@ -528,21 +528,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     void editPrecedentDegreeInformation(IndividualCandidacyProcessBean bean) {
         PrecedentDegreeInformationForIndividualCandidacyFactory.edit(bean);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.Formation> getFormations() {
-        return getFormationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile> getDocuments() {
-        return getDocumentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGrade> getIndividualCandidacySeriesGrade() {
-        return getIndividualCandidacySeriesGradeSet();
     }
 
 }

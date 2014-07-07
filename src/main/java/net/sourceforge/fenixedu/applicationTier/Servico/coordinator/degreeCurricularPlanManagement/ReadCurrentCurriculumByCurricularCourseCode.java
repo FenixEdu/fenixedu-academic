@@ -80,7 +80,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode {
         final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 
         List<ExecutionCourse> associatedExecutionCourses = new ArrayList<ExecutionCourse>();
-        Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCoursesSet();
         for (ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
                 associatedExecutionCourses.add(executionCourse);

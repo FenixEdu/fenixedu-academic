@@ -227,13 +227,12 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             request.setAttribute("person", candidacy.getRegistration().getPerson());
             request.setAttribute("campus", candidacy.getRegistration().getCampus().getName());
             request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
-                    administrativeOfficeFeeAndInsurancePaymentCode(candidacy.getAvailablePaymentCodes()));
-            request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(candidacy.getAvailablePaymentCodes()));
-            request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(candidacy.getAvailablePaymentCodes()));
+                    administrativeOfficeFeeAndInsurancePaymentCode(candidacy.getAvailablePaymentCodesSet()));
+            request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(candidacy.getAvailablePaymentCodesSet()));
+            request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(candidacy.getAvailablePaymentCodesSet()));
             request.setAttribute(
                     "firstInstallmentEndDate",
-                    calculateFirstInstallmentEndDate(candidacy.getRegistration(), getCandidacy(request)
-                            .getAvailablePaymentCodes()));
+                    calculateFirstInstallmentEndDate(candidacy.getRegistration(), getCandidacy(request).getAvailablePaymentCodesSet()));
             request.setAttribute("sibsEntityCode", FenixConfigurationManager.getConfiguration().getSibsEntityCode());
 
             final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration(), null);
@@ -258,19 +257,16 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
                             userView.getPerson().getIstUsername(), Unit.getInstitutionAcronym()));
         } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
             request.setAttribute("registration", getCandidacy(request).getRegistration());
-            request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
+            request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodesSet());
             request.setAttribute("sibsEntityCode", FenixConfigurationManager.getConfiguration().getSibsEntityCode());
             request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
-                    administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
-            request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)
-                    .getAvailablePaymentCodes()));
-            request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
-                    .getAvailablePaymentCodes()));
+                    administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodesSet()));
+            request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request).getAvailablePaymentCodesSet()));
+            request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request).getAvailablePaymentCodesSet()));
 
             request.setAttribute(
                     "firstInstallmentEndDate",
-                    calculateFirstInstallmentEndDate(getCandidacy(request).getRegistration(), getCandidacy(request)
-                            .getAvailablePaymentCodes()));
+                    calculateFirstInstallmentEndDate(getCandidacy(request).getRegistration(), getCandidacy(request).getAvailablePaymentCodesSet()));
 
             return mapping.findForward("printGratuityPaymentCodes");
 

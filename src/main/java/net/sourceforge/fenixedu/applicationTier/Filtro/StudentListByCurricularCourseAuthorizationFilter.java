@@ -100,7 +100,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
         }
 
         if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
-            Collection executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
+            Collection executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegreesSet();
             if (executionDegrees == null || executionDegrees.isEmpty()) {
                 return false;
             }
@@ -108,7 +108,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
             // ALWAYS the same
             // modified by Tânia Pousão
             Collection<Coordinator> coodinatorsList =
-                    ((ExecutionDegree) executionDegrees.iterator().next()).getCoordinatorsList();
+                    ((ExecutionDegree) executionDegrees.iterator().next()).getCoordinatorsListSet();
             if (coodinatorsList == null) {
                 return false;
             }

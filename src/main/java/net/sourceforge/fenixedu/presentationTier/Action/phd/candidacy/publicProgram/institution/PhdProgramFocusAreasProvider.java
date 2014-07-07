@@ -42,8 +42,8 @@ public class PhdProgramFocusAreasProvider extends AbstractDomainObjectProvider {
             Set<PhdProgramFocusArea> focusAreaSet = new HashSet<PhdProgramFocusArea>();
             InstitutionPhdCandidacyPeriod phdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) bean.getPhdCandidacyPeriod();
 
-            for (PhdProgram phdProgram : phdCandidacyPeriod.getPhdPrograms()) {
-                focusAreaSet.addAll(phdProgram.getPhdProgramFocusAreas());
+            for (PhdProgram phdProgram : phdCandidacyPeriod.getPhdProgramsSet()) {
+                focusAreaSet.addAll(phdProgram.getPhdProgramFocusAreasSet());
             }
 
             List<PhdProgramFocusArea> focusAreaList = new ArrayList<PhdProgramFocusArea>();
@@ -59,8 +59,8 @@ public class PhdProgramFocusAreasProvider extends AbstractDomainObjectProvider {
                     (InstitutionPhdCandidacyPeriod) bean.getIndividualProgramProcess().getCandidacyProcess()
                             .getPublicPhdCandidacyPeriod();
 
-            for (PhdProgram phdProgram : phdCandidacyPeriod.getPhdPrograms()) {
-                focusAreaSet.addAll(phdProgram.getPhdProgramFocusAreas());
+            for (PhdProgram phdProgram : phdCandidacyPeriod.getPhdProgramsSet()) {
+                focusAreaSet.addAll(phdProgram.getPhdProgramFocusAreasSet());
             }
 
             List<PhdProgramFocusArea> focusAreaList = new ArrayList<PhdProgramFocusArea>();

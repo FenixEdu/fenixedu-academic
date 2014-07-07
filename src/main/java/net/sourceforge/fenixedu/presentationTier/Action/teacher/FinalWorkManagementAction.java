@@ -444,7 +444,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
         final Scheduleing scheduleing = executionDegree.getScheduling();
         final List branches = new ArrayList();
-        for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
+        for (final ExecutionDegree ed : scheduleing.getExecutionDegreesSet()) {
             final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
             branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
                     degreeCurricularPlan.getExternalId()));
@@ -734,7 +734,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
                         return mapping.findForward("OutOfSubmisionPeriod");
                     }
                     final List branches = new ArrayList();
-                    for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
+                    for (final ExecutionDegree ed : scheduleing.getExecutionDegreesSet()) {
                         final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
                         branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
                                 degreeCurricularPlan.getExternalId()));

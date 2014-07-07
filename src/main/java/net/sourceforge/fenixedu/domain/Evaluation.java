@@ -38,20 +38,20 @@ public abstract class Evaluation extends Evaluation_Base {
 
     public List<ExecutionCourse> getAttendingExecutionCoursesFor(final Registration registration) {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        for (final ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : this.getAssociatedExecutionCoursesSet()) {
             if (registration.attends(executionCourse)) {
                 result.add(executionCourse);
             }
         }
         if (result.isEmpty()) { // Then user does not attend any executioncourse
-            result.addAll(this.getAssociatedExecutionCourses());
+            result.addAll(this.getAssociatedExecutionCoursesSet());
         }
         return result;
     }
 
     public void delete() {
-        this.getAssociatedExecutionCourses().clear();
-        for (; !getMarks().isEmpty(); getMarks().iterator().next().delete()) {
+        this.getAssociatedExecutionCoursesSet().clear();
+        for (; !getMarksSet().isEmpty(); getMarksSet().iterator().next().delete()) {
             ;
         }
         setRootDomainObject(null);
@@ -68,7 +68,7 @@ public abstract class Evaluation extends Evaluation_Base {
     public abstract EvaluationType getEvaluationType();
 
     public Mark getMarkByAttend(Attends attends) {
-        for (Mark mark : getMarks()) {
+        for (Mark mark : getMarksSet()) {
             if (mark.getAttend().equals(attends)) {
                 return mark;
             }
@@ -97,20 +97,10 @@ public abstract class Evaluation extends Evaluation_Base {
     }
 
     private void logAuxBasic(String key) {
-        for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
+        for (ExecutionCourse ec : getAssociatedExecutionCoursesSet()) {
             EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, key, getPresentationName(), ec.getName(),
                     ec.getDegreePresentationString());
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Mark> getMarks() {
-        return getMarksSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getAssociatedExecutionCourses() {
-        return getAssociatedExecutionCoursesSet();
     }
 
 }

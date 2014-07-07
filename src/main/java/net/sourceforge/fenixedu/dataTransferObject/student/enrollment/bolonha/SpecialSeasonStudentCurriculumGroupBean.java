@@ -59,7 +59,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
     protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(CurriculumGroup group,
             ExecutionSemester executionSemester) {
         List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
-        for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
+        for (CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
                 Enrolment enrolment = (Enrolment) curriculumModule;
                 if (enrolment.isSpecialSeasonEnroled(executionSemester)) {
@@ -95,7 +95,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
                 AcademicAuthorizationGroup.get(AcademicOperationType.STUDENT_ENROLMENTS).isMember(
                         Authenticate.getUser());
 
-        for (final CurriculumModule curriculumModule : group.getCurriculumModules()) {
+        for (final CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
 
                 final Enrolment enrolment = (Enrolment) curriculumModule;

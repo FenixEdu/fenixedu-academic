@@ -180,13 +180,13 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
         optionalEnrolment.setCurriculumGroup(curriculumGroup);
         optionalEnrolment.setOptionalCurricularCourse(optionalCurricularCourse);
 
-        optionalEnrolment.getEvaluations().addAll(enrolment.getEvaluations());
-        optionalEnrolment.getProgramCertificateRequests().addAll(enrolment.getProgramCertificateRequests());
-        optionalEnrolment.getCourseLoadRequests().addAll(enrolment.getCourseLoadRequests());
-        optionalEnrolment.getExtraExamRequests().addAll(enrolment.getExtraExamRequests());
-        optionalEnrolment.getEnrolmentWrappers().addAll(enrolment.getEnrolmentWrappers());
-        optionalEnrolment.getTheses().addAll(enrolment.getTheses());
-        optionalEnrolment.getExamDateCertificateRequests().addAll(enrolment.getExamDateCertificateRequests());
+        optionalEnrolment.getEvaluationsSet().addAll(enrolment.getEvaluationsSet());
+        optionalEnrolment.getProgramCertificateRequestsSet().addAll(enrolment.getProgramCertificateRequestsSet());
+        optionalEnrolment.getCourseLoadRequestsSet().addAll(enrolment.getCourseLoadRequestsSet());
+        optionalEnrolment.getExtraExamRequestsSet().addAll(enrolment.getExtraExamRequestsSet());
+        optionalEnrolment.getEnrolmentWrappersSet().addAll(enrolment.getEnrolmentWrappersSet());
+        optionalEnrolment.getThesesSet().addAll(enrolment.getThesesSet());
+        optionalEnrolment.getExamDateCertificateRequestsSet().addAll(enrolment.getExamDateCertificateRequestsSet());
         changeAttends(enrolment, optionalEnrolment);
         optionalEnrolment.createCurriculumLineLog(EnrolmentAction.ENROL);
 

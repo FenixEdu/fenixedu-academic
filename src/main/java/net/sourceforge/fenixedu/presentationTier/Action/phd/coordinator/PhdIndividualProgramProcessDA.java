@@ -138,7 +138,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         final Set<PhdProgram> result = new HashSet<PhdProgram>();
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-        for (final Coordinator coordinator : getLoggedPerson(request).getCoordinators()) {
+        for (final Coordinator coordinator : getLoggedPerson(request).getCoordinatorsSet()) {
             if (coordinator.getExecutionDegree().getDegree().getPhdProgram() != null
                     && coordinator.getExecutionDegree().getExecutionYear() == currentExecutionYear) {
                 result.add(coordinator.getExecutionDegree().getDegree().getPhdProgram());

@@ -56,7 +56,7 @@ public class SearchExecutionCourseLogBean implements Serializable {
     public SearchExecutionCourseLogBean(ExecutionCourse executionCourse) {
         setExecutionCourse(executionCourse);
         setViewPhoto(true);
-        setProfessorships(getExecutionCourse().getProfessorships());
+        setProfessorships(getExecutionCourse().getProfessorshipsSet());
         setExecutionCourseLogTypes(ExecutionCourseLogTypes.valuesAsList());
         setMonths(executionCourse.getExecutionPeriod().getSemesterMonths());
         executionCourseLogs = new ArrayList<ExecutionCourseLog>();
@@ -168,7 +168,7 @@ public class SearchExecutionCourseLogBean implements Serializable {
             });
         }
 
-        if (professorships.size() < getExecutionCourse().getProfessorships().size()) {
+        if (professorships.size() < getExecutionCourse().getProfessorshipsSet().size()) {
             filters.add(new InlinePredicate<ExecutionCourseLog, Collection<Professorship>>(getProfessorships()) {
 
                 @Override

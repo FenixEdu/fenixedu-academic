@@ -54,12 +54,12 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
 
     @Override
     protected Collection<? extends ReplyTo> getReplyTos() {
-        return getPhdProgram().getPhdProgramUnit().getUnitBasedSender().iterator().next().getReplyTos();
+        return getPhdProgram().getPhdProgramUnit().getUnitBasedSenderSet().iterator().next().getReplyTos();
     }
 
     @Override
     protected Sender getSender() {
-        return getPhdProgram().getPhdProgramUnit().getUnitBasedSender().iterator().next();
+        return getPhdProgram().getPhdProgramUnit().getUnitBasedSenderSet().iterator().next();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
     protected String getBccs() {
         StringBuilder builder = new StringBuilder();
 
-        for (PhdIndividualProgramProcess process : getPhdIndividualProgramProcesses()) {
+        for (PhdIndividualProgramProcess process : getPhdIndividualProgramProcessesSet()) {
             if (process.getPerson().getEmailForSendingEmails() != null) {
                 builder.append(process.getPerson().getEmailForSendingEmails()).append(",");
             }
@@ -102,11 +102,6 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
             throw new DomainException(BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.message.empty"));
         }
 
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getPhdIndividualProgramProcesses() {
-        return getPhdIndividualProgramProcessesSet();
     }
 
 }

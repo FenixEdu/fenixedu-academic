@@ -42,25 +42,25 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup {
     public static Boolean run(final FinalDegreeWorkGroup group, String proposalOID) throws FenixServiceException {
         check(RolePredicates.STUDENT_PREDICATE);
         Proposal proposal = FenixFramework.getDomainObject(proposalOID);
-        if (group != null && group.getGroupProposals() != null
+        if (group != null && group.getGroupProposalsSet() != null
         /* && !CollectionUtils.exists(group.getStudents(), ) */) {
             Scheduleing scheduleing = group.getExecutionDegree().getScheduling();
             if (scheduleing == null || scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup() == null) {
                 throw new MaximumNumberOfProposalCandidaciesPerGroupUndefinedException();
-            } else if (scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup().intValue() <= group.getGroupProposals().size()) {
+            } else if (scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup().intValue() <= group.getGroupProposalsSet().size()) {
                 throw new MaximumNumberOfProposalCandidaciesPerGroupReachedException(scheduleing
                         .getMaximumNumberOfProposalCandidaciesPerGroup().toString());
             }
             if (scheduleing == null || scheduleing.getMinimumNumberOfStudents() == null) {
                 throw new MinimumNumberOfStudentsUndefinedException();
-            } else if (scheduleing.getMinimumNumberOfStudents().intValue() > group.getGroupStudents().size()) {
+            } else if (scheduleing.getMinimumNumberOfStudents().intValue() > group.getGroupStudentsSet().size()) {
                 throw new MinimumNumberOfStudentsNotReachedException(scheduleing.getMinimumNumberOfStudents().toString());
             }
 
             GroupProposal groupProposal = new GroupProposal();
             groupProposal.setFinalDegreeWorkProposal(proposal);
             groupProposal.setFinalDegreeDegreeWorkGroup(group);
-            groupProposal.setOrderOfPreference(Integer.valueOf(group.getGroupProposals().size()));
+            groupProposal.setOrderOfPreference(Integer.valueOf(group.getGroupProposalsSet().size()));
             return true;
         }
 

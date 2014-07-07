@@ -52,7 +52,7 @@ public class Advise extends Advise_Base {
     }
 
     public void delete() {
-        if (getTeacherAdviseServices() == null || getTeacherAdviseServices().isEmpty()) {
+        if (getTeacherAdviseServicesSet() == null || getTeacherAdviseServicesSet().isEmpty()) {
             setStudent(null);
             setTeacher(null);
             setEndExecutionPeriod(null);
@@ -65,7 +65,7 @@ public class Advise extends Advise_Base {
     }
 
     public TeacherAdviseService getTeacherAdviseServiceByExecutionPeriod(final ExecutionSemester executionSemester) {
-        return (TeacherAdviseService) CollectionUtils.find(getTeacherAdviseServices(), new Predicate() {
+        return (TeacherAdviseService) CollectionUtils.find(getTeacherAdviseServicesSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 TeacherAdviseService teacherAdviseService = (TeacherAdviseService) arg0;
@@ -76,13 +76,13 @@ public class Advise extends Advise_Base {
 
     public void checkPercentageCoherenceWithOtherAdvises(ExecutionSemester executionSemester, double percentage)
             throws AdvisePercentageException {
-        for (Advise advise : getStudent().getAdvises()) {
+        for (Advise advise : getStudent().getAdvisesSet()) {
             if (advise != this && advise.getAdviseType().equals(getAdviseType())) {
                 TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionSemester);
                 if (teacherAdviseService != null) {
                     percentage += teacherAdviseService.getPercentage().doubleValue();
                     if (percentage > 100) {
-                        throw new AdvisePercentageException("message.invalid.advise.percentage", getStudent().getAdvises(),
+                        throw new AdvisePercentageException("message.invalid.advise.percentage", getStudent().getAdvisesSet(),
                                 executionSemester, getAdviseType());
                     }
                 }
@@ -92,7 +92,7 @@ public class Advise extends Advise_Base {
 
     public void updateEndExecutionPeriod() {
         ExecutionSemester executionSemester = getStartExecutionPeriod();
-        for (TeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
+        for (TeacherAdviseService teacherAdviseService : getTeacherAdviseServicesSet()) {
             ExecutionSemester adviseServiceEP = teacherAdviseService.getTeacherService().getExecutionPeriod();
             if (adviseServiceEP.getEndDate().after(executionSemester.getEndDate())) {
                 executionSemester = adviseServiceEP;
@@ -103,7 +103,7 @@ public class Advise extends Advise_Base {
 
     public void updateStartExecutionPeriod() {
         ExecutionSemester executionSemester = getEndExecutionPeriod();
-        for (TeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
+        for (TeacherAdviseService teacherAdviseService : getTeacherAdviseServicesSet()) {
             ExecutionSemester adviseServiceEP = teacherAdviseService.getTeacherService().getExecutionPeriod();
             if (adviseServiceEP.getBeginDate().before(executionSemester.getBeginDate())) {
                 executionSemester = adviseServiceEP;
@@ -166,7 +166,7 @@ public class Advise extends Advise_Base {
         @Override
         public void afterRemove(TeacherAdviseService teacherAdviseServices, Advise advise) {
             if (advise != null) {
-                if (advise.getTeacherAdviseServices() == null || advise.getTeacherAdviseServices().isEmpty()) {
+                if (advise.getTeacherAdviseServicesSet() == null || advise.getTeacherAdviseServicesSet().isEmpty()) {
                     advise.delete();
                 } else if (teacherAdviseServices != null) {
                     ExecutionSemester executionSemester = teacherAdviseServices.getTeacherService().getExecutionPeriod();
@@ -178,11 +178,6 @@ public class Advise extends Advise_Base {
                 }
             }
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService> getTeacherAdviseServices() {
-        return getTeacherAdviseServicesSet();
     }
 
 }

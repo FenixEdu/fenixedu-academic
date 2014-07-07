@@ -43,9 +43,4 @@ public class FirstTimeCandidacyLog extends FirstTimeCandidacyLog_Base {
         return Bennu.getInstance();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.log.FirstTimeCandidacyLogEntry> getFirstTimeCandidacyLogEntry() {
-        return getFirstTimeCandidacyLogEntrySet();
-    }
-
 }

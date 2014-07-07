@@ -113,7 +113,7 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
             HttpServletResponse response) {
         try {
             PhdGratuityCreationInformation renderedObject = (PhdGratuityCreationInformation) getRenderedObject("yearBean");
-            for (PhdGratuityEvent event : getProcess(request).getPhdGratuityEvents()) {
+            for (PhdGratuityEvent event : getProcess(request).getPhdGratuityEventsSet()) {
                 if (event.getYear().intValue() == ((PhdGratuityCreationInformation) getRenderedObject("yearBean")).getYear()
                         && event.isOpen()) {
                     throw new DomainException("already.has.phd.gratuity.for.that.year");

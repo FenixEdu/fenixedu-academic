@@ -47,7 +47,7 @@ public class NotifyStudentGroup {
 
         Set<Person> recievers = new HashSet<Person>();
 
-        for (Attends attend : submission.getStudentGroup().getAttends()) {
+        for (Attends attend : submission.getStudentGroup().getAttendsSet()) {
             recievers.add(attend.getRegistration().getStudent().getPerson());
         }
 

@@ -75,7 +75,7 @@ public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
         final ExecutionSemester executionPeriod = coordinatorInquiryTemplate.getExecutionPeriod();
 
         final Set<Coordinator> coordinatorsSet = new HashSet<Coordinator>();
-        for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegreesSet()) {
             if (!executionDegree.getInquiryResultsSet().isEmpty()) {
                 for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
                     if (coordinator.getResponsible()

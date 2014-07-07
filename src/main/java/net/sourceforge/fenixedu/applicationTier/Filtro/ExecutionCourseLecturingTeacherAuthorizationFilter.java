@@ -83,7 +83,7 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         if (person == null) {
             return false;
         }
-        for (final Professorship professorship : executionCourse.getProfessorships()) {
+        for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
             if (professorship.getPerson() == id.getPerson()) {
                 return true;
             }

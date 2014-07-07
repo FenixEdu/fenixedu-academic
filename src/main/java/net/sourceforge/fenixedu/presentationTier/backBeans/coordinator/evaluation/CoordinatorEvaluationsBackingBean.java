@@ -149,9 +149,9 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
     private ExecutionSemester getCurrentExecutionPeriod() throws FenixServiceException {
         ExecutionSemester lastExecutionPeriod = null;
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
-            for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+            for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
                 if (executionSemester.isCurrent()) {
                     return executionSemester;
                 } else if (lastExecutionPeriod == null || executionSemester.isAfter(lastExecutionPeriod)) {
@@ -165,9 +165,9 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
     public List<SelectItem> getExecutionPeriodSelectItems() throws FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final TreeSet<ExecutionSemester> executionPeriods = new TreeSet<ExecutionSemester>();
-        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
-            for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+            for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
                 executionPeriods.add(executionSemester);
             }
         }
@@ -198,7 +198,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
     private ExecutionDegree getExecutionDegree() throws FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final ExecutionSemester executionSemester = getExecutionPeriod();
-        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
             if (executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
                 return executionDegree;
             }
@@ -270,9 +270,9 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         final ExecutionSemester executionSemester = getExecutionPeriod();
         final CurricularYear curricularYear = getCurricularYear();
 
-        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             if (isActiveInExecutionPeriodAndYear(curricularCourse, executionSemester, curricularYear)) {
-                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
                     if (executionCourse.getExecutionPeriod() == executionSemester) {
                         executionCourses.add(executionCourse);
                     }
@@ -289,13 +289,13 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         final ExecutionSemester executionSemester = getExecutionPeriod();
         final CurricularYear curricularYear = getCurricularYear();
 
-        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             if (isActiveInExecutionPeriodAndYear(curricularCourse, executionSemester, curricularYear)) {
-                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
                     if (executionCourse.getExecutionPeriod() == executionSemester) {
                         final Set<Evaluation> evaluations = new TreeSet<Evaluation>(evaluationComparator);
                         executionCourseEvaluationsMap.put(executionCourse, evaluations);
-                        evaluations.addAll(executionCourse.getAssociatedEvaluations());
+                        evaluations.addAll(executionCourse.getAssociatedEvaluationsSet());
                     }
                 }
             }
@@ -308,7 +308,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         final String evaluationType = getEvaluationType();
 
         for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-            for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+            for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
                 if (evaluationType == null || evaluationType.length() == 0
                         || evaluationType.equals(evaluation.getClass().getName())) {
                     if (evaluation instanceof WrittenTest) {
@@ -351,7 +351,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
     }
 
     private boolean hasNonExamEvaluation(final ExecutionCourse executionCourse) {
-        for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+        for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
             if (!(evaluation instanceof Exam)) {
                 return true;
             }
@@ -558,7 +558,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
     private List<String> getDegreeModuleScopeIDs(final ExecutionCourse executionCourse) {
         final List<String> ids = new ArrayList<String>();
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             List<DegreeModuleScope> degreeModuleScopes = curricularCourse.getDegreeModuleScopes();
             for (DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
                 if (degreeModuleScope.getCurricularSemester().equals(executionCourse.getExecutionPeriod().getSemester())) {

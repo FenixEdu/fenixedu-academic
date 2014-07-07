@@ -37,7 +37,7 @@ public class ExecutionDegreesToImportLessonPlanningsProvider implements DataProv
         ExecutionSemester executionSemester = bean.getExecutionPeriod();
         if (executionSemester != null) {
             List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
-            executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegrees());
+            executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegreesSet());
             Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
             return executionDegrees;
         }

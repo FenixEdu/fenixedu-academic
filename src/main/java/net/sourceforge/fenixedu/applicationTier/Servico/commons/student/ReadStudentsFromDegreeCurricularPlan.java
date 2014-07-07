@@ -50,7 +50,7 @@ public class ReadStudentsFromDegreeCurricularPlan {
         // Read the Students
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        Collection students = degreeCurricularPlan.getStudentCurricularPlans();
+        Collection students = degreeCurricularPlan.getStudentCurricularPlansSet();
 
         if ((students == null) || (students.isEmpty())) {
             throw new NonExistingServiceException();

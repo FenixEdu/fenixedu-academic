@@ -55,16 +55,16 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     }
 
     public void delete() {
-        if (getMobilityQuotas().size() > 0) {
+        if (getMobilityQuotasSet().size() > 0) {
             throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.defined.quotas");
         }
-        if (getCandidacyProcesses().size() > 0) {
+        if (getCandidacyProcessesSet().size() > 0) {
             throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.process");
         }
-        if (getEmailTemplates().size() > 0) {
+        if (getEmailTemplatesSet().size() > 0) {
             throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.email.templates");
         }
-        if (getErasmusVacancy().size() > 0) {
+        if (getErasmusVacancySet().size() > 0) {
             throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.erasmus.vacancies");
         }
         if (getExecutionInterval() != null) {
@@ -98,7 +98,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     }
 
     public MobilityApplicationProcess getMobilityApplicationProcess() {
-        return (MobilityApplicationProcess) (!getCandidacyProcessesSet().isEmpty() ? getCandidacyProcesses().iterator().next() : null);
+        return (MobilityApplicationProcess) (!getCandidacyProcessesSet().isEmpty() ? getCandidacyProcessesSet().iterator().next() : null);
     }
 
     @Override
@@ -131,7 +131,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     public List<Country> getAssociatedCountries() {
         Set<Country> countries = new HashSet<Country>();
 
-        for (MobilityQuota mobilityQuota : this.getMobilityQuotas()) {
+        for (MobilityQuota mobilityQuota : this.getMobilityQuotasSet()) {
             countries.add(mobilityQuota.getMobilityAgreement().getUniversityUnit().getCountry());
         }
 
@@ -141,7 +141,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     public List<MobilityQuota> getOpeningsForCountry(Country country) {
         List<MobilityQuota> openingsList = new ArrayList<MobilityQuota>();
 
-        for (MobilityQuota quota : getMobilityQuotas()) {
+        for (MobilityQuota quota : getMobilityQuotasSet()) {
             if (quota.getMobilityAgreement().getUniversityUnit().getCountry() == country) {
                 openingsList.add(quota);
             }
@@ -186,7 +186,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
         if (degree == null || agreement == null) {
             return null;
         }
-        for (MobilityQuota quota : agreement.getMobilityQuotas()) {
+        for (MobilityQuota quota : agreement.getMobilityQuotasSet()) {
             if (quota.getDegree() != degree) {
                 continue;
             }
@@ -201,7 +201,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     public List<Degree> getPossibleDegreesAssociatedToUniversity(UniversityUnit university) {
         Set<Degree> degreeSet = new HashSet<Degree>();
 
-        for (MobilityQuota quota : getMobilityQuotas()) {
+        for (MobilityQuota quota : getMobilityQuotasSet()) {
             if (quota.getMobilityAgreement().getUniversityUnit() == university) {
                 degreeSet.add(quota.getDegree());
             }
@@ -213,7 +213,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     public List<Degree> getPossibleDegreesAssociatedToAgreement(MobilityAgreement agreement) {
         Set<Degree> degreeSet = new HashSet<Degree>();
 
-        for (MobilityQuota quota : getMobilityQuotas()) {
+        for (MobilityQuota quota : getMobilityQuotasSet()) {
             if (quota.getMobilityAgreement() == agreement) {
                 degreeSet.add(quota.getDegree());
             }
@@ -229,7 +229,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     public Set<MobilityProgram> getMobilityPrograms() {
         Set<MobilityProgram> programs = new HashSet<MobilityProgram>();
 
-        Collection<MobilityQuota> mobilityQuotas = getMobilityQuotas();
+        Collection<MobilityQuota> mobilityQuotas = getMobilityQuotasSet();
 
         for (MobilityQuota mobilityQuota : mobilityQuotas) {
             programs.add(mobilityQuota.getMobilityAgreement().getMobilityProgram());
@@ -261,7 +261,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     public List<MobilityQuota> getMobilityQuotasByProgram(final MobilityProgram program) {
         List<MobilityQuota> result = new ArrayList<MobilityQuota>();
 
-        Collection<MobilityQuota> mobilityQuotas = getMobilityQuotas();
+        Collection<MobilityQuota> mobilityQuotas = getMobilityQuotasSet();
 
         for (MobilityQuota mobilityQuota : mobilityQuotas) {
             if (mobilityQuota.isFor(program)) {
@@ -273,7 +273,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     }
 
     public MobilityEmailTemplate getEmailTemplateFor(final MobilityProgram program, final MobilityEmailTemplateType type) {
-        for (MobilityEmailTemplate template : getEmailTemplates()) {
+        for (MobilityEmailTemplate template : getEmailTemplatesSet()) {
             if (template.isFor(program, type)) {
                 return template;
             }
@@ -297,21 +297,6 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     public boolean hasEmailTemplateFor(final MobilityEmailTemplateType type) {
         MobilityProgram mobilityProgram = getMobilityPrograms().iterator().next();
         return hasEmailTemplateFor(mobilityProgram, type);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate> getEmailTemplates() {
-        return getEmailTemplatesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy> getErasmusVacancy() {
-        return getErasmusVacancySet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota> getMobilityQuotas() {
-        return getMobilityQuotasSet();
     }
 
 }

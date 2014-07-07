@@ -71,7 +71,7 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
             int totalCapacity = 0;
             final StringBuilder buffer = new StringBuilder(20);
 
-            for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenTest.getWrittenEvaluationSpaceOccupations()) {
+            for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenTest.getWrittenEvaluationSpaceOccupationsSet()) {
                 buffer.append(roomOccupation.getRoom().getName()).append(";");
                 totalCapacity += (Integer) roomOccupation.getRoom().getMetadata("examCapacity").orElse(0);
             }

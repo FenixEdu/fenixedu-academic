@@ -112,7 +112,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     }
 
     public Collection<CurricularCourse> getCurricularCourses() {
-        return getCandidacy().getCurricularCourses();
+        return getCandidacy().getCurricularCoursesSet();
     }
 
     public StandaloneIndividualCandidacyProcess editCandidacyInformation(final StandaloneIndividualCandidacyProcessBean bean) {
@@ -134,11 +134,11 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
             return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES).isMember(userView);
         }
 
-        if (process.getCandidacy().getCurricularCourses().isEmpty()) {
+        if (process.getCandidacy().getCurricularCoursesSet().isEmpty()) {
             return true;
         }
 
-        for (CurricularCourse course : process.getCandidacy().getCurricularCourses()) {
+        for (CurricularCourse course : process.getCandidacy().getCurricularCoursesSet()) {
             if (programs.contains(course.getDegreeCurricularPlan().getDegree())) {
                 return true;
             }

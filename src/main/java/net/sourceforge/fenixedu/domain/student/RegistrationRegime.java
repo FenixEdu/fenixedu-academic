@@ -82,7 +82,7 @@ public class RegistrationRegime extends RegistrationRegime_Base {
         final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
         double enroledEctsCredits = 0d;
-        for (final ExecutionSemester semester : executionYear.getExecutionPeriods()) {
+        for (final ExecutionSemester semester : executionYear.getExecutionPeriodsSet()) {
             enroledEctsCredits += studentCurricularPlan.getAccumulatedEctsCredits(semester);
         }
 

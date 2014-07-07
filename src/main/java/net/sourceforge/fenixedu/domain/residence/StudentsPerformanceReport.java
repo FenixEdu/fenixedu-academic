@@ -73,7 +73,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         }
 
         setExecutionSemester(executionSemester);
-        getStudents().addAll(studentList);
+        getStudentsSet().addAll(studentList);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
 
         Spreadsheet spreadsheet = createSpreadsheet();
 
-        for (Student student : getStudents()) {
+        for (Student student : getStudentsSet()) {
             addInformation(spreadsheet, student);
         }
 
@@ -106,7 +106,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
     public static List<StudentsPerformanceReport> readGeneratedReports(final ExecutionSemester executionSemester) {
         List<StudentsPerformanceReport> generatedReports = new ArrayList<StudentsPerformanceReport>();
 
-        CollectionUtils.select(executionSemester.getStudentsPerformanceReports(), new Predicate() {
+        CollectionUtils.select(executionSemester.getStudentsPerformanceReportsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -121,7 +121,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
     public static List<StudentsPerformanceReport> readNotGeneratedReports(final ExecutionSemester executionSemester) {
         List<StudentsPerformanceReport> generatedReports = new ArrayList<StudentsPerformanceReport>();
 
-        CollectionUtils.select(executionSemester.getStudentsPerformanceReports(), new Predicate() {
+        CollectionUtils.select(executionSemester.getStudentsPerformanceReportsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -146,7 +146,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
     public static StudentsPerformanceReport readPendingReport(final ExecutionSemester executionSemester) {
         List<StudentsPerformanceReport> pendingReports = new ArrayList<StudentsPerformanceReport>();
 
-        CollectionUtils.select(executionSemester.getStudentsPerformanceReports(), new Predicate() {
+        CollectionUtils.select(executionSemester.getStudentsPerformanceReportsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -302,11 +302,6 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         row.setCell(getB(student).toPlainString());
         row.setCell(getA(student).add(getB(student)).multiply(BigDecimal.valueOf(100)).intValue());
 
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getStudents() {
-        return getStudentsSet();
     }
 
 }

@@ -73,7 +73,7 @@ public class DegreeChangeCandidacyProcessDA extends
                             .getExecutionYear();
             final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
 
-            for (Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+            for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
                 if (coordinator.getPerson() == AccessControl.getPerson()) {
                     returnExecutionIntervals.add(interval);
                     break;
@@ -86,7 +86,7 @@ public class DegreeChangeCandidacyProcessDA extends
 
     @Override
     protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-        Collection<IndividualCandidacyProcess> processes = process.getChildProcesses();
+        Collection<IndividualCandidacyProcess> processes = process.getChildProcessesSet();
         List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses =
                 new ArrayList<IndividualCandidacyProcess>();
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);

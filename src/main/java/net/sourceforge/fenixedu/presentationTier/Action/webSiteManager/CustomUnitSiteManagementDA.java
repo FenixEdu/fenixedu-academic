@@ -288,7 +288,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward manageBanners(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         UnitSite site = getSite(request);
-        request.setAttribute("banners", site.getBanners());
+        request.setAttribute("banners", site.getBannersSet());
 
         request.setAttribute("bannerBean", new BannerBean());
         return mapping.findForward("editBanners");
@@ -310,7 +310,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         UnitSite site = getSite(request);
         String bannerId = request.getParameter("bannerID");
 
-        for (UnitSiteBanner banner : site.getBanners()) {
+        for (UnitSiteBanner banner : site.getBannersSet()) {
             if (banner.getExternalId().equals(bannerId)) {
                 return banner;
             }
@@ -357,7 +357,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         UnitSite site = getSite(request);
         String bannerId = request.getParameter("bannerID");
 
-        for (UnitSiteBanner banner : site.getBanners()) {
+        for (UnitSiteBanner banner : site.getBannersSet()) {
             if (banner.getExternalId().equals(bannerId)) {
                 DeleteUnitSiteBanner.runDeleteUnitSiteBanner(site, banner);
                 break;
@@ -416,7 +416,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         UnitSite site = getSite(request);
         String linkId = request.getParameter("linkID");
 
-        for (UnitSiteLink link : site.getTopLinks()) {
+        for (UnitSiteLink link : site.getTopLinksSet()) {
             if (link.getExternalId().equals(linkId)) {
                 DeleteUnitSiteLink.runDeleteUnitSiteLink(site, link);
                 break;
@@ -451,7 +451,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         UnitSite site = getSite(request);
         String linkId = request.getParameter("linkID");
 
-        for (UnitSiteLink link : site.getFooterLinks()) {
+        for (UnitSiteLink link : site.getFooterLinksSet()) {
             if (link.getExternalId().equals(linkId)) {
                 DeleteUnitSiteLink.runDeleteUnitSiteLink(site, link);
                 break;
@@ -623,7 +623,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
             persons.add(contract.getPerson());
         }
 
-        for (Function function : unit.getFunctions()) {
+        for (Function function : unit.getFunctionsSet()) {
             for (PersonFunction pf : function.getPersonFunctions()) {
                 if (pf.isActive(today)) {
                     persons.add(pf.getPerson());
@@ -785,7 +785,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         UnitSite site = getSite(request);
 
         request.setAttribute("managersBean", new UnitSiteManagerBean());
-        request.setAttribute("managers", site.getManagers());
+        request.setAttribute("managers", site.getManagersSet());
 
         return mapping.findForward("chooseManagers");
     }
@@ -795,7 +795,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         UnitSite site = getSite(request);
 
         String managerId = request.getParameter("managerID");
-        for (Person manager : site.getManagers()) {
+        for (Person manager : site.getManagersSet()) {
             if (manager.getExternalId().equals(managerId)) {
                 try {
                     removeUnitSiteManager(site, manager);

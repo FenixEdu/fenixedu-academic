@@ -36,7 +36,7 @@ public class InternshipCandidacySession extends InternshipCandidacySession_Base 
      */
     @Atomic
     public void delete() {
-        for (; !getInternshipCandidacySet().isEmpty(); getInternshipCandidacy().iterator().next().delete()) {
+        for (; !getInternshipCandidacySet().isEmpty(); getInternshipCandidacySet().iterator().next().delete()) {
             ;
         }
         setRootDomainObject(null);
@@ -55,21 +55,6 @@ public class InternshipCandidacySession extends InternshipCandidacySession_Base 
             }
         }
         return current;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacy> getInternshipCandidacy() {
-        return getInternshipCandidacySet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit> getUniversity() {
-        return getUniversitySet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Country> getDestination() {
-        return getDestinationSet();
     }
 
 }

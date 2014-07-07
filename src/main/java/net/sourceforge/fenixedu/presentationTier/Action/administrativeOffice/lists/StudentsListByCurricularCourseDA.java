@@ -257,7 +257,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     private PartyContact getMobileContact(final Person person) {
-        for (PartyContact contact : person.getPartyContacts()) {
+        for (PartyContact contact : person.getPartyContactsSet()) {
             if (contact.isMobile()) {
                 return contact;
             }

@@ -71,7 +71,7 @@ public class ManageAdvisoriesDA extends AnnouncementManagement {
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
         final User userView = getUserView(request);
         final Collection<AnnouncementBoard> boardsToShow = new ArrayList<AnnouncementBoard>();
-        for (AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoards()) {
+        for (AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
             if (board.getWriters() == null || board.getWriters().isMember(userView)) {
                 boardsToShow.add(board);
             }

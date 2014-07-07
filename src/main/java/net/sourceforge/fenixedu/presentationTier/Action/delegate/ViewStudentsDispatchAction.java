@@ -218,7 +218,7 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
                 return getCurricularCoursesBeans(delegateFunction, curricularCourses);
             } else if (!person.getCoordinatorsSet().isEmpty()) {
                 Set<CurricularCourse> curricularCourses =
-                        getDegreesCurricularCoursesFromCoordinatorRoles(person.getCoordinators(),
+                        getDegreesCurricularCoursesFromCoordinatorRoles(person.getCoordinatorsSet(),
                                 ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate()));
                 return getCurricularCoursesBeans(delegateFunction, curricularCourses);
             }
@@ -234,7 +234,7 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
         List<DelegateCurricularCourseBean> result = new ArrayList<DelegateCurricularCourseBean>();
 
         for (CurricularCourse curricularCourse : curricularCourses) {
-            for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+            for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
                 if (curricularCourse.hasAnyExecutionCourseIn(executionSemester)) {
                     for (DegreeModuleScope scope : curricularCourse.getDegreeModuleScopes()) {
                         if (!scope.isActiveForExecutionPeriod(executionSemester)) {

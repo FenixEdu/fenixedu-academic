@@ -429,10 +429,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             throw new DomainException("error.party.cannot.be.deleted");
         }
 
-        for (; !getAccounts().isEmpty(); getAccounts().iterator().next().delete()) {
+        for (; !getAccountsSet().isEmpty(); getAccountsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getPartyContactsSet().isEmpty(); getPartyContacts().iterator().next().deleteWithoutCheckRules()) {
+        for (; !getPartyContactsSet().isEmpty(); getPartyContactsSet().iterator().next().deleteWithoutCheckRules()) {
             ;
         }
 
@@ -1168,61 +1168,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public void logRefuseContact(PartyContact contact) {
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.contacts.PartyContact> getPartyContacts() {
-        return getPartyContactsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.documents.GeneratedDocument> getAddressedDocument() {
-        return getAddressedDocumentSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Accountability> getChilds() {
-        return getChildsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Account> getAccounts() {
-        return getAccountsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Event> getEvents() {
-        return getEventsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup> getPersistentAccessGroup() {
-        return getPersistentAccessGroupSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption> getPhdGratuityExternalScholarshipExemption() {
-        return getPhdGratuityExternalScholarshipExemptionSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Invitation> getInvitationAccountabilities() {
-        return getInvitationAccountabilitiesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Accountability> getParents() {
-        return getParentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Guide> getPayedGuides() {
-        return getPayedGuidesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getPayedReceipts() {
-        return getPayedReceiptsSet();
     }
 
 }

@@ -86,9 +86,4 @@ public class Role extends Role_Base implements Comparable<Role> {
         return logs;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getAssociatedPersons() {
-        return getAssociatedPersonsSet();
-    }
-
 }

@@ -108,29 +108,19 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
         final SortedSet<MeasurementTestRoom> result =
                 new TreeSet<MeasurementTestRoom>(MeasurementTestRoom.COMPARATOR_BY_ROOM_ORDER);
 
-        result.addAll(getRooms());
+        result.addAll(getRoomsSet());
 
         return result;
     }
 
     public MeasurementTestRoom getRoomByName(String name) {
-        for (final MeasurementTestRoom room : getRooms()) {
+        for (final MeasurementTestRoom room : getRoomsSet()) {
             if (room.getName().equals(name)) {
                 return room;
             }
         }
 
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom> getRooms() {
-        return getRoomsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeCurricularPlan> getForDegreeCurricularPlan() {
-        return getForDegreeCurricularPlanSet();
     }
 
 }

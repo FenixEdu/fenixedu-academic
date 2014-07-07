@@ -32,7 +32,7 @@ public class AttributeFinalDegreeWork {
             proposal.setGroupAttributed(groupProposal.getFinalDegreeDegreeWorkGroup());
 
             FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-            for (GroupProposal otherGroupProposal : group.getGroupProposals()) {
+            for (GroupProposal otherGroupProposal : group.getGroupProposalsSet()) {
                 if (!(otherGroupProposal == groupProposal)
                         && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() != null
                         && (otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() == group)) {

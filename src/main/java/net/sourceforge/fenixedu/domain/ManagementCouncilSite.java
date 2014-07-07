@@ -34,7 +34,7 @@ public class ManagementCouncilSite extends ManagementCouncilSite_Base {
 
     @Override
     public Group getOwner() {
-        return UserGroup.of(Person.convertToUsers(getManagers()));
+        return UserGroup.of(Person.convertToUsers(getManagersSet()));
     }
 
     @Override

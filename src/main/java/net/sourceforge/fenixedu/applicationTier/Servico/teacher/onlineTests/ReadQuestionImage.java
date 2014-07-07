@@ -72,7 +72,7 @@ public class ReadQuestionImage {
 
         Question question = null;
         Test test = FenixFramework.getDomainObject(distributedTestId);
-        for (TestQuestion testQuestion : test.getTestQuestions()) {
+        for (TestQuestion testQuestion : test.getTestQuestionsSet()) {
             if (testQuestion.getQuestion().getExternalId().equals(questionId)) {
                 question = testQuestion.getQuestion();
                 break;

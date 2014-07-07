@@ -33,7 +33,7 @@ public class EditPersistentGroup {
 
         group.setName(name);
         group.setUnit(unit);
-        group.getPersons().clear();
+        group.getPersonsSet().clear();
         for (Person person : people) {
             group.addPersons(person);
         }

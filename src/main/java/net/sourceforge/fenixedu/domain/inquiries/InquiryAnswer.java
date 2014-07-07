@@ -31,7 +31,7 @@ public class InquiryAnswer extends InquiryAnswer_Base {
     }
 
     public QuestionAnswer getQuestionAnswer(InquiryQuestion inquiryQuestion) {
-        for (QuestionAnswer questionAnswer : getQuestionAnswers()) {
+        for (QuestionAnswer questionAnswer : getQuestionAnswersSet()) {
             if (questionAnswer.getInquiryQuestion() == inquiryQuestion) {
                 return questionAnswer;
             }
@@ -41,7 +41,7 @@ public class InquiryAnswer extends InquiryAnswer_Base {
 
     public int getNumberOfAnsweredRequiredQuestions() {
         int count = 0;
-        for (QuestionAnswer questionAnswer : getQuestionAnswers()) {
+        for (QuestionAnswer questionAnswer : getQuestionAnswersSet()) {
             if (!StringUtils.isEmpty(questionAnswer.getAnswer()) && questionAnswer.getInquiryQuestion().getRequired()) {
                 count++;
             }
@@ -51,7 +51,7 @@ public class InquiryAnswer extends InquiryAnswer_Base {
 
     public int getNumberOfAnsweredQuestions() {
         int count = 0;
-        for (QuestionAnswer questionAnswer : getQuestionAnswers()) {
+        for (QuestionAnswer questionAnswer : getQuestionAnswersSet()) {
             if (!StringUtils.isEmpty(questionAnswer.getAnswer())) {
                 count++;
             }
@@ -76,11 +76,6 @@ public class InquiryAnswer extends InquiryAnswer_Base {
         } else {
             setResponseDateTime(new org.joda.time.DateTime(date.getTime()));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer> getQuestionAnswers() {
-        return getQuestionAnswersSet();
     }
 
 }

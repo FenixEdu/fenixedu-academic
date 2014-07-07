@@ -108,8 +108,8 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
                 new HashMap<Professorship, RegentTeacherResultsResume>();
 
         List<Professorship> teachersWithNoResults = new ArrayList<Professorship>();
-        for (Professorship teacherProfessorship : executionCourse.getProfessorships()) {
-            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+        for (Professorship teacherProfessorship : executionCourse.getProfessorshipsSet()) {
+            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResultsSet();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
@@ -232,7 +232,7 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
         DelegateInquiryTemplate delegateInquiryTemplate =
                 DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
         InquiryDelegateAnswer inquiryDelegateAnswer = null;
-        for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswers()) {
+        for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswersSet()) {
             if (delegateAnswer.getExecutionDegree() == executionDegree) {
                 inquiryDelegateAnswer = delegateAnswer;
                 break;

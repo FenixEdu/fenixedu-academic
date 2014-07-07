@@ -290,7 +290,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     public boolean isMasterQualificationOwner() {
-        for (Qualification qualification : getPerson().getAssociatedQualifications()) {
+        for (Qualification qualification : getPerson().getAssociatedQualificationsSet()) {
             if (QualificationTypes.isMasterQualificationType(qualification.getType())) {
                 return true;
             }
@@ -300,7 +300,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     public boolean isPhdQualificationOwner() {
-        for (Qualification qualification : getPerson().getAssociatedQualifications()) {
+        for (Qualification qualification : getPerson().getAssociatedQualificationsSet()) {
             if (QualificationTypes.isPhdQualificationType(qualification.getType())) {
                 return true;
             }
@@ -310,7 +310,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     public boolean isDegreeQualificationOwner() {
-        for (Qualification qualification : getPerson().getAssociatedQualifications()) {
+        for (Qualification qualification : getPerson().getAssociatedQualificationsSet()) {
             if (QualificationTypes.isDegreeQualificationType(qualification.getType())) {
                 return true;
             }
@@ -526,7 +526,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
             return 0;
         }
 
-        List<Registration> registrations = new ArrayList<Registration>(student.getRegistrations());
+        List<Registration> registrations = new ArrayList<Registration>(student.getRegistrationsSet());
         Collections.sort(registrations, Registration.COMPARATOR_BY_START_DATE);
         for (final Registration iter : registrations) {
             final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);

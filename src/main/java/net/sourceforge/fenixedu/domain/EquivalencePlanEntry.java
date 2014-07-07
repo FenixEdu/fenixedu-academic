@@ -439,19 +439,4 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
         return isApprovedInAll;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule> getOldDegreeModules() {
-        return getOldDegreeModulesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan> getEquivalencePlans() {
-        return getEquivalencePlansSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule> getNewDegreeModules() {
-        return getNewDegreeModulesSet();
-    }
-
 }

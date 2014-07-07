@@ -63,7 +63,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     }
 
     public void delete() {
-        if (!getCareerWorkshopApplications().isEmpty()) {
+        if (!getCareerWorkshopApplicationsSet().isEmpty()) {
             throw new DomainException(
                     "error.careerWorkshop.deletingEvent: This event already have applications associated, therefore it cannot be destroyed.");
         }
@@ -191,7 +191,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 
     public int getNumberOfApplications() {
         int result = 0;
-        for (CareerWorkshopApplication application : getCareerWorkshopApplications()) {
+        for (CareerWorkshopApplication application : getCareerWorkshopApplicationsSet()) {
             if (application.getSealStamp() != null) {
                 result++;
             }
@@ -218,7 +218,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 
     private List<CareerWorkshopApplication> getProcessedList() {
         List<CareerWorkshopApplication> processedApplications = new ArrayList<CareerWorkshopApplication>();
-        for (CareerWorkshopApplication application : getCareerWorkshopApplications()) {
+        for (CareerWorkshopApplication application : getCareerWorkshopApplicationsSet()) {
             if (application.getSealStamp() != null) {
                 processedApplications.add(application);
             }
@@ -263,11 +263,6 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
             }
         }
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication> getCareerWorkshopApplications() {
-        return getCareerWorkshopApplicationsSet();
     }
 
 }

@@ -112,7 +112,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteEvaluations(InfoSiteEvaluations component, ExecutionCourseSite site) {
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        Collection<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
+        Collection<Evaluation> evaluations = executionCourse.getAssociatedEvaluationsSet();
         component.setEvaluations(evaluations);
         return component;
     }
@@ -121,7 +121,7 @@ public class ExecutionCourseSiteComponentBuilder {
         final Integer evaluationID = component.getEvaluationID();
 
         final ExecutionCourse executionCourse = site.getExecutionCourse();
-        final Collection<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
+        final Collection<Evaluation> evaluations = executionCourse.getAssociatedEvaluationsSet();
         for (final Evaluation evaluation : evaluations) {
             if (evaluationID.equals(evaluation.getExternalId())) {
                 component.setEvaluation(evaluation);
@@ -196,9 +196,9 @@ public class ExecutionCourseSiteComponentBuilder {
         Set<Shift> shifts = disciplinaExecucao.getAssociatedShifts();
 
         for (final Shift shift : shifts) {
-            Collection<Lesson> lessons = shift.getAssociatedLessons();
+            Collection<Lesson> lessons = shift.getAssociatedLessonsSet();
             List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
-            Collection<SchoolClass> classesShifts = shift.getAssociatedClasses();
+            Collection<SchoolClass> classesShifts = shift.getAssociatedClassesSet();
             List<InfoClass> infoClasses = new ArrayList<InfoClass>(classesShifts.size());
 
             for (final Lesson lesson : lessons) {
@@ -233,7 +233,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
         Set<Shift> shifts = executionCourse.getAssociatedShifts();
         for (Shift shift : shifts) {
-            Collection aulasTemp = shift.getAssociatedLessons();
+            Collection aulasTemp = shift.getAssociatedLessonsSet();
             aulas.addAll(aulasTemp);
         }
 
@@ -288,7 +288,7 @@ public class ExecutionCourseSiteComponentBuilder {
     }
 
     private List<InfoTeacher> readLecturingTeachers(ExecutionCourse executionCourse) {
-        Collection domainLecturingTeachersList = executionCourse.getProfessorships();
+        Collection domainLecturingTeachersList = executionCourse.getProfessorshipsSet();
 
         List<InfoTeacher> lecturingInfoTeachersList = new ArrayList<InfoTeacher>();
         if (domainLecturingTeachersList != null) {
@@ -347,7 +347,7 @@ public class ExecutionCourseSiteComponentBuilder {
      * first page).
      */
     private List<InfoCurricularCourse> readCurricularCoursesOrganizedByDegree(ExecutionCourse executionCourse) {
-        final Collection curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        final Collection curricularCourses = executionCourse.getAssociatedCurricularCoursesSet();
         final int estimatedResultSize = curricularCourses.size();
 
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(estimatedResultSize);
@@ -362,7 +362,7 @@ public class ExecutionCourseSiteComponentBuilder {
                 infoCurricularCourses.add(infoCurricularCourse);
                 infoCurricularCourse.setInfoScopes(new ArrayList<InfoCurricularCourseScope>());
 
-                for (Object element : curricularCourse.getScopes()) {
+                for (Object element : curricularCourse.getScopesSet()) {
                     final CurricularCourseScope curricularCourseScope = (CurricularCourseScope) element;
                     final InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
                     infoCurricularCourse.getInfoScopes().add(infoCurricularCourseScope);

@@ -83,7 +83,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         final Project project = getProject();
         selectedDepartments = new ArrayList<String>();
         if (project != null) {
-            for (Department department : project.getDeparments()) {
+            for (Department department : project.getDeparmentsSet()) {
                 selectedDepartments.add(department.getExternalId());
             }
         }

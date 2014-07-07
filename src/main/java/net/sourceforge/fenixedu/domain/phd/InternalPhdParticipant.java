@@ -41,7 +41,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
             @Override
             public void beforeAdd(Person person, InternalPhdParticipant participant) {
                 if (participant != null && person != null) {
-                    for (final PhdParticipant each : participant.getIndividualProcess().getParticipants()) {
+                    for (final PhdParticipant each : participant.getIndividualProcess().getParticipantsSet()) {
                         if (each.isInternal() && ((InternalPhdParticipant) each).isFor(person)) {
                             throw new DomainException("phd.InternalPhdParticipant.process.already.has.participant.for.person");
                         }
@@ -121,7 +121,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     public String getInstitution() {
-        return UnitAcronym.readUnitAcronymByAcronym("utl").getUnits().iterator().next().getName();
+        return UnitAcronym.readUnitAcronymByAcronym("utl").getUnitsSet().iterator().next().getName();
     }
 
     @Override

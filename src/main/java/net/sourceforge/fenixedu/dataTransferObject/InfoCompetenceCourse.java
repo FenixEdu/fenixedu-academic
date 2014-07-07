@@ -68,7 +68,7 @@ public class InfoCompetenceCourse extends InfoObject {
             setCode(competenceCourse.getCode());
             setName(competenceCourse.getName());
             List<InfoDepartment> infoDepartments = new ArrayList<InfoDepartment>();
-            for (Department department : competenceCourse.getDepartments()) {
+            for (Department department : competenceCourse.getDepartmentsSet()) {
                 infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
             }
             setDepartment(infoDepartments);

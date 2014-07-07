@@ -85,7 +85,7 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 
     @Override
     protected void disconnect() {
-        getEnrolments().clear();
+        getEnrolmentsSet().clear();
         super.disconnect();
     }
 
@@ -95,7 +95,7 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
             for (; !getEnrolmentsSet().isEmpty();) {
-                removeEnrolments(getEnrolments().iterator().next());
+                removeEnrolments(getEnrolmentsSet().iterator().next());
             }
         }
     }
@@ -106,11 +106,6 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
             return true;
         }
         return super.isFree();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
-        return getEnrolmentsSet();
     }
 
 }

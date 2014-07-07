@@ -236,7 +236,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
             predicate = Predicates.and(IS_CANDIDACY_CANCELED_PREDICATE, predicate);
         }
 
-        return Collections2.filter(process.getChildProcesses(), predicate);
+        return Collections2.filter(process.getChildProcessesSet(), predicate);
 
     }
 
@@ -436,7 +436,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
                 new Spreadsheet(BundleUtil.getString(Bundle.CANDIDATE, "title.candidacies"), getCandidacyHeader());
         HideCancelledCandidaciesBean hideCancelledCandidacies = getHideCancelledCandidaciesValue(request);
 
-        for (final IndividualCandidacyProcess individualProcess : process.getChildProcesses()) {
+        for (final IndividualCandidacyProcess individualProcess : process.getChildProcessesSet()) {
             if (hideCancelledCandidacies.getValue() && individualProcess.isCandidacyCancelled()) {
                 continue;
             }

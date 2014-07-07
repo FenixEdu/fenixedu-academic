@@ -76,7 +76,7 @@ public class DepartmentShowThesesDA extends PublicShowThesesDA {
         Department department = getDepartment(request);
 
         bean.setDepartment(department);
-        bean.setDegreeOptions(new ArrayList<Degree>(department.getDegrees()));
+        bean.setDegreeOptions(new ArrayList<Degree>(department.getDegreesSet()));
 
         return bean;
     }

@@ -986,7 +986,7 @@ public class Lesson extends Lesson_Base {
 
         if (shift != null) {
 
-            Collection<CourseLoad> courseLoads = shift.getCourseLoads();
+            Collection<CourseLoad> courseLoads = shift.getCourseLoadsSet();
 
             if (courseLoads.size() == 1) {
 

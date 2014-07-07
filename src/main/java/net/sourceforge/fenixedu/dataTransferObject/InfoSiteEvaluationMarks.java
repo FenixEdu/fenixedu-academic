@@ -56,7 +56,7 @@ public class InfoSiteEvaluationMarks extends DataTranferObject implements ISiteC
 
     public Collection<Mark> getSortedMarks() {
         final Collection<Mark> sortedMarks = new TreeSet<Mark>(comparator);
-        sortedMarks.addAll(getEvaluation().getMarks());
+        sortedMarks.addAll(getEvaluation().getMarksSet());
         return sortedMarks;
     }
 

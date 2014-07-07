@@ -50,7 +50,7 @@ public class ReadExecutionYearsByDegreeCurricularPlanID {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         List<ExecutionYear> executionYears =
-                (List<ExecutionYear>) CollectionUtils.collect(degreeCurricularPlan.getExecutionDegrees(), new Transformer() {
+                (List<ExecutionYear>) CollectionUtils.collect(degreeCurricularPlan.getExecutionDegreesSet(), new Transformer() {
 
                     @Override
                     public Object transform(Object arg0) {

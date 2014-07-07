@@ -62,7 +62,7 @@ public class PublishMarks {
             site.getExecutionCourse().getBoard().addAnnouncement(announcement);
         }
 
-        for (Mark mark : evaluation.getMarks()) {
+        for (Mark mark : evaluation.getMarksSet()) {
             if (!mark.getMark().equals(mark.getPublishedMark())) {
                 // update published mark
                 mark.setPublishedMark(mark.getMark());

@@ -28,6 +28,6 @@ public class PhdProgramsProviderForEditDetails extends AbstractDomainObjectProvi
     @Override
     public Object provide(Object source, Object current) {
         final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) source;
-        return bean.hasFocusArea() ? bean.getFocusArea().getPhdPrograms() : Bennu.getInstance().getPhdProgramsSet();
+        return bean.hasFocusArea() ? bean.getFocusArea().getPhdProgramsSet() : Bennu.getInstance().getPhdProgramsSet();
     }
 }

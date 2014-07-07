@@ -320,7 +320,7 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
         Set<VigilantWrapper> vigilantWrappers = new HashSet<VigilantWrapper>();
         Collection<VigilantGroup> groups = this.getVigilantGroups();
         for (VigilantGroup group : groups) {
-            vigilantWrappers.addAll(group.getVigilantWrappers());
+            vigilantWrappers.addAll(group.getVigilantWrappersSet());
         }
         ComparatorChain chain = new ComparatorChain();
         chain.addComparator(VigilantWrapper.POINTS_COMPARATOR);

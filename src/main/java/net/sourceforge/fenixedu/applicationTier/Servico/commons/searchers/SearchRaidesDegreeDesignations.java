@@ -51,7 +51,7 @@ public class SearchRaidesDegreeDesignations implements AutoCompleteProvider<Degr
         if (unit == null) {
             possibleDesignations = Bennu.getInstance().getDegreeDesignationsSet();
         } else {
-            possibleDesignations = unit.getDegreeDesignation();
+            possibleDesignations = unit.getDegreeDesignationSet();
         }
 
         if (schoolLevel != null) {

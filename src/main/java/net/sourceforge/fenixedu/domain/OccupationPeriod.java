@@ -290,7 +290,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     private boolean isEmpty() {
-        return getLessons().isEmpty() && getExecutionDegrees().isEmpty();
+        return getLessonsSet().isEmpty() && getExecutionDegreesSet().isEmpty();
     }
 
     public OccupationPeriod getLastOccupationPeriodOfNestedPeriods() {
@@ -662,16 +662,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             }
         }
 
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Lesson> getLessons() {
-        return getLessonsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.OccupationPeriodReference> getExecutionDegrees() {
-        return getExecutionDegreesSet();
     }
 
 }

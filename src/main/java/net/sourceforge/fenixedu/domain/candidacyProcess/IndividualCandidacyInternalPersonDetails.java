@@ -279,7 +279,7 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public Boolean hasAnyRole() {
-        return !this.getPerson().getPersonRoles().isEmpty();
+        return !this.getPerson().getPersonRolesSet().isEmpty();
     }
 
     @Override

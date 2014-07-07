@@ -97,7 +97,7 @@ public class ResearchUnit extends ResearchUnit_Base {
 
     private static void checkIfAlreadyExistsOneResearchUnitWithSameNameOrAcronym(ResearchUnit researchUnit) {
         PartyType type = PartyType.readPartyTypeByType(PartyTypeEnum.RESEARCH_UNIT);
-        for (Party party : type.getParties()) {
+        for (Party party : type.getPartiesSet()) {
             ResearchUnit unit = (ResearchUnit) party;
             if (!unit.equals(researchUnit) && unit.isResearchUnit() && researchUnit.getName().equalsIgnoreCase(unit.getName())
                     && researchUnit.getAcronym().equalsIgnoreCase(unit.getAcronym())) {
@@ -202,7 +202,7 @@ public class ResearchUnit extends ResearchUnit_Base {
     }
 
     public boolean isUserAbleToInsertOthersPublications(Person person) {
-        return getPublicationCollaborators().contains(person);
+        return getPublicationCollaboratorsSet().contains(person);
     }
 
     public boolean isCurrentUserAbleToInsertOthersPublications() {
@@ -210,8 +210,8 @@ public class ResearchUnit extends ResearchUnit_Base {
     }
 
     public void setPublicationCollaborators(List<Person> collaborators) {
-        getPublicationCollaborators().clear();
-        getPublicationCollaborators().addAll(collaborators);
+        getPublicationCollaboratorsSet().clear();
+        getPublicationCollaboratorsSet().addAll(collaborators);
     }
 
     @Override
@@ -223,15 +223,10 @@ public class ResearchUnit extends ResearchUnit_Base {
     @Atomic
     public UnitBasedSender getOneUnitBasedSender() {
         if (!getUnitBasedSenderSet().isEmpty()) {
-            return getUnitBasedSender().iterator().next();
+            return getUnitBasedSenderSet().iterator().next();
         } else {
             return ResearchUnitBasedSender.newInstance(this);
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPublicationCollaborators() {
-        return getPublicationCollaboratorsSet();
     }
 
 }

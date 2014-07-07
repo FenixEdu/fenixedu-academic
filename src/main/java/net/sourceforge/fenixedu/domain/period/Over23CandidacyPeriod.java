@@ -56,7 +56,7 @@ public class Over23CandidacyPeriod extends Over23CandidacyPeriod_Base {
     }
 
     public Over23CandidacyProcess getOver23CandidacyProcess() {
-        return (Over23CandidacyProcess) (!getCandidacyProcessesSet().isEmpty() ? getCandidacyProcesses().iterator().next() : null);
+        return (Over23CandidacyProcess) (!getCandidacyProcessesSet().isEmpty() ? getCandidacyProcessesSet().iterator().next() : null);
     }
 
     @Override

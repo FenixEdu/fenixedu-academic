@@ -156,12 +156,12 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
     }
 
     public boolean isFor(Person person) {
-        return getPersons().contains(person);
+        return getPersonsSet().contains(person);
     }
 
     public List<PhdAlert> getAlertsPossibleResponsibleForMessageGeneration() {
         List<PhdAlert> result = new ArrayList<PhdAlert>();
-        Collection<PhdAlert> alerts = getProcess().getAlerts();
+        Collection<PhdAlert> alerts = getProcess().getAlertsSet();
 
         for (PhdAlert phdAlert : alerts) {
             if (getSubject().getContent().contentEquals(phdAlert.getFormattedSubject().getContent())) {
@@ -182,7 +182,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 
         UnitBasedSender sender = getSender();
 
-        Collection<Message> messages = sender.getMessages();
+        Collection<Message> messages = sender.getMessagesSet();
 
         for (Message message : messages) {
             if (getSubject().getContent().contentEquals(message.getSubject())) {
@@ -191,11 +191,6 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         }
 
         return result;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPersons() {
-        return getPersonsSet();
     }
 
 }

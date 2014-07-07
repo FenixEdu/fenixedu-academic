@@ -125,7 +125,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     public Set<PhdStudyPlanEntry> getNormalEntries() {
         final Set<PhdStudyPlanEntry> result = new HashSet<PhdStudyPlanEntry>();
 
-        for (final PhdStudyPlanEntry entry : getEntries()) {
+        for (final PhdStudyPlanEntry entry : getEntriesSet()) {
             if (entry.isNormal()) {
                 result.add(entry);
             }
@@ -137,7 +137,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     public Set<PhdStudyPlanEntry> getPropaedeuticEntries() {
         final Set<PhdStudyPlanEntry> result = new HashSet<PhdStudyPlanEntry>();
 
-        for (final PhdStudyPlanEntry entry : getEntries()) {
+        for (final PhdStudyPlanEntry entry : getEntriesSet()) {
             if (entry.isPropaedeutic()) {
                 result.add(entry);
             }
@@ -149,7 +149,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     public Set<PhdStudyPlanEntry> getExtraCurricularEntries() {
         final Set<PhdStudyPlanEntry> result = new HashSet<PhdStudyPlanEntry>();
 
-        for (final PhdStudyPlanEntry entry : getEntries()) {
+        for (final PhdStudyPlanEntry entry : getEntriesSet()) {
             if (entry.isExtraCurricular()) {
                 result.add(entry);
             }
@@ -159,7 +159,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     }
 
     public boolean hasSimilarEntry(PhdStudyPlanEntry entry) {
-        for (final PhdStudyPlanEntry each : getEntries()) {
+        for (final PhdStudyPlanEntry each : getEntriesSet()) {
             if (each.isSimilar(entry)) {
                 return true;
             }
@@ -186,7 +186,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     public void delete() {
 
-        for (; !getEntriesSet().isEmpty(); getEntries().iterator().next().delete()) {
+        for (; !getEntriesSet().isEmpty(); getEntriesSet().iterator().next().delete()) {
             ;
         }
 
@@ -215,7 +215,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     }
 
     public boolean hasAnyPropaeudeuticsOrExtraEntries() {
-        for (final PhdStudyPlanEntry entry : getEntries()) {
+        for (final PhdStudyPlanEntry entry : getEntriesSet()) {
             if (entry.isPropaedeutic() || entry.isExtraCurricular()) {
                 return true;
             }
@@ -226,7 +226,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     public boolean hasPropaeudeuticsOrExtraEntriesApproved() {
         final StudentCurricularPlan scp = getProcess().getRegistration().getLastStudentCurricularPlan();
 
-        for (final PhdStudyPlanEntry entry : getEntries()) {
+        for (final PhdStudyPlanEntry entry : getEntriesSet()) {
 
             if ((entry.isPropaedeutic() || entry.isExtraCurricular()) && entry.isInternalEntry()) {
 
@@ -251,11 +251,6 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     private boolean isFor(final Enrolment enrolment, final CompetenceCourse competenceCourse) {
         return enrolment.getCurricularCourse().getCompetenceCourse().equals(competenceCourse);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry> getEntries() {
-        return getEntriesSet();
     }
 
 }

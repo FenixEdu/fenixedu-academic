@@ -79,7 +79,7 @@ public class MeasurementTest extends MeasurementTest_Base {
     private SortedSet<MeasurementTestShift> getSortedShifts() {
         final SortedSet<MeasurementTestShift> result = new TreeSet<MeasurementTestShift>(MeasurementTestShift.COMPARATOR_BY_NAME);
 
-        result.addAll(getShifts());
+        result.addAll(getShiftsSet());
 
         return result;
     }
@@ -89,7 +89,7 @@ public class MeasurementTest extends MeasurementTest_Base {
 
         for (final MeasurementTestShift shift : getSortedShifts()) {
             for (MeasurementTestRoom room : shift.getSortedRooms()) {
-                result.addAll(room.getRegistrations());
+                result.addAll(room.getRegistrationsSet());
             }
         }
 
@@ -111,18 +111,13 @@ public class MeasurementTest extends MeasurementTest_Base {
     }
 
     public MeasurementTestShift getShiftByName(String name) {
-        for (final MeasurementTestShift each : getShifts()) {
+        for (final MeasurementTestShift each : getShiftsSet()) {
             if (each.getName().equals(name)) {
                 return each;
             }
         }
 
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift> getShifts() {
-        return getShiftsSet();
     }
 
 }

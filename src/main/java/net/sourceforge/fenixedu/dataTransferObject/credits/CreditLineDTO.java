@@ -100,7 +100,7 @@ public class CreditLineDTO {
         }
         setTotalCredits(round(totalCredits));
 
-        for (OtherService otherService : executionSemester.getOtherServicesCorrections()) {
+        for (OtherService otherService : executionSemester.getOtherServicesCorrectionsSet()) {
             if (otherService.getTeacherService().getTeacher().equals(teacher)
                     && !otherService.getCorrectedExecutionSemester()
                             .equals(otherService.getTeacherService().getExecutionPeriod())) {
@@ -126,7 +126,7 @@ public class CreditLineDTO {
         setServiceExemptionCredits(teacherCredits.getServiceExemptionCredits().doubleValue());
         setTotalCredits(teacherCredits.getTotalCredits().doubleValue());
 
-        for (OtherService otherService : executionSemester.getOtherServicesCorrections()) {
+        for (OtherService otherService : executionSemester.getOtherServicesCorrectionsSet()) {
             if (otherService.getTeacherService().getTeacher().equals(teacherCredits.getTeacher())
                     && !otherService.getCorrectedExecutionSemester()
                             .equals(otherService.getTeacherService().getExecutionPeriod())) {

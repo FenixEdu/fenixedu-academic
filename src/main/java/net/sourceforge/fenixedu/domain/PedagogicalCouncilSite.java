@@ -51,7 +51,7 @@ public class PedagogicalCouncilSite extends PedagogicalCouncilSite_Base {
     @Override
     public Group getOwner() {
         return RoleGroup.get(RoleType.PEDAGOGICAL_COUNCIL).or(RoleGroup.get(RoleType.TUTORSHIP))
-                .or(UserGroup.of(Person.convertToUsers(getManagers())));
+                .or(UserGroup.of(Person.convertToUsers(getManagersSet())));
     }
 
     @Override

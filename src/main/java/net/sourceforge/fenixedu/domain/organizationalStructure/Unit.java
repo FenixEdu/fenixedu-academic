@@ -191,20 +191,20 @@ public class Unit extends Unit_Base {
         }
 
         if (hasAnyParentUnits()) {
-            getParents().iterator().next().delete();
+            getParentsSet().iterator().next().delete();
         }
 
         if (getSite() != null) {
             getSite().delete();
         }
 
-        for (; !getUnitFileTagsSet().isEmpty(); getUnitFileTags().iterator().next().delete()) {
+        for (; !getUnitFileTagsSet().isEmpty(); getUnitFileTagsSet().iterator().next().delete()) {
             ;
         }
 
         getUnitName().delete();
-        getFunctionalityPrinters().clear();
-        getAllowedPeopleToUploadFiles().clear();
+        getFunctionalityPrintersSet().clear();
+        getAllowedPeopleToUploadFilesSet().clear();
 
         setRootDomainObjectForEarthUnit(null);
         setRootDomainObjectForExternalInstitutionUnit(null);
@@ -713,7 +713,7 @@ public class Unit extends Unit_Base {
      */
     public UnitBasedSender getOneUnitBasedSender() {
         if (!getUnitBasedSenderSet().isEmpty()) {
-            return getUnitBasedSender().iterator().next();
+            return getUnitBasedSenderSet().iterator().next();
         } else {
             return UnitBasedSender.newInstance(this);
         }
@@ -864,7 +864,7 @@ public class Unit extends Unit_Base {
         for (Unit unit : getSubUnits()) {
             groups.addAll(unit.getVigilantGroupsForGivenExecutionYear(executionYear));
         }
-        for (VigilantGroup group : getVigilantGroups()) {
+        for (VigilantGroup group : getVigilantGroupsSet()) {
             if (group.getExecutionYear().equals(executionYear)) {
                 groups.add(group);
             }
@@ -874,7 +874,7 @@ public class Unit extends Unit_Base {
 
     public List<ExamCoordinator> getExamCoordinatorsForGivenYear(ExecutionYear executionYear) {
         List<ExamCoordinator> examCoordinators = new ArrayList<ExamCoordinator>();
-        for (ExamCoordinator coordinator : this.getExamCoordinators()) {
+        for (ExamCoordinator coordinator : this.getExamCoordinatorsSet()) {
             if (coordinator.getExecutionYear().equals(executionYear)) {
                 examCoordinators.add(coordinator);
             }
@@ -1063,7 +1063,7 @@ public class Unit extends Unit_Base {
     }
 
     public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
-        return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCourses());
+        return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
     }
 
     public static void mergeExternalUnits(Unit fromUnit, Unit destinationUnit) {
@@ -1078,11 +1078,11 @@ public class Unit extends Unit_Base {
 
         Collection<? extends Accountability> externalContracts =
                 fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
-        destinationUnit.getChilds().addAll(externalContracts);
-        destinationUnit.getPayedReceipts().addAll(fromUnit.getPayedReceipts());
-        destinationUnit.getPayedGuides().addAll(fromUnit.getPayedGuides());
-        destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(fromUnit.getAssociatedNonAffiliatedTeachers());
-        destinationUnit.getPrecedentDegreeInformations().addAll(fromUnit.getPrecedentDegreeInformations());
+        destinationUnit.getChildsSet().addAll(externalContracts);
+        destinationUnit.getPayedReceiptsSet().addAll(fromUnit.getPayedReceiptsSet());
+        destinationUnit.getPayedGuidesSet().addAll(fromUnit.getPayedGuidesSet());
+        destinationUnit.getAssociatedNonAffiliatedTeachersSet().addAll(fromUnit.getAssociatedNonAffiliatedTeachersSet());
+        destinationUnit.getPrecedentDegreeInformationsSet().addAll(fromUnit.getPrecedentDegreeInformationsSet());
 
         fromUnit.delete();
     }
@@ -1102,7 +1102,7 @@ public class Unit extends Unit_Base {
 
     public List<UnitFile> getAccessibileFiles(Person person) {
         List<UnitFile> files = new ArrayList<UnitFile>();
-        for (UnitFile file : getFiles()) {
+        for (UnitFile file : getFilesSet()) {
             if (file.isPersonAllowedToAccess(person)) {
                 files.add(file);
             }
@@ -1123,7 +1123,7 @@ public class Unit extends Unit_Base {
     public List<UnitFile> getAccessibileFiles(Person person, UnitFileTag tag) {
         List<UnitFile> files = new ArrayList<UnitFile>();
         if (tag != null) {
-            for (UnitFile file : tag.getTaggedFiles()) {
+            for (UnitFile file : tag.getTaggedFilesSet()) {
                 if (file.isPersonAllowedToAccess(person)) {
                     files.add(file);
                 }
@@ -1138,7 +1138,7 @@ public class Unit extends Unit_Base {
     }
 
     public UnitFileTag getUnitFileTag(String name) {
-        for (UnitFileTag tag : getUnitFileTags()) {
+        for (UnitFileTag tag : getUnitFileTagsSet()) {
             if (tag.getName().equalsIgnoreCase(name)) {
                 return tag;
             }
@@ -1148,13 +1148,13 @@ public class Unit extends Unit_Base {
 
     public void removeGroupFromUnitFiles(PersistentGroupMembers members) {
         MembersLinkGroup group = MembersLinkGroup.get(members);
-        for (UnitFile file : getFiles()) {
+        for (UnitFile file : getFilesSet()) {
             file.updatePermissions(group);
         }
     }
 
     public boolean isUserAllowedToUploadFiles(Person person) {
-        return getAllowedPeopleToUploadFiles().contains(person);
+        return getAllowedPeopleToUploadFilesSet().contains(person);
     }
 
     public boolean isCurrentUserAllowedToUploadFiles() {
@@ -1162,8 +1162,8 @@ public class Unit extends Unit_Base {
     }
 
     public void setAllowedPeopleToUploadFiles(List<Person> allowedPeople) {
-        getAllowedPeopleToUploadFiles().clear();
-        getAllowedPeopleToUploadFiles().addAll(allowedPeople);
+        getAllowedPeopleToUploadFilesSet().clear();
+        getAllowedPeopleToUploadFilesSet().addAll(allowedPeople);
     }
 
     public MultiLanguageString getNameI18n() {
@@ -1172,7 +1172,7 @@ public class Unit extends Unit_Base {
 
     public List<Group> getUserDefinedGroups() {
         final List<Group> groups = new ArrayList<Group>();
-        for (final PersistentGroupMembers persistentMembers : this.getPersistentGroups()) {
+        for (final PersistentGroupMembers persistentMembers : this.getPersistentGroupsSet()) {
             groups.add(MembersLinkGroup.get(persistentMembers));
         }
         return groups;
@@ -1205,7 +1205,7 @@ public class Unit extends Unit_Base {
 
     public boolean isUserAbleToDefineGroups(Person person) {
         UnitSite site = getSite();
-        return (site == null) ? false : site.getManagers().contains(person);
+        return (site == null) ? false : site.getManagersSet().contains(person);
     }
 
     public boolean isCurrentUserAbleToDefineGroups() {
@@ -1238,7 +1238,7 @@ public class Unit extends Unit_Base {
     public Collection<Function> getFunctions(boolean active) {
         List<Function> result = new ArrayList<Function>();
         YearMonthDay today = new YearMonthDay();
-        for (Function function : getFunctions()) {
+        for (Function function : getFunctionsSet()) {
             if (function.isActive(today) != active) {
                 continue;
             }
@@ -1257,7 +1257,7 @@ public class Unit extends Unit_Base {
 
     public SortedSet<Function> getOrderedFunctions() {
         SortedSet<Function> functions = new TreeSet<Function>(Function.COMPARATOR_BY_ORDER);
-        functions.addAll(getFunctions());
+        functions.addAll(getFunctionsSet());
 
         return functions;
     }
@@ -1405,7 +1405,7 @@ public class Unit extends Unit_Base {
     }
 
     public void deleteParentUnitRelation(Unit parentUnit) {
-        for (Accountability relation : this.getParents()) {
+        for (Accountability relation : this.getParentsSet()) {
             if (relation.getParentParty().equals(parentUnit)) {
                 relation.delete();
                 return;
@@ -1450,156 +1450,6 @@ public class Unit extends Unit_Base {
     @Override
     public boolean isAdministrativeOfficeUnit() {
         return getAdministrativeOffice() != null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard> getBoards() {
-        return getBoardsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.UnitBasedSender> getUnitBasedSender() {
-        return getUnitBasedSenderSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
-        return getExamCoordinatorsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Formation> getAssociatedBaseFormations() {
-        return getAssociatedBaseFormationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsCycleGraduationGradeConversionTable> getEctsGraduationGradeConversionTables() {
-        return getEctsGraduationGradeConversionTablesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.UnitFileTag> getUnitFileTags() {
-        return getUnitFileTagsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getDestinationPrecedentDegreeInformations() {
-        return getDestinationPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getOwnedReceipts() {
-        return getOwnedReceiptsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup> getVigilantGroups() {
-        return getVigilantGroupsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation> getDestinationExternalPrecedentDegreeInformations() {
-        return getDestinationExternalPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionConversionTable> getEctsInstitutionConversionTables() {
-        return getEctsInstitutionConversionTablesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers> getPersistentGroups() {
-        return getPersistentGroupsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getTransitionPrecedentDegreeInformations() {
-        return getTransitionPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.UnitFile> getFiles() {
-        return getFilesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionByCurricularYearConversionTable> getEctsCourseConversionTables() {
-        return getEctsCourseConversionTablesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.NonAffiliatedTeacher> getAssociatedNonAffiliatedTeachers() {
-        return getAssociatedNonAffiliatedTeachersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.FunctionalityPrinters> getFunctionalityPrinters() {
-        return getFunctionalityPrintersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.raides.DegreeDesignation> getDegreeDesignation() {
-        return getDegreeDesignationSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreeInformations() {
-        return getPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Formation> getAssociatedFormations() {
-        return getAssociatedFormationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest> getExternalProgramCertificateRequests() {
-        return getExternalProgramCertificateRequestsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExternalCurricularCourse> getExternalCurricularCourses() {
-        return getExternalCurricularCoursesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.ExternalRegistrationData> getExternalRegistrationDatas() {
-        return getExternalRegistrationDatasSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy> getCandidacies() {
-        return getCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation> getCandidacyPrecedentDegreeInformations() {
-        return getCandidacyPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest> getExternalCourseLoadRequests() {
-        return getExternalCourseLoadRequestsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getAllowedPeopleToUploadFiles() {
-        return getAllowedPeopleToUploadFilesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getPersonalIngressionsData() {
-        return getPersonalIngressionsDataSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacies() {
-        return getStudentCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Function> getFunctions() {
-        return getFunctionsSet();
     }
 
 }

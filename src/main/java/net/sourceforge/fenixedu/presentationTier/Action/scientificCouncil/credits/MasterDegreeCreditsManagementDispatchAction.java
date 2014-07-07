@@ -281,7 +281,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
                 this.semesters.append("0");
             }
 
-            for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+            for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
 
                 List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester);
                 for (ExecutionCourse executionCourse : executionCourses) {
@@ -415,7 +415,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
     private StringBuilder getExecutionCourseDCPNames(ExecutionCourse executionCourse) {
         StringBuilder builder = new StringBuilder();
-        for (CurricularCourse tempCurricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (CurricularCourse tempCurricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             builder.append(tempCurricularCourse.getDegreeCurricularPlan().getName()).append(";").append(LINE_BRAKE);
         }
         return builder;
@@ -423,7 +423,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
     private StringBuilder getTeachersCredits(ExecutionCourse executionCourse) {
         StringBuilder teachers = new StringBuilder();
-        for (Professorship professorship : executionCourse.getProfessorships()) {
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
             TeacherService teacherService =
                     professorship.getTeacher().getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
             TeacherMasterDegreeService masterDegreeService = null;
@@ -437,7 +437,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
     private StringBuilder getTeachersHours(ExecutionCourse executionCourse) {
         StringBuilder teachers = new StringBuilder();
-        for (Professorship professorship : executionCourse.getProfessorships()) {
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
             TeacherService teacherService =
                     professorship.getTeacher().getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
             TeacherMasterDegreeService masterDegreeService = null;
@@ -451,7 +451,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
     private StringBuilder getTeachersDepartaments(ExecutionCourse executionCourse) {
         StringBuilder teachers = new StringBuilder();
-        for (Professorship professorship : executionCourse.getProfessorships()) {
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
             ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
             Department department =
                     professorship.getTeacher().getLastWorkingDepartment(executionSemester.getBeginDateYearMonthDay(),
@@ -463,7 +463,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
     private StringBuilder getTeachersNames(ExecutionCourse executionCourse) {
         StringBuilder teachers = new StringBuilder();
-        for (Professorship professorship : executionCourse.getProfessorships()) {
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
             teachers.append(professorship.getPerson().getName()).append(LINE_BRAKE);
         }
         return teachers;
@@ -471,7 +471,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
     private StringBuilder getTeachersNumbers(ExecutionCourse executionCourse) {
         StringBuilder teachers = new StringBuilder();
-        for (Professorship professorship : executionCourse.getProfessorships()) {
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
             teachers.append(professorship.getTeacher().getPerson().getIstUsername()).append(LINE_BRAKE);
         }
         return teachers;

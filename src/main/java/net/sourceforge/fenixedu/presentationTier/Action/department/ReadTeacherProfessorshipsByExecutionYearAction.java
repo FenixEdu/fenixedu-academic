@@ -178,7 +178,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends Action {
 
         if (userView == null || !userView.getPerson().hasRole(RoleType.CREDITS_MANAGER)) {
 
-            final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
+            final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCreditsSet();
             request.setAttribute("isDepartmentManager", Boolean.valueOf(departmentList.contains(department)));
 
         } else {

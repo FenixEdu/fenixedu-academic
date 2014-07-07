@@ -80,7 +80,7 @@ public class ResourceAllocationRolePredicates {
                     }
 
                     ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
-                    if (loggedPerson.getProfessorships().size() > 0
+                    if (loggedPerson.getProfessorshipsSet().size() > 0
                             && loggedPerson.hasProfessorshipForExecutionCourse(executionCourse)) {
                         return true;
                     }

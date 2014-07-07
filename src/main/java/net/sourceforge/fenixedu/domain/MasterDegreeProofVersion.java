@@ -60,8 +60,8 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         this.setFinalResult(finalResult);
         this.setAttachedCopiesNumber(attachedCopiesNumber);
         this.setCurrentState(currentState);
-        this.getJuries().addAll(juries);
-        this.getExternalJuries().addAll(externalJuries);
+        this.getJuriesSet().addAll(juries);
+        this.getExternalJuriesSet().addAll(externalJuries);
     }
 
     public boolean isConcluded() {
@@ -133,16 +133,6 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         } else {
             setThesisDeliveryDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Teacher> getJuries() {
-        return getJuriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract> getExternalJuries() {
-        return getExternalJuriesSet();
     }
 
 }

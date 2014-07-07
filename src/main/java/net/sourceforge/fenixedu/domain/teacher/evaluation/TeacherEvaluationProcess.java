@@ -310,19 +310,4 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
         return facultyEvaluationProcess.getAreApprovedMarksPublished() ? getApprovedEvaluationMarkAsStringForCCAD() : null;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation> getTeacherEvaluation() {
-        return getTeacherEvaluationSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationCoEvaluator> getTeacherEvaluationCoEvaluator() {
-        return getTeacherEvaluationCoEvaluatorSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluationProcessMark> getApprovedTeacherEvaluationProcessMark() {
-        return getApprovedTeacherEvaluationProcessMarkSet();
-    }
-
 }

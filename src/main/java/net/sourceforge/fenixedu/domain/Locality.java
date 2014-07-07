@@ -24,14 +24,4 @@ public class Locality extends Locality_Base {
         super();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Holiday> getHolidays() {
-        return getHolidaysSet();
-    }
-
-    @Deprecated
-    public java.util.Set<org.fenixedu.spaces.domain.Space> getCampusInformation() {
-        return getCampusInformationSet();
-    }
-
 }

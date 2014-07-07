@@ -35,9 +35,4 @@ public class AnnouncementCategory extends AnnouncementCategory_Base {
         this.setType(type);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.Announcement> getAnnouncements() {
-        return getAnnouncementsSet();
-    }
-
 }

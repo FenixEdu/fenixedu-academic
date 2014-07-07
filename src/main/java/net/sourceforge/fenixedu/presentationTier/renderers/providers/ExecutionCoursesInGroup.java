@@ -31,7 +31,7 @@ public class ExecutionCoursesInGroup implements DataProvider {
 
         VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
         VigilantGroup group = bean.getSelectedVigilantGroup();
-        return group.getExecutionCourses();
+        return group.getExecutionCoursesSet();
 
     }
 

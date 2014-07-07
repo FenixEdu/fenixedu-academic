@@ -106,7 +106,7 @@ public class DegreeCurricularPlanRendererConfig implements Serializable {
     }
 
     private Collection<ExecutionDegree> getExecutionDegrees() {
-        return getDegreeCurricularPlan().getExecutionDegrees();
+        return getDegreeCurricularPlan().getExecutionDegreesSet();
     }
 
     private ExecutionYear getDegreeMinimumExecutionYear() {

@@ -105,7 +105,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     private Collection<Registration> getRegistrationsToEnrolByStudent(final Student student) {
         final Collection<Registration> registrations = new HashSet<Registration>();
 
-        for (final Registration registration : student.getRegistrations()) {
+        for (final Registration registration : student.getRegistrationsSet()) {
             if (isRegistrationEnrolmentByStudentAllowed(registration)) {
 
                 if (registration.isActive() || isRegistrationAvailableToEnrol(registration)) {
@@ -209,7 +209,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     }
 
     private boolean hasSpecialSeasonStatute() {
-        Collection<StudentStatute> statutes = getResponsiblePerson().getStudent().getStudentStatutes();
+        Collection<StudentStatute> statutes = getResponsiblePerson().getStudent().getStudentStatutesSet();
         for (StudentStatute statute : statutes) {
             if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(getRegistration())) {
                 continue;
@@ -228,7 +228,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
         if (isResponsiblePersonAllowedToEnrolStudents()) {
             return false;
         }
-        List<StudentStatute> statutesReader = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutes());
+        List<StudentStatute> statutesReader = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutesSet());
         List<StudentStatute> validSeniorStatutes = new ArrayList<StudentStatute>();
         List<StudentStatute> validOtherStatutes = new ArrayList<StudentStatute>();
         for (StudentStatute statute : statutesReader) {
@@ -251,7 +251,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     }
 
     private Registration getRegistrationFromSeniorStatute(Enrolment enrolment) {
-        List<StudentStatute> statutesReader = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutes());
+        List<StudentStatute> statutesReader = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutesSet());
         List<StudentStatute> statutesWriter = new ArrayList<StudentStatute>();
         for (StudentStatute statute : statutesReader) {
             if (statute instanceof SeniorStatute && statute.isValidInExecutionPeriod(getExecutionSemester())) {

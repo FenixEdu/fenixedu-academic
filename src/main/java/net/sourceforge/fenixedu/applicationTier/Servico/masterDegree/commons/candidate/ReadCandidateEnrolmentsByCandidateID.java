@@ -50,7 +50,7 @@ public class ReadCandidateEnrolmentsByCandidateID {
             throw new NonExistingServiceException();
         }
 
-        Collection candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        Collection candidateEnrolments = masterDegreeCandidate.getCandidateEnrolmentsSet();
 
         if (candidateEnrolments == null) {
             throw new NonExistingServiceException();

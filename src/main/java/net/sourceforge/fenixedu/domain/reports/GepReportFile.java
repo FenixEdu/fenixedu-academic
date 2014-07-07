@@ -207,7 +207,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
     private static Registration findSourceRegistrationByEquivalencePlan(Registration targetRegistration) {
         final DegreeCurricularPlan targetDegreeCurricularPlan = targetRegistration.getLastDegreeCurricularPlan();
         if (targetDegreeCurricularPlan.getEquivalencePlan() != null) {
-            for (Registration sourceRegistration : targetRegistration.getStudent().getRegistrations()) {
+            for (Registration sourceRegistration : targetRegistration.getStudent().getRegistrationsSet()) {
                 final DegreeCurricularPlan sourceDegreeCurricularPlan = sourceRegistration.getLastDegreeCurricularPlan();
                 if (sourceRegistration != targetRegistration
                         && sourceRegistration.getActiveStateType() == RegistrationStateType.TRANSITED

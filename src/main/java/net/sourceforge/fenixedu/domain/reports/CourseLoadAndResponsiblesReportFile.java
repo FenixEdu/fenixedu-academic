@@ -104,7 +104,7 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
                         // but it needs to be here because in the old days dcps
                         // could have courses from other degrees.
                         if (curricularCourse.getDegreeType().equals(getDegreeType())) {
-                            for (ExecutionSemester semester : getExecutionYear().getExecutionPeriods()) {
+                            for (ExecutionSemester semester : getExecutionYear().getExecutionPeriodsSet()) {
                                 if (curricularCourse.isActive(semester)) {
                                     for (ExecutionCourse executionCourse : curricularCourse
                                             .getExecutionCoursesByExecutionPeriod(semester)) {

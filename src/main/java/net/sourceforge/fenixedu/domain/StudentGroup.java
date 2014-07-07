@@ -47,7 +47,7 @@ public class StudentGroup extends StudentGroup_Base {
     private static class StudentGroupAttendListener extends RelationAdapter<StudentGroup, Attends> {
         @Override
         public void beforeRemove(StudentGroup studentGroup, Attends attends) {
-            if (!studentGroup.getProjectSubmissions().isEmpty()
+            if (!studentGroup.getProjectSubmissionsSet().isEmpty()
                     && !studentGroup.getGrouping().isPersonTeacher(AccessControl.getPerson())) {
                 throw new DomainException("error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions");
             }
@@ -113,27 +113,12 @@ public class StudentGroup extends StudentGroup_Base {
 
     public boolean isPersonInStudentGroup(Person person) {
 
-        for (Attends attend : getAttends()) {
+        for (Attends attend : getAttendsSet()) {
             if (attend.getRegistration().getStudent().getPerson().equals(person)) {
                 return true;
             }
         }
         return false;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
-        return getProjectSubmissionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
-        return getProjectSubmissionLogsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
-        return getAttendsSet();
     }
 
 }

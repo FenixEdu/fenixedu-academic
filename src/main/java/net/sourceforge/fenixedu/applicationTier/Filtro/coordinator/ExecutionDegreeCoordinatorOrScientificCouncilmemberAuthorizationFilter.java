@@ -76,7 +76,7 @@ public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFil
             final Person person = id.getPerson();
             if (person != null) {
                 if (person.hasRole(RoleType.COORDINATOR)) {
-                    for (final Coordinator coordinator : person.getCoordinators()) {
+                    for (final Coordinator coordinator : person.getCoordinatorsSet()) {
                         if (executionDegree == coordinator.getExecutionDegree()) {
                             return true;
                         }

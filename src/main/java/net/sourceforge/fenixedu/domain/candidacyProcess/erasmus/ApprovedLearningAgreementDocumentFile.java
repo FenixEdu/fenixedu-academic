@@ -84,7 +84,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
         List<ApprovedLearningAgreementExecutedAction> executedActionList =
                 new ArrayList<ApprovedLearningAgreementExecutedAction>();
 
-        CollectionUtils.select(getExecutedActions(), new Predicate() {
+        CollectionUtils.select(getExecutedActionsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -116,7 +116,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
         List<ApprovedLearningAgreementExecutedAction> executedActionList =
                 new ArrayList<ApprovedLearningAgreementExecutedAction>();
 
-        CollectionUtils.select(getExecutedActions(), new Predicate() {
+        CollectionUtils.select(getExecutedActionsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -148,7 +148,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
         List<ApprovedLearningAgreementExecutedAction> executedActionList =
                 new ArrayList<ApprovedLearningAgreementExecutedAction>();
 
-        CollectionUtils.select(getExecutedActions(), new Predicate() {
+        CollectionUtils.select(getExecutedActionsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -186,11 +186,6 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
 
     public boolean isAbleToSendEmailToAcceptStudent() {
         return getProcess().isStudentAccepted() && isMostRecent() && getCandidacyFileActive();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementExecutedAction> getExecutedActions() {
-        return getExecutedActionsSet();
     }
 
 }

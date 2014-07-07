@@ -201,7 +201,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     }
 
     private void addPayedAmount(Person person, int civilYear, final IRSDeclarationDTO declarationDTO) throws FenixActionException {
-        for (final Event event : person.getEvents()) {
+        for (final Event event : person.getEventsSet()) {
             if (event.hasPaymentsByPersonForCivilYear(civilYear)
                     && event.getMaxDeductableAmountForLegalTaxes(civilYear).isPositive()) {
                 declarationDTO.addAmount(event, civilYear);

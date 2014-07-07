@@ -92,7 +92,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public String getName() {
-        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCoursesSet();
         String name = "";
         int i = 0;
         for (ExecutionCourse course : courses) {
@@ -106,7 +106,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public String getFullName() {
-        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCoursesSet();
         String fullName = "";
         int i = 0;
         for (ExecutionCourse course : courses) {
@@ -129,12 +129,12 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public ExecutionYear getExecutionYear() {
-        return this.getAssociatedExecutionCourses().iterator().next().getExecutionYear();
+        return this.getAssociatedExecutionCoursesSet().iterator().next().getExecutionYear();
     }
 
     public ExecutionDegree getExecutionDegree() {
-        for (ExecutionCourse cource : getAssociatedExecutionCourses()) {
-            for (CurricularCourse curricularCource : cource.getAssociatedCurricularCourses()) {
+        for (ExecutionCourse cource : getAssociatedExecutionCoursesSet()) {
+            for (CurricularCourse curricularCource : cource.getAssociatedCurricularCoursesSet()) {
                 return curricularCource.getExecutionDegreeFor(getExecutionYear().getAcademicInterval());
             }
         }
@@ -203,7 +203,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public List<Space> getAssociatedRooms() {
         final List<Space> result = new ArrayList<Space>();
-        for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupationsSet()) {
             result.add(roomOccupation.getRoom());
         }
         return result;
@@ -351,7 +351,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         checkValidHours(beginning, end);
 
         // Associate ExecutionCourses and Context/Scopes
-        getAssociatedExecutionCourses().addAll(executionCoursesToAssociate);
+        getAssociatedExecutionCoursesSet().addAll(executionCoursesToAssociate);
         for (DegreeModuleScope degreeModuleScope : curricularCourseScopesToAssociate) {
             if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
                 addAssociatedCurricularCourseScope(((DegreeModuleScopeCurricularCourseScope) degreeModuleScope)
@@ -370,7 +370,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
         // Edit Existent Rooms
         final Set<WrittenEvaluationSpaceOccupation> roomOccupationsToDelete = new HashSet<WrittenEvaluationSpaceOccupation>();
-        for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupationsSet()) {
             if (!newOccupations.contains(roomOccupation)) {
                 final Space room = roomOccupation.getRoom();
                 if (!rooms.contains(room)) {
@@ -399,7 +399,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     private void deleteAllRoomOccupations() {
         while (!getWrittenEvaluationSpaceOccupationsSet().isEmpty()) {
-            WrittenEvaluationSpaceOccupation occupation = getWrittenEvaluationSpaceOccupations().iterator().next();
+            WrittenEvaluationSpaceOccupation occupation = getWrittenEvaluationSpaceOccupationsSet().iterator().next();
             occupation.removeWrittenEvaluations(this);
             occupation.delete();
         }
@@ -440,7 +440,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     private boolean hasOccupationForRoom(Space room) {
-        for (final WrittenEvaluationSpaceOccupation roomOccupation : this.getWrittenEvaluationSpaceOccupations()) {
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : this.getWrittenEvaluationSpaceOccupationsSet()) {
             if (roomOccupation.getRoom() == room) {
                 return true;
             }
@@ -472,13 +472,13 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         logRemove();
         deleteAllVigilanciesAssociated();
         deleteAllRoomOccupations();
-        getAssociatedCurricularCourseScope().clear();
+        getAssociatedCurricularCourseScopeSet().clear();
         getAssociatedContextsSet().clear();
         super.delete();
     }
 
     private void deleteAllVigilanciesAssociated() {
-        for (; !this.getVigilancies().isEmpty(); this.getVigilancies().iterator().next().delete()) {
+        for (; !this.getVigilanciesSet().isEmpty(); this.getVigilanciesSet().iterator().next().delete()) {
             ;
         }
     }
@@ -492,7 +492,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         this.setEnrollmentEndDayDate(enrolmentEndDay);
         this.setEnrollmentBeginTimeDate(enrolmentBeginTime);
         this.setEnrollmentEndTimeDate(enrolmentEndTime);
-        for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
+        for (ExecutionCourse ec : getAssociatedExecutionCoursesSet()) {
             EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.evaluation.generic.edited.enrolment",
                     getPresentationName(), ec.getName(), ec.getDegreePresentationString());
         }
@@ -527,7 +527,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public void enrolStudent(Registration registration) {
-        for (WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration.getWrittenEvaluationEnrolments()) {
+        for (WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration.getWrittenEvaluationEnrolmentsSet()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
                 throw new DomainException("error.alreadyEnrolledError");
             }
@@ -579,7 +579,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
             }
         }
 
-        for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
+        for (ExecutionCourse ec : getAssociatedExecutionCoursesSet()) {
             EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
                     "log.executionCourse.evaluation.generic.edited.rooms.distributed", getPresentationName(), ec.getName(),
                     ec.getDegreePresentationString());
@@ -631,7 +631,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Registration registration) {
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration.getWrittenEvaluationEnrolments()) {
+        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration.getWrittenEvaluationEnrolmentsSet()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
                 return writtenEvaluationEnrolment;
             }
@@ -669,8 +669,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public Integer getCountStudentsEnroledAttendingExecutionCourses() {
         int i = 0;
-        for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
-            for (final Attends attends : executionCourse.getAttends()) {
+        for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
+            for (final Attends attends : executionCourse.getAttendsSet()) {
                 if (attends.getEnrolment() != null) {
                     i++;
                 }
@@ -696,7 +696,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public String getDegreesAsString() {
         Set<Degree> degrees = new HashSet<Degree>();
-        for (ExecutionCourse course : this.getAssociatedExecutionCourses()) {
+        for (ExecutionCourse course : this.getAssociatedExecutionCoursesSet()) {
             degrees.addAll(course.getDegreesSortedByDegreeName());
         }
         String degreesAsString = "";
@@ -713,7 +713,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public List<Vigilancy> getTeachersVigilancies() {
         List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : this.getVigilancies()) {
+        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
             if (vigilancy.isOwnCourseVigilancy()) {
                 vigilancies.add(vigilancy);
             }
@@ -723,7 +723,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public List<Vigilancy> getOthersVigilancies() {
         List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : this.getVigilancies()) {
+        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
             if (vigilancy.isOtherCourseVigilancy()) {
                 vigilancies.add(vigilancy);
             }
@@ -733,7 +733,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public List<Vigilancy> getActiveOtherVigilancies() {
         List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : this.getVigilancies()) {
+        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
             if (vigilancy.isOtherCourseVigilancy() && vigilancy.isActive()) {
                 vigilancies.add(vigilancy);
             }
@@ -743,7 +743,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public List<Vigilancy> getAllActiveVigilancies() {
         List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : this.getVigilancies()) {
+        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
             if (vigilancy.isActive()) {
                 vigilancies.add(vigilancy);
             }
@@ -753,7 +753,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public Set<VigilantGroup> getAssociatedVigilantGroups() {
         Set<VigilantGroup> groups = new HashSet<VigilantGroup>();
-        for (ExecutionCourse course : getAssociatedExecutionCourses()) {
+        for (ExecutionCourse course : getAssociatedExecutionCoursesSet()) {
             if (course.getVigilantGroup() != null) {
                 groups.add(course.getVigilantGroup());
             }
@@ -771,7 +771,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public List<Vigilancy> getActiveVigilancies() {
         List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : this.getVigilancies()) {
+        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
             if (vigilancy.isActive()) {
                 vigilancies.add(vigilancy);
             }
@@ -876,7 +876,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         if (registration.getRoomFor(this) != null) {
             rooms.add(registration.getRoomFor(this));
         } else {
-            for (WrittenEvaluationSpaceOccupation weSpaceOcupation : this.getWrittenEvaluationSpaceOccupations()) {
+            for (WrittenEvaluationSpaceOccupation weSpaceOcupation : this.getWrittenEvaluationSpaceOccupationsSet()) {
                 rooms.add(weSpaceOcupation.getRoom());
             }
         }
@@ -889,8 +889,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public Set<Person> getTeachers() {
         Set<Person> persons = new HashSet<Person>();
-        for (ExecutionCourse course : getAssociatedExecutionCourses()) {
-            for (Professorship professorship : course.getProfessorships()) {
+        for (ExecutionCourse course : getAssociatedExecutionCoursesSet()) {
+            for (Professorship professorship : course.getProfessorshipsSet()) {
                 persons.add(professorship.getPerson());
             }
         }
@@ -1019,31 +1019,6 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         } else {
             setEnrollmentEndTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseScope> getAssociatedCurricularCourseScope() {
-        return getAssociatedCurricularCourseScopeSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getAssociatedContexts() {
-        return getAssociatedContextsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.Vigilancy> getVigilancies() {
-        return getVigilanciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation> getWrittenEvaluationSpaceOccupations() {
-        return getWrittenEvaluationSpaceOccupationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() {
-        return getWrittenEvaluationEnrolmentsSet();
     }
 
     public DateTime getEnrolmentPeriodStart() {

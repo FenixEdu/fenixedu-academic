@@ -84,7 +84,7 @@ public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends
         final ExecutionSemester executionSemester = getDomainObject(dynaForm, "executionPeriodId");
 
         Teacher teacher = FenixFramework.getDomainObject(dynaForm.getString("teacherId"));
-        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCreditsSet();
 
         if (teacher == null || teacher.getCurrentWorkingDepartment() == null
                 || !manageableDepartments.contains(teacher.getCurrentWorkingDepartment())) {

@@ -56,14 +56,4 @@ public class MobilityAgreement extends MobilityAgreement_Base {
         return mobilityAgreementByUniversityUnit;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest> getOutboundMobilityCandidacyContest() {
-        return getOutboundMobilityCandidacyContestSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota> getMobilityQuotas() {
-        return getMobilityQuotasSet();
-    }
-
 }

@@ -248,7 +248,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     private String computeDegreeAcronyms(ExecutionCourse executionCourse) {
         StringBuilder degreeAcronyms = new StringBuilder();
 
-        Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCoursesSet();
         Set<String> processedAcronyns = new HashSet<String>();
 
         for (CurricularCourse curricularCourse : curricularCourses) {

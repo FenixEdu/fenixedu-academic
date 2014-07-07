@@ -113,7 +113,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
         AnnouncementBoard announcementsBoard = null;
         AnnouncementBoard eventsBoard = null;
 
-        for (AnnouncementBoard unitBoard : unit.getBoards()) {
+        for (AnnouncementBoard unitBoard : unit.getBoardsSet()) {
             if (unitBoard.isPublicToRead() && unitBoard.getName().equalInAnyLanguage(ANNOUNCEMENTS_NAME)) {
                 announcementsBoard = unitBoard;
             }

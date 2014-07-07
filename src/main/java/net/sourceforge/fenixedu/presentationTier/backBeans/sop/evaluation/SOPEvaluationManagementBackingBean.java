@@ -736,7 +736,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             List<Integer> curricularYears = Arrays.asList(getCurricularYearIDs());
             DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
             for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-                for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+                for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
                     if (evaluation instanceof WrittenEvaluation) {
                         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
                         if (writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
@@ -1283,11 +1283,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             this.associatedExecutionCourses = (List<String>) this.getViewState().getAttribute("associatedExecutionCourses");
         } else if (this.getEvaluationID() != null) {
             List<String> result = new ArrayList<String>();
-            for (ExecutionCourse executionCourse : this.getEvaluation().getAssociatedExecutionCourses()) {
+            for (ExecutionCourse executionCourse : this.getEvaluation().getAssociatedExecutionCoursesSet()) {
                 result.add(executionCourse.getExternalId());
                 List<String> selectedScopes = new ArrayList<String>();
                 List<String> selectedContexts = new ArrayList<String>();
-                for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                     for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
                         if (degreeModuleScope.isActiveForExecutionPeriod(executionCourse.getExecutionPeriod())) {
                             if (((WrittenEvaluation) this.getEvaluation()).getDegreeModuleScopes().contains(degreeModuleScope)) {
@@ -1346,7 +1346,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 }
             }
 
-            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                 for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
                     if (degreeModuleScope.isActiveForExecutionPeriod(executionCourse.getExecutionPeriod())) {
 
@@ -1428,7 +1428,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
             ExecutionCourse executionCourse = FenixFramework.getDomainObject(integer);
             List<String> auxiliarArray = new ArrayList<String>();
-            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                 for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
                     auxiliarArray.add(degreeModuleScope.getExternalId());
                 }

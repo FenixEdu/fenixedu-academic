@@ -81,7 +81,7 @@ public class PhdProgramInformation extends PhdProgramInformation_Base {
     }
 
     private boolean hasSomePhdProgramInformationBeanWithSameBeginDate(final PhdProgramInformationBean bean) {
-        for (PhdProgramInformation information : bean.getPhdProgram().getPhdProgramInformations()) {
+        for (PhdProgramInformation information : bean.getPhdProgram().getPhdProgramInformationsSet()) {
             if (this == information) {
                 continue;
             }

@@ -99,14 +99,14 @@ public class SubmitFinalWorkProposal {
         proposal.setTitle(infoProposal.getTitle());
         proposal.setUrl(infoProposal.getUrl());
 
-        proposal.getBranches().clear();
+        proposal.getBranchesSet().clear();
         if (infoProposal.getBranches() != null && !infoProposal.getBranches().isEmpty()) {
             for (int i = 0; i < infoProposal.getBranches().size(); i++) {
                 InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);
                 if (infoBranch != null && infoBranch.getExternalId() != null) {
                     Branch branch = FenixFramework.getDomainObject(infoBranch.getExternalId());
                     if (branch != null) {
-                        proposal.getBranches().add(branch);
+                        proposal.getBranchesSet().add(branch);
                     }
                 }
             }

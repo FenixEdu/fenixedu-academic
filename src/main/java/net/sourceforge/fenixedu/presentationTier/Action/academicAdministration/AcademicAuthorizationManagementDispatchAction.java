@@ -167,7 +167,7 @@ public class AcademicAuthorizationManagementDispatchAction extends FenixDispatch
 
     @Atomic
     private void revokePartyFromGroup(PersistentAcademicAuthorizationGroup group, Party party) {
-        if (group.getMember().size() > 1) {
+        if (group.getMemberSet().size() > 1) {
             group.revoke(party);
         } else {
             group.delete();

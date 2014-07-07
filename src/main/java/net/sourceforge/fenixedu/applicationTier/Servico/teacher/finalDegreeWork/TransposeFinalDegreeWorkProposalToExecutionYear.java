@@ -77,7 +77,7 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
 
         Scheduleing originalScheduleing = originalProposal.getScheduleing();
 
-        ExecutionDegree oneExecutionDegree = originalScheduleing.getExecutionDegrees().iterator().next();
+        ExecutionDegree oneExecutionDegree = originalScheduleing.getExecutionDegreesSet().iterator().next();
 
         ExecutionDegree executionDegree =
                 ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(oneExecutionDegree.getDegreeCurricularPlan(),
@@ -114,13 +114,13 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
         // TODO Get information by other means, instead of just returning an
         // error...
 
-        if (originalScheduleing.getExecutionDegrees().size() != newScheduleing.getExecutionDegrees().size()) {
+        if (originalScheduleing.getExecutionDegreesSet().size() != newScheduleing.getExecutionDegreesSet().size()) {
             throw new ProposalSchedulingNoMatch();
         }
 
-        Collection<ExecutionDegree> newDegrees = newScheduleing.getExecutionDegrees();
+        Collection<ExecutionDegree> newDegrees = newScheduleing.getExecutionDegreesSet();
 
-        for (ExecutionDegree originalDegree : originalScheduleing.getExecutionDegrees()) {
+        for (ExecutionDegree originalDegree : originalScheduleing.getExecutionDegreesSet()) {
             boolean found = false;
 
             for (ExecutionDegree newDegree : newDegrees) {
@@ -175,7 +175,7 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
 
         newProposal.setScheduleing(newScheduleing);
 
-        Iterator<Branch> branchIterator = originalProposal.getBranches().iterator();
+        Iterator<Branch> branchIterator = originalProposal.getBranchesSet().iterator();
         while (branchIterator.hasNext()) {
             Branch branch = branchIterator.next();
             newProposal.addBranches(branch);

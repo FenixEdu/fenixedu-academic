@@ -68,10 +68,10 @@ public class DistributedTest extends DistributedTest_Base {
                 "log.executionCourse.evaluation.tests.distribution.removed", getEvaluationTitle(), getBeginDateTimeFormatted(),
                 ec.getName(), ec.getDegreePresentationString());
 
-        for (; !getDistributedTestQuestionsSet().isEmpty(); getDistributedTestQuestions().iterator().next().delete()) {
+        for (; !getDistributedTestQuestionsSet().isEmpty(); getDistributedTestQuestionsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getStudentsLogsSet().isEmpty(); getStudentsLogs().iterator().next().delete()) {
+        for (; !getStudentsLogsSet().isEmpty(); getStudentsLogsSet().iterator().next().delete()) {
             ;
         }
         if (getTestType().getType().intValue() == TestType.EVALUATION) {
@@ -86,7 +86,7 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     private void deleteQuestions() {
-        for (StudentTestQuestion studentTestQuestion : getDistributedTestQuestions()) {
+        for (StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
             if (!studentTestQuestion.getQuestion().getVisibility()
                     && !isInOtherDistributedTest(studentTestQuestion.getQuestion())) {
                 studentTestQuestion.getQuestion().delete();
@@ -95,7 +95,7 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     private boolean isInOtherDistributedTest(Question question) {
-        for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestions()) {
+        for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestionsSet()) {
             if (!studentTestQuestion.getDistributedTest().equals(this)) {
                 return true;
             }
@@ -165,7 +165,7 @@ public class DistributedTest extends DistributedTest_Base {
 
     public StudentTestLog getLastSubmissionStudentTestLog(final String registrationId) {
         Registration registration = FenixFramework.getDomainObject(registrationId);
-        for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
+        for (final StudentTestLog studentTestLog : this.getStudentsLogsSet()) {
             if (studentTestLog.getEvent().startsWith("Submeter Teste;") && registration.equals(studentTestLog.getStudent())) {
                 return studentTestLog;
             }
@@ -175,7 +175,7 @@ public class DistributedTest extends DistributedTest_Base {
 
     public List<StudentTestLog> getStudentTestLogs(final Registration registration) {
         List<StudentTestLog> result = new ArrayList<StudentTestLog>();
-        for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
+        for (final StudentTestLog studentTestLog : this.getStudentsLogsSet()) {
             if (studentTestLog.getStudent().equals(registration)) {
                 result.add(studentTestLog);
             }
@@ -329,7 +329,7 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     public Question findQuestionByOID(String questionId) {
-        for (StudentTestQuestion studentTestQuestion : this.getDistributedTestQuestions()) {
+        for (StudentTestQuestion studentTestQuestion : this.getDistributedTestQuestionsSet()) {
             if (studentTestQuestion.getQuestion().getExternalId().equals(questionId)) {
                 return studentTestQuestion.getQuestion();
             }
@@ -507,16 +507,6 @@ public class DistributedTest extends DistributedTest_Base {
         } else {
             setEndHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog> getStudentsLogs() {
-        return getStudentsLogsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion> getDistributedTestQuestions() {
-        return getDistributedTestQuestionsSet();
     }
 
 }

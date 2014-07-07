@@ -103,7 +103,7 @@ public class DepartmentCreditsDA extends FenixDispatchAction {
 
     private List<Employee> getEmployeesFromDepartment(Department department) {
         List<Employee> employees = new LinkedList<Employee>();
-        for (Person person : department.getAssociatedPersons()) {
+        for (Person person : department.getAssociatedPersonsSet()) {
             if (hasPersonPermissionCredits(person, department)) {
                 employees.add(person.getEmployee());
             }

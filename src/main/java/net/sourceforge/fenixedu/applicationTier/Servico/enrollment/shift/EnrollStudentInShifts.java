@@ -71,7 +71,7 @@ public class EnrollStudentInShifts {
     }
 
     private Shift findShiftOfSameTypeForSameExecutionCourse(final Registration registration, final Shift shift) {
-        for (final Shift shiftFromStudent : registration.getShifts()) {
+        for (final Shift shiftFromStudent : registration.getShiftsSet()) {
             if (shiftFromStudent.getTypes().containsAll(shift.getTypes())
                     && shiftFromStudent.getExecutionCourse() == shift.getExecutionCourse()) {
                 return shiftFromStudent;

@@ -90,7 +90,7 @@ public class GratuityValues extends GratuityValues_Base {
     }
 
     public PaymentPhase getLastPaymentPhase() {
-        return !getPaymentPhaseListSet().isEmpty() ? Collections.max(getPaymentPhaseList(), PaymentPhase.COMPARATOR_BY_END_DATE) : null;
+        return !getPaymentPhaseListSet().isEmpty() ? Collections.max(getPaymentPhaseListSet(), PaymentPhase.COMPARATOR_BY_END_DATE) : null;
     }
 
     public boolean isPenaltyApplicable() {
@@ -140,16 +140,6 @@ public class GratuityValues extends GratuityValues_Base {
         } else {
             setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.GratuitySituation> getGratuitySituations() {
-        return getGratuitySituationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.PaymentPhase> getPaymentPhaseList() {
-        return getPaymentPhaseListSet();
     }
 
 }

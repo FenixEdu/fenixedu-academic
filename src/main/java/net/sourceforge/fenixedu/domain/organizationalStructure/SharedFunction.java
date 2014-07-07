@@ -49,7 +49,7 @@ public class SharedFunction extends SharedFunction_Base {
 
     public List<PersonFunctionShared> getPersonFunctionsShared() {
         List<PersonFunctionShared> personFunctions = new ArrayList<PersonFunctionShared>();
-        for (Accountability accountability : getAccountabilities()) {
+        for (Accountability accountability : getAccountabilitiesSet()) {
             if (accountability.isPersonFunctionShared()) {
                 personFunctions.add((PersonFunctionShared) accountability);
             }

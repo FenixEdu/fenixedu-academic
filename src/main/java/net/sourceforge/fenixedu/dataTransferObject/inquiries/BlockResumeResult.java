@@ -70,8 +70,8 @@ public abstract class BlockResumeResult implements Serializable {
         int count = 0;
         Collection<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
         for (InquiryBlock inquiryBlock : associatedBlocks) {
-            for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-                for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+            for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
+                for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestionsSet()) {
                     List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
                     for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
                         if (isMandatoryComment(inquiryResultQuestion)) {
@@ -101,8 +101,8 @@ public abstract class BlockResumeResult implements Serializable {
         int count = 0;
         Collection<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
         for (InquiryBlock inquiryBlock : associatedBlocks) {
-            for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-                for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+            for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
+                for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestionsSet()) {
                     List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
                     for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
                         InquiryResultComment inquiryResultComment =
@@ -147,13 +147,13 @@ public abstract class BlockResumeResult implements Serializable {
     }
 
     private Collection<InquiryBlock> getAssociatedBlocks(InquiryResult inquiryResult) {
-        Collection<InquiryBlock> associatedBlocks = inquiryResult.getInquiryQuestion().getAssociatedBlocks();
-        if (!inquiryResult.getInquiryQuestion().getAssociatedResultBlocks().isEmpty()) {
+        Collection<InquiryBlock> associatedBlocks = inquiryResult.getInquiryQuestion().getAssociatedBlocksSet();
+        if (!inquiryResult.getInquiryQuestion().getAssociatedResultBlocksSet().isEmpty()) {
             associatedBlocks = new ArrayList<InquiryBlock>();
-            for (InquiryBlock inquiryBlock : inquiryResult.getInquiryQuestion().getAssociatedResultBlocks()) {
-                for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-                    for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
-                        associatedBlocks.addAll(inquiryQuestion.getAssociatedBlocks());
+            for (InquiryBlock inquiryBlock : inquiryResult.getInquiryQuestion().getAssociatedResultBlocksSet()) {
+                for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
+                    for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestionsSet()) {
+                        associatedBlocks.addAll(inquiryQuestion.getAssociatedBlocksSet());
                     }
                 }
             }

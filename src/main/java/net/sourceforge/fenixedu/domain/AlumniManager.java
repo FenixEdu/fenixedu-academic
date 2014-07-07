@@ -101,7 +101,7 @@ public class AlumniManager {
         if (!checkAlumni(student)) {
             if (!student.getRegistrationsSet().isEmpty()) {
 
-                for (Registration registration : student.getRegistrations()) {
+                for (Registration registration : student.getRegistrationsSet()) {
                     if (registration.isConcluded()) {
                         return;
                     }

@@ -117,7 +117,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     }
 
     public IndividualCandidacyProcess getChildProcessByDocumentId(IDDocumentType type, String identification) {
-        for (IndividualCandidacyProcess individualCandidacyProcess : getChildProcesses()) {
+        for (IndividualCandidacyProcess individualCandidacyProcess : getChildProcessesSet()) {
             if (individualCandidacyProcess.getCandidacy() != null
                     && identification
                             .equals(individualCandidacyProcess.getCandidacy().getPersonalDetails().getDocumentIdNumber())
@@ -130,7 +130,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     }
 
     public IndividualCandidacyProcess getOpenChildProcessByDocumentId(IDDocumentType documentType, String documentId) {
-        for (IndividualCandidacyProcess child : this.getChildProcesses()) {
+        for (IndividualCandidacyProcess child : this.getChildProcessesSet()) {
             if (documentId.equals(child.getCandidacy().getPersonalDetails().getDocumentIdNumber())
                     && !child.isCandidacyCancelled()) {
                 return child;
@@ -145,7 +145,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
             return null;
         }
 
-        for (IndividualCandidacyProcess child : this.getChildProcesses()) {
+        for (IndividualCandidacyProcess child : this.getChildProcessesSet()) {
             if (child.isCandidacyCancelled()) {
                 continue;
             }
@@ -165,7 +165,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     public List<IndividualCandidacyProcess> getChildsWithMissingRequiredDocuments() {
         List<IndividualCandidacyProcess> childs = new ArrayList<IndividualCandidacyProcess>();
 
-        CollectionUtils.select(getChildProcesses(), new Predicate() {
+        CollectionUtils.select(getChildProcessesSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -180,16 +180,6 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
 
     public boolean isMobility() {
         return false;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Degree> getDegree() {
-        return getDegreeSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess> getChildProcesses() {
-        return getChildProcessesSet();
     }
 
     private static <T extends CandidacyProcess> Set<T> getAllInstancesOf(final Class<? extends T> type) {

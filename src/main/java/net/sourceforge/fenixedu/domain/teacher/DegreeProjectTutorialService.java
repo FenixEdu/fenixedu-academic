@@ -61,7 +61,7 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
         if (percentageValue == null || percentageValue.compareTo(0) < 0 || percentageValue.compareTo(availablePercentage) > 0) {
             throw new DomainException("message.invalid.percentage");
         }
-        for (DegreeProjectTutorialService degreeProjectTutorialService : getAttend().getDegreeProjectTutorialServices()) {
+        for (DegreeProjectTutorialService degreeProjectTutorialService : getAttend().getDegreeProjectTutorialServicesSet()) {
             if (!degreeProjectTutorialService.equals(this)) {
                 availablePercentage = availablePercentage - degreeProjectTutorialService.getPercentageValue();
             }

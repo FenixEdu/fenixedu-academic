@@ -82,9 +82,9 @@ public class WrittenTest extends WrittenTest_Base {
 
         checkEvaluationDate(testDate, executionCoursesToAssociate);
 
-        this.getAssociatedExecutionCourses().clear();
-        this.getAssociatedCurricularCourseScope().clear();
-        this.getAssociatedContexts().clear();
+        this.getAssociatedExecutionCoursesSet().clear();
+        this.getAssociatedCurricularCourseScopeSet().clear();
+        this.getAssociatedContextsSet().clear();
 
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime, executionCoursesToAssociate,
                 curricularCourseScopesToAssociate, rooms);
@@ -129,7 +129,7 @@ public class WrittenTest extends WrittenTest_Base {
             Person person = requestor.getPerson();
             Teacher teacher = person.getTeacher();
             if (teacher != null) {
-                for (ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+                for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
                     if (teacher.hasProfessorshipForExecutionCourse(executionCourse)) {
                         return true;
                     }
@@ -141,10 +141,10 @@ public class WrittenTest extends WrittenTest_Base {
 
     private boolean allowedPeriod(final Date date) {
         final YearMonthDay yearMonthDay = new YearMonthDay(date.getTime());
-        for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
             final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
             final ExecutionYear executionYear = executionCourse.getExecutionPeriod().getExecutionYear();
-            for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                 final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
                 final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
                 final Date startExamsPeriod;
@@ -167,12 +167,12 @@ public class WrittenTest extends WrittenTest_Base {
         if (requestor != null && requestor.getPerson().hasRole(RoleType.COORDINATOR)) {
             final Person person = requestor.getPerson();
             if (person != null) {
-                for (final Coordinator coordinator : person.getCoordinators()) {
+                for (final Coordinator coordinator : person.getCoordinatorsSet()) {
                     final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
-                    for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+                    for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
                         if (executionCourse.getExecutionPeriod().getExecutionYear() == executionDegree.getExecutionYear()) {
                             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-                            for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                            for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                                 if (degreeCurricularPlan == curricularCourse.getDegreeCurricularPlan()) {
                                     return true;
                                 }
@@ -252,7 +252,7 @@ public class WrittenTest extends WrittenTest_Base {
             }
         }
 
-        for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
+        for (ExecutionCourse ec : getAssociatedExecutionCoursesSet()) {
             EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
                     "log.executionCourse.evaluation.generic.edited.rooms", getPresentationName(), ec.getName(),
                     ec.getDegreePresentationString());

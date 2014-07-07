@@ -109,7 +109,7 @@ public class StudentDA extends StudentRegistrationDA {
         final Student student = getAndSetStudent(request);
 
         Person person = student.getPerson();
-        Collection<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Collection<PersonInformationLog> logsList = person.getPersonInformationLogsSet();
         request.setAttribute("person", person);
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");

@@ -77,15 +77,15 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
         List<EventBean> allEvents = new ArrayList<EventBean>();
         ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
 
-        for (Registration registration : user.getPerson().getStudent().getRegistrations()) {
+        for (Registration registration : user.getPerson().getStudent().getRegistrationsSet()) {
             for (Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
-                for (Lesson lesson : shift.getAssociatedLessons()) {
+                for (Lesson lesson : shift.getAssociatedLessonsSet()) {
                     allEvents.addAll(lesson.getAllLessonsEvents());
                 }
             }
 
             for (Shift shift : registration.getShiftsFor(currentExecutionSemester.getPreviousExecutionPeriod())) {
-                for (Lesson lesson : shift.getAssociatedLessons()) {
+                for (Lesson lesson : shift.getAssociatedLessonsSet()) {
                     allEvents.addAll(lesson.getAllLessonsEvents());
                 }
             }
@@ -97,7 +97,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
         List<EventBean> allEvents = new ArrayList<EventBean>();
 
-        for (Professorship professorShip : user.getPerson().getProfessorships()) {
+        for (Professorship professorShip : user.getPerson().getProfessorshipsSet()) {
             ExecutionCourse executionCourse = professorShip.getExecutionCourse();
             for (Lesson lesson : executionCourse.getLessons()) {
                 allEvents.addAll(lesson.getAllLessonsEvents());
@@ -125,7 +125,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
         List<EventBean> allEvents = new ArrayList<EventBean>();
         ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
 
-        for (Registration registration : user.getPerson().getStudent().getRegistrations()) {
+        for (Registration registration : user.getPerson().getStudent().getRegistrationsSet()) {
             for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester)) {
                 allEvents.addAll(writtenEvaluation.getAllEvents(registration));
             }
@@ -155,7 +155,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
         List<EventBean> allEvents = new ArrayList<EventBean>();
 
-        for (Professorship professorShip : user.getPerson().getProfessorships()) {
+        for (Professorship professorShip : user.getPerson().getProfessorshipsSet()) {
             ExecutionCourse executionCourse = professorShip.getExecutionCourse();
 
             for (WrittenEvaluation writtenEvaluation : executionCourse.getWrittenEvaluations()) {

@@ -55,7 +55,7 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
     public VigilantWrapper hasPerson(Person person) {
-        for (VigilantWrapper vigilantWrapper : getVigilantWrappers()) {
+        for (VigilantWrapper vigilantWrapper : getVigilantWrappersSet()) {
             if (vigilantWrapper.getPerson().equals(person)) {
                 return vigilantWrapper;
             }
@@ -69,7 +69,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         StrategyFactory factory = StrategyFactory.getInstance();
         Strategy strategy = factory.getStrategy(strategyName);
         List<VigilantWrapper> possibleVigilants = new ArrayList<VigilantWrapper>(this.getVigilantWrappersThatCanBeConvoked());
-        possibleVigilants.addAll(findTeachersThatAreInGroupFor(writtenEvaluation.getAssociatedExecutionCourses()));
+        possibleVigilants.addAll(findTeachersThatAreInGroupFor(writtenEvaluation.getAssociatedExecutionCoursesSet()));
         return (strategy != null) ? strategy.sugest(possibleVigilants, writtenEvaluation) : null;
 
     }
@@ -114,7 +114,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public List<VigilantWrapper> getVigilantWrappersThatCanBeConvoked() {
         ArrayList<VigilantWrapper> vigilantWrappersThatCanBeConvoked = new ArrayList<VigilantWrapper>();
-        for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
+        for (VigilantWrapper vigilantWrapper : this.getVigilantWrappersSet()) {
             if (vigilantWrapper.getConvokable()) {
                 vigilantWrappersThatCanBeConvoked.add(vigilantWrapper);
             }
@@ -124,7 +124,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public List<VigilantWrapper> getVigilantWrappersThatCantBeConvoked() {
         ArrayList<VigilantWrapper> vigilantWrappersThatCantBeConvoked = new ArrayList<VigilantWrapper>();
-        for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
+        for (VigilantWrapper vigilantWrapper : this.getVigilantWrappersSet()) {
             if (!vigilantWrapper.getConvokable()) {
                 vigilantWrappersThatCantBeConvoked.add(vigilantWrapper);
             }
@@ -144,9 +144,9 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public List<Vigilancy> getVigilancies() {
         List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (ExecutionCourse course : this.getExecutionCourses()) {
+        for (ExecutionCourse course : this.getExecutionCoursesSet()) {
             for (WrittenEvaluation evaluation : course.getWrittenEvaluations()) {
-                vigilancies.addAll(evaluation.getVigilancies());
+                vigilancies.addAll(evaluation.getVigilanciesSet());
             }
         }
         return vigilancies;
@@ -184,7 +184,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public List<UnavailablePeriod> getUnavailablePeriodsOfVigilantsInGroup() {
         List<UnavailablePeriod> unavailablePeriods = new ArrayList<UnavailablePeriod>();
-        for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
+        for (VigilantWrapper vigilantWrapper : this.getVigilantWrappersSet()) {
             unavailablePeriods.addAll(vigilantWrapper.getUnavailablePeriods());
         }
         return unavailablePeriods;
@@ -200,9 +200,9 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public List<VigilantWrapper> getVigilantWrappersWithIncompatiblePerson() {
         List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>();
-        for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
+        for (VigilantWrapper vigilantWrapper : this.getVigilantWrappersSet()) {
             Person incompatiblePerson = vigilantWrapper.getPerson().getIncompatibleVigilantPerson();
-            if (incompatiblePerson != null && !vigilantWrappers.contains(incompatiblePerson.getVigilantWrappers())) {
+            if (incompatiblePerson != null && !vigilantWrappers.contains(incompatiblePerson.getVigilantWrappersSet())) {
                 vigilantWrappers.add(vigilantWrapper);
             }
         }
@@ -220,11 +220,11 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public void delete() {
         setExecutionYear(null);
-        getExecutionCourses().clear();
-        getExamCoordinators().clear();
+        getExecutionCoursesSet().clear();
+        getExamCoordinatorsSet().clear();
         setUnit(null);
         setRootDomainObject(null);
-        for (VigilantWrapper vigilant : this.getVigilantWrappers()) {
+        for (VigilantWrapper vigilant : this.getVigilantWrappersSet()) {
             Collection<Vigilancy> vigilancies = vigilant.getVigilanciesSet();
             for (Vigilancy vigilancy : vigilancies) {
                 if (vigilancy.isActive()) {
@@ -237,7 +237,7 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
     public List<WrittenEvaluation> getAllAssociatedWrittenEvaluations() {
-        Collection<ExecutionCourse> courses = this.getExecutionCourses();
+        Collection<ExecutionCourse> courses = this.getExecutionCoursesSet();
         Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
         for (ExecutionCourse course : courses) {
             evaluations.addAll(course.getWrittenEvaluations());
@@ -276,27 +276,12 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
     public VigilantWrapper getVigilantWrapperFor(Person person) {
-        for (VigilantWrapper wrapper : getVigilantWrappers()) {
+        for (VigilantWrapper wrapper : getVigilantWrappersSet()) {
             if (wrapper.getPerson() == person) {
                 return wrapper;
             }
         }
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
-        return getExamCoordinatorsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper> getVigilantWrappers() {
-        return getVigilantWrappersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getExecutionCourses() {
-        return getExecutionCoursesSet();
     }
 
 }

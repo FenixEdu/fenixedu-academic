@@ -35,7 +35,7 @@ public class EnrolledGroupBean {
 
     public EnrolledGroupBean(final StudentGroup studentGroup, final Attends attend) {
         setGroupNumber(studentGroup.getGroupNumber().toString());
-        for (Attends collegueAttends : studentGroup.getAttends()) {
+        for (Attends collegueAttends : studentGroup.getAttendsSet()) {
             if (collegueAttends != attend) {
                 getCollegues().add(
                         new Pair<String, String>(collegueAttends.getRegistration().getStudent().getPerson().getIstUsername(),

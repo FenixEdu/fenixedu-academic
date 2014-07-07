@@ -167,7 +167,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         setExternalCurricularCourse(null);
         setRegistration(null);
         setRootDomainObject(null);
-        getNotNeedToEnrollCurricularCourses().clear();
+        getNotNeedToEnrollCurricularCoursesSet().clear();
         super.deleteDomainObject();
     }
 
@@ -320,16 +320,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         } else {
             setCreationDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse> getNotNeedToEnrollCurricularCourses() {
-        return getNotNeedToEnrollCurricularCoursesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolmentWrapper> getEnrolmentWrappers() {
-        return getEnrolmentWrappersSet();
     }
 
     @Override

@@ -64,7 +64,7 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
             getProgramSet().addAll(targetPrograms);
         }
         if (isOfficeAllowedAsTarget()) {
-            getOffice().addAll(administrativeOffices);
+            getOfficeSet().addAll(administrativeOffices);
         }
     }
 
@@ -90,7 +90,7 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
             PersistentAcademicAuthorizationGroup oldAcademic = (PersistentAcademicAuthorizationGroup) old;
             setOperation(oldAcademic.getOperation());
             getProgramSet().addAll(oldAcademic.getProgramSet());
-            getOffice().addAll(oldAcademic.getOffice());
+            getOfficeSet().addAll(oldAcademic.getOfficeSet());
         }
     }
 
@@ -379,16 +379,6 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
 
     private boolean isProgramAllowedAsTarget() {
         return getOperation().isProgramAllowedAsTarget();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.AcademicProgram> getProgram() {
-        return getProgramSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice> getOffice() {
-        return getOfficeSet();
     }
 
 }

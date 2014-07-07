@@ -202,7 +202,7 @@ public class Proposal extends Proposal_Base {
         }
         if (userView != null) {
             final Person person = userView.getPerson();
-            for (final ExecutionDegree executionDegree : getScheduleing().getExecutionDegrees()) {
+            for (final ExecutionDegree executionDegree : getScheduleing().getExecutionDegreesSet()) {
                 for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
                     if (coordinator.getPerson() == person) {
                         return true;
@@ -291,7 +291,7 @@ public class Proposal extends Proposal_Base {
         }
         if (getGroupAttributedByTeacher() != null) {
             FinalDegreeWorkGroup group = getGroupAttributedByTeacher();
-            for (GroupStudent groupStudent : group.getGroupStudents()) {
+            for (GroupStudent groupStudent : group.getGroupStudentsSet()) {
                 if (groupStudent.getFinalDegreeWorkProposalConfirmation() != this) {
                     return CandidacyAttributionType.ATTRIBUTED_NOT_CONFIRMED;
                 }
@@ -303,16 +303,16 @@ public class Proposal extends Proposal_Base {
 
     public Collection<GroupStudent> getAttributionGroup() {
         if (getGroupAttributed() != null) {
-            return getGroupAttributed().getGroupStudents();
+            return getGroupAttributed().getGroupStudentsSet();
         }
         if (getGroupAttributedByTeacher() != null) {
             FinalDegreeWorkGroup group = getGroupAttributedByTeacher();
-            for (GroupStudent groupStudent : group.getGroupStudents()) {
+            for (GroupStudent groupStudent : group.getGroupStudentsSet()) {
                 if (groupStudent.getFinalDegreeWorkProposalConfirmation() != this) {
                     return Collections.emptyList();
                 }
             }
-            return group.getGroupStudents();
+            return group.getGroupStudentsSet();
         }
         return Collections.emptyList();
     }
@@ -350,7 +350,7 @@ public class Proposal extends Proposal_Base {
 
     public Set<FinalDegreeWorkGroup> getCandidacies() {
         final Set<FinalDegreeWorkGroup> candidacies = new HashSet<FinalDegreeWorkGroup>();
-        for (GroupProposal groupProposal : getGroupProposals()) {
+        for (GroupProposal groupProposal : getGroupProposalsSet()) {
             candidacies.add(groupProposal.getFinalDegreeDegreeWorkGroup());
         }
         return candidacies;
@@ -376,13 +376,13 @@ public class Proposal extends Proposal_Base {
         if (person != null && getScheduleing() != null) {
             int count = 0;
 
-            for (Proposal p : person.getAssociatedProposalsByOrientator()) {
+            for (Proposal p : person.getAssociatedProposalsByOrientatorSet()) {
                 if (p.getScheduleing().equals(getScheduleing())) {
                     count++;
                 }
             }
 
-            for (Proposal p : person.getAssociatedProposalsByCoorientator()) {
+            for (Proposal p : person.getAssociatedProposalsByCoorientatorSet()) {
                 if (p.getScheduleing().equals(getScheduleing())) {
                     count++;
                 }
@@ -396,21 +396,6 @@ public class Proposal extends Proposal_Base {
                 }
             }
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent> getAssociatedGroupStudents() {
-        return getAssociatedGroupStudentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Branch> getBranches() {
-        return getBranchesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal> getGroupProposals() {
-        return getGroupProposalsSet();
     }
 
 }

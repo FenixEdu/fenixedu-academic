@@ -123,7 +123,7 @@ public class ReceiptDocument extends FenixReport {
         final List<ReceiptDocumentEntry> result = new ArrayList<ReceiptDocumentEntry>();
 
         final SortedSet<Entry> sortedEntries = new TreeSet<Entry>(Entry.COMPARATOR_BY_MOST_RECENT_WHEN_REGISTERED);
-        sortedEntries.addAll(receipt.getEntries());
+        sortedEntries.addAll(receipt.getEntriesSet());
 
         for (final Entry entry : sortedEntries) {
             result.add(new ReceiptDocumentEntry(entry.getDescription().toString(this.messageResourceProvider), entry

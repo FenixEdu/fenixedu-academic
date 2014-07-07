@@ -60,7 +60,7 @@ public abstract class AbstractTeacherDepartmentAuthorization<T> extends Filtro {
 
             Department teacherDepartment = teacher.getCurrentWorkingDepartment();
 
-            Collection departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
+            Collection departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCreditsSet();
 
             if (!departmentsWithAccessGranted.contains(teacherDepartment)) {
                 throw new NotAuthorizedException();

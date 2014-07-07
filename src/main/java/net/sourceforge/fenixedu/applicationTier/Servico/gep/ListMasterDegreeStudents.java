@@ -55,7 +55,7 @@ public class ListMasterDegreeStudents {
             @Override
             public boolean evaluate(Object arg0) {
                 DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) arg0;
-                for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+                for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
                     if (executionDegree.getExecutionYear().equals(executionYear)) {
                         return true;
                     }
@@ -66,7 +66,7 @@ public class ListMasterDegreeStudents {
         });
 
         for (DegreeCurricularPlan degreeCurricularPlan : masterDegreeCurricularPlans) {
-            studentCurricularPlans.addAll(degreeCurricularPlan.getStudentCurricularPlans());
+            studentCurricularPlans.addAll(degreeCurricularPlan.getStudentCurricularPlansSet());
         }
 
         for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {

@@ -81,7 +81,7 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
         }
 
         final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-        for (final Registration registration : student.getRegistrations()) {
+        for (final Registration registration : student.getRegistrationsSet()) {
 
             if (registration.isBolonha()) {
                 final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();

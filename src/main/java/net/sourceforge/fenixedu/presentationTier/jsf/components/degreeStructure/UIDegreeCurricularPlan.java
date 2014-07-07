@@ -241,7 +241,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     private boolean encodeCurricularCourses(CurricularPeriod curricularPeriod) throws IOException {
         boolean anyCurricularCourseEncoded = false;
 
-        for (Context context : curricularPeriod.getContexts()) {
+        for (Context context : curricularPeriod.getContextsSet()) {
             if (context.getChildDegreeModule().isLeaf() && (executionYear == null || context.isValid(executionYear))) {
                 anyCurricularCourseEncoded = true;
 

@@ -37,7 +37,7 @@ public class DegreeCurricularPlansProvider implements DataProvider {
 
         ExecutionDegreeListBean executionDegreeListBean = (ExecutionDegreeListBean) source;
         if (executionDegreeListBean.getDegree() != null) {
-            result.addAll(executionDegreeListBean.getDegree().getDegreeCurricularPlans());
+            result.addAll(executionDegreeListBean.getDegree().getDegreeCurricularPlansSet());
         }
 
         return result;

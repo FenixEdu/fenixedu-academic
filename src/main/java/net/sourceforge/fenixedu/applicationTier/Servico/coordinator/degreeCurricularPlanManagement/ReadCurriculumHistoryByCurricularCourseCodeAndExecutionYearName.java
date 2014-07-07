@@ -77,7 +77,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
         if (curriculumExecutionYear != null) {
             List allCurricularCourseScopes = new ArrayList();
             List allExecutionCourses = new ArrayList();
-            Collection executionPeriods = executionYear.getExecutionPeriods();
+            Collection executionPeriods = executionYear.getExecutionPeriodsSet();
             Iterator iterExecutionPeriods = executionPeriods.iterator();
             while (iterExecutionPeriods.hasNext()) {
                 ExecutionSemester executionSemester = (ExecutionSemester) iterExecutionPeriods.next();
@@ -94,7 +94,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
                             (List) CollectionUtils.union(disjunctionCurricularCourseScopes, intersectionCurricularCourseScopes);
                 }
                 List associatedExecutionCourses = new ArrayList();
-                Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+                Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCoursesSet();
                 for (ExecutionCourse executionCourse : executionCourses) {
                     if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
                         associatedExecutionCourses.add(executionCourse);

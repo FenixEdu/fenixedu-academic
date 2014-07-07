@@ -52,8 +52,8 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
         setStudentCurricularPlan(null);
         setCurricularCourse(null);
         setRootDomainObject(null);
-        getEnrolments().clear();
-        getExternalEnrolments().clear();
+        getEnrolmentsSet().clear();
+        getExternalEnrolmentsSet().clear();
         super.deleteDomainObject();
     }
 
@@ -97,16 +97,6 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
         Set<IEnrolment> res = new HashSet<IEnrolment>(getEnrolmentsSet());
         res.addAll(getExternalEnrolmentsSet());
         return res;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment> getExternalEnrolments() {
-        return getExternalEnrolmentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
-        return getEnrolmentsSet();
     }
 
 }

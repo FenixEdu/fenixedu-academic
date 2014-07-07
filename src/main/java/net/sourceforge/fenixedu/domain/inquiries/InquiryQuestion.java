@@ -37,7 +37,7 @@ public class InquiryQuestion extends InquiryQuestion_Base {
     }
 
     public boolean isVisible(StudentInquiryRegistry studentInquiryRegistry) {
-        for (QuestionCondition questionCondition : getQuestionConditions()) {
+        for (QuestionCondition questionCondition : getQuestionConditionsSet()) {
             if (questionCondition instanceof ECTSVisibleCondition) {
                 return ((ECTSVisibleCondition) questionCondition).isVisible(studentInquiryRegistry);
             }
@@ -46,7 +46,7 @@ public class InquiryQuestion extends InquiryQuestion_Base {
     }
 
     public String[] getConditionValues(StudentInquiryRegistry studentInquiryRegistry) {
-        for (QuestionCondition questionCondition : getQuestionConditions()) {
+        for (QuestionCondition questionCondition : getQuestionConditionsSet()) {
             if (questionCondition instanceof ECTSVisibleCondition) {
                 return ((ECTSVisibleCondition) questionCondition).getConditionValues(studentInquiryRegistry);
             }
@@ -55,22 +55,22 @@ public class InquiryQuestion extends InquiryQuestion_Base {
     }
 
     public void delete() {
-        if (!getInquiryResults().isEmpty()) {
+        if (!getInquiryResultsSet().isEmpty()) {
             throw new DomainException("error.inquiryQuestion.can.not.delete.hasAssociatedResults");
         }
-        if (!getQuestionAnswers().isEmpty()) {
+        if (!getQuestionAnswersSet().isEmpty()) {
             throw new DomainException("error.inquiryQuestion.can.not.delete.hasAssociatedAnswers");
         }
-        for (; !getQuestionConditions().isEmpty(); getQuestionConditions().iterator().next().delete()) {
+        for (; !getQuestionConditionsSet().isEmpty(); getQuestionConditionsSet().iterator().next().delete()) {
             ;
         }
         if (getInquiryQuestionHeader() != null) {
             getInquiryQuestionHeader().delete();
         }
-        for (InquiryBlock inquiryBlock : getAssociatedBlocks()) {
+        for (InquiryBlock inquiryBlock : getAssociatedBlocksSet()) {
             removeAssociatedBlocks(inquiryBlock);
         }
-        for (InquiryBlock inquiryBlock : getAssociatedResultBlocks()) {
+        for (InquiryBlock inquiryBlock : getAssociatedResultBlocksSet()) {
             removeAssociatedResultBlocks(inquiryBlock);
         }
         setCheckboxGroupQuestion(null);
@@ -92,31 +92,6 @@ public class InquiryQuestion extends InquiryQuestion_Base {
 
     public boolean hasGroupDependentQuestionCondition() {
         return getDependentQuestionCondition() != null && getDependentQuestionCondition().getInquiryGroupQuestion() != null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryBlock> getAssociatedBlocks() {
-        return getAssociatedBlocksSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryBlock> getAssociatedResultBlocks() {
-        return getAssociatedResultBlocksSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer> getQuestionAnswers() {
-        return getQuestionAnswersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResult> getInquiryResults() {
-        return getInquiryResultsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.QuestionCondition> getQuestionConditions() {
-        return getQuestionConditionsSet();
     }
 
 }

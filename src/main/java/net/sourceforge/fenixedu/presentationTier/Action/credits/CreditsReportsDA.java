@@ -229,7 +229,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
             AnnualCreditsState annualCreditsState =
                     AnnualCreditsState.getAnnualCreditsState(departmentCreditsBean.getExecutionYear());
             if (annualCreditsState.getIsFinalCreditsCalculated()) {
-                for (AnnualTeachingCredits annualTeachingCredits : annualCreditsState.getAnnualTeachingCredits()) {
+                for (AnnualTeachingCredits annualTeachingCredits : annualCreditsState.getAnnualTeachingCreditsSet()) {
                     Teacher teacher = annualTeachingCredits.getTeacher();
                     Department teacherDepartment =
                             teacher.getLastWorkingDepartment(departmentCreditsBean.getExecutionYear().getFirstExecutionPeriod()
@@ -279,7 +279,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
 
     protected BigDecimal getCorrectedCL(DepartmentCreditsBean departmentCreditsBean, Teacher teacher) {
         BigDecimal correcredCL = BigDecimal.ZERO;
-        for (ExecutionSemester executionSemester : departmentCreditsBean.getExecutionYear().getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : departmentCreditsBean.getExecutionYear().getExecutionPeriodsSet()) {
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
             if (teacherService != null) {
                 for (OtherService otherService : teacherService.getOtherServices()) {

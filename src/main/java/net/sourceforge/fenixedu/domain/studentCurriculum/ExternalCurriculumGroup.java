@@ -78,7 +78,7 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
                 studentCurricularPlan.getDegreeCurricularPlan().getCycleCourseGroup(
                         cycleCourseGroup.getCycleType().getSourceCycleAffinity());
 
-        if (!sourceAffinityCycleCourseGroup.getDestinationAffinities().contains(cycleCourseGroup)) {
+        if (!sourceAffinityCycleCourseGroup.getDestinationAffinitiesSet().contains(cycleCourseGroup)) {
             throw new DomainException(
                     "error.studentCurriculum.ExternalCurriculumGroup.cycle.course.group.does.not.belong.to.afinity.of.source");
         }

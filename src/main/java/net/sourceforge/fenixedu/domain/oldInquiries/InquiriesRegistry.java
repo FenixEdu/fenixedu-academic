@@ -69,7 +69,7 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
             throw new NullArgumentException("The executionCourse, executionPeriod and student should not be null!");
         }
 
-        for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
+        for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistriesSet()) {
             if (inquiriesRegistry.getExecutionCourse() == executionCourse
                     && inquiriesRegistry.getExecutionPeriod() == executionSemester) {
                 throw new DomainException(

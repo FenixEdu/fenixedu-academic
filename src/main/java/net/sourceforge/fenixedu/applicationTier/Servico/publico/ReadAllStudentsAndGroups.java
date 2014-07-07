@@ -68,7 +68,7 @@ public class ReadAllStudentsAndGroups {
             Collection studentGroupAttendList;
             StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
 
-            studentGroupAttendList = studentGroup.getAttends();
+            studentGroupAttendList = studentGroup.getAttendsSet();
 
             Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
             InfoSiteStudentInformation infoSiteStudentInformation = null;

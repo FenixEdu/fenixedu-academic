@@ -81,7 +81,7 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
 
     private List<SelectItem> readCurricularRulesLabels() throws FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final CurricularRule curricularRule : getDegreeModule().getCurricularRules()) {
+        for (final CurricularRule curricularRule : getDegreeModule().getCurricularRulesSet()) {
             result.add(new SelectItem(curricularRule.getExternalId(), CurricularRuleLabelFormatter.getLabel(curricularRule)));
         }
         return result;

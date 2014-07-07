@@ -117,7 +117,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
 
     private List<String> getDegreeModuleScopeIDs(final ExecutionCourse executionCourse) {
         final List<String> degreeModuleScopeIDs = new ArrayList<String>();
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             List<DegreeModuleScope> degreeModuleScopes = curricularCourse.getDegreeModuleScopes();
             for (DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
                 if (degreeModuleScope.getCurricularSemester().equals(executionCourse.getExecutionPeriod().getSemester())) {

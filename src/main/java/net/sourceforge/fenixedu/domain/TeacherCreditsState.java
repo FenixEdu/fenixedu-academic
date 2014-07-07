@@ -66,9 +66,4 @@ public class TeacherCreditsState extends TeacherCreditsState_Base {
         return null;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCredits> getTeacherCredits() {
-        return getTeacherCreditsSet();
-    }
-
 }

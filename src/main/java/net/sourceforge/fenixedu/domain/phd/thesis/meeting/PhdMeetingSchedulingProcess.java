@@ -125,11 +125,11 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     }
 
     public void addMeeting(PhdMeeting meeting) {
-        getMeetings().add(meeting);
+        getMeetingsSet().add(meeting);
     }
 
     public boolean isAnyMinutesDocumentMissing() {
-        for (PhdMeeting meeting : getMeetings()) {
+        for (PhdMeeting meeting : getMeetingsSet()) {
             if (!meeting.getDocumentsSet().isEmpty()) {
                 continue;
             }
@@ -154,11 +154,6 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     @Override
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting> getMeetings() {
-        return getMeetingsSet();
     }
 
 }

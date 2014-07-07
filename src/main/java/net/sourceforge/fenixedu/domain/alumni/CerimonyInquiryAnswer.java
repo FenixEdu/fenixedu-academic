@@ -63,9 +63,4 @@ public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements
         }
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson> getCerimonyInquiryPerson() {
-        return getCerimonyInquiryPersonSet();
-    }
-
 }

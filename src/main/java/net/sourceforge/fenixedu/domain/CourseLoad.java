@@ -119,14 +119,4 @@ public class CourseLoad extends CourseLoad_Base {
         return getUnitQuantity() == null || getTotalQuantity().compareTo(getUnitQuantity()) != -1;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.LessonInstance> getLessonInstances() {
-        return getLessonInstancesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Shift> getShifts() {
-        return getShiftsSet();
-    }
-
 }

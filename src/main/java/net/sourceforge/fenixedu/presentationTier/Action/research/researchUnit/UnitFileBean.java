@@ -50,7 +50,7 @@ public class UnitFileBean implements Serializable {
         this.name = file.getDisplayName();
         this.description = file.getDescription();
         setupGroups(file.getPermittedGroup());
-        setupTags(file.getUnitFileTags());
+        setupTags(file.getUnitFileTagsSet());
     }
 
     private void setupTags(Collection<UnitFileTag> unitFileTags) {

@@ -164,7 +164,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
 
         List<DetailSummaryElement> executionCoursesResume =
-                getExecutionCourseResume(executionCourse.getExecutionPeriod(), executionCourse.getProfessorships());
+                getExecutionCourseResume(executionCourse.getExecutionPeriod(), executionCourse.getProfessorshipsSet());
 
         request.setAttribute("departmentID", departmentID);
         request.setAttribute("categoryControl", categoryControl);
@@ -386,7 +386,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
 
     private BigDecimal getDeclaredLesson(Double percentage, Shift shift, BigDecimal lessonGiven, LocalDate oneWeekBeforeToday) {
         BigDecimal shiftLessonSum = EMPTY;
-        for (Lesson lesson : shift.getAssociatedLessons()) {
+        for (Lesson lesson : shift.getAssociatedLessonsSet()) {
             shiftLessonSum =
                     shiftLessonSum.add(BigDecimal.valueOf(lesson.getAllLessonDatesUntil(new YearMonthDay(oneWeekBeforeToday))
                             .size()));
@@ -408,7 +408,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
         int numberOfPossibleInstanceLessons = 0;
         int numberOfInstanceLessonsWithSummary = 0;
         int numberOfInstanceLessonsWithNotTaughtSummary = 0;
-        for (Lesson lesson : shift.getAssociatedLessons()) {
+        for (Lesson lesson : shift.getAssociatedLessonsSet()) {
             List<LessonInstance> allLessonInstanceUntil = lesson.getAllLessonInstancesUntil(oneWeekBeforeToday);
             Set<YearMonthDay> allPossibleDates = lesson.getAllLessonDatesUntil(new YearMonthDay(oneWeekBeforeToday));
             numberOfPossibleInstanceLessons += allPossibleDates.size();
@@ -428,7 +428,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
 
     private BigDecimal getSummariesGiven(Professorship professorship, Shift shift, BigDecimal summariesGiven,
             LocalDate oneWeekBeforeToday) {
-        for (Summary summary : shift.getAssociatedSummaries()) {
+        for (Summary summary : shift.getAssociatedSummariesSet()) {
             if (summary.getProfessorship() != null && summary.getProfessorship() == professorship && !summary.getIsExtraLesson()
                     && !summary.getLessonInstance().getBeginDateTime().toLocalDate().isAfter(oneWeekBeforeToday)) {
                 summariesGiven = summariesGiven.add(BigDecimal.ONE);
@@ -439,7 +439,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
 
     private BigDecimal getNotTaughtSummaries(Professorship professorship, Shift shift, BigDecimal notTaughtSummaries,
             LocalDate oneWeekBeforeToday) {
-        for (Summary summary : shift.getAssociatedSummaries()) {
+        for (Summary summary : shift.getAssociatedSummariesSet()) {
             if (summary.getProfessorship() != null && summary.getProfessorship() == professorship && !summary.getIsExtraLesson()
                     && !summary.getLessonInstance().getBeginDateTime().toLocalDate().isAfter(oneWeekBeforeToday)) {
                 if (summary.getTaught() != null && summary.getTaught() == false) {
@@ -461,15 +461,15 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
 
     private String getSiglas(Professorship professorship) {
         ExecutionCourse executionCourse = professorship.getExecutionCourse();
-        int numberOfCurricularCourse = executionCourse.getAssociatedCurricularCourses().size();
+        int numberOfCurricularCourse = executionCourse.getAssociatedCurricularCoursesSet().size();
 
         List<String> siglas = new ArrayList<String>();
         StringBuilder buffer = new StringBuilder();
 
-        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             String sigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
             if (!siglas.contains(sigla)) {
-                if (numberOfCurricularCourse < executionCourse.getAssociatedCurricularCourses().size()) {
+                if (numberOfCurricularCourse < executionCourse.getAssociatedCurricularCoursesSet().size()) {
                     buffer.append(",");
                 }
                 buffer.append(sigla);
@@ -579,7 +579,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
             counter = 0;
             List<DetailSummaryElement> executionCoursesResume =
                     getExecutionCourseResume(executionCourse.getExecutionCourse().getExecutionPeriod(), executionCourse
-                            .getExecutionCourse().getProfessorships());
+                    .getExecutionCourse().getProfessorshipsSet());
 
             int lessons = executionCourse.getNumberOfLessonInstances().intValue();
             int lessonsWithSummaries = executionCourse.getNumberOfLessonInstancesWithSummary().intValue();

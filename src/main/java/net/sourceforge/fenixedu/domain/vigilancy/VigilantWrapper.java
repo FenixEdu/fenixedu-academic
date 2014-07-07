@@ -181,7 +181,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public Boolean isAvailableOnDate(DateTime begin, DateTime end) {
-        Collection<UnavailablePeriod> unavailablePeriods = this.getPerson().getUnavailablePeriods();
+        Collection<UnavailablePeriod> unavailablePeriods = this.getPerson().getUnavailablePeriodsSet();
         for (UnavailablePeriod period : unavailablePeriods) {
             if (period.containsInterval(begin, end)) {
                 return Boolean.FALSE;
@@ -190,7 +190,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         }
         Interval interval = new Interval(begin, end);
 
-        for (VigilantWrapper otherVigilant : this.getPerson().getVigilantWrappers()) {
+        for (VigilantWrapper otherVigilant : this.getPerson().getVigilantWrappersSet()) {
             for (Vigilancy vigilancy : otherVigilant.getVigilanciesSet()) {
                 if (interval.overlaps(vigilancy.getWrittenEvaluation().getDurationInterval())) {
                     if (vigilancy.getWrittenEvaluation().getDurationInterval().overlaps(interval)) {
@@ -261,11 +261,11 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         DateTime beginOfExam = writtenEvaluation.getBeginningDateTime();
         DateTime endOfExam = writtenEvaluation.getEndDateTime();
 
-        boolean isInExamPeriod = writtenEvaluation.getAssociatedExecutionCourses().iterator().next().isInExamPeriod();
+        boolean isInExamPeriod = writtenEvaluation.getAssociatedExecutionCoursesSet().iterator().next().isInExamPeriod();
         return this.isAvailableOnDate(beginOfExam, endOfExam)
                 && this.hasNoEvaluationsOnDate(beginOfExam, endOfExam)
                 && (isInExamPeriod || (!isInExamPeriod && ((this.getTeacher() != null && this.getTeacher().teachesAny(
-                        writtenEvaluation.getAssociatedExecutionCourses())) || !hasLessons(beginOfExam, endOfExam))));
+                        writtenEvaluation.getAssociatedExecutionCoursesSet())) || !hasLessons(beginOfExam, endOfExam))));
     }
 
     private boolean hasLessons(DateTime beginOfExam, DateTime endOfExam) {
@@ -430,7 +430,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
         Person person = this.getPerson().getIncompatibleVigilantPerson();
         if (person != null) {
-            Collection<Vigilancy> convokes = writtenEvaluation.getVigilancies();
+            Collection<Vigilancy> convokes = writtenEvaluation.getVigilanciesSet();
             for (Vigilancy convoke : convokes) {
                 if (convoke.getVigilantWrapper().getPerson().equals(person)) {
                     return UnavailableTypes.INCOMPATIBLE_PERSON;

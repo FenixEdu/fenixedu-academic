@@ -97,9 +97,4 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
         return getAvailableProcess();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAuditFile> getExecutionCourseAuditFiles() {
-        return getExecutionCourseAuditFilesSet();
-    }
-
 }

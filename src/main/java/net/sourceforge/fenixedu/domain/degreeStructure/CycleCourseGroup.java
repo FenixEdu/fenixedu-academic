@@ -182,24 +182,4 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
         return new CycleCourseGroupInformation(this, executionYear, graduatedTitleSuffix, graduatedTitleSuffixEn);
     }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup> getSourceAffinities() {
-        return getSourceAffinitiesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup> getDestinationAffinities() {
-        return getDestinationAffinitiesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyDestinationAffinities() {
-        return !getDestinationAffinitiesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasCycleType() {
-        return getCycleType() != null;
-    }
 }

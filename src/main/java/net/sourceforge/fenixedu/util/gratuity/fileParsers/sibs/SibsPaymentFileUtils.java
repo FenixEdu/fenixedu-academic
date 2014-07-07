@@ -147,7 +147,7 @@ public class SibsPaymentFileUtils {
 
         });
 
-        sibsFile.getSibsPaymentFileEntries().addAll(sibsFileEntries);
+        sibsFile.getSibsPaymentFileEntriesSet().addAll(sibsFileEntries);
 
         return sibsFile;
     }

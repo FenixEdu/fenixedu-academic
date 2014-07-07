@@ -52,7 +52,7 @@ public class ReadExecutionCourseTeachers {
 
         Collection professorShips = null;
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
-        professorShips = executionCourse.getProfessorships();
+        professorShips = executionCourse.getProfessorshipsSet();
 
         if (professorShips == null || professorShips.isEmpty()) {
             return null;

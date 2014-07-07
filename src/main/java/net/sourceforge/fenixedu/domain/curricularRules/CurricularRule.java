@@ -160,7 +160,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     @Override
     public boolean isValid(ExecutionYear executionYear) {
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (isValid(executionSemester)) {
                 return true;
             }

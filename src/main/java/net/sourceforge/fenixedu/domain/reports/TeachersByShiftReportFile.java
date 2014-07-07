@@ -63,7 +63,7 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
         //TODO remove when the main external teachers structure is global for everyone
         Set<NonRegularTeachingService> nonRegularTeachingServices = Bennu.getInstance().getNonRegularTeachingServicesSet();
 
-        for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriodsSet()) {
             //TODO remove this cycle when the main external teachers structure is global for everyone
             for (NonRegularTeachingService nonRegularTeachingService : nonRegularTeachingServices) {
                 if (nonRegularTeachingService.getProfessorship().getExecutionCourse().getExecutionPeriod() == executionSemester) {
@@ -84,7 +84,7 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
                     row.setCell(String.valueOf(nonRegularTeachingService.getProfessorship().getOid()));
                 }
             }
-            for (TeacherService teacherService : executionSemester.getTeacherServices()) {
+            for (TeacherService teacherService : executionSemester.getTeacherServicesSet()) {
                 for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {
 
                     final Shift shift = degreeTeachingService.getShift();

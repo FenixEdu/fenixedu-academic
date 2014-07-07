@@ -161,19 +161,4 @@ public class ExternalContract extends ExternalContract_Base {
         return externalPersons;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisExternalAssistentGuider() {
-        return getMasterDegreeThesisExternalAssistentGuiderSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofsExternalJury() {
-        return getMasterDegreeProofsExternalJurySet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisExternalGuider() {
-        return getMasterDegreeThesisExternalGuiderSet();
-    }
-
 }

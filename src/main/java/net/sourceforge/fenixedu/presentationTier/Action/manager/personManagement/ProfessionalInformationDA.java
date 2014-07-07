@@ -73,7 +73,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
         List<PersonContractSituation> situations = new ArrayList<PersonContractSituation>();
         if (person.getPersonProfessionalData() != null) {
             for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-                for (PersonContractSituation personContractSituation : giafProfessionalData.getPersonContractSituations()) {
+                for (PersonContractSituation personContractSituation : giafProfessionalData.getPersonContractSituationsSet()) {
                     if (personContractSituation.getAnulationDate() == null) {
                         situations.add(personContractSituation);
                     }
@@ -92,8 +92,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
         List<PersonProfessionalCategory> categories = new ArrayList<PersonProfessionalCategory>();
         if (person.getPersonProfessionalData() != null) {
             for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-                for (PersonProfessionalCategory personProfessionalCategory : giafProfessionalData
-                        .getPersonProfessionalCategories()) {
+                for (PersonProfessionalCategory personProfessionalCategory : giafProfessionalData.getPersonProfessionalCategoriesSet()) {
                     if (personProfessionalCategory.getAnulationDate() == null) {
                         categories.add(personProfessionalCategory);
                     }
@@ -112,7 +111,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
         List<PersonProfessionalRegime> regimes = new ArrayList<PersonProfessionalRegime>();
         if (person.getPersonProfessionalData() != null) {
             for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-                for (PersonProfessionalRegime personProfessionalRegime : giafProfessionalData.getPersonProfessionalRegimes()) {
+                for (PersonProfessionalRegime personProfessionalRegime : giafProfessionalData.getPersonProfessionalRegimesSet()) {
                     if (personProfessionalRegime.getAnulationDate() == null) {
                         regimes.add(personProfessionalRegime);
                     }
@@ -131,8 +130,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
         List<PersonProfessionalRelation> relations = new ArrayList<PersonProfessionalRelation>();
         if (person.getPersonProfessionalData() != null) {
             for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-                for (PersonProfessionalRelation personProfessionalRelation : giafProfessionalData
-                        .getPersonProfessionalRelations()) {
+                for (PersonProfessionalRelation personProfessionalRelation : giafProfessionalData.getPersonProfessionalRelationsSet()) {
                     if (personProfessionalRelation.getAnulationDate() == null) {
                         relations.add(personProfessionalRelation);
                     }
@@ -151,8 +149,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
         List<PersonProfessionalContract> contracts = new ArrayList<PersonProfessionalContract>();
         if (person.getPersonProfessionalData() != null) {
             for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-                for (PersonProfessionalContract personProfessionalContract : giafProfessionalData
-                        .getPersonProfessionalContracts()) {
+                for (PersonProfessionalContract personProfessionalContract : giafProfessionalData.getPersonProfessionalContractsSet()) {
                     if (personProfessionalContract.getAnulationDate() == null) {
                         contracts.add(personProfessionalContract);
                     }
@@ -171,8 +168,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
         List<PersonFunctionsAccumulation> functionsAccumulations = new ArrayList<PersonFunctionsAccumulation>();
         if (person.getPersonProfessionalData() != null) {
             for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-                for (PersonFunctionsAccumulation employeeFunctionsAccumulation : giafProfessionalData
-                        .getPersonFunctionsAccumulations()) {
+                for (PersonFunctionsAccumulation employeeFunctionsAccumulation : giafProfessionalData.getPersonFunctionsAccumulationsSet()) {
                     if (employeeFunctionsAccumulation.getAnulationDate() == null) {
                         functionsAccumulations.add(employeeFunctionsAccumulation);
                     }
@@ -191,8 +187,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
         List<PersonProfessionalExemption> sabbaticals = new ArrayList<PersonProfessionalExemption>();
         if (person.getPersonProfessionalData() != null) {
             for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
-                        .getPersonProfessionalExemptions()) {
+                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptionsSet()) {
                     if (personProfessionalExemption instanceof PersonSabbatical
                             && personProfessionalExemption.getAnulationDate() == null) {
                         sabbaticals.add(personProfessionalExemption);
@@ -212,8 +207,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
         List<PersonProfessionalExemption> serviceExemptions = new ArrayList<PersonProfessionalExemption>();
         if (person.getPersonProfessionalData() != null) {
             for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
-                        .getPersonProfessionalExemptions()) {
+                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptionsSet()) {
                     if (personProfessionalExemption instanceof PersonServiceExemption
                             && personProfessionalExemption.getAnulationDate() == null) {
                         serviceExemptions.add(personProfessionalExemption);
@@ -233,8 +227,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
         List<PersonProfessionalExemption> grantOwnerEquivalences = new ArrayList<PersonProfessionalExemption>();
         if (person.getPersonProfessionalData() != null) {
             for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
-                        .getPersonProfessionalExemptions()) {
+                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptionsSet()) {
                     if (personProfessionalExemption instanceof PersonGrantOwnerEquivalent
                             && personProfessionalExemption.getAnulationDate() == null) {
                         grantOwnerEquivalences.add(personProfessionalExemption);
@@ -254,8 +247,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
         List<PersonProfessionalExemption> absences = new ArrayList<PersonProfessionalExemption>();
         if (person.getPersonProfessionalData() != null) {
             for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
-                        .getPersonProfessionalExemptions()) {
+                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptionsSet()) {
                     if (personProfessionalExemption instanceof PersonAbsence
                             && personProfessionalExemption.getAnulationDate() == null) {
                         absences.add(personProfessionalExemption);

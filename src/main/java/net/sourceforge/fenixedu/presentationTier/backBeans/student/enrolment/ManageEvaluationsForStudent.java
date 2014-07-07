@@ -79,7 +79,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
         this.evaluationsWithEnrolmentPeriodOpened = new ArrayList();
 
         final String evaluationType = getEvaluationTypeString();
-        for (final Registration registration : getStudent().getStudent().getRegistrations()) {
+        for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
 
             if (!registration.hasStateType(getExecutionPeriod(), RegistrationStateType.REGISTERED)) {
                 continue;

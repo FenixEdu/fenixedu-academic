@@ -69,7 +69,7 @@ public class SendReceptionEmailBean implements java.io.Serializable {
     public void retrieveProcesses() {
         subjectProcesses = new ArrayList<MobilityIndividualApplicationProcess>();
 
-        for (IndividualCandidacyProcess child : mobilityApplicationProcess.getChildProcesses()) {
+        for (IndividualCandidacyProcess child : mobilityApplicationProcess.getChildProcessesSet()) {
             MobilityIndividualApplicationProcess individualCandidacyProcess = (MobilityIndividualApplicationProcess) child;
 
             if (!individualCandidacyProcess.isStudentAcceptedAndNotified()) {

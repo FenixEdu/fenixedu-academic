@@ -66,14 +66,14 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     public List<CurricularPeriod> getSortedChilds() {
         List<CurricularPeriod> sortedChilds = new ArrayList<CurricularPeriod>();
-        sortedChilds.addAll(getChilds());
+        sortedChilds.addAll(getChildsSet());
         Collections.sort(sortedChilds);
         return sortedChilds;
     }
 
     public CurricularPeriod getChildByOrder(Integer order) {
 
-        for (CurricularPeriod curricularPeriod : getChilds()) {
+        for (CurricularPeriod curricularPeriod : getChildsSet()) {
             if (curricularPeriod.getChildOrder().equals(order)) {
                 return curricularPeriod;
             }
@@ -84,7 +84,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     private CurricularPeriod findChild(AcademicPeriod academicPeriod, Integer order) {
 
-        for (CurricularPeriod curricularPeriod : getChilds()) {
+        for (CurricularPeriod curricularPeriod : getChildsSet()) {
             if (curricularPeriod.getChildOrder().equals(order) && curricularPeriod.getAcademicPeriod().equals(academicPeriod)) {
                 return curricularPeriod;
             }
@@ -162,11 +162,11 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     public void delete() {
 
-        getContexts().clear();
+        getContextsSet().clear();
         setDegreeCurricularPlan(null);
 
         setParent(null);
-        for (CurricularPeriod child : getChilds()) {
+        for (CurricularPeriod child : getChildsSet()) {
             child.delete();
         }
 
@@ -224,7 +224,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
             }
 
             float childsWeight = child.getAcademicPeriod().getWeight();
-            for (CurricularPeriod period : parent.getChilds()) {
+            for (CurricularPeriod period : parent.getChildsSet()) {
                 childsWeight += period.getAcademicPeriod().getWeight();
             }
 
@@ -269,7 +269,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         if (this.getAcademicPeriod().equals(academicPeriod) && this.getChildOrder().equals(order)) {
             return this;
         }
-        for (CurricularPeriod curricularPeriod : getChilds()) {
+        for (CurricularPeriod curricularPeriod : getChildsSet()) {
             CurricularPeriod period = curricularPeriod.contains(academicPeriod, order);
             if (period != null) {
                 return period;
@@ -335,16 +335,6 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     public boolean hasChildOrderValue(final Integer order) {
         return hasChildOrder() && getChildOrder().equals(order);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getContexts() {
-        return getContextsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod> getChilds() {
-        return getChildsSet();
     }
 
 }

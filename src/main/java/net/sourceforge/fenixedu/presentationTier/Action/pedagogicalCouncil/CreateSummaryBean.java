@@ -98,7 +98,7 @@ public class CreateSummaryBean implements Serializable {
     private void feedTutorshipRelations(TutorshipSummary tutorshipSummary) {
         List<TutorshipSummaryRelationBean> tutorshipRelations = new ArrayList<TutorshipSummaryRelationBean>();
 
-        for (TutorshipSummaryRelation tsr : tutorshipSummary.getTutorshipSummaryRelations()) {
+        for (TutorshipSummaryRelation tsr : tutorshipSummary.getTutorshipSummaryRelationsSet()) {
             tutorshipRelations.add(new TutorshipSummaryRelationBean(tsr));
         }
 

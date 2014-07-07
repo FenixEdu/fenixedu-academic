@@ -89,7 +89,7 @@ public class TeacherCreditsBean implements Serializable {
         });
         boolean hasCurrentYear = false;
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        for (AnnualTeachingCredits annualTeachingCredits : teacher.getAnnualTeachingCredits()) {
+        for (AnnualTeachingCredits annualTeachingCredits : teacher.getAnnualTeachingCreditsSet()) {
             AnnualTeachingCreditsBean annualTeachingCreditsBean = new AnnualTeachingCreditsBean(annualTeachingCredits, roleType);
             this.annualTeachingCredits.add(annualTeachingCreditsBean);
             if (annualTeachingCredits.getAnnualCreditsState().getExecutionYear().equals(currentExecutionYear)) {
@@ -112,7 +112,7 @@ public class TeacherCreditsBean implements Serializable {
     }
 
     private boolean isTeacherActiveForYear(ExecutionYear currentExecutionYear) {
-        for (ExecutionSemester executionSemester : currentExecutionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : currentExecutionYear.getExecutionPeriodsSet()) {
             if (teacher.isActiveForSemester(executionSemester) || teacher.getTeacherAuthorization(executionSemester) != null) {
                 return true;
             }
@@ -128,7 +128,7 @@ public class TeacherCreditsBean implements Serializable {
                 return creditLineDTO1.getExecutionPeriod().compareTo(creditLineDTO2.getExecutionPeriod());
             }
         });
-        for (TeacherCredits teacherCredits : teacher.getTeacherCredits()) {
+        for (TeacherCredits teacherCredits : teacher.getTeacherCreditsSet()) {
             CreditLineDTO creditLineDTO =
                     new CreditLineDTO(teacherCredits.getTeacherCreditsState().getExecutionSemester(), teacherCredits);
             pastTeachingCredits.add(creditLineDTO);

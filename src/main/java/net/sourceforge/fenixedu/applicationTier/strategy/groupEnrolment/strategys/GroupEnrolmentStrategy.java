@@ -128,7 +128,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         if (studentAttend != null) {
             Collection<StudentGroup> groupingStudentGroups = grouping.getStudentGroupsSet();
             for (final StudentGroup studentGroup : groupingStudentGroups) {
-                Collection<Attends> studentGroupAttends = studentGroup.getAttends();
+                Collection<Attends> studentGroupAttends = studentGroup.getAttendsSet();
                 for (final Attends attend : studentGroupAttends) {
                     if (attend == studentAttend) {
                         return true;
@@ -145,7 +145,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         final Attends studentAttend = grouping.getStudentAttend(studentUsername);
 
         if (studentAttend != null) {
-            Collection<Attends> studentGroupAttends = studentGroup.getAttends();
+            Collection<Attends> studentGroupAttends = studentGroup.getAttendsSet();
             for (final Attends attend : studentGroupAttends) {
                 if (attend == studentAttend) {
                     return false;
@@ -158,7 +158,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     @Override
     public boolean checkPossibleToEnrolInExistingGroup(Grouping grouping, StudentGroup studentGroup) {
 
-        final int numberOfElements = studentGroup.getAttends().size();
+        final int numberOfElements = studentGroup.getAttendsSet().size();
         final Integer maximumCapacity = grouping.getMaximumCapacity();
         if (maximumCapacity == null) {
             return true;
@@ -173,7 +173,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     @Override
     public boolean checkIfStudentGroupIsEmpty(Attends attend, StudentGroup studentGroup) {
 
-        final Collection allStudentGroupAttends = studentGroup.getAttends();
+        final Collection allStudentGroupAttends = studentGroup.getAttendsSet();
         if (allStudentGroupAttends.size() == 1 && allStudentGroupAttends.contains(attend)) {
             return true;
         }

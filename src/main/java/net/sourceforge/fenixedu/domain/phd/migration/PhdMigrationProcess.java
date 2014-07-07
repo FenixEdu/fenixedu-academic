@@ -27,14 +27,4 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData> getPhdMigrationIndividualProcessData() {
-        return getPhdMigrationIndividualProcessDataSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding> getPhdMigrationGuiding() {
-        return getPhdMigrationGuidingSet();
-    }
-
 }

@@ -79,24 +79,4 @@ public class CurricularYear extends CurricularYear_Base implements Comparable<Cu
         return null;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularSemester> getCurricularSemesters() {
-        return getCurricularSemestersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction> getPersonFunctions() {
-        return getPersonFunctionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.elections.YearDelegateElection> getYearDelegateElections() {
-        return getYearDelegateElectionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsCurricularYearConversionTable> getEctsConversionTables() {
-        return getEctsConversionTablesSet();
-    }
-
 }

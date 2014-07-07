@@ -56,19 +56,4 @@ public class CostCenter extends CostCenter_Base {
         return null;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getSalaryCostCenterAssociatedEmployeeHistorics() {
-        return getSalaryCostCenterAssociatedEmployeeHistoricsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getMailingCostCenterAssociatedEmployeeHistorics() {
-        return getMailingCostCenterAssociatedEmployeeHistoricsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getWorkingPlaceCostCenterAssociatedEmployeeHistorics() {
-        return getWorkingPlaceCostCenterAssociatedEmployeeHistoricsSet();
-    }
-
 }

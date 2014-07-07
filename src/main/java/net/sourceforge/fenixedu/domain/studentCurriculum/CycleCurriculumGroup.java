@@ -169,7 +169,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     @Override
     public void deleteRecursive() {
         check(this, RolePredicates.MANAGER_PREDICATE);
-        for (final CurriculumModule child : getCurriculumModules()) {
+        for (final CurriculumModule child : getCurriculumModulesSet()) {
             child.deleteRecursive();
         }
 

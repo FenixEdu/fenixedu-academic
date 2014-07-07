@@ -310,7 +310,7 @@ public class Receipt extends Receipt_Base {
     }
 
     public boolean isFromAdministrativeOffice(AdministrativeOffice administrativeOffice) {
-        for (final Entry entry : getEntries()) {
+        for (final Entry entry : getEntriesSet()) {
             if (!entry.getAccountingTransaction().getEvent().isPayableOnAdministrativeOffice(administrativeOffice)) {
                 return false;
             }
@@ -370,7 +370,7 @@ public class Receipt extends Receipt_Base {
 
     public void deleteReceiptPrintVersions() {
         check(this, RolePredicates.MANAGER_PREDICATE);
-        for (; !getReceiptsVersionsSet().isEmpty(); getReceiptsVersions().iterator().next().delete()) {
+        for (; !getReceiptsVersionsSet().isEmpty(); getReceiptsVersionsSet().iterator().next().delete()) {
             ;
         }
     }
@@ -470,26 +470,6 @@ public class Receipt extends Receipt_Base {
         }
 
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNote> getCreditNotes() {
-        return getCreditNotesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion> getReceiptsVersions() {
-        return getReceiptsVersionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Entry> getEntries() {
-        return getEntriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.documents.ReceiptGeneratedDocument> getDocument() {
-        return getDocumentSet();
     }
 
 }

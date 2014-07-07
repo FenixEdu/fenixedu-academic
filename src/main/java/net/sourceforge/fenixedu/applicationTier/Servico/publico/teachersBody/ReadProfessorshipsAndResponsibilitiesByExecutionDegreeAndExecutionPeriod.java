@@ -126,10 +126,10 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
         List responsibleFors = new ArrayList();
 
         Collection<ExecutionCourse> executionCourses = new ArrayList();
-        Collection<ExecutionSemester> executionSemesters = executionDegree.getExecutionYear().getExecutionPeriods();
+        Collection<ExecutionSemester> executionSemesters = executionDegree.getExecutionYear().getExecutionPeriodsSet();
 
         for (ExecutionSemester executionSemester : executionSemesters) {
-            executionCourses = executionSemester.getAssociatedExecutionCourses();
+            executionCourses = executionSemester.getAssociatedExecutionCoursesSet();
             for (ExecutionCourse executionCourse : executionCourses) {
                 responsibleFors.add(executionCourse.responsibleFors());
             }
@@ -167,7 +167,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
             private List getInfoCurricularCourses(ExecutionCourse executionCourse) {
 
                 List infoCurricularCourses =
-                        (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(), new Transformer() {
+                        (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCoursesSet(), new Transformer() {
 
                             @Override
                             public Object transform(Object input) {

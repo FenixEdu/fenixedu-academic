@@ -70,7 +70,7 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
     }
 
     public void delete() {
-        getPhdPrograms().clear();
+        getPhdProgramsSet().clear();
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
@@ -88,7 +88,7 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
             final PhdIndividualProgramCollaborationType type) {
         List<ExternalPhdProgram> externalPhdProgramList = new ArrayList<ExternalPhdProgram>();
 
-        CollectionUtils.select(getExternalPhdPrograms(), new Predicate() {
+        CollectionUtils.select(getExternalPhdProgramsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object object) {
@@ -109,26 +109,6 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
             }
 
         });
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgram> getPhdPrograms() {
-        return getPhdProgramsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ExternalPhdProgram> getExternalPhdPrograms() {
-        return getExternalPhdProgramsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubject> getThesisSubjects() {
-        return getThesisSubjectsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getIndividualProgramProcesses() {
-        return getIndividualProgramProcessesSet();
     }
 
     public static Set<PhdProgramFocusArea> getActivePhdProgramFocusAreas() {

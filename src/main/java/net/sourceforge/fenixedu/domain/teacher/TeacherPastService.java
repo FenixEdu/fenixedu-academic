@@ -45,7 +45,7 @@ public class TeacherPastService extends TeacherPastService_Base {
 
     private int countPastServices(Teacher teacher) {
         int count = 0;
-        for (TeacherService teacherService : teacher.getTeacherServices()) {
+        for (TeacherService teacherService : teacher.getTeacherServicesSet()) {
             if (teacherService.getPastService() != null) {
                 count++;
             }

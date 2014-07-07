@@ -82,7 +82,7 @@ public class ApprovedEnrolmentsToCreateDocumentRequestProvider implements DataPr
     }
 
     private boolean isSourceInAnyCycleGroup(final Enrolment enrolment, final CycleType cycleType) {
-        for (final InternalEnrolmentWrapper wrapper : enrolment.getEnrolmentWrappers()) {
+        for (final InternalEnrolmentWrapper wrapper : enrolment.getEnrolmentWrappersSet()) {
             if (wrapper.getCredits().hasAnyDismissalInCycle(cycleType)) {
                 return true;
             }

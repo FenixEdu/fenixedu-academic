@@ -33,9 +33,4 @@ public class University extends University_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getAssociatedCurricularCourses() {
-        return getAssociatedCurricularCoursesSet();
-    }
-
 }

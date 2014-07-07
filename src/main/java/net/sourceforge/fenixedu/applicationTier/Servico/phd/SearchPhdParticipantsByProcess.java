@@ -32,7 +32,7 @@ public class SearchPhdParticipantsByProcess implements AutoCompleteProvider<PhdP
 
     @Override
     public Collection<PhdParticipant> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
-        return getPhdIndividualProgramProcess(argsMap).getParticipants();
+        return getPhdIndividualProgramProcess(argsMap).getParticipantsSet();
     }
 
     private PhdIndividualProgramProcess getPhdIndividualProgramProcess(Map<String, String> arguments) {

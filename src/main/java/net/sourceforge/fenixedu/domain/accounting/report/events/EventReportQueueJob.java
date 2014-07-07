@@ -358,7 +358,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                 }
             }
 
-            for (AccountingTransaction adjustment : transaction.getAdjustmentTransactions()) {
+            for (AccountingTransaction adjustment : transaction.getAdjustmentTransactionsSet()) {
                 if (adjustment.getWhenRegistered() != null) {
                     if (adjustment.getWhenRegistered()
                             .isBefore(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))
@@ -684,7 +684,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
         for (AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
 
-            for (AccountingTransaction adjustment : transaction.getAdjustmentTransactions()) {
+            for (AccountingTransaction adjustment : transaction.getAdjustmentTransactionsSet()) {
                 Entry internalEntry = obtainInternalAccountEntry(adjustment);
                 Entry externalEntry = obtainExternalAccountEntry(adjustment);
 
@@ -712,7 +712,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                 result.add(bean);
             }
 
-            if (transaction.getAdjustmentTransactions().isEmpty()) {
+            if (transaction.getAdjustmentTransactionsSet().isEmpty()) {
                 Entry internalEntry = obtainInternalAccountEntry(transaction);
                 Entry externalEntry = obtainExternalAccountEntry(transaction);
 

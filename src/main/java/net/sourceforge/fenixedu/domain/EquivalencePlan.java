@@ -29,15 +29,10 @@ public abstract class EquivalencePlan extends EquivalencePlan_Base {
 
     public void delete() {
         setRootDomainObject(null);
-        for (; !getEntriesSet().isEmpty(); getEntries().iterator().next().delete()) {
+        for (; !getEntriesSet().isEmpty(); getEntriesSet().iterator().next().delete()) {
             ;
         }
         super.deleteDomainObject();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getEntries() {
-        return getEntriesSet();
     }
 
 }

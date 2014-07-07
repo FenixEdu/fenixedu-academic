@@ -102,7 +102,7 @@ public class Grouping extends Grouping_Base {
 
     public List<ExecutionCourse> getExecutionCourses() {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        for (final ExportGrouping exportGrouping : this.getExportGroupings()) {
+        for (final ExportGrouping exportGrouping : this.getExportGroupingsSet()) {
             if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
                     || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
                 result.add(exportGrouping.getExecutionCourse());
@@ -133,11 +133,11 @@ public class Grouping extends Grouping_Base {
 
     public Integer getNumberOfStudentsNotInGrouping() {
         int numberOfStudents = 0;
-        for (final ExportGrouping exportGrouping : this.getExportGroupings()) {
+        for (final ExportGrouping exportGrouping : this.getExportGroupingsSet()) {
             if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
                     || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
-                for (final Attends attend : exportGrouping.getExecutionCourse().getAttends()) {
-                    if (!this.getAttends().contains(attend)) {
+                for (final Attends attend : exportGrouping.getExecutionCourse().getAttendsSet()) {
+                    if (!this.getAttendsSet().contains(attend)) {
                         numberOfStudents++;
                     }
                 }
@@ -160,11 +160,11 @@ public class Grouping extends Grouping_Base {
     }
 
     public Integer getNumberOfStudentsInGrouping() {
-        return this.getAttends().size();
+        return this.getAttendsSet().size();
     }
 
     public Attends getStudentAttend(final Registration registration) {
-        for (final Attends attend : this.getAttends()) {
+        for (final Attends attend : this.getAttendsSet()) {
             if (attend.getRegistration().getStudent() == registration.getStudent()) {
                 return attend;
             }
@@ -173,7 +173,7 @@ public class Grouping extends Grouping_Base {
     }
 
     public Attends getStudentAttend(String studentUsername) {
-        for (final Attends attend : this.getAttends()) {
+        for (final Attends attend : this.getAttendsSet()) {
             if (attend.getRegistration().getPerson().getUsername().equals(studentUsername)) {
                 return attend;
             }
@@ -228,7 +228,7 @@ public class Grouping extends Grouping_Base {
         ExportGrouping exportGrouping = new ExportGrouping(grouping, executionCourse);
         exportGrouping.setProposalState(new ProposalState(ProposalState.CRIADOR));
 
-        addGroupingToAttends(grouping, executionCourse.getAttends());
+        addGroupingToAttends(grouping, executionCourse.getAttendsSet());
         GroupsAndShiftsManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.groupAndShifts.grouping.added", grouping.getName(), executionCourse.getNome(),
                 executionCourse.getDegreePresentationString());
@@ -275,7 +275,7 @@ public class Grouping extends Grouping_Base {
                 throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
             }
 
-            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingPropertiesSet();
             for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
                 shiftGP.delete();
             }
@@ -284,7 +284,7 @@ public class Grouping extends Grouping_Base {
                 throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
             }
 
-            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingPropertiesSet();
             for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
                 shiftGP.delete();
             }
@@ -328,7 +328,7 @@ public class Grouping extends Grouping_Base {
         if (differentiatedCapacity) {
             createOrEditShiftGroupingProperties(infoShifts);
         } else {
-            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingPropertiesSet();
             for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
                 shiftGP.delete();
             }
@@ -439,9 +439,9 @@ public class Grouping extends Grouping_Base {
         for (Registration registration : students) {
             Attends attend = getStudentAttend(registration);
             for (final StudentGroup studentGroup : this.getStudentGroupsSet()) {
-                if (studentGroup.getAttends().contains(attend)) {
+                if (studentGroup.getAttendsSet().contains(attend)) {
                     throw new DomainException(this.getClass().getName(), "errors.existing.studentEnrolment");
-                } else if (!this.getAttends().contains(attend)) {
+                } else if (!this.getAttendsSet().contains(attend)) {
                     throw new DomainException(this.getClass().getName(), "errors.notExisting.studentInGrouping");
                 }
             }
@@ -465,14 +465,14 @@ public class Grouping extends Grouping_Base {
                     ec.getDegreePresentationString());
         }
 
-        Collection<Attends> attends = this.getAttends();
+        Collection<Attends> attends = this.getAttendsSet();
         List<Attends> attendsAux = new ArrayList<Attends>();
         attendsAux.addAll(attends);
         for (Attends attend : attendsAux) {
             attend.removeGroupings(this);
         }
 
-        Collection<ExportGrouping> exportGroupings = this.getExportGroupings();
+        Collection<ExportGrouping> exportGroupings = this.getExportGroupingsSet();
         List<ExportGrouping> exportGroupingsAux = new ArrayList<ExportGrouping>();
         exportGroupingsAux.addAll(exportGroupings);
         for (ExportGrouping exportGrouping : exportGroupingsAux) {
@@ -481,11 +481,11 @@ public class Grouping extends Grouping_Base {
             exportGrouping.delete();
         }
 
-        for (ShiftGroupingProperties shiftGP : getShiftGroupingProperties()) {
+        for (ShiftGroupingProperties shiftGP : getShiftGroupingPropertiesSet()) {
             shiftGP.delete();
         }
 
-        for (Project project : getProjects()) {
+        for (Project project : getProjectsSet()) {
             project.delete();
         }
 
@@ -516,7 +516,7 @@ public class Grouping extends Grouping_Base {
 
     public StudentGroup getStudentGroupByAttends(Attends attends) {
         for (StudentGroup studentGroup : getStudentGroupsSet()) {
-            if (studentGroup.getAttends().contains(attends)) {
+            if (studentGroup.getAttendsSet().contains(attends)) {
                 return studentGroup;
             }
         }
@@ -551,7 +551,7 @@ public class Grouping extends Grouping_Base {
 
     public boolean isPersonTeacher(Person person) {
         for (ExecutionCourse ec : getExecutionCourses()) {
-            for (Professorship professorship : ec.getProfessorships()) {
+            for (Professorship professorship : ec.getProfessorshipsSet()) {
                 if (professorship.getPerson() == person) {
                     return true;
                 }
@@ -609,26 +609,6 @@ public class Grouping extends Grouping_Base {
         } else {
             setEnrolmentEndDayDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getExportGroupings() {
-        return getExportGroupingsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
-        return getAttendsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Project> getProjects() {
-        return getProjectsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftGroupingProperties> getShiftGroupingProperties() {
-        return getShiftGroupingPropertiesSet();
     }
 
 }

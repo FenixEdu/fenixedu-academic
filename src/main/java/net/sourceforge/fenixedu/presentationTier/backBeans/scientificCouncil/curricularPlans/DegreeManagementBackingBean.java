@@ -118,7 +118,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     public List<Degree> getFilteredBolonhaDegrees() {
         final Set<Degree> result = new HashSet<Degree>();
         for (final Degree degree : Degree.readBolonhaDegrees()) {
-            for (final DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+            for (final DegreeCurricularPlan dcp : degree.getDegreeCurricularPlansSet()) {
                 if (dcp.getCurricularStage().equals(CurricularStage.PUBLISHED)
                         || dcp.getCurricularStage().equals(CurricularStage.APPROVED)
                         || dcp.getCurricularPlanMembersGroup().isMember(this.getUserView())) {
@@ -473,7 +473,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
         this.officialPublicationsBeanPrettyPrints.clear();
 
-        for (DegreeOfficialPublication degreeOfficialPublication : getDegree().getOfficialPublication()) {
+        for (DegreeOfficialPublication degreeOfficialPublication : getDegree().getOfficialPublicationSet()) {
             officialPublicationsBeanPrettyPrints.add(new OfficialPubBeanPrint(degreeOfficialPublication));
         }
 
@@ -526,7 +526,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
                 throw new RuntimeException("que bodega..");
             }
 
-            for (DegreeSpecializationArea specializationArea : degreeOfficialPublication.getSpecializationArea()) {
+            for (DegreeSpecializationArea specializationArea : degreeOfficialPublication.getSpecializationAreaSet()) {
                 specializationAreas +=
                         (specializationAreas.compareTo("") == 0 ? "" : ", ") + specializationArea.getName().toString();
             }
@@ -799,7 +799,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
             if (getDegreeOfficialPublication() != null && specializationNames == null) {
                 specializations = new ArrayList<DegreeManagementBackingBean.OfficialPublicationBean.Pair>();
-                for (DegreeSpecializationArea area : getDegreeOfficialPublication().getSpecializationArea()) {
+                for (DegreeSpecializationArea area : getDegreeOfficialPublication().getSpecializationAreaSet()) {
                     specializations.add(new Pair(area));
                 }
                 specializationNames = specializations;

@@ -40,7 +40,7 @@ public class ReadPublicExecutionDegreeByDCPID {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
-        for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
             result.add(copyExecutionDegree2InfoExecutionDegree(executionDegree));
         }
 

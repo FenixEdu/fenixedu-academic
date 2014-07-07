@@ -49,17 +49,12 @@ public class AcademicServiceRequestYear extends AcademicServiceRequestYear_Base 
         if (requestYear == null) {
             return Collections.emptySet();
         }
-        return requestYear.getAcademicServiceRequests();
+        return requestYear.getAcademicServiceRequestsSet();
     }
 
     protected Integer generateServiceRequestNumber() {
         setLatestServiceRequestNumber(Integer.valueOf(getLatestServiceRequestNumber().intValue() + 1));
         return getLatestServiceRequestNumber();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getAcademicServiceRequests() {
-        return getAcademicServiceRequestsSet();
     }
 
 }

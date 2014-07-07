@@ -126,7 +126,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
             if (semester != null) {
                 Map<Class<? extends EnrolmentPeriod>, EnrolmentPeriodTypeConfiguration> map =
                         new HashMap<Class<? extends EnrolmentPeriod>, EnrolmentPeriodTypeConfiguration>();
-                for (final EnrolmentPeriod period : semester.getEnrolmentPeriod()) {
+                for (final EnrolmentPeriod period : semester.getEnrolmentPeriodSet()) {
                     if (VALID_ENROLMENT_PERIODS.contains(period.getClass())) {
                         if (!AcademicPredicates.MANAGE_ENROLMENT_PERIODS.evaluate(period.getDegree())) {
                             continue;

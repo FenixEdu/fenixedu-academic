@@ -109,7 +109,7 @@ public class ReadTeacherServiceDistributionByTeachers {
 
                     Map<String, String> degreeNameMap = new LinkedHashMap<String, String>();
                     Map<String, Set<String>> degreeCurricularYearsMap = new LinkedHashMap<String, Set<String>>();
-                    for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                    for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                         Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
                         String degreeExternalId = degree.getExternalId();
                         if (!degreeNameMap.containsKey(degreeExternalId)) {
@@ -119,7 +119,7 @@ public class ReadTeacherServiceDistributionByTeachers {
 
                         Set<String> curricularYears = new LinkedHashSet<String>();
 
-                        for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                        for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
 
                             if (curricularCourseScope.isActive(executionPeriodEntry.getEndDate())) {
                                 CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();

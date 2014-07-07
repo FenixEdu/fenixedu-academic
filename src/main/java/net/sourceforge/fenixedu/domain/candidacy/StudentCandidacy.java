@@ -111,7 +111,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     public DateTime getCandidacyDate() {
-        return Collections.min(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR).getSituationDate();
+        return Collections.min(getCandidacySituationsSet(), CandidacySituation.DATE_COMPARATOR).getSituationDate();
     }
 
     public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree, Person studentPerson) {
@@ -223,7 +223,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
         if (!isConcluded()) {
             new CancelledCandidacySituation(this, this.getPerson());
 
-            for (PaymentCode paymentCode : getAvailablePaymentCodes()) {
+            for (PaymentCode paymentCode : getAvailablePaymentCodesSet()) {
                 AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
                 if (accountingEventPaymentCode.isNew() && accountingEventPaymentCode.getAccountingEvent() == null) {
                     accountingEventPaymentCode.cancel();
@@ -249,11 +249,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     public ExecutionYear getExecutionYear() {
         return getExecutionDegree().getExecutionYear();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCode> getAvailablePaymentCodes() {
-        return getAvailablePaymentCodesSet();
     }
 
 }

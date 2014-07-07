@@ -157,7 +157,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
     @Override
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
         final Collection<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>();
-        for (final AnnouncementBoard currentBoard : rootDomainObject.getInstitutionUnit().getBoards()) {
+        for (final AnnouncementBoard currentBoard : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
             final UnitAnnouncementBoard board = (UnitAnnouncementBoard) currentBoard;
             if (board.getUnitPermittedWriteGroupType() == UnitBoardPermittedGroupType.UB_WEBSITE_MANAGER
                     && board.getWriters().isMember(Authenticate.getUser())) {

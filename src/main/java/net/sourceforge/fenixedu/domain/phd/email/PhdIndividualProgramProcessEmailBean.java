@@ -190,7 +190,7 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 
         @Override
         public Collection<PhdParticipant> getGroupParticipants(PhdIndividualProgramProcess process) {
-            return process.getParticipants();
+            return process.getParticipantsSet();
         }
 
     }
@@ -215,7 +215,7 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
                 participants.add(process.getThesisProcess().getPresidentJuryElement().getParticipant());
             }
 
-            for (ThesisJuryElement element : process.getThesisProcess().getThesisJuryElements()) {
+            for (ThesisJuryElement element : process.getThesisProcess().getThesisJuryElementsSet()) {
                 participants.add(element.getParticipant());
             }
 

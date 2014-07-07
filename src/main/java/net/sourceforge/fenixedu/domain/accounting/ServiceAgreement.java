@@ -35,7 +35,7 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
             @Override
             public void beforeAdd(ServiceAgreement serviceAgreementToAdd, Person person) {
                 if (serviceAgreementToAdd != null && person != null) {
-                    for (final ServiceAgreement serviceAgreement : person.getServiceAgreements()) {
+                    for (final ServiceAgreement serviceAgreement : person.getServiceAgreementsSet()) {
                         if (serviceAgreement.getServiceAgreementTemplate() == serviceAgreementToAdd.getServiceAgreementTemplate()) {
                             throw new DomainException(
                                     "error.accounting.ServiceAgreement.person.already.has.service.agreement.for.service.agreement.template");
@@ -98,7 +98,7 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
     }
 
     public CustomGratuityPaymentPlan getCustomGratuityPaymentPlan(final ExecutionYear executionYear) {
-        for (final ServiceAgreementPaymentPlan paymentPlan : getPaymentPlans()) {
+        for (final ServiceAgreementPaymentPlan paymentPlan : getPaymentPlansSet()) {
             if (paymentPlan instanceof CustomGratuityPaymentPlan && paymentPlan.isFor(executionYear)) {
                 return (CustomGratuityPaymentPlan) paymentPlan;
             }
@@ -108,11 +108,6 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
 
     public boolean hasCustomGratuityPaymentPlan(final ExecutionYear executionYear) {
         return getCustomGratuityPaymentPlan(executionYear) != null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ServiceAgreementPaymentPlan> getPaymentPlans() {
-        return getPaymentPlansSet();
     }
 
 }

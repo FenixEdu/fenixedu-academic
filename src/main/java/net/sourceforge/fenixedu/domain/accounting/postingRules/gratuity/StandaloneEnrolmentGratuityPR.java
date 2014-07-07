@@ -190,7 +190,7 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 
         final Student student = gratuityEvent.getStudentCurricularPlan().getRegistration().getStudent();
 
-        for (final Registration registration : student.getRegistrations()) {
+        for (final Registration registration : student.getRegistrationsSet()) {
 
             if (registration.getDegree().isEmpty()) {
                 continue;

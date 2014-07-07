@@ -49,7 +49,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessBean extends
         setSelectedDegree(process.getCandidacySelectedDegree());
         setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(process.getCandidacy()));
         setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getPrecedentDegreeInformation()));
-        initializeFormation(process.getCandidacy().getFormations());
+        initializeFormation(process.getCandidacy().getFormationsSet());
         setObservations(process.getCandidacy().getObservations());
         setProcessChecked(process.getProcessChecked());
         setPaymentChecked(process.getPaymentChecked());

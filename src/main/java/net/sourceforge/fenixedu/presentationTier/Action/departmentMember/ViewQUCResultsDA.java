@@ -235,7 +235,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
             for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
                 if (!professorship.getInquiryResultsSet().isEmpty()) {
                     if (allTeachers || professorship.hasResultsToImprove()) {
-                        Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
+                        Collection<InquiryResult> professorshipResults = professorship.getInquiryResultsSet();
                         if (!professorshipResults.isEmpty()) {
                             for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                                 List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);

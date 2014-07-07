@@ -36,7 +36,7 @@ public class UnitFileTag extends UnitFileTag_Base {
 
     public Integer getFileTagCount(Person person) {
         int count = 0;
-        for (UnitFile file : getTaggedFiles()) {
+        for (UnitFile file : getTaggedFilesSet()) {
             if (file.isPersonAllowedToAccess(person)) {
                 count++;
             }
@@ -59,16 +59,11 @@ public class UnitFileTag extends UnitFileTag_Base {
 
     public Set<UnitFileTag> getNeighboursTags() {
         Set<UnitFileTag> tags = new HashSet<UnitFileTag>();
-        for (UnitFile file : getTaggedFiles()) {
-            tags.addAll(file.getUnitFileTags());
+        for (UnitFile file : getTaggedFilesSet()) {
+            tags.addAll(file.getUnitFileTagsSet());
         }
         tags.remove(this);
         return tags;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.UnitFile> getTaggedFiles() {
-        return getTaggedFilesSet();
     }
 
 }

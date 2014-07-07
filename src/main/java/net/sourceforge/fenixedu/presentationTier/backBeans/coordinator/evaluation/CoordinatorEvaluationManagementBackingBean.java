@@ -226,7 +226,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 
     private ExecutionDegree getExecutionDegree() {
         if (this.executionDegree == null) {
-            for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegrees()) {
+            for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegreesSet()) {
                 if (executionDegree.getExecutionYear() == getExecutionPeriod().getExecutionYear()) {
                     return (this.executionDegree = executionDegree);
                 }

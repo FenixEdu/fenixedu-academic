@@ -113,7 +113,7 @@ public class ManageRolesDA extends FenixDispatchAction {
             roles = null;
             return showError(request, mapping, errors, "noUsername", new ActionError("error.noUsername", username));
         } else {
-            roles = new ArrayList<>(person.getPersonRoles());
+            roles = new ArrayList<>(person.getPersonRolesSet());
             // if (roles.size() <= 0) {
             // return showError(request, mapping, errors, "noRoles", new
             // ActionError("error.noRoles", null));

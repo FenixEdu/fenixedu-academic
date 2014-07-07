@@ -46,7 +46,7 @@ public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGrou
     protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(CurriculumGroup group,
             ExecutionSemester executionSemester) {
         List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
-        for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
+        for (CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
                 Enrolment enrolment = (Enrolment) curriculumModule;
                 if (enrolment.isImprovementEnroled() && enrolment.getExecutionPeriod().isBefore(executionSemester)) {
@@ -62,7 +62,7 @@ public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGrou
     protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
             ExecutionSemester executionSemester) {
         List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
-        for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
+        for (CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
                 Enrolment enrolment = (Enrolment) curriculumModule;
                 if (enrolment.canBeImproved() && enrolment.getExecutionPeriod().isBefore(executionSemester)) {

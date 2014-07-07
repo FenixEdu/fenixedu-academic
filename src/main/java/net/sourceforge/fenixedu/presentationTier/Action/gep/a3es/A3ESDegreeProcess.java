@@ -385,7 +385,7 @@ public class A3ESDegreeProcess implements Serializable {
     private String getTeachersAndTeachingHours(CurricularCourse course, boolean responsibleTeacher) {
         Map<Teacher, Double> responsiblesMap = new HashMap<Teacher, Double>();
         List<ExecutionSemester> executionSemesters = getSelectedExecutionSemesters();
-        for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
             if (executionSemesters.contains(executionCourse.getExecutionPeriod())) {
                 for (Professorship professorhip : executionCourse.getProfessorshipsSet()) {
                     if (professorhip.isResponsibleFor() == responsibleTeacher
@@ -416,7 +416,7 @@ public class A3ESDegreeProcess implements Serializable {
             for (ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                 if (executionCourse.getExecutionPeriod().getExecutionYear()
                         .equals(executionSemester.getExecutionYear().getPreviousExecutionYear())) {
-                    for (Attends attends : executionCourse.getAttends()) {
+                    for (Attends attends : executionCourse.getAttendsSet()) {
                         if (attends.getEnrolment() != null && attends.getEnrolment().getThesis() != null) {
                             for (ThesisEvaluationParticipant thesisEvaluationParticipant : attends.getEnrolment().getThesis()
                                     .getOrientation()) {
@@ -455,7 +455,7 @@ public class A3ESDegreeProcess implements Serializable {
         if (teacherService != null) {
             for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {
                 if (degreeTeachingService.getProfessorship().getExecutionCourse().equals(professorhip.getExecutionCourse())) {
-                    for (CourseLoad courseLoad : degreeTeachingService.getShift().getCourseLoads()) {
+                    for (CourseLoad courseLoad : degreeTeachingService.getShift().getCourseLoadsSet()) {
                         result =
                                 result + courseLoad.getTotalQuantity().doubleValue()
                                         * (degreeTeachingService.getPercentage().doubleValue() / 100);
@@ -500,8 +500,8 @@ public class A3ESDegreeProcess implements Serializable {
         Set<Teacher> teachers = new HashSet<Teacher>();
         ExecutionYear previousExecutionYear = executionSemester.getExecutionYear().getPreviousExecutionYear();
         for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
+                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                     if (executionSemesters.contains(executionCourse.getExecutionPeriod())) {
                         for (Professorship professorhip : executionCourse.getProfessorshipsSet()) {
                             if (professorhip.getPerson().getTeacher()
@@ -512,7 +512,7 @@ public class A3ESDegreeProcess implements Serializable {
                     }
                     if (previousExecutionYear.equals(executionCourse.getExecutionPeriod().getExecutionYear())) {
                         if (executionCourse.isDissertation()) {
-                            for (Attends attends : executionCourse.getAttends()) {
+                            for (Attends attends : executionCourse.getAttendsSet()) {
                                 if (attends.getEnrolment() != null && attends.getEnrolment().getThesis() != null) {
                                     for (ThesisEvaluationParticipant thesisEvaluationParticipant : attends.getEnrolment()
                                             .getThesis().getOrientation()) {
@@ -535,10 +535,10 @@ public class A3ESDegreeProcess implements Serializable {
 
         PhdProgram phdProgram = degree.getPhdProgram();
         if (phdProgram != null) {
-            for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdProgram.getIndividualProgramProcesses()) {
+            for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdProgram.getIndividualProgramProcessesSet()) {
                 for (ExecutionSemester executionSemester : executionSemesters) {
                     if (phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())) {
-                        for (PhdParticipant phdParticipant : phdIndividualProgramProcess.getParticipants()) {
+                        for (PhdParticipant phdParticipant : phdIndividualProgramProcess.getParticipantsSet()) {
                             if (phdParticipant instanceof InternalPhdParticipant) {
                                 InternalPhdParticipant internalPhdParticipant = (InternalPhdParticipant) phdParticipant;
                                 if (internalPhdParticipant.isGuidingOrAssistantGuiding()

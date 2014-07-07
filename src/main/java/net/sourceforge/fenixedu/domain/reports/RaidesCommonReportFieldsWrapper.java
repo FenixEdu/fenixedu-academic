@@ -407,7 +407,7 @@ public class RaidesCommonReportFieldsWrapper {
         // referem
         // os dados
         boolean working1Found = false;
-        for (StudentStatute statute : registration.getStudent().getStudentStatutes()) {
+        for (StudentStatute statute : registration.getStudent().getStudentStatutesSet()) {
             if (statute.getStatuteType() == StudentStatuteType.WORKING_STUDENT
                     && statute.isValidInExecutionPeriod(executionYear.getFirstExecutionPeriod())) {
                 working1Found = true;
@@ -420,7 +420,7 @@ public class RaidesCommonReportFieldsWrapper {
         // referem
         // os dados
         boolean working2Found = false;
-        for (StudentStatute statute : registration.getStudent().getStudentStatutes()) {
+        for (StudentStatute statute : registration.getStudent().getStudentStatutesSet()) {
             if (statute.getStatuteType() == StudentStatuteType.WORKING_STUDENT
                     && statute.isValidInExecutionPeriod(executionYear.getLastExecutionPeriod())) {
                 working2Found = true;
@@ -446,7 +446,7 @@ public class RaidesCommonReportFieldsWrapper {
 
         // Bolseiro (info. oficial)
         boolean sasFound = false;
-        for (StudentStatute statute : registration.getStudent().getStudentStatutes()) {
+        for (StudentStatute statute : registration.getStudent().getStudentStatutesSet()) {
             if (statute.getStatuteType() == StudentStatuteType.SAS_GRANT_OWNER
                     && statute.isValidInExecutionPeriod(executionYear.getFirstExecutionPeriod())) {
                 sasFound = true;
@@ -561,7 +561,7 @@ public class RaidesCommonReportFieldsWrapper {
         // que se
         // referem os dados (neste caso até ao fim de 2007/08) no curso actual
         double totalCreditsDismissed = 0d;
-        for (Credits credits : lastStudentCurricularPlan.getCredits()) {
+        for (Credits credits : lastStudentCurricularPlan.getCreditsSet()) {
             if (credits.isEquivalence()) {
                 totalCreditsDismissed += credits.getEnrolmentsEcts();
             }
@@ -597,7 +597,7 @@ public class RaidesCommonReportFieldsWrapper {
         // Estados de matrícula
         SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
         for (Registration current : registrationPath) {
-            states.addAll(current.getRegistrationStates());
+            states.addAll(current.getRegistrationStatesSet());
         }
         RegistrationState previousYearState = null;
         RegistrationState currentYearState = null;

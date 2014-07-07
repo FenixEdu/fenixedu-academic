@@ -115,7 +115,7 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
         StandaloneEnrolmentCertificateRequest request = getDocumentRequest();
 
         final Collection<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
-        enrolments.addAll(request.getEnrolments());
+        enrolments.addAll(request.getEnrolmentsSet());
 
         for (final Enrolment enrolment : enrolments) {
             result.append(

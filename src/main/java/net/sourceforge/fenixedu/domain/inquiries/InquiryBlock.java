@@ -34,7 +34,7 @@ public class InquiryBlock extends InquiryBlock_Base {
     }
 
     public InquiryTemplate getInquiry(ExecutionSemester executionSemester) {
-        for (InquiryTemplate inquiryTemplate : getInquiries()) {
+        for (InquiryTemplate inquiryTemplate : getInquiriesSet()) {
             if (inquiryTemplate.getExecutionPeriod() == executionSemester) {
                 return inquiryTemplate;
             }
@@ -43,7 +43,7 @@ public class InquiryBlock extends InquiryBlock_Base {
     }
 
     public void delete() {
-        for (; !getInquiryGroupsQuestions().isEmpty(); getInquiryGroupsQuestions().iterator().next().delete()) {
+        for (; !getInquiryGroupsQuestionsSet().isEmpty(); getInquiryGroupsQuestionsSet().iterator().next().delete()) {
             setRootDomainObject(null);
         }
         if (getInquiryQuestionHeader() != null) {
@@ -51,20 +51,10 @@ public class InquiryBlock extends InquiryBlock_Base {
         }
         setResultQuestion(null);
         setGroupResultQuestion(null);
-        for (InquiryTemplate inquiryTemplate : getInquiries()) {
+        for (InquiryTemplate inquiryTemplate : getInquiriesSet()) {
             removeInquiries(inquiryTemplate);
         }
         super.deleteDomainObject();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate> getInquiries() {
-        return getInquiriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion> getInquiryGroupsQuestions() {
-        return getInquiryGroupsQuestionsSet();
     }
 
 }

@@ -239,7 +239,7 @@ public class DelegateSearchBean implements Serializable {
             final DegreeType type = bean.getDegreeType();
 
             if (type != null && executionPeriod != null) {
-                for (ExecutionDegree executionDegree : executionPeriod.getExecutionDegrees()) {
+                for (ExecutionDegree executionDegree : executionPeriod.getExecutionDegreesSet()) {
                     if (executionDegree.getDegreeType().equals(type)) {
                         degrees.add(executionDegree.getDegree());
                     }
@@ -265,7 +265,7 @@ public class DelegateSearchBean implements Serializable {
             final ExecutionYear executionPeriod = bean.getExecutionYear();
             Set<DegreeType> degreeTypes = new TreeSet<DegreeType>();
 
-            for (ExecutionDegree executionDegree : executionPeriod.getExecutionDegrees()) {
+            for (ExecutionDegree executionDegree : executionPeriod.getExecutionDegreesSet()) {
                 degreeTypes.add(executionDegree.getDegreeType());
             }
 

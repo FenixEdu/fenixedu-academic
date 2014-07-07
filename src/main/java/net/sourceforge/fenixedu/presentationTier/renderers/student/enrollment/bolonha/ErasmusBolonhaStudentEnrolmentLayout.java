@@ -88,7 +88,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
         ErasmusBolonhaStudentEnrollmentBean bean = (ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean();
 
         for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : coursesToEvaluate) {
-            if (!bean.getCandidacy().getCurricularCourses().contains(degreeModuleToEvaluate.getDegreeModule())) {
+            if (!bean.getCandidacy().getCurricularCoursesSet().contains(degreeModuleToEvaluate.getDegreeModule())) {
                 // if(contains(bean.getCandidacy().getCurricularCourses(),
                 // degreeModuleToEvaluate)) {
                 continue;
@@ -181,7 +181,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
     public CopyCheckBoxValuesController controller = new CopyCheckBoxValuesController();
 
     public boolean isContextValid(CurricularCourse curricularCourse) {
-        Collection<Context> parentContexts = curricularCourse.getParentContexts();
+        Collection<Context> parentContexts = curricularCourse.getParentContextsSet();
         for (Context context : parentContexts) {
             if (context.isValid(getBolonhaStudentEnrollmentBean().getExecutionPeriod())) {
                 return true;
@@ -244,7 +244,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
         HashSet<CurricularCourse> set = new HashSet<CurricularCourse>();
         ErasmusBolonhaStudentEnrollmentBean erasmusBolonhaStudentEnrollmentBean =
                 (ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean();
-        set.addAll(erasmusBolonhaStudentEnrollmentBean.getCandidacy().getCurricularCourses());
+        set.addAll(erasmusBolonhaStudentEnrollmentBean.getCandidacy().getCurricularCoursesSet());
         for (Enrolment enrolment : group.getEnrolments()) {
             set.add(enrolment.getCurricularCourse());
         }

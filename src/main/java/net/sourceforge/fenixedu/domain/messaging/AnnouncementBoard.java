@@ -248,7 +248,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     private void removeBookmarkedBoards() {
-        for (final Person person : this.getBookmarkOwner()) {
+        for (final Person person : this.getBookmarkOwnerSet()) {
             removeBookmarkOwner(person);
         }
     }
@@ -498,10 +498,5 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public abstract Site getSite();
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getBookmarkOwner() {
-        return getBookmarkOwnerSet();
-    }
 
 }

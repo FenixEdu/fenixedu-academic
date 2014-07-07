@@ -59,7 +59,7 @@ public class MarkSheetSearchResultBean {
         int numberOfEnroledStudents = 0;
         for (MarkSheet markSheet : getMarkSheets()) {
             if (!isRectificationMarkSheet(markSheet.getMarkSheetState())) {
-                numberOfEnroledStudents += markSheet.getEnrolmentEvaluations().size();
+                numberOfEnroledStudents += markSheet.getEnrolmentEvaluationsSet().size();
             }
         }
         return numberOfEnroledStudents;

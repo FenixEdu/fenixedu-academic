@@ -70,7 +70,7 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
         setDisabilities(process.getDisabilities());
         setEducation(process.getEducation());
         setLanguages(process.getLanguages());
-        initializeFormation(process.getCandidacy().getFormations());
+        initializeFormation(process.getCandidacy().getFormationsSet());
         setLanguagesRead(process.getLanguagesRead());
         setLanguagesWrite(process.getLanguagesWrite());
         setLanguagesSpeak(process.getLanguagesSpeak());

@@ -209,9 +209,4 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
         }
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.person.PersonNamePart> getPersonNamePart() {
-        return getPersonNamePartSet();
-    }
-
 }

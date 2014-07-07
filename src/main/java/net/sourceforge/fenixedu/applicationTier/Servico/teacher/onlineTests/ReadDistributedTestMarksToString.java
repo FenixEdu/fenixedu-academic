@@ -109,7 +109,7 @@ public class ReadDistributedTestMarksToString {
 
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         List<Registration> studentsFromAttendsList =
-                (List) CollectionUtils.collect(executionCourse.getAttends(), new Transformer() {
+                (List) CollectionUtils.collect(executionCourse.getAttendsSet(), new Transformer() {
 
                     @Override
                     public Object transform(Object input) {

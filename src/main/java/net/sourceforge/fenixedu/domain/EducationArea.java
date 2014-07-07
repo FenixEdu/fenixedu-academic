@@ -34,14 +34,4 @@ public class EducationArea extends EducationArea_Base {
         setParentArea(parentArea);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Formation> getAssociatedFormations() {
-        return getAssociatedFormationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EducationArea> getChildAreas() {
-        return getChildAreasSet();
-    }
-
 }

@@ -306,7 +306,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
     private static boolean registrationHasRepeatedPDI(Registration registration, ExecutionYear executionYear) {
         PrecedentDegreeInformation existingPdi = null;
-        for (PrecedentDegreeInformation pdi : registration.getPrecedentDegreesInformations()) {
+        for (PrecedentDegreeInformation pdi : registration.getPrecedentDegreesInformationsSet()) {
             if (pdi.getExecutionYear().equals(executionYear)) {
                 if (existingPdi == null) {
                     existingPdi = pdi;
@@ -320,7 +320,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
     private static boolean phdProcessHasRepeatedPDI(PhdIndividualProgramProcess phdProcess, ExecutionYear executionYear) {
         PrecedentDegreeInformation existingPdi = null;
-        for (PrecedentDegreeInformation pdi : phdProcess.getPrecedentDegreeInformations()) {
+        for (PrecedentDegreeInformation pdi : phdProcess.getPrecedentDegreeInformationsSet()) {
             if (pdi.getExecutionYear().equals(executionYear)) {
                 if (existingPdi == null) {
                     existingPdi = pdi;

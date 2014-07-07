@@ -238,9 +238,4 @@ public class Tutorship extends Tutorship_Base {
         return !(degreeCurricularPlan == null || getTutorshipLog() == null);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummaryRelation> getTutorshipSummaryRelations() {
-        return getTutorshipSummaryRelationsSet();
-    }
-
 }

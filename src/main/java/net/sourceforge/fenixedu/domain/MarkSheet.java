@@ -555,11 +555,11 @@ public class MarkSheet extends MarkSheet_Base {
 
         if (hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED)) {
             changeRectifiedEnrolmentEvaluationToPreviowsState();
-            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().iterator().next().delete()) {
+            for (; !getEnrolmentEvaluationsSet().isEmpty(); getEnrolmentEvaluationsSet().iterator().next().delete()) {
                 ;
             }
         } else {
-            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().iterator().next().removeFromMarkSheet()) {
+            for (; !getEnrolmentEvaluationsSet().isEmpty(); getEnrolmentEvaluationsSet().iterator().next().removeFromMarkSheet()) {
                 ;
             }
         }
@@ -578,7 +578,7 @@ public class MarkSheet extends MarkSheet_Base {
             return;
         }
 
-        EnrolmentEvaluation enrolmentEvaluation = this.getEnrolmentEvaluations().iterator().next().getRectified();
+        EnrolmentEvaluation enrolmentEvaluation = this.getEnrolmentEvaluationsSet().iterator().next().getRectified();
         enrolmentEvaluation
                 .setEnrolmentEvaluationState((enrolmentEvaluation.getMarkSheet().getMarkSheetState() == MarkSheetState.RECTIFICATION) ? EnrolmentEvaluationState.RECTIFICATION_OBJ : EnrolmentEvaluationState.FINAL_OBJ);
     }
@@ -662,7 +662,7 @@ public class MarkSheet extends MarkSheet_Base {
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("markSheet", markSheet);
         parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
-        List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluations());
+        List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluationsSet());
         Collections.sort(evaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
 
         boolean result = ReportsUtils.printReport("markSheet", parameters, evaluations, printerName);
@@ -1020,11 +1020,6 @@ public class MarkSheet extends MarkSheet_Base {
     public java.util.Date getEvaluationDate() {
         org.joda.time.DateTime dt = getEvaluationDateDateTime();
         return (dt == null) ? null : new java.util.Date(dt.getMillis());
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getEnrolmentEvaluations() {
-        return getEnrolmentEvaluationsSet();
     }
 
 }

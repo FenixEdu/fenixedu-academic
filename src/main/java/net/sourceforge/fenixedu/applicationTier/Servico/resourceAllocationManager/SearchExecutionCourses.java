@@ -116,13 +116,13 @@ public class SearchExecutionCourses {
 
                 ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
-                if (executionCourse.getAssociatedCurricularCourses() != null) {
+                if (executionCourse.getAssociatedCurricularCoursesSet() != null) {
 
                     InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
                     int enrolledInCurricularCourse = 0;
                     int evaluated = 0;
                     int approved = 0;
-                    Iterator<CurricularCourse> iter = executionCourse.getAssociatedCurricularCourses().iterator();
+                    Iterator<CurricularCourse> iter = executionCourse.getAssociatedCurricularCoursesSet().iterator();
 
                     while (iter.hasNext()) {
                         CurricularCourse curricularCourse = iter.next();
@@ -248,7 +248,7 @@ public class SearchExecutionCourses {
                     infoExecutionCourse.setOccupancy(Double.valueOf(-1));
                 } else {
                     infoExecutionCourse.setOccupancy(NumberUtils.formatNumber(
-                            Double.valueOf((Double.valueOf(executionCourse.getAttends().size()).floatValue() * 100 / total)), 1));
+                            Double.valueOf((Double.valueOf(executionCourse.getAttendsSet().size()).floatValue() * 100 / total)), 1));
                 }
                 return infoExecutionCourse;
             }

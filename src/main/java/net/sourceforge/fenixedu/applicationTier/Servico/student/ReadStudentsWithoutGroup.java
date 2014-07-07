@@ -73,7 +73,7 @@ public class ReadStudentsWithoutGroup {
         infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
         infoSiteStudentsWithoutGroup.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
 
-        final Collection<Attends> attends = grouping.getAttends();
+        final Collection<Attends> attends = grouping.getAttendsSet();
 
         Registration userStudent = null;
         for (Object element : attends) {
@@ -96,7 +96,7 @@ public class ReadStudentsWithoutGroup {
         for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext();) {
             final StudentGroup studentGroup = (StudentGroup) iterator.next();
 
-            final Collection allStudentGroupsAttends = studentGroup.getAttends();
+            final Collection allStudentGroupsAttends = studentGroup.getAttendsSet();
 
             for (final Iterator iterator2 = allStudentGroupsAttends.iterator(); iterator2.hasNext();) {
                 final Attends studentGroupAttend = (Attends) iterator2.next();

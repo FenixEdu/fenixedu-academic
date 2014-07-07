@@ -36,7 +36,7 @@ public class VigilantGroupsOfExamCoordinator implements DataProvider {
 
         ExamCoordinator coordinator = bean.getExamCoordinator();
         Collection<VigilantGroup> vigilantGroups =
-                (coordinator == null) ? bean.getVigilantGroups() : coordinator.getVigilantGroups();
+                (coordinator == null) ? bean.getVigilantGroups() : coordinator.getVigilantGroupsSet();
 
         return vigilantGroups;
     }

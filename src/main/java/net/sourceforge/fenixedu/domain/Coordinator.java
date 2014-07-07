@@ -82,8 +82,8 @@ public class Coordinator extends Coordinator_Base {
         checkRulesToDelete();
         setExecutionDegree(null);
         setPerson(null);
-        getExecutionDegreeCoursesReports().clear();
-        getStudentInquiriesCourseResults().clear();
+        getExecutionDegreeCoursesReportsSet().clear();
+        getStudentInquiriesCourseResultsSet().clear();
 
         setRootDomainObject(null);
         super.deleteDomainObject();
@@ -91,7 +91,7 @@ public class Coordinator extends Coordinator_Base {
 
     private void checkRulesToDelete() {
         if (!getExecutionDegreeCoursesReportsSet().isEmpty()) {
-            for (CoordinatorExecutionDegreeCoursesReport report : getExecutionDegreeCoursesReports()) {
+            for (CoordinatorExecutionDegreeCoursesReport report : getExecutionDegreeCoursesReportsSet()) {
                 if (!report.isEmpty()) {
                     throw new DomainException("error.Coordinator.cannot.delete.because.already.has.written.comments");
                 }
@@ -173,27 +173,12 @@ public class Coordinator extends Coordinator_Base {
     }
 
     public InquiryCoordinatorAnswer getInquiryCoordinatorAnswer(ExecutionSemester executionSemester) {
-        for (InquiryCoordinatorAnswer inquiryCoordinatorAnswer : getInquiryCoordinatorAnswers()) {
+        for (InquiryCoordinatorAnswer inquiryCoordinatorAnswer : getInquiryCoordinatorAnswersSet()) {
             if (inquiryCoordinatorAnswer.getExecutionSemester() == executionSemester) {
                 return inquiryCoordinatorAnswer;
             }
         }
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport> getExecutionDegreeCoursesReports() {
-        return getExecutionDegreeCoursesReportsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult> getStudentInquiriesCourseResults() {
-        return getStudentInquiriesCourseResultsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer> getInquiryCoordinatorAnswers() {
-        return getInquiryCoordinatorAnswersSet();
     }
 
 }

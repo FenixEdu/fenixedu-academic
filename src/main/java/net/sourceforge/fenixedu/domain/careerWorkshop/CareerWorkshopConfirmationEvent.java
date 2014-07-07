@@ -63,7 +63,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
     }
 
     public void delete() {
-        if (!getCareerWorkshopConfirmations().isEmpty()) {
+        if (!getCareerWorkshopConfirmationsSet().isEmpty()) {
             throw new DomainException(
                     "error.careerWorkshop.deletingConfirmationPeriod: There are confirmations already associated");
         }
@@ -83,7 +83,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 
     public int getNumberOfConfirmations() {
         int result = 0;
-        for (CareerWorkshopConfirmation confirmation : getCareerWorkshopConfirmations()) {
+        for (CareerWorkshopConfirmation confirmation : getCareerWorkshopConfirmationsSet()) {
             if (confirmation.getSealStamp() != null) {
                 if (confirmation.getConfirmation() != null) {
                     result += (confirmation.getConfirmation() ? 1 : 0);
@@ -155,7 +155,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 
     @Atomic
     private List<CareerWorkshopConfirmation> getProcessedList() {
-        for (CareerWorkshopApplication application : getCareerWorkshopApplicationEvent().getCareerWorkshopApplications()) {
+        for (CareerWorkshopApplication application : getCareerWorkshopApplicationEvent().getCareerWorkshopApplicationsSet()) {
             if (!(application.getCareerWorkshopConfirmation() == null)) {
                 continue;
             }
@@ -166,7 +166,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
             new CareerWorkshopConfirmation(application.getStudent(), this, application);
         }
         List<CareerWorkshopConfirmation> processedConfirmations =
-                new ArrayList<CareerWorkshopConfirmation>(getCareerWorkshopConfirmations());
+                new ArrayList<CareerWorkshopConfirmation>(getCareerWorkshopConfirmationsSet());
         Collections.sort(processedConfirmations, new Comparator<CareerWorkshopConfirmation>() {
 
             @Override
@@ -191,11 +191,6 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 
     public CareerWorkshopConfirmationSpreadsheet getConfirmationsWithoutGenerate() {
         return super.getConfirmations();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmation> getCareerWorkshopConfirmations() {
-        return getCareerWorkshopConfirmationsSet();
     }
 
 }

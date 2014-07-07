@@ -196,9 +196,9 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
             ExecutionYear executionYear) {
 
         Set<Professorship> professorships = new HashSet<Professorship>();
-        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
-                professorships.addAll(executionCourse.getProfessorships());
+                professorships.addAll(executionCourse.getProfessorshipsSet());
             }
         }
         return new ArrayList<Professorship>(professorships);
@@ -208,10 +208,10 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
             DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Boolean basic) {
 
         Set<Professorship> professorships = new HashSet<Professorship>();
-        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             if (curricularCourse.getBasic().equals(basic)) {
                 for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
-                    professorships.addAll(executionCourse.getProfessorships());
+                    professorships.addAll(executionCourse.getProfessorshipsSet());
                 }
             }
         }
@@ -222,9 +222,9 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
             ExecutionSemester executionSemester) {
 
         Set<Professorship> professorships = new HashSet<Professorship>();
-        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
-                professorships.addAll(executionCourse.getProfessorships());
+                professorships.addAll(executionCourse.getProfessorshipsSet());
             }
         }
         return new ArrayList<Professorship>(professorships);
@@ -235,15 +235,15 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
         Set<Professorship> professorships = new HashSet<Professorship>();
         for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-            for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+            for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
                 if (curricularCourse.getBasic() == null || curricularCourse.getBasic().equals(basic)) {
                     if (executionYear != null) {
                         for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
-                            professorships.addAll(executionCourse.getProfessorships());
+                            professorships.addAll(executionCourse.getProfessorshipsSet());
                         }
                     } else {
-                        for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-                            professorships.addAll(executionCourse.getProfessorships());
+                        for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+                            professorships.addAll(executionCourse.getProfessorshipsSet());
                         }
                     }
                 }
@@ -257,14 +257,14 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
         Set<Professorship> professorships = new HashSet<Professorship>();
         for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-            for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+            for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
                 if (executionYear != null) {
                     for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
-                        professorships.addAll(executionCourse.getProfessorships());
+                        professorships.addAll(executionCourse.getProfessorshipsSet());
                     }
                 } else {
-                    for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-                        professorships.addAll(executionCourse.getProfessorships());
+                    for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+                        professorships.addAll(executionCourse.getProfessorshipsSet());
                     }
                 }
             }
@@ -300,7 +300,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         final InquiryResponsePeriod responsePeriod =
                 executionCourse.getExecutionPeriod().getInquiryResponsePeriod(InquiryResponsePeriodType.TEACHING);
         if (responsePeriod == null || !responsePeriod.isOpen() || !executionCourse.isAvailableForInquiry()
-                || executionCourse.getStudentInquiriesCourseResults().isEmpty()
+                || executionCourse.getStudentInquiriesCourseResultsSet().isEmpty()
                 || (!isResponsibleFor() && !hasAssociatedLessonsInTeachingServices())) {
             return false;
         }
@@ -310,7 +310,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public StudentInquiriesTeachingResult getStudentInquiriesTeachingResult(final ExecutionDegree executionDegree,
             final ShiftType shiftType) {
-        for (StudentInquiriesTeachingResult result : getStudentInquiriesTeachingResults()) {
+        for (StudentInquiriesTeachingResult result : getStudentInquiriesTeachingResultsSet()) {
             if (result.getExecutionDegree() == executionDegree && result.getShiftType() == shiftType) {
                 return result;
             }
@@ -320,7 +320,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public boolean hasAssociatedLessonsInTeachingServices() {
         for (final DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-            if (!degreeTeachingService.getShift().getAssociatedLessons().isEmpty()) {
+            if (!degreeTeachingService.getShift().getAssociatedLessonsSet().isEmpty()) {
                 return true;
             }
         }
@@ -345,7 +345,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public String getDegreeSiglas() {
         Set<String> degreeSiglas = new HashSet<String>();
-        for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
+        for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
             degreeSiglas.add(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
         }
         return StringUtils.join(degreeSiglas, ", ");
@@ -353,7 +353,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public String getDegreePlanNames() {
         Set<String> degreeSiglas = new HashSet<String>();
-        for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
+        for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
             degreeSiglas.add(curricularCourse.getDegreeCurricularPlan().getName());
         }
         return StringUtils.join(degreeSiglas, ", ");
@@ -370,7 +370,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public boolean hasMandatoryCommentsToMake() {
-        Collection<InquiryResult> inquiryResults = getInquiryResults();
+        Collection<InquiryResult> inquiryResults = getInquiryResultsSet();
         for (InquiryResult inquiryResult : inquiryResults) {
             if (inquiryResult.getResultClassification() != null) {
                 if (inquiryResult.getResultClassification().isMandatoryComment()
@@ -387,8 +387,8 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public boolean hasMandatoryCommentsToMakeAsResponsible() {
-        for (Professorship professorship : getExecutionCourse().getProfessorships()) {
-            Collection<InquiryResult> inquiryResults = professorship.getInquiryResults();
+        for (Professorship professorship : getExecutionCourse().getProfessorshipsSet()) {
+            Collection<InquiryResult> inquiryResults = professorship.getInquiryResultsSet();
             for (InquiryResult inquiryResult : inquiryResults) {
                 if (inquiryResult.getResultClassification() != null) {
                     if (inquiryResult.getResultClassification().isMandatoryComment()
@@ -410,7 +410,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public boolean hasResultsToImprove() {
-        for (InquiryResult inquiryResult : getInquiryResults()) {
+        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
             if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())
                     && inquiryResult.getResultClassification().isMandatoryComment()) {
                 return true;
@@ -455,66 +455,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         }
         lessonNumber += getSupportLessonsSet().size();
         return lessonNumber;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryStudentTeacherAnswer> getInquiryStudentTeacherAnswers() {
-        return getInquiryStudentTeacherAnswersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.NonRegularTeachingService> getNonRegularTeachingServices() {
-        return getNonRegularTeachingServicesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
-        return getDegreeProjectTutorialServicesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection> getDegreeTeachingServiceCorrections() {
-        return getDegreeTeachingServiceCorrectionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
-        return getAssociatedSummariesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService> getTeacherMasterDegreeServices() {
-        return getTeacherMasterDegreeServicesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResult> getInquiryResults() {
-        return getInquiryResultsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult> getStudentInquiriesTeachingResults() {
-        return getStudentInquiriesTeachingResultsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftProfessorship> getAssociatedShiftProfessorship() {
-        return getAssociatedShiftProfessorshipSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesTeacher> getAssociatedInquiriesTeacher() {
-        return getAssociatedInquiriesTeacherSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.SupportLesson> getSupportLessons() {
-        return getSupportLessonsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService> getDegreeTeachingServices() {
-        return getDegreeTeachingServicesSet();
     }
 
 }

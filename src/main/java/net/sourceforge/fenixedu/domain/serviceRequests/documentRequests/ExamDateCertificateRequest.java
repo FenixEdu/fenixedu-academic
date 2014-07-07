@@ -116,7 +116,7 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
     }
 
     public Exam getExamFor(final Enrolment enrolment, final Season season) {
-        for (final Exam exam : getExams()) {
+        for (final Exam exam : getExamsSet()) {
             if (exam.contains(enrolment.getCurricularCourse()) && exam.isForSeason(season)) {
                 return exam;
             }
@@ -131,16 +131,6 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
             return true;
         }
         return super.isFree();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Exam> getExams() {
-        return getExamsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
-        return getEnrolmentsSet();
     }
 
 }

@@ -42,11 +42,11 @@ public class CreateCourseReports {
         Set<String> courseReportsExecutionCoursesIDs = new HashSet<String>();
 
         final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
-        Collection<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCoursesSet();
 
         for (ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.getCourseReport() == null) {
-                for (Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+                for (Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
                     if (evaluation instanceof FinalEvaluation) {
 
                         if (courseReportsExecutionCoursesIDs.add(executionCourse.getExternalId())) {

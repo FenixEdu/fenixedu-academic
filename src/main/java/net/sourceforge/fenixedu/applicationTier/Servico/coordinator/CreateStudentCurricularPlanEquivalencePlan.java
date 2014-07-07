@@ -28,7 +28,7 @@ public class CreateStudentCurricularPlanEquivalencePlan {
 
     @Atomic
     public static StudentCurricularPlanEquivalencePlan run(final Student student) {
-        for (final Registration registration : student.getRegistrations()) {
+        for (final Registration registration : student.getRegistrationsSet()) {
             final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
             if (studentCurricularPlan != null && studentCurricularPlan.isBoxStructure()
                     && !studentCurricularPlan.isBolonhaDegree()) {

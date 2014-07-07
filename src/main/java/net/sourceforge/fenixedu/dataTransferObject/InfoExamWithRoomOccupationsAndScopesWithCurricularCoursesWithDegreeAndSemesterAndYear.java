@@ -42,8 +42,7 @@ public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegree
     public void copyFromDomain(Exam exam) {
         super.copyFromDomain(exam);
         if (exam != null) {
-            setAssociatedCurricularCourseScope(copyICurricularCourseScope2InfoCurricularCourseScope(exam
-                    .getAssociatedCurricularCourseScope()));
+            setAssociatedCurricularCourseScope(copyICurricularCourseScope2InfoCurricularCourseScope(exam.getAssociatedCurricularCourseScopeSet()));
         }
     }
 

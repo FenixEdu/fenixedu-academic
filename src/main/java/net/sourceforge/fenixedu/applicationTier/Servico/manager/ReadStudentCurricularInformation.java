@@ -47,7 +47,7 @@ public class ReadStudentCurricularInformation {
         final List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
 
         for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {
-            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                 infoStudentCurricularPlans.add(constructInfoStudentCurricularPlan(studentCurricularPlan));
             }
         }

@@ -91,14 +91,14 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
             ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
             // For all Associated Curricular Courses
-            Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCourses().iterator();
+            Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCoursesSet().iterator();
             while (curricularCourseIterator.hasNext()) {
                 CurricularCourse curricularCourse = (CurricularCourse) curricularCourseIterator.next();
 
                 // Read All Execution Degrees for this Degree Curricular
                 // Plan
 
-                Collection executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
+                Collection executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegreesSet();
 
                 // Check if the Coordinator is the logged one
                 Iterator executionDegreesIterator = executionDegrees.iterator();

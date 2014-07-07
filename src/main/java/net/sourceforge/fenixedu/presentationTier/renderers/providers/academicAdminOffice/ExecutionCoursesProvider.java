@@ -35,7 +35,7 @@ public class ExecutionCoursesProvider extends AbstractDomainObjectProvider {
         ExecutionSemester executionSemester = bean.getExecutionSemester();
         HashSet<ExecutionCourse> result = new HashSet<ExecutionCourse>();
         if (executionSemester != null) {
-            for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+            for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
                 for (ExecutionDegree degree : executionCourse.getExecutionDegrees()) {
                     if (AcademicPredicates.MANAGE_EXECUTION_COURSES.evaluate(degree.getDegree())) {
                         result.add(executionCourse);

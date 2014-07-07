@@ -56,7 +56,7 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
                                     markSheetManagementBean.getExecutionPeriod().getExecutionYear()),
                             markSheetManagementBean.getExecutionPeriod());
                 } else {
-                    addCurricularCourses(result, markSheetManagementBean.getDegreeCurricularPlan().getCurricularCourses(),
+                    addCurricularCourses(result, markSheetManagementBean.getDegreeCurricularPlan().getCurricularCoursesSet(),
                             markSheetManagementBean.getExecutionPeriod());
                 }
             } else {

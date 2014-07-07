@@ -147,7 +147,7 @@ public class MergeExecutionCourses {
         copyDistributedTestStuff(executionCourseFrom, executionCourseTo);
         copyVigilantGroups(executionCourseFrom, executionCourseTo);
         copyExecutionCourseLogs(executionCourseFrom, executionCourseTo);
-        executionCourseTo.getAssociatedCurricularCourses().addAll(executionCourseFrom.getAssociatedCurricularCourses());
+        executionCourseTo.getAssociatedCurricularCoursesSet().addAll(executionCourseFrom.getAssociatedCurricularCoursesSet());
 
         executionCourseTo.copyLessonPlanningsFrom(executionCourseFrom);
 
@@ -175,7 +175,7 @@ public class MergeExecutionCourses {
         for (final InquiriesCourse inquiriesCourse : executionCourseFrom.getAssociatedInquiriesCoursesSet()) {
             inquiriesCourse.setExecutionCourse(executionCourseTo);
         }
-        for (final InquiriesRegistry inquiriesRegistry : executionCourseFrom.getAssociatedInquiriesRegistries()) {
+        for (final InquiriesRegistry inquiriesRegistry : executionCourseFrom.getAssociatedInquiriesRegistriesSet()) {
             inquiriesRegistry.setExecutionCourse(executionCourseTo);
         }
         //new QUC model
@@ -228,7 +228,7 @@ public class MergeExecutionCourses {
 
     private void copySummaries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         final List<Summary> associatedSummaries = new ArrayList<Summary>();
-        associatedSummaries.addAll(executionCourseFrom.getAssociatedSummaries());
+        associatedSummaries.addAll(executionCourseFrom.getAssociatedSummariesSet());
         for (final Summary summary : associatedSummaries) {
             summary.setExecutionCourse(executionCourseTo);
         }
@@ -237,7 +237,7 @@ public class MergeExecutionCourses {
     private void copyGroupPropertiesExecutionCourse(final ExecutionCourse executionCourseFrom,
             final ExecutionCourse executionCourseTo) {
         final List<ExportGrouping> associatedGroupPropertiesExecutionCourse = new ArrayList<ExportGrouping>();
-        associatedGroupPropertiesExecutionCourse.addAll(executionCourseFrom.getExportGroupings());
+        associatedGroupPropertiesExecutionCourse.addAll(executionCourseFrom.getExportGroupingsSet());
 
         for (final ExportGrouping groupPropertiesExecutionCourse : associatedGroupPropertiesExecutionCourse) {
             if (executionCourseTo.hasGrouping(groupPropertiesExecutionCourse.getGrouping())) {
@@ -250,8 +250,8 @@ public class MergeExecutionCourses {
 
     private void removeEvaluations(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
-        while (!executionCourseFrom.getAssociatedEvaluations().isEmpty()) {
-            final Evaluation evaluation = executionCourseFrom.getAssociatedEvaluations().iterator().next();
+        while (!executionCourseFrom.getAssociatedEvaluationsSet().isEmpty()) {
+            final Evaluation evaluation = executionCourseFrom.getAssociatedEvaluationsSet().iterator().next();
             if (evaluation instanceof FinalEvaluation) {
                 final FinalEvaluation finalEvaluationFrom = (FinalEvaluation) evaluation;
                 if (!finalEvaluationFrom.getMarksSet().isEmpty()) {
@@ -260,16 +260,15 @@ public class MergeExecutionCourses {
                     finalEvaluationFrom.delete();
                 }
             } else {
-                executionCourseTo.getAssociatedEvaluations().add(evaluation);
-                executionCourseFrom.getAssociatedEvaluations().remove(evaluation);
+                executionCourseTo.getAssociatedEvaluationsSet().add(evaluation);
+                executionCourseFrom.getAssociatedEvaluationsSet().remove(evaluation);
             }
         }
     }
 
     private void copyBibliographicReference(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
-        for (; !executionCourseFrom.getAssociatedBibliographicReferences().isEmpty(); executionCourseTo
-                .getAssociatedBibliographicReferences().add(
-                        executionCourseFrom.getAssociatedBibliographicReferences().iterator().next())) {
+        for (; !executionCourseFrom.getAssociatedBibliographicReferencesSet().isEmpty(); executionCourseTo.getAssociatedBibliographicReferencesSet().add(
+                        executionCourseFrom.getAssociatedBibliographicReferencesSet().iterator().next())) {
             ;
         }
     }
@@ -277,7 +276,7 @@ public class MergeExecutionCourses {
     private void copyShifts(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         final List<Shift> associatedShifts = new ArrayList<Shift>(executionCourseFrom.getAssociatedShifts());
         for (final Shift shift : associatedShifts) {
-            List<CourseLoad> courseLoadsFrom = new ArrayList<CourseLoad>(shift.getCourseLoads());
+            List<CourseLoad> courseLoadsFrom = new ArrayList<CourseLoad>(shift.getCourseLoadsSet());
             for (Iterator<CourseLoad> iter = courseLoadsFrom.iterator(); iter.hasNext();) {
                 CourseLoad courseLoadFrom = iter.next();
                 CourseLoad courseLoadTo = executionCourseTo.getCourseLoadByShiftType(courseLoadFrom.getType());
@@ -333,7 +332,7 @@ public class MergeExecutionCourses {
             }
         }
 
-        final Iterator<Attends> associatedAttendsFromDestination = executionCourseTo.getAttends().iterator();
+        final Iterator<Attends> associatedAttendsFromDestination = executionCourseTo.getAttendsSet().iterator();
         final Map<String, Attends> alreadyAttendingDestination = new HashMap<String, Attends>();
         while (associatedAttendsFromDestination.hasNext()) {
             Attends attend = associatedAttendsFromDestination.next();
@@ -347,7 +346,7 @@ public class MergeExecutionCourses {
             }
         }
         final List<Attends> associatedAttendsFromSource = new ArrayList<Attends>();
-        associatedAttendsFromSource.addAll(executionCourseFrom.getAttends());
+        associatedAttendsFromSource.addAll(executionCourseFrom.getAttendsSet());
         for (final Attends attend : associatedAttendsFromSource) {
             if (!alreadyAttendingDestination.containsKey(attend.getRegistration().getNumber().toString())) {
                 attend.setDisciplinaExecucao(executionCourseTo);
@@ -428,30 +427,28 @@ public class MergeExecutionCourses {
     }
 
     private void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
-        for (; !executionCourseFrom.getProfessorships().isEmpty();) {
-            final Professorship professorship = executionCourseFrom.getProfessorships().iterator().next();
+        for (; !executionCourseFrom.getProfessorshipsSet().isEmpty();) {
+            final Professorship professorship = executionCourseFrom.getProfessorshipsSet().iterator().next();
             final Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getPerson());
             if (otherProfessorship == null) {
                 professorship.setExecutionCourse(executionCourseTo);
             } else {
-                for (; !professorship.getAssociatedSummaries().isEmpty(); otherProfessorship.addAssociatedSummaries(professorship
-                        .getAssociatedSummaries().iterator().next())) {
+                for (; !professorship.getAssociatedSummariesSet().isEmpty(); otherProfessorship.addAssociatedSummaries(professorship.getAssociatedSummariesSet().iterator().next())) {
                     ;
                 }
-                for (; !professorship.getAssociatedShiftProfessorship().isEmpty(); otherProfessorship
-                        .addAssociatedShiftProfessorship(professorship.getAssociatedShiftProfessorship().iterator().next())) {
+                for (; !professorship.getAssociatedShiftProfessorshipSet().isEmpty(); otherProfessorship
+                        .addAssociatedShiftProfessorship(professorship.getAssociatedShiftProfessorshipSet().iterator().next())) {
                     ;
                 }
-                for (; !professorship.getSupportLessons().isEmpty(); otherProfessorship.addSupportLessons(professorship
-                        .getSupportLessons().iterator().next())) {
+                for (; !professorship.getSupportLessonsSet().isEmpty(); otherProfessorship.addSupportLessons(professorship.getSupportLessonsSet().iterator().next())) {
                     ;
                 }
-                for (; !professorship.getDegreeTeachingServices().isEmpty(); otherProfessorship
-                        .addDegreeTeachingServices(professorship.getDegreeTeachingServices().iterator().next())) {
+                for (; !professorship.getDegreeTeachingServicesSet().isEmpty(); otherProfessorship
+                        .addDegreeTeachingServices(professorship.getDegreeTeachingServicesSet().iterator().next())) {
                     ;
                 }
-                for (; !professorship.getTeacherMasterDegreeServices().isEmpty(); otherProfessorship
-                        .addTeacherMasterDegreeServices(professorship.getTeacherMasterDegreeServices().iterator().next())) {
+                for (; !professorship.getTeacherMasterDegreeServicesSet().isEmpty(); otherProfessorship
+                        .addTeacherMasterDegreeServices(professorship.getTeacherMasterDegreeServicesSet().iterator().next())) {
                     ;
                 }
                 professorship.delete();
@@ -460,7 +457,7 @@ public class MergeExecutionCourses {
     }
 
     private Professorship findProfessorShip(final ExecutionCourse executionCourseTo, final Person person) {
-        for (final Professorship professorship : executionCourseTo.getProfessorships()) {
+        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
             if (professorship.getPerson() == person) {
                 return professorship;
             }
@@ -532,7 +529,7 @@ public class MergeExecutionCourses {
     }
 
     private void copyExecutionCourseLogs(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
-        for (ExecutionCourseLog executionCourseLog : executionCourseFrom.getExecutionCourseLogs()) {
+        for (ExecutionCourseLog executionCourseLog : executionCourseFrom.getExecutionCourseLogsSet()) {
             executionCourseLog.setExecutionCourse(executionCourseTo);
         }
 

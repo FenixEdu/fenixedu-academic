@@ -127,14 +127,4 @@ public class ExternalPhdProgram extends ExternalPhdProgram_Base {
         });
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getIndividualProgramProcesses() {
-        return getIndividualProgramProcessesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea> getPhdProgramFocusAreas() {
-        return getPhdProgramFocusAreasSet();
-    }
-
 }

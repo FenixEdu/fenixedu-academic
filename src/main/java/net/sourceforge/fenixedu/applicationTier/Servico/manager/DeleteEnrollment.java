@@ -44,7 +44,7 @@ public class DeleteEnrollment {
         for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {
             final Enrolment enrollment = registration.findEnrolmentByEnrolmentID(enrollmentId);
             if (enrollment != null) {
-                for (EnrolmentEvaluation evaluation : enrollment.getEvaluations()) {
+                for (EnrolmentEvaluation evaluation : enrollment.getEvaluationsSet()) {
                     evaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
                 }
 

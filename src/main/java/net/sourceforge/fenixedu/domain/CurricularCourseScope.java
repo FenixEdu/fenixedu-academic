@@ -305,9 +305,4 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         }
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getAssociatedWrittenEvaluations() {
-        return getAssociatedWrittenEvaluationsSet();
-    }
-
 }

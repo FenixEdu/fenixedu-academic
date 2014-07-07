@@ -69,7 +69,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     public List<? extends CandidacyPeriod> getCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
         final List<CandidacyPeriod> result = new ArrayList<CandidacyPeriod>();
-        for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriods()) {
+        for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriodsSet()) {
             if (candidacyPeriod.getClass().equals(clazz)) {
                 result.add(candidacyPeriod);
             }
@@ -78,7 +78,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     }
 
     public boolean hasCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
-        for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriods()) {
+        for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriodsSet()) {
             if (candidacyPeriod.getClass().equals(clazz)) {
                 return true;
             }
@@ -217,26 +217,6 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
         } else {
             setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction> getPersonFunction() {
-        return getPersonFunctionSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping> getPaymentCodeMappings() {
-        return getPaymentCodeMappingsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.period.CandidacyPeriod> getCandidacyPeriods() {
-        return getCandidacyPeriodsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport> getExecutionDegreeCoursesReports() {
-        return getExecutionDegreeCoursesReportsSet();
     }
 
 }

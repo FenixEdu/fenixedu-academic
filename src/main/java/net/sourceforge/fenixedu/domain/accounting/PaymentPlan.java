@@ -298,7 +298,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     }
 
     public Installment getInstallmentByOrder(int order) {
-        for (final Installment installment : getInstallments()) {
+        for (final Installment installment : getInstallmentsSet()) {
             if (installment.getInstallmentOrder() == order) {
                 return installment;
             }
@@ -377,12 +377,12 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
 
     public void delete() {
         check(this, RolePredicates.MANAGER_PREDICATE);
-        if (!getGratuityEventsWithPaymentPlan().isEmpty()) {
+        if (!getGratuityEventsWithPaymentPlanSet().isEmpty()) {
             throw new DomainException("error.accounting.PaymentPlan.cannot.delete.with.already.associated.gratuity.events");
         }
 
         while (!getInstallmentsSet().isEmpty()) {
-            getInstallments().iterator().next().delete();
+            getInstallmentsSet().iterator().next().delete();
         }
 
         removeParameters();
@@ -401,16 +401,6 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
 
     public boolean hasSingleInstallment() {
         return getInstallmentsSet().size() == 1;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan> getGratuityEventsWithPaymentPlan() {
-        return getGratuityEventsWithPaymentPlanSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Installment> getInstallments() {
-        return getInstallmentsSet();
     }
 
 }

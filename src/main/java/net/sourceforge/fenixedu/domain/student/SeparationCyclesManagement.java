@@ -158,7 +158,7 @@ public class SeparationCyclesManagement {
     private void moveInquiriesRegistries(final StudentCurricularPlan oldStudentCurricularPlan, final Registration newRegistration) {
         Set<ExecutionCourse> oldExecutionCourses = oldStudentCurricularPlan.getRegistration().getAttendingExecutionCoursesFor();
         Set<ExecutionCourse> newExecutionCourses = newRegistration.getAttendingExecutionCoursesFor();
-        for (InquiriesRegistry inquiriesRegistry : oldStudentCurricularPlan.getRegistration().getAssociatedInquiriesRegistries()) {
+        for (InquiriesRegistry inquiriesRegistry : oldStudentCurricularPlan.getRegistration().getAssociatedInquiriesRegistriesSet()) {
             if (!oldExecutionCourses.contains(inquiriesRegistry.getExecutionCourse())
                     && newExecutionCourses.contains(inquiriesRegistry.getExecutionCourse())
                     && !newRegistration.hasInquiryResponseFor(inquiriesRegistry.getExecutionCourse())) {
@@ -351,7 +351,7 @@ public class SeparationCyclesManagement {
         final Registration registration = parent.getStudentCurricularPlan().getRegistration();
         enrolment.setCurriculumGroup(parent);
 
-        for (final Attends attend : enrolment.getAttends()) {
+        for (final Attends attend : enrolment.getAttendsSet()) {
             if (!registration.attends(attend.getExecutionCourse())) {
                 attend.setRegistration(registration);
             }
@@ -496,7 +496,7 @@ public class SeparationCyclesManagement {
             }
         } else if (dismissal.isCreditsDismissal()) {
             final CreditsDismissal creditsDismissal = (CreditsDismissal) dismissal;
-            new CreditsDismissal(newCredits, parent, creditsDismissal.getNoEnrolCurricularCourses());
+            new CreditsDismissal(newCredits, parent, creditsDismissal.getNoEnrolCurricularCoursesSet());
         } else {
             throw new DomainException("error.unknown.dismissal.type");
         }
@@ -554,7 +554,7 @@ public class SeparationCyclesManagement {
         if (!curriculumModule.isLeaf()) {
             final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
             for (; !curriculumGroup.getCurriculumModulesSet().isEmpty();) {
-                deleteCurriculumModules(curriculumGroup.getCurriculumModules().iterator().next());
+                deleteCurriculumModules(curriculumGroup.getCurriculumModulesSet().iterator().next());
             }
             curriculumGroup.delete();
         } else if (curriculumModule.isDismissal()) {

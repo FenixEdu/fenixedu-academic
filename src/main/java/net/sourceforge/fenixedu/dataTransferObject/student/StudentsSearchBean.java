@@ -136,7 +136,7 @@ public class StudentsSearchBean implements Serializable {
                 students.add(student);
             }
 
-            for (Registration registration : student.getRegistrations()) {
+            for (Registration registration : student.getRegistrationsSet()) {
                 if (programs.contains(registration.getDegree())) {
                     students.add(student);
                 }

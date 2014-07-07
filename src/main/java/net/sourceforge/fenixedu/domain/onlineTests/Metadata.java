@@ -93,7 +93,7 @@ public class Metadata extends Metadata_Base {
 
     public List<Question> getVisibleQuestions() {
         final List<Question> visibleQuestions = new ArrayList<Question>();
-        for (final Question question : getQuestions()) {
+        for (final Question question : getQuestionsSet()) {
             if (question.getVisibility()) {
                 visibleQuestions.add(question);
             }
@@ -113,7 +113,7 @@ public class Metadata extends Metadata_Base {
     }
 
     public Question getQuestionByFileName(String fileName) {
-        for (Question question : this.getQuestions()) {
+        for (Question question : this.getQuestionsSet()) {
             if (question.getXmlFileName() != null && question.getXmlFileName().equalsIgnoreCase(fileName)) {
                 return question;
             }
@@ -122,7 +122,7 @@ public class Metadata extends Metadata_Base {
     }
 
     public void delete() {
-        for (; !getQuestions().isEmpty(); getQuestions().iterator().next().delete()) {
+        for (; !getQuestionsSet().isEmpty(); getQuestionsSet().iterator().next().delete()) {
             ;
         }
         setExecutionCourse(null);
@@ -193,11 +193,6 @@ public class Metadata extends Metadata_Base {
         } else {
             setLearningTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.Question> getQuestions() {
-        return getQuestionsSet();
     }
 
 }

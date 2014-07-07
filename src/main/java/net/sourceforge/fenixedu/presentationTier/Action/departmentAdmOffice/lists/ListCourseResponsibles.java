@@ -106,8 +106,8 @@ public class ListCourseResponsibles extends FenixDispatchAction {
 
         for (semester = 1; semester <= 2; semester++) {
             ExecutionSemester execSemester = executionYear.getExecutionSemesterFor(semester);
-            for (ExecutionCourse execCourse : execSemester.getAssociatedExecutionCourses()) {
-                for (Professorship professorship : execCourse.getProfessorships()) {
+            for (ExecutionCourse execCourse : execSemester.getAssociatedExecutionCoursesSet()) {
+                for (Professorship professorship : execCourse.getProfessorshipsSet()) {
                     if (professorship.isResponsibleFor()) {
                         Teacher teacher = professorship.getTeacher();
                         Department dept =

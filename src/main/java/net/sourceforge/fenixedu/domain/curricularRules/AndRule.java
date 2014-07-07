@@ -44,7 +44,7 @@ public class AndRule extends AndRule_Base {
     @Override
     public RuleResult evaluate(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
         RuleResult result = RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-        for (final CurricularRule curricularRule : getCurricularRules()) {
+        for (final CurricularRule curricularRule : getCurricularRulesSet()) {
             result = result.and(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
         }
         return result;
@@ -54,7 +54,7 @@ public class AndRule extends AndRule_Base {
     public RuleResult verify(VerifyRuleLevel verifyRuleLevel, EnrolmentContext enrolmentContext,
             DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
         RuleResult result = RuleResult.createTrue(degreeModuleToVerify);
-        for (final CurricularRule curricularRule : getCurricularRules()) {
+        for (final CurricularRule curricularRule : getCurricularRulesSet()) {
             result =
                     result.and(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify, parentCourseGroup));
         }

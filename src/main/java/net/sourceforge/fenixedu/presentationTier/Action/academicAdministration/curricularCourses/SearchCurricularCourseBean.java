@@ -54,7 +54,7 @@ public class SearchCurricularCourseBean implements Serializable {
     }
 
     private void searchRecursive(final CourseGroup courseGroup, Set<Context> result) {
-        Collection<Context> childContexts = courseGroup.getChildContexts();
+        Collection<Context> childContexts = courseGroup.getChildContextsSet();
 
         for (Context context : childContexts) {
             DegreeModule childDegreeModule = context.getChildDegreeModule();

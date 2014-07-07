@@ -176,7 +176,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
                 setDomainObjectInRequest(dynaActionForm, request, "degreeCurricularPlanID", "executionCourse");
         if (degreeCurricularPlan != null) {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getExternalId());
-            for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+            for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
                 for (final DegreeModuleScope degreeCourseScope : curricularCourse.getDegreeModuleScopes()) {
                     final CurricularYear curricularYear = CurricularYear.readByYear(degreeCourseScope.getCurricularYear());
                     curricularYears.add(curricularYear);

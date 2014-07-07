@@ -118,14 +118,4 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         setAllowComments(Boolean.valueOf(value));
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson> getCerimonyInquiryPerson() {
-        return getCerimonyInquiryPersonSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryAnswer> getCerimonyInquiryAnswer() {
-        return getCerimonyInquiryAnswerSet();
-    }
-
 }

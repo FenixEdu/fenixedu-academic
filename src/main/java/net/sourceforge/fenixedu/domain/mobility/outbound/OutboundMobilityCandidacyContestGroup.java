@@ -453,34 +453,4 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         removeCandidatesNotifiedOfSelectionResultsForPeriod(period);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegree() {
-        return getExecutionDegreeSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getMobilityCoordinator() {
-        return getMobilityCoordinatorSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmissionGrade> getOutboundMobilityCandidacySubmissionGrade() {
-        return getOutboundMobilityCandidacySubmissionGradeSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod> getCandidatesNotifiedOfSelectionResultsForPeriod() {
-        return getCandidatesNotifiedOfSelectionResultsForPeriodSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod> getConcludedCandidateSelectionForPeriod() {
-        return getConcludedCandidateSelectionForPeriodSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest> getOutboundMobilityCandidacyContest() {
-        return getOutboundMobilityCandidacyContestSet();
-    }
-
 }

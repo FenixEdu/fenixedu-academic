@@ -44,7 +44,7 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
     }
 
     public void delete() {
-        for (; !getInquiryResultCommentsSet().isEmpty(); getInquiryResultComments().iterator().next().delete()) {
+        for (; !getInquiryResultCommentsSet().isEmpty(); getInquiryResultCommentsSet().iterator().next().delete()) {
             ;
         }
         setExecutionCourse(null);
@@ -53,11 +53,6 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
         setTeacher(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment> getInquiryResultComments() {
-        return getInquiryResultCommentsSet();
     }
 
 }

@@ -161,7 +161,7 @@ public class RegisterCandidate {
 
     private static void createEnrolments(User userView, MasterDegreeCandidate masterDegreeCandidate,
             StudentCurricularPlan studentCurricularPlan) {
-        Collection<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        Collection<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolmentsSet();
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
             new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(), executionSemester,

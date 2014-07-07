@@ -76,7 +76,7 @@ public class GroupStudentEnrolment {
         if (studentAttend == null) {
             throw new NotAuthorizedException();
         }
-        if (studentGroup.getAttends().contains(studentAttend)) {
+        if (studentGroup.getAttendsSet().contains(studentAttend)) {
             throw new InvalidSituationServiceException();
         }
 
@@ -112,7 +112,7 @@ public class GroupStudentEnrolment {
             final StudentGroup studentGroupEnrolled, final Attends studentAttend) throws InvalidSituationServiceException {
 
         for (final StudentGroup studentGroup : studentGroups) {
-            if (studentGroup != studentGroupEnrolled && studentGroup.getAttends().contains(studentAttend)) {
+            if (studentGroup != studentGroupEnrolled && studentGroup.getAttendsSet().contains(studentAttend)) {
                 throw new InvalidSituationServiceException();
             }
         }

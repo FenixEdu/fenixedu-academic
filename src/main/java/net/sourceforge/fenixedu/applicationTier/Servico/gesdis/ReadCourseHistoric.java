@@ -45,7 +45,7 @@ public class ReadCourseHistoric {
     protected List run(String executionCourseId) throws FenixServiceException {
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         Integer semester = executionCourse.getExecutionPeriod().getSemester();
-        Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCoursesSet();
         return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester);
     }
 
@@ -68,7 +68,7 @@ public class ReadCourseHistoric {
         InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
         infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
-        final Collection<CourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
+        final Collection<CourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistoricsSet();
 
         // the historic must only show info regarding the years previous to the
         // year chosen by the user

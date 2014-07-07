@@ -230,14 +230,4 @@ public class Entry extends Entry_Base {
         return getAccountingTransaction().getTransactionDetail().getPaymentMode();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry> getCreditNoteEntries() {
-        return getCreditNoteEntriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getReceipts() {
-        return getReceiptsSet();
-    }
-
 }

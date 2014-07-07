@@ -84,8 +84,8 @@ public class DelegateInquiryBean implements Serializable {
 
     private void initTeachersResults(ExecutionCourse executionCourse, Person person) {
         setTeachersResults(new ArrayList<TeacherShiftTypeResultsBean>());
-        for (Professorship professorship : executionCourse.getProfessorships()) {
-            Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
+            Collection<InquiryResult> professorshipResults = professorship.getInquiryResultsSet();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
@@ -211,7 +211,7 @@ public class DelegateInquiryBean implements Serializable {
                             if (inquiryResultComment == null) {
                                 inquiryResultComment =
                                         new InquiryResultComment(questionResult, person, delegate, questionResultsSummaryBean
-                                                .getQuestionResult().getInquiryResultComments().size() + 1);
+                                        .getQuestionResult().getInquiryResultCommentsSet().size() + 1);
                             }
                             inquiryResultComment.setComment(questionResultsSummaryBean.getEditableComment());
                         }

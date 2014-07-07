@@ -159,7 +159,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
                             }
                         });
                 executionCoursesByCurricularYearByExecutionDegree.put(executionDegree, executionCoursesByCurricularYear);
-                for (final CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
+                for (final CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCoursesSet()) {
                     for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
                         if (degreeModuleScope.isActiveForAcademicInterval(academicInterval)) {
                             final Integer curricularSemester = degreeModuleScope.getCurricularSemester();
@@ -181,7 +181,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
                                 } else {
                                     executionCourses = executionCoursesByCurricularYear.get(curricularYear);
                                 }
-                                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
                                     if (academicInterval.equals(executionCourse.getAcademicInterval())) {
                                         executionCourses.add(executionCourse);
                                     }

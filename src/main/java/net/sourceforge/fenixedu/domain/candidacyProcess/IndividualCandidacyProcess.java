@@ -319,7 +319,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public IndividualCandidacyDocumentFile getActiveFileForType(IndividualCandidacyDocumentFileType type) {
-        for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocuments()) {
+        for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocumentsSet()) {
             if (document.getCandidacyFileType().equals(type) && document.getCandidacyFileActive()) {
                 return document;
             }
@@ -330,7 +330,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public List<IndividualCandidacyDocumentFile> getAllFilesForType(IndividualCandidacyDocumentFileType type) {
         List<IndividualCandidacyDocumentFile> files = new ArrayList<IndividualCandidacyDocumentFile>();
-        for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocuments()) {
+        for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocumentsSet()) {
             if (document.getCandidacyFileType().equals(type)) {
                 files.add(document);
             }
@@ -358,7 +358,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public List<IndividualCandidacyDocumentFile> getActiveDocumentFiles() {
         List<IndividualCandidacyDocumentFile> documentList = new ArrayList<IndividualCandidacyDocumentFile>();
 
-        CollectionUtils.select(getCandidacy().getDocuments(), new Predicate() {
+        CollectionUtils.select(getCandidacy().getDocumentsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {

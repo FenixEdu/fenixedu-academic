@@ -804,7 +804,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
         for (StudentInquiriesCourseResult courseResult : Bennu.getInstance().getStudentInquiriesCourseResultsSet()) {
             if (StringUtils.isEmpty(coursesBean.getKeyExecutionCourseHeader())) {
                 if (coursesBean.getResultsDate().equals(courseResult.getResultsDate())) {
-                    professorships.addAll(courseResult.getExecutionCourse().getProfessorships());
+                    professorships.addAll(courseResult.getExecutionCourse().getProfessorshipsSet());
                     courseResult.resetValues();
                     resetedItems = true;
                 }
@@ -815,7 +815,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
                             coursesBean.getKeyExecutionCourseHeader());
                 }
                 if (executionCourse != null && courseResult.getExecutionCourse() == executionCourse) {
-                    professorships.addAll(courseResult.getExecutionCourse().getProfessorships());
+                    professorships.addAll(courseResult.getExecutionCourse().getProfessorshipsSet());
                     courseResult.resetValues();
                     resetedItems = true;
                 }
@@ -823,7 +823,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
         }
         List<StudentInquiriesTeachingResult> toDelete = new ArrayList<StudentInquiriesTeachingResult>();
         for (Professorship professorship : professorships) {
-            for (StudentInquiriesTeachingResult teachingResult : professorship.getStudentInquiriesTeachingResults()) {
+            for (StudentInquiriesTeachingResult teachingResult : professorship.getStudentInquiriesTeachingResultsSet()) {
                 toDelete.add(teachingResult);
             }
         }

@@ -412,7 +412,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 
         final ExternalCurricularCourse externalCurricularCourse = getExternalCurricularCourse(request);
         request.setAttribute("externalCurricularCourseBean", new ExternalCurricularCourseResultBean(externalCurricularCourse));
-        request.setAttribute("externalEnrolments", externalCurricularCourse.getExternalEnrolments());
+        request.setAttribute("externalEnrolments", externalCurricularCourse.getExternalEnrolmentsSet());
         return mapping.findForward("viewExternalCurricularCourse");
     }
 

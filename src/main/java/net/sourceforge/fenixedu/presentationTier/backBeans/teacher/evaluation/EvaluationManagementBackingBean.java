@@ -637,7 +637,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         if (this.writtenEvaluationEnrolments == null) {
             this.writtenEvaluationEnrolments =
-                    new ArrayList(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationEnrolments());
+                    new ArrayList(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationEnrolmentsSet());
             Collections.sort(this.writtenEvaluationEnrolments, new BeanComparator("student.number"));
         }
         return this.writtenEvaluationEnrolments;
@@ -853,7 +853,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     private List<String> getDegreeModuleScopeIDs(ExecutionCourse executionCourse) {
         final List<String> degreeModuleScopesIDs = new ArrayList<String>();
-        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             List<DegreeModuleScope> degreeModuleScopes = curricularCourse.getDegreeModuleScopes();
             for (DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
                 if (degreeModuleScope.getCurricularSemester().equals(executionCourse.getExecutionPeriod().getSemester())) {
@@ -894,8 +894,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     private Space getRoom(final String roomID) throws FenixServiceException {
-        for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
-                .getWrittenEvaluationSpaceOccupations()) {
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsSet()) {
             if (roomOccupation.getRoom().getExternalId().equals(roomID)) {
                 return roomOccupation.getRoom();
             }
@@ -957,8 +956,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getNames() throws FenixServiceException {
         final List<SelectItem> result =
                 new ArrayList<SelectItem>(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsSet().size());
-        for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
-                .getWrittenEvaluationSpaceOccupations()) {
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsSet()) {
             result.add(new SelectItem(roomOccupation.getRoom().getExternalId(), (roomOccupation.getRoom()).getName()));
         }
         return result;
@@ -1017,14 +1015,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public int getNumberOfAttendingStudents() throws FenixServiceException {
         int numberOfAttendingStudents = 0;
-        for (final ExecutionCourse executionCourse : getEvaluation().getAssociatedExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : getEvaluation().getAssociatedExecutionCoursesSet()) {
             numberOfAttendingStudents += executionCourse.getAttendsSet().size();
         }
         return numberOfAttendingStudents;
     }
 
     public FinalEvaluation getFinalEvaluation() {
-        for (final Evaluation evaluation : getExecutionCourse().getAssociatedEvaluations()) {
+        for (final Evaluation evaluation : getExecutionCourse().getAssociatedEvaluationsSet()) {
             if (evaluation instanceof FinalEvaluation) {
                 return (FinalEvaluation) evaluation;
             }

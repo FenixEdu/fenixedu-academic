@@ -63,9 +63,9 @@ public class Exam extends Exam_Base {
 
         // It's necessary to remove this associations before check some
         // constrains
-        this.getAssociatedExecutionCourses().clear();
-        this.getAssociatedCurricularCourseScope().clear();
-        this.getAssociatedContexts().clear();
+        this.getAssociatedExecutionCoursesSet().clear();
+        this.getAssociatedCurricularCourseScopeSet().clear();
+        this.getAssociatedContextsSet().clear();
 
         checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
 
@@ -83,7 +83,7 @@ public class Exam extends Exam_Base {
         // season and scope
 
         for (ExecutionCourse executionCourse : executionCoursesToAssociate) {
-            for (Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+            for (Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
                 if (evaluation instanceof Exam) {
                     Exam existingExam = (Exam) evaluation;
                     if (existingExam.getSeason().equals(season)) {
@@ -101,10 +101,10 @@ public class Exam extends Exam_Base {
     }
 
     public boolean isExamsMapPublished() {
-        for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
-            for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
+            for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                 final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-                for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+                for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
                     if (executionCourse.getExecutionPeriod().getExecutionYear() == executionDegree.getExecutionYear()
                             && (executionDegree.isPublishedExam(executionCourse.getExecutionPeriod()))) {
                         return true;
@@ -123,13 +123,13 @@ public class Exam extends Exam_Base {
         List<Exam> result = new ArrayList<Exam>();
 
         outter: for (Exam exam : Exam.readExams()) {
-            for (WrittenEvaluationSpaceOccupation occupation : exam.getWrittenEvaluationSpaceOccupations()) {
+            for (WrittenEvaluationSpaceOccupation occupation : exam.getWrittenEvaluationSpaceOccupationsSet()) {
                 if (!(occupation.getRoom()).getName().equals(room)) {
                     continue outter;
                 }
             }
 
-            for (ExecutionCourse course : exam.getAssociatedExecutionCourses()) {
+            for (ExecutionCourse course : exam.getAssociatedExecutionCoursesSet()) {
                 if (!course.getExecutionPeriod().getName().equals(executionPeriod)) {
                     continue outter;
                 }
@@ -210,11 +210,6 @@ public class Exam extends Exam_Base {
     public String getPresentationName() {
         return BundleUtil.getString(Bundle.APPLICATION, "label.exam") + " "
                 + BundleUtil.getString(Bundle.APPLICATION, getSeason().getKey());
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest> getExamDateCertificateRequests() {
-        return getExamDateCertificateRequestsSet();
     }
 
 }

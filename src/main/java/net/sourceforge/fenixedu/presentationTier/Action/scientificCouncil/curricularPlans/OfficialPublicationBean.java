@@ -63,7 +63,7 @@ public class OfficialPublicationBean implements Serializable {
     }
 
     private void initSpecializationNames() {
-        for (DegreeSpecializationArea area : this.degreeOfficialPublication.getSpecializationArea()) {
+        for (DegreeSpecializationArea area : this.degreeOfficialPublication.getSpecializationAreaSet()) {
             SpecializationName name = new SpecializationName(area);
             this.specializationNames.add(name);
         }

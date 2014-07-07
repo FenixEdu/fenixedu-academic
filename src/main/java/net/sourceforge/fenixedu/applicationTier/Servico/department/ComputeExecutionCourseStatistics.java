@@ -72,7 +72,7 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
     private List<String> getResponsibleTeachersName(ExecutionCourse executionCourse) {
         List<String> result = new ArrayList<String>();
-        for (Professorship professorship : executionCourse.getProfessorships()) {
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
             if (professorship.getResponsibleFor().booleanValue()) {
                 result.add(professorship.getPerson().getName());
             }
@@ -83,7 +83,7 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
     private List<String> getDegrees(ExecutionCourse executionCourse) {
         Set<Degree> degrees = new HashSet<Degree>();
-        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             degrees.add(curricularCourse.getDegreeCurricularPlan().getDegree());
         }
 

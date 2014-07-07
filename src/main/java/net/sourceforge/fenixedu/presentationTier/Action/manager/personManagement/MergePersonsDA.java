@@ -401,7 +401,7 @@ public class MergePersonsDA extends FenixDispatchAction {
         Student studentDestiny = domainObject1.getStudent();
         Student studentToRemove = domainObject2.getStudent();
 
-        studentDestiny.acceptRegistrationsFromOtherStudent(studentToRemove.getRegistrations());
+        studentDestiny.acceptRegistrationsFromOtherStudent(studentToRemove.getRegistrationsSet());
 
         return prepareTransferRegistrations(mapping, form, request, response);
 

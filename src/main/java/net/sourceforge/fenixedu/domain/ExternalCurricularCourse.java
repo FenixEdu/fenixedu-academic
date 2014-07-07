@@ -78,7 +78,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 
     private void checkForExternalCurricularCourseWithSameNameAndCode(final Unit unit, final String name, final String code) {
         final String nameToSearch = name.toLowerCase();
-        for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCourses()) {
+        for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCoursesSet()) {
             if (externalCurricularCourse.getName().toLowerCase().equals(nameToSearch)) {
                 if ((externalCurricularCourse.getCode() != null && externalCurricularCourse.getCode().equals(code))
                         || externalCurricularCourse.getCode() == null && code == null) {
@@ -129,7 +129,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
     }
 
     static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String name, String code) {
-        for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCourses()) {
+        for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCoursesSet()) {
             if (externalCurricularCourse.getCode().equals(code) && externalCurricularCourse.getName().equals(name)) {
                 return externalCurricularCourse;
             }
@@ -139,7 +139,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 
     static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String code) {
         List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>();
-        for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCourses()) {
+        for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCoursesSet()) {
             if (StringUtils.isEmpty(externalCurricularCourse.getCode()) && StringUtils.isEmpty(code)
                     || externalCurricularCourse.getCode().equals(code)) {
                 result.add(externalCurricularCourse);
@@ -176,11 +176,6 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
             }
         }
         return result;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment> getExternalEnrolments() {
-        return getExternalEnrolmentsSet();
     }
 
 }

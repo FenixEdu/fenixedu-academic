@@ -74,7 +74,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 
     @Override
     public void setTemplateEntry(AcademicCalendarEntry templateEntry) {
-        if (templateEntry != null && !getChildEntries().isEmpty()
+        if (templateEntry != null && !getChildEntriesSet().isEmpty()
                 && (getTemplateEntry() == null || !getTemplateEntry().equals(templateEntry))) {
             throw new DomainException("error.RootEntry.invalid.templateEntry");
         }
@@ -96,7 +96,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
         Collection<AcademicCalendarEntry> result = null;
 
         if (getTemplateEntry() == null) {
-            result = getChildEntries();
+            result = getChildEntriesSet();
         } else {
             result = getChildEntriesWithTemplateEntries();
         }

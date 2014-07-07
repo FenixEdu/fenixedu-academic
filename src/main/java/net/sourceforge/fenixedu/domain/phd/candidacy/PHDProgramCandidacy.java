@@ -130,8 +130,8 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
         setExecutionDegree(studentCandidacy.getExecutionDegree());
         setRegistration(studentCandidacy.getRegistration());
         setGrantOwnerProvider(studentCandidacy.getGrantOwnerProvider());
-        getCandidacyDocuments().addAll(studentCandidacy.getCandidacyDocuments());
-        getCandidacySituations().addAll(studentCandidacy.getCandidacySituations());
+        getCandidacyDocumentsSet().addAll(studentCandidacy.getCandidacyDocumentsSet());
+        getCandidacySituationsSet().addAll(studentCandidacy.getCandidacySituationsSet());
 
         setSchoolTimeDistrictSubDivisionOfResidence(studentCandidacy.getSchoolTimeDistrictSubDivisionOfResidence());
         setCountryOfResidence(studentCandidacy.getCountryOfResidence());

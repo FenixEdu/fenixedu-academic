@@ -43,14 +43,14 @@ public class ReadCurricularCourseListOfExecutionCourse {
         ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(infoExecCourse.getSigla());
 
         List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();
-        if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
+        if (executionCourse != null && executionCourse.getAssociatedCurricularCoursesSet() != null) {
 
-            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 
                 // curricular course scope list
                 List<InfoCurricularCourseScope> infoCurricularCourseScopeList = new ArrayList<InfoCurricularCourseScope>();
-                for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
                     InfoCurricularCourseScope infoCurricularCourseScope =
                             InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
                     infoCurricularCourseScopeList.add(infoCurricularCourseScope);

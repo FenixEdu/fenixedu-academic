@@ -79,14 +79,4 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
         return numberOfEnrolments;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Shift> getEnrolledShifts() {
-        return getEnrolledShiftsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryStudentTeacherAnswer> getAssociatedInquiryStudentTeacherAnswers() {
-        return getAssociatedInquiryStudentTeacherAnswersSet();
-    }
-
 }

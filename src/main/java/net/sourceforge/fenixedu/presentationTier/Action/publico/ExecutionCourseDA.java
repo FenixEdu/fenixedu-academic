@@ -378,14 +378,14 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
                 request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.m1");
                 return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
             }
-            if (executionCourse.getInquiryResults().isEmpty()) {
+            if (executionCourse.getInquiryResultsSet().isEmpty()) {
                 request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable");
                 return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
             }
 
             Map<Professorship, Set<ShiftType>> professorships = new HashMap<Professorship, Set<ShiftType>>();
-            for (Professorship professorship : executionCourse.getProfessorships()) {
-                Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
+            for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
+                Collection<InquiryResult> professorshipResults = professorship.getInquiryResultsSet();
                 if (!professorshipResults.isEmpty()) {
                     professorships.put(professorship, getShiftTypes(professorshipResults));
                 }
@@ -535,7 +535,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             final ExecutionCourse executionCourse) {
         Map<ExecutionDegree, StudentInquiriesCourseResultBean> courseResultsMap =
                 new HashMap<ExecutionDegree, StudentInquiriesCourseResultBean>();
-        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
+        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResultsSet()) {
             boolean publicDisclosure =
                     studentInquiriesCourseResult.getPublicDisclosure() != null
                             && studentInquiriesCourseResult.getPublicDisclosure();
@@ -548,9 +548,8 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             }
         }
 
-        for (Professorship otherTeacherProfessorship : executionCourse.getProfessorships()) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
-                    .getStudentInquiriesTeachingResults()) {
+        for (Professorship otherTeacherProfessorship : executionCourse.getProfessorshipsSet()) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
                 final boolean publicDisclosure =
                         studentInquiriesTeachingResult.getPublicDegreeDisclosure() != null
                                 && studentInquiriesTeachingResult.getPublicDegreeDisclosure();
@@ -571,16 +570,15 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             final ExecutionCourse executionCourse) {
         Map<ExecutionDegree, StudentInquiriesCourseResultBean> courseResultsMap =
                 new HashMap<ExecutionDegree, StudentInquiriesCourseResultBean>();
-        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
+        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResultsSet()) {
             if (studentInquiriesCourseResult.getPublicDisclosure() != null && studentInquiriesCourseResult.getPublicDisclosure()) {
                 courseResultsMap.put(studentInquiriesCourseResult.getExecutionDegree(), new StudentInquiriesCourseResultBean(
                         studentInquiriesCourseResult));
             }
         }
 
-        for (Professorship otherTeacherProfessorship : executionCourse.getProfessorships()) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
-                    .getStudentInquiriesTeachingResults()) {
+        for (Professorship otherTeacherProfessorship : executionCourse.getProfessorshipsSet()) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
                 if (studentInquiriesTeachingResult.getPublicDegreeDisclosure() != null
                         && studentInquiriesTeachingResult.getPublicDegreeDisclosure()) {
                     final StudentInquiriesCourseResultBean studentInquiriesCourseResultBean =

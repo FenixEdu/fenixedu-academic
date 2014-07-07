@@ -111,7 +111,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 
     private List<Registration> getAllRegistrations(final Student student) {
         final List<Registration> result = new ArrayList<Registration>();
-        result.addAll(student.getRegistrations());
+        result.addAll(student.getRegistrationsSet());
         result.addAll(student.getTransitionRegistrations());
         Collections.sort(result, new ReverseComparator(Registration.COMPARATOR_BY_START_DATE));
         return result;

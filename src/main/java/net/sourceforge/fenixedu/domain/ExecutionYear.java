@@ -111,7 +111,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
-        return CollectionUtils.select(getExecutionDegrees(), new Predicate() {
+        return CollectionUtils.select(getExecutionDegreesSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 ExecutionDegree executionDegree = (ExecutionDegree) arg0;
@@ -180,13 +180,13 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
-        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
+        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegreesSet());
         Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
         return executionDegrees;
     }
 
     public ExecutionSemester getExecutionSemesterFor(final Integer semester) {
-        for (final ExecutionSemester executionSemester : getExecutionPeriods()) {
+        for (final ExecutionSemester executionSemester : getExecutionPeriodsSet()) {
             if (executionSemester.isFor(semester)) {
                 return executionSemester;
             }
@@ -195,11 +195,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public ExecutionSemester getFirstExecutionPeriod() {
-        return Collections.min(this.getExecutionPeriods(), ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+        return Collections.min(this.getExecutionPeriodsSet(), ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
     public ExecutionSemester getLastExecutionPeriod() {
-        return Collections.max(this.getExecutionPeriods(), ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+        return Collections.max(this.getExecutionPeriodsSet(), ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
     public List<ExecutionSemester> readNotClosedPublicExecutionPeriods() {
@@ -228,7 +228,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public DegreeInfo getDegreeInfo(final Degree degree) {
-        for (final DegreeInfo degreeInfo : getDegreeInfos()) {
+        for (final DegreeInfo degreeInfo : getDegreeInfosSet()) {
             if (degreeInfo.getDegree() == degree) {
                 return degreeInfo;
             }
@@ -357,7 +357,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     private Set<AccountingTransaction> getPaymentsFor(final Class<? extends AnnualEvent> eventClass) {
         final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
-        for (final AnnualEvent each : getAnnualEvents()) {
+        for (final AnnualEvent each : getAnnualEventsSet()) {
             if (eventClass.equals(each.getClass()) && !each.isCancelled()) {
                 result.addAll(each.getNonAdjustingTransactions());
             }
@@ -373,7 +373,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     public List<StudentCandidacy> getStudentCandidacies() {
         final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
         for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-            result.addAll(executionDegree.getStudentCandidacies());
+            result.addAll(executionDegree.getStudentCandidaciesSet());
         }
         return result;
     }
@@ -388,7 +388,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public ExecutionSemester getExecutionSemester(final YearMonthDay date) {
-        for (final ExecutionSemester semester : getExecutionPeriods()) {
+        for (final ExecutionSemester semester : getExecutionPeriodsSet()) {
             if (semester.containsDay(date)) {
                 return semester;
             }
@@ -625,197 +625,12 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public ExecutionDegree getExecutionDegreeByAcronym(String acronym) {
-        for (ExecutionDegree executionDegree : getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : getExecutionDegreesSet()) {
             if (executionDegree.getDegree().getSigla().equals(acronym)) {
                 return executionDegree;
             }
         }
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess> getConclusionProcessesConcluded() {
-        return getConclusionProcessesConcludedSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.export.SIBSOutgoingPaymentFile> getSIBSOutgoingPaymentFiles() {
-        return getSIBSOutgoingPaymentFilesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElection> getDelegateElections() {
-        return getDelegateElectionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.Formation> getCandidacyFormations() {
-        return getCandidacyFormationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.reports.GepReportFile> getGepReportFile() {
-        return getGepReportFileSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction> getInsuranceTransactions() {
-        return getInsuranceTransactionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent> getAnnualEvents() {
-        return getAnnualEventsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation> getTeacherPersonalExpectations() {
-        return getTeacherPersonalExpectationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup> getVigilantGroups() {
-        return getVigilantGroupsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent> getDfaRegistrationEvents() {
-        return getDfaRegistrationEventsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionSemester> getExecutionPeriods() {
-        return getExecutionPeriodsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode> getMasterDegreeInsurancePaymentCodes() {
-        return getMasterDegreeInsurancePaymentCodesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear> getRegistrationDataByExecutionYear() {
-        return getRegistrationDataByExecutionYearSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersionsConcluded() {
-        return getConclusionProcessVersionsConcludedSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroupInformation> getCycleCourseGroupInformation() {
-        return getCycleCourseGroupInformationSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeLog> getDegreeLogs() {
-        return getDegreeLogsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup> getExpectationEvaluationGroups() {
-        return getExpectationEvaluationGroupsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.importation.DgesBaseProcess> getDgesBaseProcess() {
-        return getDgesBaseProcessSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeInfo> getDegreeInfos() {
-        return getDegreeInfosSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersionsBegined() {
-        return getConclusionProcessVersionsBeginedSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod> getTeacherPersonalExpectationPeriods() {
-        return getTeacherPersonalExpectationPeriodsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getStudents() {
-        return getStudentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
-        return getExamCoordinatorsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.alumni.AlumniReportFile> getAlumniReportFiles() {
-        return getAlumniReportFilesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJob> getGratuityReportQueueJobs() {
-        return getGratuityReportQueueJobsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.PublicRelationsStudentListQueueJob> getPublicRelationsStudentListQueueJob() {
-        return getPublicRelationsStudentListQueueJobSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.MeasurementTest> getMeasurementTests() {
-        return getMeasurementTestsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob> getEventReportQueueJob() {
-        return getEventReportQueueJobSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.RegistrationRegime> getRegistrationRegimes() {
-        return getRegistrationRegimesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getPhdIndividualProgramProcesses() {
-        return getPhdIndividualProgramProcessesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DepartmentCreditsPool> getDepartmentCreditsPools() {
-        return getDepartmentCreditsPoolsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getPersonalIngressionsData() {
-        return getPersonalIngressionsDataSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getAcademicServiceRequests() {
-        return getAcademicServiceRequestsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear> getStudentDataByExecutionYear() {
-        return getStudentDataByExecutionYearSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegrees() {
-        return getExecutionDegreesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR> getPartialRegistrationRegimeRequestPostingRules() {
-        return getPartialRegistrationRegimeRequestPostingRulesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentPlan> getPaymentPlans() {
-        return getPaymentPlansSet();
     }
 
 }

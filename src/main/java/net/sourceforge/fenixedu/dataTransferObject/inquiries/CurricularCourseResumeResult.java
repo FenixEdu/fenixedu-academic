@@ -89,7 +89,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
     @Override
     protected void initResultBlocks() {
         setResultBlocks(new TreeSet<InquiryResult>(new BeanComparator("inquiryQuestion.questionOrder")));
-        for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResults()) {
+        for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResultsSet()) {
             if ((inquiryResult.getExecutionDegree() == getExecutionDegree() || (inquiryResult.getExecutionDegree() == null && inquiryResult
                     .getProfessorship() == null)) && InquiryConnectionType.GROUP.equals(inquiryResult.getConnectionType())) { //change to COURSE_EVALUATION
                 getResultBlocks().add(inquiryResult);
@@ -99,8 +99,8 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 
     private void initTeachersResults(ExecutionCourse executionCourse) {
         setTeachersResults(new ArrayList<TeacherShiftTypeResultsBean>());
-        for (Professorship professorship : executionCourse.getProfessorships()) {
-            Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
+            Collection<InquiryResult> professorshipResults = professorship.getInquiryResultsSet();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
@@ -128,7 +128,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
     @Override
     protected InquiryAnswer getInquiryAnswer() {
         InquiryDelegateAnswer inquiryDelegateAnswer = null;
-        for (InquiryDelegateAnswer delegateAnswer : getYearDelegate().getInquiryDelegateAnswers()) {
+        for (InquiryDelegateAnswer delegateAnswer : getYearDelegate().getInquiryDelegateAnswersSet()) {
             if (delegateAnswer.getExecutionCourse() == getExecutionCourse()) {
                 inquiryDelegateAnswer = delegateAnswer;
             }
@@ -146,7 +146,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
     @Override
     protected List<InquiryResult> getInquiryResultsByQuestion(InquiryQuestion inquiryQuestion) {
         List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
-        for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResults()) {
+        for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResultsSet()) {
             if (inquiryResult.getExecutionDegree() == getExecutionDegree()
                     || (inquiryResult.getExecutionDegree() == null && inquiryResult.getShiftType() != null)) {
                 if (inquiryResult.getInquiryQuestion() == inquiryQuestion && inquiryResult.getResultClassification() != null) {

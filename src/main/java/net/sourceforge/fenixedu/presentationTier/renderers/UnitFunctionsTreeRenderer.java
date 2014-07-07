@@ -62,7 +62,7 @@ public class UnitFunctionsTreeRenderer extends AbstractUnitFunctionsTreeRenderer
 
     @Override
     protected String getLinkSequenceFor(Unit unit) {
-        return createLinkSequence(getAddFunctionLink(), unit.getFunctions().size() > 1 ? getOrderFunctionsLink() : null);
+        return createLinkSequence(getAddFunctionLink(), unit.getFunctionsSet().size() > 1 ? getOrderFunctionsLink() : null);
     }
 
     @Override

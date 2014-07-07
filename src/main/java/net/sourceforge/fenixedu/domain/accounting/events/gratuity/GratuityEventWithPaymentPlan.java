@@ -326,7 +326,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
             return null;
         }
 
-        for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodes()) {
+        for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodesSet()) {
             if (!paymentCode.isNew()) {
                 continue;
             }
@@ -520,7 +520,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         final DateTime now = new DateTime();
         Money result = Money.ZERO;
 
-        for (final Installment installment : getGratuityPaymentPlan().getInstallments()) {
+        for (final Installment installment : getGratuityPaymentPlan().getInstallmentsSet()) {
             if (!getGratuityPaymentPlan().isInstallmentInDebt(installment, this, now, BigDecimal.ZERO)) {
                 result = result.add(installment.getAmount());
             }

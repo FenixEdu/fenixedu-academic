@@ -209,8 +209,8 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
      */
     protected boolean validateCoordinationAccessRestrictions(final Person person, final ExecutionDegree executionDegree) {
         List<Coordinator> coordinators = new ArrayList<Coordinator>();
-        coordinators.addAll(person.getCoordinators());
-        coordinators.retainAll(executionDegree.getCoordinatorsList());
+        coordinators.addAll(person.getCoordinatorsSet());
+        coordinators.retainAll(executionDegree.getCoordinatorsListSet());
 
         return !coordinators.isEmpty();
     }

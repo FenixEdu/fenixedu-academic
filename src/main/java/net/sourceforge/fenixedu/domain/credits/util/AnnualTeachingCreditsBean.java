@@ -103,9 +103,9 @@ public class AnnualTeachingCreditsBean implements Serializable {
         this.hasAnyLimitation = annualTeachingCredits.getHasAnyLimitation();
         setAreCreditsCalculated(annualTeachingCredits.getAnnualCreditsState().getIsFinalCreditsCalculated());
         setAnnualTeachingCreditsByPeriod(executionYear, teacher, roleType);
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (!annualTeachingCredits.isPastResume()) {
-                for (OtherService otherService : executionSemester.getOtherServicesCorrections()) {
+                for (OtherService otherService : executionSemester.getOtherServicesCorrectionsSet()) {
                     if (otherService.getTeacherService().getTeacher().equals(teacher)
                             && !otherService.getCorrectedExecutionSemester().equals(
                                     otherService.getTeacherService().getExecutionPeriod())) {
@@ -139,7 +139,7 @@ public class AnnualTeachingCreditsBean implements Serializable {
         if (roleType.equals(RoleType.SCIENTIFIC_COUNCIL) || roleType.equals(RoleType.DEPARTMENT_MEMBER)) {
             setCanSeeCreditsReduction(true);
         }
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             AnnualTeachingCreditsByPeriodBean annualTeachingCreditsByPeriodBean =
                     new AnnualTeachingCreditsByPeriodBean(executionSemester, teacher, roleType);
             annualTeachingCreditsByPeriodBeans.add(annualTeachingCreditsByPeriodBean);
@@ -173,7 +173,7 @@ public class AnnualTeachingCreditsBean implements Serializable {
     public List<ThesisEvaluationParticipant> getMasterDegreeThesis() {
         ArrayList<ThesisEvaluationParticipant> participants = new ArrayList<ThesisEvaluationParticipant>();
         if (!executionYear.getYear().equals("2011/2012")) {
-            for (ThesisEvaluationParticipant participant : teacher.getPerson().getThesisEvaluationParticipants()) {
+            for (ThesisEvaluationParticipant participant : teacher.getPerson().getThesisEvaluationParticipantsSet()) {
                 Thesis thesis = participant.getThesis();
                 if (thesis.isEvaluated()
                         && thesis.hasFinalEnrolmentEvaluation()
@@ -190,7 +190,7 @@ public class AnnualTeachingCreditsBean implements Serializable {
     public List<InternalPhdParticipant> getPhdDegreeTheses() {
         ArrayList<InternalPhdParticipant> participants = new ArrayList<InternalPhdParticipant>();
         if (!executionYear.getYear().equals("2011/2012")) {
-            for (InternalPhdParticipant internalPhdParticipant : teacher.getPerson().getInternalParticipants()) {
+            for (InternalPhdParticipant internalPhdParticipant : teacher.getPerson().getInternalParticipantsSet()) {
                 LocalDate conclusionDate = internalPhdParticipant.getIndividualProcess().getConclusionDate();
                 if (conclusionDate != null
                         && conclusionDate.getYear() == executionYear.getBeginCivilYear()
@@ -218,7 +218,7 @@ public class AnnualTeachingCreditsBean implements Serializable {
 
     public List<TeacherServiceComment> getTeacherServiceComments() {
         List<TeacherServiceComment> teacherServiceComments = new ArrayList<TeacherServiceComment>();
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
             if (teacherService != null) {
                 teacherServiceComments.addAll(teacherService.getTeacherServiceComments());
@@ -371,7 +371,7 @@ public class AnnualTeachingCreditsBean implements Serializable {
         boolean hasOrientantionCredits = false;
         boolean hasFinalAndAccumulatedCredits = false;
 
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (getTeacher().isActiveForSemester(executionSemester) || getTeacher().hasTeacherAuthorization(executionSemester)) {
                 BigDecimal thisSemesterManagementFunctionCredits =
                         new BigDecimal(getTeacher().getManagementFunctionsCredits(executionSemester));

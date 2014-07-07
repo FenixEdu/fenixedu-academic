@@ -98,7 +98,7 @@ public class ReadShiftsAndGroups {
         final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 
         if (strategy.checkHasShift(grouping)) {
-            for (final ExportGrouping exportGrouping : grouping.getExportGroupings()) {
+            for (final ExportGrouping exportGrouping : grouping.getExportGroupingsSet()) {
                 final ExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
                 for (final Shift shift : executionCourse.getAssociatedShifts()) {
                     if (shift.containsType(grouping.getShiftType())) {

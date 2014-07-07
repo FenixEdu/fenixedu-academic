@@ -107,7 +107,7 @@ public class Branch extends Branch_Base {
 
         final Branch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
 
-        this.getStudentCurricularPlans().clear();
+        this.getStudentCurricularPlansSet().clear();
 
         removeCurricularCourseScopes(commonBranch);
         setDegreeCurricularPlan(null);
@@ -137,7 +137,7 @@ public class Branch extends Branch_Base {
     }
 
     private Branch findCommonBranchForSameDegreeCurricularPlan() {
-        for (Branch branch : getDegreeCurricularPlan().getAreas()) {
+        for (Branch branch : getDegreeCurricularPlan().getAreasSet()) {
             if (branch.representsCommonBranch() && branch.getName().equals("")) {
                 return branch;
             }
@@ -147,7 +147,7 @@ public class Branch extends Branch_Base {
 
     private Boolean hasCurricularCourseCommonBranchInAnyCurricularCourseScope(CurricularCourse curricularCourse,
             final Branch commonBranch) {
-        return ((CurricularCourseScope) CollectionUtils.find(curricularCourse.getScopes(), new Predicate() {
+        return ((CurricularCourseScope) CollectionUtils.find(curricularCourse.getScopesSet(), new Predicate() {
             @Override
             public boolean evaluate(Object o) {
                 CurricularCourseScope ccs = (CurricularCourseScope) o;
@@ -176,21 +176,6 @@ public class Branch extends Branch_Base {
 
     public boolean isSecondaryBranch() {
         return getBranchType() == BranchType.SECNBR;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal> getAssociatedFinalDegreeWorkProposals() {
-        return getAssociatedFinalDegreeWorkProposalsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseScope> getScopes() {
-        return getScopesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlan> getStudentCurricularPlans() {
-        return getStudentCurricularPlansSet();
     }
 
 }

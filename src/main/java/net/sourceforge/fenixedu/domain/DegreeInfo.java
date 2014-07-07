@@ -301,7 +301,7 @@ public class DegreeInfo extends DegreeInfo_Base {
     public static String readAllDegreeInfos() {
         JSONArray infos = new JSONArray();
         for (Degree degree : Bennu.getInstance().getDegreesSet()) {
-            Collection<DegreeInfo> degreeInfos = degree.getDegreeInfos();
+            Collection<DegreeInfo> degreeInfos = degree.getDegreeInfosSet();
             if (!degreeInfos.isEmpty()) {
                 for (DegreeInfo degreeInfo : degreeInfos) {
                     JSONObject obj = new JSONObject();

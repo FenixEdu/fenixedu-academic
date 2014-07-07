@@ -44,7 +44,7 @@ public class InsertTestAsNewTest {
         String title = BundleUtil.getString(Bundle.APPLICATION, "label.testTitle.duplicated", oldTest.getTitle() );
         Test test = new Test(title, oldTest.getInformation(), oldTest.getTestScope());
 
-        Collection<TestQuestion> testQuestionList = oldTest.getTestQuestions();
+        Collection<TestQuestion> testQuestionList = oldTest.getTestQuestionsSet();
 
         for (TestQuestion testQuestion : testQuestionList) {
             TestQuestion newTestQuestion = new TestQuestion();

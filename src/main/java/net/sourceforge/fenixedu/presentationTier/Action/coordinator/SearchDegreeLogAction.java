@@ -149,7 +149,7 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
     private void searchLogs(SearchDegreeLogBean bean) {
         final Predicate<DegreeLog> filter = bean.getFilters();
         final Collection<DegreeLog> validLogs = new HashSet<DegreeLog>();
-        for (final DegreeLog log : bean.getDegree().getDegreeLogs()) {
+        for (final DegreeLog log : bean.getDegree().getDegreeLogsSet()) {
             if (filter.eval(log)) {
                 validLogs.add(log);
             }

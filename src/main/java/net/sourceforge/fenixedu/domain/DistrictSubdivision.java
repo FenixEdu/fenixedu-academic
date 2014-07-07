@@ -104,34 +104,4 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
         return result;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getPersonalIngressionsData() {
-        return getPersonalIngressionsDataSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getSchoolTimePersonalIngressionsData() {
-        return getSchoolTimePersonalIngressionsDataSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy> getSchoolTimeIndividualCandidacies() {
-        return getSchoolTimeIndividualCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getSchoolTimeStudentCandidacies() {
-        return getSchoolTimeStudentCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy> getIndividualCandidacies() {
-        return getIndividualCandidaciesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacies() {
-        return getStudentCandidaciesSet();
-    }
-
 }

@@ -69,7 +69,7 @@ public class ExamCoordinator extends ExamCoordinator_Base {
 
     public List<UnavailablePeriod> getUnavailablePeriodsThatCanManage() {
         Set<UnavailablePeriod> unavailablePeriods = new HashSet<UnavailablePeriod>();
-        for (VigilantGroup group : this.getVigilantGroups()) {
+        for (VigilantGroup group : this.getVigilantGroupsSet()) {
             unavailablePeriods.addAll(group.getUnavailablePeriodsOfVigilantsInGroup());
         }
         return new ArrayList<UnavailablePeriod>(unavailablePeriods);
@@ -97,8 +97,8 @@ public class ExamCoordinator extends ExamCoordinator_Base {
 
     public List<ExecutionCourse> getAssociatedExecutionCourses() {
         List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
-        for (VigilantGroup group : this.getVigilantGroups()) {
-            courses.addAll(group.getExecutionCourses());
+        for (VigilantGroup group : this.getVigilantGroupsSet()) {
+            courses.addAll(group.getExecutionCoursesSet());
         }
         return courses;
     }
@@ -136,11 +136,6 @@ public class ExamCoordinator extends ExamCoordinator_Base {
         setPerson(null);
         setExecutionYear(null);
         super.deleteDomainObject();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup> getVigilantGroups() {
-        return getVigilantGroupsSet();
     }
 
 }

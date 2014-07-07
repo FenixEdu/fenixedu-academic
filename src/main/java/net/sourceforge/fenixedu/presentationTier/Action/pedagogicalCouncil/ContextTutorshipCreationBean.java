@@ -207,8 +207,8 @@ public class ContextTutorshipCreationBean implements Serializable {
             final ExecutionSemester executionSemester) {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
+                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                     if (executionSemester == executionCourse.getExecutionPeriod()) {
                         for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
                             String fields[] = execYear.getYear().split("/");

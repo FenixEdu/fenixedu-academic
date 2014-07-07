@@ -34,7 +34,7 @@ public class ReadExportGroupingsByGrouping {
     @Atomic
     public static List<InfoExportGrouping> run(String groupingOID) {
         final Grouping grouping = FenixFramework.getDomainObject(groupingOID);
-        final Collection<ExportGrouping> exportGroupings = grouping.getExportGroupings();
+        final Collection<ExportGrouping> exportGroupings = grouping.getExportGroupingsSet();
 
         final List<InfoExportGrouping> infoExportGroupings = new ArrayList<InfoExportGrouping>(exportGroupings.size());
         for (final ExportGrouping exportGrouping : exportGroupings) {

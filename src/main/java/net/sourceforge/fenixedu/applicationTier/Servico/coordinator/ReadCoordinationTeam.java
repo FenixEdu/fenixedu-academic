@@ -48,7 +48,7 @@ public class ReadCoordinationTeam {
         if (executionDegree == null) {
             throw new FenixServiceException("errors.invalid.execution.degree");
         }
-        Collection<Coordinator> coordinators = executionDegree.getCoordinatorsList();
+        Collection<Coordinator> coordinators = executionDegree.getCoordinatorsListSet();
         Iterator iterator = coordinators.iterator();
         List infoCoordinators = new ArrayList();
         while (iterator.hasNext()) {

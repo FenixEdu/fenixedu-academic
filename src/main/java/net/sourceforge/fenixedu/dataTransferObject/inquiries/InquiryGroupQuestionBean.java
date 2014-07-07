@@ -51,7 +51,7 @@ public class InquiryGroupQuestionBean implements Serializable {
         initGroup(groupQuestion);
         setStudentInquiryRegistry(studentInquiryRegistry);
         setConditionOptions(studentInquiryRegistry);
-        for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
+        for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestionsSet()) {
             getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, studentInquiryRegistry));
         }
     }
@@ -59,7 +59,7 @@ public class InquiryGroupQuestionBean implements Serializable {
     public InquiryGroupQuestionBean(InquiryGroupQuestion inquiryGroupQuestion, InquiryAnswer inquiryAnswer) {
         initGroup(inquiryGroupQuestion);
         setVisible(true);
-        for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+        for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestionsSet()) {
             getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, inquiryAnswer));
         }
     }
@@ -67,7 +67,7 @@ public class InquiryGroupQuestionBean implements Serializable {
     public InquiryGroupQuestionBean(InquiryGroupQuestion inquiryGroupQuestion) {
         initGroup(inquiryGroupQuestion);
         setVisible(true);
-        for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+        for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestionsSet()) {
             getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion));
         }
     }
@@ -137,7 +137,7 @@ public class InquiryGroupQuestionBean implements Serializable {
     }
 
     private String validateQuestionConditions(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
-        for (QuestionCondition questionCondition : inquiryQuestion.getQuestionConditions()) {
+        for (QuestionCondition questionCondition : inquiryQuestion.getQuestionConditionsSet()) {
             if (questionCondition instanceof MandatoryCondition) {
                 MandatoryCondition condition = (MandatoryCondition) questionCondition;
                 InquiryQuestionDTO inquiryDependentQuestionBean =
@@ -152,7 +152,7 @@ public class InquiryGroupQuestionBean implements Serializable {
     }
 
     private String validateGroupConditions(Set<InquiryBlockDTO> inquiryBlocks, boolean isGroupFilledIn) {
-        for (QuestionCondition questionCondition : getInquiryGroupQuestion().getQuestionConditions()) {
+        for (QuestionCondition questionCondition : getInquiryGroupQuestion().getQuestionConditionsSet()) {
             if (questionCondition instanceof MandatoryCondition) {
                 MandatoryCondition condition = (MandatoryCondition) questionCondition;
                 InquiryQuestionDTO inquiryDependentQuestionBean =

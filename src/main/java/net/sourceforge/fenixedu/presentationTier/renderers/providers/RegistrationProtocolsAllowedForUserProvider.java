@@ -45,7 +45,7 @@ public class RegistrationProtocolsAllowedForUserProvider implements DataProvider
         final Person supervisor = userView.getPerson();
 
         List<RegistrationProtocol> registrationProtocolsSet = new ArrayList<RegistrationProtocol>();
-        registrationProtocolsSet.addAll(supervisor.getRegistrationProtocols());
+        registrationProtocolsSet.addAll(supervisor.getRegistrationProtocolsSet());
         Collections.sort(registrationProtocolsSet, RegistrationProtocol.AGREEMENT_COMPARATOR);
         return registrationProtocolsSet;
     }

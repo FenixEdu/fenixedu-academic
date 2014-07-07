@@ -59,9 +59,4 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
         super.deleteDomainObject();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeSpecializationArea> getSpecializationArea() {
-        return getSpecializationAreaSet();
-    }
-
 }

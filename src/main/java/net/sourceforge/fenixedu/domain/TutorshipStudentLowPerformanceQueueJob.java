@@ -83,7 +83,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
                 AbstractPrescriptionRule.readPrescriptionRules(getPrescriptionEnum());
         for (AbstractPrescriptionRule abstractPrescriptionRule : prescriptionRules) {
 
-            for (Registration registration : abstractPrescriptionRule.getRegistrationStart(getExecutionYear()).getStudents()) {
+            for (Registration registration : abstractPrescriptionRule.getRegistrationStart(getExecutionYear()).getStudentsSet()) {
                 if (isValidRegistration(registration)) {
                     StudentLowPerformanceBean s = calcStudentCycleLowPerformanceBean(registration, abstractPrescriptionRules);
                     if (s != null) {
@@ -92,7 +92,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
                 }
 
                 else if (!registration.isBolonha() && isValidSourceLink(registration)) {
-                    for (Registration destinationRegistration : registration.getDestinyRegistrations()) {
+                    for (Registration destinationRegistration : registration.getDestinyRegistrationsSet()) {
                         if ((destinationRegistration.getDegreeType() != DegreeType.BOLONHA_DEGREE)
                                 && (destinationRegistration.getDegreeType() != DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
                             continue;
@@ -171,7 +171,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 
     private String flunkedStudent(List<Registration> registrations) {
         for (Registration registration : registrations) {
-            for (RegistrationState registrationState : registration.getRegistrationStates()) {
+            for (RegistrationState registrationState : registration.getRegistrationStatesSet()) {
                 if (registrationState.getStateType() == RegistrationStateType.FLUNKED) {
                     return "Prescrito" + ";";
                 }

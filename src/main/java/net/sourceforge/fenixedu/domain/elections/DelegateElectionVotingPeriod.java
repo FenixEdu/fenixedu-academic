@@ -41,7 +41,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
 
     public boolean hasVotedStudent(Student student) {
 
-        for (DelegateElectionVote vote : getVotes()) {
+        for (DelegateElectionVote vote : getVotesSet()) {
             if (vote.getStudent() != null && vote.getStudent().equals(student)) {
                 return true;
             }
@@ -51,7 +51,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
 
     public int getBlankVotesElection() {
         int nrBlankVotes = 0;
-        for (DelegateElectionVote vote : getVotes()) {
+        for (DelegateElectionVote vote : getVotesSet()) {
             if (vote instanceof DelegateElectionBlankVote) {
                 nrBlankVotes++;
             }
@@ -61,7 +61,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
 
     public int getNrVotesByStudent(Student student) {
         int nrVotes = 0;
-        for (DelegateElectionVote vote : getVotes()) {
+        for (DelegateElectionVote vote : getVotesSet()) {
             if (vote instanceof DelegateElectionVote) {
                 if (vote.getStudent() != null && vote.getStudent().equals(student)) {
                     nrVotes++;
@@ -88,7 +88,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
         DelegateElection election = getDelegateElection();
         int totalStudentsCount = election.getCandidatesSet().size() + election.getStudentsSet().size();
 
-        for (DelegateElectionVote vote : getVotes()) {
+        for (DelegateElectionVote vote : getVotesSet()) {
             totalVoteCount++;
             if (vote.getStudent() == null) {
                 continue;
@@ -139,21 +139,6 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
             return true;
         }
         return false;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getCandidatesForNewRoundElections() {
-        return getCandidatesForNewRoundElectionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVote> getVotes() {
-        return getVotesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getVotingStudents() {
-        return getVotingStudentsSet();
     }
 
 }

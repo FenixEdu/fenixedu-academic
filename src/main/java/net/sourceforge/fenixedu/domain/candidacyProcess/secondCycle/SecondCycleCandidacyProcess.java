@@ -108,7 +108,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 
     public List<SecondCycleIndividualCandidacyProcess> getValidSecondCycleIndividualCandidacies() {
         final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
             if (process.isCandidacyValid()) {
                 result.add(process);
@@ -122,7 +122,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
             return Collections.emptyList();
         }
         final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
             if (process.isCandidacyValid() && process.hasCandidacyForSelectedDegree(degree)) {
                 result.add(process);
@@ -134,7 +134,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
     public Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> getValidSecondCycleIndividualCandidaciesByDegree() {
         final Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> result =
                 new TreeMap<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>>(Degree.COMPARATOR_BY_NAME_AND_ID);
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
             if (process.isCandidacyValid()) {
                 addCandidacy(result, process);
@@ -156,7 +156,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 
     public List<SecondCycleIndividualCandidacyProcess> getAcceptedSecondCycleIndividualCandidacies() {
         final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
                 result.add((SecondCycleIndividualCandidacyProcess) child);
             }

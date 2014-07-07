@@ -69,7 +69,7 @@ public class ReadStudentGroupInformation {
 
         List studentGroupInformationList = new ArrayList();
         grouping = studentGroup.getGrouping();
-        groupAttendsList = studentGroup.getAttends();
+        groupAttendsList = studentGroup.getAttendsSet();
 
         Iterator iter = groupAttendsList.iterator();
         InfoSiteStudentInformation infoSiteStudentInformation = null;

@@ -131,7 +131,7 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
-        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
+        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegreesSet());
         Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
         return executionDegrees;
     }
@@ -234,13 +234,13 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     public ExecutionYear getExecutionYearOfOneExecutionDegree() {
-        return getExecutionDegrees().iterator().next().getExecutionYear();
+        return getExecutionDegreesSet().iterator().next().getExecutionYear();
     }
 
     public Set<FinalDegreeWorkGroup> getAssociatedFinalDegreeWorkGroups() {
         final Set<FinalDegreeWorkGroup> groups = new HashSet<FinalDegreeWorkGroup>();
-        for (ExecutionDegree executionDegree : getExecutionDegrees()) {
-            groups.addAll(executionDegree.getAssociatedFinalDegreeWorkGroups());
+        for (ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+            groups.addAll(executionDegree.getAssociatedFinalDegreeWorkGroupsSet());
         }
         return groups;
     }
@@ -455,16 +455,6 @@ public class Scheduleing extends Scheduleing_Base {
         } else {
             setStartOfProposalPeriodTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal> getProposals() {
-        return getProposalsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegrees() {
-        return getExecutionDegreesSet();
     }
 
 }

@@ -172,7 +172,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
         // "NOME", "NUMERO_ALUNO", "CURSO", "INICIO", "CONCLUSAO", "DESCRICAO",
         // "EMPREGADO ACTUALMENTE"
-        for (Registration registration : student.getRegistrations()) {
+        for (Registration registration : student.getRegistrationsSet()) {
             if (registration.isBolonha()) {
                 if (registration.hasConcluded()) {
                     final SortedSet<CycleCurriculumGroup> concludeCycles =
@@ -355,7 +355,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     public static List<AlumniReportFile> readDoneJobs() {
         List<AlumniReportFile> reportFileList = new ArrayList<AlumniReportFile>();
 
-        CollectionUtils.select(ExecutionYear.readCurrentExecutionYear().getAlumniReportFiles(), new Predicate() {
+        CollectionUtils.select(ExecutionYear.readCurrentExecutionYear().getAlumniReportFilesSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -367,14 +367,14 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     public static List<AlumniReportFile> readUndoneJobs() {
-        return new ArrayList(CollectionUtils.subtract(ExecutionYear.readCurrentExecutionYear().getAlumniReportFiles(),
+        return new ArrayList(CollectionUtils.subtract(ExecutionYear.readCurrentExecutionYear().getAlumniReportFilesSet(),
                 readDoneJobs()));
     }
 
     public static List<AlumniReportFile> readPendingJobs() {
         List<AlumniReportFile> reportFileList = new ArrayList<AlumniReportFile>();
 
-        CollectionUtils.select(ExecutionYear.readCurrentExecutionYear().getAlumniReportFiles(), new Predicate() {
+        CollectionUtils.select(ExecutionYear.readCurrentExecutionYear().getAlumniReportFilesSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {

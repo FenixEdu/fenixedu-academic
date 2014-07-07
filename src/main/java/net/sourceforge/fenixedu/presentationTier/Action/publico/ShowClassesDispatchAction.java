@@ -119,7 +119,7 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
         final DegreeCurricularPlan degreeCurricularPlan = findMostRecentDegreeCurricularPlan(degree, executionSemester);
 
         final SortedSet<SchoolClass> schoolClasses = new TreeSet<SchoolClass>(new BeanComparator("nome"));
-        for (final SchoolClass schoolClass : executionSemester.getSchoolClasses()) {
+        for (final SchoolClass schoolClass : executionSemester.getSchoolClassesSet()) {
             final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
             if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
                 schoolClasses.add(schoolClass);

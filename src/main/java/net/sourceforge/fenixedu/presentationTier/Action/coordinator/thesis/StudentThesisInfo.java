@@ -131,7 +131,7 @@ public class StudentThesisInfo implements Serializable {
 
     public String getProposalYear() {
         String mostRecentYear = "0000";
-        for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudents()) {
+        for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudentsSet()) {
             Proposal proposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
             if (proposal != null && proposal.getAttributionStatus().isFinalAttribution()) {
                 String proposalYear = proposal.getScheduleing().getExecutionYearOfOneExecutionDegree().getNextYearsYearString();
@@ -145,7 +145,7 @@ public class StudentThesisInfo implements Serializable {
 
     public boolean getHasMadeProposalPreviousYear() {
         ExecutionYear enrolmentExecutionYear = getEnrolment().getExecutionYear();
-        for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudents()) {
+        for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudentsSet()) {
             Proposal proposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
             if (proposal != null && proposal.isForExecutionYear(enrolmentExecutionYear.getPreviousExecutionYear())
                     && proposal.getAttributionStatus().isFinalAttribution()) {

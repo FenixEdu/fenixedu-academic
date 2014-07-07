@@ -299,7 +299,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         Person person = getLoggedPerson(request);
         ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(bean.getExecutionYear());
         if (coordinator != null) {
-            bean.setVigilantGroups(coordinator.getVigilantGroups());
+            bean.setVigilantGroups(coordinator.getVigilantGroupsSet());
         } else {
             bean.setVigilantGroups(Collections.EMPTY_LIST);
         }
@@ -463,7 +463,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
                 (VigilantGroupBean) RenderUtils.getViewState("selectVigilantWrapper").getMetaObject().getObject();
         VigilantGroup group = bean.getSelectedVigilantGroup();
         if (group != null) {
-            List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>(group.getVigilantWrappers());
+            List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>(group.getVigilantWrappersSet());
 
             VigilantWrapper selectedVigilantWrapper = bean.getSelectedVigilantWrapper();
             if (selectedVigilantWrapper != null) {
@@ -529,7 +529,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(groupId);
 
-        List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>(group.getVigilantWrappers());
+        List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>(group.getVigilantWrappersSet());
         ComparatorChain chain = new ComparatorChain();
         chain.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
         chain.addComparator(VigilantWrapper.USERNAME_COMPARATOR);

@@ -276,7 +276,7 @@ public class AlertService {
                 toNotify.add(((InternalPhdParticipant) participant).getPerson());
             } else {
                 Unit unit = process.getAdministrativeOffice().getUnit();
-                UnitBasedSender sender = unit.getUnitBasedSender().iterator().next();
+                UnitBasedSender sender = unit.getUnitBasedSenderSet().iterator().next();
                 new Message(sender, Collections.<ReplyTo> emptyList(), Collections.<Recipient> emptyList(), getSubjectPrefixed(
                         process, subject), getBodyText(process, body), Collections.singleton(participant.getEmail()));
             }

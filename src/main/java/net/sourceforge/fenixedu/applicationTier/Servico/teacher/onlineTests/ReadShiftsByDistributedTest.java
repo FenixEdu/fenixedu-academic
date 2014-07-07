@@ -59,7 +59,7 @@ public class ReadShiftsByDistributedTest {
 
         List<InfoShift> result = new ArrayList<InfoShift>();
         for (Shift shift : shiftList) {
-            Collection<Registration> shiftStudents = shift.getStudents();
+            Collection<Registration> shiftStudents = shift.getStudentsSet();
             if (!students.containsAll(shiftStudents)) {
                 result.add(InfoShift.newInfoFromDomain(shift));
             }

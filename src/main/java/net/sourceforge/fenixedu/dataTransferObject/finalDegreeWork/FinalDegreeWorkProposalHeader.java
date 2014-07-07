@@ -50,7 +50,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 
     public FinalDegreeWorkProposalHeader(final Proposal proposal) {
         proposalDomainReference = proposal;
-        executionDegreeDomainReference = proposal.getScheduleing().getExecutionDegrees().iterator().next();
+        executionDegreeDomainReference = proposal.getScheduleing().getExecutionDegreesSet().iterator().next();
     }
 
     public FinalDegreeWorkProposalHeader(final Proposal proposal, final ExecutionDegree executionDegree) {
@@ -176,7 +176,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     public List<InfoBranch> getBranches() {
         List<InfoBranch> result = new ArrayList<InfoBranch>();
 
-        for (final Branch branch : getProposal().getBranches()) {
+        for (final Branch branch : getProposal().getBranchesSet()) {
             result.add(InfoBranch.newInfoFromDomain(branch));
         }
 
@@ -189,7 +189,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     public List<InfoGroupProposal> getGroupProposals() {
         List<InfoGroupProposal> result = new ArrayList<InfoGroupProposal>();
 
-        for (final GroupProposal groupProposal : getProposal().getGroupProposals()) {
+        for (final GroupProposal groupProposal : getProposal().getGroupProposalsSet()) {
             result.add(InfoGroupProposal.newInfoFromDomain(groupProposal));
         }
 

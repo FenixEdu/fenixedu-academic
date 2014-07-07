@@ -48,7 +48,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
         init(credits, curriculumGroup);
         checkParameters(credits);
         if (noEnrolCurricularCourses != null) {
-            getNoEnrolCurricularCourses().addAll(noEnrolCurricularCourses);
+            getNoEnrolCurricularCoursesSet().addAll(noEnrolCurricularCourses);
         }
         createCurriculumLineLog(EnrolmentAction.ENROL);
     }
@@ -120,7 +120,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     @Override
     public void delete() {
-        getNoEnrolCurricularCourses().clear();
+        getNoEnrolCurricularCoursesSet().clear();
         super.delete();
     }
 
@@ -132,13 +132,13 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     @Override
     public boolean isSimilar(final Dismissal dismissal) {
         return dismissal.isCreditsDismissal() && hasSameSourceIEnrolments(getSourceIEnrolments(), dismissal)
-                && hasSameNoEnrolCurricularCourses(getNoEnrolCurricularCourses(), (CreditsDismissal) dismissal)
+                && hasSameNoEnrolCurricularCourses(getNoEnrolCurricularCoursesSet(), (CreditsDismissal) dismissal)
                 && hasSameEctsCredits(getEctsCredits(), (CreditsDismissal) dismissal);
     }
 
     private boolean hasSameNoEnrolCurricularCourses(final Collection<CurricularCourse> curricularCourses,
             final CreditsDismissal dismissal) {
-        return curricularCourses.containsAll(dismissal.getNoEnrolCurricularCourses())
+        return curricularCourses.containsAll(dismissal.getNoEnrolCurricularCoursesSet())
                 && curricularCourses.size() == dismissal.getNoEnrolCurricularCoursesSet().size();
     }
 
@@ -155,11 +155,6 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     @Override
     public Grade getEctsGrade(DateTime processingDate) {
         return EctsTableIndex.convertGradeToEcts(getStudentCurricularPlan().getDegree(), this, getGrade(), processingDate);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getNoEnrolCurricularCourses() {
-        return getNoEnrolCurricularCoursesSet();
     }
 
 }

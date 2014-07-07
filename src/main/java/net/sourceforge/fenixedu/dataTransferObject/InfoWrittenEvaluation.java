@@ -168,13 +168,13 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
             associatedExecutionCourse = new ArrayList<InfoExecutionCourse>();
             associatedRoomOccupation = new ArrayList<InfoRoomOccupation>();
             associatedCurricularCourseScope = new ArrayList<InfoCurricularCourseScope>();
-            for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
+            for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCoursesSet()) {
                 associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
-            for (WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupations()) {
+            for (WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) {
                 associatedRoomOccupation.add(InfoRoomOccupation.newInfoFromDomain(roomOccupation));
             }
-            for (CurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScope()) {
+            for (CurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScopeSet()) {
                 associatedCurricularCourseScope.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
             }
             setBeginning(writtenEvaluation.getBeginning());

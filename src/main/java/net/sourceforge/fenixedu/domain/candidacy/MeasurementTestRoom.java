@@ -94,9 +94,4 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
         return getShift().getTest().getCampus();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getRegistrations() {
-        return getRegistrationsSet();
-    }
-
 }

@@ -66,7 +66,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
 
     protected void initResultComment(Person person, boolean updateComment) {
         if (getInquiryGlobalComment() != null) {
-            for (InquiryResultComment inquiryResultComment : getInquiryGlobalComment().getInquiryResultComments()) {
+            for (InquiryResultComment inquiryResultComment : getInquiryGlobalComment().getInquiryResultCommentsSet()) {
                 if (inquiryResultComment.getPerson() == person
                         && getPersonCategory().equals(inquiryResultComment.getPersonCategory())) {
                     setInquiryResultComment(inquiryResultComment);
@@ -80,10 +80,10 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
 
     public Collection<InquiryResultComment> getOtherInquiryResultComments() {
         if (getInquiryGlobalComment() == null) {
-            return getInquiryGlobalComment().getInquiryResultComments();
+            return getInquiryGlobalComment().getInquiryResultCommentsSet();
         }
         List<InquiryResultComment> result = new ArrayList<InquiryResultComment>();
-        for (InquiryResultComment inquiryResultComment : getInquiryGlobalComment().getInquiryResultComments()) {
+        for (InquiryResultComment inquiryResultComment : getInquiryGlobalComment().getInquiryResultCommentsSet()) {
             if (inquiryResultComment.getPerson() == getPerson()
                     && getPersonCategory().equals(inquiryResultComment.getPersonCategory())) {
                 continue;
@@ -98,7 +98,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
         setTeachersResultsMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
         for (Professorship teacherProfessorship : getProfessorships()) {
             ArrayList<TeacherShiftTypeResultsBean> teachersResults = new ArrayList<TeacherShiftTypeResultsBean>();
-            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResultsSet();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
@@ -123,7 +123,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
     }
 
     protected Collection<Professorship> getProfessorships() {
-        return getExecutionCourse().getProfessorships();
+        return getExecutionCourse().getProfessorshipsSet();
     }
 
     public abstract InquiryGlobalComment getInquiryGlobalComment();
@@ -139,7 +139,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
                     getInquiryResultComment().setComment(getComment());
                 } else {
                     new InquiryResultComment(getInquiryGlobalComment(), getPerson(), getPersonCategory(),
-                            getInquiryGlobalComment().getInquiryResultComments().size() + 1, getComment());
+                            getInquiryGlobalComment().getInquiryResultCommentsSet().size() + 1, getComment());
                 }
             } else {
                 InquiryGlobalComment inquiryGlobalComment = createGlobalComment();

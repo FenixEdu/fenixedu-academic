@@ -95,7 +95,7 @@ public class Department extends Department_Base {
     public List<Teacher> getAllCurrentTeachers() {
         Unit departmentUnit = getDepartmentUnit();
         List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers() : new ArrayList<Teacher>(0);
-        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()) {
+        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorizedSet()) {
             if (teacherAuthorization.getActive()
                     && teacherAuthorization.getExecutionSemester().equals(ExecutionSemester.readActualExecutionSemester())
                     && !list.contains(teacherAuthorization.getTeacher())) {
@@ -108,7 +108,7 @@ public class Department extends Department_Base {
     public List<Teacher> getAllTeachers() {
         Unit departmentUnit = getDepartmentUnit();
         List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers() : new ArrayList<Teacher>(0);
-        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()) {
+        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorizedSet()) {
             if (teacherAuthorization.getActive() && !list.contains(teacherAuthorization.getTeacher())) {
                 list.add(teacherAuthorization.getTeacher());
             }
@@ -119,7 +119,7 @@ public class Department extends Department_Base {
     public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
         Unit departmentUnit = getDepartmentUnit();
         List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>(0);
-        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()) {
+        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorizedSet()) {
             if (teacherAuthorization.getActive()
                     && teacherAuthorization.getExecutionSemester().getAcademicInterval()
                             .overlaps(new Interval(begin.toDateMidnight(), end.toDateMidnight()))
@@ -134,7 +134,7 @@ public class Department extends Department_Base {
         Unit departmentUnit = getDepartmentUnit();
         List<Teacher> list =
                 (departmentUnit != null) ? departmentUnit.getAllTeachers(academicInterval) : new ArrayList<Teacher>(0);
-        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()) {
+        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorizedSet()) {
             if (teacherAuthorization.getActive()
                     && teacherAuthorization.getExecutionSemester().getAcademicInterval().overlaps(academicInterval)
                     && !list.contains(teacherAuthorization.getTeacher())) {
@@ -146,7 +146,7 @@ public class Department extends Department_Base {
 
     public Set<DegreeType> getDegreeTypes() {
         Set<DegreeType> degreeTypes = new TreeSet<DegreeType>();
-        for (Degree degree : getDegrees()) {
+        for (Degree degree : getDegreesSet()) {
             degreeTypes.add(degree.getDegreeType());
         }
         return degreeTypes;
@@ -168,7 +168,7 @@ public class Department extends Department_Base {
      * 
      */
     public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
-        Collection<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
+        Collection<CompetenceCourse> competenceCourses = this.getCompetenceCoursesSet();
         List<CompetenceCourse> competenceCoursesByExecutionYear = new ArrayList<CompetenceCourse>();
         for (CompetenceCourse competenceCourse : competenceCourses) {
             if (competenceCourse.hasActiveScopesInExecutionYear(executionYear)) {
@@ -188,7 +188,7 @@ public class Department extends Department_Base {
      */
     public void addAllCompetenceCoursesByExecutionPeriod(final Collection<CompetenceCourse> competenceCourses,
             final ExecutionSemester executionSemester) {
-        for (CompetenceCourse competenceCourse : getCompetenceCourses()) {
+        for (CompetenceCourse competenceCourse : getCompetenceCoursesSet()) {
             if (competenceCourse.hasActiveScopesInExecutionPeriod(executionSemester)) {
                 competenceCourses.add(competenceCourse);
             }
@@ -206,7 +206,7 @@ public class Department extends Department_Base {
 
         Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
 
-        for (CompetenceCourse competenceCourse : getCompetenceCourses()) {
+        for (CompetenceCourse competenceCourse : getCompetenceCoursesSet()) {
             competenceCourse.getExecutionCoursesByExecutionPeriod(executionSemester, executionCourses);
         }
 
@@ -262,7 +262,7 @@ public class Department extends Department_Base {
             Class<? extends TeacherPersonalExpectationPeriod> clazz) {
 
         if (executionYear != null) {
-            for (TeacherPersonalExpectationPeriod period : getTeacherPersonalExpectationPeriods()) {
+            for (TeacherPersonalExpectationPeriod period : getTeacherPersonalExpectationPeriodsSet()) {
                 if (period.getExecutionYear().equals(executionYear) && period.getClass().equals(clazz)) {
                     return period;
                 }
@@ -466,41 +466,6 @@ public class Department extends Department_Base {
         }
         Collections.sort(departments, Department.COMPARATOR_BY_NAME);
         return departments;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Project> getProjects() {
-        return getProjectsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization> getTeacherAuthorizationsAuthorized() {
-        return getTeacherAuthorizationsAuthorizedSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CompetenceCourse> getCompetenceCourses() {
-        return getCompetenceCoursesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DepartmentCreditsPool> getDepartmentCreditsPools() {
-        return getDepartmentCreditsPoolsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod> getTeacherPersonalExpectationPeriods() {
-        return getTeacherPersonalExpectationPeriodsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Degree> getDegrees() {
-        return getDegreesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getAssociatedPersons() {
-        return getAssociatedPersonsSet();
     }
 
 }

@@ -69,7 +69,7 @@ public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
         }
         AnnualTeachingCreditsBean annualTeachingCreditsBean = null;
 
-        for (AnnualTeachingCredits annualTeachingCredits : teacher.getAnnualTeachingCredits()) {
+        for (AnnualTeachingCredits annualTeachingCredits : teacher.getAnnualTeachingCreditsSet()) {
             if (annualTeachingCredits.getAnnualCreditsState().getExecutionYear().equals(executionYear)) {
                 if (annualTeachingCredits.isPastResume()) {
                     TeacherCreditsBean teacherBean = new TeacherCreditsBean(teacher);

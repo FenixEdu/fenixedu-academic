@@ -111,7 +111,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
     public List<GenericPair<Object, Boolean>> getLabel(final String operator) {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
         labelList.add(new GenericPair<Object, Boolean>("( ", false));
-        final Iterator<CurricularRule> curricularRulesIterator = getCurricularRules().iterator();
+        final Iterator<CurricularRule> curricularRulesIterator = getCurricularRulesSet().iterator();
         while (curricularRulesIterator.hasNext()) {
             labelList.addAll(curricularRulesIterator.next().getLabel());
             if (curricularRulesIterator.hasNext()) {
@@ -143,7 +143,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
 
     @Override
     public boolean appliesToContext(Context context) {
-        for (CurricularRule curricularRule : this.getCurricularRules()) {
+        for (CurricularRule curricularRule : this.getCurricularRulesSet()) {
             if (!curricularRule.appliesToContext(context)) {
                 return false;
             }
@@ -153,7 +153,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
 
     @Override
     protected void removeOwnParameters() {
-        for (; !getCurricularRules().isEmpty(); getCurricularRules().iterator().next().delete()) {
+        for (; !getCurricularRulesSet().isEmpty(); getCurricularRulesSet().iterator().next().delete()) {
             ;
         }
     }
@@ -161,11 +161,6 @@ public abstract class CompositeRule extends CompositeRule_Base {
     @Override
     public boolean isLeaf() {
         return false;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getCurricularRules() {
-        return getCurricularRulesSet();
     }
 
 }

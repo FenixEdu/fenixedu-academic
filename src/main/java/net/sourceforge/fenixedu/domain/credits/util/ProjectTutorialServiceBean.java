@@ -40,7 +40,7 @@ public class ProjectTutorialServiceBean implements Serializable {
     public ProjectTutorialServiceBean(Professorship professorship, Attends attend) {
         this.professorship = professorship;
         this.attend = attend;
-        for (DegreeProjectTutorialService degreeProjectTutorialService : attend.getDegreeProjectTutorialServices()) {
+        for (DegreeProjectTutorialService degreeProjectTutorialService : attend.getDegreeProjectTutorialServicesSet()) {
             if (degreeProjectTutorialService.getProfessorship().equals(professorship)) {
                 this.percentage = degreeProjectTutorialService.getPercentageValue();
                 this.degreeProjectTutorialService = degreeProjectTutorialService;

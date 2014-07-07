@@ -71,13 +71,13 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
 
         setDegreeCurricularPlan(degreeCurricularPlan);
         setEquivalentCurricularCourse(equivalentCurricularCourse);
-        getOldCurricularCourses().addAll(oldCurricularCourses);
+        getOldCurricularCoursesSet().addAll(oldCurricularCourses);
     }
 
     private void checkIfEquivalenceAlreadyExists(CurricularCourse curricularCourse,
             Collection<CurricularCourse> oldCurricularCourses) {
         int size = oldCurricularCourses.size();
-        for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalences()) {
+        for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalencesSet()) {
             int sizeOld = curricularCourseEquivalence.getOldCurricularCoursesSet().size();
             if ((size == sizeOld)
                     && CollectionUtils.intersection(oldCurricularCourses,
@@ -90,7 +90,7 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
     public void delete() {
         setDegreeCurricularPlan(null);
         setEquivalentCurricularCourse(null);
-        getOldCurricularCourses().clear();
+        getOldCurricularCoursesSet().clear();
 
         setRootDomainObject(null);
         super.deleteDomainObject();
@@ -110,11 +110,6 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
 
     public boolean isFrom(DegreeCurricularPlan degreeCurricularPlan) {
         return getDegreeCurricularPlan() == degreeCurricularPlan;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getOldCurricularCourses() {
-        return getOldCurricularCoursesSet();
     }
 
 }

@@ -115,7 +115,7 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
         setRootDomainObject(null);
 
         List<PhdCandidacyRefereeAlert> alerts = new ArrayList<PhdCandidacyRefereeAlert>();
-        alerts.addAll(getAlerts());
+        alerts.addAll(getAlertsSet());
 
         for (PhdCandidacyRefereeAlert phdCandidacyRefereeAlert : alerts) {
             removeAlerts(phdCandidacyRefereeAlert);
@@ -143,11 +143,6 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
         return null;
 
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdCandidacyRefereeAlert> getAlerts() {
-        return getAlertsSet();
     }
 
 }

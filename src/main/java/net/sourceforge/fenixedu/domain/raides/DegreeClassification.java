@@ -42,7 +42,7 @@ public class DegreeClassification extends DegreeClassification_Base {
     }
 
     public void delete() {
-        for (DegreeDesignation designation : getDegreeDesignations()) {
+        for (DegreeDesignation designation : getDegreeDesignationsSet()) {
             removeDegreeDesignations(designation);
         }
         setRootDomainObject(null);
@@ -56,11 +56,6 @@ public class DegreeClassification extends DegreeClassification_Base {
             }
         }
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.raides.DegreeDesignation> getDegreeDesignations() {
-        return getDegreeDesignationsSet();
     }
 
 }

@@ -81,7 +81,7 @@ public class RegistrationFormalizationBean implements Serializable {
                 return Collections.singleton(registration);
             }
         } else {
-            return process.getPerson().getStudent().getRegistrations();
+            return process.getPerson().getStudent().getRegistrationsSet();
         }
 
         return Collections.emptySet();

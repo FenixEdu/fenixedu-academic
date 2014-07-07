@@ -98,7 +98,7 @@ public class UnEnrollGroupShift {
     private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup) {
         boolean found = false;
 
-        Collection studentGroupAttends = studentGroup.getAttends();
+        Collection studentGroupAttends = studentGroup.getAttendsSet();
         Attends attend = null;
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {

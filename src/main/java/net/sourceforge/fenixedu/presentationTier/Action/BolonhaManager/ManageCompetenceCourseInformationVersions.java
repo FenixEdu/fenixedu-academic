@@ -153,12 +153,11 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
             load = (CompetenceCourseLoadBean) viewStateLoad.getMetaObject().getObject();
         } else {
             if (information != null && information.getCompetenceCourseLoadsSet().size() > 0) {
-                load = new CompetenceCourseLoadBean(information.getCompetenceCourseLoads().iterator().next());
+                load = new CompetenceCourseLoadBean(information.getCompetenceCourseLoadsSet().iterator().next());
             } else if (period != null
                     && course.findCompetenceCourseInformationForExecutionPeriod(period).getCompetenceCourseLoadsSet().size() > 0) {
                 load =
-                        new CompetenceCourseLoadBean(course.findCompetenceCourseInformationForExecutionPeriod(period)
-                                .getCompetenceCourseLoads().iterator().next());
+                        new CompetenceCourseLoadBean(course.findCompetenceCourseInformationForExecutionPeriod(period).getCompetenceCourseLoadsSet().iterator().next());
             } else {
                 load = new CompetenceCourseLoadBean();
             }
@@ -343,7 +342,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         CompetenceCourse course = getCompetenceCourse(request);
         String externalId = request.getParameter("oid");
 
-        for (CompetenceCourseInformation information : course.getCompetenceCourseInformations()) {
+        for (CompetenceCourseInformation information : course.getCompetenceCourseInformationsSet()) {
             if (information.getExternalId().equals(externalId)) {
                 request.setAttribute("information", information);
             }

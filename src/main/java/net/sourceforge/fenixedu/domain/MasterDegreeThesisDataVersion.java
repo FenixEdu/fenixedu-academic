@@ -72,11 +72,11 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     public String getGuidersNames() {
         final List<String> names = new ArrayList<String>();
 
-        for (final Teacher teacher : getGuiders()) {
+        for (final Teacher teacher : getGuidersSet()) {
             names.add(teacher.getPerson().getName());
         }
 
-        for (final ExternalContract contract : getExternalGuiders()) {
+        for (final ExternalContract contract : getExternalGuidersSet()) {
             names.add(contract.getPerson().getName());
         }
 
@@ -103,26 +103,6 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
         } else {
             setLastModificationDateTime(new org.joda.time.DateTime(date.getTime()));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract> getExternalAssistentGuiders() {
-        return getExternalAssistentGuidersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Teacher> getGuiders() {
-        return getGuidersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Teacher> getAssistentGuiders() {
-        return getAssistentGuidersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract> getExternalGuiders() {
-        return getExternalGuidersSet();
     }
 
 }

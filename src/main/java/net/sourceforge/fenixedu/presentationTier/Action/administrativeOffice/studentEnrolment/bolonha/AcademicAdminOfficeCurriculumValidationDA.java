@@ -232,7 +232,7 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 
         request.setAttribute("entriesList", enrolmentEvaluationBeanList);
 
-        request.setAttribute("allEvaluationsBound", enrolment.getEvaluations());
+        request.setAttribute("allEvaluationsBound", enrolment.getEvaluationsSet());
 
         return mapping.findForward("show-edit-evaluation-form");
     }

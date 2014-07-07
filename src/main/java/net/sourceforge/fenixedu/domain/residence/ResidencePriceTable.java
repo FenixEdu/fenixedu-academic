@@ -28,9 +28,4 @@ public class ResidencePriceTable extends ResidencePriceTable_Base {
         return getDoubleRoomValue() != null && getSingleRoomValue() != null && getPaymentLimitDay() != null;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit> getUnits() {
-        return getUnitsSet();
-    }
-
 }

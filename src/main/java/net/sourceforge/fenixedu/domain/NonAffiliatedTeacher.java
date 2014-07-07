@@ -73,7 +73,7 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
             nonAffiliatedTeacher = new NonAffiliatedTeacher(nonAffiliatedTeacherName, institution);
         }
 
-        if (nonAffiliatedTeacher.getExecutionCourses().contains(executionCourse)) {
+        if (nonAffiliatedTeacher.getExecutionCoursesSet().contains(executionCourse)) {
             throw new DomainException("error.invalid.executionCourse");
         } else {
             nonAffiliatedTeacher.addExecutionCourses(executionCourse);
@@ -83,7 +83,7 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
 
     @Atomic
     public void removeExecutionCourse(final ExecutionCourse executionCourse) {
-        getExecutionCourses().remove(executionCourse);
+        getExecutionCoursesSet().remove(executionCourse);
     }
 
     public void delete() {
@@ -95,19 +95,9 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
 
         setRootDomainObject(null);
         setInstitutionUnit(null);
-        getExecutionCourses().clear();
+        getExecutionCoursesSet().clear();
 
         super.deleteDomainObject();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getExecutionCourses() {
-        return getExecutionCoursesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesTeacher> getAssociatedInquiriesTeachers() {
-        return getAssociatedInquiriesTeachersSet();
     }
 
 }

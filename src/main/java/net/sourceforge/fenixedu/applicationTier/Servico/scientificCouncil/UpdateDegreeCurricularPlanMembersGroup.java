@@ -87,7 +87,7 @@ public class UpdateDegreeCurricularPlanMembersGroup {
 
     private static boolean belongsToOtherGroupsWithSameRole(DegreeCurricularPlan dcpWhoAsks, Person person) {
         for (Degree bolonhaDegree : Degree.readBolonhaDegrees()) {
-            for (DegreeCurricularPlan dcp : bolonhaDegree.getDegreeCurricularPlans()) {
+            for (DegreeCurricularPlan dcp : bolonhaDegree.getDegreeCurricularPlansSet()) {
                 if (dcp != dcpWhoAsks) {
                     if (dcp.getCurricularPlanMembersGroup().isMember(person.getUser())) {
                         return true;

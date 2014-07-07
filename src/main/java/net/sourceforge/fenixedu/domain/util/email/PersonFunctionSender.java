@@ -50,7 +50,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
         setFromAddress(Sender.getNoreplyMail());
         addReplyTos(new CurrentUserReplyTo());
         setMembers(UserGroup.of(person.getUser()));
-        getRecipients().addAll(Recipient.newInstance(getPossibleReceivers(person)));
+        getRecipientsSet().addAll(Recipient.newInstance(getPossibleReceivers(person)));
         setFromName(createFromName());
     }
 

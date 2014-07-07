@@ -35,19 +35,19 @@ public class BusinessAreaChildProvider implements DataProvider {
         if (source.getClass().equals(AlumniJobBean.class)) {
             final AlumniJobBean jobBean = (AlumniJobBean) source;
             if (jobBean.getParentBusinessArea() != null) {
-                return jobBean.getParentBusinessArea().getChildAreas();
+                return jobBean.getParentBusinessArea().getChildAreasSet();
             }
 
         } else if (source.getClass().equals(AlumniPublicAccessBean.class)) {
             final AlumniPublicAccessBean publicBean = (AlumniPublicAccessBean) source;
             if (publicBean.getJobBean().getParentBusinessArea() != null) {
-                return publicBean.getJobBean().getParentBusinessArea().getChildAreas();
+                return publicBean.getJobBean().getParentBusinessArea().getChildAreasSet();
             }
 
         } else if (source.getClass().equals(JobBean.class)) {
             final JobBean jobBean = (JobBean) source;
             if (jobBean.hasParentBusinessArea()) {
-                return jobBean.getParentBusinessArea().getChildAreas();
+                return jobBean.getParentBusinessArea().getChildAreasSet();
             }
         }
 

@@ -204,14 +204,4 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         setVacancies(vacancies);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy> getOutboundMobilityCandidacy() {
-        return getOutboundMobilityCandidacySet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegree() {
-        return getExecutionDegreeSet();
-    }
-
 }

@@ -288,7 +288,7 @@ public class InsertDistributedTest {
         public void doIt() {
             Test test = FenixFramework.getDomainObject(testId);
 
-            List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+            List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestionsSet());
             Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
 
             final Distribution distribution = new Distribution(testQuestionList, infoStudentList);

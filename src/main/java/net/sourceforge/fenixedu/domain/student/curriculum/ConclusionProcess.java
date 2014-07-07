@@ -36,7 +36,7 @@ import org.joda.time.YearMonthDay;
 abstract public class ConclusionProcess extends ConclusionProcess_Base {
 
     private ConclusionProcessVersion getFirstVersion() {
-        return Collections.min(getVersions(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID);
+        return Collections.min(getVersionsSet(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID);
     }
 
     public DateTime getCreationDateTime() {
@@ -91,7 +91,7 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
 
     final protected void addVersions(final RegistrationConclusionBean bean) {
         super.addVersions(new ConclusionProcessVersion(bean));
-        super.setLastVersion(Collections.max(getVersions(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID));
+        super.setLastVersion(Collections.max(getVersionsSet(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID));
         super.setConclusionYear(getLastVersion().getConclusionYear());
 
         addSpecificVersionInfo();
@@ -130,11 +130,6 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
 
     public DegreeType getDegreeType() {
         return getDegree().getDegreeType();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getVersions() {
-        return getVersionsSet();
     }
 
 }

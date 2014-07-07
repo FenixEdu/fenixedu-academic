@@ -354,7 +354,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
         Person person = AccessControl.getPerson();
 
-        Collection<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Collection<PersonInformationLog> logsList = person.getPersonInformationLogsSet();
         request.setAttribute("person", person);
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");

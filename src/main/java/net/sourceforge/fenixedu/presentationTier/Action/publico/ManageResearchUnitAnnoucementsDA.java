@@ -68,7 +68,7 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
     public ActionForward editAnnouncementBoards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ResearchUnitSite site = getSite(request);
-        Collection<UnitAnnouncementBoard> boards = site.getUnit().getBoards();
+        Collection<UnitAnnouncementBoard> boards = site.getUnit().getBoardsSet();
         request.setAttribute("announcementBoards", boards);
         return mapping.findForward(boards.isEmpty() ? "noBoards" : "listAnnouncementBoards");
     }

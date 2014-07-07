@@ -198,7 +198,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             private List getInfoCurricularCourses(ExecutionCourse executionCourse) {
 
                 List infoCurricularCourses =
-                        (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(), new Transformer() {
+                        (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCoursesSet(), new Transformer() {
 
                             @Override
                             public Object transform(Object input) {

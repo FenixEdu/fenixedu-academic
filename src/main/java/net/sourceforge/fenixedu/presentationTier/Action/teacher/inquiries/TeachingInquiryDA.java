@@ -152,7 +152,7 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
 
     static InquiryResponseState getFilledState(Professorship professorship, TeacherInquiryTemplate inquiryTemplate,
             List<TeacherShiftTypeGroupsResumeResult> teacherResults) {
-        Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
+        Collection<InquiryResult> professorshipResults = professorship.getInquiryResultsSet();
         InquiryResponseState finalState = InquiryResponseState.COMPLETE;
         if (professorship.getInquiryTeacherAnswer() != null
                 && professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)) {
@@ -212,7 +212,7 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
         DelegateInquiryTemplate delegateInquiryTemplate =
                 DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
         InquiryDelegateAnswer inquiryDelegateAnswer = null;
-        for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswers()) {
+        for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswersSet()) {
             if (delegateAnswer.getExecutionDegree() == executionDegree) {
                 inquiryDelegateAnswer = delegateAnswer;
                 break;
@@ -335,16 +335,13 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
     private Collection<StudentInquiriesCourseResultBean> populateStudentInquiriesCourseResults(final Professorship professorship) {
         Map<ExecutionDegree, StudentInquiriesCourseResultBean> courseResultsMap =
                 new HashMap<ExecutionDegree, StudentInquiriesCourseResultBean>();
-        for (StudentInquiriesCourseResult studentInquiriesCourseResult : professorship.getExecutionCourse()
-                .getStudentInquiriesCourseResults()) {
+        for (StudentInquiriesCourseResult studentInquiriesCourseResult : professorship.getExecutionCourse().getStudentInquiriesCourseResultsSet()) {
             courseResultsMap.put(studentInquiriesCourseResult.getExecutionDegree(), new StudentInquiriesCourseResultBean(
                     studentInquiriesCourseResult));
         }
 
-        for (Professorship otherTeacherProfessorship : professorship.isResponsibleFor() ? professorship.getExecutionCourse()
-                .getProfessorships() : Collections.singletonList(professorship)) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
-                    .getStudentInquiriesTeachingResults()) {
+        for (Professorship otherTeacherProfessorship : professorship.isResponsibleFor() ? professorship.getExecutionCourse().getProfessorshipsSet() : Collections.singletonList(professorship)) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
                 if (studentInquiriesTeachingResult.getInternalDegreeDisclosure()) {
                     courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
                             studentInquiriesTeachingResult);

@@ -93,7 +93,7 @@ public class DeleteWrittenEvaluation {
                     BundleUtil.getString(Bundle.VIGILANCY,
                             "label.writtenEvaluationDeletedMessage", new String[] { writtenEvaluation.getName(), beginDateString,
                                     time });
-            for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
+            for (Vigilancy vigilancy : writtenEvaluation.getVigilanciesSet()) {
                 Person person = vigilancy.getVigilantWrapper().getPerson();
                 tos.add(person);
             }

@@ -122,9 +122,4 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
         return super.getRootDomainObject() != null || super.getDeletedRootDomainObject() != null || super.getNewGroup() != null;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Party> getMember() {
-        return getMemberSet();
-    }
-
 }

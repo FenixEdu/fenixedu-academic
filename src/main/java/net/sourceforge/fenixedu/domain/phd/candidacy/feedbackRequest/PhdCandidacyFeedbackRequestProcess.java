@@ -132,7 +132,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
     public Set<PhdProgramProcessDocument> getSubmittedCandidacyFeedbackDocuments() {
         final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
-        for (final PhdCandidacyFeedbackRequestElement element : getElements()) {
+        for (final PhdCandidacyFeedbackRequestElement element : getElementsSet()) {
             final PhdCandidacyFeedbackRequestDocument document = element.getLastFeedbackDocument();
             if (document != null) {
                 result.add(document);
@@ -180,7 +180,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     }
 
     public boolean hasElement(final Person person) {
-        for (final PhdCandidacyFeedbackRequestElement element : getElements()) {
+        for (final PhdCandidacyFeedbackRequestElement element : getElementsSet()) {
             if (element.isFor(person)) {
                 return true;
             }
@@ -189,7 +189,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     }
 
     public PhdCandidacyFeedbackRequestElement getElement(final Person person) {
-        for (final PhdCandidacyFeedbackRequestElement element : getElements()) {
+        for (final PhdCandidacyFeedbackRequestElement element : getElementsSet()) {
             if (element.isFor(person)) {
                 return element;
             }
@@ -463,11 +463,6 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     @Override
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement> getElements() {
-        return getElementsSet();
     }
 
 }

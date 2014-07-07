@@ -50,7 +50,7 @@ public class StudentStatute extends StudentStatute_Base {
         setEndExecutionPeriod(endExecutionPeriod);
         setStatuteType(statuteType);
 
-        for (StudentStatute statute : student.getStudentStatutes()) {
+        for (StudentStatute statute : student.getStudentStatutesSet()) {
             if (statute.overlapsWith(this)) {
                 throw new DomainException("error.studentStatute.alreadyExistsOneOverlapingStatute");
             }
@@ -73,7 +73,7 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public boolean isValidOn(final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (!isValidInExecutionPeriod(executionSemester)) {
                 return false;
             }
@@ -83,7 +83,7 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public boolean isValidOnAnyExecutionPeriodFor(final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (isValidInExecutionPeriod(executionSemester)) {
                 return true;
             }

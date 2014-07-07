@@ -37,7 +37,7 @@ public class RegistrationsProvider implements DataProvider {
     @Override
     public Object provide(Object source, Object currentValue) {
         ChooseStudentCurricularPlanBean bean = (ChooseStudentCurricularPlanBean) source;
-        return bean.getStudent() != null ? bean.getStudent().getRegistrations() : Collections.EMPTY_LIST;
+        return bean.getStudent() != null ? bean.getStudent().getRegistrationsSet() : Collections.EMPTY_LIST;
     }
 
     @Override

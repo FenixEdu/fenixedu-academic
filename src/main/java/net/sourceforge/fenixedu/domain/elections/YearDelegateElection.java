@@ -154,7 +154,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
                     curricularYear.getYear().toString(), previousElection.getLastVotingPeriod().getPeriod() });
         }
 
-        if (previousElection != null && previousElection.getVotingPeriod() != null && previousElection.hasLastVotingPeriod()
+        if (previousElection != null && previousElection.getVotingPeriodSet() != null && previousElection.hasLastVotingPeriod()
                 && !previousElection.getLastVotingPeriod().isPastPeriod()) {
             // future voting period (must be deleted)
             previousElection.getLastVotingPeriod().delete();
@@ -191,7 +191,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
     }
 
     private static boolean hasDelegateElection(YearDelegateElection election, StudentCurricularPlan scp) {
-        for (DelegateElection delegateElection : scp.getRegistration().getStudent().getDelegateElections()) {
+        for (DelegateElection delegateElection : scp.getRegistration().getStudent().getDelegateElectionsSet()) {
             if (delegateElection instanceof YearDelegateElection) {
                 if (delegateElection.getDegree().equals(election.getDegree())
                         && delegateElection.getExecutionYear().equals(election.getExecutionYear())
@@ -284,7 +284,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
     }
 
     public DelegateElectionVotingPeriod getCurrentVotingPeriod() {
-        for (DelegateElectionVotingPeriod votingPeriod : getVotingPeriod()) {
+        for (DelegateElectionVotingPeriod votingPeriod : getVotingPeriodSet()) {
             if (votingPeriod.isCurrentPeriod()) {
                 return votingPeriod;
             }

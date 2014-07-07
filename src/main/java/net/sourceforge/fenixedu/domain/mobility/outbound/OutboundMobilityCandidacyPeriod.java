@@ -135,7 +135,7 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     public SortedSet<OutboundMobilityCandidacyContest> getSortedOutboundMobilityCandidacyContest() {
-        return new TreeSet<OutboundMobilityCandidacyContest>(getOutboundMobilityCandidacyContest());
+        return new TreeSet<OutboundMobilityCandidacyContest>(getOutboundMobilityCandidacyContestSet());
     }
 
     public boolean isAcceptingCandidacies() {
@@ -151,7 +151,7 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     public OutboundMobilityCandidacySubmission findSubmissionFor(final Person person) {
-        for (final Registration registration : person.getStudent().getRegistrations()) {
+        for (final Registration registration : person.getStudent().getRegistrationsSet()) {
             for (final OutboundMobilityCandidacySubmission submission : registration.getOutboundMobilityCandidacySubmissionSet()) {
                 if (submission.getOutboundMobilityCandidacyPeriod() == this) {
                     return submission;
@@ -361,31 +361,6 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     private String printPlacement(final OutboundMobilityCandidacy candidacy) {
         return candidacy == null ? "-----" : candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement()
                 .getUniversityUnit().getPresentationName();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest> getOutboundMobilityCandidacyContest() {
-        return getOutboundMobilityCandidacyContestSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission> getOutboundMobilityCandidacySubmission() {
-        return getOutboundMobilityCandidacySubmissionSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup> getCandidatesNotifiedOfSelectionResultsForGroups() {
-        return getCandidatesNotifiedOfSelectionResultsForGroupsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption> getOutboundMobilityCandidacyPeriodConfirmationOption() {
-        return getOutboundMobilityCandidacyPeriodConfirmationOptionSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup> getConcludedCandidateSelectionGroups() {
-        return getConcludedCandidateSelectionGroupsSet();
     }
 
     private OutboundMobilityCandidacyPeriod findPreviousPeriod() {

@@ -39,7 +39,7 @@ public class GratuityReportingService {
 
         final GratuityReport report = new GratuityReport();
 
-        for (final AnnualEvent event : executionYear.getAnnualEvents()) {
+        for (final AnnualEvent event : executionYear.getAnnualEventsSet()) {
 
             if (event instanceof GratuityEvent) {
                 final GratuityEvent gratuityEvent = (GratuityEvent) event;

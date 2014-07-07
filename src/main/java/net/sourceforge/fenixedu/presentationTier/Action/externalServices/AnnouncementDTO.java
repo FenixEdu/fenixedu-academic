@@ -255,7 +255,7 @@ public class AnnouncementDTO {
     private void setCategoriesFromAnnouncement(Announcement announcement, final Locale language) {
         java.util.List<String> categories = new java.util.ArrayList<String>();
 
-        for (AnnouncementCategory category : announcement.getCategories()) {
+        for (AnnouncementCategory category : announcement.getCategoriesSet()) {
             if (category.getName().getContent(language) != null) {
                 categories.add(category.getName().getContent(language));
             }

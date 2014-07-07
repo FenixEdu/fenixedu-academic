@@ -150,23 +150,23 @@ public abstract class Process extends Process_Base implements Comparable<Process
     }
 
     public ProcessLog getLastProcessLog() {
-        return Collections.max(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN);
+        return Collections.max(getProcessLogsSet(), ProcessLog.COMPARATOR_BY_WHEN);
     }
 
     public DateTime getWhenCreated() {
-        return Collections.min(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getWhenDateTime();
+        return Collections.min(getProcessLogsSet(), ProcessLog.COMPARATOR_BY_WHEN).getWhenDateTime();
     }
 
     public DateTime getWhenUpdated() {
-        return Collections.max(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getWhenDateTime();
+        return Collections.max(getProcessLogsSet(), ProcessLog.COMPARATOR_BY_WHEN).getWhenDateTime();
     }
 
     public String getCreatedBy() {
-        return Collections.min(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getUserName();
+        return Collections.min(getProcessLogsSet(), ProcessLog.COMPARATOR_BY_WHEN).getUserName();
     }
 
     public String getUpdatedBy() {
-        return Collections.max(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getUserName();
+        return Collections.max(getProcessLogsSet(), ProcessLog.COMPARATOR_BY_WHEN).getUserName();
     }
 
     protected DateTime getLastExecutionDateOf(final Class<? extends Activity> clazz) {
@@ -176,7 +176,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
 
     protected SortedSet<ProcessLog> getSortedProcessLogs(final Class<? extends Activity> clazz) {
         final SortedSet<ProcessLog> logs = new TreeSet<ProcessLog>(ProcessLog.COMPARATOR_BY_WHEN);
-        for (final ProcessLog log : getProcessLogs()) {
+        for (final ProcessLog log : getProcessLogsSet()) {
             if (log.isFor(clazz)) {
                 logs.add(log);
             }
@@ -187,10 +187,5 @@ public abstract class Process extends Process_Base implements Comparable<Process
     public abstract boolean canExecuteActivity(User userView);
 
     public abstract String getDisplayName();
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.caseHandling.ProcessLog> getProcessLogs() {
-        return getProcessLogsSet();
-    }
 
 }

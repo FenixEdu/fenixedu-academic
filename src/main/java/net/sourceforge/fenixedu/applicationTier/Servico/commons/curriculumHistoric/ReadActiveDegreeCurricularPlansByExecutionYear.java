@@ -56,7 +56,7 @@ public class ReadActiveDegreeCurricularPlansByExecutionYear {
 
         Collection executionDegrees = null;
         if (executionYear != null) {
-            executionDegrees = executionYear.getExecutionDegrees();
+            executionDegrees = executionYear.getExecutionDegreesSet();
         }
 
         if (executionDegrees == null) {

@@ -180,8 +180,8 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 
     private static InquiryQuestion getEstimatedEvaluationsQuestion(Collection<InquiryBlock> inquiryBlocks) {
         for (InquiryBlock inquiryBlock : inquiryBlocks) {
-            for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-                for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+            for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
+                for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestionsSet()) {
                     if (!inquiryQuestion.getPresentResults()) {
                         return inquiryQuestion;
                     }
@@ -193,7 +193,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 
     private static List<TeacherShiftTypeGeneralResultBean> getTeachersShiftsResults(ExecutionCourse executionCourse) {
         List<TeacherShiftTypeGeneralResultBean> teachersSummaries = new ArrayList<TeacherShiftTypeGeneralResultBean>();
-        for (InquiryResult inquiryResult : executionCourse.getInquiryResults()) {
+        for (InquiryResult inquiryResult : executionCourse.getInquiryResultsSet()) {
             if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())) {
                 teachersSummaries.add(new TeacherShiftTypeGeneralResultBean(inquiryResult.getProfessorship(), inquiryResult
                         .getShiftType(), inquiryResult));

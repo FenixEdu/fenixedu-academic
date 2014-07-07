@@ -110,7 +110,7 @@ public class CreditNoteDocument extends FenixReport {
 
         final SortedSet<CreditNoteEntry> sortedEntries =
                 new TreeSet<CreditNoteEntry>(CreditNoteEntry.COMPARATOR_BY_WHEN_REGISTERED);
-        sortedEntries.addAll(this.creditNote.getCreditNoteEntries());
+        sortedEntries.addAll(this.creditNote.getCreditNoteEntriesSet());
 
         final List<CreditNoteDocumentEntry> result = new ArrayList<CreditNoteDocumentEntry>();
         for (final CreditNoteEntry each : sortedEntries) {

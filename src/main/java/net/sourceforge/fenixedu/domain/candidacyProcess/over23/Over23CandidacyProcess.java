@@ -114,7 +114,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
     public List<Over23IndividualCandidacyProcess> getOver23IndividualCandidaciesThatCanBeSendToJury() {
         final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             final Over23IndividualCandidacyProcess over23CP = (Over23IndividualCandidacyProcess) child;
             if (over23CP.isCandidacyValid()) {
                 result.add(over23CP);
@@ -125,7 +125,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
     public List<Over23IndividualCandidacyProcess> getAcceptedOver23IndividualCandidacies() {
         final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
                 result.add((Over23IndividualCandidacyProcess) child);
             }

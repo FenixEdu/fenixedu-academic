@@ -64,8 +64,8 @@ public class AddStudentToFinalDegreeWorkStudentGroup {
         Registration registration = findSomeRegistration(username);
         if (group == null
                 || registration == null
-                || group.getGroupStudents() == null
-                || CollectionUtils.find(group.getGroupStudents(), new PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(registration)) != null) {
+                || group.getGroupStudentsSet() == null
+                || CollectionUtils.find(group.getGroupStudentsSet(), new PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(registration)) != null) {
             return false;
         }
         Scheduleing scheduleing = group.getExecutionDegree().getScheduling();
@@ -79,7 +79,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup {
             // } else if (scheduleing.getMinimumNumberOfCompletedCourses() ==
             // null) {
             // throw new MinimumNumberOfCompletedCoursesUndefinedException();
-        } else if (scheduleing.getMaximumNumberOfStudents().intValue() <= group.getGroupStudents().size()) {
+        } else if (scheduleing.getMaximumNumberOfStudents().intValue() <= group.getGroupStudentsSet().size()) {
             throw new MaximumNumberOfStudentsReachedException(scheduleing.getMaximumNumberOfStudents().toString());
         } else {
             final Integer maximumCurricularYearToCountCompletedCourses =

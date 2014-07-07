@@ -60,7 +60,7 @@ public class DegreeCandidacyForGraduatedPersonCandidacyPeriod extends DegreeCand
     }
 
     public DegreeCandidacyForGraduatedPersonProcess getDegreeCandidacyForGraduatedPersonProcess() {
-        return (DegreeCandidacyForGraduatedPersonProcess) (!getCandidacyProcessesSet().isEmpty() ? getCandidacyProcesses().iterator().next() : null);
+        return (DegreeCandidacyForGraduatedPersonProcess) (!getCandidacyProcessesSet().isEmpty() ? getCandidacyProcessesSet().iterator().next() : null);
     }
 
     @Override

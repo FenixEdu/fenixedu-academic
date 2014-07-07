@@ -102,14 +102,4 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
         return this.getRegistrationAgreement().name().equals(myOtherSoul.name());
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getSupervisors() {
-        return getSupervisorsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getRegistrations() {
-        return getRegistrationsSet();
-    }
-
 }

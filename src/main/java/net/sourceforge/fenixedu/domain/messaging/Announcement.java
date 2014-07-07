@@ -294,7 +294,7 @@ public class Announcement extends Announcement_Base {
     }
 
     public void setCategories(java.util.List<AnnouncementCategory> categories) {
-        this.getCategories().clear();
+        this.getCategoriesSet().clear();
 
         for (AnnouncementCategory category : categories) {
             this.addCategories(category);
@@ -346,7 +346,7 @@ public class Announcement extends Announcement_Base {
                             .getNome(), ecab.getExecutionCourse().getDegreePresentationString());
         }
 
-        for (final AnnouncementCategory category : getCategories()) {
+        for (final AnnouncementCategory category : getCategoriesSet()) {
             removeCategories(category);
         }
         setCampus(null);
@@ -461,11 +461,6 @@ public class Announcement extends Announcement_Base {
                 announcement.setPriority(announcement.getPriority() - 1);
             }
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory> getCategories() {
-        return getCategoriesSet();
     }
 
 }

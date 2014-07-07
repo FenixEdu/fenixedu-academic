@@ -94,7 +94,7 @@ public class EnrollGroupShift {
     private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
             throws FenixServiceException {
 
-        for (final Attends attend : studentGroup.getAttends()) {
+        for (final Attends attend : studentGroup.getAttendsSet()) {
             if (attend.getRegistration() == registration) {
                 return true;
             }

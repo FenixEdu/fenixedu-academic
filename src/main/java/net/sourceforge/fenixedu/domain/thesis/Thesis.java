@@ -93,7 +93,7 @@ public class Thesis extends Thesis_Base {
                     return;
                 }
 
-                Collection<Thesis> theses = enrolment.getTheses();
+                Collection<Thesis> theses = enrolment.getThesesSet();
 
                 String number = enrolment.getStudentCurricularPlan().getRegistration().getNumber().toString();
                 switch (theses.size()) {
@@ -360,7 +360,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public ThesisEvaluationParticipant getParticipant(ThesisParticipationType type) {
-        for (ThesisEvaluationParticipant participant : getParticipations()) {
+        for (ThesisEvaluationParticipant participant : getParticipationsSet()) {
             if (participant.getType() == type) {
                 return participant;
             }
@@ -372,7 +372,7 @@ public class Thesis extends Thesis_Base {
     public List<ThesisEvaluationParticipant> getAllParticipants(ThesisParticipationType type) {
         List<ThesisEvaluationParticipant> result = new ArrayList<ThesisEvaluationParticipant>();
 
-        for (ThesisEvaluationParticipant participant : getParticipations()) {
+        for (ThesisEvaluationParticipant participant : getParticipationsSet()) {
             if (participant.getType() == type) {
                 result.add(participant);
             }
@@ -390,7 +390,7 @@ public class Thesis extends Thesis_Base {
 
         setRootDomainObject(null);
 
-        for (; !getParticipations().isEmpty(); getParticipations().iterator().next().delete()) {
+        for (; !getParticipationsSet().isEmpty(); getParticipationsSet().iterator().next().delete()) {
             ;
         }
 
@@ -554,7 +554,7 @@ public class Thesis extends Thesis_Base {
             return competenceCourse.getDepartmentUnit().getDepartment().getRealName();
         }
         if (!competenceCourse.getDepartmentsSet().isEmpty()) {
-            return competenceCourse.getDepartments().iterator().next().getRealName();
+            return competenceCourse.getDepartmentsSet().iterator().next().getRealName();
         }
         return null;
     }
@@ -686,7 +686,7 @@ public class Thesis extends Thesis_Base {
         final String body = getMessage("message.thesis.reject.submission.email.body", studentNumber, title, rejectionComment);
 
         //
-        final Sender sender = ScientificCouncilUnit.getScientificCouncilUnit().getUnitBasedSender().iterator().next();
+        final Sender sender = ScientificCouncilUnit.getScientificCouncilUnit().getUnitBasedSenderSet().iterator().next();
 
         new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
     }
@@ -879,7 +879,7 @@ public class Thesis extends Thesis_Base {
      */
     public boolean isFinalThesis() {
         final Enrolment enrolment = getEnrolment();
-        return enrolment.getTheses().size() != 1 || !getEvaluationMark().getValue().equals(GradeScale.RE);
+        return enrolment.getThesesSet().size() != 1 || !getEvaluationMark().getValue().equals(GradeScale.RE);
     }
 
     /**
@@ -899,7 +899,7 @@ public class Thesis extends Thesis_Base {
      *         least one EnrolmentEvaluation connected to a MarkSheet
      */
     public boolean hasAnyEvaluations() {
-        for (EnrolmentEvaluation evaluation : getEnrolment().getEvaluations()) {
+        for (EnrolmentEvaluation evaluation : getEnrolment().getEvaluationsSet()) {
             if (!evaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
                 continue;
             }
@@ -926,7 +926,7 @@ public class Thesis extends Thesis_Base {
 
         Teacher teacher = getResponsibleTeacher();
 
-        for (MarkSheet markSheet : curricularCourse.getMarkSheets()) {
+        for (MarkSheet markSheet : curricularCourse.getMarkSheetsSet()) {
             if (getEnrolment().getExecutionPeriod() != markSheet.getExecutionPeriod()) {
                 continue;
             }
@@ -990,7 +990,7 @@ public class Thesis extends Thesis_Base {
 
         final ExecutionCourse executionCourse = getExecutionCourse();
         if (executionCourse != null) {
-            for (Professorship professorship : executionCourse.getProfessorships()) {
+            for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
                 if (professorship.isResponsibleFor() && professorship.hasTeacher()) {
                     return professorship.getTeacher();
                 }
@@ -1668,7 +1668,7 @@ public class Thesis extends Thesis_Base {
 
     public boolean getHasMadeProposalPreviousYear() {
         ExecutionYear enrolmentExecutionYear = getEnrolment().getExecutionYear();
-        for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudents()) {
+        for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudentsSet()) {
             Proposal proposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
             if (proposal != null && proposal.isForExecutionYear(enrolmentExecutionYear.getPreviousExecutionYear())
                     && proposal.getAttributionStatus().isFinalAttribution()) {
@@ -1726,11 +1726,6 @@ public class Thesis extends Thesis_Base {
     public boolean areThesisFilesReadable() {
         final ThesisFile thesisFile = getDissertation();
         return thesisFile != null && thesisFile.areThesisFilesReadable();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant> getParticipations() {
-        return getParticipationsSet();
     }
 
 }

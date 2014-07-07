@@ -442,7 +442,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     private String getAlmaMater(final Person person, final Registration registration) {
-        for (IndividualCandidacyPersonalDetails shite : person.getIndividualCandidacies()) {
+        for (IndividualCandidacyPersonalDetails shite : person.getIndividualCandidaciesSet()) {
             if (shite.getCandidacy().getCandidacyProcess() instanceof MobilityIndividualApplicationProcess) {
                 MobilityIndividualApplicationProcess erasmusShite =
                         (MobilityIndividualApplicationProcess) shite.getCandidacy().getCandidacyProcess();
@@ -477,7 +477,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     private String getAlmaMaterCountry(final Person person, final Registration registration) {
-        for (IndividualCandidacyPersonalDetails shite : person.getIndividualCandidacies()) {
+        for (IndividualCandidacyPersonalDetails shite : person.getIndividualCandidaciesSet()) {
             if (shite.getCandidacy().getCandidacyProcess() instanceof MobilityIndividualApplicationProcess) {
                 MobilityIndividualApplicationProcess erasmusShite =
                         (MobilityIndividualApplicationProcess) shite.getCandidacy().getCandidacyProcess();

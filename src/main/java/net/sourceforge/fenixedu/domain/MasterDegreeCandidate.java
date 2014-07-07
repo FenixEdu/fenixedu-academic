@@ -72,7 +72,7 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
     }
 
     public CandidateSituation getActiveCandidateSituation() {
-        for (CandidateSituation candidateSituation : getSituations()) {
+        for (CandidateSituation candidateSituation : getSituationsSet()) {
             if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
                 return candidateSituation;
             }
@@ -128,16 +128,6 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
             description.append(getMajorDegreeSchool());
         }
         return description.toString();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CandidateSituation> getSituations() {
-        return getSituationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CandidateEnrolment> getCandidateEnrolments() {
-        return getCandidateEnrolmentsSet();
     }
 
 }

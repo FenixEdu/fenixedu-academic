@@ -47,7 +47,7 @@ public class NonRegularTeachingService extends NonRegularTeachingService_Base {
             }
         }
 
-        for (NonRegularTeachingService nonRegularTeachingService : professorship.getNonRegularTeachingServices()) {
+        for (NonRegularTeachingService nonRegularTeachingService : professorship.getNonRegularTeachingServicesSet()) {
             if (nonRegularTeachingService.getShift().equals(shift)) {
                 if (percentage == null || percentage.equals(new Double(0.0))) {
                     nonRegularTeachingService.delete();

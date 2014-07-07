@@ -89,9 +89,4 @@ public class UnitAcronym extends UnitAcronym_Base {
         return string == null ? null : StringNormalizer.normalize(string).replace(' ', '-');
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Unit> getUnits() {
-        return getUnitsSet();
-    }
-
 }

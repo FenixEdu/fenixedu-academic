@@ -34,7 +34,7 @@ public class SeniorStatute extends SeniorStatute_Base {
         setEndExecutionPeriod(endExecutionPeriod);
         setStatuteType(statuteType);
 
-        for (StudentStatute statute : student.getStudentStatutes()) {
+        for (StudentStatute statute : student.getStudentStatutesSet()) {
             if (!statute.overlapsWith(this)) {
                 continue;
             }

@@ -31,9 +31,9 @@ public class DegreeChangePublicIndividualCandidacyDegreesProvider implements Dat
                 (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) source;
 
         if (bean.getCandidacyProcess() != null) {
-            return bean.getCandidacyProcess().getDegree();
+            return bean.getCandidacyProcess().getDegreeSet();
         } else {
-            return bean.getIndividualCandidacyProcess().getCandidacyProcess().getDegree();
+            return bean.getIndividualCandidacyProcess().getCandidacyProcess().getDegreeSet();
         }
     }
 

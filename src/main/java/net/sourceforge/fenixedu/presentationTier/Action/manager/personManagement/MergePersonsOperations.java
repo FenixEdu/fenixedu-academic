@@ -27,14 +27,14 @@ public class MergePersonsOperations {
 
     @Atomic
     public static void removeFromPersistentGroups(Person person) {
-        for (PersistentGroupMembers group : person.getPersistentGroups()) {
+        for (PersistentGroupMembers group : person.getPersistentGroupsSet()) {
             group.removePersons(person);
         }
     }
 
     @Atomic
     public static void removeFromUploadUnits(Person person) {
-        for (Unit unit : person.getUnitsWithUploadPermission()) {
+        for (Unit unit : person.getUnitsWithUploadPermissionSet()) {
             unit.removeAllowedPeopleToUploadFiles(person);
         }
     }

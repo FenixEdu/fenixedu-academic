@@ -36,7 +36,7 @@ public class SchoolTimeDistrictSubdivisionForResidenceInformationFormProvider im
     public Object provide(Object source, Object currentValue) {
         final ResidenceInformationForm residenceInformationForm = (ResidenceInformationForm) source;
         if (residenceInformationForm.getSchoolTimeDistrictOfResidence() != null) {
-            return residenceInformationForm.getSchoolTimeDistrictOfResidence().getDistrictSubdivisions();
+            return residenceInformationForm.getSchoolTimeDistrictOfResidence().getDistrictSubdivisionsSet();
         }
 
         return Collections.emptyList();

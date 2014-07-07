@@ -135,7 +135,7 @@ public class DegreeTransferIndividualCandidacyPR extends DegreeTransferIndividua
         }
 
         final List<Registration> registrations = event.getCandidacyStudent().getRegistrationsFor(event.getCandidacyDegree());
-        for (final Registration registration : event.getCandidacyStudent().getRegistrations()) {
+        for (final Registration registration : event.getCandidacyStudent().getRegistrationsSet()) {
             if (!registrations.contains(registration) && !registration.isCanceled()) {
                 return true;
             }

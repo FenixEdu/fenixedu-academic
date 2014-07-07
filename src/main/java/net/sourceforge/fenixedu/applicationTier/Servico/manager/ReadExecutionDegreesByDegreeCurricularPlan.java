@@ -36,7 +36,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlan {
     }
 
     public static List<InfoExecutionDegree> getExecutionCourses(final DegreeCurricularPlan degreeCurricularPlan) {
-        final Collection<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegreesSet();
 
         final List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>(executionDegrees.size());
         for (final ExecutionDegree executionDegree : executionDegrees) {

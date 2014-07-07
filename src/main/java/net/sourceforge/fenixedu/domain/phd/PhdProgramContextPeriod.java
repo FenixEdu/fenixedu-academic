@@ -75,7 +75,7 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
     }
 
     private void checkOverlaps(PhdProgram phdProgram, DateTime beginPeriod, DateTime endPeriod) {
-        for (PhdProgramContextPeriod period : phdProgram.getPhdProgramContextPeriods()) {
+        for (PhdProgramContextPeriod period : phdProgram.getPhdProgramContextPeriodsSet()) {
             if (period == this) {
                 continue;
             }

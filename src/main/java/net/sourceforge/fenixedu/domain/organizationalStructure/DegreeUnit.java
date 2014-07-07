@@ -130,7 +130,7 @@ public class DegreeUnit extends DegreeUnit_Base {
     /* For each delegate function type, there can be only one active function */
     public Function getActiveDelegateFunctionByType(FunctionType functionType) {
         YearMonthDay today = new YearMonthDay();
-        for (Function function : getFunctions()) {
+        for (Function function : getFunctionsSet()) {
             if (functionType.equals(function.getFunctionType()) && function.isActive(today)) {
                 return function;
             }
@@ -226,7 +226,7 @@ public class DegreeUnit extends DegreeUnit_Base {
 
     /* Return delegate function, of the given type, in the given execution year */
     public Function getDelegateFunctionByTypeAndExecutionYear(ExecutionYear executionYear, FunctionType functionType) {
-        for (Function function : getFunctions()) {
+        for (Function function : getFunctionsSet()) {
             if (function.getFunctionType() != null && function.getFunctionType().equals(functionType)
                     && function.belongsToPeriod(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay())) {
                 return function;
@@ -237,7 +237,7 @@ public class DegreeUnit extends DegreeUnit_Base {
 
     public List<Function> getAllDelegateFunctionsByType(FunctionType functionType) {
         List<Function> result = new ArrayList<Function>();
-        for (Function function : getFunctions()) {
+        for (Function function : getFunctionsSet()) {
             if (function.getFunctionType().equals(functionType)) {
                 result.add(function);
             }

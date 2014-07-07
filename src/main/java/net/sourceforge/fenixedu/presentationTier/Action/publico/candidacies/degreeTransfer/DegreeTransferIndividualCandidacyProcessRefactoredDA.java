@@ -267,7 +267,7 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 
         ExecutionYear candidacyExecutionInterval = bean.getCandidacyExecutionInterval();
 
-        for (Registration registration : student.getRegistrations()) {
+        for (Registration registration : student.getRegistrationsSet()) {
             StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
 
             if (lastStudentCurricularPlan.isActive(candidacyExecutionInterval.getPreviousExecutionYear())) {

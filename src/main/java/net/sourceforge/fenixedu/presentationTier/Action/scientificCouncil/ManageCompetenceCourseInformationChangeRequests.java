@@ -132,7 +132,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     private void putChangeRequestInRequest(HttpServletRequest request, Department department) {
         List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<CompetenceCourseInformationChangeRequest>();
         for (CompetenceCourse courses : department.getDepartmentUnit().getCompetenceCourses()) {
-            requests.addAll(courses.getCompetenceCourseInformationChangeRequests());
+            requests.addAll(courses.getCompetenceCourseInformationChangeRequestsSet());
         }
         request.setAttribute("changeRequests", requests);
     }

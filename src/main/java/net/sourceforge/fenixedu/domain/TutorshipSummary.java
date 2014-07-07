@@ -121,9 +121,4 @@ public class TutorshipSummary extends TutorshipSummary_Base {
         return semesters;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummaryRelation> getTutorshipSummaryRelations() {
-        return getTutorshipSummaryRelationsSet();
-    }
-
 }

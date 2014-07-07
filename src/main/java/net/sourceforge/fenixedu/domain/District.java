@@ -94,9 +94,4 @@ public class District extends District_Base {
         return null;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DistrictSubdivision> getDistrictSubdivisions() {
-        return getDistrictSubdivisionsSet();
-    }
-
 }

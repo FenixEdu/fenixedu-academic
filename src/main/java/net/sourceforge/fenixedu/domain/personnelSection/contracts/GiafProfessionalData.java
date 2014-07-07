@@ -73,7 +73,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 
     public Set<PersonContractSituation> getValidPersonContractSituations() {
         Set<PersonContractSituation> personContractSituations = new HashSet<PersonContractSituation>();
-        for (PersonContractSituation personContractSituation : getPersonContractSituations()) {
+        for (PersonContractSituation personContractSituation : getPersonContractSituationsSet()) {
             if (personContractSituation.isValid() && personContractSituation.getAnulationDate() == null
                     && personContractSituation.getContractSituation().getInExercise()
                     && !personContractSituation.getContractSituation().getEndSituation()) {
@@ -85,7 +85,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 
     public Set<PersonProfessionalExemption> getValidPersonProfessionalExemption() {
         Set<PersonProfessionalExemption> personProfessionalExemptions = new HashSet<PersonProfessionalExemption>();
-        for (PersonProfessionalExemption personProfessionalExemption : getPersonProfessionalExemptions()) {
+        for (PersonProfessionalExemption personProfessionalExemption : getPersonProfessionalExemptionsSet()) {
             if (personProfessionalExemption.isValid() && personProfessionalExemption.getAnulationDate() == null) {
                 personProfessionalExemptions.add(personProfessionalExemption);
             }
@@ -95,7 +95,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 
     public Set<PersonProfessionalRegime> getValidPersonProfessionalRegimes() {
         Set<PersonProfessionalRegime> personProfessionalRegimes = new HashSet<PersonProfessionalRegime>();
-        for (PersonProfessionalRegime personProfessionalRegime : getPersonProfessionalRegimes()) {
+        for (PersonProfessionalRegime personProfessionalRegime : getPersonProfessionalRegimesSet()) {
             if (personProfessionalRegime.isValid() && personProfessionalRegime.getAnulationDate() == null) {
                 personProfessionalRegimes.add(personProfessionalRegime);
             }
@@ -105,7 +105,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 
     public Set<PersonProfessionalCategory> getValidPersonProfessionalCategories() {
         Set<PersonProfessionalCategory> personProfessionalCategories = new HashSet<PersonProfessionalCategory>();
-        for (PersonProfessionalCategory personProfessionalCategory : getPersonProfessionalCategories()) {
+        for (PersonProfessionalCategory personProfessionalCategory : getPersonProfessionalCategoriesSet()) {
             if (personProfessionalCategory.isValid() && personProfessionalCategory.getAnulationDate() == null) {
                 personProfessionalCategories.add(personProfessionalCategory);
             }
@@ -115,7 +115,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 
     public Set<PersonProfessionalRelation> getValidPersonProfessionalRelations() {
         Set<PersonProfessionalRelation> personProfessionalRelations = new HashSet<PersonProfessionalRelation>();
-        for (PersonProfessionalRelation personProfessionalRelation : getPersonProfessionalRelations()) {
+        for (PersonProfessionalRelation personProfessionalRelation : getPersonProfessionalRelationsSet()) {
             if (personProfessionalRelation.isValid() && personProfessionalRelation.getAnulationDate() == null) {
                 personProfessionalRelations.add(personProfessionalRelation);
             }
@@ -145,41 +145,6 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
         return !(getContractSituation().getEndSituation() || !getContractSituation().getInExercise() || (getTerminationSituationDate() != null
                 && getTerminationSituationDate().isBefore(new LocalDate()) && getTerminationSituationDate().isAfter(
                 getContractSituationDate())));
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption> getPersonProfessionalExemptions() {
-        return getPersonProfessionalExemptionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRelation> getPersonProfessionalRelations() {
-        return getPersonProfessionalRelationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation> getPersonContractSituations() {
-        return getPersonContractSituationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalContract> getPersonProfessionalContracts() {
-        return getPersonProfessionalContractsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRegime> getPersonProfessionalRegimes() {
-        return getPersonProfessionalRegimesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalCategory> getPersonProfessionalCategories() {
-        return getPersonProfessionalCategoriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonFunctionsAccumulation> getPersonFunctionsAccumulations() {
-        return getPersonFunctionsAccumulationsSet();
     }
 
 }

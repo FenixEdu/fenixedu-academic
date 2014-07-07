@@ -96,7 +96,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup {
         }
 
         for (Degree degree : Degree.readBolonhaDegrees()) {
-            for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+            for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlansSet()) {
                 if (dcp.getCurricularPlanMembersGroup().isMember(person.getUser())) {
                     return true;
                 }

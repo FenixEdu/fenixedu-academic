@@ -84,7 +84,7 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
             areLessonsWithoutTeacherConsidered.put(executionCourse, false);
         }
         for (Teacher teacher : getRootDomainObject().getTeachersSet()) {
-            for (final ExecutionSemester semester : executionYear.getExecutionPeriods()) {
+            for (final ExecutionSemester semester : executionYear.getExecutionPeriodsSet()) {
                 ExecutionCourse executionCourse = null;
                 for (Professorship professorship : teacher.getDegreeProfessorshipsByExecutionPeriod(semester)) {
                     executionCourse = professorship.getExecutionCourse();
@@ -98,7 +98,7 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
                         continue;
                     }
                     for (DegreeTeachingService service : professorship.getDegreeTeachingServicesOrderedByShift()) {
-                        for (Lesson lesson : service.getShift().getAssociatedLessons()) {
+                        for (Lesson lesson : service.getShift().getAssociatedLessonsSet()) {
                             for (ShiftType shiftType : service.getShift().getTypes()) {
                                 final Row row = spreadsheet.addRow();
 
@@ -159,7 +159,7 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
                         if (lesson.getExecutionCourse() != executionCourse) {
                             continue;
                         }
-                        if (lesson.getShift().getDegreeTeachingServices().isEmpty()) {
+                        if (lesson.getShift().getDegreeTeachingServicesSet().isEmpty()) {
                             for (ShiftType shiftType : lesson.getShift().getTypes()) {
                                 // Licoes sem professor
                                 final Row row = spreadsheet.addRow();

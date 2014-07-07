@@ -87,7 +87,7 @@ public class InstallmentBean implements Serializable {
 
         if (installment instanceof PartialRegimeInstallment) {
             PartialRegimeInstallment partialInstallment = (PartialRegimeInstallment) installment;
-            setExecutionSemesters(partialInstallment.getExecutionSemesters());
+            setExecutionSemesters(partialInstallment.getExecutionSemestersSet());
             setEctsForAmount(partialInstallment.getEctsForAmount());
         }
 
