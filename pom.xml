@@ -149,7 +149,7 @@
         <dependency>
             <groupId>org.fenixedu</groupId>
             <artifactId>bennu-renderers</artifactId>
-            <version>4.0.3</version>
+            <version>4.1.0</version>
         </dependency>
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
@@ -222,16 +222,6 @@
             <groupId>taglibs</groupId>
             <artifactId>datetime</artifactId>
             <version>1.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>standard</artifactId>
-            <version>1.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.0.6</version>
         </dependency>
         <dependency>
             <groupId>commons-httpclient</groupId>
