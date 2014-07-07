@@ -134,17 +134,17 @@ public class SantanderBatchFillerWorker {
     }
 
     private boolean treatAsEmployee(Person person) {
-        return (person.hasRole(RoleType.EMPLOYEE) && person.hasPersonProfessionalData());
+        return (person.hasRole(RoleType.EMPLOYEE) && person.getPersonProfessionalData() != null);
     }
 
     private boolean treatAsGrantOwner(Person person) {
         return (isGrantOwner(person))
-                || (person.hasRole(RoleType.GRANT_OWNER) && person.hasEmployee() && !person.hasRole(RoleType.EMPLOYEE) && person
-                        .hasPersonProfessionalData());
+                || (person.hasRole(RoleType.GRANT_OWNER) && person.getEmployee() != null && !person.hasRole(RoleType.EMPLOYEE) && person
+                        .getPersonProfessionalData() != null);
     }
 
     private boolean treatAsStudent(Person person, ExecutionYear executionYear) {
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             final List<Registration> activeRegistrations = person.getStudent().getActiveRegistrations();
             for (final Registration registration : activeRegistrations) {
                 if (registration.isBolonha() && !registration.getDegreeType().isEmpty()) {
@@ -153,7 +153,7 @@ public class SantanderBatchFillerWorker {
             }
             final InsuranceEvent event = person.getInsuranceEventFor(executionYear);
             final PhdIndividualProgramProcess phdIndividualProgramProcess =
-                    event != null && event.isClosed() ? find(person.getPhdIndividualProgramProcesses()) : null;
+                    event != null && event.isClosed() ? find(person.getPhdIndividualProgramProcessesSet()) : null;
             return (phdIndividualProgramProcess != null);
         }
         return false;
@@ -165,7 +165,7 @@ public class SantanderBatchFillerWorker {
                     person.getPersonProfessionalData() != null ? person.getPersonProfessionalData()
                             .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
             if (currentGrantOwnerContractSituation != null
-                    && currentGrantOwnerContractSituation.getProfessionalCategory() != null && person.hasEmployee()
+                    && currentGrantOwnerContractSituation.getProfessionalCategory() != null && person.getEmployee() != null
                     && person.getEmployee().getCurrentWorkingPlace() != null) {
                 return true;
             }
@@ -543,7 +543,7 @@ public class SantanderBatchFillerWorker {
 
     private PhdIndividualProgramProcess getPhdProcess(final Person person) {
         final InsuranceEvent event = person.getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear());
-        return event != null && event.isClosed() ? find(person.getPhdIndividualProgramProcesses()) : null;
+        return event != null && event.isClosed() ? find(person.getPhdIndividualProgramProcessesSet()) : null;
     }
 
     private Degree getDegree(final Student student) {

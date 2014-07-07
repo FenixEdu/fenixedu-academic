@@ -116,7 +116,8 @@ class ImportPersonSabbaticalsFromGiaf extends ImportProcessor {
         int totalInFenix = 0;
         int repeted = 0;
         for (GiafProfessionalData giafProfessionalData : Bennu.getInstance().getGiafProfessionalDataSet()) {
-            for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptions()) {
+            for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
+                    .getPersonProfessionalExemptionsSet()) {
                 if (personProfessionalExemption instanceof PersonSabbatical
                         && personProfessionalExemption.getAnulationDate() == null) {
                     final PersonSabbatical personSabbatical = (PersonSabbatical) personProfessionalExemption;
@@ -218,7 +219,7 @@ class ImportPersonSabbaticalsFromGiaf extends ImportProcessor {
 
     private boolean hasPersonSabbatical(GiafProfessionalData giafProfessionalData, LocalDate beginDate, LocalDate endDate,
             DateTime creationDate, DateTime modifiedDate) {
-        for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptions()) {
+        for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptionsSet()) {
             if (personProfessionalExemption.getAnulationDate() == null) {
                 if (personProfessionalExemption instanceof PersonSabbatical) {
                     PersonSabbatical personSabbatical = (PersonSabbatical) personProfessionalExemption;

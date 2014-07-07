@@ -145,7 +145,7 @@ class ImportPersonProfessionalCategoriesFromGiaf extends ImportProcessor {
         int repeted = 0;
         for (GiafProfessionalData giafProfessionalData : Bennu.getInstance().getGiafProfessionalDataSet()) {
             for (final PersonProfessionalCategory personProfessionalCategory : giafProfessionalData
-                    .getPersonProfessionalCategories()) {
+                    .getPersonProfessionalCategoriesSet()) {
                 if (personProfessionalCategory.getAnulationDate() == null) {
                     int countThisPersonProfessionalCategoryOnGiaf =
                             countThisPersonProfessionalCategoryOnGiaf(oracleConnection, personProfessionalCategory, logger);
@@ -281,7 +281,7 @@ class ImportPersonProfessionalCategoriesFromGiaf extends ImportProcessor {
             LocalDate endDate, ProfessionalCategory professionalCategory, String professionalCategoryGiafId,
             ProfessionalRegime professionalRegime, String professionalRegimeGiafId, ProfessionalRelation professionalRelation,
             String professionalRelationGiafId, String step, String level, DateTime creationDate, DateTime modifiedDate) {
-        for (PersonProfessionalCategory personProfessionalCategory : giafProfessionalData.getPersonProfessionalCategories()) {
+        for (PersonProfessionalCategory personProfessionalCategory : giafProfessionalData.getPersonProfessionalCategoriesSet()) {
             if (personProfessionalCategory.getAnulationDate() == null) {
                 if (Objects.equals(beginDate, personProfessionalCategory.getBeginDate())
                         && Objects.equals(endDate, personProfessionalCategory.getEndDate())

@@ -92,7 +92,7 @@ public class CreateAndInitializeExecutionCourses extends CustomTask {
         final ExecutionYear executionYear = destinationExecutionSemester.getExecutionYear();
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+            for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
                 if (shouldCreateFor(curricularCourse)) {
                     createFor(curricularCourse);
                 }
@@ -554,7 +554,7 @@ public class CreateAndInitializeExecutionCourses extends CustomTask {
         final Period period;
         if (lessonInstance != null) {
             period = new Period(maxLessonsPeriod.getLeft(), lessonInstance.getDay());
-        } else if (oldLesson.hasPeriod()) {
+        } else if (oldLesson.getPeriod() != null) {
             final YearMonthDay start = oldLesson.getPeriod().getStartYearMonthDay();
             period = new Period(maxLessonsPeriod.getLeft(), start);
         } else {

@@ -95,7 +95,7 @@ public class SendVoteResults extends CronTask {
                 int maxNameSize = 0;
 
                 for (final DelegateElectionVote delegateElectionVote : lastVotingPeriod.getVotesSet()) {
-                    if (!delegateElectionVote.hasStudent()) {
+                    if (delegateElectionVote.getStudent() == null) {
                         continue;
                     }
                     final Student student = delegateElectionVote.getStudent();

@@ -138,7 +138,7 @@ public class PersonInformationDTO {
         }
 
         this.studentDegrees = new ArrayList<String>();
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             for (Registration registration : person.getStudent().getActiveRegistrations()) {
                 studentDegrees.add(registration.getDegree().getPresentationName());
             }
@@ -150,11 +150,11 @@ public class PersonInformationDTO {
 
         }
 
-        if (person.hasTeacher() && person.getTeacher().getCurrentWorkingDepartment() != null) {
+        if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null) {
             this.teacherDepartment = person.getTeacher().getCurrentWorkingDepartment().getRealName();
         }
 
-        if (person.hasEmployee()) {
+        if (person.getEmployee() != null) {
             final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
             if (currentWorkingPlace != null) {
                 this.employeeUnit = currentWorkingPlace.getName();

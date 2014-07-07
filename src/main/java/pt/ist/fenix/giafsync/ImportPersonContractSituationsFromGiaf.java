@@ -266,7 +266,7 @@ class ImportPersonContractSituationsFromGiaf extends ImportProcessor {
     private boolean hasPersonContractSituation(GiafProfessionalData giafProfessionalData, LocalDate beginDate, LocalDate endDate,
             DateTime creationDate, DateTime modifiedDate, String step, ContractSituation contractSituation,
             String contractSituationGiafId, ProfessionalCategory category, String categoryGiafId) {
-        for (PersonContractSituation personContractSituation : giafProfessionalData.getPersonContractSituations()) {
+        for (PersonContractSituation personContractSituation : giafProfessionalData.getPersonContractSituationsSet()) {
             if (personContractSituation.getAnulationDate() == null) {
                 if (personContractSituation.getCreationDate().equals(creationDate)
                         && Objects.equals(contractSituation, personContractSituation.getContractSituation())
