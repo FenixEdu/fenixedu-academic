@@ -192,14 +192,4 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup> getDestinationAffinities() {
         return getDestinationAffinitiesSet();
     }
-
-    @Deprecated
-    public boolean hasAnyDestinationAffinities() {
-        return !getDestinationAffinitiesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasCycleType() {
-        return getCycleType() != null;
-    }
 }
