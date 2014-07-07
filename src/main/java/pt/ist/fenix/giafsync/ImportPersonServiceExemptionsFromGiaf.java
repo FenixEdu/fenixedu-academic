@@ -127,7 +127,8 @@ class ImportPersonServiceExemptionsFromGiaf extends ImportProcessor {
         int totalInFenix = 0;
         int repeted = 0;
         for (GiafProfessionalData giafProfessionalData : Bennu.getInstance().getGiafProfessionalDataSet()) {
-            for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptions()) {
+            for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
+                    .getPersonProfessionalExemptionsSet()) {
                 if (personProfessionalExemption instanceof PersonServiceExemption
                         && personProfessionalExemption.getAnulationDate() == null) {
                     final PersonServiceExemption personServiceExemption = (PersonServiceExemption) personProfessionalExemption;
@@ -235,7 +236,7 @@ class ImportPersonServiceExemptionsFromGiaf extends ImportProcessor {
 
     private boolean hasPersonServiceExemption(GiafProfessionalData giafProfessionalData, LocalDate beginDate, LocalDate endDate,
             ServiceExemption serviceExemption, String serviceExemptionGiafId, DateTime creationDate, DateTime modifiedDate) {
-        for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptions()) {
+        for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptionsSet()) {
             if (personProfessionalExemption instanceof PersonServiceExemption) {
                 PersonServiceExemption personServiceExemption = (PersonServiceExemption) personProfessionalExemption;
                 if (personServiceExemption.getAnulationDate() == null

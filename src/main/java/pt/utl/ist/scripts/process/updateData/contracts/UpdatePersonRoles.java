@@ -105,7 +105,7 @@ public class UpdatePersonRoles extends CronTask {
                 }
             }
         }
-        for (Person person : Role.getRoleByRoleType(RoleType.RESEARCHER).getAssociatedPersons()) {
+        for (Person person : Role.getRoleByRoleType(RoleType.RESEARCHER).getAssociatedPersonsSet()) {
             if ((!person.hasRole(RoleType.TEACHER)) && !isActive(person, CategoryType.RESEARCHER)
                     && !hasActiveResearchContracts(person)) {
                 if (person.hasRole(RoleType.RESEARCHER)) {
@@ -175,7 +175,7 @@ public class UpdatePersonRoles extends CronTask {
     }
 
     private void createTeacher(Employee employee) {
-        if (!employee.getPerson().hasTeacher()) {
+        if (employee.getPerson().getTeacher() == null) {
             new Teacher(employee.getPerson());
             getLogger().info("CREATED Teacher -> TeacherNumber: " + employee.getEmployeeNumber());
         }

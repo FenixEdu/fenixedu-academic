@@ -9,7 +9,7 @@
 
     <groupId>pt.ist</groupId>
     <artifactId>fenix-ist</artifactId>
-    <version>1.2.10</version>
+    <version>1.2.11</version>
 
     <name>Fenix IST</name>
     <url>http://www.fenixedu.org</url>
@@ -19,7 +19,7 @@
         <connection>scm:git:git@github.com:ist-dsi/fenix-ist.git</connection>
         <developerConnection>scm:git:git@github.com:ist-/fenix-ist.git</developerConnection>
         <url>http://fenixedu.org</url>
-        <tag>HEAD</tag>
+        <tag>v1.2.11</tag>
     </scm>
 
     <build>

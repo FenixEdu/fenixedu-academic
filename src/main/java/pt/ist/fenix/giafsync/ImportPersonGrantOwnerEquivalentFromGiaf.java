@@ -142,7 +142,8 @@ class ImportPersonGrantOwnerEquivalentFromGiaf extends ImportProcessor {
         int totalInFenix = 0;
         int repeted = 0;
         for (GiafProfessionalData giafProfessionalData : Bennu.getInstance().getGiafProfessionalDataSet()) {
-            for (PersonProfessionalExemption pesonProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptions()) {
+            for (PersonProfessionalExemption pesonProfessionalExemption : giafProfessionalData
+                    .getPersonProfessionalExemptionsSet()) {
                 if (pesonProfessionalExemption instanceof PersonGrantOwnerEquivalent
                         && pesonProfessionalExemption.getAnulationDate() == null) {
                     final PersonGrantOwnerEquivalent personGrantOwnerEquivalent =
@@ -278,7 +279,7 @@ class ImportPersonGrantOwnerEquivalentFromGiaf extends ImportProcessor {
             LocalDate endDate, String motive, String local, String giafCountryName, Country country,
             GrantOwnerEquivalent grantOwnerEquivalent, String grantOwnerEquivalentGiafId, DateTime creationDate,
             DateTime modifiedDate) {
-        for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptions()) {
+        for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptionsSet()) {
             if (personProfessionalExemption instanceof PersonGrantOwnerEquivalent) {
                 PersonGrantOwnerEquivalent personGrantOwnerEquivalent = (PersonGrantOwnerEquivalent) personProfessionalExemption;
                 if (personGrantOwnerEquivalent.getAnulationDate() == null

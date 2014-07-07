@@ -74,11 +74,11 @@ public class CreateCardGenerationEntries extends CronTask {
                                     && person.getEmployee() != null && person.getEmployee().getCurrentWorkingPlace() != null) {
                                 final Employee employee = person.getEmployee();
                                 professionalLine = CardGenerationEntry.createResearcherLine(employee);
-                            } else if (person.hasRole(RoleType.EMPLOYEE) && person.hasPersonProfessionalData()) {
+                            } else if (person.hasRole(RoleType.EMPLOYEE) && person.getPersonProfessionalData() != null) {
                                 final Employee employee = person.getEmployee();
                                 professionalLine = CardGenerationEntry.createLine(employee);
-                            } else if (person.hasRole(RoleType.GRANT_OWNER) && person.hasEmployee()
-                                    && !person.hasRole(RoleType.EMPLOYEE) && person.hasPersonProfessionalData()) {
+                            } else if (person.hasRole(RoleType.GRANT_OWNER) && person.getEmployee() != null
+                                    && !person.hasRole(RoleType.EMPLOYEE) && person.getPersonProfessionalData() != null) {
                                 final Employee employee = person.getEmployee();
                                 professionalLine = CardGenerationEntry.createGrantOwnerLine(employee);
                             } else {
@@ -86,7 +86,7 @@ public class CreateCardGenerationEntries extends CronTask {
                             }
 
                             String studentLine = null;
-                            if (person.hasStudent()) {
+                            if (person.getStudent() != null) {
                                 final Student student = person.getStudent();
                                 if (!student.getActiveRegistrations().isEmpty()) {
                                     final StudentCurricularPlan studentCurricularPlan =
@@ -165,7 +165,7 @@ public class CreateCardGenerationEntries extends CronTask {
 
     private PhdIndividualProgramProcess find(final Person person) {
         final InsuranceEvent event = person.getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear());
-        return event != null && event.isClosed() ? find(person.getPhdIndividualProgramProcesses()) : null;
+        return event != null && event.isClosed() ? find(person.getPhdIndividualProgramProcessesSet()) : null;
     }
 
     private boolean hasMatchingLine(final Person person, final String line) {

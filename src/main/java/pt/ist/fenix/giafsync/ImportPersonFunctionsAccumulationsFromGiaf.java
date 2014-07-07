@@ -143,7 +143,7 @@ class ImportPersonFunctionsAccumulationsFromGiaf extends ImportProcessor {
 
         for (GiafProfessionalData giafProfessionalData : Bennu.getInstance().getGiafProfessionalDataSet()) {
             for (final PersonFunctionsAccumulation personFunctionsAccumulation : giafProfessionalData
-                    .getPersonFunctionsAccumulations()) {
+                    .getPersonFunctionsAccumulationsSet()) {
                 if (personFunctionsAccumulation.getAnulationDate() == null) {
                     int countThisPersonFunctionsAccumulationOnGiaf =
                             countThisPersonFunctionsAccumulationOnGiaf(oracleConnection, personFunctionsAccumulation, logger);
@@ -264,7 +264,7 @@ class ImportPersonFunctionsAccumulationsFromGiaf extends ImportProcessor {
     private boolean hasPersonFunctionsAccumulations(GiafProfessionalData giafProfessionalData, LocalDate beginDate,
             LocalDate endDate, BigDecimal hours, FunctionsAccumulation functionsAccumulation, String functionsAccumulationGiafId,
             ProfessionalRegime professionalRegime, String professionalRegimeGiafId, DateTime creationDate, DateTime modifiedDate) {
-        for (PersonFunctionsAccumulation personFunctionsAccumulation : giafProfessionalData.getPersonFunctionsAccumulations()) {
+        for (PersonFunctionsAccumulation personFunctionsAccumulation : giafProfessionalData.getPersonFunctionsAccumulationsSet()) {
             if (personFunctionsAccumulation.getAnulationDate() == null) {
                 if (Objects.equals(beginDate, personFunctionsAccumulation.getBeginDate())
                         && Objects.equals(endDate, personFunctionsAccumulation.getEndDate())

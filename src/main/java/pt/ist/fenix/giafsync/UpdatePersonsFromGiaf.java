@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -223,7 +222,7 @@ public class UpdatePersonsFromGiaf extends ImportProcessor {
             PersonProfessionalData personProfessionalData = employee.getPerson().getPersonProfessionalData();
             if (personProfessionalData != null) {
                 LocalDate today = new LocalDate();
-                for (GiafProfessionalData giafProfessionalData : personProfessionalData.getGiafProfessionalDatas()) {
+                for (GiafProfessionalData giafProfessionalData : personProfessionalData.getGiafProfessionalDatasSet()) {
                     for (final PersonContractSituation situation : giafProfessionalData.getValidPersonContractSituations()) {
                         if (situation.isActive(today)
                                 && (currentPersonContractSituation == null || situation.isAfter(currentPersonContractSituation))) {
