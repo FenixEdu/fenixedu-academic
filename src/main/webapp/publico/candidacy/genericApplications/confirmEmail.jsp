@@ -692,7 +692,7 @@
 					<% } %>
 				</td>
 				<td>
-					<% if (!recomentation.getLetterOfRecomentation() != null) { %>
+					<% if (recomentation.getLetterOfRecomentation() != null) { %>
 						<a href="<%= request.getContextPath() +  resendRequestUrl + "&recomentationId=" + recomentation.getExternalId() %>">
 							<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.request.resend"/>
 						</a>
