@@ -217,7 +217,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     private StudentCandidacy getActiveDgesCandidacy(Person person) {
-        for (Candidacy candidacy : person.getCandidacies()) {
+        for (Candidacy candidacy : person.getCandidaciesSet()) {
             if (!candidacy.isActive()) {
                 continue;
             }

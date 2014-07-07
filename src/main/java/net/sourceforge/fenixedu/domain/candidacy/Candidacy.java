@@ -59,7 +59,7 @@ public abstract class Candidacy extends Candidacy_Base {
     }
 
     public CandidacySituation getActiveCandidacySituation() {
-        return !getCandidacySituationsSet().isEmpty() ? Collections.max(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR) : null;
+        return !getCandidacySituationsSet().isEmpty() ? Collections.max(getCandidacySituationsSet(), CandidacySituation.DATE_COMPARATOR) : null;
     }
 
     public CandidacySituationType getActiveCandidacySituationType() {
@@ -68,7 +68,7 @@ public abstract class Candidacy extends Candidacy_Base {
     }
 
     private CandidacySituation getFirstCandidacySituation() {
-        return Collections.min(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR);
+        return Collections.min(getCandidacySituationsSet(), CandidacySituation.DATE_COMPARATOR);
     }
 
     // static methods
@@ -246,16 +246,6 @@ public abstract class Candidacy extends Candidacy_Base {
     public boolean isActive() {
         final CandidacySituationType situationType = getActiveCandidacySituationType();
         return situationType != null && situationType.isActive();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument> getCandidacyDocuments() {
-        return getCandidacyDocumentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.CandidacySituation> getCandidacySituations() {
-        return getCandidacySituationsSet();
     }
 
 }

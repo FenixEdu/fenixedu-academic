@@ -164,7 +164,7 @@ public class InfoReimbursementGuide extends InfoObject {
             setNumber(reimbursementGuide.getNumber());
 
             List infoReimbursementGuideEntries =
-                    (List) CollectionUtils.collect(reimbursementGuide.getReimbursementGuideEntries(), new Transformer() {
+                    (List) CollectionUtils.collect(reimbursementGuide.getReimbursementGuideEntriesSet(), new Transformer() {
 
                         @Override
                         public Object transform(Object arg0) {
@@ -176,7 +176,7 @@ public class InfoReimbursementGuide extends InfoObject {
             setInfoReimbursementGuideEntries(infoReimbursementGuideEntries);
 
             List infoReimbursementGuideSituations =
-                    (List) CollectionUtils.collect(reimbursementGuide.getReimbursementGuideSituations(), new Transformer() {
+                    (List) CollectionUtils.collect(reimbursementGuide.getReimbursementGuideSituationsSet(), new Transformer() {
 
                         @Override
                         public Object transform(Object arg0) {

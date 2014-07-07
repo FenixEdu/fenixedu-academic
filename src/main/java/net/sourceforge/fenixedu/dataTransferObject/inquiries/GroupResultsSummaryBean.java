@@ -45,7 +45,7 @@ public class GroupResultsSummaryBean implements Serializable {
             ResultPersonCategory personCategory) {
         setInquiryGroupQuestion(inquiryGroupQuestion);
         setLeft(true);
-        for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+        for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestionsSet()) {
             List<InquiryResult> questionResults = getResultsForQuestion(inquiryResults, inquiryQuestion);
             QuestionResultsSummaryBean resultsSummaryBean = null;
             if (inquiryQuestion.isScaleQuestion()) {

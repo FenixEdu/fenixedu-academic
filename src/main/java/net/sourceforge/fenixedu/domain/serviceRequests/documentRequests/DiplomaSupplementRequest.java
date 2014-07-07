@@ -293,9 +293,4 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
         return false;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity> getExtraCurricularActivity() {
-        return getExtraCurricularActivitySet();
-    }
-
 }

@@ -195,14 +195,4 @@ public class UniversityUnit extends UniversityUnit_Base {
         return getName();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy> getErasmusVacancy() {
-        return getErasmusVacancySet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement> getMobilityAgreements() {
-        return getMobilityAgreementsSet();
-    }
-
 }

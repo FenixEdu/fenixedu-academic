@@ -60,7 +60,7 @@ public class ReadCourseInformationCoordinatorAuthorizationFilter extends Coordin
         }
 
         SortedSet<Coordinator> coordinators = new TreeSet<Coordinator>(new CoordinatorByExecutionDegreeComparator());
-        coordinators.addAll(person.getCoordinators());
+        coordinators.addAll(person.getCoordinatorsSet());
 
         if (coordinators.isEmpty()) {
             deny();

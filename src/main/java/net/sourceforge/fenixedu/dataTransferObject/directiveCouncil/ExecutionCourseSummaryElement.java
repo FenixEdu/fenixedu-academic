@@ -50,7 +50,7 @@ public class ExecutionCourseSummaryElement implements Serializable {
 
     public Set<Person> getPersons() {
         Set<Person> persons = new HashSet<Person>();
-        for (Professorship professorship : getExecutionCourse().getProfessorships()) {
+        for (Professorship professorship : getExecutionCourse().getProfessorshipsSet()) {
             persons.add(professorship.getPerson());
         }
         return persons;

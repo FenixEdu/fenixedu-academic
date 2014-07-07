@@ -82,7 +82,7 @@ public class InfoEnrolment extends InfoObject {
     }
 
     public List<InfoEnrolmentEvaluation> getInfoEvaluations() {
-        final List<InfoEnrolmentEvaluation> result = new ArrayList<InfoEnrolmentEvaluation>(enrolment.getEvaluations().size());
+        final List<InfoEnrolmentEvaluation> result = new ArrayList<InfoEnrolmentEvaluation>(enrolment.getEvaluationsSet().size());
         for (final EnrolmentEvaluation enrolmentEvaluation : enrolment.getEvaluationsSet()) {
             result.add(InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolmentEvaluation));
         }

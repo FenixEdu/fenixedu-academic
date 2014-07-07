@@ -102,7 +102,7 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 
     private static List<AnnualEvent> readBy(final ExecutionYear executionYear, final EventState eventState) {
         final List<AnnualEvent> result = new ArrayList<AnnualEvent>();
-        for (final Event event : executionYear.getAnnualEvents()) {
+        for (final Event event : executionYear.getAnnualEventsSet()) {
             if (event.isInState(eventState)) {
                 result.add((AnnualEvent) event);
             }
@@ -119,7 +119,7 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
             final YearMonthDay startDate, final YearMonthDay endDate) {
         final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
         for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
-            for (final AnnualEvent each : executionYear.getAnnualEvents()) {
+            for (final AnnualEvent each : executionYear.getAnnualEventsSet()) {
                 if (eventClass.equals(each.getClass()) && !each.isCancelled()) {
                     for (final AccountingTransaction transaction : each.getNonAdjustingTransactions()) {
                         if (transaction.isInsidePeriod(startDate, endDate)) {

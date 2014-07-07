@@ -53,7 +53,7 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
         setSelectedDegree(process.getCandidacySelectedDegree());
         setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getPrecedentDegreeInformation()));
         setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(process.getCandidacy()));
-        initializeFormation(process.getCandidacy().getFormations());
+        initializeFormation(process.getCandidacy().getFormationsSet());
         setObservations(process.getCandidacy().getObservations());
         setProcessChecked(process.getProcessChecked());
         setPaymentChecked(process.getPaymentChecked());
@@ -84,7 +84,7 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
         }
 
         final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-        for (final Registration registration : student.getRegistrations()) {
+        for (final Registration registration : student.getRegistrationsSet()) {
             if (registration.isBolonha()) {
                 final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 

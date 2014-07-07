@@ -36,7 +36,7 @@ public class SchoolTimeDistrictSubdivisionForOriginInformationFormProvider imple
     public Object provide(Object source, Object currentValue) {
         final OriginInformationBean originInformationForm = (OriginInformationBean) source;
         if (originInformationForm.getSchoolTimeDistrictOfResidence() != null) {
-            return originInformationForm.getSchoolTimeDistrictOfResidence().getDistrictSubdivisions();
+            return originInformationForm.getSchoolTimeDistrictOfResidence().getDistrictSubdivisionsSet();
         }
 
         return Collections.emptyList();

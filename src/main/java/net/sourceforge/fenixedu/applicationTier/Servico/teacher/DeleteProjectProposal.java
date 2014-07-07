@@ -73,7 +73,7 @@ public class DeleteProjectProposal {
         // List teachers to advise
         List group = new ArrayList();
 
-        Collection groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = groupProperties.getExportGroupingsSet();
         Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
 
         while (iterGroupPropertiesExecutionCourseList.hasNext()) {
@@ -82,7 +82,7 @@ public class DeleteProjectProposal {
             if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
                     || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
 
-                Collection professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
+                Collection professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorshipsSet();
 
                 Iterator iterProfessorship = professorships.iterator();
                 while (iterProfessorship.hasNext()) {
@@ -96,7 +96,7 @@ public class DeleteProjectProposal {
             }
         }
 
-        Collection professorshipsAux = executionCourse.getProfessorships();
+        Collection professorshipsAux = executionCourse.getProfessorshipsSet();
 
         Iterator iterProfessorshipsAux = professorshipsAux.iterator();
         while (iterProfessorshipsAux.hasNext()) {

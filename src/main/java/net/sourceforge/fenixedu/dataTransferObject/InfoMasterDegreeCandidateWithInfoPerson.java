@@ -44,9 +44,9 @@ public class InfoMasterDegreeCandidateWithInfoPerson extends InfoMasterDegreeCan
             setMajorDegreeYear(masterDegreeCandidate.getMajorDegreeYear());
             setSpecializationArea(masterDegreeCandidate.getSpecializationArea());
             setSubstituteOrder(masterDegreeCandidate.getSubstituteOrder());
-            setSituationList(new ArrayList<InfoCandidateSituation>(masterDegreeCandidate.getSituations().size()));
+            setSituationList(new ArrayList<InfoCandidateSituation>(masterDegreeCandidate.getSituationsSet().size()));
 
-            for (CandidateSituation candidateSituation : masterDegreeCandidate.getSituations()) {
+            for (CandidateSituation candidateSituation : masterDegreeCandidate.getSituationsSet()) {
                 getSituationList().add(InfoCandidateSituation.newInfoFromDomain(candidateSituation));
 
                 if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {

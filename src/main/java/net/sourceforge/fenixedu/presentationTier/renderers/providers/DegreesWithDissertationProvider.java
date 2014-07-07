@@ -46,12 +46,12 @@ public class DegreesWithDissertationProvider implements DataProvider {
                 continue;
             }
 
-            planLoop: for (DegreeCurricularPlan plan : degree.getDegreeCurricularPlans()) {
+            planLoop: for (DegreeCurricularPlan plan : degree.getDegreeCurricularPlansSet()) {
                 if (!plan.isActive()) {
                     continue;
                 }
 
-                for (CurricularCourse course : plan.getCurricularCourses()) {
+                for (CurricularCourse course : plan.getCurricularCoursesSet()) {
                     if (course.isDissertation()) {
                         degrees.add(degree);
                         break planLoop;

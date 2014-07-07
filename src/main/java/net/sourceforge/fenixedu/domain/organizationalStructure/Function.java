@@ -122,7 +122,7 @@ public class Function extends Function_Base {
 
     public List<PersonFunction> getPersonFunctions() {
         List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-        for (Accountability accountability : getAccountabilities()) {
+        for (Accountability accountability : getAccountabilitiesSet()) {
             if (accountability.isPersonFunction()) {
                 personFunctions.add((PersonFunction) accountability);
             }
@@ -133,7 +133,7 @@ public class Function extends Function_Base {
     public List<PersonFunction> getActivePersonFunctions() {
         List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
         YearMonthDay currentDate = new YearMonthDay();
-        for (Accountability accountability : getAccountabilities()) {
+        for (Accountability accountability : getAccountabilitiesSet()) {
             if (accountability.isPersonFunction() && accountability.isActive(currentDate)) {
                 personFunctions.add((PersonFunction) accountability);
             }
@@ -144,7 +144,7 @@ public class Function extends Function_Base {
     public List<PersonFunction> getActivePersonFunctionsByPerson(final Person person) {
         List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
         YearMonthDay currentDate = new YearMonthDay();
-        for (Accountability accountability : getAccountabilities()) {
+        for (Accountability accountability : getAccountabilitiesSet()) {
             if (accountability.isPersonFunction() && accountability.isActive(currentDate)) {
                 PersonFunction personFunction = (PersonFunction) accountability;
                 if (personFunction.getPerson().equals(person)) {
@@ -216,7 +216,7 @@ public class Function extends Function_Base {
 
     public List<PersonFunction> getActivePersonFunctionsStartingIn(ExecutionYear executionYear) {
         List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-        for (Accountability accountability : getAccountabilities()) {
+        for (Accountability accountability : getAccountabilitiesSet()) {
             if (accountability.isPersonFunction()) {
                 if (accountability.getBeginDate().isBefore(executionYear.getEndDateYearMonthDay())
                         && (accountability.getEndDate() == null || accountability.getEndDate().isAfter(
@@ -269,11 +269,6 @@ public class Function extends Function_Base {
         } else {
             setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Function> getInherentFunctions() {
-        return getInherentFunctionsSet();
     }
 
 }

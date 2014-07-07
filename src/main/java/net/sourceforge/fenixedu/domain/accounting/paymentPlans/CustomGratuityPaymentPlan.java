@@ -86,9 +86,9 @@ public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {
     @Override
     public void delete() {
         while (!getInstallmentsSet().isEmpty()) {
-            getInstallments().iterator().next().delete();
+            getInstallmentsSet().iterator().next().delete();
         }
-        getGratuityEventsWithPaymentPlan().clear();
+        getGratuityEventsWithPaymentPlanSet().clear();
         removeParameters();
         setRootDomainObject(null);
         super.deleteDomainObject();

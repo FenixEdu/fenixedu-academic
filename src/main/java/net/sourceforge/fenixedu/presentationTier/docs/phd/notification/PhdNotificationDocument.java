@@ -107,13 +107,13 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     private void addGuidingsParameter(final PhdIndividualProgramProcess individualProgramProcess) {
-        if (!individualProgramProcess.getGuidings().isEmpty() && !individualProgramProcess.getAssistantGuidings().isEmpty()) {
+        if (!individualProgramProcess.getGuidingsSet().isEmpty() && !individualProgramProcess.getAssistantGuidingsSet().isEmpty()) {
             addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
-                    + ".full.guidings.template"), buildGuidingsInformation(individualProgramProcess.getGuidings()),
-                    buildGuidingsInformation(individualProgramProcess.getAssistantGuidings())));
-        } else if (!individualProgramProcess.getGuidings().isEmpty()) {
+                    + ".full.guidings.template"), buildGuidingsInformation(individualProgramProcess.getGuidingsSet()),
+                    buildGuidingsInformation(individualProgramProcess.getAssistantGuidingsSet())));
+        } else if (!individualProgramProcess.getGuidingsSet().isEmpty()) {
             addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
-                    + ".guidings.only.template"), buildGuidingsInformation(individualProgramProcess.getGuidings())));
+                    + ".guidings.only.template"), buildGuidingsInformation(individualProgramProcess.getGuidingsSet())));
         } else {
             addParameter("guidingsInformation", "");
         }

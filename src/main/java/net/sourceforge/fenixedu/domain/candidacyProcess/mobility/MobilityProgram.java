@@ -55,7 +55,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
 
     public void delete() {
         setRootDomainObject(null);
-        getMobilityAgreements().clear();
+        getMobilityAgreementsSet().clear();
         deleteDomainObject();
     }
 
@@ -89,7 +89,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
     }
 
     public MobilityAgreement getMobilityAgreementByUniversityUnit(final UniversityUnit unit) {
-        Collection<MobilityAgreement> mobilityAgreements = getMobilityAgreements();
+        Collection<MobilityAgreement> mobilityAgreements = getMobilityAgreementsSet();
 
         for (MobilityAgreement mobilityAgreement : mobilityAgreements) {
             if (mobilityAgreement.getUniversityUnit() == unit) {
@@ -117,16 +117,6 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
     public int compareTo(final MobilityProgram o) {
         int rac = getRegistrationAgreement().compareTo(o.getRegistrationAgreement());
         return rac == 0 ? getExternalId().compareTo(o.getExternalId()) : rac;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement> getMobilityAgreements() {
-        return getMobilityAgreementsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate> getEmailTemplates() {
-        return getEmailTemplatesSet();
     }
 
 }

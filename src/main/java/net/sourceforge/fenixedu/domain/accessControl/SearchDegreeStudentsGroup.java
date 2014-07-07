@@ -404,7 +404,7 @@ public class SearchDegreeStudentsGroup implements Serializable {
     public Map<StudentCurricularPlan, RegistrationStateType> searchStudentCurricularPlans(Integer minIndex, Integer maxIndex) {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-        for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
+        for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
             if (matchesSelectCriteria(studentCurricularPlan)) {
                 studentCurricularPlans.add(studentCurricularPlan);
             }

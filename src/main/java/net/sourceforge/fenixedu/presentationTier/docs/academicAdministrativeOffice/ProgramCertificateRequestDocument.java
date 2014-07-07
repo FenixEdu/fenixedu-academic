@@ -211,7 +211,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
         private List<ContextInformation> buildContextsInformation(final CurricularCourse curricularCourse) {
             final List<ContextInformation> result = new ArrayList<ContextInformation>();
-            for (final Context context : curricularCourse.getParentContexts()) {
+            for (final Context context : curricularCourse.getParentContextsSet()) {
                 result.add(new ContextInformation(context, getLanguage(), getLocale()));
             }
             return result;

@@ -139,7 +139,7 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public Integer getNumberOfAttendingStudents() {
-        return getExecutionCourse().getAttends().size();
+        return getExecutionCourse().getAttendsSet().size();
     }
 
     public String getCourseReportFilled() {
@@ -184,7 +184,7 @@ public class InfoExecutionCourse extends InfoObject {
     public List<InfoNonAffiliatedTeacher> getNonAffiliatedTeachers() {
         final List<InfoNonAffiliatedTeacher> result = new ArrayList<InfoNonAffiliatedTeacher>();
 
-        for (final NonAffiliatedTeacher nonAffiliatedTeacher : getExecutionCourse().getNonAffiliatedTeachers()) {
+        for (final NonAffiliatedTeacher nonAffiliatedTeacher : getExecutionCourse().getNonAffiliatedTeachersSet()) {
             result.add(InfoNonAffiliatedTeacher.newInfoFromDomain(nonAffiliatedTeacher));
         }
 
@@ -194,7 +194,7 @@ public class InfoExecutionCourse extends InfoObject {
     public List<InfoEvaluation> getAssociatedInfoEvaluations() {
         final List<InfoEvaluation> result = new ArrayList<InfoEvaluation>();
 
-        for (final Evaluation nonAffiliatedTeacher : getExecutionCourse().getAssociatedEvaluations()) {
+        for (final Evaluation nonAffiliatedTeacher : getExecutionCourse().getAssociatedEvaluationsSet()) {
             result.add(InfoEvaluation.newInfoFromDomain(nonAffiliatedTeacher));
         }
 
@@ -205,7 +205,7 @@ public class InfoExecutionCourse extends InfoObject {
         if (filteredAssociatedInfoCurricularCourses == null) {
             List<InfoCurricularCourse> result = new ArrayList<InfoCurricularCourse>();
 
-            for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
+            for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
                 final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse.getScopesSet()));
 
@@ -236,7 +236,7 @@ public class InfoExecutionCourse extends InfoObject {
     public List<InfoCurricularCourse> getAssociatedInfoCurricularCourses(final ExecutionYear executionYear) {
         List<InfoCurricularCourse> result = new ArrayList<InfoCurricularCourse>();
 
-        for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
             final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
             infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse.findCurricularCourseScopesIntersectingPeriod(
                     executionYear.getBeginDate(), executionYear.getEndDate())));
@@ -274,7 +274,7 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public Collection<CourseLoad> getCourseLoads() {
-        return getExecutionCourse().getCourseLoads();
+        return getExecutionCourse().getCourseLoadsSet();
     }
 
     // =================== FIELDS NOT RETRIEVED BY DOMAIN LOGIC

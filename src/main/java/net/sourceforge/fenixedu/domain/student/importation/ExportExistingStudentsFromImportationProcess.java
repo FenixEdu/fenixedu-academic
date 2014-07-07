@@ -130,7 +130,7 @@ public class ExportExistingStudentsFromImportationProcess extends ExportExisting
         List<ExportExistingStudentsFromImportationProcess> jobList =
                 new ArrayList<ExportExistingStudentsFromImportationProcess>();
 
-        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcessSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -142,13 +142,13 @@ public class ExportExistingStudentsFromImportationProcess extends ExportExisting
     }
 
     public static List<ExportExistingStudentsFromImportationProcess> readUndoneJobs(final ExecutionYear executionYear) {
-        return new ArrayList(CollectionUtils.subtract(executionYear.getDgesBaseProcess(), readDoneJobs(executionYear)));
+        return new ArrayList(CollectionUtils.subtract(executionYear.getDgesBaseProcessSet(), readDoneJobs(executionYear)));
     }
 
     public static List<DgesStudentImportationProcess> readPendingJobs(final ExecutionYear executionYear) {
         List<DgesStudentImportationProcess> jobList = new ArrayList<DgesStudentImportationProcess>();
 
-        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcessSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {

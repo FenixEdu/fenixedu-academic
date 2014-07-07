@@ -349,14 +349,4 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
         return COMPARATOR_BY_INTERVAL.compare(this, o);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess> getTeacherEvaluationProcess() {
-        return getTeacherEvaluationProcessSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessYear> getFacultyEvaluationProcessYear() {
-        return getFacultyEvaluationProcessYearSet();
-    }
-
 }

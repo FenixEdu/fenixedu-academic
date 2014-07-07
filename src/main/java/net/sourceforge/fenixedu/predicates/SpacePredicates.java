@@ -96,7 +96,7 @@ public class SpacePredicates {
                         return true;
                     }
 
-                    if (loggedPerson.getProfessorships().size() > 0) {
+                    if (loggedPerson.getProfessorshipsSet().size() > 0) {
                         return true;
                     }
 

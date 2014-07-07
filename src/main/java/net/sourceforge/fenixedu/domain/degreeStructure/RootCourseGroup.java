@@ -89,7 +89,7 @@ public class RootCourseGroup extends RootCourseGroup_Base {
     }
 
     private boolean childsCanBeDeleted() {
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             final DegreeModule degreeModule = context.getChildDegreeModule();
             if (!degreeModule.getCanBeDeleted()) {
                 return false;

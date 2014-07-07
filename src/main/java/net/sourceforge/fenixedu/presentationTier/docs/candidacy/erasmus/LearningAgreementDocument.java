@@ -59,7 +59,7 @@ public class LearningAgreementDocument extends FenixReport {
     private String getChosenSubjectsInformation() {
         StringBuilder result = new StringBuilder();
 
-        for (CurricularCourse course : process.getCandidacy().getCurricularCourses()) {
+        for (CurricularCourse course : process.getCandidacy().getCurricularCoursesSet()) {
             result.append(
                     FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(MultiLanguageString.en)
                             + " (" + course.getDegree().getSigla() + ")", LINE_LENGTH, END_CHAR, course.getEctsCredits()

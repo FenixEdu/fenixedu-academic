@@ -222,7 +222,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public List<String> getRulesLabels() {
         final List<String> resultLabels = new ArrayList<String>();
-        for (CurricularRule curricularRule : getDegreeModule().getCurricularRules()) {
+        for (CurricularRule curricularRule : getDegreeModule().getCurricularRulesSet()) {
             resultLabels.add(CurricularRuleLabelFormatter.getLabel(curricularRule));
         }
         return resultLabels;
@@ -650,7 +650,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     private Object readParentCourseGroups(String selectedCurricularRuleType) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null && !selectedCurricularRuleType.equals(NO_SELECTION_STRING)) {
-            for (final Context context : getDegreeModule().getParentContexts()) {
+            for (final Context context : getDegreeModule().getParentContextsSet()) {
                 final CourseGroup courseGroup = context.getParentCourseGroup();
                 if (!courseGroup.isRoot()) {
                     result.add(new SelectItem(courseGroup.getExternalId(), courseGroup.getName()));

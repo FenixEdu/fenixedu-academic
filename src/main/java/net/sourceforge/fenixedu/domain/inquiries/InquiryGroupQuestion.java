@@ -31,7 +31,7 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
     }
 
     public boolean isVisible(StudentInquiryRegistry studentInquiryRegistry) {
-        for (QuestionCondition questionCondition : getQuestionConditions()) {
+        for (QuestionCondition questionCondition : getQuestionConditionsSet()) {
             if (questionCondition instanceof ECTSVisibleCondition) {
                 return ((ECTSVisibleCondition) questionCondition).isVisible(studentInquiryRegistry);
             }
@@ -40,7 +40,7 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
     }
 
     public String[] getConditionValues(StudentInquiryRegistry studentInquiryRegistry) {
-        for (QuestionCondition questionCondition : getQuestionConditions()) {
+        for (QuestionCondition questionCondition : getQuestionConditionsSet()) {
             if (questionCondition instanceof ECTSVisibleCondition) {
                 return ((ECTSVisibleCondition) questionCondition).getConditionValues(studentInquiryRegistry);
             }
@@ -52,7 +52,7 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
         if (getInquiryQuestionHeader() != null && getInquiryQuestionHeader().getScaleHeaders() != null) {
             return true;
         }
-        for (InquiryQuestion inquiryQuestion : getInquiryQuestions()) {
+        for (InquiryQuestion inquiryQuestion : getInquiryQuestionsSet()) {
             if (inquiryQuestion.isScaleQuestion()) {
                 return true;
             }
@@ -65,7 +65,7 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
     }
 
     public boolean isCheckbox() {
-        for (InquiryQuestion inquiryQuestion : getInquiryQuestions()) {
+        for (InquiryQuestion inquiryQuestion : getInquiryQuestionsSet()) {
             if (inquiryQuestion instanceof InquiryCheckBoxQuestion) {
                 return true;
             }
@@ -74,7 +74,7 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
     }
 
     public boolean isToPresentStandardResults() {
-        for (InquiryQuestion inquiryQuestion : getInquiryQuestions()) {
+        for (InquiryQuestion inquiryQuestion : getInquiryQuestionsSet()) {
             if (inquiryQuestion.getPresentResults()) {
                 return true;
             }
@@ -84,7 +84,7 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
 
     public int getNumberOfMandatoryQuestions() {
         int count = 0;
-        for (InquiryQuestion inquiryQuestion : getInquiryQuestions()) {
+        for (InquiryQuestion inquiryQuestion : getInquiryQuestionsSet()) {
             if (inquiryQuestion.getRequired()) {
                 count++;
             }
@@ -93,10 +93,10 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
     }
 
     public void delete() {
-        for (; !getInquiryQuestions().isEmpty(); getInquiryQuestions().iterator().next().delete()) {
+        for (; !getInquiryQuestionsSet().isEmpty(); getInquiryQuestionsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getQuestionConditions().isEmpty(); getQuestionConditions().iterator().next().delete()) {
+        for (; !getQuestionConditionsSet().isEmpty(); getQuestionConditionsSet().iterator().next().delete()) {
             ;
         }
         if (getInquiryQuestionHeader() != null) {
@@ -109,16 +109,6 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
         setResultQuestion(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion> getInquiryQuestions() {
-        return getInquiryQuestionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.QuestionCondition> getQuestionConditions() {
-        return getQuestionConditionsSet();
     }
 
 }

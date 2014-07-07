@@ -173,7 +173,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
         final Set<Sender> availableSenders = Sender.getAvailableSenders();
         Sender gepSender = getGEPSender(availableSenders);
         List<Recipient> recipients = new ArrayList<Recipient>();
-        recipients.addAll(gepSender.getRecipients());
+        recipients.addAll(gepSender.getRecipientsSet());
         Collections.sort(recipients, new BeanComparator("toName"));
         Collections.reverse(recipients);
         request.setAttribute("recipients", recipients);

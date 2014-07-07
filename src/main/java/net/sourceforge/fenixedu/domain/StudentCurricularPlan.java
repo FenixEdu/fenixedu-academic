@@ -323,7 +323,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             notNeedToEnrollInCurricularCourse.delete();
         }
 
-        for (; !getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().iterator().next().delete()) {
+        for (; !getCreditsInAnySecundaryAreasSet().isEmpty(); getCreditsInAnySecundaryAreasSet().iterator().next().delete()) {
             ;
         }
 
@@ -334,10 +334,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             creditsInScientificArea.delete();
         }
 
-        for (; !getCreditsSet().isEmpty(); getCredits().iterator().next().delete()) {
+        for (; !getCreditsSet().isEmpty(); getCreditsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getTutorshipsSet().isEmpty(); getTutorships().iterator().next().delete()) {
+        for (; !getTutorshipsSet().isEmpty(); getTutorshipsSet().iterator().next().delete()) {
             ;
         }
 
@@ -894,7 +894,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE_AND_ID);
 
         if (getRoot() != null) {
-            for (final CurriculumModule module : getRoot().getCurriculumModules()) {
+            for (final CurriculumModule module : getRoot().getCurriculumModulesSet()) {
                 if (!module.isNoCourseGroupCurriculumGroup()) {
                     module.addApprovedCurriculumLines(curriculumLines);
                 }
@@ -1177,7 +1177,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         List<Enrolment> allEnrollments = new ArrayList<Enrolment>();
         addNonInvisibleEnrolments(allEnrollments, getEnrolmentsSet());
 
-        for (final StudentCurricularPlan studentCurricularPlan : getRegistration().getStudentCurricularPlans()) {
+        for (final StudentCurricularPlan studentCurricularPlan : getRegistration().getStudentCurricularPlansSet()) {
             addNonInvisibleEnrolments(allEnrollments, studentCurricularPlan.getEnrolmentsSet());
         }
 
@@ -1268,7 +1268,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public int getNumberOfApprovedCurricularCourses() {
         int counter = 0;
 
-        int size = getDegreeCurricularPlan().getCurricularCourses().size();
+        int size = getDegreeCurricularPlan().getCurricularCoursesSet().size();
         for (CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
             if (isCurricularCourseApproved(curricularCourse)) {
                 counter++;
@@ -1328,8 +1328,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             return true;
         }
 
-        for (CurricularCourseEquivalence equiv : curricularCourse.getCurricularCourseEquivalences()) {
-            if (allNotNeedToEnroll(equiv.getOldCurricularCourses())) {
+        for (CurricularCourseEquivalence equiv : curricularCourse.getCurricularCourseEquivalencesSet()) {
+            if (allNotNeedToEnroll(equiv.getOldCurricularCoursesSet())) {
                 return true;
             }
         }
@@ -1363,8 +1363,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             return true;
         }
 
-        for (CurricularCourseEquivalence equiv : curricularCourse.getCurricularCourseEquivalences()) {
-            if (allCurricularCoursesInTheList(equiv.getOldCurricularCourses(), otherCourses)) {
+        for (CurricularCourseEquivalence equiv : curricularCourse.getCurricularCourseEquivalencesSet()) {
+            if (allCurricularCoursesInTheList(equiv.getOldCurricularCoursesSet(), otherCourses)) {
                 return true;
             }
         }
@@ -1603,7 +1603,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             sameCompetenceCurricularCourses.add(curricularCourse);
         } else {
             sameCompetenceCurricularCourses = new ArrayList<CurricularCourse>();
-            for (final CurricularCourse course : curricularCourse.getCompetenceCourse().getAssociatedCurricularCourses()) {
+            for (final CurricularCourse course : curricularCourse.getCompetenceCourse().getAssociatedCurricularCoursesSet()) {
                 if (!course.isBolonhaDegree()) {
                     sameCompetenceCurricularCourses.add(course);
                 }
@@ -1611,7 +1611,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         for (CurricularCourse course : sameCompetenceCurricularCourses) {
-            for (CurricularCourseEquivalence curricularCourseEquivalence : course.getOldCurricularCourseEquivalences()) {
+            for (CurricularCourseEquivalence curricularCourseEquivalence : course.getOldCurricularCourseEquivalencesSet()) {
                 curricularCoursesEquivalent.add(curricularCourseEquivalence.getEquivalentCurricularCourse());
             }
         }
@@ -1650,7 +1650,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private List<CurricularCourse> getStudentNotNeedToEnrollCurricularCourses() {
-        return (List<CurricularCourse>) CollectionUtils.collect(getNotNeedToEnrollCurricularCourses(), new Transformer() {
+        return (List<CurricularCourse>) CollectionUtils.collect(getNotNeedToEnrollCurricularCoursesSet(), new Transformer() {
             @Override
             final public Object transform(Object obj) {
                 NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) obj;
@@ -1726,7 +1726,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public GratuitySituation getGratuitySituationByGratuityValues(final GratuityValues gratuityValues) {
-        for (final GratuitySituation gratuitySituation : getGratuitySituations()) {
+        for (final GratuitySituation gratuitySituation : getGratuitySituationsSet()) {
             if (gratuitySituation.getGratuityValues().equals(gratuityValues)) {
                 return gratuitySituation;
             }
@@ -1751,7 +1751,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public <T extends GratuityEvent> T getGratuityEvent(final ExecutionYear executionYear,
             final Class<? extends GratuityEvent> type) {
-        for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
             if (!gratuityEvent.isCancelled() && gratuityEvent.getExecutionYear() == executionYear
                     && gratuityEvent.getClass().equals(type)) {
                 return (T) gratuityEvent;
@@ -1768,7 +1768,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public Set<GratuityEvent> getNotPayedGratuityEvents() {
         final Set<GratuityEvent> result = new HashSet<GratuityEvent>();
 
-        for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
             if (gratuityEvent.isInDebt()) {
                 result.add(gratuityEvent);
             }
@@ -1778,7 +1778,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public boolean hasAnyNotPayedGratuityEvents() {
-        for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
             if (gratuityEvent.isInDebt()) {
                 return true;
             }
@@ -1788,7 +1788,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public boolean hasAnyNotPayedGratuityEventsUntil(final ExecutionYear executionYear) {
-        for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
             if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
                 return true;
             }
@@ -1802,7 +1802,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
      */
     final public boolean hasAnyNotPayedGratuityEventsForPreviousYears(final ExecutionYear limitExecutionYear) {
 
-        for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
             if (gratuityEvent.getExecutionYear().isBefore(limitExecutionYear) && gratuityEvent.isInDebt()) {
                 return true;
             }
@@ -1814,7 +1814,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public MasterDegreeProofVersion readActiveMasterDegreeProofVersion() {
         MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
         if (masterDegreeThesis != null) {
-            for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis.getMasterDegreeProofVersions()) {
+            for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis.getMasterDegreeProofVersionsSet()) {
                 if (masterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     return masterDegreeProofVersion;
                 }
@@ -1827,7 +1827,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
         List<MasterDegreeProofVersion> masterDegreeProofVersions = new ArrayList<MasterDegreeProofVersion>();
         if (masterDegreeThesis != null) {
-            for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis.getMasterDegreeProofVersions()) {
+            for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis.getMasterDegreeProofVersionsSet()) {
                 if (!masterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     masterDegreeProofVersions.add(masterDegreeProofVersion);
                 }
@@ -1840,8 +1840,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public MasterDegreeThesisDataVersion readActiveMasterDegreeThesisDataVersion() {
         MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
         if (masterDegreeThesis != null) {
-            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
-                    .getMasterDegreeThesisDataVersions()) {
+            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis.getMasterDegreeThesisDataVersionsSet()) {
                 if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     return masterDegreeThesisDataVersion;
                 }
@@ -1854,8 +1853,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
         List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = new ArrayList<MasterDegreeThesisDataVersion>();
         if (masterDegreeThesis != null) {
-            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
-                    .getMasterDegreeThesisDataVersions()) {
+            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis.getMasterDegreeThesisDataVersionsSet()) {
                 if (!masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     masterDegreeThesisDataVersions.add(masterDegreeThesisDataVersion);
                 }
@@ -2447,13 +2445,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 ExecutionDegree firstExecutionDegree =
                         this.getDegreeCurricularPlan()
                                 .getExecutionDegreeByYear(this.getFirstExecutionPeriod().getExecutionYear());
-                for (final MasterDegreeCandidate candidate : this.getPerson().getMasterDegreeCandidates()) {
+                for (final MasterDegreeCandidate candidate : this.getPerson().getMasterDegreeCandidatesSet()) {
                     if (candidate.getExecutionDegree() == firstExecutionDegree) {
                         return candidate;
                     }
                 }
             } else if (this.getPerson().getMasterDegreeCandidatesSet().size() == 1) {
-                return this.getPerson().getMasterDegreeCandidates().iterator().next();
+                return this.getPerson().getMasterDegreeCandidatesSet().iterator().next();
             }
         }
         return null;
@@ -2526,13 +2524,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public Tutorship getLastTutorship() {
         if (!getTutorshipsSet().isEmpty()) {
-            return Collections.max(getTutorships(), Tutorship.TUTORSHIP_START_DATE_COMPARATOR);
+            return Collections.max(getTutorshipsSet(), Tutorship.TUTORSHIP_START_DATE_COMPARATOR);
         }
         return null;
     }
 
     public Tutorship getActiveTutorship() {
-        Collection<Tutorship> tutorships = getTutorships();
+        Collection<Tutorship> tutorships = getTutorshipsSet();
         if (!tutorships.isEmpty() && getLastTutorship().isActive()) {
             return getLastTutorship();
         }
@@ -2541,7 +2539,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     @Override
     public void addTutorships(Tutorship tutorships) throws DomainException {
-        for (Tutorship tutorship : getTutorships()) {
+        for (Tutorship tutorship : getTutorshipsSet()) {
             if (tutorship.getTeacher().equals(tutorships.getTeacher()) && tutorship.getEndDate().equals(tutorships.getEndDate())) {
                 throw new DomainException("error.tutorships.duplicatedTutorship");
             }
@@ -2555,7 +2553,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean getHasAnyEquivalences() {
-        return !this.getNotNeedToEnrollCurricularCourses().isEmpty();
+        return !this.getNotNeedToEnrollCurricularCoursesSet().isEmpty();
     }
 
     public boolean isLastStudentCurricularPlanFromRegistration() {
@@ -2795,7 +2793,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             return false;
         }
         final Student student = getRegistration().getStudent();
-        for (final CycleCourseGroup affinity : getCycleCourseGroup(firstCycle.getCycleType()).getDestinationAffinities()) {
+        for (final CycleCourseGroup affinity : getCycleCourseGroup(firstCycle.getCycleType()).getDestinationAffinitiesSet()) {
             if (student.hasActiveRegistrationFor(affinity.getParentDegreeCurricularPlan())) {
                 return true;
             }
@@ -2847,9 +2845,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         final OptionalEnrolment result = OptionalEnrolment.createBasedOn(enrolment, curriculumGroup, curricularCourse);
-        enrolment.getProgramCertificateRequests().clear();
-        enrolment.getCourseLoadRequests().clear();
-        enrolment.getExamDateCertificateRequests().clear();
+        enrolment.getProgramCertificateRequestsSet().clear();
+        enrolment.getCourseLoadRequestsSet().clear();
+        enrolment.getExamDateCertificateRequestsSet().clear();
         enrolment.delete();
 
         if (result.getStudentCurricularPlan() != this) {
@@ -2860,7 +2858,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private void correctInvalidAttends(final StudentCurricularPlan to) {
-        for (final Attends attend : getRegistration().getAssociatedAttends()) {
+        for (final Attends attend : getRegistration().getAssociatedAttendsSet()) {
             if (!attend.hasExecutionCourseTo(this) && attend.canMove(this, to)) {
                 getRegistration().changeShifts(attend, to.getRegistration());
                 attend.setRegistration(to.getRegistration());
@@ -2886,9 +2884,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         final Enrolment result = Enrolment.createBasedOn(enrolment, curriculumGroup);
-        enrolment.getProgramCertificateRequests().clear();
-        enrolment.getCourseLoadRequests().clear();
-        enrolment.getExamDateCertificateRequests().clear();
+        enrolment.getProgramCertificateRequestsSet().clear();
+        enrolment.getCourseLoadRequestsSet().clear();
+        enrolment.getExamDateCertificateRequestsSet().clear();
         enrolment.delete();
 
         if (result.getStudentCurricularPlan() != this) {
@@ -2903,7 +2901,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean hasAnyGratuityEventFor(final ExecutionYear executionYear) {
-        for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
             if (gratuityEvent.isFor(executionYear)) {
                 return true;
             }
@@ -2914,7 +2912,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean hasAnyGratuitySituationFor(final ExecutionYear executionYear) {
-        for (final GratuitySituation gratuitySituation : getGratuitySituations()) {
+        for (final GratuitySituation gratuitySituation : getGratuitySituationsSet()) {
             if (gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear() == executionYear) {
                 return true;
             }
@@ -3042,56 +3040,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isAllowedToManageAccountingEvents() {
         return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
                 AcademicOperationType.MANAGE_ACCOUNTING_EVENTS).contains(this.getDegree());
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent> getEnrolmentOutOfPeriodEvents() {
-        return getEnrolmentOutOfPeriodEventsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreeInformations() {
-        return getPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent> getGratuityEvents() {
-        return getGratuityEventsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Tutorship> getTutorships() {
-        return getTutorshipsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea> getCreditsInAnySecundaryAreas() {
-        return getCreditsInAnySecundaryAreasSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse> getNotNeedToEnrollCurricularCourses() {
-        return getNotNeedToEnrollCurricularCoursesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.Credits> getCredits() {
-        return getCreditsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInScientificArea> getCreditsInScientificAreas() {
-        return getCreditsInScientificAreasSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation> getCandidacyPrecedentDegreeInformations() {
-        return getCandidacyPrecedentDegreeInformationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.GratuitySituation> getGratuitySituations() {
-        return getGratuitySituationsSet();
     }
 
 }

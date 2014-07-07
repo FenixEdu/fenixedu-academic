@@ -117,7 +117,7 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
 
     @Atomic
     public void create(Party party, Set<AcademicProgram> newPrograms, Set<AdministrativeOffice> newOffices) {
-        for (PersistentAccessGroup accessGroup : party.getPersistentAccessGroup()) {
+        for (PersistentAccessGroup accessGroup : party.getPersistentAccessGroupSet()) {
             if (accessGroup instanceof PersistentAcademicAuthorizationGroup && accessGroup.getDeletedRootDomainObject() == null) {
                 if (((PersistentAcademicAuthorizationGroup) accessGroup).getOperation().equals(operation)) {
                     throw new DomainException("error.person.already.has.permission.of.type", operation.getLocalizedName());
@@ -137,7 +137,7 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
 
     @Atomic
     public void delete(Party party) {
-        if (group.getMember().size() > 1) {
+        if (group.getMemberSet().size() > 1) {
             group.revoke(party);
         } else {
             group.delete();

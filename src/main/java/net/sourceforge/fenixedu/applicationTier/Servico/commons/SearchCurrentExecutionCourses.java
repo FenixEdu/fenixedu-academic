@@ -41,7 +41,7 @@ public class SearchCurrentExecutionCourses implements AutoCompleteProvider<Execu
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 
         String slotName = argsMap.get("slot");
-        Collection<ExecutionCourse> objects = ExecutionSemester.readActualExecutionSemester().getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> objects = ExecutionSemester.readActualExecutionSemester().getAssociatedExecutionCoursesSet();
 
         if (value == null) {
             result.addAll(objects);

@@ -34,7 +34,7 @@ public class TargetEventsProviderForTransferPaymentsToOtherEventAndCancel implem
         final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBetweenEventsBean =
                 (TransferPaymentsToOtherEventAndCancelBean) source;
         final Set<Event> result = new HashSet<Event>();
-        result.addAll(transferPaymentsBetweenEventsBean.getSourceEvent().getPerson().getEvents());
+        result.addAll(transferPaymentsBetweenEventsBean.getSourceEvent().getPerson().getEventsSet());
         result.remove(transferPaymentsBetweenEventsBean.getSourceEvent());
 
         return result;

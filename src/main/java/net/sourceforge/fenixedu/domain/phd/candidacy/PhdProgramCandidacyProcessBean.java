@@ -565,7 +565,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
         int order = 1;
         getThesisSubjectBeans().clear();
         if (hasFocusArea()) {
-            for (ThesisSubject thesisSubject : getFocusArea().getThesisSubjects()) {
+            for (ThesisSubject thesisSubject : getFocusArea().getThesisSubjectsSet()) {
                 addThesisSubjectBean(new PhdThesisSubjectOrderBean(order++, thesisSubject));
             }
         }

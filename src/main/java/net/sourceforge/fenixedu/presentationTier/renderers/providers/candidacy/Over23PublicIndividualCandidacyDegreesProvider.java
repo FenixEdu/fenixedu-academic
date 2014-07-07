@@ -29,9 +29,9 @@ public class Over23PublicIndividualCandidacyDegreesProvider implements DataProvi
     public Object provide(Object source, Object currentValue) {
         Over23IndividualCandidacyProcessBean over23IndividualCandidacyProcessBean = (Over23IndividualCandidacyProcessBean) source;
         if (over23IndividualCandidacyProcessBean.getCandidacyProcess() != null) {
-            return over23IndividualCandidacyProcessBean.getCandidacyProcess().getDegree();
+            return over23IndividualCandidacyProcessBean.getCandidacyProcess().getDegreeSet();
         } else {
-            return over23IndividualCandidacyProcessBean.getIndividualCandidacyProcess().getCandidacyProcess().getDegree();
+            return over23IndividualCandidacyProcessBean.getIndividualCandidacyProcess().getCandidacyProcess().getDegreeSet();
         }
     }
 

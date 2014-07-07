@@ -109,7 +109,7 @@ public class CreateMarkSheetByTeacher {
                             curricularCourse.createNormalMarkSheet(executionCourse.getExecutionPeriod(), responsibleTeacher,
                                     evaluationDate, markSheetType, Boolean.TRUE, markSheetEnrolmentEvaluationBeans,
                                     responsibleTeacher.getPerson());
-                    enrolmetnEvaluations.addAll(markSheet.getEnrolmentEvaluations());
+                    enrolmetnEvaluations.addAll(markSheet.getEnrolmentEvaluationsSet());
                 }
             }
         }

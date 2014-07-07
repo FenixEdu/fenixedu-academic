@@ -37,7 +37,7 @@ public class ReadBranchesByDegreeCurricularPlan {
             throw new NonExistingServiceException();
         }
 
-        Collection<Branch> allBranches = degreeCurricularPlan.getAreas();
+        Collection<Branch> allBranches = degreeCurricularPlan.getAreasSet();
         if (allBranches == null || allBranches.isEmpty()) {
             return null;
         }

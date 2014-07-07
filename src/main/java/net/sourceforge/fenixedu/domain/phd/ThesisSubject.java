@@ -46,7 +46,7 @@ public class ThesisSubject extends ThesisSubject_Base {
         setTeacher(teacher);
         setExternalAdvisorName(externalAdvisor);
 
-        for (PhdIndividualProgramProcess process : focusArea.getIndividualProgramProcesses()) {
+        for (PhdIndividualProgramProcess process : focusArea.getIndividualProgramProcessesSet()) {
             if (isCandidacyPeriodOpen(process)) {
                 new ThesisSubjectOrder(this, process, process.getHighestThesisSubjectOrder() + 1);
             }
@@ -89,7 +89,7 @@ public class ThesisSubject extends ThesisSubject_Base {
 
     @Atomic
     public void delete() {
-        for (ThesisSubjectOrder order : getThesisSubjectOrders()) {
+        for (ThesisSubjectOrder order : getThesisSubjectOrdersSet()) {
             if (isCandidacyPeriodOpen(order.getPhdIndividualProgramProcess())) {
                 order.delete();
             }
@@ -113,11 +113,6 @@ public class ThesisSubject extends ThesisSubject_Base {
     private boolean isCandidacyPeriodOpen(PhdIndividualProgramProcess process) {
         return process.getCandidacyProcess().getPublicPhdCandidacyPeriod() != null
                 && process.getCandidacyProcess().getPublicPhdCandidacyPeriod().isOpen();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder> getThesisSubjectOrders() {
-        return getThesisSubjectOrdersSet();
     }
 
 }

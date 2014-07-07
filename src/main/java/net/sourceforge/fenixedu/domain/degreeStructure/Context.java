@@ -84,7 +84,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 
             private void validateCycleCourseGroupParent(Context context, CourseGroup courseGroup) {
                 CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) context.getChildDegreeModule();
-                if (cycleCourseGroup.getParentContexts().size() > 1) {
+                if (cycleCourseGroup.getParentContextsSet().size() > 1) {
                     throw new DomainException("error.degreeStructure.CycleCourseGroup.can.only.have.one.parent");
                 }
                 if (!courseGroup.isRoot()) {
@@ -103,7 +103,7 @@ public class Context extends Context_Base implements Comparable<Context> {
                     }
                     if (degreeModule.isCycleCourseGroup()) {
                         CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) degreeModule;
-                        if (cycleCourseGroup.getParentContexts().size() > 0) {
+                        if (cycleCourseGroup.getParentContextsSet().size() > 0) {
                             throw new DomainException("error.degreeStructure.CycleCourseGroup.can.only.have.one.parent");
                         }
                         if (context.getParentCourseGroup() != null && !context.getParentCourseGroup().isRoot()) {
@@ -170,7 +170,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     private void checkExistingCourseGroupContexts(final CourseGroup courseGroup, final DegreeModule degreeModule,
             final CurricularPeriod curricularPeriod, final ExecutionSemester begin, final ExecutionSemester end) {
 
-        for (final Context context : courseGroup.getChildContexts()) {
+        for (final Context context : courseGroup.getChildContextsSet()) {
             if (context != this && context.hasChildDegreeModule(degreeModule) && context.hasCurricularPeriod(curricularPeriod)
                     && context.contains(begin, end)) {
                 throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
@@ -194,7 +194,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     private void checkCurriculumLines(final DegreeModule degreeModule) {
-        for (final CurriculumModule curriculumModule : degreeModule.getCurriculumModules()) {
+        for (final CurriculumModule curriculumModule : degreeModule.getCurriculumModulesSet()) {
             if (curriculumModule.isCurriculumLine()) {
                 final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
                 if (curriculumLine.hasExecutionPeriod()
@@ -220,7 +220,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setBeginExecutionPeriod(null);
         setEndExecutionPeriod(null);
         setRootDomainObject(null);
-        getAssociatedWrittenEvaluations().clear();
+        getAssociatedWrittenEvaluationsSet().clear();
         super.deleteDomainObject();
     }
 
@@ -274,7 +274,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public boolean isValid(final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (isValid(executionSemester)) {
                 return true;
             }
@@ -308,7 +308,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public boolean isOpen(final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (isOpen(executionSemester)) {
                 return true;
             }
@@ -485,11 +485,6 @@ public class Context extends Context_Base implements Comparable<Context> {
         public int hashCode() {
             return context.hashCode();
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getAssociatedWrittenEvaluations() {
-        return getAssociatedWrittenEvaluationsSet();
     }
 
 }

@@ -47,7 +47,7 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
     protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person,
             final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
         checkParameters(enrolmentEvaluations);
-        getImprovementEnrolmentEvaluations().addAll(enrolmentEvaluations);
+        getImprovementEnrolmentEvaluationsSet().addAll(enrolmentEvaluations);
         super.init(administrativeOffice, eventType, person);
     }
 
@@ -73,7 +73,7 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
 
     private String getImprovementEnrolmentsDescription() {
         final StringBuilder result = new StringBuilder();
-        for (final EnrolmentEvaluation enrolmentEvaluation : getImprovementEnrolmentEvaluations()) {
+        for (final EnrolmentEvaluation enrolmentEvaluation : getImprovementEnrolmentEvaluationsSet()) {
             result.append(enrolmentEvaluation.getEnrolment().getName().getContent()).append(", ");
         }
 
@@ -137,11 +137,6 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
             this.delete();
         }
 
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getImprovementEnrolmentEvaluations() {
-        return getImprovementEnrolmentEvaluationsSet();
     }
 
 }

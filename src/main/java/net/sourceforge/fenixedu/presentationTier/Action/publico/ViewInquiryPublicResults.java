@@ -33,7 +33,7 @@ public abstract class ViewInquiryPublicResults extends FenixDispatchAction {
     protected static GroupResultsSummaryBean getGeneralResults(List<InquiryResult> results,
             Collection<InquiryBlock> resultsBlocks, GroupResultType groupResultType) {
         for (InquiryBlock inquiryBlock : resultsBlocks) {
-            for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+            for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
                 if (groupResultType.equals(groupQuestion.getGroupResultType())) {
                     return new GroupResultsSummaryBean(groupQuestion, results, null, null);
                 }

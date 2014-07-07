@@ -220,7 +220,7 @@ public class ProjectSubmissionsManagementDispatchAction extends ExecutionCourseB
         }
         final Person person = getUserView(request).getPerson();
         final String projectId = request.getParameter("projectID");
-        for (final Professorship professorship : person.getProfessorships()) {
+        for (final Professorship professorship : person.getProfessorshipsSet()) {
             for (final Project project : professorship.getExecutionCourse().getAssociatedProjects()) {
                 if (project.getExternalId().equals(projectId)) {
                     request.setAttribute("projectOID", project.getExternalId());
@@ -237,7 +237,7 @@ public class ProjectSubmissionsManagementDispatchAction extends ExecutionCourseB
     }
 
     private String getStudentsISTID(StudentGroup group) {
-        ArrayList<Attends> sortedAttends = new ArrayList(group.getAttends());
+        ArrayList<Attends> sortedAttends = new ArrayList(group.getAttendsSet());
         Collections.sort(sortedAttends, Attends.COMPARATOR_BY_STUDENT_NUMBER);
 
         String studentsISTID = "";

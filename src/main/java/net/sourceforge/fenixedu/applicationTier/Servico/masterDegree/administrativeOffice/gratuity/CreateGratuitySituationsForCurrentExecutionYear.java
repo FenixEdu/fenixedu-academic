@@ -65,7 +65,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
             this.firstYear = executionDegree.isFirstYear();
 
             Collection<StudentCurricularPlan> studentCurricularPlans =
-                    executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
+                    executionDegree.getDegreeCurricularPlan().getStudentCurricularPlansSet();
             for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 
                 GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
@@ -129,12 +129,12 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
     private void removeWrongGratuitySituation(GratuitySituation gratuitySituation) {
 
         // find gratuity situation of first persistentSupportecialization year
-        for (GratuitySituation correctSituation : gratuitySituation.getStudentCurricularPlan().getGratuitySituations()) {
+        for (GratuitySituation correctSituation : gratuitySituation.getStudentCurricularPlan().getGratuitySituationsSet()) {
             if (correctSituation.getGratuityValues().getExecutionDegree().isFirstYear()) {
 
                 // transfer transactions from wrong to correct gratuity
                 // situation
-                for (GratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
+                for (GratuityTransaction gratuityTransaction : gratuitySituation.getTransactionListSet()) {
                     correctSituation.addTransactionList(gratuityTransaction);
                 }
 

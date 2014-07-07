@@ -64,7 +64,7 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
         /*
          * Can not have more than one element for the same process
          */
-        for (final PhdCandidacyFeedbackRequestElement element : participant.getCandidacyFeedbackRequestElements()) {
+        for (final PhdCandidacyFeedbackRequestElement element : participant.getCandidacyFeedbackRequestElementsSet()) {
             if (element.getProcess() != null && element.getProcess().equals(process)) {
                 throw new DomainException(
                         "error.PhdCandidacyFeedbackRequestElement.participant.already.has.jury.element.in.process");
@@ -138,11 +138,6 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     static public PhdCandidacyFeedbackRequestElement create(final PhdCandidacyFeedbackRequestProcess process,
             final PhdParticipant participant, final PhdCandidacyFeedbackRequestElementBean bean) {
         return new PhdCandidacyFeedbackRequestElement().init(process, participant, bean);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument> getFeedbackDocuments() {
-        return getFeedbackDocumentsSet();
     }
 
 }

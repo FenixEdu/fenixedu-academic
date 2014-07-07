@@ -238,10 +238,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     private void addAllExecutionDegrees(final Set<ExecutionDegree> executionDegrees, final Set<CompetenceCourse> competenceCourses) {
         for (final CompetenceCourse competenceCourse : competenceCourses) {
-            for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
+            for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
                 if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE || competenceCourse.isDissertation()) {
                     final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-                    executionDegrees.addAll(degreeCurricularPlan.getExecutionDegrees());
+                    executionDegrees.addAll(degreeCurricularPlan.getExecutionDegreesSet());
                 }
             }
         }
@@ -765,7 +765,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                     final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeOID);
                     final Scheduleing scheduleing = executionDegree.getScheduling();
                     final List branches = new ArrayList();
-                    for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
+                    for (final ExecutionDegree ed : scheduleing.getExecutionDegreesSet()) {
                         final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
                         branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
                                 degreeCurricularPlan.getExternalId()));
@@ -809,7 +809,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         }
 
         final List branches = new ArrayList();
-        for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
+        for (final ExecutionDegree ed : scheduleing.getExecutionDegreesSet()) {
             final DegreeCurricularPlan degreeCurricularPlanIter = ed.getDegreeCurricularPlan();
             branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
                     degreeCurricularPlanIter.getExternalId()));
@@ -1084,7 +1084,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         request.setAttribute("executionDegreeOID", executionDegree.getExternalId());
         final Scheduleing scheduleing = executionDegree.getScheduling();
         final List branches = new ArrayList();
-        for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
+        for (final ExecutionDegree ed : scheduleing.getExecutionDegreesSet()) {
             final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
             branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
                     degreeCurricularPlan.getExternalId()));

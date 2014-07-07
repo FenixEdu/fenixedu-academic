@@ -50,7 +50,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 
     public static AnnualTeachingCredits readByYearAndTeacher(ExecutionYear executionYear, Teacher teacher) {
         if (executionYear != null) {
-            for (AnnualTeachingCredits annualTeachingCredits : teacher.getAnnualTeachingCredits()) {
+            for (AnnualTeachingCredits annualTeachingCredits : teacher.getAnnualTeachingCreditsSet()) {
                 if (annualTeachingCredits.getAnnualCreditsState().getExecutionYear().equals(executionYear)) {
                     return annualTeachingCredits;
                 }
@@ -82,7 +82,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         boolean hasOrientantionCredits = false;
         boolean hasFinalAndAccumulatedCredits = false;
 
-        for (ExecutionSemester executionSemester : getAnnualCreditsState().getExecutionYear().getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : getAnnualCreditsState().getExecutionYear().getExecutionPeriodsSet()) {
             if (getTeacher().isActiveForSemester(executionSemester) || getTeacher().hasTeacherAuthorization(executionSemester)) {
                 BigDecimal thisSemesterManagementFunctionCredits =
                         new BigDecimal(getTeacher().getManagementFunctionsCredits(executionSemester));
@@ -165,7 +165,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 
     public AnnualTeachingCreditsDocument getLastTeacherCreditsDocument(Boolean withConfidencialInformation) {
         AnnualTeachingCreditsDocument lastAnnualTeachingCreditsDocument = null;
-        for (AnnualTeachingCreditsDocument annualTeachingCreditsDocument : getAnnualTeachingCreditsDocument()) {
+        for (AnnualTeachingCreditsDocument annualTeachingCreditsDocument : getAnnualTeachingCreditsDocumentSet()) {
             if (annualTeachingCreditsDocument.getHasConfidencialInformation() == withConfidencialInformation
                     && (lastAnnualTeachingCreditsDocument == null || lastAnnualTeachingCreditsDocument.getUploadTime().isBefore(
                             annualTeachingCreditsDocument.getUploadTime()))) {
@@ -173,11 +173,6 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
             }
         }
         return lastAnnualTeachingCreditsDocument;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.credits.AnnualTeachingCreditsDocument> getAnnualTeachingCreditsDocument() {
-        return getAnnualTeachingCreditsDocumentSet();
     }
 
 }

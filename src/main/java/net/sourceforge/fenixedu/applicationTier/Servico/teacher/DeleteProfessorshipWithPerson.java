@@ -60,7 +60,7 @@ public class DeleteProfessorshipWithPerson extends AbstractModifyProfessorshipWi
 
         Professorship professorshipToDelete = person.getProfessorshipByExecutionCourse(executionCourse);
 
-        Collection shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
+        Collection shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorshipSet();
 
         boolean hasCredits = false;
 

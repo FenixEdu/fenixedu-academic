@@ -53,7 +53,7 @@ public class DepartmentSite extends DepartmentSite_Base {
 
     @Override
     public Group getOwner() {
-        return RoleGroup.get(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE).or(UserGroup.of(Person.convertToUsers(getManagers())));
+        return RoleGroup.get(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE).or(UserGroup.of(Person.convertToUsers(getManagersSet())));
     }
 
     @Override

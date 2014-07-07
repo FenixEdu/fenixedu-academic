@@ -139,7 +139,7 @@ public class ListExecutionCourseGroupingsDA extends FenixDispatchAction {
             final StringBuilder responsibleForStringBuilder = new StringBuilder();
             final StringBuilder responsibleForEmailsStringBuilder = new StringBuilder();
             boolean isFirstResp = true;
-            for (final Professorship professorship : executionCourse.getProfessorships()) {
+            for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
                 if (professorship.getResponsibleFor().booleanValue()) {
                     if (isFirstResp) {
                         isFirstResp = false;
@@ -232,7 +232,7 @@ public class ListExecutionCourseGroupingsDA extends FenixDispatchAction {
     private Map<Degree, Set<Integer>> constructDegreeOccurenceMap(final AcademicInterval academicInterval,
             final ExecutionCourse executionCourse) {
         final Map<Degree, Set<Integer>> degreeOccurenceMap = new HashMap<Degree, Set<Integer>>();
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             final List<DegreeModuleScope> degreeModuleScopes =
                     curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(academicInterval);
             for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {

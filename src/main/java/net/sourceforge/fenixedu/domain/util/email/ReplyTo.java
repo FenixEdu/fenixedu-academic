@@ -70,9 +70,4 @@ public abstract class ReplyTo extends ReplyTo_Base {
         return Collections.singletonList(this);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessages() {
-        return getMessagesSet();
-    }
-
 }

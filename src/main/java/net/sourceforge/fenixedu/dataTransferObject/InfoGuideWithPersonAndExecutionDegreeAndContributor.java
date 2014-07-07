@@ -53,8 +53,8 @@ public class InfoGuideWithPersonAndExecutionDegreeAndContributor extends InfoGui
             setInfoContributor(InfoContributor.newInfoFromDomain(guide.getContributorParty()));
             setInfoGuideSituation(InfoGuideSituation.newInfoFromDomain(guide.getActiveSituation()));
 
-            if (guide.getGuideEntries() != null) {
-                List infoGuideEntryList = (List) CollectionUtils.collect(guide.getGuideEntries(), new Transformer() {
+            if (guide.getGuideEntriesSet() != null) {
+                List infoGuideEntryList = (List) CollectionUtils.collect(guide.getGuideEntriesSet(), new Transformer() {
 
                     @Override
                     public Object transform(Object arg0) {
@@ -65,8 +65,8 @@ public class InfoGuideWithPersonAndExecutionDegreeAndContributor extends InfoGui
                 setInfoGuideEntries(infoGuideEntryList);
             }
 
-            if (guide.getGuideSituations() != null) {
-                List infoGuideSituationList = (List) CollectionUtils.collect(guide.getGuideSituations(), new Transformer() {
+            if (guide.getGuideSituationsSet() != null) {
+                List infoGuideSituationList = (List) CollectionUtils.collect(guide.getGuideSituationsSet(), new Transformer() {
 
                     @Override
                     public Object transform(Object arg0) {

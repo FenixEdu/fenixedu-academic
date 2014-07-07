@@ -464,7 +464,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 
         if (!process.getGuidingsSet().isEmpty()) {
             int count = 1;
-            for (final PhdParticipant guiding : process.getGuidings()) {
+            for (final PhdParticipant guiding : process.getGuidingsSet()) {
                 page.pStart("mbottom0").strong(String.valueOf(count) + ". ").pEnd();
                 drawGuiding(page, guiding);
                 count++;

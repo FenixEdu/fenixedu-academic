@@ -150,8 +150,8 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
         if (processes.size() == 1) {
             request.setAttribute("process", processes.iterator().next());
             loadProcessAlertMessagesToNotify(request, processes.iterator().next());
-            Collection<PhdParticipant> guidingsList = processes.iterator().next().getGuidings();
-            Collection<PhdParticipant> assistantGuidingsList = processes.iterator().next().getAssistantGuidings();
+            Collection<PhdParticipant> guidingsList = processes.iterator().next().getGuidingsSet();
+            Collection<PhdParticipant> assistantGuidingsList = processes.iterator().next().getAssistantGuidingsSet();
             request.setAttribute("guidingsList", guidingsList);
             request.setAttribute("assistantGuidingsList", assistantGuidingsList);
             return mapping.findForward("viewProcess");
@@ -170,8 +170,8 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
         if (process != null && process.getRegistration() != null) {
             request.setAttribute("registrationConclusionBean", new PhdRegistrationConclusionBean(process.getRegistration()));
         }
-        Collection<PhdParticipant> guidingsList = process.getGuidings();
-        Collection<PhdParticipant> assistantGuidingsList = process.getAssistantGuidings();
+        Collection<PhdParticipant> guidingsList = process.getGuidingsSet();
+        Collection<PhdParticipant> assistantGuidingsList = process.getAssistantGuidingsSet();
         request.setAttribute("guidingsList", guidingsList);
         request.setAttribute("assistantGuidingsList", assistantGuidingsList);
         return forwardToViewProcess(mapping, request);
@@ -197,7 +197,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 
         TreeSet<PhdAlertMessage> orderedMessages =
                 new TreeSet<PhdAlertMessage>(Collections.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
-        orderedMessages.addAll(getLoggedPerson(request).getPhdAlertMessages());
+        orderedMessages.addAll(getLoggedPerson(request).getPhdAlertMessagesSet());
         ArrayList<PhdAlertMessage> lastMessages = new ArrayList<PhdAlertMessage>();
         lastMessages.addAll(orderedMessages);
 
@@ -236,13 +236,13 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
         TreeSet<PhdAlertMessage> orderedMessages =
                 new TreeSet<PhdAlertMessage>(Collections.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
         if (month == null) {
-            for (PhdAlertMessage message : getLoggedPerson(request).getPhdAlertMessages()) {
+            for (PhdAlertMessage message : getLoggedPerson(request).getPhdAlertMessagesSet()) {
                 if (year == message.getWhenCreated().getYear()) {
                     orderedMessages.add(message);
                 }
             }
         } else {
-            for (PhdAlertMessage message : getLoggedPerson(request).getPhdAlertMessages()) {
+            for (PhdAlertMessage message : getLoggedPerson(request).getPhdAlertMessagesSet()) {
                 if ((year == message.getWhenCreated().getYear())
                         && (month.getNumberOfMonth() == message.getWhenCreated().getMonthOfYear())) {
                     orderedMessages.add(message);

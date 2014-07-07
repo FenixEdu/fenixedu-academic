@@ -75,13 +75,13 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
     public void copyFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
         super.copyFromDomain(masterDegreeThesisDataVersion);
         if (masterDegreeThesisDataVersion != null) {
-            setInfoAssistentGuiders(copyTeachers(masterDegreeThesisDataVersion.getAssistentGuiders()));
+            setInfoAssistentGuiders(copyTeachers(masterDegreeThesisDataVersion.getAssistentGuidersSet()));
 
-            setInfoExternalAssistentGuiders(copyExternalPersons(masterDegreeThesisDataVersion.getExternalAssistentGuiders()));
+            setInfoExternalAssistentGuiders(copyExternalPersons(masterDegreeThesisDataVersion.getExternalAssistentGuidersSet()));
 
-            setInfoExternalGuiders(copyExternalPersons(masterDegreeThesisDataVersion.getExternalGuiders()));
+            setInfoExternalGuiders(copyExternalPersons(masterDegreeThesisDataVersion.getExternalGuidersSet()));
 
-            setInfoGuiders(copyTeachers(masterDegreeThesisDataVersion.getGuiders()));
+            setInfoGuiders(copyTeachers(masterDegreeThesisDataVersion.getGuidersSet()));
         }
     }
 

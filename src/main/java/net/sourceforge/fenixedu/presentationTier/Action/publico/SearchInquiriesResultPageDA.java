@@ -113,7 +113,7 @@ public class SearchInquiriesResultPageDA extends FenixDispatchAction {
         }
 
         Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
+        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResultsSet()) {
             final ExecutionCourse executionCourse = studentInquiriesCourseResult.getExecutionCourse();
             if (executionCourse != null && executionCourse.getExecutionPeriod() == executionSemester) {
                 final Boolean publicDisclosure = studentInquiriesCourseResult.getPublicDisclosure();
@@ -155,8 +155,8 @@ public class SearchInquiriesResultPageDA extends FenixDispatchAction {
 
     private Collection<ExecutionDegree> getExecutionDegrees(ExecutionSemester executionSemester) {
         Collection<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
-        for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
-            if (!executionDegree.getStudentInquiriesCourseResults().isEmpty()) {
+        for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegreesSet()) {
+            if (!executionDegree.getStudentInquiriesCourseResultsSet().isEmpty()) {
                 executionDegrees.add(executionDegree);
             }
         }

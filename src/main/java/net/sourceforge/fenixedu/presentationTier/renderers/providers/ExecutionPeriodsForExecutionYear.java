@@ -44,7 +44,7 @@ public class ExecutionPeriodsForExecutionYear implements DataProvider {
 
         List<ExecutionSemester> periods = new ArrayList<ExecutionSemester>();
         if (executionYear != null) {
-            periods.addAll(executionYear.getExecutionPeriods());
+            periods.addAll(executionYear.getExecutionPeriodsSet());
         }
 
         return periods;

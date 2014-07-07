@@ -166,7 +166,7 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
         SortedSet<DegreeType> activeTypes = new TreeSet<DegreeType>();
         SortedSet<DegreeType> inactiveTypes = new TreeSet<DegreeType>();
 
-        for (Degree degree : department.getDegrees()) {
+        for (Degree degree : department.getDegreesSet()) {
             DegreeType type = degree.getDegreeType();
             if (degree.isActive()) {
                 activeTypes.add(type);

@@ -44,7 +44,7 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     }
 
     public boolean hasExemptionsOfType(Class cl) {
-        for (Exemption exemption : getExemptions()) {
+        for (Exemption exemption : getExemptionsSet()) {
             if (cl.isAssignableFrom(exemption.getClass())) {
                 return true;
             }

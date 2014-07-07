@@ -97,9 +97,4 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         return false;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy> getIndividualCandidacy() {
-        return getIndividualCandidacySet();
-    }
-
 }

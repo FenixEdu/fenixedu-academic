@@ -255,7 +255,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         final Person student = personalData.getPerson();
 
         if (!student.getPhdIndividualProgramProcessesSet().isEmpty()) {
-            return student.getPhdIndividualProgramProcesses().iterator().next();
+            return student.getPhdIndividualProgramProcessesSet().iterator().next();
         }
 
         return null;
@@ -453,7 +453,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
         candidacyBean.setExecutionYear(getExecutionYear());
         candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasSet().size() == 1) ? getProcessBean()
-                .getPhdProgram().getPhdProgramFocusAreas().iterator().next() : null);
+        .getPhdProgram().getPhdProgramFocusAreasSet().iterator().next() : null);
 
         final PhdIndividualProgramProcess individualProcess =
                 (PhdIndividualProgramProcess) CreateNewProcess.run(PhdIndividualProgramProcess.class, candidacyBean);
@@ -547,7 +547,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 
     private PhdMigrationGuiding getGuiding(String guidingNumber) {
         String alternativeGuidingNumber = "0".concat(guidingNumber);
-        for (PhdMigrationGuiding migrationGuiding : getPhdMigrationProcess().getPhdMigrationGuiding()) {
+        for (PhdMigrationGuiding migrationGuiding : getPhdMigrationProcess().getPhdMigrationGuidingSet()) {
             if (guidingNumber.equals(migrationGuiding.getTeacherNumber())
                     || alternativeGuidingNumber.equals(migrationGuiding.getTeacherNumber())) {
                 return migrationGuiding;

@@ -60,7 +60,7 @@ public class TeacherShiftTypeGroupsResumeResult extends BlockResumeResult implem
         setResultBlocks(new TreeSet<InquiryResult>(new BeanComparator("inquiryQuestion.questionOrder")));
         for (InquiryResult inquiryResult : getProfessorship().getInquiryResults(getShiftType())) {
             if (InquiryConnectionType.GROUP.equals(inquiryResult.getConnectionType())
-                    && !inquiryResult.getInquiryQuestion().getAssociatedBlocks().isEmpty()) { //change to TEACHER_SHIFT_EVALUATION
+                    && !inquiryResult.getInquiryQuestion().getAssociatedBlocksSet().isEmpty()) { //change to TEACHER_SHIFT_EVALUATION
                 getResultBlocks().add(inquiryResult);
             } else if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())) {
                 setGlobalTeacherResult(inquiryResult);

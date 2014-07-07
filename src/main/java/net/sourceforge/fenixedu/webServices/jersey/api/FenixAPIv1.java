@@ -330,7 +330,7 @@ public class FenixAPIv1 {
         Set<ExecutionSemester> semesters = new HashSet<ExecutionSemester>();
 
         if (executionInterval instanceof ExecutionYear) {
-            semesters.addAll(((ExecutionYear) executionInterval).getExecutionPeriods());
+            semesters.addAll(((ExecutionYear) executionInterval).getExecutionPeriodsSet());
         } else if (executionInterval instanceof ExecutionSemester) {
             semesters.add((ExecutionSemester) executionInterval);
         }

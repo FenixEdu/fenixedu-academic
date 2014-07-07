@@ -87,9 +87,4 @@ public class ShiftDistribution extends ShiftDistribution_Base {
         return false;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry> getShiftDistributionEntries() {
-        return getShiftDistributionEntriesSet();
-    }
-
 }

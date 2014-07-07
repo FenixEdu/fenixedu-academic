@@ -151,9 +151,9 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
         if (getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)) {
             return getPersonBean().getPerson();
-        } else if (!getPersonBean().getPerson().getPersonRoles().isEmpty() && this.isPublicCandidacy()) {
+        } else if (!getPersonBean().getPerson().getPersonRolesSet().isEmpty() && this.isPublicCandidacy()) {
             return getPersonBean().getPerson();
-        } else if (getPersonBean().getPerson().getPersonRoles().isEmpty() && this.isPublicCandidacy()) {
+        } else if (getPersonBean().getPerson().getPersonRolesSet().isEmpty() && this.isPublicCandidacy()) {
             return getPersonBean().getPerson().editByPublicCandidate(personBean);
         } else {
             return getPersonBean().getPerson().edit(getPersonBean());

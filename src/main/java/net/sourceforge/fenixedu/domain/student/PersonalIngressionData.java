@@ -153,7 +153,7 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
 
     private static boolean studentHasRepeatedPID(Student student, ExecutionYear executionYear) {
         PersonalIngressionData existingPid = null;
-        for (PersonalIngressionData pid : student.getPersonalIngressionsData()) {
+        for (PersonalIngressionData pid : student.getPersonalIngressionsDataSet()) {
             if (pid.getExecutionYear().equals(executionYear)) {
                 if (existingPid == null) {
                     existingPid = pid;
@@ -169,7 +169,7 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
         // TODO: Make this method safe.	
         setStudent(null);
         setExecutionYear(null);
-        getPrecedentDegreesInformations().clear();
+        getPrecedentDegreesInformationsSet().clear();
         setRootDomainObject(null);
         setCountryOfResidence(null);
         setGrantOwnerProvider(null);
@@ -191,11 +191,6 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
     @ConsistencyPredicate
     public boolean checkMultiplicityOfPrecedentDegreesInformations() {
         return getPrecedentDegreesInformationsSet().size() > 0;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreesInformations() {
-        return getPrecedentDegreesInformationsSet();
     }
 
 }

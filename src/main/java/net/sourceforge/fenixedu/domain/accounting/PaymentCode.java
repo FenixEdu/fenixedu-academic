@@ -288,14 +288,4 @@ public abstract class PaymentCode extends PaymentCode_Base {
         return false;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping> getNewPaymentCodeMappings() {
-        return getNewPaymentCodeMappingsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping> getOldPaymentCodeMappings() {
-        return getOldPaymentCodeMappingsSet();
-    }
-
 }

@@ -238,14 +238,4 @@ public class InquiriesCourse extends InquiriesCourse_Base {
         }
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRoom> getAssociatedInquiriesRooms() {
-        return getAssociatedInquiriesRoomsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesTeacher> getAssociatedInquiriesTeachers() {
-        return getAssociatedInquiriesTeachersSet();
-    }
-
 }

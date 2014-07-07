@@ -38,7 +38,7 @@ public class ExecutionCourseQucAuditSearchBean extends ExecutionCourseSearchBean
         final ExecutionSemester executionSemester = getExecutionPeriod();
 
         if (executionDegree == null && executionSemester != null) {
-            for (InquiryResult inquiryResult : executionSemester.getInquiryResults()) {
+            for (InquiryResult inquiryResult : executionSemester.getInquiryResultsSet()) {
                 if (InquiryResultType.AUDIT.equals(inquiryResult.getResultType())) {
                     result.add(inquiryResult.getExecutionCourse());
                 }

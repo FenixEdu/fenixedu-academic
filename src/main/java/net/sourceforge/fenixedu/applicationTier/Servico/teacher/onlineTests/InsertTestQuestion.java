@@ -64,7 +64,7 @@ public class InsertTestQuestion {
             if (test == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+            List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestionsSet());
             Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
             if (testQuestionList != null) {
                 if (questionOrder == null || questionOrder.equals(Integer.valueOf(-1))) {

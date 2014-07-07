@@ -78,7 +78,7 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
         if (getGuideEntry() == null || getGuideEntry().getReimbursementGuideEntriesSet().size() == 0) {
             return false;
         } else {
-            for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
+            for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntriesSet()) {
                 if (reimbursementGuideEntry.getReimbursementGuide().getActiveReimbursementGuideSituation()
                         .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
                     return true;

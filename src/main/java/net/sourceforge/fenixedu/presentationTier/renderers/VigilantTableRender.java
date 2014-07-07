@@ -335,7 +335,7 @@ public class VigilantTableRender extends OutputRenderer {
         chain.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
 
         this.group = (VigilantGroup) object;
-        List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>(this.group.getVigilantWrappers());
+        List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>(this.group.getVigilantWrappersSet());
 
         Collections.sort(vigilants, chain);
 

@@ -77,7 +77,7 @@ public class UnitSite extends UnitSite_Base {
 
     @Override
     public Group getOwner() {
-        return UserGroup.of(Person.convertToUsers(getManagers()));
+        return UserGroup.of(Person.convertToUsers(getManagersSet()));
     }
 
     @Override
@@ -176,7 +176,7 @@ public class UnitSite extends UnitSite_Base {
 
     public SortedSet<UnitSiteLink> getSortedTopLinks() {
         SortedSet<UnitSiteLink> sorted = new TreeSet<UnitSiteLink>(UnitSiteLink.COMPARATOR_BY_ORDER);
-        sorted.addAll(getTopLinks());
+        sorted.addAll(getTopLinksSet());
 
         return sorted;
     }
@@ -187,7 +187,7 @@ public class UnitSite extends UnitSite_Base {
 
     public SortedSet<UnitSiteLink> getSortedFooterLinks() {
         SortedSet<UnitSiteLink> sorted = new TreeSet<UnitSiteLink>(UnitSiteLink.COMPARATOR_BY_ORDER);
-        sorted.addAll(getFooterLinks());
+        sorted.addAll(getFooterLinksSet());
 
         return sorted;
     }
@@ -195,7 +195,7 @@ public class UnitSite extends UnitSite_Base {
     public boolean isBannerAvailable() {
         Integer sum = null;
 
-        Collection<UnitSiteBanner> banners = getBanners();
+        Collection<UnitSiteBanner> banners = getBannersSet();
         for (UnitSiteBanner banner : banners) {
             Integer weight = banner.getWeight();
 
@@ -212,7 +212,7 @@ public class UnitSite extends UnitSite_Base {
     }
 
     public UnitSiteBanner getCurrentBanner() {
-        List<UnitSiteBanner> banners = new ArrayList<>(getBanners());
+        List<UnitSiteBanner> banners = new ArrayList<>(getBannersSet());
 
         if (banners.isEmpty()) {
             return null;
@@ -385,26 +385,6 @@ public class UnitSite extends UnitSite_Base {
 
     private String getSpecificPart() {
         return this.getClass() == UnitSite.class ? "/" + getExternalId() : "";
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.UnitSiteBanner> getBanners() {
-        return getBannersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.UnitSiteLink> getTopLinks() {
-        return getTopLinksSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getManagers() {
-        return getManagersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.UnitSiteLink> getFooterLinks() {
-        return getFooterLinksSet();
     }
 
 }

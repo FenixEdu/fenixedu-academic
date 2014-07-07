@@ -69,7 +69,7 @@ public class ExpandExecutionCourseMailAlias {
                 List<String> addresses = new ArrayList<String>();
                 if (course.getSite() != null) {
                     if (course.getSite().getDynamicMailDistribution()) {
-                        for (Professorship professorship : course.getProfessorships()) {
+                        for (Professorship professorship : course.getProfessorshipsSet()) {
                             addresses.add(professorship.getPerson().getEmail());
                         }
                         report.status = AliasExpandingStatus.OK;

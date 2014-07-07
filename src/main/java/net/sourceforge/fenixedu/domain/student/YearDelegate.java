@@ -76,7 +76,7 @@ public class YearDelegate extends YearDelegate_Base {
     }
 
     public boolean hasMandatoryCommentsToMake(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
-        Collection<InquiryResult> inquiryResults = executionCourse.getInquiryResults();
+        Collection<InquiryResult> inquiryResults = executionCourse.getInquiryResultsSet();
         for (InquiryResult inquiryResult : inquiryResults) {
             if (inquiryResult.getResultClassification() != null
                     && (inquiryResult.getExecutionDegree() == executionDegree || inquiryResult.getExecutionDegree() == null)) {
@@ -190,7 +190,7 @@ public class YearDelegate extends YearDelegate_Base {
 
     public Collection<ExecutionCourse> getAnsweredInquiriesExecutionCourses(final ExecutionSemester executionSemester) {
         final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-        for (YearDelegateCourseInquiry yearDelegateCourseInquiry : getYearDelegateCourseInquiries()) {
+        for (YearDelegateCourseInquiry yearDelegateCourseInquiry : getYearDelegateCourseInquiriesSet()) {
             final ExecutionCourse executionCourse = yearDelegateCourseInquiry.getExecutionCourse();
             if (executionCourse.getExecutionPeriod() == executionSemester) {
                 result.add(executionCourse);
@@ -222,16 +222,6 @@ public class YearDelegate extends YearDelegate_Base {
     @Override
     public Degree getDegree() {
         return super.getDegree();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry> getYearDelegateCourseInquiries() {
-        return getYearDelegateCourseInquiriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer> getInquiryDelegateAnswers() {
-        return getInquiryDelegateAnswersSet();
     }
 
 }

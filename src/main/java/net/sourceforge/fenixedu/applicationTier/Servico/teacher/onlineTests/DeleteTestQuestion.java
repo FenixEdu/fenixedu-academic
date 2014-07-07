@@ -38,7 +38,7 @@ public class DeleteTestQuestion {
             throw new InvalidArgumentsServiceException();
         }
 
-        TestQuestion testQuestion = (TestQuestion) CollectionUtils.find(test.getTestQuestions(), new Predicate() {
+        TestQuestion testQuestion = (TestQuestion) CollectionUtils.find(test.getTestQuestionsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 final TestQuestion testQuestion = (TestQuestion) arg0;

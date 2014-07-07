@@ -173,7 +173,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
         request.setAttribute("focusArea", focusArea);
         request.setAttribute("thesisSubjectBean", new ThesisSubjectBean());
-        request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
+        request.setAttribute("thesisSubjects", focusArea.getThesisSubjectsSet());
 
         return mapping.findForward("manageThesisSubjects");
     }
@@ -204,7 +204,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
         request.setAttribute("focusArea", focusArea);
         request.setAttribute("thesisSubjectBean", bean);
-        request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
+        request.setAttribute("thesisSubjects", focusArea.getThesisSubjectsSet());
 
         return mapping.findForward("manageThesisSubjects");
     }

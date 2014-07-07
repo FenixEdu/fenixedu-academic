@@ -259,7 +259,7 @@ public class InfoProposal extends InfoObject {
      * @return Returns the executionDegree.
      */
     public InfoExecutionDegree getExecutionDegree() {
-        return InfoExecutionDegree.newInfoFromDomain(getProposal().getScheduleing().getExecutionDegrees().iterator().next());
+        return InfoExecutionDegree.newInfoFromDomain(getProposal().getScheduleing().getExecutionDegreesSet().iterator().next());
     }
 
     /**
@@ -284,7 +284,7 @@ public class InfoProposal extends InfoObject {
     public List<InfoBranch> getBranches() {
         List<InfoBranch> result = new ArrayList<InfoBranch>();
 
-        for (final Branch branch : getProposal().getBranches()) {
+        for (final Branch branch : getProposal().getBranchesSet()) {
             result.add(InfoBranch.newInfoFromDomain(branch));
         }
 

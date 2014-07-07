@@ -46,7 +46,7 @@ public class ReadStudentTestQuestionImage {
     public static String run(Registration registration, DistributedTest distributedTest, String questionId, Integer imageId,
             Integer feedbackId, Integer itemIndex) throws FenixServiceException {
         final Question question = FenixFramework.getDomainObject(questionId);
-        for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
+        for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestionsSet()) {
             if (studentTestQuestion.getDistributedTest() == distributedTest && studentTestQuestion.getQuestion() == question) {
                 ParseSubQuestion parse = new ParseSubQuestion();
                 try {

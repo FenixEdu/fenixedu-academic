@@ -303,7 +303,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public void delete() {
 
         super.setAdjustedTransaction(null);
-        for (; !getAdjustmentTransactions().isEmpty(); getAdjustmentTransactions().iterator().next().delete()) {
+        for (; !getAdjustmentTransactionsSet().isEmpty(); getAdjustmentTransactionsSet().iterator().next().delete()) {
             ;
         }
 
@@ -311,7 +311,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
             getTransactionDetail().delete();
         }
 
-        for (; !getEntries().isEmpty(); getEntries().iterator().next().delete()) {
+        for (; !getEntriesSet().isEmpty(); getEntriesSet().iterator().next().delete()) {
             ;
         }
 
@@ -344,16 +344,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
     public Money getOriginalAmount() {
         return getToAccountEntry().getOriginalAmount();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.AccountingTransaction> getAdjustmentTransactions() {
-        return getAdjustmentTransactionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Entry> getEntries() {
-        return getEntriesSet();
     }
 
 }

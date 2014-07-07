@@ -104,7 +104,7 @@ public class TeacherCurricularInformation implements Serializable {
         this.teacher = teacher;
         this.degree = degree;
         this.executionSemesters.addAll(executionSemester);
-        for (Qualification qualification : teacher.getPerson().getAssociatedQualifications()) {
+        for (Qualification qualification : teacher.getPerson().getAssociatedQualificationsSet()) {
             if (qualification.getType() != null
                     && (qualification.getType().isDegree() || qualification.getType().isMaster()
                             || qualification.getType().isDoctorate() || qualification.getType().equals(
@@ -339,7 +339,7 @@ public class TeacherCurricularInformation implements Serializable {
 
     public String getDegreeSiglas(ExecutionCourse executionCourse) {
         Set<String> degreeSiglas = new HashSet<String>();
-        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             degreeSiglas.add(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
         }
         return StringUtils.join(degreeSiglas, ", ");
@@ -353,7 +353,7 @@ public class TeacherCurricularInformation implements Serializable {
             List<DegreeTeachingService> degreeTeachingServices =
                     teacherService.getDegreeTeachingServiceByProfessorship(professorship);
             for (DegreeTeachingService degreeTeachingService : degreeTeachingServices) {
-                for (CourseLoad courseLoad : degreeTeachingService.getShift().getCourseLoads()) {
+                for (CourseLoad courseLoad : degreeTeachingService.getShift().getCourseLoadsSet()) {
                     final ShiftType type = courseLoad.getType();
                     appendShiftType(shiftTypeDescription, type);
                     Float duration = hoursByTypeMap.get(StringUtils.EMPTY);

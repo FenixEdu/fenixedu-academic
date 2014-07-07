@@ -87,7 +87,7 @@ public class SeperateExecutionCourse {
     private static void transferCurricularCourses(final ExecutionCourse originExecutionCourse,
             final ExecutionCourse destinationExecutionCourse, final List<CurricularCourse> curricularCoursesToTransfer) {
         // The last curricular course must not be removed.
-        if (originExecutionCourse.getAssociatedCurricularCourses().size() - curricularCoursesToTransfer.size() < 1) {
+        if (originExecutionCourse.getAssociatedCurricularCoursesSet().size() - curricularCoursesToTransfer.size() < 1) {
             throw new DomainException("error.manager.executionCourseManagement.lastCurricularCourse");
         }
 
@@ -99,7 +99,7 @@ public class SeperateExecutionCourse {
 
     private static void transferAttends(final ExecutionCourse originExecutionCourse,
             final ExecutionCourse destinationExecutionCourse) {
-        final Collection<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
+        final Collection<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCoursesSet();
         List<Attends> allAttends = new ArrayList<>(originExecutionCourse.getAttendsSet());
         for (Attends attends : allAttends) {
             final Enrolment enrolment = attends.getEnrolment();
@@ -113,7 +113,7 @@ public class SeperateExecutionCourse {
             final ExecutionCourse destinationExecutionCourse, final List<Shift> shiftsToTransfer) {
         for (final Shift shift : shiftsToTransfer) {
 
-            Collection<CourseLoad> courseLoads = shift.getCourseLoads();
+            Collection<CourseLoad> courseLoads = shift.getCourseLoadsSet();
             for (Iterator<CourseLoad> iter = courseLoads.iterator(); iter.hasNext();) {
                 CourseLoad courseLoad = iter.next();
                 CourseLoad newCourseLoad = destinationExecutionCourse.getCourseLoadByShiftType(courseLoad.getType());
@@ -144,7 +144,7 @@ public class SeperateExecutionCourse {
             final ExecutionCourse destinationExecutionCourse) {
         for (final Grouping grouping : originExecutionCourse.getGroupings()) {
             for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
-                studentGroup.getAttends().clear();
+                studentGroup.getAttendsSet().clear();
                 studentGroup.delete();
             }
             grouping.delete();
@@ -159,18 +159,18 @@ public class SeperateExecutionCourse {
         final ExecutionCourse destinationExecutionCourse =
                 new ExecutionCourse(originExecutionCourse.getNome(), sigla, originExecutionCourse.getExecutionPeriod(), null);
 
-        for (CourseLoad courseLoad : originExecutionCourse.getCourseLoads()) {
+        for (CourseLoad courseLoad : originExecutionCourse.getCourseLoadsSet()) {
             new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(),
                     courseLoad.getTotalQuantity());
         }
 
-        for (final Professorship professorship : originExecutionCourse.getProfessorships()) {
+        for (final Professorship professorship : originExecutionCourse.getProfessorshipsSet()) {
             final Professorship newProfessorship = new Professorship();
             newProfessorship.setExecutionCourse(destinationExecutionCourse);
             newProfessorship.setPerson(professorship.getPerson());
             newProfessorship.setResponsibleFor(professorship.getResponsibleFor());
             professorship.getPermissions().copyPremissions(newProfessorship);
-            destinationExecutionCourse.getProfessorships().add(newProfessorship);
+            destinationExecutionCourse.getProfessorshipsSet().add(newProfessorship);
         }
 
         return destinationExecutionCourse;
@@ -200,7 +200,7 @@ public class SeperateExecutionCourse {
     }
 
     private static Set<String> getExecutionCourseCodes(ExecutionSemester executionSemester) {
-        Collection<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCoursesSet();
         return new HashSet<String>(CollectionUtils.collect(executionCourses, new Transformer() {
             @Override
             public Object transform(Object arg0) {

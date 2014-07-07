@@ -38,7 +38,7 @@ public class ExecutionYearsProviderForListsContextBean implements DataProvider {
         if (executionDegreeBean.getDegreeCurricularPlan() != null) {
             final SortedSet<ExecutionDegree> executionDegrees =
                     new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-            executionDegrees.addAll(executionDegreeBean.getDegreeCurricularPlan().getExecutionDegrees());
+            executionDegrees.addAll(executionDegreeBean.getDegreeCurricularPlan().getExecutionDegreesSet());
 
             for (ExecutionDegree exeDegree : executionDegrees) {
                 executionYears.add(exeDegree.getExecutionYear());

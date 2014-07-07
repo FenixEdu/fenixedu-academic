@@ -63,9 +63,4 @@ public class Contributor extends Contributor_Base {
         return null;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Guide> getGuides() {
-        return getGuidesSet();
-    }
-
 }

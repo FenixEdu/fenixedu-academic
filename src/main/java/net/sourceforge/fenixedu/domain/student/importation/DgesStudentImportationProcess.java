@@ -378,7 +378,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     }
 
     private void voidPreviousCandidacies(Person person, ExecutionDegree executionDegree) {
-        for (Candidacy candidacy : person.getCandidacies()) {
+        for (Candidacy candidacy : person.getCandidaciesSet()) {
             if (candidacy instanceof StudentCandidacy) {
                 StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
                 if (studentCandidacy.getExecutionDegree().getExecutionYear() == executionDegree.getExecutionYear()
@@ -421,7 +421,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     public static List<DgesStudentImportationProcess> readAllJobs(final ExecutionYear executionYear) {
         List<DgesStudentImportationProcess> jobList = new ArrayList<DgesStudentImportationProcess>();
 
-        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcessSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -435,7 +435,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     public static List<DgesStudentImportationProcess> readDoneJobs(final ExecutionYear executionYear) {
         List<DgesStudentImportationProcess> jobList = new ArrayList<DgesStudentImportationProcess>();
 
-        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcessSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -453,7 +453,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     public static List<DgesStudentImportationProcess> readPendingJobs(final ExecutionYear executionYear) {
         List<DgesStudentImportationProcess> jobList = new ArrayList<DgesStudentImportationProcess>();
 
-        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcessSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -493,11 +493,6 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
         return InstallmentPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(), entry
                 .getInstallment().getEndDate(), null, entry.getInstallment(), entry.getAmountToPay(), entry.getAmountToPay(),
                 student);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacy() {
-        return getStudentCandidacySet();
     }
 
 }

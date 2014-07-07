@@ -125,7 +125,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 
     private void collectStudentCurricularPlansFor(final ExecutionYear executionYear, final Set<StudentCurricularPlan> result) {
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesByType(this.getDegreeType())) {
-            result.addAll(executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans());
+            result.addAll(executionDegree.getDegreeCurricularPlan().getStudentCurricularPlansSet());
         }
     }
 

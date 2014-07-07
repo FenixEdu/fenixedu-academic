@@ -100,7 +100,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         String id = request.getParameter("oid");
         UnavailablePeriod unavailablePeriod = (UnavailablePeriod) FenixFramework.getDomainObject(id);
 
-        VigilantWrapper vigilant = unavailablePeriod.getPerson().getVigilantWrappers().iterator().next();
+        VigilantWrapper vigilant = unavailablePeriod.getPerson().getVigilantWrappersSet().iterator().next();
         deletePeriod(request);
         putRequestVigilantManagementCompliant(request, vigilant);
         return mapping.findForward("deleteUnavailablePeriod");
@@ -256,7 +256,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         bean.setBeginDate(unavailablePeriod.getBeginDate());
         bean.setEndDate(unavailablePeriod.getEndDate());
         bean.setJustification(unavailablePeriod.getJustification());
-        bean.setVigilantWrapper(unavailablePeriod.getPerson().getVigilantWrappers().iterator().next());
+        bean.setVigilantWrapper(unavailablePeriod.getPerson().getVigilantWrappersSet().iterator().next());
 
         request.setAttribute("bean", bean);
     }

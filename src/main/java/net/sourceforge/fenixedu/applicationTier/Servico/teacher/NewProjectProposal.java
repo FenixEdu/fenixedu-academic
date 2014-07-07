@@ -79,7 +79,7 @@ public class NewProjectProposal {
             throw new InvalidArgumentsServiceException("error.noPerson");
         }
 
-        Collection listaRelation = groupProperties.getExportGroupings();
+        Collection listaRelation = groupProperties.getExportGroupingsSet();
         Iterator iterRelation = listaRelation.iterator();
         while (iterRelation.hasNext()) {
             ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterRelation.next();
@@ -109,7 +109,7 @@ public class NewProjectProposal {
         List group = new ArrayList();
         List allOtherProfessors = new ArrayList();
 
-        Collection professorships = goalExecutionCourse.getProfessorships();
+        Collection professorships = goalExecutionCourse.getProfessorshipsSet();
         Iterator iterProfessorship = professorships.iterator();
         while (iterProfessorship.hasNext()) {
             Professorship professorship = (Professorship) iterProfessorship.next();
@@ -124,7 +124,7 @@ public class NewProjectProposal {
 
         List groupAux = new ArrayList();
 
-        Collection professorshipsAux = startExecutionCourse.getProfessorships();
+        Collection professorshipsAux = startExecutionCourse.getProfessorshipsSet();
         Iterator iterProfessorshipAux = professorshipsAux.iterator();
         while (iterProfessorshipAux.hasNext()) {
             Professorship professorshipAux = (Professorship) iterProfessorshipAux.next();
@@ -144,7 +144,7 @@ public class NewProjectProposal {
             groupPropertiesExecutionCourse.setProposalState(new ProposalState(Integer.valueOf(2)));
             List groupingStudentNumbers = new ArrayList();
 
-            Iterator iterAttends = groupPropertiesExecutionCourse.getGrouping().getAttends().iterator();
+            Iterator iterAttends = groupPropertiesExecutionCourse.getGrouping().getAttendsSet().iterator();
 
             while (iterAttends.hasNext()) {
                 Attends attend = (Attends) iterAttends.next();

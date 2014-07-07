@@ -87,7 +87,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
         component.setExecutionCourse(infoExecutionCourse);
 
-        final Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        final Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCoursesSet();
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());
         for (final CurricularCourse curricularCourse : curricularCourses) {
             infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
@@ -106,7 +106,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         }
 
         final List<InfoSiteStudentInformation> infoSiteStudentInformations = new ArrayList<InfoSiteStudentInformation>();
-        for (final Attends attend : studentGroup.getAttends()) {
+        for (final Attends attend : studentGroup.getAttendsSet()) {
             infoSiteStudentInformations.add(new InfoSiteStudentInformation(attend.getRegistration().getPerson().getName(), attend
                     .getRegistration().getPerson().getEmail(), attend.getRegistration().getPerson().getUsername(), attend
                     .getRegistration().getNumber()));
@@ -116,7 +116,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         component.setInfoStudentGroup(InfoStudentGroupWithAttendsAndGroupingAndShift.newInfoFromDomain(studentGroup));
 
         if (studentGroup.getGrouping().getMaximumCapacity() != null) {
-            int freeGroups = studentGroup.getGrouping().getMaximumCapacity() - studentGroup.getAttends().size();
+            int freeGroups = studentGroup.getGrouping().getMaximumCapacity() - studentGroup.getAttendsSet().size();
             component.setNrOfElements(Integer.valueOf(freeGroups));
         } else {
             component.setNrOfElements("Sem limite");
@@ -228,7 +228,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             infoSiteStudentsAndShiftByStudentGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
             infoSiteStudentsAndShiftByStudentGroup.setInfoShift(InfoShift.newInfoFromDomain(turno));
 
-            Collection attendsList = studentGroup.getAttends();
+            Collection attendsList = studentGroup.getAttendsSet();
 
             List<InfoSiteStudentInformation> studentGroupAttendInformationList = new ArrayList<InfoSiteStudentInformation>();
             Iterator iterAttendsList = attendsList.iterator();

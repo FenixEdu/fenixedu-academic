@@ -97,10 +97,10 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
         UnitSite site = getSite(request);
         Unit unit = site.getUnit();
 
-        if (unit == null || unit.getBoards().isEmpty()) {
+        if (unit == null || unit.getBoardsSet().isEmpty()) {
             return mapping.findForward("noBoards");
         } else {
-            Collection<UnitAnnouncementBoard> boards = unit.getBoards();
+            Collection<UnitAnnouncementBoard> boards = unit.getBoardsSet();
             if (boards.size() > 1) {
                 return start(mapping, actionForm, request, response);
             } else {
@@ -142,7 +142,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
 
         Collection<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>();
         if (unit != null) {
-            for (AnnouncementBoard board : unit.getBoards()) {
+            for (AnnouncementBoard board : unit.getBoardsSet()) {
                 if (board.getWriters() == null || board.getReaders() == null || board.getManagers() == null
                         || board.getWriters().isMember(getUserView(request)) || board.getReaders().isMember(getUserView(request))
                         || board.getManagers().isMember(getUserView(request))) {

@@ -46,7 +46,7 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         if (degreeCurricularPlan != null) {
-            Collection<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
+            Collection<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCoursesSet();
 
             if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
                 infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(degreeCurricularPlan, allCurricularCourses);

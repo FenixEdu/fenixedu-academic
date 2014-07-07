@@ -81,7 +81,7 @@ public class DepartmentAdmOfficeManageDegreeTeachingServicesDispatchAction exten
             HttpServletRequest request) {
 
         User userView = Authenticate.getUser();
-        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCreditsSet();
 
         List<Unit> workingPlacesByPeriod =
                 teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),

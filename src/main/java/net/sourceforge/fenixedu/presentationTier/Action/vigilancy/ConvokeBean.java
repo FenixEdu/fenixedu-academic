@@ -226,8 +226,8 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
         List<VigilantWrapper> teachersForAGivenCourse = this.getTeachersForAGivenCourse();
         WrittenEvaluation writtenEvaluation = this.getWrittenEvaluation();
 
-        if (writtenEvaluation != null && writtenEvaluation.getVigilancies().size() > 0) {
-            for (Vigilancy convoke : writtenEvaluation.getVigilancies()) {
+        if (writtenEvaluation != null && writtenEvaluation.getVigilanciesSet().size() > 0) {
+            for (Vigilancy convoke : writtenEvaluation.getVigilanciesSet()) {
                 teachersForAGivenCourse.remove(convoke.getVigilantWrapper());
             }
 

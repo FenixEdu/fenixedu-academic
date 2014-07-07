@@ -202,7 +202,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public static boolean hasOnlineApplicationForPeriod(final Person person, PhdCandidacyPeriod phdCandidacyPeriod) {
-        Collection<PhdIndividualProgramProcess> phdIndividualProgramProcesses = person.getPhdIndividualProgramProcesses();
+        Collection<PhdIndividualProgramProcess> phdIndividualProgramProcesses = person.getPhdIndividualProgramProcessesSet();
 
         for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdIndividualProgramProcesses) {
             if (phdCandidacyPeriod == phdIndividualProgramProcess.getCandidacyProcess().getPublicPhdCandidacyPeriod()) {
@@ -587,7 +587,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public PhdCandidacyReferee getCandidacyRefereeByEmail(final String email) {
-        Collection<PhdCandidacyReferee> candidacyReferees = getCandidacyReferees();
+        Collection<PhdCandidacyReferee> candidacyReferees = getCandidacyRefereesSet();
 
         for (PhdCandidacyReferee phdCandidacyReferee : candidacyReferees) {
             if (phdCandidacyReferee.getEmail().trim().equals(email.trim())) {
@@ -596,21 +596,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         }
 
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.notification.PhdNotification> getNotifications() {
-        return getNotificationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter> getRefereeLetters() {
-        return getRefereeLettersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee> getCandidacyReferees() {
-        return getCandidacyRefereesSet();
     }
 
     @Override

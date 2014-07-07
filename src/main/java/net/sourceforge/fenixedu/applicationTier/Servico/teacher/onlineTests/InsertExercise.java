@@ -110,7 +110,7 @@ public class InsertExercise {
                         List<Question> listToThisMetadata = getListToThisMetadata(questionMap, parse.getMembers());
                         if (listToThisMetadata.size() != 0) {
                             metadata = new Metadata(executionCourse, xmlFile, vector);
-                            metadata.getQuestions().addAll(listToThisMetadata);
+                            metadata.getQuestionsSet().addAll(listToThisMetadata);
                         } else {
                             badXmls.add(xmlFileName + ": Metadata sem exercício associado.");
                         }
@@ -120,7 +120,7 @@ public class InsertExercise {
                 }
                 if (metadata == null) {
                     metadata = new Metadata(executionCourse, null, null);
-                    metadata.getQuestions().addAll(questionMap.values());
+                    metadata.getQuestionsSet().addAll(questionMap.values());
                 }
                 createAny = true;
             } else {

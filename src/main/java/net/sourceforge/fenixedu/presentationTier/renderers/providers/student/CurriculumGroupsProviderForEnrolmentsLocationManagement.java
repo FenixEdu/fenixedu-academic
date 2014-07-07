@@ -51,7 +51,7 @@ public class CurriculumGroupsProviderForEnrolmentsLocationManagement implements 
         final Set<AcademicProgram> programs =
                 AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS);
 
-        for (final Registration registration : bean.getStudent().getRegistrations()) {
+        for (final Registration registration : bean.getStudent().getRegistrationsSet()) {
 
             if (!registration.isBolonha()) {
                 continue;

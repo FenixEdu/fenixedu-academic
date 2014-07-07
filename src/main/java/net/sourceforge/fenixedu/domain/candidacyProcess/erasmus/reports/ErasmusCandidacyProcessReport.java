@@ -83,7 +83,7 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
                 "Foto", "Fotocópia do Passaporte ou do Cartão de Identificação", "Acordo", "CV", "Registo Académico",
                 "Nível Inglês" });
 
-        for (IndividualCandidacyProcess individualCandidacyProcess : getMobilityApplicationProcess().getChildProcesses()) {
+        for (IndividualCandidacyProcess individualCandidacyProcess : getMobilityApplicationProcess().getChildProcessesSet()) {
             photo = false;
             photocopy = false;
             agree = false;
@@ -128,35 +128,35 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
             } else {
                 row.setCell(12, "Não");
             }
-            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocuments(),
+            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
                     IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) != null) {
                 row.setCell(13, "Sim");
                 photocopy = true;
             } else {
                 row.setCell(13, "Não");
             }
-            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocuments(),
+            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
                     IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) != null) {
                 row.setCell(14, "Sim");
                 agree = true;
             } else {
                 row.setCell(14, "Não");
             }
-            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocuments(),
+            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
                     IndividualCandidacyDocumentFileType.CV_DOCUMENT) != null) {
                 row.setCell(15, "Sim");
                 cv = true;
             } else {
                 row.setCell(15, "Não");
             }
-            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocuments(),
+            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
                     IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS) != null) {
                 row.setCell(16, "Sim");
                 transcript = true;
             } else {
                 row.setCell(16, "Não");
             }
-            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocuments(),
+            if (getUploadedDocumentByType(erasmusIndividualCandidacyProcess.getCandidacy().getDocumentsSet(),
                     IndividualCandidacyDocumentFileType.ENGLISH_LEVEL_DECLARATION) != null) {
                 row.setCell(17, "Sim");
                 englishLevel = true;

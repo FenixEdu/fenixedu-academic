@@ -401,7 +401,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
                 studentCurricularPlan.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.STANDALONE);
         Set<CurricularCourse> remaining = new HashSet<CurricularCourse>();
         HashSet<CurricularCourse> set = new HashSet<CurricularCourse>();
-        set.addAll(erasmusBolonhaStudentEnrollmentBean.getCandidacy().getCurricularCourses());
+        set.addAll(erasmusBolonhaStudentEnrollmentBean.getCandidacy().getCurricularCoursesSet());
         for (Enrolment enrolment : group.getEnrolments()) {
             set.add(enrolment.getCurricularCourse());
         }

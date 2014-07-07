@@ -115,7 +115,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 
     private void collectStudentCurricularPlansFor(final ExecutionYear executionYear, final Set<StudentCurricularPlan> result) {
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesByType(this.getDegreeType())) {
-            result.addAll(executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans());
+            result.addAll(executionDegree.getDegreeCurricularPlan().getStudentCurricularPlansSet());
         }
     }
 

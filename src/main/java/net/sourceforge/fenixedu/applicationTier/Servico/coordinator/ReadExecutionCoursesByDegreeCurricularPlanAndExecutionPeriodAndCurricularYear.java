@@ -61,7 +61,7 @@ public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurr
         }
 
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
             if (belongToDegreeCurricularPlanAndCurricularYear(executionCourse, degreeCurricularPlan, curricularYear)) {
                 result.add(executionCourse);
             }
@@ -72,7 +72,7 @@ public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurr
     private boolean belongToDegreeCurricularPlanAndCurricularYear(final ExecutionCourse executionCourse,
             final DegreeCurricularPlan degreeCurricularPlan, final CurricularYear curricularYear) {
 
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
                     executionCourse.getExecutionPeriod())) {
                 return true;

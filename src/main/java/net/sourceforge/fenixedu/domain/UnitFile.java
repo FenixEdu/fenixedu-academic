@@ -58,7 +58,7 @@ public class UnitFile extends UnitFile_Base {
     }
 
     public void setUnitFileTags(String tag) {
-        getUnitFileTags().clear();
+        getUnitFileTagsSet().clear();
         String[] tagNames = tag.split("\\p{Space}+");
         for (String tagName : tagNames) {
             UnitFileTag unitFileTag = getUnit().getUnitFileTag(tagName.trim());
@@ -70,7 +70,7 @@ public class UnitFile extends UnitFile_Base {
     public void delete() {
         if (isEditableByCurrentUser()) {
             setUnit(null);
-            for (; !getUnitFileTags().isEmpty(); getUnitFileTags().iterator().next().removeTaggedFiles(this)) {
+            for (; !getUnitFileTagsSet().isEmpty(); getUnitFileTagsSet().iterator().next().removeTaggedFiles(this)) {
                 ;
             }
             setUploader(null);
@@ -93,12 +93,7 @@ public class UnitFile extends UnitFile_Base {
     }
 
     public boolean hasUnitFileTags(Collection<UnitFileTag> tags) {
-        return getUnitFileTags().containsAll(tags);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.UnitFileTag> getUnitFileTags() {
-        return getUnitFileTagsSet();
+        return getUnitFileTagsSet().containsAll(tags);
     }
 
 }

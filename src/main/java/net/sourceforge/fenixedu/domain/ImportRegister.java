@@ -28,9 +28,4 @@ public class ImportRegister extends ImportRegister_Base {
         new ImportRegisterLog(this);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ImportRegisterLog> getImportRegisterLogs() {
-        return getImportRegisterLogsSet();
-    }
-
 }

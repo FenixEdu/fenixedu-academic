@@ -83,7 +83,7 @@ public class RequestJuryReviews extends PhdThesisActivity {
 
     private void notifyJuryElements(PhdThesisProcess process) {
 
-        for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
+        for (final ThesisJuryElement juryElement : process.getThesisJuryElementsSet()) {
 
             if (juryElement.isDocumentValidated()) {
                 continue;
@@ -101,7 +101,7 @@ public class RequestJuryReviews extends PhdThesisActivity {
             }
         }
 
-        for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
+        for (final ThesisJuryElement juryElement : process.getThesisJuryElementsSet()) {
             final PhdParticipant participant = juryElement.getParticipant();
             if (!juryElement.getReporter().booleanValue()) {
                 continue;

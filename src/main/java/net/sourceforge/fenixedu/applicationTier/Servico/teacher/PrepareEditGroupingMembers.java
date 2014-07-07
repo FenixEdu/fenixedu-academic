@@ -51,11 +51,11 @@ public class PrepareEditGroupingMembers {
         final List<Attends> attends = new ArrayList<Attends>();
         final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>();
 
-        for (final ExportGrouping exportGrouping : grouping.getExportGroupings()) {
+        for (final ExportGrouping exportGrouping : grouping.getExportGroupingsSet()) {
             if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
                     || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
-                for (final Attends attend : exportGrouping.getExecutionCourse().getAttends()) {
-                    if (!attends.contains(attend) && !grouping.getAttends().contains(attend)) {
+                for (final Attends attend : exportGrouping.getExecutionCourse().getAttendsSet()) {
+                    if (!attends.contains(attend) && !grouping.getAttendsSet().contains(attend)) {
                         attends.add(attend);
                         infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
                     }

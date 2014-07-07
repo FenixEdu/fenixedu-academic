@@ -53,7 +53,7 @@ public class PersonAccount extends PersonAccount_Base {
     public List getPaymentTransactions() {
 
         List result = new ArrayList<PaymentTransaction>();
-        for (Transaction transaction : this.getTransactions()) {
+        for (Transaction transaction : this.getTransactionsSet()) {
             if (transaction instanceof PaymentTransaction) {
                 result.add(transaction);
             }
@@ -65,7 +65,7 @@ public class PersonAccount extends PersonAccount_Base {
     public List getInsuranceTransactions() {
 
         List result = new ArrayList<InsuranceTransaction>();
-        for (Transaction transaction : this.getTransactions()) {
+        for (Transaction transaction : this.getTransactionsSet()) {
             if (transaction instanceof InsuranceTransaction) {
                 result.add(transaction);
             }
@@ -82,11 +82,6 @@ public class PersonAccount extends PersonAccount_Base {
         setRootDomainObject(null);
         setPerson(null);
         super.deleteDomainObject();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.transactions.Transaction> getTransactions() {
-        return getTransactionsSet();
     }
 
 }

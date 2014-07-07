@@ -95,7 +95,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
                 courses.add(bean.getCompetenceCourse());
             }
             for (CompetenceCourse competence : courses) {
-                for (CurricularCourse course : competence.getAssociatedCurricularCourses()) {
+                for (CurricularCourse course : competence.getAssociatedCurricularCoursesSet()) {
                     for (Enrolment enrolment : course.getActiveEnrollments(bean.getExecutionSemester())) {
                         if (enrolment.isSpecialSeason()) {
                             enrolments.add(enrolment);

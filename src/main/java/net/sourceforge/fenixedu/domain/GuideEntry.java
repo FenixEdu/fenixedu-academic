@@ -83,7 +83,7 @@ public class GuideEntry extends GuideEntry_Base {
     public BigDecimal getValueWithAdjustment() {
 
         BigDecimal reimbursedValue = BigDecimal.ZERO;
-        for (final ReimbursementGuideEntry reimbursementGuideEntry : getReimbursementGuideEntries()) {
+        for (final ReimbursementGuideEntry reimbursementGuideEntry : getReimbursementGuideEntriesSet()) {
             if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
                 reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
             }
@@ -91,11 +91,6 @@ public class GuideEntry extends GuideEntry_Base {
 
         return getPriceBigDecimal().subtract(reimbursedValue);
 
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry> getReimbursementGuideEntries() {
-        return getReimbursementGuideEntriesSet();
     }
 
 }

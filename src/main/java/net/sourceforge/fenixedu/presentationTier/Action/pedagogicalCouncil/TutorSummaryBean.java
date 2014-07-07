@@ -63,7 +63,7 @@ public class TutorSummaryBean extends TutorSearchBean {
 
         if (getTeacher() != null) {
             /* add active - already created - summaries */
-            for (TutorshipSummary ts : getTeacher().getTutorshipSummaries()) {
+            for (TutorshipSummary ts : getTeacher().getTutorshipSummariesSet()) {
                 if (ts.isActive()) {
                     CreateSummaryBean createSummaryBean = new CreateSummaryBean(ts);
                     result.add(createSummaryBean);
@@ -109,7 +109,7 @@ public class TutorSummaryBean extends TutorSearchBean {
                     Teacher teacher = employee.getPerson().getTeacher();
                     if (teacher != null) {
                         if (!teacher.getTutorshipsSet().isEmpty()) {
-                            for (TutorshipSummary ts : teacher.getTutorshipSummaries()) {
+                            for (TutorshipSummary ts : teacher.getTutorshipSummariesSet()) {
                                 if ((!ts.isActive())) {
                                     result.add(ts);
                                 }
@@ -122,7 +122,7 @@ public class TutorSummaryBean extends TutorSearchBean {
                     Teacher teacher = employee.getPerson().getTeacher();
                     if (teacher != null) {
                         if (!teacher.getTutorshipsSet().isEmpty()) {
-                            for (TutorshipSummary ts : teacher.getTutorshipSummaries()) {
+                            for (TutorshipSummary ts : teacher.getTutorshipSummariesSet()) {
                                 if ((!ts.isActive()) && ts.getSemester().equals(getExecutionSemester())) {
                                     result.add(ts);
                                 }
@@ -132,14 +132,14 @@ public class TutorSummaryBean extends TutorSearchBean {
                 }
             } else {
                 if (getTeacher() != null && getExecutionSemester() != null) {
-                    for (TutorshipSummary ts : getTeacher().getTutorshipSummaries()) {
+                    for (TutorshipSummary ts : getTeacher().getTutorshipSummariesSet()) {
                         if ((!ts.isActive()) && ts.getSemester().equals(getExecutionSemester())) {
                             result.add(ts);
                         }
                     }
                 } else {
                     if (getTeacher() != null) {
-                        for (TutorshipSummary ts : getTeacher().getTutorshipSummaries()) {
+                        for (TutorshipSummary ts : getTeacher().getTutorshipSummariesSet()) {
                             if (!ts.isActive()) {
                                 result.add(ts);
                             }
@@ -147,7 +147,7 @@ public class TutorSummaryBean extends TutorSearchBean {
 
                     } else {
                         if (getExecutionSemester() != null) {
-                            for (TutorshipSummary ts : getExecutionSemester().getTutorshipSummaries()) {
+                            for (TutorshipSummary ts : getExecutionSemester().getTutorshipSummariesSet()) {
                                 if (!ts.isActive()) {
                                     result.add(ts);
                                 }
@@ -158,19 +158,19 @@ public class TutorSummaryBean extends TutorSearchBean {
             }
         } else {
             if (getDegree() != null && getExecutionSemester() != null) {
-                for (TutorshipSummary ts : getDegree().getTutorshipSummaries()) {
+                for (TutorshipSummary ts : getDegree().getTutorshipSummariesSet()) {
                     if (!ts.isActive() && ts.getSemester().equals(getExecutionSemester())) {
                         result.add(ts);
                     }
                 }
             } else if (getDegree() != null && getExecutionSemester() == null) {
-                for (TutorshipSummary ts : getDegree().getTutorshipSummaries()) {
+                for (TutorshipSummary ts : getDegree().getTutorshipSummariesSet()) {
                     if (!ts.isActive()) {
                         result.add(ts);
                     }
                 }
             } else if (getExecutionSemester() != null) {
-                for (TutorshipSummary ts : getExecutionSemester().getTutorshipSummaries()) {
+                for (TutorshipSummary ts : getExecutionSemester().getTutorshipSummariesSet()) {
                     if (!ts.isActive()) {
                         result.add(ts);
                     }
@@ -206,8 +206,7 @@ public class TutorSummaryBean extends TutorSearchBean {
             final TutorSummaryBean chooseDegreeBean = (TutorSummaryBean) source;
 
             if (chooseDegreeBean.getExecutionSemester() != null) {
-                for (final ExecutionDegree executionDegree : chooseDegreeBean.getExecutionSemester().getExecutionYear()
-                        .getExecutionDegrees()) {
+                for (final ExecutionDegree executionDegree : chooseDegreeBean.getExecutionSemester().getExecutionYear().getExecutionDegreesSet()) {
                     if (executionDegree.getDegreeType().isFirstCycle()) {
                         result.add(executionDegree.getDegree());
                     }

@@ -462,7 +462,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         setPhdProgramFocusArea(bean.getFocusArea());
         setExternalPhdProgram(bean.getExternalPhdProgram());
 
-        for (ThesisSubjectOrder subjectOrder : getThesisSubjectOrders()) {
+        for (ThesisSubjectOrder subjectOrder : getThesisSubjectOrdersSet()) {
             subjectOrder.delete();
         }
         for (PhdThesisSubjectOrderBean subjectOrderBean : bean.getThesisSubjectBeans()) {
@@ -505,11 +505,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public Collection<PhdCandidacyReferee> getPhdCandidacyReferees() {
-        return getCandidacyProcess().getCandidacyReferees();
+        return getCandidacyProcess().getCandidacyRefereesSet();
     }
 
     public Collection<Qualification> getQualifications() {
-        return getPerson().getAssociatedQualifications();
+        return getPerson().getAssociatedQualificationsSet();
     }
 
     public List<Qualification> getQualificationsSortedByAttendedEndDate() {
@@ -565,7 +565,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public Set<PhdAlert> getActiveAlerts() {
         final Set<PhdAlert> result = new HashSet<PhdAlert>();
 
-        for (final PhdAlert each : getAlerts()) {
+        for (final PhdAlert each : getAlertsSet()) {
             if (each.isActive()) {
                 result.add(each);
             }
@@ -581,7 +581,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public Set<PhdAlertMessage> getUnreadedAlertMessagesFor(final Person person) {
         final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
 
-        for (final PhdAlertMessage each : getAlertMessages()) {
+        for (final PhdAlertMessage each : getAlertMessagesSet()) {
             if (!each.isReaded() && each.isFor(person)) {
                 result.add(each);
             }
@@ -597,7 +597,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public Set<PhdAlertMessage> getAlertMessagesFor(Person person) {
         final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
 
-        for (final PhdAlertMessage each : getAlertMessages()) {
+        for (final PhdAlertMessage each : getAlertMessagesSet()) {
             if (each.isFor(person)) {
                 result.add(each);
             }
@@ -642,7 +642,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(ExecutionYear executionYear) {
         PrecedentDegreeInformation result = null;
-        for (PrecedentDegreeInformation precedentDegreeInfo : getPrecedentDegreeInformations()) {
+        for (PrecedentDegreeInformation precedentDegreeInfo : getPrecedentDegreeInformationsSet()) {
             if (precedentDegreeInfo.getPersonalIngressionData().getExecutionYear().equals(executionYear)
                     && (result == null || (result.getLastModifiedDate().isBefore(precedentDegreeInfo.getLastModifiedDate())))) {
                 result = precedentDegreeInfo;
@@ -669,12 +669,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                 new TreeSet<PrecedentDegreeInformation>(
                         Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        for (PrecedentDegreeInformation pdi : getPrecedentDegreeInformations()) {
+        for (PrecedentDegreeInformation pdi : getPrecedentDegreeInformationsSet()) {
             if (!pdi.getExecutionYear().isAfter(currentExecutionYear)) {
                 degreeInformations.add(pdi);
             }
         }
-        degreeInformations.addAll(getPrecedentDegreeInformations());
+        degreeInformations.addAll(getPrecedentDegreeInformationsSet());
 
         return (degreeInformations.iterator().hasNext()) ? degreeInformations.iterator().next() : null;
     }
@@ -734,7 +734,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                         .getExecutionDegreeByAcademicInterval(ExecutionYear.readCurrentExecutionYear().getAcademicInterval());
 
         if (executionDegree != null) {
-            for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+            for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
                 if (coordinator.getPerson() == person) {
                     return true;
                 }
@@ -749,7 +749,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isGuider(Person person) {
-        for (final PhdParticipant guiding : getGuidings()) {
+        for (final PhdParticipant guiding : getGuidingsSet()) {
             if (guiding.isFor(person)) {
                 return true;
             }
@@ -763,7 +763,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isAssistantGuider(Person person) {
-        for (final PhdParticipant guiding : getAssistantGuidings()) {
+        for (final PhdParticipant guiding : getAssistantGuidingsSet()) {
             if (guiding.isFor(person)) {
                 return true;
             }
@@ -789,8 +789,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public Set<PhdParticipant> getGuidingsAndAssistantGuidings() {
         final Set<PhdParticipant> result = new HashSet<PhdParticipant>();
-        result.addAll(getAssistantGuidings());
-        result.addAll(getGuidings());
+        result.addAll(getAssistantGuidingsSet());
+        result.addAll(getGuidingsSet());
 
         return result;
     }
@@ -843,7 +843,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     protected boolean hasPhdAlert(final Class<? extends PhdAlert> clazz) {
-        for (final Alert alert : getAlerts()) {
+        for (final Alert alert : getAlertsSet()) {
             if (clazz.isAssignableFrom(alert.getClass())) {
                 return true;
             }
@@ -852,7 +852,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PhdParticipant getParticipant(final Person person) {
-        for (final PhdParticipant participant : getParticipants()) {
+        for (final PhdParticipant participant : getParticipantsSet()) {
             if (participant.isFor(person)) {
                 return participant;
             }
@@ -894,7 +894,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         }
 
         final Collection<CompetenceCourse> result = new HashSet<CompetenceCourse>();
-        for (PhdStudyPlanEntry entry : getStudyPlan().getEntries()) {
+        for (PhdStudyPlanEntry entry : getStudyPlan().getEntriesSet()) {
             if (entry.isInternalEntry()) {
                 result.add(((InternalPhdStudyPlanEntry) entry).getCompetenceCourse());
             }
@@ -1092,7 +1092,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         }
 
         for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
-            for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
+            for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessDataSet()) {
                 if (processData.getNumber().equals(getPhdStudentNumber())) {
                     return processData;
                 }
@@ -1124,7 +1124,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     private PhdMigrationGuiding getAssociatedMigrationgGuidingOrAssistant(String guiderNumber) {
         for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
-            for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuiding()) {
+            for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuidingSet()) {
                 if (guidingData.getTeacherNumber().equals(guiderNumber)) {
                     return guidingData;
                 }
@@ -1139,7 +1139,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         final List<PhdMigrationIndividualProcessData> processDataList = new ArrayList<PhdMigrationIndividualProcessData>();
 
         for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
-            for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
+            for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessDataSet()) {
                 final ExecutionYear processYear = processData.getExecutionYear();
                 if (processYear == null || year == null || processYear.equals(year)) {
                     processDataList.add(processData);
@@ -1266,7 +1266,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean hasDiplomaRequest() {
-        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
+        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequestsSet()) {
             if (academicServiceRequest.isDiploma() && !academicServiceRequest.isCancelled()
                     && !academicServiceRequest.isRejected()) {
                 return true;
@@ -1277,7 +1277,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PhdRegistryDiplomaRequest getRegistryDiplomaRequest() {
-        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
+        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequestsSet()) {
             if (academicServiceRequest.isRegistryDiploma() && !academicServiceRequest.isCancelled()
                     && !academicServiceRequest.isRejected()) {
                 return (PhdRegistryDiplomaRequest) academicServiceRequest;
@@ -1292,7 +1292,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PhdDiplomaRequest getDiplomaRequest() {
-        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
+        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequestsSet()) {
             if (academicServiceRequest.isDiploma() && !academicServiceRequest.isCancelled()
                     && !academicServiceRequest.isRejected()) {
                 return (PhdDiplomaRequest) academicServiceRequest;
@@ -1311,18 +1311,18 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PhdConclusionProcess getLastConclusionProcess() {
-        if (getPhdConclusionProcesses().isEmpty()) {
+        if (getPhdConclusionProcessesSet().isEmpty()) {
             return null;
         }
 
         Set<PhdConclusionProcess> conclusionProcessSet =
                 new TreeSet<PhdConclusionProcess>(PhdConclusionProcess.VERSION_COMPARATOR);
-        conclusionProcessSet.addAll(getPhdConclusionProcesses());
+        conclusionProcessSet.addAll(getPhdConclusionProcessesSet());
         return conclusionProcessSet.iterator().next();
     }
 
     public boolean isConclusionProcessed() {
-        return !getPhdConclusionProcesses().isEmpty();
+        return !getPhdConclusionProcessesSet().isEmpty();
     }
 
     public String getGraduateTitle(Locale locale) {
@@ -1341,7 +1341,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public List<PhdAcademicServiceRequest> getNewAcademicServiceRequests() {
         List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
 
-        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequests()) {
+        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequestsSet()) {
             if (!request.isNewRequest()) {
                 continue;
             }
@@ -1355,7 +1355,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public List<PhdAcademicServiceRequest> getProcessingAcademicServiceRequests() {
         List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
 
-        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequests()) {
+        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequestsSet()) {
             if (request.isNewRequest()) {
                 continue;
             }
@@ -1377,7 +1377,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public List<PhdAcademicServiceRequest> getToDeliverAcademicServiceRequests() {
         List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
 
-        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequests()) {
+        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequestsSet()) {
             if (!request.isDeliveredSituationAccepted()) {
                 continue;
             }
@@ -1391,7 +1391,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public List<PhdAcademicServiceRequest> getHistoricalAcademicServiceRequests() {
         List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
 
-        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequests()) {
+        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequestsSet()) {
             if (request.isDelivered() || request.isCancelled() || request.isRejected()) {
                 result.add(request);
                 continue;
@@ -1407,13 +1407,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public Collection<ThesisSubjectOrder> getThesisSubjectOrdersSorted() {
         TreeSet<ThesisSubjectOrder> subjectOrders = new TreeSet<ThesisSubjectOrder>(ThesisSubjectOrder.COMPARATOR_BY_ORDER);
-        subjectOrders.addAll(getThesisSubjectOrders());
+        subjectOrders.addAll(getThesisSubjectOrdersSet());
         return subjectOrders;
     }
 
     public int getHighestThesisSubjectOrder() {
         int highestOrder = 0;
-        for (ThesisSubjectOrder order : getThesisSubjectOrders()) {
+        for (ThesisSubjectOrder order : getThesisSubjectOrdersSet()) {
             if (order.getSubjectOrder() > highestOrder) {
                 highestOrder = order.getSubjectOrder();
             }
@@ -1422,7 +1422,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean hasPhdGratuityEventForYear(int year) {
-        for (PhdGratuityEvent event : getPhdGratuityEvents()) {
+        for (PhdGratuityEvent event : getPhdGratuityEventsSet()) {
             if (event.getYear() == year && !event.isCancelled()) {
                 return true;
             }
@@ -1434,11 +1434,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         return getPhdProgram() != null ? getPhdProgram().getAdministrativeOffice() : null;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreeInformations() {
-        return getPrecedentDegreeInformationsSet();
-    }
-
     @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState> getStates() {
@@ -1448,61 +1443,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     @Override
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail> getPhdIndividualProgramProcessEmails() {
-        return getPhdIndividualProgramProcessEmailsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdAlert> getAlerts() {
-        return getAlertsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess> getPhdConclusionProcesses() {
-        return getPhdConclusionProcessesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent> getPhdGratuityEvents() {
-        return getPhdGratuityEventsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdParticipant> getParticipants() {
-        return getParticipantsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail> getPhdProgramEmail() {
-        return getPhdProgramEmailSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdParticipant> getAssistantGuidings() {
-        return getAssistantGuidingsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdParticipant> getGuidings() {
-        return getGuidingsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder> getThesisSubjectOrders() {
-        return getThesisSubjectOrdersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage> getAlertMessages() {
-        return getAlertMessagesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest> getPhdAcademicServiceRequests() {
-        return getPhdAcademicServiceRequestsSet();
     }
 
 }

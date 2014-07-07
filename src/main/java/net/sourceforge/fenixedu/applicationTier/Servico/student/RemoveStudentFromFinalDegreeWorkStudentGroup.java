@@ -50,17 +50,17 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup {
         FinalDegreeWorkGroup group = FenixFramework.getDomainObject(groupOID);
         Registration registration = Registration.readByUsername(username);
 
-        if (group == null || registration == null || group.getGroupStudents() == null
+        if (group == null || registration == null || group.getGroupStudentsSet() == null
                 || registration.getExternalId().equals(studentToRemoveID)) {
             return false;
         }
 
-        if (!group.getGroupProposals().isEmpty()) {
+        if (!group.getGroupProposalsSet().isEmpty()) {
             throw new GroupProposalCandidaciesExistException();
         }
 
         PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(studentToRemoveID);
-        for (GroupStudent groupStudent : group.getGroupStudents()) {
+        for (GroupStudent groupStudent : group.getGroupStudentsSet()) {
             if (!predicate.evaluate(groupStudent)) {
                 groupStudent.delete();
             }

@@ -62,7 +62,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 
     public Set<PostingRule> getActivePostingRules(DateTime when) {
         final Set<PostingRule> activePostingRules = new HashSet<PostingRule>();
-        for (final PostingRule postingRule : getPostingRules()) {
+        for (final PostingRule postingRule : getPostingRulesSet()) {
             if (postingRule.isActiveForDate(when)) {
                 activePostingRules.add(postingRule);
             }
@@ -77,7 +77,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 
     public Set<PostingRule> getActiveVisiblePostingRules(DateTime when) {
         final Set<PostingRule> result = new HashSet<PostingRule>();
-        for (final PostingRule postingRule : getPostingRules()) {
+        for (final PostingRule postingRule : getPostingRulesSet()) {
             if (postingRule.isActiveForDate(when) && postingRule.isVisible()) {
                 result.add(postingRule);
             }
@@ -146,7 +146,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
     }
 
     public ServiceAgreement getServiceAgreementForPerson(Person person) {
-        for (final ServiceAgreement serviceAgreement : getServiceAgreements()) {
+        for (final ServiceAgreement serviceAgreement : getServiceAgreementsSet()) {
             if (serviceAgreement.getPerson() == person) {
                 return serviceAgreement;
             }
@@ -193,21 +193,6 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
         }
 
         return result;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ServiceAgreement> getServiceAgreements() {
-        return getServiceAgreementsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplatePaymentPlan> getPaymentPlans() {
-        return getPaymentPlansSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PostingRule> getPostingRules() {
-        return getPostingRulesSet();
     }
 
 }

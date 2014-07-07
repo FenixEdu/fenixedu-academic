@@ -89,7 +89,7 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
             for (; !getEnrolmentsSet().isEmpty();) {
-                removeEnrolments(getEnrolments().iterator().next());
+                removeEnrolments(getEnrolmentsSet().iterator().next());
             }
         }
     }
@@ -106,11 +106,6 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
             return true;
         }
         return super.isFree();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
-        return getEnrolmentsSet();
     }
 
 }

@@ -139,7 +139,7 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
         }
 
         User userView = getUserView(request);
-        for (AnnouncementBoard board : unit.getBoards()) {
+        for (AnnouncementBoard board : unit.getBoardsSet()) {
             if (board.getReaders() == null) {
                 boards.add(board);
             }
@@ -160,7 +160,7 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
             return null;
         } else {
             MultiLanguageString name = getBoardName(request);
-            for (AnnouncementBoard board : unit.getBoards()) {
+            for (AnnouncementBoard board : unit.getBoardsSet()) {
                 if (board.getReaders() == null && board.getName().equalInAnyLanguage(name)) {
                     return board;
                 }

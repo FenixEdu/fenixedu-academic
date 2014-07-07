@@ -49,7 +49,7 @@ public class FirstTimeInstitutionStudentsPaymentPlanRule implements PaymentPlanR
 
         if (student.getRegistrationsSet().size() > 1) {
 
-            for (final Registration registration : student.getRegistrations()) {
+            for (final Registration registration : student.getRegistrationsSet()) {
 
                 if (registration != current) {
 

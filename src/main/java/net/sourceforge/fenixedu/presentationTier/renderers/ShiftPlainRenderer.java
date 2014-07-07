@@ -46,7 +46,7 @@ public class ShiftPlainRenderer extends OutputRenderer {
                 int index = 0;
 
                 Set<Lesson> shiftLessons = new TreeSet<Lesson>(Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME);
-                shiftLessons.addAll(shift.getAssociatedLessons());
+                shiftLessons.addAll(shift.getAssociatedLessonsSet());
 
                 for (Lesson lesson : shiftLessons) {
                     index++;

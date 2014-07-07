@@ -95,7 +95,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
          * Can not have more than one jury element for the same process, but
          * allow to be President and Jury Member at the same time
          */
-        for (final ThesisJuryElement element : participant.getThesisJuryElements()) {
+        for (final ThesisJuryElement element : participant.getThesisJuryElementsSet()) {
             if (element.getProcess() != null && element.getProcess().equals(process) && !isPresident && !element.isPresident()) {
                 throw new DomainException("error.ThesisJuryElement.participant.already.has.jury.element.in.process");
             }
@@ -106,7 +106,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
         if (process.getThesisJuryElementsSet().isEmpty()) {
             return Integer.valueOf(1);
         }
-        return Integer.valueOf(Collections.max(process.getThesisJuryElements(), ThesisJuryElement.COMPARATOR_BY_ELEMENT_ORDER)
+        return Integer.valueOf(Collections.max(process.getThesisJuryElementsSet(), ThesisJuryElement.COMPARATOR_BY_ELEMENT_ORDER)
                 .getElementOrder().intValue() + 1);
     }
 
@@ -246,11 +246,6 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     public boolean isPresident() {
         return getProcessForPresidentJuryElement() != null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument> getFeedbackDocuments() {
-        return getFeedbackDocumentsSet();
     }
 
 }

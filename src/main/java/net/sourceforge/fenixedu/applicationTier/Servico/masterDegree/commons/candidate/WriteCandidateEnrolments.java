@@ -54,7 +54,7 @@ public class WriteCandidateEnrolments {
             masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);
         }
 
-        Collection<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        Collection<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolmentsSet();
         List<String> candidateEnrolmentsCurricularCoursesIDs =
                 (List<String>) CollectionUtils.collect(candidateEnrolments, new Transformer() {
                     @Override

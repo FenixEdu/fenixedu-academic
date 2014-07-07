@@ -78,8 +78,8 @@ public class Guide extends Guide_Base {
     };
 
     public GuideSituation getActiveSituation() {
-        if (this.getGuideSituations() != null) {
-            Iterator iterator = this.getGuideSituations().iterator();
+        if (this.getGuideSituationsSet() != null) {
+            Iterator iterator = this.getGuideSituationsSet().iterator();
             while (iterator.hasNext()) {
                 GuideSituation guideSituation = (GuideSituation) iterator.next();
                 if (guideSituation.getState().getState().equals(State.ACTIVE)) {
@@ -94,7 +94,7 @@ public class Guide extends Guide_Base {
 
         BigDecimal total = BigDecimal.ZERO;
 
-        for (final GuideEntry guideEntry : getGuideEntries()) {
+        for (final GuideEntry guideEntry : getGuideEntriesSet()) {
             total = total.add(guideEntry.getPriceBigDecimal().multiply(BigDecimal.valueOf(guideEntry.getQuantity())));
         }
 
@@ -105,7 +105,7 @@ public class Guide extends Guide_Base {
     }
 
     public GuideEntry getEntry(GraduationType graduationType, DocumentType documentType, String description) {
-        for (GuideEntry entry : getGuideEntries()) {
+        for (GuideEntry entry : getGuideEntriesSet()) {
             if (graduationType == null || !graduationType.equals(entry.getGraduationType())) {
                 continue;
             }
@@ -231,21 +231,6 @@ public class Guide extends Guide_Base {
         } else {
             setPaymentDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.GuideSituation> getGuideSituations() {
-        return getGuideSituationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide> getReimbursementGuides() {
-        return getReimbursementGuidesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.GuideEntry> getGuideEntries() {
-        return getGuideEntriesSet();
     }
 
 }

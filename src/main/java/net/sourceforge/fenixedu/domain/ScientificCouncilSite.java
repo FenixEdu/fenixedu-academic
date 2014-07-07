@@ -37,7 +37,7 @@ public class ScientificCouncilSite extends ScientificCouncilSite_Base {
 
     @Override
     public Group getOwner() {
-        return RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL).or(UserGroup.of(Person.convertToUsers(getManagers())));
+        return RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL).or(UserGroup.of(Person.convertToUsers(getManagersSet())));
     }
 
     /**

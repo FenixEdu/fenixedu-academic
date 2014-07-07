@@ -41,7 +41,7 @@ public class InstitutionSite extends InstitutionSite_Base {
     @Override
     public Group getOwner() {
         RoleType roleType = RoleType.MANAGER;
-        return UserGroup.of(Person.convertToUsers(getManagers())).or(RoleGroup.get(roleType));
+        return UserGroup.of(Person.convertToUsers(getManagersSet())).or(RoleGroup.get(roleType));
     }
 
     /**

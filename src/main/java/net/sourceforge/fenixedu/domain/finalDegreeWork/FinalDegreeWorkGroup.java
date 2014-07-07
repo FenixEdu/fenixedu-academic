@@ -151,7 +151,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
         }
         Proposal proposalAttributedByTeacher = getProposalAttributedByTeacher();
         if (proposalAttributedByTeacher != null) {
-            for (GroupStudent groupStudent : getGroupStudents()) {
+            for (GroupStudent groupStudent : getGroupStudentsSet()) {
                 if (groupStudent.getFinalDegreeWorkProposalConfirmation() != proposalAttributedByTeacher) {
                     return CandidacyAttributionType.ATTRIBUTED_NOT_CONFIRMED;
                 }
@@ -175,7 +175,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
         }
         Proposal proposalAttributedByTeacher = getProposalAttributedByTeacher();
         if (proposalAttributedByTeacher != null) {
-            for (GroupStudent groupStudent : getGroupStudents()) {
+            for (GroupStudent groupStudent : getGroupStudentsSet()) {
                 if (groupStudent.getFinalDegreeWorkProposalConfirmation() != proposalAttributedByTeacher) {
                     return null;
                 }
@@ -187,16 +187,6 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 
     public boolean isValid() {
         return !getGroupProposalsSet().isEmpty() || getProposalAttributed() != null || getProposalAttributedByTeacher() != null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent> getGroupStudents() {
-        return getGroupStudentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal> getGroupProposals() {
-        return getGroupProposalsSet();
     }
 
 }

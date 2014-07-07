@@ -38,7 +38,7 @@ public class AcademicIntervalProviderForListsContextBean implements DataProvider
         final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) source;
         if (executionDegreeBean.getDegreeCurricularPlan() != null) {
 
-            for (ExecutionDegree exeDegree : executionDegreeBean.getDegreeCurricularPlan().getExecutionDegrees()) {
+            for (ExecutionDegree exeDegree : executionDegreeBean.getDegreeCurricularPlan().getExecutionDegreesSet()) {
                 academicIntervals.add(exeDegree.getAcademicInterval());
             }
         }

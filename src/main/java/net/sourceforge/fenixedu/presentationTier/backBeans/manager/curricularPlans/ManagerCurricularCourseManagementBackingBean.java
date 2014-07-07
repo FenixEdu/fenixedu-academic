@@ -277,7 +277,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
     }
 
     private void readBolonhaExecutionYears(final List<SelectItem> result) {
-        final Collection<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegreesSet();
         if (executionDegrees.isEmpty()) {
             for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
                 result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));

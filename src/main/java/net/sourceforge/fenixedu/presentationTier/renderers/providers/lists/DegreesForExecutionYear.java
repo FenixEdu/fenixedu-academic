@@ -58,7 +58,7 @@ public class DegreesForExecutionYear implements DataProvider {
             return true;
         }
 
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
             if (executionDegree.getDegree() == degree) {
                 return true;
             }

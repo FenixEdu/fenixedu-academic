@@ -105,7 +105,7 @@ public class ReadStudentsByIdArray {
                 continue;
             }
             Shift shift = FenixFramework.getDomainObject(shift2);
-            Collection<Registration> studentList = shift.getStudents();
+            Collection<Registration> studentList = shift.getStudentsSet();
             for (Registration registration : studentList) {
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
                 if (!infoStudentList.contains(infoStudent)
@@ -127,7 +127,7 @@ public class ReadStudentsByIdArray {
 
         for (String student : students) {
             if (student.equals(value)) {
-                Collection<Attends> attendList = executionCourse.getAttends();
+                Collection<Attends> attendList = executionCourse.getAttendsSet();
                 for (Attends attend : attendList) {
                     InfoStudent infoStudent = InfoStudent.newInfoFromDomain(attend.getRegistration());
                     if (!studentsList.contains(infoStudent)

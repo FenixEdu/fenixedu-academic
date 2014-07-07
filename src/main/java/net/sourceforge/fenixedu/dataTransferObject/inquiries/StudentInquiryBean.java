@@ -80,7 +80,7 @@ public class StudentInquiryBean implements Serializable {
                 new HashMap<Person, Map<ShiftType, StudentTeacherInquiryBean>>();
         Map<ShiftType, Double> allTeachingServicesShiftType = null;
         Set<ShiftType> nonAssociatedTeachersShiftTypes = null;
-        for (final Professorship professorship : executionCourse.getProfessorships()) {
+        for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
 
             final Person person = professorship.getPerson();
             if (!teachersShifts.containsKey(person)) {
@@ -97,7 +97,7 @@ public class StudentInquiryBean implements Serializable {
             //	    }
 
             Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
-            for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
+            for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServicesSet()) {
                 for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
                     Double percentage = shiftTypesPercentageMap.get(shiftType);
                     if (percentage == null) {
@@ -160,7 +160,7 @@ public class StudentInquiryBean implements Serializable {
     private Set<ShiftType> getNonAssociatedTeachersShiftTypes(ExecutionCourse executionCourse) {
         Set<ShiftType> nonAssociatedTeachersShiftTypes = new HashSet<ShiftType>();
         for (Shift shift : executionCourse.getAssociatedShifts()) {
-            if (shift.getDegreeTeachingServices().isEmpty() && shift.getNonRegularTeachingServices().isEmpty()) {
+            if (shift.getDegreeTeachingServicesSet().isEmpty() && shift.getNonRegularTeachingServicesSet().isEmpty()) {
                 nonAssociatedTeachersShiftTypes.addAll(shift.getTypes());
             }
         }
@@ -169,8 +169,8 @@ public class StudentInquiryBean implements Serializable {
 
     private Map<ShiftType, Double> getAllDegreeTeachingServices(ExecutionCourse executionCourse) {
         Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
-        for (Professorship professorship : executionCourse.getProfessorships()) {
-            for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
+            for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServicesSet()) {
                 for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
                     Double percentage = shiftTypesPercentageMap.get(shiftType);
                     if (percentage == null) {

@@ -63,7 +63,7 @@ public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_B
     }
 
     private void sendEmails() {
-        getMobilityEmailTemplate().sendMultiEmailFor(getSubjectMobilityIndividualApplicationProcess());
+        getMobilityEmailTemplate().sendMultiEmailFor(getSubjectMobilityIndividualApplicationProcessSet());
 
     }
 

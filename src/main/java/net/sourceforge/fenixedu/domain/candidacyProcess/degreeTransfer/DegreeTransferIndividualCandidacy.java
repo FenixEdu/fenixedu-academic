@@ -64,7 +64,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 
         DegreeTransferIndividualCandidacySeriesGrade newSCICSeriesGrade = new DegreeTransferIndividualCandidacySeriesGrade();
         newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
-        getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+        getIndividualCandidacySeriesGradeSet().add(newSCICSeriesGrade);
 
         /*
          * 06/04/2009 - The candidacy may not be associated with a person. In
@@ -300,7 +300,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     }
 
     public DegreeTransferIndividualCandidacySeriesGrade getDegreeTransferIndividualCandidacySeriesGradeForDegree(Degree degree) {
-        for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGrade()) {
+        for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGradeSet()) {
             if (seriesGrade.getDegree() == degree) {
                 return (DegreeTransferIndividualCandidacySeriesGrade) seriesGrade;
             }
@@ -309,7 +309,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     }
 
     private DegreeTransferIndividualCandidacySeriesGrade getDegreeTransferIndividualCandidacySeriesGrade() {
-        if (getIndividualCandidacySeriesGrade().size() == 0) {
+        if (getIndividualCandidacySeriesGradeSet().size() == 0) {
             return null;
         } else {
             return getDegreeTransferIndividualCandidacySeriesGradeForDegree(getSelectedDegree());

@@ -36,7 +36,7 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
         if (executionDegree.getScheduling() != null) {
-            final Collection<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().getProposals();
+            final Collection<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().getProposalsSet();
 
             for (final Proposal proposal : finalDegreeWorkProposals) {
                 result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal, executionDegree));

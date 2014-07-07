@@ -44,10 +44,10 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
 
     @Override
     public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
-        final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCourses());
+        final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
         for (Unit subUnit : getSubUnits()) {
             if (subUnit.isDepartmentUnit()) {
-                result.addAll(subUnit.getExternalCurricularCourses());
+                result.addAll(subUnit.getExternalCurricularCoursesSet());
             }
         }
         return result;
@@ -115,15 +115,5 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
     }
 
     public abstract String getFullPresentationName();
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacySession> getInternshipCandidacySession() {
-        return getInternshipCandidacySessionSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacy> getInternshipCandidacy() {
-        return getInternshipCandidacySet();
-    }
 
 }

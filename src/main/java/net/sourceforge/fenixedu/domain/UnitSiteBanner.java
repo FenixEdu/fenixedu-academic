@@ -87,7 +87,7 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
 
     public float getWeightPercentage() {
         Integer weight = getWeight();
-        Collection<UnitSiteBanner> banners = getSite().getBanners();
+        Collection<UnitSiteBanner> banners = getSite().getBannersSet();
 
         if (weight == null) {
             for (UnitSiteBanner banner : banners) {

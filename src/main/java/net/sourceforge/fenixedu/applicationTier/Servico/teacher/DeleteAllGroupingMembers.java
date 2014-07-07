@@ -54,7 +54,7 @@ public class DeleteAllGroupingMembers {
         }
 
         List attendsElements = new ArrayList();
-        attendsElements.addAll(grouping.getAttends());
+        attendsElements.addAll(grouping.getAttendsSet());
         Iterator iterator = attendsElements.iterator();
         StringBuilder sbStudentNumbers = new StringBuilder("");
         sbStudentNumbers.setLength(0);

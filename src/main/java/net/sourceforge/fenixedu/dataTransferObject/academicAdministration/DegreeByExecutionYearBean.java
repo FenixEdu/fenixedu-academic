@@ -127,7 +127,7 @@ public class DegreeByExecutionYearBean implements Serializable, Comparable<Degre
     }
 
     public Collection<DegreeCurricularPlan> getDegreeCurricularPlans() {
-        return getDegree().getDegreeCurricularPlans();
+        return getDegree().getDegreeCurricularPlansSet();
     }
 
     @Override

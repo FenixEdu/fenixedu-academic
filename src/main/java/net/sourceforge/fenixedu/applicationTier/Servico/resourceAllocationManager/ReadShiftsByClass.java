@@ -47,7 +47,7 @@ public class ReadShiftsByClass {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
 
-        Collection<Shift> shifts = schoolClass.getAssociatedShifts();
+        Collection<Shift> shifts = schoolClass.getAssociatedShiftsSet();
 
         return CollectionUtils.collect(shifts, new Transformer() {
             @Override

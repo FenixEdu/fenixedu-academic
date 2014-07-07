@@ -47,7 +47,7 @@ public class ResidenceYear extends ResidenceYear_Base {
 
     public Set<ResidenceMonth> getSortedMonths() {
         TreeSet<ResidenceMonth> months = new TreeSet<ResidenceMonth>(new BeanComparator("month"));
-        months.addAll(getMonths());
+        months.addAll(getMonthsSet());
         return months;
     }
 
@@ -78,11 +78,6 @@ public class ResidenceYear extends ResidenceYear_Base {
 
     public boolean isFor(int year) {
         return getYear().intValue() == year;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.residence.ResidenceMonth> getMonths() {
-        return getMonthsSet();
     }
 
 }

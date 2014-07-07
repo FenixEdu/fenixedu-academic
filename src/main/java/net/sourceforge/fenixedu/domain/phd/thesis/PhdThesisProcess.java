@@ -321,7 +321,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public ThesisJuryElement getThesisJuryElement(final Person person) {
-        for (final ThesisJuryElement element : getThesisJuryElements()) {
+        for (final ThesisJuryElement element : getThesisJuryElementsSet()) {
             if (element.isFor(person)) {
                 return element;
             }
@@ -365,7 +365,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     public Collection<ThesisJuryElement> getReportThesisJuryElements() {
         final Collection<ThesisJuryElement> result = new ArrayList<ThesisJuryElement>();
-        for (final ThesisJuryElement element : getThesisJuryElements()) {
+        for (final ThesisJuryElement element : getThesisJuryElementsSet()) {
             if (element.getReporter().booleanValue()) {
                 result.add(element);
             }
@@ -378,7 +378,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public boolean isAnyDocumentToValidate() {
-        for (final ThesisJuryElement element : getThesisJuryElements()) {
+        for (final ThesisJuryElement element : getThesisJuryElementsSet()) {
             if (element.getReporter().booleanValue() && !element.isDocumentValidated()) {
                 return true;
             }
@@ -388,7 +388,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     public Collection<PhdProgramProcessDocument> getReportThesisJuryElementDocuments() {
         final Collection<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
-        for (final ThesisJuryElement element : getThesisJuryElements()) {
+        for (final ThesisJuryElement element : getThesisJuryElementsSet()) {
             if (element.getReporter().booleanValue() && element.isDocumentValidated()) {
                 result.add(element.getLastFeedbackDocument());
             }
@@ -438,7 +438,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     public void checkJuryPresidentNotGuider(final PhdThesisJuryElementBean bean) {
         final PhdIndividualProgramProcess process = getIndividualProgramProcess();
 
-        for (PhdParticipant processParticipant : process.getParticipants()) {
+        for (PhdParticipant processParticipant : process.getParticipantsSet()) {
             if (processParticipant == bean.getParticipant()) {
                 if (process.isGuider(processParticipant) || process.isAssistantGuider(processParticipant)) {
                     throw new DomainException("error.PhdThesisProcess.president.cannot.be.guider.or.assistantguider");
@@ -463,7 +463,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
         final PhdIndividualProgramProcess process = getIndividualProgramProcess();
 
-        for (PhdParticipant processParticipant : process.getParticipants()) {
+        for (PhdParticipant processParticipant : process.getParticipantsSet()) {
             if (processParticipant == bean.getParticipant()) {
                 if (process.isGuider(processParticipant) || process.isAssistantGuider(processParticipant)) {
                     throw new DomainException("error.PhdThesisProcess.reporter.cannot.be.guider.or.assistantguider");
@@ -585,11 +585,6 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     @Override
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement> getThesisJuryElements() {
-        return getThesisJuryElementsSet();
     }
 
 }

@@ -104,7 +104,7 @@ public class PublicSiteComponentBuilder {
             throws FenixServiceException {
         List infoLessonList = null;
 
-        Collection<Shift> shiftList = domainClass.getAssociatedShifts();
+        Collection<Shift> shiftList = domainClass.getAssociatedShiftsSet();
         infoLessonList = new ArrayList();
 
         ExecutionSemester executionSemester = domainClass.getExecutionPeriod();

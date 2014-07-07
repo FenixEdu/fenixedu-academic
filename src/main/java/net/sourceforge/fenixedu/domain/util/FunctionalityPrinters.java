@@ -30,9 +30,4 @@ public class FunctionalityPrinters extends FunctionalityPrinters_Base {
         return FenixConfigurationManager.getPrinterManager().getFunctionPrinterNames(getKeyPrinters());
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Unit> getUnits() {
-        return getUnitsSet();
-    }
-
 }

@@ -184,16 +184,6 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         }
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmissionGrade> getOutboundMobilityCandidacySubmissionGrade() {
-        return getOutboundMobilityCandidacySubmissionGradeSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy> getOutboundMobilityCandidacy() {
-        return getOutboundMobilityCandidacySet();
-    }
-
     private final static BigDecimal AVG_FACTOR = new BigDecimal(1000000000000l);
     private final static BigDecimal ECTS_FACTOR = new BigDecimal(100000000l);
     private final static BigDecimal PENDING_ECTS_FACTOR = new BigDecimal(10000l);

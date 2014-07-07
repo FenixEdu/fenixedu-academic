@@ -131,7 +131,7 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
 
     private int countNumberOfExternalCurricularCourses(final Unit unit) {
 
-        int result = unit.getExternalCurricularCourses().size();
+        int result = unit.getExternalCurricularCoursesSet().size();
 
         switch (unit.getType()) {
         case COUNTRY:

@@ -66,7 +66,7 @@ public class ReadCurriculumByCurricularCourseCode {
 
     private static List buildExecutionCourses(final CurricularCourse curricularCourse) {
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
-        for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
             final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
             if (executionSemester.getState().equals(PeriodState.OPEN) || executionSemester.getState().equals(PeriodState.CURRENT)) {
                 infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
@@ -77,7 +77,7 @@ public class ReadCurriculumByCurricularCourseCode {
 
     private static List<InfoCurricularCourseScope> buildActiveScopes(final CurricularCourse curricularCourse) {
         final List<InfoCurricularCourseScope> activeInfoCurricularCourseScopes = new ArrayList<InfoCurricularCourseScope>();
-        for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+        for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
             if (curricularCourseScope.isActive()) {
                 activeInfoCurricularCourseScopes.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
             }

@@ -36,7 +36,7 @@ public class RemoveExecutionDegreeToScheduling {
                 || (executionDegree.getScheduling() != null && executionDegree.getScheduling().getProposalsSet().isEmpty())) {
             throw new SchedulingContainsProposalsException();
         }
-        scheduleing.getExecutionDegrees().remove(executionDegree);
+        scheduleing.getExecutionDegreesSet().remove(executionDegree);
     }
 
     // Service Invokers migrated from Berserk

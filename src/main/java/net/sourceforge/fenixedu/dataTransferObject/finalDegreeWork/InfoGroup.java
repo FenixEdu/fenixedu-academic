@@ -89,7 +89,7 @@ public class InfoGroup extends InfoObject {
     public List<InfoGroupProposal> getGroupProposals() {
         List<InfoGroupProposal> result = new ArrayList<InfoGroupProposal>();
 
-        for (final GroupProposal groupProposal : getGroup().getGroupProposals()) {
+        for (final GroupProposal groupProposal : getGroup().getGroupProposalsSet()) {
             result.add(InfoGroupProposal.newInfoFromDomain(groupProposal));
         }
 
@@ -102,7 +102,7 @@ public class InfoGroup extends InfoObject {
     public List<InfoGroupStudent> getGroupStudents() {
         List<InfoGroupStudent> result = new ArrayList<InfoGroupStudent>();
 
-        for (final GroupStudent groupStudent : getGroup().getGroupStudents()) {
+        for (final GroupStudent groupStudent : getGroup().getGroupStudentsSet()) {
             result.add(InfoGroupStudent.newInfoFromDomain(groupStudent));
         }
 

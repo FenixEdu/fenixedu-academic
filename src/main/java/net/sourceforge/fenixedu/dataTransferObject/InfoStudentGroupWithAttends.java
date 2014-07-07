@@ -32,7 +32,7 @@ public class InfoStudentGroupWithAttends extends InfoStudentGroup {
         super.copyFromDomain(studentGroup);
 
         if (studentGroup != null) {
-            final Collection<Attends> attends = studentGroup.getAttends();
+            final Collection<Attends> attends = studentGroup.getAttendsSet();
             final List<InfoFrequenta> infoAttends = new ArrayList<InfoFrequenta>(attends.size());
             setInfoAttends(infoAttends);
             for (final Attends attend : attends) {

@@ -331,7 +331,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     public ExecutionCourse getExecutionCourseByInitials(final String courseInitials) {
-        for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
             if (executionCourse.getSigla().equalsIgnoreCase(courseInitials)) {
                 return executionCourse;
             }
@@ -341,7 +341,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public List<ExecutionCourse> getExecutionCoursesWithNoCurricularCourses() {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
             if (executionCourse.getAssociatedCurricularCoursesSet().isEmpty()) {
                 result.add(executionCourse);
             }
@@ -355,7 +355,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         final String normalizedName = (name != null) ? StringNormalizer.normalize(name).replaceAll("%", ".*") : null;
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 
-        for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
             final String executionCourseName = StringNormalizer.normalize(executionCourse.getNome());
             if (normalizedName != null && executionCourseName.matches(normalizedName)) {
                 if (executionCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan)) {
@@ -368,7 +368,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public Collection<MarkSheet> getWebMarkSheetsNotPrinted() {
         final Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
-        for (final MarkSheet sheet : getMarkSheets()) {
+        for (final MarkSheet sheet : getMarkSheetsSet()) {
             if (sheet.getSubmittedByTeacher() && !sheet.getPrinted()) {
                 markSheets.add(sheet);
             }
@@ -378,7 +378,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public Collection<MarkSheet> getWebMarkSheetsNotPrinted(Person person, DegreeCurricularPlan dcp) {
         final Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
-        for (final MarkSheet sheet : getMarkSheets()) {
+        for (final MarkSheet sheet : getMarkSheetsSet()) {
             if (sheet.getSubmittedByTeacher() && !sheet.getPrinted()) {
                 if ((dcp == null || sheet.isFor(dcp)) && sheet.getCurricularCourse().hasAnyExecutionDegreeFor(getExecutionYear())) {
                     ExecutionDegree executionDegree =
@@ -755,7 +755,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     public InquiryResponsePeriod getInquiryResponsePeriod(final InquiryResponsePeriodType type) {
-        for (InquiryResponsePeriod inquiryResponsePeriod : getInquiryResponsePeriods()) {
+        for (InquiryResponsePeriod inquiryResponsePeriod : getInquiryResponsePeriodsSet()) {
             if (inquiryResponsePeriod.getType() == type) {
                 return inquiryResponsePeriod;
             }
@@ -801,267 +801,12 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public List<InquiryResultComment> getAuditCommentsMadeOnTeacher(Person teacher) {
         List<InquiryResultComment> resultComments = new ArrayList<InquiryResultComment>();
-        for (InquiryGlobalComment globalComment : getInquiryGlobalComments()) {
+        for (InquiryGlobalComment globalComment : getInquiryGlobalCommentsSet()) {
             if (teacher == globalComment.getTeacher()) {
-                resultComments.addAll(globalComment.getInquiryResultComments());
+                resultComments.addAll(globalComment.getInquiryResultCommentsSet());
             }
         }
         return resultComments;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getAssociatedExecutionCourses() {
-        return getAssociatedExecutionCoursesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.Credits> getCredits() {
-        return getCreditsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer> getInquiryCourseAnswers() {
-        return getInquiryCourseAnswersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.credits.CreditsPersonFunctionsSharedQueueJob> getCreditsPersonFunctionsSharedQueueJob() {
-        return getCreditsPersonFunctionsSharedQueueJobSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentStatute> getEndingStudentStatutes() {
-        return getEndingStudentStatutesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine> getAssociatedOtherTypeCreditLines() {
-        return getAssociatedOtherTypeCreditLinesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentStatute> getBeginningStudentStatutes() {
-        return getBeginningStudentStatutesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.SchoolClass> getSchoolClasses() {
-        return getSchoolClassesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod> getInquiryResponsePeriods() {
-        return getInquiryResponsePeriodsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherService> getTeacherServices() {
-        return getTeacherServicesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.log.CurriculumLineLog> getCurriculumLineLogs() {
-        return getCurriculumLineLogsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Advise> getAssociatedStartadvises() {
-        return getAssociatedStartadvisesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
-        return getEnrolmentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
-        return getCompetenceCourseInformationChangeRequestsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getBeginExecutionPeriodContexts() {
-        return getBeginExecutionPeriodContextsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCreditsQueueJob> getTeacherCreditsQueueJob() {
-        return getTeacherCreditsQueueJobSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime> getAssociatedTeacherInstitutionWorkTime() {
-        return getAssociatedTeacherInstitutionWorkTimeSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry> getStudentsInquiryRegistries() {
-        return getStudentsInquiryRegistriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MarkSheet> getMarkSheets() {
-        return getMarkSheetsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getParticipatingEndCurricularRules() {
-        return getParticipatingEndCurricularRulesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest> getEndingSpecialSeason() {
-        return getEndingSpecialSeasonSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getParticipatingBeginCurricularRules() {
-        return getParticipatingBeginCurricularRulesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes> getAssociatedOldInquiriesTeachersRes() {
-        return getAssociatedOldInquiriesTeachersResSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesStudentExecutionPeriod> getInquiriesStudentExecutionPeriods() {
-        return getInquiriesStudentExecutionPeriodsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment> getPartialRegimeInstallments() {
-        return getPartialRegimeInstallmentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent> getEnrolmentOutOfPeriodEvents() {
-        return getEnrolmentOutOfPeriodEventsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate> getInquiriesTemplates() {
-        return getInquiriesTemplatesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse> getAssociatedInquiriesCourses() {
-        return getAssociatedInquiriesCoursesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesCoursesRes> getAssociatedOldInquiriesCoursesRes() {
-        return getAssociatedOldInquiriesCoursesResSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment> getInquiryGlobalComments() {
-        return getInquiryGlobalCommentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod> getStudentsInquiriesExecutionPeriod() {
-        return getStudentsInquiriesExecutionPeriodSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment> getExternalEnrolments() {
-        return getExternalEnrolmentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary> getAssociatedOldInquiriesSummaries() {
-        return getAssociatedOldInquiriesSummariesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.Advise> getAssociatedEndadvises() {
-        return getAssociatedEndadvisesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer> getInquiryCoordinatorsAnswers() {
-        return getInquiryCoordinatorsAnswersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentPeriod> getEnrolmentPeriod() {
-        return getEnrolmentPeriodSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummary> getTutorshipSummaries() {
-        return getTutorshipSummariesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResult> getInquiryResults() {
-        return getInquiryResultsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getEnrolmentEvaluations() {
-        return getEnrolmentEvaluationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry> getAssociatedInquiriesRegistries() {
-        return getAssociatedInquiriesRegistriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.residence.StudentsPerformanceReport> getStudentsPerformanceReports() {
-        return getStudentsPerformanceReportsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent> getAssociatedTeacherDegreeFinalProjectStudents() {
-        return getAssociatedTeacherDegreeFinalProjectStudentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegreesExamMaps() {
-        return getExecutionDegreesExamMapsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest> getBeginningSpecialSeason() {
-        return getBeginningSpecialSeasonSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation> getCompetenceCourseInformations() {
-        return getCompetenceCourseInformationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.log.FirstYearShiftsCapacityToggleLog> getFirstYearShiftsCapacityToggleLog() {
-        return getFirstYearShiftsCapacityToggleLogSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest> getExamDateCertificateRequests() {
-        return getExamDateCertificateRequestsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.OtherService> getOtherServicesCorrections() {
-        return getOtherServicesCorrectionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCreditsState> getTeacherCreditsState() {
-        return getTeacherCreditsStateSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getEndExecutionPeriodContexts() {
-        return getEndExecutionPeriodContextsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherAuthorization> getAuthorization() {
-        return getAuthorizationSet();
     }
 
 }

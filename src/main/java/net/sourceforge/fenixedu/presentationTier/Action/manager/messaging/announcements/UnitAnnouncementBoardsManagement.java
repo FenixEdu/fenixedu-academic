@@ -227,7 +227,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         form.setKeyUnit(board.getUnit().getExternalId());
 
         Collection<AnnouncementBoardApproversBean> approvers = new ArrayList<AnnouncementBoardApproversBean>();
-        for (Person person : board.getUnit().getSite().getManagers()) {
+        for (Person person : board.getUnit().getSite().getManagersSet()) {
             approvers.add(new AnnouncementBoardApproversBean(person, board.getApprovers() != null ? board.getApprovers()
                     .isMember(person.getUser()) : false));
         }
@@ -365,7 +365,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         Collection<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>();
         Unit unit = this.getRequestedUnit(request);
         if (unit != null) {
-            for (AnnouncementBoard board : unit.getBoards()) {
+            for (AnnouncementBoard board : unit.getBoardsSet()) {
                 if (board.getWriters() == null || board.getReaders() == null || board.getManagers() == null
                         || board.getWriters().isMember(getUserView(request)) || board.getReaders().isMember(getUserView(request))
                         || board.getManagers().isMember(getUserView(request))) {

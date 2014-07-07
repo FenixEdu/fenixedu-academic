@@ -215,9 +215,4 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
         return result;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getDocumentRequest() {
-        return getDocumentRequestSet();
-    }
-
 }

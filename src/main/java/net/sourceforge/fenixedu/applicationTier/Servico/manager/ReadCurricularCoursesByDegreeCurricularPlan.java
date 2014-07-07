@@ -42,7 +42,7 @@ public class ReadCurricularCoursesByDegreeCurricularPlan {
     public static List run(final String idDegreeCurricularPlan) throws FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(idDegreeCurricularPlan);
 
-        final Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        final Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCoursesSet();
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());
         for (final CurricularCourse curricularCourse : curricularCourses) {
             infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));

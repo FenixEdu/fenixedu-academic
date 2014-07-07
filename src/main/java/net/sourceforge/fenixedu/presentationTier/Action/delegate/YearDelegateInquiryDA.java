@@ -136,7 +136,7 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
         List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
         DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
         InquiryDelegateAnswer inquiryDelegateAnswer = null;
-        for (InquiryDelegateAnswer delegateAnswer : yearDelegate.getInquiryDelegateAnswers()) {
+        for (InquiryDelegateAnswer delegateAnswer : yearDelegate.getInquiryDelegateAnswersSet()) {
             if (delegateAnswer.getExecutionCourse() == executionCourse) {
                 inquiryDelegateAnswer = delegateAnswer;
             }
@@ -159,7 +159,7 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
         final DelegateInquiryBean delegateInquiryBean = getRenderedObject("delegateInquiryBean");
         if (delegateInquiryBean.getInquiryDelegateAnswer() == null) {
             InquiryDelegateAnswer inquiryDelegateAnswer = null;
-            for (InquiryDelegateAnswer delegateAnswer : delegateInquiryBean.getYearDelegate().getInquiryDelegateAnswers()) {
+            for (InquiryDelegateAnswer delegateAnswer : delegateInquiryBean.getYearDelegate().getInquiryDelegateAnswersSet()) {
                 if (delegateAnswer.getExecutionCourse() == delegateInquiryBean.getExecutionCourse()) {
                     inquiryDelegateAnswer = delegateAnswer;
                 }

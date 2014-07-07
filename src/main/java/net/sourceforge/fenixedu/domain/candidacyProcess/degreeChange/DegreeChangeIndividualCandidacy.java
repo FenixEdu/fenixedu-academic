@@ -65,7 +65,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
         createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
         DegreeChangeIndividualCandidacySeriesGrade newSCICSeriesGrade = new DegreeChangeIndividualCandidacySeriesGrade();
         newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
-        getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+        getIndividualCandidacySeriesGradeSet().add(newSCICSeriesGrade);
 
         /*
          * 06/04/2009 - The candidacy may not be associated with a person. In
@@ -305,7 +305,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     }
 
     public DegreeChangeIndividualCandidacySeriesGrade getDegreeChangeIndividualCandidacySeriesGradeForDegree(Degree degree) {
-        for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGrade()) {
+        for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGradeSet()) {
             if (seriesGrade.getDegree() == degree) {
                 return (DegreeChangeIndividualCandidacySeriesGrade) seriesGrade;
             }
@@ -314,10 +314,10 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     }
 
     private DegreeChangeIndividualCandidacySeriesGrade getDegreeChangeIndividualCandidacySeriesGrade() {
-        if (getIndividualCandidacySeriesGrade().size() == 0) {
+        if (getIndividualCandidacySeriesGradeSet().size() == 0) {
             return null;
         } else {
-            return (DegreeChangeIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGrade().iterator().next();
+            return (DegreeChangeIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGradeSet().iterator().next();
         }
     }
 

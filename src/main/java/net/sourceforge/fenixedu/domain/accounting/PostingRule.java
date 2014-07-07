@@ -90,7 +90,7 @@ public abstract class PostingRule extends PostingRule_Base {
                     private void checkIfPostingRuleOverlapsExisting(ServiceAgreementTemplate serviceAgreementTemplate,
                             PostingRule postingRule) {
                         if (serviceAgreementTemplate != null) {
-                            for (final PostingRule existingPostingRule : serviceAgreementTemplate.getPostingRules()) {
+                            for (final PostingRule existingPostingRule : serviceAgreementTemplate.getPostingRulesSet()) {
                                 if (postingRule.overlaps(existingPostingRule)) {
                                     throw new DomainException(
                                             "error.accounting.agreement.ServiceAgreementTemplate.postingRule.overlaps.existing.one");

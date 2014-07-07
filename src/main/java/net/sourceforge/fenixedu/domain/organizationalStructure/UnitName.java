@@ -342,9 +342,4 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
         }
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart> getUnitNamePart() {
-        return getUnitNamePartSet();
-    }
-
 }

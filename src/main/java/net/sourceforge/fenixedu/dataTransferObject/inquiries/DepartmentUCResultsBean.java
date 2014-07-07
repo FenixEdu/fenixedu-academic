@@ -42,7 +42,7 @@ public class DepartmentUCResultsBean extends CoordinatorResultsBean {
 
     public List<InquiryResultComment> getAllCourseComments() {
         List<InquiryResultComment> commentsMade = new ArrayList<InquiryResultComment>();
-        for (InquiryGlobalComment globalComment : getExecutionCourse().getInquiryGlobalComments()) {
+        for (InquiryGlobalComment globalComment : getExecutionCourse().getInquiryGlobalCommentsSet()) {
             commentsMade.addAll(globalComment.getInquiryResultCommentsSet());
         }
         Collections.sort(commentsMade, new BeanComparator("person.name"));

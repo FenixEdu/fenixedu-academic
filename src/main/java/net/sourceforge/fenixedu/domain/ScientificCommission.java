@@ -51,7 +51,7 @@ public class ScientificCommission extends ScientificCommission_Base {
     }
 
     public Coordinator getCoordinator() {
-        for (Coordinator coordinator : getExecutionDegree().getCoordinatorsList()) {
+        for (Coordinator coordinator : getExecutionDegree().getCoordinatorsListSet()) {
             if (this.getPerson().equals(coordinator.getPerson())) {
                 return coordinator;
             }

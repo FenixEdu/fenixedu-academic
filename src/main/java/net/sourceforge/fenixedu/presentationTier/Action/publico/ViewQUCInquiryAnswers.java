@@ -143,7 +143,7 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
         DelegateInquiryTemplate delegateInquiryTemplate =
                 DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
         InquiryDelegateAnswer inquiryDelegateAnswer = null;
-        for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswers()) {
+        for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswersSet()) {
             if (delegateAnswer.getExecutionDegree() == executionDegree) {
                 inquiryDelegateAnswer = delegateAnswer;
                 break;

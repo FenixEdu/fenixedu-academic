@@ -48,7 +48,7 @@ public class ReadStudentCurricularPlans {
         if (registration == null) {
             throw new NonExistingServiceException("student does not exist");
         }
-        Collection<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
+        Collection<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlansSet();
 
         if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {
             throw new NonExistingServiceException();

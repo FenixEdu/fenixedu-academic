@@ -49,7 +49,7 @@ public class VoteYearDelegateElections {
         DelegateElectionVotingPeriod votingPeriod = yearDelegateElection.getCurrentVotingPeriod();
 
         try {
-            if (!votingPeriod.getVotingStudents().contains(student)) {
+            if (!votingPeriod.getVotingStudentsSet().contains(student)) {
                 final String fromName = getString("VoteYearDelegateElections.email.fromName");
                 final String fromAddress = getString("VoteYearDelegateElections.email.fromAddress");
                 final String subject = fromName + "-" + getString("VoteYearDelegateElections.email.subject");

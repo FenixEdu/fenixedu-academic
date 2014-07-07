@@ -59,7 +59,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
             int numberExecutionCourses = 0;
             StringBuilder curricularCodes = new StringBuilder();
             final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
-            final Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+            final Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCoursesSet();
             for (final CurricularCourse curricularCourse : curricularCourses) {
 
                 if (curricularCourse.isOptionalCurricularCourse()

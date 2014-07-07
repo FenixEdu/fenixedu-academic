@@ -65,7 +65,7 @@ public class AuthorizationsManagementBean implements Serializable {
         this.party = party;
         this.groups = new ArrayList<AuthorizationGroupBean>();
         if (party != null) {
-            for (PersistentAccessGroup group : party.getPersistentAccessGroup()) {
+            for (PersistentAccessGroup group : party.getPersistentAccessGroupSet()) {
                 if (group instanceof PersistentAcademicAuthorizationGroup && group.getDeletedRootDomainObject() == null) {
                     AuthorizationGroupBean bean = new AuthorizationGroupBean((PersistentAcademicAuthorizationGroup) group);
                     groups.add(bean);

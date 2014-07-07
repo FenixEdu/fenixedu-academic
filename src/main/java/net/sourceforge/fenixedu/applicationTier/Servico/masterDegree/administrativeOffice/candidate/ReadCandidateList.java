@@ -69,7 +69,7 @@ public class ReadCandidateList {
             final InfoMasterDegreeCandidate infoMasterDegreeCandidate =
                     InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);
 
-            final Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
+            final Iterator situationIterator = masterDegreeCandidate.getSituationsSet().iterator();
             final List situations = new ArrayList();
             while (situationIterator.hasNext()) {
                 final InfoCandidateSituation infoCandidateSituation =

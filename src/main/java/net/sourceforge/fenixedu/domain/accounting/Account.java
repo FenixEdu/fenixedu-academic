@@ -116,9 +116,4 @@ public class Account extends Account_Base {
         return getAccountType() == AccountType.EXTERNAL;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Entry> getEntries() {
-        return getEntriesSet();
-    }
-
 }

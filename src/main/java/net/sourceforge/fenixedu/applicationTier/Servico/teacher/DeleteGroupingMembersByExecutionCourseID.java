@@ -63,14 +63,14 @@ public class DeleteGroupingMembersByExecutionCourseID {
         }
 
         List executionCourseStudentNumbers = new ArrayList();
-        final Collection<Attends> attends = executionCourse.getAttends();
+        final Collection<Attends> attends = executionCourse.getAttendsSet();
         for (final Attends attend : attends) {
             final Registration registration = attend.getRegistration();
             executionCourseStudentNumbers.add(registration.getNumber());
         }
 
         List attendsElements = new ArrayList();
-        attendsElements.addAll(grouping.getAttends());
+        attendsElements.addAll(grouping.getAttendsSet());
         Iterator iterator = attendsElements.iterator();
         StringBuilder sbStudentNumbers = new StringBuilder("");
         sbStudentNumbers.setLength(0);

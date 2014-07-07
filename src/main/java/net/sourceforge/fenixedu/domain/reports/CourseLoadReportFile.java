@@ -62,12 +62,12 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
         spreadsheet.setHeader("total turnos");
         spreadsheet.setHeader("OID execucao disciplina");
 
-        for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
-            for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+        for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriodsSet()) {
+            for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
 
-                for (CourseLoad courseLoad : executionCourse.getCourseLoads()) {
+                for (CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
 
-                    for (Shift shift : courseLoad.getShifts()) {
+                    for (Shift shift : courseLoad.getShiftsSet()) {
 
                         if (!shift.hasSchoolClassForDegreeType(getDegreeType())) {
                             continue;

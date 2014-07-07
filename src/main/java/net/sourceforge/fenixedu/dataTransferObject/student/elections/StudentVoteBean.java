@@ -111,7 +111,7 @@ public class StudentVoteBean implements Serializable {
 
     private Collection<Student> getCandidates(YearDelegateElection yearDelegateElection) {
         if (yearDelegateElection.getLastVotingPeriod().isSecondRoundElections()) {
-            return yearDelegateElection.getLastVotingPeriod().getCandidatesForNewRoundElections();
+            return yearDelegateElection.getLastVotingPeriod().getCandidatesForNewRoundElectionsSet();
         }
         return yearDelegateElection.getCandidatesSet();
     }

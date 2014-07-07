@@ -44,7 +44,7 @@ public class LerAulasDeTurno {
         final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
 
         final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
-        for (final Lesson lesson : shift.getAssociatedLessons()) {
+        for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
             infoAulas.add(InfoLesson.newInfoFromDomain(lesson));
         }
         return infoAulas;

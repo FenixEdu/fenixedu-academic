@@ -134,7 +134,7 @@ public class ScientificCouncilComponentBuilder {
             throw new InvalidArgumentsServiceException();
         }
 
-        Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCoursesSet();
 
         Iterator iter = curricularCourses.iterator();
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();

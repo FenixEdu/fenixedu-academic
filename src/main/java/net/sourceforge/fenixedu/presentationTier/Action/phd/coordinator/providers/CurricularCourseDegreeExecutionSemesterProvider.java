@@ -45,7 +45,7 @@ public class CurricularCourseDegreeExecutionSemesterProvider extends AbstractDom
         final Collection<ExecutionSemester> result = new TreeSet<ExecutionSemester>(new ReverseComparator());
 
         for (final ExecutionYear executionYear : bean.getCurricularCourse().getDegreeCurricularPlan().getExecutionYears()) {
-            result.addAll(executionYear.getExecutionPeriods());
+            result.addAll(executionYear.getExecutionPeriodsSet());
         }
 
         return result;

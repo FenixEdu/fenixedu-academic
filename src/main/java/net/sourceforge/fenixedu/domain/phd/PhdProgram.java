@@ -158,7 +158,7 @@ public class PhdProgram extends PhdProgram_Base {
 
         final Set<Person> result = new HashSet<Person>();
         if (executionDegree != null) {
-            for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+            for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
                 result.add(coordinator.getPerson());
             }
         }
@@ -176,7 +176,7 @@ public class PhdProgram extends PhdProgram_Base {
 
         final Set<Person> result = new HashSet<Person>();
         if (executionDegree != null) {
-            for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+            for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
                 if (coordinator.isResponsible()) {
                     result.add(coordinator.getPerson());
                 }
@@ -211,7 +211,7 @@ public class PhdProgram extends PhdProgram_Base {
 
     public PhdProgramContextPeriod getMostRecentPeriod() {
         List<PhdProgramContextPeriod> periods = new ArrayList<PhdProgramContextPeriod>();
-        periods.addAll(getPhdProgramContextPeriods());
+        periods.addAll(getPhdProgramContextPeriodsSet());
 
         Collections.sort(periods, Collections.reverseOrder(PhdProgramContextPeriod.COMPARATOR_BY_BEGIN_DATE));
 
@@ -227,7 +227,7 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     public boolean isActive(DateTime date) {
-        for (PhdProgramContextPeriod period : getPhdProgramContextPeriods()) {
+        for (PhdProgramContextPeriod period : getPhdProgramContextPeriodsSet()) {
             if (period.contains(date)) {
                 return true;
             }
@@ -255,7 +255,7 @@ public class PhdProgram extends PhdProgram_Base {
     public PhdProgramInformation getPhdProgramInformationByDate(LocalDate localDate) {
         PhdProgramInformation mostRecent = null;
 
-        for (PhdProgramInformation phdProgramInformation : getPhdProgramInformations()) {
+        for (PhdProgramInformation phdProgramInformation : getPhdProgramInformationsSet()) {
             if (phdProgramInformation.getBeginDate().isAfter(localDate)) {
                 continue;
             }
@@ -276,36 +276,6 @@ public class PhdProgram extends PhdProgram_Base {
     @Atomic
     public PhdProgramContextPeriod create(PhdProgramContextPeriodBean bean) {
         return PhdProgramContextPeriod.create(bean);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea> getPhdProgramFocusAreas() {
-        return getPhdProgramFocusAreasSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getIndividualProgramProcesses() {
-        return getIndividualProgramProcessesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeriod> getInstitutionPhdCandidacyPeriod() {
-        return getInstitutionPhdCandidacyPeriodSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail> getPhdProgramEmails() {
-        return getPhdProgramEmailsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod> getPhdProgramContextPeriods() {
-        return getPhdProgramContextPeriodsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramInformation> getPhdProgramInformations() {
-        return getPhdProgramInformationsSet();
     }
 
 }

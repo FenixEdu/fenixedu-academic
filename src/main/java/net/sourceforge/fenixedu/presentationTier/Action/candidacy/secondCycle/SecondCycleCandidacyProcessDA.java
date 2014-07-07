@@ -389,7 +389,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
         row.setCell(secondCycleIndividualCandidacyProcess.getPrecedentDegreeInformation().getConclusionGrade());
 
         StringBuilder degreesSb = new StringBuilder();
-        for (Degree degree : secondCycleIndividualCandidacyProcess.getCandidacy().getSelectedDegrees()) {
+        for (Degree degree : secondCycleIndividualCandidacyProcess.getCandidacy().getSelectedDegreesSet()) {
             degreesSb.append(degree.getName()).append("\n");
         }
 
@@ -411,7 +411,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
             return new Predicate<IndividualCandidacyProcess>() {
                 @Override
                 public boolean apply(IndividualCandidacyProcess process) {
-                    return ((SecondCycleIndividualCandidacyProcess) process).getCandidacy().getSelectedDegrees()
+                    return ((SecondCycleIndividualCandidacyProcess) process).getCandidacy().getSelectedDegreesSet()
                             .contains(selectedDegree);
                 }
             };

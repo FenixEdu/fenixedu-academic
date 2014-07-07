@@ -63,14 +63,14 @@ public class NonRegularTeachingServiceBean implements Serializable {
     public NonRegularTeachingServiceBean(Shift shift, Professorship professorship) {
         setProfessorship(professorship);
         setShift(shift);
-        for (NonRegularTeachingService nonRegularTeachingService : shift.getNonRegularTeachingServices()) {
+        for (NonRegularTeachingService nonRegularTeachingService : shift.getNonRegularTeachingServicesSet()) {
             if (nonRegularTeachingService.getProfessorship().equals(professorship)) {
                 setPercentage(nonRegularTeachingService.getPercentage());
             }
             teachingServicePercentages.add(new TeachingServicePercentage(nonRegularTeachingService.getProfessorship().getPerson()
                     .getName(), nonRegularTeachingService.getPercentage()));
         }
-        for (DegreeTeachingService degreeTeachingService : shift.getDegreeTeachingServices()) {
+        for (DegreeTeachingService degreeTeachingService : shift.getDegreeTeachingServicesSet()) {
             teachingServicePercentages.add(new TeachingServicePercentage(degreeTeachingService.getProfessorship().getPerson()
                     .getName(), degreeTeachingService.getPercentage()));
         }

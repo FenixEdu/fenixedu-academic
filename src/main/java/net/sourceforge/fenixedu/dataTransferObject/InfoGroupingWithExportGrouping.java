@@ -31,7 +31,7 @@ public class InfoGroupingWithExportGrouping extends InfoGrouping {
     public void copyFromDomain(Grouping grouping) {
         super.copyFromDomain(grouping);
         if (grouping != null) {
-            final Collection<ExportGrouping> exportGroupings = grouping.getExportGroupings();
+            final Collection<ExportGrouping> exportGroupings = grouping.getExportGroupingsSet();
             final List<InfoExportGrouping> infoExportGroupings = new ArrayList<InfoExportGrouping>(exportGroupings.size());
             for (final ExportGrouping exportGrouping : exportGroupings) {
                 infoExportGroupings.add(InfoExportGrouping.newInfoFromDomain(exportGrouping));

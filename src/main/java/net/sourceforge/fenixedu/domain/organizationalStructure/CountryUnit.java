@@ -105,10 +105,10 @@ public class CountryUnit extends CountryUnit_Base {
 
     @Override
     public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
-        final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCourses());
+        final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
         for (Unit subUnit : getSubUnits()) {
             if (subUnit.isUniversityUnit() || subUnit.isSchoolUnit()) {
-                result.addAll(subUnit.getExternalCurricularCourses());
+                result.addAll(subUnit.getExternalCurricularCoursesSet());
             }
         }
         return result;
@@ -183,11 +183,6 @@ public class CountryUnit extends CountryUnit_Base {
         }
 
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Formation> getAssociatedCountryUnitFormations() {
-        return getAssociatedCountryUnitFormationsSet();
     }
 
 }

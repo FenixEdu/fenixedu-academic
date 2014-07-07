@@ -31,7 +31,7 @@ public class DeleteScientificCommission {
     protected void run(String executionDegreeId, ScientificCommission commission) {
         ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
-        if (!executionDegree.getScientificCommissionMembers().contains(commission)) {
+        if (!executionDegree.getScientificCommissionMembersSet().contains(commission)) {
             throw new DomainException("scientificCommission.delete.incorrectExecutionDegree");
         }
 

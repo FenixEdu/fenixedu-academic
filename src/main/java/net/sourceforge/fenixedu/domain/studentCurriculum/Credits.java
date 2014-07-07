@@ -127,7 +127,7 @@ public class Credits extends Credits_Base {
         if (courseGroup.isCycleCourseGroup() || courseGroup.isRoot()) {
             return true;
         }
-        for (final Context context : courseGroup.getParentContexts()) {
+        for (final Context context : courseGroup.getParentContextsSet()) {
             if (context.isOpen(executionSemester)) {
                 if (allowsEctsCredits(studentCurricularPlan, context.getParentCourseGroup(), executionSemester, ectsCredits)) {
                     return true;
@@ -221,11 +221,11 @@ public class Credits extends Credits_Base {
     }
 
     protected void disconnect() {
-        for (; !getDismissalsSet().isEmpty(); getDismissals().iterator().next().deleteFromCredits()) {
+        for (; !getDismissalsSet().isEmpty(); getDismissalsSet().iterator().next().deleteFromCredits()) {
             ;
         }
 
-        for (; !getEnrolmentsSet().isEmpty(); getEnrolments().iterator().next().delete()) {
+        for (; !getEnrolmentsSet().isEmpty(); getEnrolmentsSet().iterator().next().delete()) {
             ;
         }
 
@@ -298,27 +298,17 @@ public class Credits extends Credits_Base {
     }
 
     public boolean isAllEnrolmentsAreExternal() {
-        if (getEnrolments().isEmpty()) {
+        if (getEnrolmentsSet().isEmpty()) {
             return false;
         }
 
-        for (EnrolmentWrapper wrapper : getEnrolments()) {
+        for (EnrolmentWrapper wrapper : getEnrolmentsSet()) {
             if (!wrapper.getIEnrolment().isExternalEnrolment()) {
                 return false;
             }
         }
 
         return true;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal> getDismissals() {
-        return getDismissalsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper> getEnrolments() {
-        return getEnrolmentsSet();
     }
 
 }

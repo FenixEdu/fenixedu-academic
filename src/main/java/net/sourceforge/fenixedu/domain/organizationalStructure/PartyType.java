@@ -55,19 +55,4 @@ public class PartyType extends PartyType_Base {
         return partyType == null ? Collections.EMPTY_SET : partyType.getPartiesSet();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule> getAllowedChildConnectionRules() {
-        return getAllowedChildConnectionRulesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule> getAllowedParentConnectionRules() {
-        return getAllowedParentConnectionRulesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Party> getParties() {
-        return getPartiesSet();
-    }
-
 }

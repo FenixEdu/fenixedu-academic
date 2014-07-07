@@ -39,7 +39,7 @@ public class ExamCoordinatorsForGivenGroup implements DataProvider {
         VigilantGroupBean bean = (VigilantGroupBean) source;
         VigilantGroup group = bean.getSelectedVigilantGroup();
 
-        List<ExamCoordinator> coordinators = new ArrayList<ExamCoordinator>(group.getExamCoordinators());
+        List<ExamCoordinator> coordinators = new ArrayList<ExamCoordinator>(group.getExamCoordinatorsSet());
 
         Collections.sort(coordinators, new BeanComparator("person.name"));
         return coordinators;

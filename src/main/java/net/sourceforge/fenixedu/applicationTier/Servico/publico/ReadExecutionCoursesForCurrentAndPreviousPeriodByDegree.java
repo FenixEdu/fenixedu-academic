@@ -42,7 +42,7 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree {
         }
 
         final Set<ExecutionCourseView> result = new HashSet<ExecutionCourseView>();
-        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
             if (degreeCurricularPlan.isActive()) {
                 degreeCurricularPlan.addExecutionCourses(result, currentExecutionPeriod, previousExecutionPeriod);
             }

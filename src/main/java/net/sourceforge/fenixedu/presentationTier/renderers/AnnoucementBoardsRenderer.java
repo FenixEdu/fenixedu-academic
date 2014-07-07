@@ -175,7 +175,7 @@ public class AnnoucementBoardsRenderer extends OutputRenderer {
             HtmlInlineContainer container = new HtmlInlineContainer();
             dataRow.createCell().setBody(container);
 
-            if (board.getBookmarkOwner().contains(AccessControl.getPerson())) {
+            if (board.getBookmarkOwnerSet().contains(AccessControl.getPerson())) {
                 container.addChild(new HtmlText(RenderUtils.getResourceString("MESSAGING_RESOURCES", "label.yes")));
                 container.addChild(new HtmlText("("));
                 HtmlLink link = generateLinkToRemoveFavourite(board);

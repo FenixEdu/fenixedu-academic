@@ -49,19 +49,9 @@ public class TestScope extends TestScope_Base {
         List<DistributedTest> result = new ArrayList<DistributedTest>();
         TestScope testScope = executionCourse.getTestScope();
         if (testScope != null) {
-            result.addAll(testScope.getDistributedTests());
+            result.addAll(testScope.getDistributedTestsSet());
         }
         return result;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.Test> getTests() {
-        return getTestsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.DistributedTest> getDistributedTests() {
-        return getDistributedTestsSet();
     }
 
 }

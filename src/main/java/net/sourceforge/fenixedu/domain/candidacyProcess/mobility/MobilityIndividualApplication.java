@@ -115,7 +115,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
     }
 
     void editDegreeAndCoursesInformation(MobilityIndividualApplicationProcessBean bean) {
-        Set<CurricularCourse> setOne = new HashSet<CurricularCourse>(this.getCurricularCourses());
+        Set<CurricularCourse> setOne = new HashSet<CurricularCourse>(this.getCurricularCoursesSet());
         setOne.addAll(bean.getSelectedCurricularCourses());
 
         getMobilityStudentData().setSelectedOpening(bean.determineMobilityQuota());
@@ -190,7 +190,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
 
     public List<ApprovedLearningAgreementDocumentFile> getActiveApprovedLearningAgreements() {
         List<ApprovedLearningAgreementDocumentFile> activeDocuments = new ArrayList<ApprovedLearningAgreementDocumentFile>();
-        CollectionUtils.select(getApprovedLearningAgreements(), new Predicate() {
+        CollectionUtils.select(getApprovedLearningAgreementsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -280,7 +280,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
 
         Set<DegreeModuleToEnrol> degreeModulesToEnrol = new HashSet<DegreeModuleToEnrol>();
 
-        for (CurricularCourse selectedCurricularCourse : getCurricularCourses()) {
+        for (CurricularCourse selectedCurricularCourse : getCurricularCoursesSet()) {
             List<Context> contextList = selectedCurricularCourse.getParentContextsByExecutionSemester(semesterToEnrol);
 
             if (contextList.isEmpty()) {
@@ -325,16 +325,6 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         MobilityQuota selectedOpening = getMobilityStudentData().getSelectedOpening();
 
         return selectedOpening.getMobilityAgreement().getMobilityProgram();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile> getApprovedLearningAgreements() {
-        return getApprovedLearningAgreementsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
-        return getCurricularCoursesSet();
     }
 
 }

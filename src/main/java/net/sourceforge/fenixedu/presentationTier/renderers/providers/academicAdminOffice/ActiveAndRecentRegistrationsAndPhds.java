@@ -49,7 +49,7 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
         Set<PhdRegistrationWrapper> phdRegistrationWrapperResult = new HashSet<PhdRegistrationWrapper>();
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-        for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
+        for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcessesSet()) {
             if (!phdProcess.isAllowedToManageProcess(Authenticate.getUser())) {
                 continue;
             }

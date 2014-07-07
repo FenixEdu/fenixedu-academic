@@ -117,7 +117,7 @@ public class SearchOccupationsDA extends FenixDispatchAction {
                 }
                 if (occupation instanceof WrittenEvaluationSpaceOccupation) {
                     WrittenEvaluationSpaceOccupation evalOccupation = (WrittenEvaluationSpaceOccupation) occupation;
-                    for (WrittenEvaluation eval : evalOccupation.getWrittenEvaluations()) {
+                    for (WrittenEvaluation eval : evalOccupation.getWrittenEvaluationsSet()) {
                         final Interval durationInterval = eval.getDurationInterval();
                         if (searchInterval.overlaps(durationInterval)) {
                             String desc;

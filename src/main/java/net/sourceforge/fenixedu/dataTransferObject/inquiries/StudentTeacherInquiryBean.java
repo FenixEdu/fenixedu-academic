@@ -77,7 +77,7 @@ public class StudentTeacherInquiryBean implements Serializable {
     }
 
     private void setGroupVisibility(Set<InquiryBlockDTO> inquiryBlocks, InquiryGroupQuestionBean groupQuestionBean) {
-        for (QuestionCondition questionCondition : groupQuestionBean.getInquiryGroupQuestion().getQuestionConditions()) {
+        for (QuestionCondition questionCondition : groupQuestionBean.getInquiryGroupQuestion().getQuestionConditionsSet()) {
             if (questionCondition instanceof MandatoryCondition) {
                 MandatoryCondition condition = (MandatoryCondition) questionCondition;
                 InquiryQuestionDTO inquiryDependentQuestionBean =

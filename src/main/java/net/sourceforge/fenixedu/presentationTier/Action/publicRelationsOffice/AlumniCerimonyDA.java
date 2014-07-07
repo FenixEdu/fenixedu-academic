@@ -215,7 +215,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 
         final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
         if (cerimonyInquiry != null) {
-            Collection<CerimonyInquiryPerson> requests = cerimonyInquiry.getCerimonyInquiryPerson();
+            Collection<CerimonyInquiryPerson> requests = cerimonyInquiry.getCerimonyInquiryPersonSet();
 
             String inquiryName =
                     (cerimonyInquiry.getDescription() != null ? cerimonyInquiry.getDescription() : "UnnamedInquiry").replaceAll(

@@ -56,7 +56,7 @@ public class DepartmentTeacherDetailsBean extends GlobalCommentsResultsBean {
         setTeachersResultsToImproveMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
         for (Professorship teacherProfessorship : getProfessorships()) {
             ArrayList<TeacherShiftTypeResultsBean> teachersResults = new ArrayList<TeacherShiftTypeResultsBean>();
-            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResultsSet();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);

@@ -42,7 +42,7 @@ public class SelectVigilantForUnavailable implements DataProvider {
 
         List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>();
         if (vigilantGroup != null) {
-            vigilantWrappers.addAll(vigilantGroup.getVigilantWrappers());
+            vigilantWrappers.addAll(vigilantGroup.getVigilantWrappersSet());
             Collections.sort(vigilantWrappers, new BeanComparator("person.name"));
         }
         return vigilantWrappers;

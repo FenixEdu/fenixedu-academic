@@ -90,7 +90,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 
     public List<StandaloneIndividualCandidacyProcess> getSortedStandaloneIndividualCandidaciesThatCanBeSendToJury() {
         final List<StandaloneIndividualCandidacyProcess> result = new ArrayList<StandaloneIndividualCandidacyProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             if (child.isCandidacyValid()) {
                 result.add((StandaloneIndividualCandidacyProcess) child);
             }
@@ -101,7 +101,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 
     public List<StandaloneIndividualCandidacyProcess> getAcceptedStandaloneIndividualCandidacies() {
         final List<StandaloneIndividualCandidacyProcess> result = new ArrayList<StandaloneIndividualCandidacyProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
                 result.add((StandaloneIndividualCandidacyProcess) child);
             }

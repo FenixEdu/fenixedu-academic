@@ -217,7 +217,7 @@ public class EditWrittenEvaluation {
                             "Caro Vigilante,\n\nA prova de avalia��o: %1$s %2$s - %3$s foi alterada para  %4$td-%4$tm-%4$tY - %5$tH:%5$tM.",
                             new Object[] { writtenEvaluation.getName(), beginDateString, time, dayDate, beginDate });
 
-            for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
+            for (Vigilancy vigilancy : writtenEvaluation.getVigilanciesSet()) {
                 Person person = vigilancy.getVigilantWrapper().getPerson();
                 tos.add(person);
             }

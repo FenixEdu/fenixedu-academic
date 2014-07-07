@@ -65,7 +65,7 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     public InquiryResultComment getInquiryResultComment(Person person, ResultPersonCategory personCategory) {
-        for (InquiryResultComment inquiryResultComment : getInquiryResultComments()) {
+        for (InquiryResultComment inquiryResultComment : getInquiryResultCommentsSet()) {
             if (inquiryResultComment.getPerson() == person && inquiryResultComment.getPersonCategory().equals(personCategory)) {
                 return inquiryResultComment;
             }
@@ -288,7 +288,7 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     public void delete() {
-        if (!getInquiryResultComments().isEmpty()) {
+        if (!getInquiryResultCommentsSet().isEmpty()) {
             throw new DomainException("error.inquiryResult.hasComments", getInquiryQuestion().getLabel().toString(),
                     getExecutionCourse().getExternalId(),
                     getExecutionDegree() != null ? getExecutionDegree().getExternalId() : StringUtils.EMPTY,
@@ -305,7 +305,7 @@ public class InquiryResult extends InquiryResult_Base {
 
     public List<InquiryResultComment> getCommentsWithLowerPermissions(ResultPersonCategory personCategory) {
         List<InquiryResultComment> result = new ArrayList<InquiryResultComment>();
-        for (InquiryResultComment inquiryResultComment : getInquiryResultComments()) {
+        for (InquiryResultComment inquiryResultComment : getInquiryResultCommentsSet()) {
             if (inquiryResultComment.getPersonCategory().getPermissionOrder() < personCategory.getPermissionOrder()) {
                 result.add(inquiryResultComment);
             }
@@ -498,11 +498,6 @@ public class InquiryResult extends InquiryResult_Base {
             this.shiftType = shiftType;
         }
 
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment> getInquiryResultComments() {
-        return getInquiryResultCommentsSet();
     }
 
 }

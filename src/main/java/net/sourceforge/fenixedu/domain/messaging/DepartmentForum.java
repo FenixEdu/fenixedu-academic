@@ -74,7 +74,7 @@ public class DepartmentForum extends DepartmentForum_Base {
     }
 
     private Collection<Person> getDepartmentManagers() {
-        return getDepartment().getDepartmentUnit().getSite().getManagers();
+        return getDepartment().getDepartmentUnit().getSite().getManagersSet();
     }
 
     private List<Person> getPersonsFromTeachers(Department department) {

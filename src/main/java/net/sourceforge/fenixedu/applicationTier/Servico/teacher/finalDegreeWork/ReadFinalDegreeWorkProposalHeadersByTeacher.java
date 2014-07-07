@@ -43,7 +43,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher {
         for (final Proposal proposal : person.findFinalDegreeWorkProposals()) {
             final Scheduleing scheduleing = proposal.getScheduleing();
 
-            for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegrees()) {
+            for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
                 result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal, executionDegree));
             }
         }

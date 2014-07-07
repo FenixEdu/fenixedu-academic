@@ -125,7 +125,7 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
         final Map<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>> result =
                 new TreeMap<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>>(
                         Degree.COMPARATOR_BY_NAME_AND_ID);
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             final DegreeCandidacyForGraduatedPersonIndividualProcess process =
                     (DegreeCandidacyForGraduatedPersonIndividualProcess) child;
             if (process.isCandidacyValid() && process.canExecuteActivity(Authenticate.getUser())) {
@@ -149,7 +149,7 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
     public List<DegreeCandidacyForGraduatedPersonIndividualProcess> getAcceptedDegreeCandidacyForGraduatedPersonIndividualCandidacies() {
         final List<DegreeCandidacyForGraduatedPersonIndividualProcess> result =
                 new ArrayList<DegreeCandidacyForGraduatedPersonIndividualProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
                 result.add((DegreeCandidacyForGraduatedPersonIndividualProcess) child);
             }
@@ -166,7 +166,7 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 
         final List<DegreeCandidacyForGraduatedPersonIndividualProcess> result =
                 new ArrayList<DegreeCandidacyForGraduatedPersonIndividualProcess>();
-        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+        for (final IndividualCandidacyProcess child : getChildProcessesSet()) {
             final DegreeCandidacyForGraduatedPersonIndividualProcess process =
                     (DegreeCandidacyForGraduatedPersonIndividualProcess) child;
             if (process.isCandidacyValid() && process.hasCandidacyForSelectedDegree(degree)) {

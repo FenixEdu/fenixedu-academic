@@ -121,7 +121,7 @@ public class ExternalSupervisorViewStudentDA extends FenixDispatchAction {
         }*/
 
         final Person personStudent = bean.getStudent();
-        final Collection<Registration> registrations = personStudent.getStudent().getRegistrations();
+        final Collection<Registration> registrations = personStudent.getStudent().getRegistrationsSet();
         Boolean hasDissertations;
 
         List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
@@ -155,7 +155,7 @@ public class ExternalSupervisorViewStudentDA extends FenixDispatchAction {
                 new HashMap<ExecutionSemester, ExecutionPeriodStatisticsBean>();
 
         for (Registration registration : registrations) {
-            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                 for (ExecutionSemester executionSemester : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
                     if (enrolmentsByExecutionPeriod.containsKey(executionSemester)) {
                         ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =

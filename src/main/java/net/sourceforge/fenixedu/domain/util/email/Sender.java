@@ -171,16 +171,6 @@ public class Sender extends Sender_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getRecipients() {
-        return getRecipientsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessages() {
-        return getMessagesSet();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.email.ReplyTo> getReplyTos() {
         return getReplyTosSet();
     }

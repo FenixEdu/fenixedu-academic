@@ -72,7 +72,7 @@ public class TeacherInquiryBean implements Serializable {
 
     private void initTeachersResults(Professorship professorship, Person person) {
         setTeachersResults(new ArrayList<TeacherShiftTypeResultsBean>());
-        Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
+        Collection<InquiryResult> professorshipResults = professorship.getInquiryResultsSet();
         if (!professorshipResults.isEmpty()) {
             for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                 List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
@@ -105,7 +105,7 @@ public class TeacherInquiryBean implements Serializable {
     }
 
     private void setGroupVisibility(Set<InquiryBlockDTO> inquiryBlocks, InquiryGroupQuestionBean groupQuestionBean) {
-        for (QuestionCondition questionCondition : groupQuestionBean.getInquiryGroupQuestion().getQuestionConditions()) {
+        for (QuestionCondition questionCondition : groupQuestionBean.getInquiryGroupQuestion().getQuestionConditionsSet()) {
             if (questionCondition instanceof MandatoryCondition) {
                 MandatoryCondition condition = (MandatoryCondition) questionCondition;
                 InquiryQuestionDTO inquiryDependentQuestionBean =
@@ -195,7 +195,7 @@ public class TeacherInquiryBean implements Serializable {
                             if (inquiryResultComment == null) {
                                 inquiryResultComment =
                                         new InquiryResultComment(questionResult, person, teacher, questionResultsSummaryBean
-                                                .getQuestionResult().getInquiryResultComments().size() + 1);
+                                        .getQuestionResult().getInquiryResultCommentsSet().size() + 1);
                             }
                             inquiryResultComment.setComment(questionResultsSummaryBean.getEditableComment());
                         }

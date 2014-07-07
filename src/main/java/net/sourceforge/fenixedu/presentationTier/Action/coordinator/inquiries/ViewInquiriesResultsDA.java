@@ -136,7 +136,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
             Collection<StudentInquiriesCourseResult> executionCoursesToImproove,
             Collection<StudentInquiriesCourseResult> excelentExecutionCourses) {
 
-        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
+        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResultsSet()) {
             final ExecutionCourse executionCourse = studentInquiriesCourseResult.getExecutionCourse();
             if (executionCourse != null && executionCourse.getExecutionPeriod() == executionSemester) {
 
@@ -171,9 +171,8 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
     }
 
     protected boolean hasTeachingResultsToImproove(final ExecutionDegree executionDegree, final ExecutionCourse executionCourse) {
-        for (Professorship otherTeacherProfessorship : executionCourse.getProfessorships()) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
-                    .getStudentInquiriesTeachingResults()) {
+        for (Professorship otherTeacherProfessorship : executionCourse.getProfessorshipsSet()) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
                 if (studentInquiriesTeachingResult.getExecutionDegree() == executionDegree
                         && studentInquiriesTeachingResult.isUnsatisfactory()) {
                     return true;
@@ -184,9 +183,8 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
     }
 
     protected boolean hasExcellentTeachingResults(final ExecutionDegree executionDegree, final ExecutionCourse executionCourse) {
-        for (Professorship otherTeacherProfessorship : executionCourse.getProfessorships()) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
-                    .getStudentInquiriesTeachingResults()) {
+        for (Professorship otherTeacherProfessorship : executionCourse.getProfessorshipsSet()) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
                 if (studentInquiriesTeachingResult.getExecutionDegree() == executionDegree
                         && studentInquiriesTeachingResult.isExcellent()) {
                     return true;
@@ -242,9 +240,8 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
         StudentInquiriesCourseResultBean resultBean =
                 new StudentInquiriesCourseResultBean(getStudentInquiriesCourseResult(executionCourse, executionDegree));
 
-        for (Professorship otherTeacherProfessorship : executionCourse.getProfessorships()) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
-                    .getStudentInquiriesTeachingResults()) {
+        for (Professorship otherTeacherProfessorship : executionCourse.getProfessorshipsSet()) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
                 if (studentInquiriesTeachingResult.getExecutionDegree() == executionDegree
                         && studentInquiriesTeachingResult.getInternalDegreeDisclosure()) {
                     resultBean.addStudentInquiriesTeachingResult(studentInquiriesTeachingResult);
@@ -257,7 +254,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
     protected StudentInquiriesCourseResult getStudentInquiriesCourseResult(final ExecutionCourse executionCourse,
             final ExecutionDegree executionDegree) {
-        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
+        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResultsSet()) {
             if (studentInquiriesCourseResult.getExecutionDegree() == executionDegree) {
                 return studentInquiriesCourseResult;
             }

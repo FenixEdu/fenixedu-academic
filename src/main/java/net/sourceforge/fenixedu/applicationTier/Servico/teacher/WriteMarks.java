@@ -89,7 +89,7 @@ public class WriteMarks {
             final List<DomainException> exceptionList) {
 
         final List<Attends> activeAttends = new ArrayList<Attends>(2);
-        for (final Attends attend : executionCourse.getAttends()) {
+        for (final Attends attend : executionCourse.getAttendsSet()) {
             if (attend.getRegistration().getNumber().equals(studentNumber)
                     && (isActive(attend) || belongsToActiveExternalCycle(attend))) {
                 activeAttends.add(attend);
@@ -174,7 +174,7 @@ public class WriteMarks {
     }
 
     private static Attends findAttend(final ExecutionCourse executionCourse, final String attendId) {
-        for (final Attends attend : executionCourse.getAttends()) {
+        for (final Attends attend : executionCourse.getAttendsSet()) {
             if (attend.getExternalId().equals(attendId)) {
                 return attend;
             }

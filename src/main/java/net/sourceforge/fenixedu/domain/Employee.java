@@ -358,7 +358,7 @@ public class Employee extends Employee_Base {
 
     @Atomic
     public void assignPermission(final Department department) {
-        this.getPerson().getManageableDepartmentCredits().add(department);
+        this.getPerson().getManageableDepartmentCreditsSet().add(department);
         this.getPerson().addPersonRoleByRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER);
         this.getPerson().addPersonRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
     }
@@ -369,52 +369,7 @@ public class Employee extends Employee_Base {
             this.getPerson().removeRoleByType(RoleType.DEPARTMENT_CREDITS_MANAGER);
             this.getPerson().removeRoleByType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
         }
-        this.getPerson().getManageableDepartmentCredits().remove(department);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisDataVersions() {
-        return getMasterDegreeThesisDataVersionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofVersions() {
-        return getMasterDegreeProofVersionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.GratuitySituation> getPenaltyExemptionGratuitySituations() {
-        return getPenaltyExemptionGratuitySituationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getHistoricList() {
-        return getHistoricListSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation> getReimbursementGuideSituations() {
-        return getReimbursementGuideSituationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.GratuitySituation> getGratuitySituations() {
-        return getGratuitySituationsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EmployeeHistoric> getResponsibleEmployeeAssociatedEmployeeHistorics() {
-        return getResponsibleEmployeeAssociatedEmployeeHistoricsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlan> getStudentCurricularPlans() {
-        return getStudentCurricularPlansSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.GratuityValues> getGratuityValues() {
-        return getGratuityValuesSet();
+        this.getPerson().getManageableDepartmentCreditsSet().remove(department);
     }
 
 }

@@ -342,7 +342,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         public List<TransactionEntryDetail> getBoundAdjustingTransactions() {
             List<TransactionEntryDetail> adjustmentTransactions = new ArrayList<TransactionEntryDetail>();
 
-            for (AccountingTransaction adjustment : transaction.getAdjustmentTransactions()) {
+            for (AccountingTransaction adjustment : transaction.getAdjustmentTransactionsSet()) {
                 adjustmentTransactions.add(new TransactionEntryDetail(adjustment));
             }
 
@@ -363,7 +363,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
             }
 
             List<String> contributorsNames = new ArrayList<String>();
-            for (Receipt receipt : transaction.getEntryFor(transaction.getFromAccount()).getReceipts()) {
+            for (Receipt receipt : transaction.getEntryFor(transaction.getFromAccount()).getReceiptsSet()) {
                 if (!org.apache.commons.lang.StringUtils.isEmpty(receipt.getContributorName())) {
                     contributorsNames.add(receipt.getContributorName());
                     continue;
@@ -393,7 +393,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         }
 
         for (ExecutionYear executionYear : executionYearList) {
-            for (AnnualEvent event : executionYear.getAnnualEvents()) {
+            for (AnnualEvent event : executionYear.getAnnualEventsSet()) {
                 if ((++i % 1000) == 0) {
                     logger.info(String.format("Read %s events", i));
                 }
@@ -453,7 +453,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
     public static List<GratuityReportQueueJob> retrieveAllGeneratedReports(final ExecutionYear executionYear) {
         List<GratuityReportQueueJob> reports = new ArrayList<GratuityReportQueueJob>();
 
-        CollectionUtils.select(executionYear.getGratuityReportQueueJobs(), new Predicate() {
+        CollectionUtils.select(executionYear.getGratuityReportQueueJobsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -470,7 +470,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
     public static List<GratuityReportQueueJob> retrieveNotGeneratedReports(final ExecutionYear executionYear) {
         List<GratuityReportQueueJob> reports = new ArrayList<GratuityReportQueueJob>();
 
-        CollectionUtils.select(executionYear.getGratuityReportQueueJobs(), new Predicate() {
+        CollectionUtils.select(executionYear.getGratuityReportQueueJobsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {

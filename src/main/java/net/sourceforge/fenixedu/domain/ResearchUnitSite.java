@@ -63,7 +63,7 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 
     @Override
     public Group getOwner() {
-        return UserGroup.of(Person.convertToUsers(getManagers()));
+        return UserGroup.of(Person.convertToUsers(getManagersSet()));
     }
 
     @Override

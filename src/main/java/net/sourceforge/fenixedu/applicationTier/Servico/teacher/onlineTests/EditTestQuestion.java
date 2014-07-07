@@ -42,7 +42,7 @@ public class EditTestQuestion {
             throw new InvalidArgumentsServiceException();
         }
         if (testQuestionOrder == -1) {
-            testQuestionOrder = testQuestion.getTest().getTestQuestions().size();
+            testQuestionOrder = testQuestion.getTest().getTestQuestionsSet().size();
         } else if (testQuestionOrder == -2) {
             testQuestionOrder = testQuestion.getTestQuestionOrder();
         }

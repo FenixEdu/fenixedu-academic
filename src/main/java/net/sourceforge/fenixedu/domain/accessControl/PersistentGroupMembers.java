@@ -52,7 +52,7 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
         if (getMembersLinkGroup() != null) {
             throw new DomainException("error.persistentGroupMembers.cannotDeletePersistentGroupMembersUsedInAccessControl");
         }
-        getPersons().clear();
+        getPersonsSet().clear();
         if (getUnit() != null) {
             getUnit().removeGroupFromUnitFiles(this);
         }
@@ -104,11 +104,6 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
                 throw new DomainException("error.PersistentGroupMembers.group.already.exists");
             }
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPersons() {
-        return getPersonsSet();
     }
 
 }

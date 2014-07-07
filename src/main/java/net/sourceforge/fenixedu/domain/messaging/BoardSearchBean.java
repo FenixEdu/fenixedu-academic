@@ -99,7 +99,7 @@ public class BoardSearchBean implements Serializable, HasExecutionSemester {
         } else {
             final Unit unit = getUnit();
             if (unit != null) {
-                boards.addAll(unit.getBoards());
+                boards.addAll(unit.getBoardsSet());
             }
         }
         return boards;

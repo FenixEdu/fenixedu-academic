@@ -103,7 +103,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
 
         List<Interval> result = new ArrayList<Interval>();
-        Collection<LessonInstance> lessonInstances = getLessonInstances();
+        Collection<LessonInstance> lessonInstances = getLessonInstancesSet();
 
         DateTime startDateTime = startDateToSearch != null ? startDateToSearch.toDateTimeAtMidnight() : null;
         DateTime endDateTime = endDateToSearch != null ? endDateToSearch.toDateTime(new TimeOfDay(23, 59, 59)) : null;
@@ -179,14 +179,9 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Override
     public String getPresentationString() {
         if (!getLessonInstancesSet().isEmpty()) {
-            return getLessonInstances().iterator().next().getLesson().getShift().getExecutionCourse().getSigla();
+            return getLessonInstancesSet().iterator().next().getLesson().getShift().getExecutionCourse().getSigla();
         }
         return getClass().getName();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.LessonInstance> getLessonInstances() {
-        return getLessonInstancesSet();
     }
 
     @Override

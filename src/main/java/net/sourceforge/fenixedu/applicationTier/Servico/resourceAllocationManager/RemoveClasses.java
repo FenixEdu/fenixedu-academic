@@ -43,8 +43,8 @@ public class RemoveClasses {
 
         for (int i = 0; i < classOIDs.size(); i++) {
             final SchoolClass schoolClass = FenixFramework.getDomainObject(classOIDs.get(i));
-            shift.getAssociatedClasses().remove(schoolClass);
-            schoolClass.getAssociatedShifts().remove(shift);
+            shift.getAssociatedClassesSet().remove(schoolClass);
+            schoolClass.getAssociatedShiftsSet().remove(shift);
         }
         return Boolean.TRUE;
     }

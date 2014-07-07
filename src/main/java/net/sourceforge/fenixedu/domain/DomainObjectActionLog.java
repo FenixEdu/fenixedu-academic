@@ -140,9 +140,4 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
         return resultList;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.DomainObjectActionLogEntry> getDomainObjectActionLogEntries() {
-        return getDomainObjectActionLogEntriesSet();
-    }
-
 }

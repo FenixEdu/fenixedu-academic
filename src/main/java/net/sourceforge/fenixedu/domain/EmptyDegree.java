@@ -246,7 +246,7 @@ public class EmptyDegree extends EmptyDegree_Base {
 
     @Override
     public DegreeCurricularPlan getMostRecentDegreeCurricularPlan() {
-        return getDegreeCurricularPlans().iterator().next();
+        return getDegreeCurricularPlansSet().iterator().next();
     }
 
     @Override

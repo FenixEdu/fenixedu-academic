@@ -114,7 +114,7 @@ public abstract class ComputeCourseStatistics {
     protected EnrolmentEvaluation getBestEnrollmentEvaluation(Enrolment enrollment) {
         EnrolmentEvaluation best = null;
 
-        for (EnrolmentEvaluation evaluation : enrollment.getEvaluations()) {
+        for (EnrolmentEvaluation evaluation : enrollment.getEvaluationsSet()) {
             if (best == null || best.getGradeWrapper().compareTo(evaluation.getGradeWrapper()) > 0) {
                 best = evaluation;
             }

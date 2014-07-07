@@ -88,7 +88,7 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     }
 
     private Function getFunctionWithName(Unit unit, String name) {
-        for (Function function : unit.getFunctions()) {
+        for (Function function : unit.getFunctionsSet()) {
             if (function.getName().equals(name)) {
                 return function;
             }

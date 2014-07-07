@@ -122,7 +122,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     public double calculatePayedValue(final YearMonthDay date) {
-        final Collection<GratuityTransaction> transactions = (date == null ? getTransactionList() : getTransactionsUntil(date));
+        final Collection<GratuityTransaction> transactions = (date == null ? getTransactionListSet() : getTransactionsUntil(date));
         BigDecimal result = BigDecimal.ZERO;
         for (final GratuityTransaction transaction : transactions) {
             result = result.add(transaction.getValueWithAdjustment());
@@ -134,7 +134,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     private List<GratuityTransaction> getTransactionsUntil(final YearMonthDay date) {
         final List<GratuityTransaction> result = new ArrayList<GratuityTransaction>();
 
-        for (final GratuityTransaction gratuityTransaction : getTransactionList()) {
+        for (final GratuityTransaction gratuityTransaction : getTransactionListSet()) {
             if (gratuityTransaction.getTransactionDateDateTime().toYearMonthDay().compareTo(date) <= 0) {
                 result.add(gratuityTransaction);
             }
@@ -363,7 +363,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     public Money getPayedAmountBetween(DateTime startDate, DateTime endDate) {
         Money result = Money.ZERO;
 
-        for (final GratuityTransaction transaction : getTransactionList()) {
+        for (final GratuityTransaction transaction : getTransactionListSet()) {
             if (!transaction.getTransactionDateDateTime().isBefore(startDate)
                     && !transaction.getTransactionDateDateTime().isAfter(endDate)) {
                 result = result.add(transaction.getValueWithAdjustment());
@@ -386,11 +386,6 @@ public class GratuitySituation extends GratuitySituation_Base {
         } else {
             setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.transactions.GratuityTransaction> getTransactionList() {
-        return getTransactionListSet();
     }
 
 }

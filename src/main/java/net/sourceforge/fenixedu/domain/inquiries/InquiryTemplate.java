@@ -47,7 +47,7 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
     public int getNumberOfQuestions() {
         int count = 0;
         for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
-            for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+            for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
                 if (groupQuestion.isCheckbox()) {
                     count++;
                 } else {
@@ -61,7 +61,7 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
     public int getNumberOfRequiredQuestions() {
         int count = 0;
         for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
-            for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+            for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
                 if (groupQuestion.isCheckbox() && groupQuestion.getRequired()) {
                     count++;
                 } else {

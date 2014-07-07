@@ -46,10 +46,10 @@ public class DeleteExercise {
             throw new InvalidArgumentsServiceException();
         }
 
-        Collection<Question> questionList = metadata.getQuestions();
+        Collection<Question> questionList = metadata.getQuestionsSet();
         boolean delete = true;
         for (Question question : questionList) {
-            Collection<TestQuestion> testQuestionList = question.getTestQuestions();
+            Collection<TestQuestion> testQuestionList = question.getTestQuestionsSet();
             for (TestQuestion testQuestion : testQuestionList) {
                 removeTestQuestionFromTest(testQuestion);
             }
@@ -73,7 +73,7 @@ public class DeleteExercise {
             throw new FenixServiceException();
         }
 
-        List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+        List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestionsSet());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
 
         Integer questionOrder = testQuestion.getTestQuestionOrder();

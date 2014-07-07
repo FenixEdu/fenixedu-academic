@@ -382,10 +382,10 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 
             for (DgesStudentImportationProcess process : processList) {
                 int i = 0;
-                for (StudentCandidacy studentCandidacy : process.getStudentCandidacy()) {
+                for (StudentCandidacy studentCandidacy : process.getStudentCandidacySet()) {
                     i++;
 
-                    for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodes()) {
+                    for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodesSet()) {
                         try {
                             if (paymentCode.isCancelled()) {
                                 continue;

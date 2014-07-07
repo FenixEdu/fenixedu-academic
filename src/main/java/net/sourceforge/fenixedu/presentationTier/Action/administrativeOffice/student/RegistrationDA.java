@@ -361,7 +361,7 @@ public class RegistrationDA extends StudentRegistrationDA {
             HttpServletResponse response) {
 
         final Registration registration = getAndSetRegistration(request);
-        final List<RegistrationRegime> regimes = new ArrayList<RegistrationRegime>(registration.getRegistrationRegimes());
+        final List<RegistrationRegime> regimes = new ArrayList<RegistrationRegime>(registration.getRegistrationRegimesSet());
 
         Collections.sort(regimes, new ReverseComparator(RegistrationRegime.COMPARATOR_BY_EXECUTION_YEAR));
         request.setAttribute("registrationRegimes", regimes);

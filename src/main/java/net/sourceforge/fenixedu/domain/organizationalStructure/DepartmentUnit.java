@@ -194,7 +194,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
     @Override
     public void delete() {
-        for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
+        for (; !getParticipatingAnyCurricularCourseCurricularRulesSet().isEmpty(); getParticipatingAnyCurricularCourseCurricularRulesSet()
                 .iterator().next().delete()) {
             ;
         }
@@ -238,7 +238,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
             groups.add(UnitGroup.recursiveWorkers(department.getDepartmentUnit()));
 
             SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-            degrees.addAll(department.getDegrees());
+            degrees.addAll(department.getDegreesSet());
 
             for (Degree degree : degrees) {
                 groups.add(StudentGroup.get(degree, null));
@@ -267,7 +267,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     @Override
     public UnitBasedSender getOneUnitBasedSender() {
         if (!getUnitBasedSenderSet().isEmpty()) {
-            return getUnitBasedSender().iterator().next();
+            return getUnitBasedSenderSet().iterator().next();
         } else {
             return UnitBasedSender.newInstance(this);
         }
@@ -288,11 +288,6 @@ public class DepartmentUnit extends DepartmentUnit_Base {
             }
         }
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse> getParticipatingAnyCurricularCourseCurricularRules() {
-        return getParticipatingAnyCurricularCourseCurricularRulesSet();
     }
 
     @Override

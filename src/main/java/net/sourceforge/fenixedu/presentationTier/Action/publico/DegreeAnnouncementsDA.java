@@ -141,7 +141,7 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
         }
 
         User userView = getUserView(request);
-        for (AnnouncementBoard board : unit.getBoards()) {
+        for (AnnouncementBoard board : unit.getBoardsSet()) {
             if (board.getReaders() == null) {
                 boards.add(board);
             }
@@ -161,7 +161,7 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
         if (unit == null) {
             return null;
         } else {
-            for (AnnouncementBoard board : unit.getBoards()) {
+            for (AnnouncementBoard board : unit.getBoardsSet()) {
                 if (board.getReaders() == null) {
                     return board;
                 }

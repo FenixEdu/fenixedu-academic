@@ -38,7 +38,7 @@ public class PhdProgramsProviderForPublicCandidacy extends AbstractDomainObjectP
             PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) source;
             InstitutionPhdCandidacyPeriod phdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) bean.getPhdCandidacyPeriod();
 
-            return phdCandidacyPeriod.getPhdPrograms();
+            return phdCandidacyPeriod.getPhdProgramsSet();
 
         } else if (source instanceof PhdIndividualProgramProcessBean) {
             PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) source;
@@ -46,7 +46,7 @@ public class PhdProgramsProviderForPublicCandidacy extends AbstractDomainObjectP
                     (InstitutionPhdCandidacyPeriod) bean.getIndividualProgramProcess().getCandidacyProcess()
                             .getPublicPhdCandidacyPeriod();
 
-            return publicPhdCandidacyPeriod.getPhdPrograms();
+            return publicPhdCandidacyPeriod.getPhdProgramsSet();
         }
 
         return Collections.EMPTY_LIST;
@@ -61,8 +61,8 @@ public class PhdProgramsProviderForPublicCandidacy extends AbstractDomainObjectP
             return Collections.EMPTY_LIST;
         }
 
-        for (PhdProgram phdProgram : bean.getFocusArea().getPhdPrograms()) {
-            if (phdCandidacyPeriod.getPhdPrograms().contains(phdProgram)) {
+        for (PhdProgram phdProgram : bean.getFocusArea().getPhdProgramsSet()) {
+            if (phdCandidacyPeriod.getPhdProgramsSet().contains(phdProgram)) {
                 activePhdProgramList.add(phdProgram);
             }
         }

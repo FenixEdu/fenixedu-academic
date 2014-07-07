@@ -67,9 +67,9 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
 
     private void canBeDeleted() {
         for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
-            for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-                for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
-                    for (QuestionAnswer questionAnswer : inquiryQuestion.getQuestionAnswers()) {
+            for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
+                for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestionsSet()) {
+                    for (QuestionAnswer questionAnswer : inquiryQuestion.getQuestionAnswersSet()) {
                         InquiryCoordinatorAnswer coordinatorAnswer = (InquiryCoordinatorAnswer) questionAnswer.getInquiryAnswer();
                         if (coordinatorAnswer.getExecutionSemester() == getExecutionPeriod()) {
                             throw new DomainException("error.CoordinatorInquiryTemplate.hasGivenAnswers");

@@ -97,7 +97,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
 
         TreeSet<ExecutionDegree> executionDegrees =
                 new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
-        executionDegrees.addAll(degreeCurricularPlan.getExecutionDegrees());
+        executionDegrees.addAll(degreeCurricularPlan.getExecutionDegreesSet());
 
         return executionDegrees.isEmpty() ? null : executionDegrees.last();
     }
@@ -116,7 +116,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
         request.setAttribute("executionDegree", executionDegree);
         request.setAttribute("executionDegreeBean", bean);
         request.setAttribute("usernameBean", new VariantBean());
-        request.setAttribute("members", executionDegree == null ? null : executionDegree.getScientificCommissionMembers());
+        request.setAttribute("members", executionDegree == null ? null : executionDegree.getScientificCommissionMembersSet());
 
         if (isResponsible(request, executionDegree)) {
             request.setAttribute("responsible", true);
@@ -185,7 +185,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
         if (memberId != null) {
             ExecutionDegree executionDegree = getExecutionDegree(request);
 
-            for (ScientificCommission commission : executionDegree.getScientificCommissionMembers()) {
+            for (ScientificCommission commission : executionDegree.getScientificCommissionMembersSet()) {
                 if (commission.getExternalId().equals(memberId)) {
                     try {
                         DeleteScientificCommission.runDeleteScientificCommission(executionDegree.getExternalId(), commission);

@@ -107,7 +107,7 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
         spreadsheet.setHeader("O - Descrição");
 
         Collection<Teacher> teachers = Bennu.getInstance().getTeachersSet();
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             Interval semesterInterval =
                     new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
                             executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());

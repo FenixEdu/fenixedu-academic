@@ -171,7 +171,7 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
 
     @Atomic
     private CareerWorkshopApplication retrieveThisWorkshopApplication(Student student, CareerWorkshopApplicationEvent event) {
-        for (CareerWorkshopApplication application : student.getCareerWorkshopApplications()) {
+        for (CareerWorkshopApplication application : student.getCareerWorkshopApplicationsSet()) {
             if (application.getCareerWorkshopApplicationEvent() == event) {
                 return application;
             }
@@ -182,7 +182,7 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
     @Atomic
     private CareerWorkshopConfirmation retrieveThisWorskhopApplicationConfirmation(Student student,
             CareerWorkshopConfirmationEvent confirmationEvent, CareerWorkshopApplication application) {
-        for (CareerWorkshopConfirmation confirmation : student.getCareerWorkshopConfirmations()) {
+        for (CareerWorkshopConfirmation confirmation : student.getCareerWorkshopConfirmationsSet()) {
             if (confirmation.getCareerWorkshopConfirmationEvent() == confirmationEvent) {
                 return confirmation;
             }

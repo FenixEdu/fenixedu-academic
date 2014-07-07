@@ -105,7 +105,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     private void addSelectedCurricularCourses(final List<CurricularCourse> curricularCourses,
             final ExecutionSemester executionSemester) {
         checkEctsCredits(curricularCourses, executionSemester);
-        getCurricularCourses().addAll(curricularCourses);
+        getCurricularCoursesSet().addAll(curricularCourses);
     }
 
     private void checkEctsCredits(List<CurricularCourse> curricularCourses, ExecutionSemester executionSemester) {
@@ -128,7 +128,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     public void editCandidacyInformation(final LocalDate candidacyDate, final List<CurricularCourse> curricularCourses) {
         super.checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
         setCandidacyDate(candidacyDate);
-        getCurricularCourses().clear();
+        getCurricularCoursesSet().clear();
         addSelectedCurricularCourses(curricularCourses, getCandidacyExecutionInterval());
     }
 
@@ -240,11 +240,6 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     @Override
     public boolean isStandalone() {
         return true;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
-        return getCurricularCoursesSet();
     }
 
 }

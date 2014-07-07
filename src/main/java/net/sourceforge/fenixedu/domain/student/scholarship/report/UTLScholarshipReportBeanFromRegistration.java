@@ -132,7 +132,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
     public Integer getNumberOfDegreeChanges() {
         int numberOfDegreeChanges = 0;
 
-        List<Registration> registrations = new ArrayList<Registration>(readStudent().getRegistrations());
+        List<Registration> registrations = new ArrayList<Registration>(readStudent().getRegistrationsSet());
         Collections.sort(registrations, Registration.COMPARATOR_BY_START_DATE);
         for (final Registration iter : registrations) {
             final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
@@ -339,7 +339,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public String getIsDegreeQualificationOwner() {
-        for (Qualification qualification : readStudent().getPerson().getAssociatedQualifications()) {
+        for (Qualification qualification : readStudent().getPerson().getAssociatedQualificationsSet()) {
             if (isDegreeQualificationType(qualification.getType())) {
                 return BundleUtil.getString(Bundle.ACADEMIC, "label.yes");
             }
@@ -350,7 +350,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public String getIsMasterDegreeQualificationOwner() {
-        for (Qualification qualification : registration.getPerson().getAssociatedQualifications()) {
+        for (Qualification qualification : registration.getPerson().getAssociatedQualificationsSet()) {
             if (isMasterQualificationType(qualification.getType())) {
                 return BundleUtil.getString(Bundle.ACADEMIC, "label.yes");
             }
@@ -361,7 +361,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public String getIsPhdQualificationOwner() {
-        for (Qualification qualification : registration.getPerson().getAssociatedQualifications()) {
+        for (Qualification qualification : registration.getPerson().getAssociatedQualificationsSet()) {
             if (isPhdQualificationType(qualification.getType())) {
                 BundleUtil.getString(Bundle.ACADEMIC, "label.yes");
             }
@@ -372,7 +372,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public String getIsOwnerOfQualification() {
-        for (Qualification qualification : registration.getPerson().getAssociatedQualifications()) {
+        for (Qualification qualification : registration.getPerson().getAssociatedQualificationsSet()) {
             if (isDegreeQualificationType(qualification.getType())) {
                 return BundleUtil.getString(Bundle.ACADEMIC, "label.yes");
             }

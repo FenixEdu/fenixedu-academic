@@ -79,7 +79,7 @@ public class UnEnrollStudentInGroup {
 
         final List<String> emails = new ArrayList<String>();
         final Collection<Person> people = new ArrayList<Person>();
-        for (final Attends attends : studentGroup.getAttends()) {
+        for (final Attends attends : studentGroup.getAttendsSet()) {
             final Person person = attends.getRegistration().getPerson();
             people.add(person);
         }

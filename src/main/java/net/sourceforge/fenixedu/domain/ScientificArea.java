@@ -38,14 +38,4 @@ public class ScientificArea extends ScientificArea_Base {
         super.setName(name);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getAssociatedCurricularCourses() {
-        return getAssociatedCurricularCoursesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInScientificArea> getCreditsInScientificAreas() {
-        return getCreditsInScientificAreasSet();
-    }
-
 }

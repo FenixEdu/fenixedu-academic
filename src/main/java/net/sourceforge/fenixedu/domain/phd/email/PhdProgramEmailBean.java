@@ -89,7 +89,7 @@ public class PhdProgramEmailBean extends PhdEmailBean {
                         return getValue().equals(toEval.getPhdProgram());
                     } else if (toEval.getPhdProgramFocusArea() != null) {
                         return !CollectionUtils.intersection(Collections.singleton(getValue()),
-                                toEval.getPhdProgramFocusArea().getPhdPrograms()).isEmpty();
+                                toEval.getPhdProgramFocusArea().getPhdProgramsSet()).isEmpty();
                     } else {
                         return false;
                     }

@@ -43,8 +43,8 @@ public class Question extends Question_Base {
     public void delete() {
         setMetadata(null);
         setRootDomainObject(null);
-        getStudentTestsQuestions().clear();
-        getTestQuestions().clear();
+        getStudentTestsQuestionsSet().clear();
+        getTestQuestionsSet().clear();
         super.deleteDomainObject();
     }
 
@@ -73,14 +73,5 @@ public class Question extends Question_Base {
     // return null;
     // }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.TestQuestion> getTestQuestions() {
-        return getTestQuestionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion> getStudentTestsQuestions() {
-        return getStudentTestsQuestionsSet();
-    }
 
 }

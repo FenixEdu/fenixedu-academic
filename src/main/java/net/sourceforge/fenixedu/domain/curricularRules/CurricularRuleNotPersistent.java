@@ -94,7 +94,7 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
 
     @Override
     public boolean isValid(ExecutionYear executionYear) {
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (isValid(executionSemester)) {
                 return true;
             }

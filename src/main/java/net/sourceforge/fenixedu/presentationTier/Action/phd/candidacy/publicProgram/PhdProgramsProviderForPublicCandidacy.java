@@ -35,7 +35,7 @@ public class PhdProgramsProviderForPublicCandidacy extends AbstractDomainObjectP
                 return Collections.EMPTY_LIST;
             }
 
-            return bean.getFocusArea().getPhdPrograms();
+            return bean.getFocusArea().getPhdProgramsSet();
         }
 
         if (source instanceof PhdIndividualProgramProcessBean) {
@@ -44,7 +44,7 @@ public class PhdProgramsProviderForPublicCandidacy extends AbstractDomainObjectP
                 return Collections.EMPTY_LIST;
             }
 
-            return bean.getFocusArea().getPhdPrograms();
+            return bean.getFocusArea().getPhdProgramsSet();
         }
 
         return null;

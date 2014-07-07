@@ -385,7 +385,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
                     if (toEval.getPhdProgram() != null) {
                         return getValue().contains(toEval.getPhdProgram());
                     } else if (toEval.getPhdProgramFocusArea() != null) {
-                        return !CollectionUtils.intersection(getValue(), toEval.getPhdProgramFocusArea().getPhdPrograms())
+                        return !CollectionUtils.intersection(getValue(), toEval.getPhdProgramFocusArea().getPhdProgramsSet())
                                 .isEmpty();
                     } else {
                         return false;

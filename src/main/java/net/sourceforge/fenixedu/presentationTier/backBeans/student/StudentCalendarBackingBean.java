@@ -92,7 +92,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
             executionSemesters = new TreeSet<ExecutionSemester>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
             if (registration != null) {
-                for (final Attends attends : registration.getAssociatedAttends()) {
+                for (final Attends attends : registration.getAssociatedAttendsSet()) {
                     executionSemesters.add(attends.getExecutionCourse().getExecutionPeriod());
                 }
             }
@@ -109,7 +109,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
             executionCourses = new TreeSet<ExecutionCourse>(executionCourseComparator);
             if (registration != null) {
-                for (final Attends attends : registration.getAssociatedAttends()) {
+                for (final Attends attends : registration.getAssociatedAttendsSet()) {
                     final ExecutionCourse executionCourse = attends.getExecutionCourse();
                     if (executionCourse.getExecutionPeriod() == executionSemester) {
                         executionCourses.add(executionCourse);
@@ -253,7 +253,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     private ExecutionDegree findExecutinDegree(final DegreeCurricularPlan degreeCurricularPlan,
             final ExecutionSemester executionSemester) {
         if (degreeCurricularPlan != null) {
-            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
                 if (executionSemester != null && executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
                     return executionDegree;
                 }
@@ -268,11 +268,11 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         final ExecutionSemester executionSemester = getExecutionPeriod();
         final Registration registration = getStudent();
 
-        for (final Attends attends : registration.getAssociatedAttends()) {
+        for (final Attends attends : registration.getAssociatedAttendsSet()) {
             final ExecutionCourse executionCourse = attends.getExecutionCourse();
             if (executionCourse.getExecutionPeriod() == executionSemester
                     && (getExecutionCourseID() == null || getExecutionCourseID().equals(executionCourse.getExternalId()))) {
-                for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+                for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
                     if (evaluation instanceof WrittenEvaluation) {
                         if (evaluation instanceof Exam) {
                             final Exam exam = (Exam) evaluation;

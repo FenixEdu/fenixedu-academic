@@ -152,7 +152,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     private ExecutionSemester getLastSemester(PersonContractSituation personContractSituation, ExecutionYear executionYear) {
         ExecutionSemester lastExecutionSemester = null;
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (lastExecutionSemester == null
                     || personContractSituation.overlaps(executionSemester.getLessonsPeriod().getIntervalWithNextPeriods())) {
                 lastExecutionSemester = executionSemester;
@@ -227,7 +227,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     private Qualification getBetterQualificationOfPersonByExecutionYear(Person person, ExecutionYear executionYear) {
         Qualification qualification = null;
-        for (Qualification q : person.getAssociatedQualifications()) {
+        for (Qualification q : person.getAssociatedQualificationsSet()) {
             if (q.getDate() != null && q.getDate().before(executionYear.getEndDate())
                     && ((qualification == null) || (Qualification.COMPARATOR_BY_YEAR.compare(qualification, q) < 0))) {
                 qualification = q;

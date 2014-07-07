@@ -29,9 +29,4 @@ public class FacultyEvaluationProcessYear extends FacultyEvaluationProcessYear_B
         setYear(year);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluationProcessMark> getApprovedTeacherEvaluationProcessMark() {
-        return getApprovedTeacherEvaluationProcessMarkSet();
-    }
-
 }

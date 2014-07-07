@@ -109,7 +109,7 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
             final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
                     (ImprovementOfApprovedEnrolmentEvent) event;
             final Set<EnrolmentEvaluation> enrolmentEvaluations =
-                    improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations();
+                    improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsSet();
             if (enrolmentEvaluations.isEmpty()) {
                 return false;
             }

@@ -50,7 +50,7 @@ public class DepartmentCreditsPool extends DepartmentCreditsPool_Base {
     }
 
     public static DepartmentCreditsPool getDepartmentCreditsPool(Department department, ExecutionYear executionYear) {
-        for (DepartmentCreditsPool departmentCreditsPool : executionYear.getDepartmentCreditsPools()) {
+        for (DepartmentCreditsPool departmentCreditsPool : executionYear.getDepartmentCreditsPoolsSet()) {
             if (departmentCreditsPool.getDepartment().equals(department)) {
                 return departmentCreditsPool;
             }

@@ -80,7 +80,7 @@ public class PersonInformationBean {
         fillPersonalAndWorkContacts(person.getEmailAddresses(), getPersonalEmails(), getWorkEmails(), checkIfPublic);
 
         setPersonCategories(new ArrayList<String>());
-        for (Role role : person.getPersonRoles()) {
+        for (Role role : person.getPersonRolesSet()) {
             if (role.getRoleType().equals(RoleType.ALUMNI) || role.getRoleType().equals(RoleType.DELEGATE)
                     || role.getRoleType().equals(RoleType.EMPLOYEE) || role.getRoleType().equals(RoleType.GRANT_OWNER)
                     || role.getRoleType().equals(RoleType.RESEARCHER) || role.getRoleType().equals(RoleType.STUDENT)

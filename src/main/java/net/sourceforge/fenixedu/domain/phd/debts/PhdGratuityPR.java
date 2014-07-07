@@ -85,13 +85,13 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
         if (states.size() > 0 && getPhdGratuityPriceQuirksSet().size() > 0) {
             int years = 0;
 
-            for (PhdGratuityEvent event : process.getPhdGratuityEvents()) {
+            for (PhdGratuityEvent event : process.getPhdGratuityEventsSet()) {
                 if (!event.isInState(EventState.CANCELLED)) {
                     years++;
                 }
             }
 
-            for (PhdGratuityPriceQuirk quirk : getPhdGratuityPriceQuirks()) {
+            for (PhdGratuityPriceQuirk quirk : getPhdGratuityPriceQuirksSet()) {
                 if (quirk.getYear() == years) {
                     return quirk.getGratuity();
                 }
@@ -117,7 +117,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
         amountToPay = adjustGratuityWithExmptions(phdGratuityEvent, amountToPay);
 
         BigDecimal percentage = new BigDecimal(0);
-        for (Exemption exemption : phdGratuityEvent.getExemptions()) {
+        for (Exemption exemption : phdGratuityEvent.getExemptionsSet()) {
             if (exemption.isGratuityExemption()) {
                 percentage = percentage.add(((GratuityExemption) exemption).calculateDiscountPercentage(amountToPay));
             }
@@ -132,7 +132,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     }
 
     private boolean hasFineExemption(PhdGratuityEvent phdGratuityEvent) {
-        for (Exemption exemption : phdGratuityEvent.getExemptions()) {
+        for (Exemption exemption : phdGratuityEvent.getExemptionsSet()) {
             if (exemption instanceof PhdGratuityFineExemption) {
                 return true;
             }
@@ -142,7 +142,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 
     private Money adjustGratuityWithExmptions(PhdGratuityEvent phdGratuityEvent, Money gratuity) {
         if (phdGratuityEvent.getExemptionsSet().size() > 0) {
-            for (Exemption exemption : phdGratuityEvent.getExemptions()) {
+            for (Exemption exemption : phdGratuityEvent.getExemptionsSet()) {
                 if (exemption instanceof PhdEventExemption && !(exemption instanceof PhdGratuityFineExemption)) {
                     gratuity = gratuity.subtract(((PhdEventExemption) exemption).getValue());
                 }
@@ -152,7 +152,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     }
 
     public PhdGratuityPaymentPeriod getPhdGratuityPeriod(LocalDate programStartDate) {
-        for (PhdGratuityPaymentPeriod period : getPhdGratuityPaymentPeriods()) {
+        for (PhdGratuityPaymentPeriod period : getPhdGratuityPaymentPeriodsSet()) {
             if (period.contains(programStartDate)) {
                 return period;
             }
@@ -188,20 +188,10 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 
     @Override
     public void removeOtherRelations() {
-        for (PhdGratuityPaymentPeriod period : getPhdGratuityPaymentPeriods()) {
+        for (PhdGratuityPaymentPeriod period : getPhdGratuityPaymentPeriodsSet()) {
             period.delete();
         }
-        getPhdGratuityPaymentPeriods().clear();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPaymentPeriod> getPhdGratuityPaymentPeriods() {
-        return getPhdGratuityPaymentPeriodsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPriceQuirk> getPhdGratuityPriceQuirks() {
-        return getPhdGratuityPriceQuirksSet();
+        getPhdGratuityPaymentPeriodsSet().clear();
     }
 
 }

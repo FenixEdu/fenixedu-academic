@@ -65,7 +65,7 @@ public class Test extends Test_Base {
 
     private void organizeTestQuestionsOrder(Integer testQuestionToInsertOrder) {
 
-        Collection<TestQuestion> testQuestions = getTestQuestions();
+        Collection<TestQuestion> testQuestions = getTestQuestionsSet();
         for (final TestQuestion testQuestion : testQuestions) {
             Integer iterQuestionOrder = testQuestion.getTestQuestionOrder();
             if (testQuestionToInsertOrder.compareTo(iterQuestionOrder) <= 0) {
@@ -77,7 +77,7 @@ public class Test extends Test_Base {
     public void deleteTestQuestion(final TestQuestion testQuestionToDelete) {
         List<TestQuestion> aux = new ArrayList<TestQuestion>();
 
-        Collection<TestQuestion> testQuestions = getTestQuestions();
+        Collection<TestQuestion> testQuestions = getTestQuestionsSet();
         for (final TestQuestion testQuestion : testQuestions) {
             if (!testQuestionToDelete.equals(testQuestion)) {
                 Integer iterQuestionOrder = testQuestion.getTestQuestionOrder();
@@ -97,7 +97,7 @@ public class Test extends Test_Base {
     }
 
     public TestQuestion getTestQuestion(final Question question) {
-        for (final TestQuestion testQuestion : getTestQuestions()) {
+        for (final TestQuestion testQuestion : getTestQuestionsSet()) {
             if (testQuestion.getQuestion() == question) {
                 return testQuestion;
             }
@@ -106,7 +106,7 @@ public class Test extends Test_Base {
     }
 
     public void delete() {
-        for (; !getTestQuestions().isEmpty(); getTestQuestions().iterator().next().delete()) {
+        for (; !getTestQuestionsSet().isEmpty(); getTestQuestionsSet().iterator().next().delete()) {
             ;
         }
         setTestScope(null);
@@ -115,7 +115,7 @@ public class Test extends Test_Base {
     }
 
     public Question findQuestionByOID(String questionId) {
-        for (TestQuestion testQuestion : this.getTestQuestions()) {
+        for (TestQuestion testQuestion : this.getTestQuestionsSet()) {
             if (testQuestion.getQuestion().getExternalId().equals(questionId)) {
                 return testQuestion.getQuestion();
             }
@@ -161,11 +161,6 @@ public class Test extends Test_Base {
         } else {
             setLastModifiedDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.TestQuestion> getTestQuestions() {
-        return getTestQuestionsSet();
     }
 
 }

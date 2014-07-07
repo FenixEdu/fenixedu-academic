@@ -37,8 +37,8 @@ public class AddExecutionDegreeToScheduling {
                 || (executionDegree.getScheduling() != null && executionDegree.getScheduling().getProposalsSet().isEmpty())) {
             throw new SchedulingContainsProposalsException();
         }
-        if (!scheduleing.getExecutionDegrees().contains(executionDegree)) {
-            scheduleing.getExecutionDegrees().add(executionDegree);
+        if (!scheduleing.getExecutionDegreesSet().contains(executionDegree)) {
+            scheduleing.getExecutionDegreesSet().add(executionDegree);
         }
     }
 

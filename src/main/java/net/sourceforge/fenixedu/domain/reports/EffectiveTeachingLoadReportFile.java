@@ -73,8 +73,8 @@ public class EffectiveTeachingLoadReportFile extends EffectiveTeachingLoadReport
 
     protected Map<Teacher, Map<ExecutionCourse, BigDecimal>> getLoad(ExecutionYear executionYear) {
         Map<Teacher, Map<ExecutionCourse, BigDecimal>> teachingLoad = new HashMap<Teacher, Map<ExecutionCourse, BigDecimal>>();
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
-            for (TeacherService teacherService : executionSemester.getTeacherServices()) {
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+            for (TeacherService teacherService : executionSemester.getTeacherServicesSet()) {
                 for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {
                     double efectiveLoad = degreeTeachingService.getEfectiveLoad();
                     if ((!degreeTeachingService.getProfessorship().getExecutionCourse().isDissertation())

@@ -410,7 +410,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         }
 
         List<Registration> registrations = new ArrayList<Registration>();
-        registrations.addAll(shift.getStudents());
+        registrations.addAll(shift.getStudentsSet());
         Collections.sort(registrations, Registration.NUMBER_COMPARATOR);
 
         request.setAttribute("registrations", registrations);
@@ -479,13 +479,13 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         Shift shift = FenixFramework.getDomainObject(shiftID);
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
-        for (Registration registration : shift.getStudents()) {
+        for (Registration registration : shift.getStudentsSet()) {
             shift.removeAttendFromShift(registration, executionCourse);
         }
 
         request.setAttribute("shift", shift);
         request.setAttribute("executionCourseID", executionCourseID);
-        request.setAttribute("registrations", shift.getStudents());
+        request.setAttribute("registrations", shift.getStudentsSet());
         request.setAttribute("personBean", new PersonBean());
 
         return forward(request, "/teacher/executionCourse/editShift.jsp");

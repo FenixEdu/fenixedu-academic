@@ -60,7 +60,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
         createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
         DegreeCandidacyForGraduatedPersonSeriesGade newSCICSeriesGrade = new DegreeCandidacyForGraduatedPersonSeriesGade();
         newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
-        getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+        getIndividualCandidacySeriesGradeSet().add(newSCICSeriesGrade);
         setSelectedDegree(bean.getSelectedDegree());
 
         /*
@@ -221,7 +221,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     }
 
     public DegreeCandidacyForGraduatedPersonSeriesGade getDegreeCandidacyForGraduatedPersonSeriesGadeForDegree(Degree degree) {
-        for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGrade()) {
+        for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGradeSet()) {
             if (seriesGrade.getDegree() == degree) {
                 return (DegreeCandidacyForGraduatedPersonSeriesGade) seriesGrade;
             }
@@ -230,10 +230,10 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     }
 
     private DegreeCandidacyForGraduatedPersonSeriesGade getDegreeCandidacyForGraduatedPersonSeriesGade() {
-        if (getIndividualCandidacySeriesGrade().size() == 0) {
+        if (getIndividualCandidacySeriesGradeSet().size() == 0) {
             return null;
         } else {
-            return (DegreeCandidacyForGraduatedPersonSeriesGade) getIndividualCandidacySeriesGrade().iterator().next();
+            return (DegreeCandidacyForGraduatedPersonSeriesGade) getIndividualCandidacySeriesGradeSet().iterator().next();
         }
     }
 

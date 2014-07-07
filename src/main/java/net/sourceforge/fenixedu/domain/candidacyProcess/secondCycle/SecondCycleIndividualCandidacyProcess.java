@@ -153,7 +153,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     }
 
     public Collection<Degree> getSelectedDegrees() {
-        return getCandidacy().getSelectedDegrees();
+        return getCandidacy().getSelectedDegreesSet();
     }
 
     public boolean hasCandidacyForSelectedDegree(final Degree degree) {
@@ -213,7 +213,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
             return false;
         }
 
-        return !Collections.disjoint(programs, process.getCandidacy().getSelectedDegrees());
+        return !Collections.disjoint(programs, process.getCandidacy().getSelectedDegreesSet());
 
     }
 
@@ -802,7 +802,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
             new SecondCycleIndividualCandidacyExemption(userView.getPerson(), event,
                     CandidacyExemptionJustificationType.TRANSFERED_APPLICATION);
 
-            Collection<IndividualCandidacyDocumentFile> documents = process.getCandidacy().getDocuments();
+            Collection<IndividualCandidacyDocumentFile> documents = process.getCandidacy().getDocumentsSet();
 
             for (IndividualCandidacyDocumentFile individualCandidacyDocumentFile : documents) {
                 individualCandidacyDocumentFile.addIndividualCandidacy(newProcess.getCandidacy());

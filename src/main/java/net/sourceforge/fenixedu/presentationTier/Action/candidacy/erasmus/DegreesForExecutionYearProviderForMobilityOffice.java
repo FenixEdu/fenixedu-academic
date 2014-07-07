@@ -72,7 +72,7 @@ public class DegreesForExecutionYearProviderForMobilityOffice implements DataPro
     }
 
     private boolean matchesExecutionYear(Degree degree, ExecutionYear executionYear) {
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
             if (executionDegree.getDegree() == degree) {
                 return true;
             }

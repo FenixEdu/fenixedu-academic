@@ -139,7 +139,7 @@ public class TagInputCloudRenderer extends InputRenderer {
 
             private Collection<UnitFileTag> getTags() {
                 UnitFileBean bean = (UnitFileBean) getContext().getParentContext().getMetaObject().getObject();
-                return bean.getUnit().getUnitFileTags();
+                return bean.getUnit().getUnitFileTagsSet();
             }
 
             private String getAction(String name) {

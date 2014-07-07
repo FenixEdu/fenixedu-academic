@@ -72,7 +72,7 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
         setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(process.getCandidacy()));
         setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getPrecedentDegreeInformation()));
         setCandidacyDate(process.getCandidacyDate());
-        initializeFormation(process.getCandidacy().getFormations());
+        initializeFormation(process.getCandidacy().getFormationsSet());
         setObservations(process.getCandidacy().getObservations());
         setIstStudentNumber(process.getCandidacy().getFormerStudentNumber());
         setProcessChecked(process.getProcessChecked());

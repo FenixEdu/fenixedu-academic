@@ -164,7 +164,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
             throw new PhdMigrationGuidingNotFoundException("The guiding is not present in the system as a teacher");
         }
 
-        for (PhdParticipant existingParticipant : individualProcess.getParticipants()) {
+        for (PhdParticipant existingParticipant : individualProcess.getParticipantsSet()) {
             if (!existingParticipant.isInternal()) {
                 continue;
             }

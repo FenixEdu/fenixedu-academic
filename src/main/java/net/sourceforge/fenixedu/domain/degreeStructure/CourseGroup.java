@@ -121,7 +121,7 @@ public class CourseGroup extends CourseGroup_Base {
     public void delete() {
         if (getCanBeDeleted()) {
             super.delete();
-            for (; !getParticipatingContextCurricularRules().isEmpty(); getParticipatingContextCurricularRules().iterator()
+            for (; !getParticipatingContextCurricularRulesSet().isEmpty(); getParticipatingContextCurricularRulesSet().iterator()
                     .next().delete()) {
                 ;
             }
@@ -153,7 +153,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        return !getParentContextsSet().isEmpty() ? getParentContexts().iterator().next().getParentCourseGroup()
+        return !getParentContextsSet().isEmpty() ? getParentContextsSet().iterator().next().getParentCourseGroup()
                 .getParentDegreeCurricularPlan() : null;
     }
 
@@ -175,7 +175,7 @@ public class CourseGroup extends CourseGroup_Base {
     // ExecutionYear
     public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
         final List<Context> result = new ArrayList<Context>();
-        for (final Context context : this.getChildContexts()) {
+        for (final Context context : this.getChildContextsSet()) {
             if (hasClass(clazz, context.getChildDegreeModule()) && ((executionYear == null || context.isValid(executionYear)))) {
                 result.add(context);
             }
@@ -189,7 +189,7 @@ public class CourseGroup extends CourseGroup_Base {
     public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz,
             final ExecutionSemester executionSemester) {
         final List<Context> result = new ArrayList<Context>();
-        for (Context context : this.getChildContexts()) {
+        for (Context context : this.getChildContextsSet()) {
             if (hasClass(clazz, context.getChildDegreeModule())
                     && ((executionSemester == null || context.isValid(executionSemester)))) {
                 result.add(context);
@@ -219,7 +219,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionSemester executionSemester) {
         final List<Context> result = new ArrayList<Context>();
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             if (hasClass(clazz, context.getChildDegreeModule())
                     && ((executionSemester == null || context.isOpen(executionSemester)))) {
                 result.add(context);
@@ -230,7 +230,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
         final List<Context> result = new ArrayList<Context>();
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             if (hasClass(clazz, context.getChildDegreeModule()) && ((executionYear == null || context.isOpen(executionYear)))) {
                 result.add(context);
             }
@@ -270,7 +270,7 @@ public class CourseGroup extends CourseGroup_Base {
     public List<CurricularRule> getParticipatingCurricularRules() {
         final List<CurricularRule> result = new ArrayList<CurricularRule>();
         result.addAll(super.getParticipatingCurricularRules());
-        result.addAll(getParticipatingContextCurricularRules());
+        result.addAll(getParticipatingContextCurricularRulesSet());
         return result;
     }
 
@@ -297,7 +297,7 @@ public class CourseGroup extends CourseGroup_Base {
     public void checkDuplicateBrotherNames(final String name, final String nameEn) {
         String normalizedName = StringFormatter.normalize(name);
         String normalizedNameEn = StringFormatter.normalize(nameEn);
-        for (Context parentContext : getParentContexts()) {
+        for (Context parentContext : getParentContextsSet()) {
             CourseGroup parentCourseGroup = parentContext.getParentCourseGroup();
             if (!parentCourseGroup.verifyNames(normalizedName, normalizedNameEn, this)) {
                 throw new DomainException("error.existingCourseGroupWithSameName");
@@ -310,7 +310,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     private boolean verifyNames(String normalizedName, String normalizedNameEn, DegreeModule excludedModule) {
-        for (Context context : getChildContexts()) {
+        for (Context context : getChildContextsSet()) {
             DegreeModule degreeModule = context.getChildDegreeModule();
             if (degreeModule != excludedModule) {
                 if (degreeModule.getName() != null && StringFormatter.normalize(degreeModule.getName()).equals(normalizedName)) {
@@ -461,7 +461,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     private Collection<DegreeModule> getDegreeModulesByExecutionPeriod(final ExecutionSemester executionSemester) {
         final Collection<DegreeModule> result = new HashSet<DegreeModule>();
-        for (final Context context : this.getChildContexts()) {
+        for (final Context context : this.getChildContextsSet()) {
             if (context.isValid(executionSemester)) {
                 result.add(context.getChildDegreeModule());
             }
@@ -499,7 +499,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public Set<DegreeModule> getOpenChildDegreeModulesByExecutionPeriod(final ExecutionSemester executionSemester) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             if (context.isOpen(executionSemester)) {
                 result.add(context.getChildDegreeModule());
             }
@@ -510,7 +510,7 @@ public class CourseGroup extends CourseGroup_Base {
     @Override
     public Set<CourseGroup> getParentCourseGroups() {
         final Set<CourseGroup> result = new HashSet<CourseGroup>();
-        for (final Context context : getParentContexts()) {
+        for (final Context context : getParentContextsSet()) {
             result.add(context.getParentCourseGroup());
         }
         return result;
@@ -596,7 +596,7 @@ public class CourseGroup extends CourseGroup_Base {
         if (super.hasDegreeModule(degreeModule)) {
             return true;
         }
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             if (context.getChildDegreeModule().hasDegreeModule(degreeModule)) {
                 return true;
             }
@@ -622,7 +622,7 @@ public class CourseGroup extends CourseGroup_Base {
     @Override
     public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
         degreeModules.add(this);
-        for (Context context : getChildContexts()) {
+        for (Context context : getChildContextsSet()) {
             context.getAllDegreeModules(degreeModules);
         }
     }
@@ -645,7 +645,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public Set<DegreeModule> getChildDegreeModules() {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             result.add(context.getChildDegreeModule());
         }
         return result;
@@ -672,7 +672,7 @@ public class CourseGroup extends CourseGroup_Base {
     public Set<Context> getActiveChildContexts() {
         final Set<Context> result = new HashSet<Context>();
 
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             if (context.isOpen()) {
                 result.add(context);
             }
@@ -754,7 +754,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public boolean hasDegreeModuleOnChilds(final DegreeModule degreeModuleToSearch) {
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             if (context.getChildDegreeModule() == degreeModuleToSearch) {
                 return true;
             }
@@ -779,7 +779,7 @@ public class CourseGroup extends CourseGroup_Base {
     @Override
     public Set<CurricularCourse> getAllCurricularCourses(final ExecutionSemester executionSemester) {
         final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             if (executionSemester == null || context.isOpen(executionSemester)) {
                 result.addAll(context.getChildDegreeModule().getAllCurricularCourses(executionSemester));
             }
@@ -807,7 +807,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor) {
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             final DegreeModule degreeModule = context.getChildDegreeModule();
             degreeModule.doForAllCurricularCourses(curricularCourseFunctor);
             if (!curricularCourseFunctor.keepDoing()) {
@@ -821,7 +821,7 @@ public class CourseGroup extends CourseGroup_Base {
         if (isBranchCourseGroup()) {
             return true;
         } else {
-            for (Context context : getParentContexts()) {
+            for (Context context : getParentContextsSet()) {
                 if (context.getParentCourseGroup().hasAnyParentBranchCourseGroup()) {
                     return true;
                 }
@@ -832,37 +832,12 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate) {
-        for (final Context context : getChildContexts()) {
+        for (final Context context : getChildContextsSet()) {
             if (executionYear == null || context.isValid(executionYear)) {
                 final DegreeModule childDegreeModule = context.getChildDegreeModule();
                 childDegreeModule.applyToCurricularCourses(executionYear, predicate);
             }
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getPreviousEquivalencePlanEntries() {
-        return getPreviousEquivalencePlanEntriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getChildContexts() {
-        return getChildContextsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getParticipatingContextCurricularRules() {
-        return getParticipatingContextCurricularRulesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest> getOldCourseGroupChangeRequests() {
-        return getOldCourseGroupChangeRequestsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest> getNewCourseGroupChangeRequests() {
-        return getNewCourseGroupChangeRequestsSet();
     }
 
 }

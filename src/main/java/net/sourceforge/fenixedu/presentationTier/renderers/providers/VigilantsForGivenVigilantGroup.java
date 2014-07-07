@@ -48,13 +48,13 @@ public class VigilantsForGivenVigilantGroup implements DataProvider {
             ConvokeBean convokeBean = (ConvokeBean) bean;
             vigilants.addAll(convokeBean.getVigilantsSugestion());
             WrittenEvaluation evaluation = convokeBean.getWrittenEvaluation();
-            if (evaluation != null && evaluation.getVigilancies().size() > 0) {
-                for (Vigilancy convoke : evaluation.getVigilancies()) {
+            if (evaluation != null && evaluation.getVigilanciesSet().size() > 0) {
+                for (Vigilancy convoke : evaluation.getVigilanciesSet()) {
                     vigilants.remove(convoke.getVigilantWrapper());
                 }
             }
         } else {
-            vigilants.addAll(vigilantGroup.getVigilantWrappers());
+            vigilants.addAll(vigilantGroup.getVigilantWrappersSet());
             ComparatorChain chain = new ComparatorChain();
             chain.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
             chain.addComparator(VigilantWrapper.USERNAME_COMPARATOR);

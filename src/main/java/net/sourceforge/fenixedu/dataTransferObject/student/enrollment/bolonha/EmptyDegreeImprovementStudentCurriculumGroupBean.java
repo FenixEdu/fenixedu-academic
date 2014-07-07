@@ -54,7 +54,7 @@ public class EmptyDegreeImprovementStudentCurriculumGroupBean extends Improvemen
     private Set<CurriculumGroup> filterGroups(CurriculumGroup parentGroup) {
         final Set<CurriculumGroup> groups = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
 
-        for (final CurriculumModule curriculumModule : parentGroup.getCurriculumModules()) {
+        for (final CurriculumModule curriculumModule : parentGroup.getCurriculumModulesSet()) {
 
             if (!curriculumModule.isLeaf()) {
 

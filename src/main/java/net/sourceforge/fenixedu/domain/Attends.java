@@ -158,7 +158,7 @@ public class Attends extends Attends_Base {
     public void delete() throws DomainException {
         if (canDelete()) {
 
-            for (; !getWeeklyWorkLoadsSet().isEmpty(); getWeeklyWorkLoads().iterator().next().delete()) {
+            for (; !getWeeklyWorkLoadsSet().isEmpty(); getWeeklyWorkLoadsSet().iterator().next().delete()) {
                 ;
             }
 
@@ -222,7 +222,7 @@ public class Attends extends Attends_Base {
 
     public boolean hasAnyShiftEnrolments() {
         for (Shift shift : this.getExecutionCourse().getAssociatedShifts()) {
-            if (shift.getStudents().contains(this.getRegistration())) {
+            if (shift.getStudentsSet().contains(this.getRegistration())) {
                 return true;
             }
         }
@@ -230,7 +230,7 @@ public class Attends extends Attends_Base {
     }
 
     public FinalMark getFinalMark() {
-        for (Mark mark : getAssociatedMarks()) {
+        for (Mark mark : getAssociatedMarksSet()) {
             if (mark instanceof FinalMark) {
                 return (FinalMark) mark;
             }
@@ -239,7 +239,7 @@ public class Attends extends Attends_Base {
     }
 
     public Mark getMarkByEvaluation(Evaluation evaluation) {
-        for (final Mark mark : getAssociatedMarks()) {
+        for (final Mark mark : getAssociatedMarksSet()) {
             if (mark.getEvaluation().equals(evaluation)) {
                 return mark;
             }
@@ -253,7 +253,7 @@ public class Attends extends Attends_Base {
         for (int i = 0; i < orderedEvaluations.size(); i++) {
             orderedMarks.add(null);
         }
-        for (final Mark mark : getAssociatedMarks()) {
+        for (final Mark mark : getAssociatedMarksSet()) {
             final Evaluation evaluation = mark.getEvaluation();
             orderedMarks.set(orderedEvaluations.indexOf(evaluation), mark);
         }
@@ -279,7 +279,7 @@ public class Attends extends Attends_Base {
         final int previousWeekOffset = currentWeekOffset - 1;
 
         final WeeklyWorkLoad lastExistentWeeklyWorkLoad =
-                getWeeklyWorkLoads().isEmpty() ? null : Collections.max(getWeeklyWorkLoads());
+                getWeeklyWorkLoadsSet().isEmpty() ? null : Collections.max(getWeeklyWorkLoadsSet());
         if (lastExistentWeeklyWorkLoad != null && lastExistentWeeklyWorkLoad.getWeekOffset().intValue() == previousWeekOffset) {
             throw new DomainException("weekly.work.load.for.previous.week.already.exists");
         }
@@ -302,7 +302,7 @@ public class Attends extends Attends_Base {
             throw new DomainException("outside.weekly.work.load.response.period");
         }
         final int previousWeekOffset = currentWeekOffset - 1;
-        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoadsSet()) {
             if (weeklyWorkLoad.getWeekOffset().intValue() == previousWeekOffset) {
                 return weeklyWorkLoad;
             }
@@ -351,12 +351,12 @@ public class Attends extends Attends_Base {
     }
 
     public Set<WeeklyWorkLoad> getSortedWeeklyWorkLoads() {
-        return new TreeSet<WeeklyWorkLoad>(getWeeklyWorkLoads());
+        return new TreeSet<WeeklyWorkLoad>(getWeeklyWorkLoadsSet());
     }
 
     public int getWeeklyWorkLoadContact() {
         int result = 0;
-        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoadsSet()) {
             final int contact = weeklyWorkLoad.getContact() != null ? weeklyWorkLoad.getContact() : 0;
             result += contact;
         }
@@ -365,7 +365,7 @@ public class Attends extends Attends_Base {
 
     public int getWeeklyWorkLoadAutonomousStudy() {
         int result = 0;
-        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoadsSet()) {
             final int contact = weeklyWorkLoad.getAutonomousStudy() != null ? weeklyWorkLoad.getAutonomousStudy() : 0;
             result += contact;
         }
@@ -374,7 +374,7 @@ public class Attends extends Attends_Base {
 
     public int getWeeklyWorkLoadOther() {
         int result = 0;
-        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoadsSet()) {
             final int contact = weeklyWorkLoad.getOther() != null ? weeklyWorkLoad.getOther() : 0;
             result += contact;
         }
@@ -383,7 +383,7 @@ public class Attends extends Attends_Base {
 
     public int getWeeklyWorkLoadTotal() {
         int result = 0;
-        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoadsSet()) {
             final int contact = weeklyWorkLoad.getTotal();
             result += contact;
         }
@@ -569,36 +569,6 @@ public class Attends extends Attends_Base {
         for (final Shift shift : executionCourse.getAssociatedShifts()) {
             shift.removeStudents(registration);
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
-        return getDegreeProjectTutorialServicesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Grouping> getGroupings() {
-        return getGroupingsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Mark> getAssociatedMarks() {
-        return getAssociatedMarksSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
-        return getProjectSubmissionLogsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad> getWeeklyWorkLoads() {
-        return getWeeklyWorkLoadsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
-        return getProjectSubmissionsSet();
     }
 
 }

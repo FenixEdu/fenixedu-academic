@@ -118,7 +118,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
     public Set<CompetenceCourse> getCompetenceCoursesSet() {
         final SortedSet<CompetenceCourse> result =
                 new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-        for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformations()) {
+        for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformationsSet()) {
             if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit() == this) {
                 result.add(competenceInformation.getCompetenceCourse());
             }
@@ -133,7 +133,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
     public List<CompetenceCourse> getCurrentOrFutureCompetenceCourses() {
         final SortedSet<CompetenceCourse> result =
                 new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-        for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformations()) {
+        for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformationsSet()) {
             if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit() == this) {
                 result.add(competenceInformation.getCompetenceCourse());
             }
@@ -148,7 +148,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
     public List<CompetenceCourse> getOldCompetenceCourses() {
         final SortedSet<CompetenceCourse> result =
                 new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-        for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformations()) {
+        for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformationsSet()) {
             CompetenceCourse course = competenceInformation.getCompetenceCourse();
             if ((course.getDepartmentUnit() != getDepartmentUnit())
                     && (course.getMostRecentGroupInDepartment(getDepartmentUnit()) == this)) {
@@ -168,7 +168,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
         List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
 
         for (CompetenceCourse competenceCourse : competenceCourses) {
-            curricularCourses.addAll(competenceCourse.getAssociatedCurricularCourses());
+            curricularCourses.addAll(competenceCourse.getAssociatedCurricularCoursesSet());
         }
 
         return curricularCourses;
@@ -204,16 +204,6 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
                 }
             }
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
-        return getCompetenceCourseInformationChangeRequestsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation> getCompetenceCourseInformations() {
-        return getCompetenceCourseInformationsSet();
     }
 
 }

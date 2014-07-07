@@ -222,7 +222,7 @@ public class AcademicAuthorizationGroup extends FenixGroup {
                 new Function<PersistentAcademicAuthorizationGroup, Collection<AdministrativeOffice>>() {
                     @Override
                     public Collection<AdministrativeOffice> apply(PersistentAcademicAuthorizationGroup group) {
-                        return group.getOffice();
+                        return group.getOfficeSet();
                     }
                 });
     }

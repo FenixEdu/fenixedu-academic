@@ -52,7 +52,7 @@ public class ConvokeByPoints extends Strategy {
             incompatiblePersons.addAll(getIncompatiblePersons(writtenEvaluation));
         }
 
-        final Collection<ExecutionCourse> executionCourses = writtenEvaluation.getAssociatedExecutionCourses();
+        final Collection<ExecutionCourse> executionCourses = writtenEvaluation.getAssociatedExecutionCoursesSet();
 
         for (VigilantWrapper vigilant : vigilants) {
 
@@ -104,7 +104,7 @@ public class ConvokeByPoints extends Strategy {
     }
 
     private List<Person> getIncompatiblePersons(WrittenEvaluation writtenEvaluation) {
-        Collection<Vigilancy> convokes = writtenEvaluation.getVigilancies();
+        Collection<Vigilancy> convokes = writtenEvaluation.getVigilanciesSet();
         List<Person> people = new ArrayList<Person>();
         for (Vigilancy convoke : convokes) {
             VigilantWrapper vigilant = convoke.getVigilantWrapper();

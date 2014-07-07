@@ -109,7 +109,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
         setFocusArea(process.getPhdProgramFocusArea());
         setExternalPhdProgram(process.getExternalPhdProgram());
 
-        for (ThesisSubjectOrder subjectOrder : process.getThesisSubjectOrders()) {
+        for (ThesisSubjectOrder subjectOrder : process.getThesisSubjectOrdersSet()) {
             addThesisSubjectBean(new PhdThesisSubjectOrderBean(subjectOrder.getSubjectOrder(), subjectOrder.getThesisSubject()));
         }
         sortThesisSubjectBeans();
@@ -158,7 +158,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
         int order = 1;
         getThesisSubjectBeans().clear();
         if (hasFocusArea()) {
-            for (ThesisSubject thesisSubject : getFocusArea().getThesisSubjects()) {
+            for (ThesisSubject thesisSubject : getFocusArea().getThesisSubjectsSet()) {
                 addThesisSubjectBean(new PhdThesisSubjectOrderBean(order++, thesisSubject));
             }
         }

@@ -196,7 +196,7 @@ public class DepartmentCourseDA extends FenixDispatchAction {
 
     private CurricularCourse getCurricularCourseToExport(CompetenceCourse competenceCourse, Degree degree) {
 
-        for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
             if (curricularCourse.getDegree().equals(degree)) {
                 return curricularCourse;
             }

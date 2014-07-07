@@ -108,9 +108,4 @@ public class PersonNamePart extends PersonNamePart_Base {
         }
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.person.PersonName> getPersonName() {
-        return getPersonNameSet();
-    }
-
 }

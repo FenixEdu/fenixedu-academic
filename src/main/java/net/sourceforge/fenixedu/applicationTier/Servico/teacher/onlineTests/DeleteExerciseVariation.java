@@ -57,7 +57,7 @@ public class DeleteExerciseVariation {
             throw new InvalidArgumentsServiceException();
         }
 
-        for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestions()) {
+        for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestionsSet()) {
             if (compareDates(studentTestQuestion.getDistributedTest().getEndDate(), studentTestQuestion.getDistributedTest()
                     .getEndHour())) {
                 result.add(new LabelValueBean(studentTestQuestion.getDistributedTest().getTitle(), studentTestQuestion
@@ -67,7 +67,7 @@ public class DeleteExerciseVariation {
 
         if (result.size() == 0) {
             Question newQuestion = getNewQuestion(question);
-            for (TestQuestion testQuestion : question.getTestQuestions()) {
+            for (TestQuestion testQuestion : question.getTestQuestionsSet()) {
                 if (newQuestion == null) {
                     testQuestion.getTest().deleteTestQuestion(testQuestion);
                 } else {
@@ -75,7 +75,7 @@ public class DeleteExerciseVariation {
                 }
             }
             Metadata metadata = question.getMetadata();
-            if (question.getStudentTestsQuestions() == null || question.getStudentTestsQuestions().size() == 0) {
+            if (question.getStudentTestsQuestionsSet() == null || question.getStudentTestsQuestionsSet().size() == 0) {
                 question.delete();
                 if (metadata.getQuestionsSet().size() <= 1) {
                     metadata.delete();

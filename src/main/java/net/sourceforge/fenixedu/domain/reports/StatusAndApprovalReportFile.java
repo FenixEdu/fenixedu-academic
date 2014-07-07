@@ -86,7 +86,7 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
                         count(enrolment);
                     }
                 }
-                for (RegistrationState state : current.getRegistrationStates()) {
+                for (RegistrationState state : current.getRegistrationStatesSet()) {
                     if (state.isActive()) {
                         // ensure the entries exist if there is an active state
                         // in the target years

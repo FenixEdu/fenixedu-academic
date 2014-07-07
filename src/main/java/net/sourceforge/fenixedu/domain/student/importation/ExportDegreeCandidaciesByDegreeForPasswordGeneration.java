@@ -66,12 +66,12 @@ public class ExportDegreeCandidaciesByDegreeForPasswordGeneration extends
     public QueueJobResult execute() throws Exception {
         final Map<Degree, Set<Person>> result = new HashMap<Degree, Set<Person>>();
 
-        for (final ExecutionDegree executionDegree : getExecutionYear().getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : getExecutionYear().getExecutionDegreesSet()) {
             if (!isAcceptedDegreeType(executionDegree)) {
                 continue;
             }
 
-            for (final StudentCandidacy studentCandidacy : executionDegree.getStudentCandidacies()) {
+            for (final StudentCandidacy studentCandidacy : executionDegree.getStudentCandidaciesSet()) {
                 if (!(studentCandidacy instanceof DegreeCandidacy || studentCandidacy instanceof IMDCandidacy)) {
                     continue;
                 }
@@ -149,7 +149,7 @@ public class ExportDegreeCandidaciesByDegreeForPasswordGeneration extends
         List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> jobList =
                 new ArrayList<ExportDegreeCandidaciesByDegreeForPasswordGeneration>();
 
-        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcessSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -164,7 +164,7 @@ public class ExportDegreeCandidaciesByDegreeForPasswordGeneration extends
         List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> jobList =
                 new ArrayList<ExportDegreeCandidaciesByDegreeForPasswordGeneration>();
 
-        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcessSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -183,7 +183,7 @@ public class ExportDegreeCandidaciesByDegreeForPasswordGeneration extends
         List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> jobList =
                 new ArrayList<ExportDegreeCandidaciesByDegreeForPasswordGeneration>();
 
-        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcessSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {

@@ -54,7 +54,7 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
             setState(process.getCandidacyState());
         }
         List<Degree> d = new ArrayList<Degree>();
-        d.addAll(process.getCandidacy().getSelectedDegrees());
+        d.addAll(process.getCandidacy().getSelectedDegreesSet());
         setDegrees(d);
         setNotes(process.getCandidacyNotes());
     }
@@ -73,7 +73,7 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
             setState(process.getCandidacyState());
         }
         List<Degree> d = new ArrayList<Degree>();
-        d.addAll(process.getCandidacy().getSelectedDegrees());
+        d.addAll(process.getCandidacy().getSelectedDegreesSet());
         setDegrees(d);
         setNotes(seriesGradeForDegree.getNotes());
         setSeriesGradeState(seriesGradeForDegree.getState());

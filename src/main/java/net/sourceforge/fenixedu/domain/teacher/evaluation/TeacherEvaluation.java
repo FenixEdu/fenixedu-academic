@@ -138,9 +138,4 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
         }
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFile> getTeacherEvaluationFile() {
-        return getTeacherEvaluationFileSet();
-    }
-
 }

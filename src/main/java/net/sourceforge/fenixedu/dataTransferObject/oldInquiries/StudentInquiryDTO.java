@@ -90,7 +90,7 @@ public class StudentInquiryDTO implements Serializable {
 
     private void fillTeachersInquiriesWithNonAffiliatedTeachers(final ExecutionCourse executionCourse,
             final Set<ShiftType> shiftTypes) {
-        for (final NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachers()) {
+        for (final NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachersSet()) {
             final NonAffiliatedTeacherDTO nonAffiliatedTeacherDTO = new NonAffiliatedTeacherDTO(nonAffiliatedTeacher);
             Collection<TeacherInquiryDTO> nonAffiliatedTeachers = new ArrayList<TeacherInquiryDTO>();
             for (final ShiftType shiftType : shiftTypes) {
@@ -103,7 +103,7 @@ public class StudentInquiryDTO implements Serializable {
     private void fillTeachersInquiriesWithAffiliatedTeachers(final ExecutionCourse executionCourse,
             final Set<ShiftType> shiftTypes) {
         Map<Person, Map<ShiftType, TeacherInquiryDTO>> teachersShifts = new HashMap<Person, Map<ShiftType, TeacherInquiryDTO>>();
-        for (final Professorship professorship : executionCourse.getProfessorships()) {
+        for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
 
             final Person person = professorship.getPerson();
             if (!teachersShifts.containsKey(person)) {
@@ -113,7 +113,7 @@ public class StudentInquiryDTO implements Serializable {
             final Map<ShiftType, TeacherInquiryDTO> teacherShift = teachersShifts.get(person);
             final TeacherDTO teacherDTO = new AffiliatedTeacherDTO(person);
 
-            for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
+            for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServicesSet()) {
                 for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
                     if (!teacherShift.containsKey(shiftType)) {
                         teacherShift.put(shiftType, new TeacherInquiryDTO(teacherDTO, executionCourse, shiftType));

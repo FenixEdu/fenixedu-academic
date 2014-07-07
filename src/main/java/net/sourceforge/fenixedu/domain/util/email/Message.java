@@ -224,7 +224,7 @@ public class Message extends Message_Base {
     public String getRecipientsGroupMembersInText() {
         StringBuilder builder = new StringBuilder();
 
-        Collection<Recipient> recipients = getRecipients();
+        Collection<Recipient> recipients = getRecipientsSet();
         for (Recipient recipient : recipients) {
             builder.append(recipient.getMembersEmailInText());
         }
@@ -334,7 +334,7 @@ public class Message extends Message_Base {
 
     public int getPossibleRecipientsCount() {
         int count = 0;
-        for (Recipient recipient : getRecipients()) {
+        for (Recipient recipient : getRecipientsSet()) {
             count += recipient.getMembers().getMembers().size();
         }
         return count;
@@ -342,7 +342,7 @@ public class Message extends Message_Base {
 
     public int getRecipientsWithEmailCount() {
         int count = 0;
-        for (Recipient recipient : getRecipients()) {
+        for (Recipient recipient : getRecipientsSet()) {
             final Set<User> elements = recipient.getMembers().getMembers();
             for (User user : elements) {
                 if (user.getPerson().getEmailForSendingEmails() != null) {
@@ -355,7 +355,7 @@ public class Message extends Message_Base {
 
     public int getSentMailsCount() {
         int count = 0;
-        for (Email email : getEmails()) {
+        for (Email email : getEmailsSet()) {
             final EmailAddressList confirmedAddresses = email.getConfirmedAddresses();
             if (confirmedAddresses != null && !confirmedAddresses.isEmpty()) {
                 count += confirmedAddresses.toCollection().size();
@@ -366,7 +366,7 @@ public class Message extends Message_Base {
 
     public int getFailedMailsCount() {
         int count = 0;
-        for (Email email : getEmails()) {
+        for (Email email : getEmailsSet()) {
             EmailAddressList failedAddresses = email.getFailedAddresses();
 
             if (failedAddresses != null && !failedAddresses.isEmpty()) {
@@ -374,31 +374,6 @@ public class Message extends Message_Base {
             }
         }
         return count;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getTos() {
-        return getTosSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.Email> getEmails() {
-        return getEmailsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getCcs() {
-        return getCcsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.ReplyTo> getReplyTos() {
-        return getReplyTosSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getRecipients() {
-        return getRecipientsSet();
     }
 
 }

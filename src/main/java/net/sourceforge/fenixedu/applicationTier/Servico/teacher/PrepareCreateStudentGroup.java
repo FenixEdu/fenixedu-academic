@@ -59,9 +59,9 @@ public class PrepareCreateStudentGroup {
         }
 
         final Collection<StudentGroup> allStudentsGroups = grouping.getStudentGroupsSet();
-        final List<Attends> attendsGrouping = new ArrayList(grouping.getAttends());
+        final List<Attends> attendsGrouping = new ArrayList(grouping.getAttendsSet());
         for (final StudentGroup studentGroup : allStudentsGroups) {
-            for (Attends attend : studentGroup.getAttends()) {
+            for (Attends attend : studentGroup.getAttendsSet()) {
                 attendsGrouping.remove(attend);
             }
         }

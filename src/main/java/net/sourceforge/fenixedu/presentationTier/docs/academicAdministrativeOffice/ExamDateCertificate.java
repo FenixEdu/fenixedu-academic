@@ -155,7 +155,7 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
         final List<ExamDateEntry> result = new ArrayList<ExamDateEntry>();
         final ExamDateCertificateRequest request = (ExamDateCertificateRequest) getDocumentRequest();
 
-        for (final Enrolment enrolment : request.getEnrolments()) {
+        for (final Enrolment enrolment : request.getEnrolmentsSet()) {
             final ExamDateEntry entry = new ExamDateEntry();
             entry.setCurricularCourseName(enrolment.getCurricularCourse().getName());
             fillFirstSeasonExam(request, enrolment, entry);

@@ -581,7 +581,7 @@ public class PersonalInformationBean implements Serializable {
         }
 
         if (isUnitFromRaidesListMandatory() && hasRaidesDegreeDesignation()
-                && !getRaidesDegreeDesignation().getInstitutionUnit().contains(getInstitution())) {
+                && !getRaidesDegreeDesignation().getInstitutionUnitSet().contains(getInstitution())) {
             result.add("error.CandidacyInformationBean.designation.must.match.institution");
         }
 

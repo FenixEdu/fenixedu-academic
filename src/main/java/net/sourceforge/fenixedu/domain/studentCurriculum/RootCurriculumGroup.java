@@ -395,7 +395,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     public Set<CurriculumGroup> getAllCurriculumGroups() {
         Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
 
-        for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
             result.addAll(curriculumModule.getAllCurriculumGroups());
         }
         return result;
@@ -405,7 +405,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() {
         Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
 
-        for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
             result.addAll(curriculumModule.getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups());
         }
         return result;

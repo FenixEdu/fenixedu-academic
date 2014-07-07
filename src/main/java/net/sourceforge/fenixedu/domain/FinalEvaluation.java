@@ -41,7 +41,7 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 
     public Integer getGradesListVersion() {
         int lastVersion = 0;
-        for (Mark mark : getMarks()) {
+        for (Mark mark : getMarksSet()) {
             FinalMark finalMark = (FinalMark) mark;
             if (finalMark.getGradeListVersion() > lastVersion) {
                 lastVersion = finalMark.getGradeListVersion();
@@ -68,7 +68,7 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 
     public List<FinalMark> getAlreadySubmitedMarks(ExecutionCourse executionCourse) {
         List<FinalMark> result = new ArrayList<FinalMark>();
-        for (Mark mark : getMarks()) {
+        for (Mark mark : getMarksSet()) {
             FinalMark finalMark = (FinalMark) mark;
             if (finalMark.getAttend().getExecutionCourse().equals(executionCourse) && finalMark.getGradeListVersion() != 0
                     && finalMark.getSubmitedMark() != null) {
@@ -81,7 +81,7 @@ public class FinalEvaluation extends FinalEvaluation_Base {
     public List<Attends> getNotSubmitedMarkAttends(ExecutionCourse executionCourse) {
         List<Attends> result = new ArrayList<Attends>();
 
-        for (Attends attends : executionCourse.getAttends()) {
+        for (Attends attends : executionCourse.getAttendsSet()) {
             if (attends.getEnrolment() != null && attends.getRegistration().getDegreeType().equals(DegreeType.DEGREE)) {
                 FinalMark mark = getFinalMark(attends);
                 if (mark == null || (mark.getGradeListVersion() == 0 && mark.getSubmitedMark() == null)) {
@@ -93,7 +93,7 @@ public class FinalEvaluation extends FinalEvaluation_Base {
     }
 
     private FinalMark getFinalMark(Attends attends) {
-        for (Mark mark : attends.getAssociatedMarks()) {
+        for (Mark mark : attends.getAssociatedMarksSet()) {
             if (mark.getEvaluation().equals(this)) {
                 return (FinalMark) mark;
             }

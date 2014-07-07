@@ -43,7 +43,7 @@ public class ReadCPlanFromChosenMasterDegree {
         Degree degree = FenixFramework.getDomainObject(externalId);
 
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
-        for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+        for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlansSet()) {
             if (!dcp.isBolonhaDegree()) {
                 result.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
             }

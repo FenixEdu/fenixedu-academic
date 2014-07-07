@@ -106,7 +106,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         private List getInfoCurricularCourses(final DetailedProfessorship detailedProfessorship, ExecutionCourse executionCourse) {
 
             List infoCurricularCourses =
-                    (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(), new Transformer() {
+                    (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCoursesSet(), new Transformer() {
 
                         @Override
                         public Object transform(Object input) {
@@ -163,7 +163,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     List getDetailedProfessorships(User userView, String personId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
 
-        Collection<Professorship> professorshipList = ((Person) FenixFramework.getDomainObject(personId)).getProfessorships();
+        Collection<Professorship> professorshipList = ((Person) FenixFramework.getDomainObject(personId)).getProfessorshipsSet();
 
         String executionYearID = (String) actionForm.get("executionYearId");
         ExecutionYear executionYear =
@@ -245,7 +245,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
             Department department = person.getTeacher().getCurrentWorkingDepartment();
             teacherDepartment = InfoDepartment.newInfoFromDomain(department);
             if (userView == null || !userView.getPerson().hasRole(RoleType.CREDITS_MANAGER)) {
-                final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
+                final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCreditsSet();
                 request.setAttribute("isDepartmentManager", (departmentList.contains(department) || department == null));
             } else {
                 request.setAttribute("isDepartmentManager", Boolean.FALSE);

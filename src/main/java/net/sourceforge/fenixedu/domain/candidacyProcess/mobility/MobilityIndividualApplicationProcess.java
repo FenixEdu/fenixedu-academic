@@ -326,7 +326,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     public List<ErasmusAlert> getAlertsNotViewed() {
         List<ErasmusAlert> alertsNotViewed = new ArrayList<ErasmusAlert>();
 
-        CollectionUtils.select(getAlert(), arg0 -> {
+        CollectionUtils.select(getAlertSet(), arg0 -> {
             ErasmusAlert alert = (ErasmusAlert) arg0;
             return alert.isToFire();
         }, alertsNotViewed);
@@ -337,7 +337,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     public ErasmusAlert getMostRecentAlert() {
-        List<ErasmusAlert> alerts = new ArrayList<ErasmusAlert>(getAlert());
+        List<ErasmusAlert> alerts = new ArrayList<ErasmusAlert>(getAlertSet());
         Collections.sort(alerts, Collections.reverseOrder(ErasmusAlert.WHEN_CREATED_COMPARATOR));
 
         return alerts.iterator().next();
@@ -374,10 +374,9 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     List<ReceptionEmailExecutedAction> getAllReceptionEmailNotifications() {
         List<ReceptionEmailExecutedAction> list = new ArrayList<ReceptionEmailExecutedAction>();
 
-        for (ErasmusCandidacyProcessExecutedAction executedAction : ((MobilityApplicationProcess) getCandidacyProcess())
-                .getErasmusCandidacyProcessExecutedAction()) {
+        for (ErasmusCandidacyProcessExecutedAction executedAction : ((MobilityApplicationProcess) getCandidacyProcess()).getErasmusCandidacyProcessExecutedActionSet()) {
             if (executedAction.isReceptionEmailExecutedAction()
-                    && executedAction.getSubjectMobilityIndividualApplicationProcess().contains(this)) {
+                    && executedAction.getSubjectMobilityIndividualApplicationProcessSet().contains(this)) {
                 list.add((ReceptionEmailExecutedAction) executedAction);
             }
         }
@@ -1363,21 +1362,6 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     public MobilityProgram getMobilityProgram() {
         return getCandidacy().getMobilityProgram();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlert> getAlert() {
-        return getAlertSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessExecutedAction> getExecutedActions() {
-        return getExecutedActionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction> getErasmusCandidacyProcessExecutedAction() {
-        return getErasmusCandidacyProcessExecutedActionSet();
     }
 
 }

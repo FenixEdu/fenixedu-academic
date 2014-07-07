@@ -39,7 +39,7 @@ public abstract class ViewStudentsByTutorDispatchAction extends FenixDispatchAct
 
     protected void getTutorships(HttpServletRequest request, final Teacher teacher) {
 
-        if (!teacher.getTutorships().isEmpty()) {
+        if (!teacher.getTutorshipsSet().isEmpty()) {
             TutorTutorshipsHistoryBean tutorshipHistory = new TutorTutorshipsHistoryBean(teacher);
 
             List<StudentsByTutorBean> activeTutorshipsByEntryYear = getTutorshipsByEntryYear(teacher.getActiveTutorships());

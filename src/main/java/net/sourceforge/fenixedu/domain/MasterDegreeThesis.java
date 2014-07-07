@@ -42,7 +42,7 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
     public MasterDegreeThesisDataVersion getActiveMasterDegreeThesisDataVersion() {
 
-        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisDataVersions()) {
+        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisDataVersionsSet()) {
             if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                 return masterDegreeThesisDataVersion;
             }
@@ -63,7 +63,7 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
     public MasterDegreeProofVersion getActiveMasterDegreeProofVersion() {
         MasterDegreeProofVersion activeMasterDegreeProofVersion = null;
 
-        for (MasterDegreeProofVersion candidateMasterDegreeProofVersion : this.getMasterDegreeProofVersions()) {
+        for (MasterDegreeProofVersion candidateMasterDegreeProofVersion : this.getMasterDegreeProofVersionsSet()) {
             if (candidateMasterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                 activeMasterDegreeProofVersion = candidateMasterDegreeProofVersion;
                 break;
@@ -100,26 +100,11 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
     }
 
     public void delete() {
-        getMasterDegreeThesisDataVersions().clear();
-        getMasterDegreeProofVersions().clear();
+        getMasterDegreeThesisDataVersionsSet().clear();
+        getMasterDegreeProofVersionsSet().clear();
         setStudentCurricularPlan(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisDataVersions() {
-        return getMasterDegreeThesisDataVersionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofVersions() {
-        return getMasterDegreeProofVersionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersions() {
-        return getConclusionProcessVersionsSet();
     }
 
 }

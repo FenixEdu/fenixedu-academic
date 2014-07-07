@@ -79,14 +79,14 @@ public class AcceptNewProjectProposal {
         }
 
         List attendsStudentNumbers = new ArrayList();
-        Collection<Attends> attends = groupPropertiesExecutionCourse.getGrouping().getAttends();
+        Collection<Attends> attends = groupPropertiesExecutionCourse.getGrouping().getAttendsSet();
         Iterator iterAttendsInAttendsSet = attends.iterator();
         while (iterAttendsInAttendsSet.hasNext()) {
             Attends attend = (Attends) iterAttendsInAttendsSet.next();
             attendsStudentNumbers.add(attend.getRegistration().getNumber());
         }
 
-        Collection<Attends> attendsAux = executionCourse.getAttends();
+        Collection<Attends> attendsAux = executionCourse.getAttendsSet();
         Iterator iterAttends = attendsAux.iterator();
         while (iterAttends.hasNext()) {
             Attends attend = (Attends) iterAttends.next();
@@ -96,7 +96,7 @@ public class AcceptNewProjectProposal {
         }
 
         Person senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
-        Collection groupPropertiesExecutionCourseList = grouping.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = grouping.getExportGroupingsSet();
         Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
         List groupTeachers = new ArrayList();
         while (iterGroupPropertiesExecutionCourseList.hasNext()) {
@@ -104,7 +104,7 @@ public class AcceptNewProjectProposal {
             if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
                     || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
                 ExecutionCourse personExecutionCourse = groupPropertiesExecutionCourseAux.getExecutionCourse();
-                Collection professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
+                Collection professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorshipsSet();
                 Iterator iterProfessorship = professorships.iterator();
                 while (iterProfessorship.hasNext()) {
                     Professorship professorship = (Professorship) iterProfessorship.next();
@@ -117,7 +117,7 @@ public class AcceptNewProjectProposal {
         }
 
         List groupAux = new ArrayList();
-        Collection<Professorship> professorshipsAux = executionCourse.getProfessorships();
+        Collection<Professorship> professorshipsAux = executionCourse.getProfessorshipsSet();
 
         Iterator iterProfessorshipsAux = professorshipsAux.iterator();
         while (iterProfessorshipsAux.hasNext()) {

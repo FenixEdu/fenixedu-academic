@@ -771,7 +771,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     protected List<SelectItem> readExecutionYearItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
-        final Collection<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegreesSet();
 
         if (executionDegrees.isEmpty()) {
             final ExecutionYear executionYear =

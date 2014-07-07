@@ -325,8 +325,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     // Edit Qualifications and Jobs information
     private void addQualificationsAndJobsContextInformation(HttpServletRequest request) {
         final Person person = getProcess(request).getPerson();
-        request.setAttribute("qualifications", person.getAssociatedQualifications());
-        request.setAttribute("jobs", person.getJobs());
+        request.setAttribute("qualifications", person.getAssociatedQualificationsSet());
+        request.setAttribute("jobs", person.getJobsSet());
     }
 
     public ActionForward prepareEditQualificationsAndJobsInformation(ActionMapping mapping, ActionForm actionForm,
@@ -477,8 +477,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     // Phd guiding information
     private void addGuidingsContextInformation(ActionMapping mapping, HttpServletRequest request) {
-        request.setAttribute("guidings", getProcess(request).getGuidings());
-        request.setAttribute("assistantGuidings", getProcess(request).getAssistantGuidings());
+        request.setAttribute("guidings", getProcess(request).getGuidingsSet());
+        request.setAttribute("assistantGuidings", getProcess(request).getAssistantGuidingsSet());
     }
 
     public ActionForward prepareManageGuidingInformation(ActionMapping mapping, ActionForm actionForm,
@@ -1354,7 +1354,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     private PhdMigrationIndividualProcessData getMigrationProcessData(Integer migrationId) {
         for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
-            for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
+            for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessDataSet()) {
                 if (processData.getNumber().equals(migrationId)) {
                     return processData;
                 }
@@ -1366,7 +1366,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     private PhdMigrationGuiding getMigrationGuidingData(String teacherCode) {
         for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
-            for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuiding()) {
+            for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuidingSet()) {
                 if (guidingData.getTeacherNumber().equals(teacherCode)) {
                     return guidingData;
                 }
@@ -1554,7 +1554,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     private List<PhdIndividualProgramProcess> getStudentOtherProcesses(final PhdIndividualProgramProcess process) {
         List<PhdIndividualProgramProcess> result = new ArrayList<PhdIndividualProgramProcess>();
-        result.addAll(CollectionUtils.disjunction(process.getPerson().getPhdIndividualProgramProcesses(),
+        result.addAll(CollectionUtils.disjunction(process.getPerson().getPhdIndividualProgramProcessesSet(),
                 Collections.singletonList(process)));
 
         return result;
@@ -1710,7 +1710,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
         TreeSet<PhdAlertMessage> orderedMessages =
                 new TreeSet<PhdAlertMessage>(Collections.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
-        orderedMessages.addAll(process.getAlertMessages());
+        orderedMessages.addAll(process.getAlertMessagesSet());
 
         request.setAttribute("alertMessages", orderedMessages);
         return mapping.findForward("viewAllAlertMessages");

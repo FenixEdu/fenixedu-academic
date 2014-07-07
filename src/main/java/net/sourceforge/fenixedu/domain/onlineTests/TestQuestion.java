@@ -49,7 +49,7 @@ public class TestQuestion extends TestQuestion_Base {
     }
 
     private void organizeTestQuestionsOrder(Integer newOrder, Integer oldOrder) {
-        Collection<TestQuestion> testQuestions = getTest().getTestQuestions();
+        Collection<TestQuestion> testQuestions = getTest().getTestQuestionsSet();
         int diffOrder = newOrder.intValue() - oldOrder.intValue();
         if (diffOrder != 0) {
             if (diffOrder > 0) {

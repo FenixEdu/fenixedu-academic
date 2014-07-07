@@ -869,8 +869,8 @@ public abstract class Event extends Event_Base {
             super.getPaymentCodesSet().iterator().next().delete();
         }
 
-        while (!getExemptions().isEmpty()) {
-            getExemptions().iterator().next().delete(false);
+        while (!getExemptionsSet().isEmpty()) {
+            getExemptionsSet().iterator().next().delete(false);
         }
 
         super.setParty(null);
@@ -1054,7 +1054,7 @@ public abstract class Event extends Event_Base {
 
     public Money getTotalDiscount() {
         Money result = Money.ZERO;
-        for (final Discount discount : getDiscounts()) {
+        for (final Discount discount : getDiscountsSet()) {
             result = result.add(discount.getAmount());
         }
         return result;
@@ -1111,16 +1111,6 @@ public abstract class Event extends Event_Base {
 
     public Person getPerson() {
         return (Person) getParty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Discount> getDiscounts() {
-        return getDiscountsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Exemption> getExemptions() {
-        return getExemptionsSet();
     }
 
 }

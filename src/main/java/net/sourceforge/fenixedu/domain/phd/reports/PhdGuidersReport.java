@@ -65,12 +65,12 @@ public class PhdGuidersReport extends PhdReport {
         String assistantGuiderRole =
                 BundleUtil.getString(Bundle.PHD, "label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.assistantGuider");
 
-        for (PhdParticipant phdParticipant : process.getGuidings()) {
+        for (PhdParticipant phdParticipant : process.getGuidingsSet()) {
             HSSFRow row = sheet.createRow(this.rowCounter++);
             fillParticipant(guiderRole, process, phdParticipant, row);
         }
 
-        for (PhdParticipant phdParticipant : process.getAssistantGuidings()) {
+        for (PhdParticipant phdParticipant : process.getAssistantGuidingsSet()) {
             HSSFRow row = sheet.createRow(this.rowCounter++);
             fillParticipant(assistantGuiderRole, process, phdParticipant, row);
         }

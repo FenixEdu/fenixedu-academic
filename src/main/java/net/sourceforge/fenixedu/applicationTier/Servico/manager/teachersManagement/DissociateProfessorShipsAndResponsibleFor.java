@@ -86,13 +86,13 @@ public class DissociateProfessorShipsAndResponsibleFor {
             // everything is ok for removal, but first check
             // professorships with support lessons and shifts
             for (Professorship professorship : newProfessorships) {
-                Collection<SupportLesson> supportLessons = professorship.getSupportLessons();
-                Collection<ShiftProfessorship> shiftProfessorships = professorship.getAssociatedShiftProfessorship();
+                Collection<SupportLesson> supportLessons = professorship.getSupportLessonsSet();
+                Collection<ShiftProfessorship> shiftProfessorships = professorship.getAssociatedShiftProfessorshipSet();
 
                 if ((shiftProfessorships == null || shiftProfessorships.isEmpty())
                         && (supportLessons == null || supportLessons.isEmpty())) {
 
-                    Collection<Summary> summaryList = professorship.getAssociatedSummaries();
+                    Collection<Summary> summaryList = professorship.getAssociatedSummariesSet();
                     if (summaryList != null && !summaryList.isEmpty()) {
                         for (Summary summary : summaryList) {
                             summary.setProfessorship(null);

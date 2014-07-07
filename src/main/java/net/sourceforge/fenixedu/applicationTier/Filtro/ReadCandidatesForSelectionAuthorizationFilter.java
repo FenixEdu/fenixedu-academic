@@ -102,7 +102,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 
         if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
             // modified by Tânia Pousão
-            Collection<Coordinator> coodinatorsList = executionDegree.getCoordinatorsList();
+            Collection<Coordinator> coodinatorsList = executionDegree.getCoordinatorsListSet();
             if (coodinatorsList == null) {
                 return false;
             }

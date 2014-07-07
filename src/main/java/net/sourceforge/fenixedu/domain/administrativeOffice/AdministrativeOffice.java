@@ -169,42 +169,12 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public boolean getHasAnyPhdProgram() {
-        for (AcademicProgram program : getManagedAcademicProgram()) {
+        for (AcademicProgram program : getManagedAcademicProgramSet()) {
             if (program instanceof PhdProgram) {
                 return true;
             }
         }
         return false;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob> getEventReportQueueJob() {
-        return getEventReportQueueJobSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup> getAcademicGroup() {
-        return getAcademicGroupSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch> getRectorateSubmissionBatch() {
-        return getRectorateSubmissionBatchSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.AcademicProgram> getManagedAcademicProgram() {
-        return getManagedAcademicProgramSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.AcademicEvent> getEvents() {
-        return getEventsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getAcademicServiceRequests() {
-        return getAcademicServiceRequestsSet();
     }
 
 }

@@ -72,8 +72,8 @@ public class DepartmentCreditsPoolBean implements Serializable {
         availableCredits = BigDecimal.ZERO;
         assignedCredits = BigDecimal.ZERO;
         if (departmentCreditsPool != null) {
-            for (ExecutionSemester executionSemester : getAnnualCreditsState().getExecutionYear().getExecutionPeriods()) {
-                for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+            for (ExecutionSemester executionSemester : getAnnualCreditsState().getExecutionYear().getExecutionPeriodsSet()) {
+                for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
                     if (!(executionCourse.isDissertation() || executionCourse.getProjectTutorialCourse())) {
                         if (executionCourse.getDepartments().contains(getDepartment())) {
                             if (isSharedExecutionCourse(executionCourse)) {
@@ -104,7 +104,7 @@ public class DepartmentCreditsPoolBean implements Serializable {
     }
 
     private boolean isTaughtByTeacherFromThisDepartment(ExecutionCourse executionCourse) {
-        for (Professorship professorship : executionCourse.getProfessorships()) {
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
             Department professorshipDepartment =
                     professorship.getTeacher().getLastWorkingDepartment(
                             executionCourse.getExecutionPeriod().getBeginDateYearMonthDay(),
@@ -117,7 +117,7 @@ public class DepartmentCreditsPoolBean implements Serializable {
     }
 
     private boolean isSharedExecutionCourse(ExecutionCourse executionCourse) {
-        for (Professorship professorship : executionCourse.getProfessorships()) {
+        for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
             Department professorshipDepartment =
                     professorship.getTeacher().getLastWorkingDepartment(
                             executionCourse.getExecutionPeriod().getBeginDateYearMonthDay(),
@@ -239,20 +239,19 @@ public class DepartmentCreditsPoolBean implements Serializable {
         }
 
         public void setEfectiveLoads() {
-            for (Professorship professorship : getExecutionCourse().getProfessorships()) {
+            for (Professorship professorship : getExecutionCourse().getProfessorshipsSet()) {
                 ExecutionSemester executionPeriod = getExecutionCourse().getExecutionPeriod();
                 Department lastWorkingDepartment =
                         professorship.getTeacher().getLastWorkingDepartment(executionPeriod.getBeginDateYearMonthDay(),
                                 executionPeriod.getEndDateYearMonthDay());
-                for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
+                for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServicesSet()) {
                     double efectiveLoad = degreeTeachingService.getEfectiveLoad();
                     if (lastWorkingDepartment != null && lastWorkingDepartment.equals(getDepartment())) {
                         this.departmentEffectiveLoad = this.departmentEffectiveLoad.add(new BigDecimal(efectiveLoad));
                     }
                     this.totalEffectiveLoad = this.totalEffectiveLoad.add(new BigDecimal(efectiveLoad));
                 }
-                for (DegreeTeachingServiceCorrection degreeTeachingServiceCorrection : professorship
-                        .getDegreeTeachingServiceCorrections()) {
+                for (DegreeTeachingServiceCorrection degreeTeachingServiceCorrection : professorship.getDegreeTeachingServiceCorrectionsSet()) {
                     BigDecimal efectiveLoad = degreeTeachingServiceCorrection.getCorrection();
                     if (lastWorkingDepartment != null && lastWorkingDepartment.equals(getDepartment())) {
                         this.departmentEffectiveLoad = this.departmentEffectiveLoad.add(efectiveLoad);

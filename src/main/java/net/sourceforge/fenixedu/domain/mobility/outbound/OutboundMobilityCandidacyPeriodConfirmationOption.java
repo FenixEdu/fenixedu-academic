@@ -45,9 +45,4 @@ public class OutboundMobilityCandidacyPeriodConfirmationOption extends OutboundM
         return getExternalId().compareTo(o.getExternalId());
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission> getSubmissionsThatSelectedOption() {
-        return getSubmissionsThatSelectedOptionSet();
-    }
-
 }

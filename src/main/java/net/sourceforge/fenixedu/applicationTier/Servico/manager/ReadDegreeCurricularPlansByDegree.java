@@ -43,7 +43,7 @@ public class ReadDegreeCurricularPlansByDegree {
 
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
 
-        for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+        for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlansSet()) {
             result.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
         }
 

@@ -230,7 +230,7 @@ public class CreditNote extends CreditNote_Base {
     private static Map<Event, Money> calculateAmountsToReimburseByEvent(Receipt receipt) {
         final Map<Event, Money> amountToReimburseByEvent = new HashMap<Event, Money>();
         for (final CreditNote creditNote : receipt.getEmittedCreditNotes()) {
-            for (final CreditNoteEntry creditNoteEntry : creditNote.getCreditNoteEntries()) {
+            for (final CreditNoteEntry creditNoteEntry : creditNote.getCreditNoteEntriesSet()) {
                 final Event event = creditNoteEntry.getAccountingEntry().getAccountingTransaction().getEvent();
                 final Money amountToReimburse = creditNoteEntry.getAmount();
                 if (amountToReimburseByEvent.containsKey(event)) {
@@ -267,16 +267,6 @@ public class CreditNote extends CreditNote_Base {
         }
 
         return totalAmount;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.documents.CreditNoteGeneratedDocument> getDocument() {
-        return getDocumentSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry> getCreditNoteEntries() {
-        return getCreditNoteEntriesSet();
     }
 
 }

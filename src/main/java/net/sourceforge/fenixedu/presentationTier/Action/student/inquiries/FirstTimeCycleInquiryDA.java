@@ -74,7 +74,7 @@ public class FirstTimeCycleInquiryDA extends FenixDispatchAction {
             }
         }
 
-        for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
+        for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcessesSet()) {
             if (phdProcess.getInquiryStudentCycleAnswer() == null && student.isValidAndActivePhdProcess(phdProcess)) {
                 if (phdProcess.getRegistration() != null) {
                     if (phdProcess.getRegistration().getInquiryStudentCycleAnswer() != null) {

@@ -41,9 +41,4 @@ public abstract class AcademicProgram extends AcademicProgram_Base {
         deleteDomainObject();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup> getAcademicGroup() {
-        return getAcademicGroupSet();
-    }
-
 }

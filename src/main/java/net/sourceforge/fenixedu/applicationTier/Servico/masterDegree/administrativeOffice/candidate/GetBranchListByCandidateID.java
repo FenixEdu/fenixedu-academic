@@ -41,7 +41,7 @@ public class GetBranchListByCandidateID {
         List<InfoBranch> result = new ArrayList<InfoBranch>();
 
         MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
-        Collection<Branch> branches = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
+        Collection<Branch> branches = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreasSet();
         if (branches == null) {
             InfoBranchEditor infoBranch = new InfoBranchEditor();
             infoBranch.setName("Tronco Comum");

@@ -40,7 +40,7 @@ public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID {
 
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        final Collection executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+        final Collection executionDegrees = degreeCurricularPlan.getExecutionDegreesSet();
         final ExecutionDegree executionDegree = (ExecutionDegree) CollectionUtils.find(executionDegrees, new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {

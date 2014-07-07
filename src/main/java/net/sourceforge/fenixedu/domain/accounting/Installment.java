@@ -181,19 +181,4 @@ public class Installment extends Installment_Base {
         super.setEndDate(endDate);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode> getPaymentCodes() {
-        return getPaymentCodesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption> getInstallmentPenaltyExemptions() {
-        return getInstallmentPenaltyExemptionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction> getAccountingTransactions() {
-        return getAccountingTransactionsSet();
-    }
-
 }

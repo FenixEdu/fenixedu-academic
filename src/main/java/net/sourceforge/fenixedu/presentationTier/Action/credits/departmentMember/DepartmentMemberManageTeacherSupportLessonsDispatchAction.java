@@ -84,7 +84,7 @@ public class DepartmentMemberManageTeacherSupportLessonsDispatchAction extends M
         SupportLesson supportLesson = null;
         if (!StringUtils.isEmpty(supportLesssonID)) {
             supportLesson = FenixFramework.getDomainObject(supportLesssonID);
-            if (!professorship.getSupportLessons().contains(supportLesson)) {
+            if (!professorship.getSupportLessonsSet().contains(supportLesson)) {
                 createNewActionMessage(request);
                 return mapping.findForward("teacher-not-found");
             }

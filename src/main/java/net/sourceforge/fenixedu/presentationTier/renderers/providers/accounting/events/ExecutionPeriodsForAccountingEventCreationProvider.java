@@ -33,7 +33,7 @@ public class ExecutionPeriodsForAccountingEventCreationProvider implements DataP
         final AccountingEventCreateBean accountingEventCreateBean = (AccountingEventCreateBean) source;
 
         if (accountingEventCreateBean.getExecutionYear() != null) {
-            return accountingEventCreateBean.getExecutionYear().getExecutionPeriods();
+            return accountingEventCreateBean.getExecutionYear().getExecutionPeriodsSet();
         }
 
         return Collections.EMPTY_LIST;

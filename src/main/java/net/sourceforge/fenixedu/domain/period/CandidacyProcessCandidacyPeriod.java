@@ -39,7 +39,7 @@ abstract public class CandidacyProcessCandidacyPeriod extends CandidacyProcessCa
     }
 
     public boolean containsCandidacyProcess(final Class<? extends CandidacyProcess> clazz) {
-        for (final CandidacyProcess process : getCandidacyProcesses()) {
+        for (final CandidacyProcess process : getCandidacyProcessesSet()) {
             if (process.getClass().equals(clazz)) {
                 return true;
             }
@@ -49,17 +49,12 @@ abstract public class CandidacyProcessCandidacyPeriod extends CandidacyProcessCa
 
     public List<CandidacyProcess> getCandidacyProcesses(final Class<? extends CandidacyProcess> clazz) {
         final List<CandidacyProcess> result = new ArrayList<CandidacyProcess>();
-        for (final CandidacyProcess process : getCandidacyProcesses()) {
+        for (final CandidacyProcess process : getCandidacyProcessesSet()) {
             if (process.getClass().equals(clazz)) {
                 result.add(process);
             }
         }
         return result;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess> getCandidacyProcesses() {
-        return getCandidacyProcessesSet();
     }
 
 }

@@ -131,9 +131,4 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
         return false;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest> getEquivalencePlanRevisionRequests() {
-        return getEquivalencePlanRevisionRequestsSet();
-    }
-
 }

@@ -59,7 +59,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public void delete() {
-        if (getServiceItems().isEmpty()) {
+        if (getServiceItemsSet().isEmpty()) {
             setTeacher(null);
             setExecutionPeriod(null);
             setRootDomainObject(null);
@@ -204,7 +204,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public List<DegreeTeachingService> getDegreeTeachingServices() {
-        return (List<DegreeTeachingService>) CollectionUtils.select(getServiceItems(), new Predicate() {
+        return (List<DegreeTeachingService>) CollectionUtils.select(getServiceItemsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof DegreeTeachingService;
@@ -213,7 +213,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public List<DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
-        return (List<DegreeProjectTutorialService>) CollectionUtils.select(getServiceItems(), new Predicate() {
+        return (List<DegreeProjectTutorialService>) CollectionUtils.select(getServiceItemsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof DegreeProjectTutorialService;
@@ -222,7 +222,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public List<TeacherMasterDegreeService> getMasterDegreeServices() {
-        return (List<TeacherMasterDegreeService>) CollectionUtils.select(getServiceItems(), new Predicate() {
+        return (List<TeacherMasterDegreeService>) CollectionUtils.select(getServiceItemsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof TeacherMasterDegreeService;
@@ -231,7 +231,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public TeacherPastService getPastService() {
-        return (TeacherPastService) CollectionUtils.find(getServiceItems(), new Predicate() {
+        return (TeacherPastService) CollectionUtils.find(getServiceItemsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof TeacherPastService;
@@ -240,7 +240,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public List<OtherService> getOtherServices() {
-        return (List<OtherService>) CollectionUtils.select(getServiceItems(), new Predicate() {
+        return (List<OtherService>) CollectionUtils.select(getServiceItemsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof OtherService;
@@ -249,7 +249,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public List<InstitutionWorkTime> getInstitutionWorkTimes() {
-        return (List<InstitutionWorkTime>) CollectionUtils.select(getServiceItems(), new Predicate() {
+        return (List<InstitutionWorkTime>) CollectionUtils.select(getServiceItemsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof InstitutionWorkTime;
@@ -258,7 +258,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public ReductionService getReductionService() {
-        return (ReductionService) CollectionUtils.find(getServiceItems(), new Predicate() {
+        return (ReductionService) CollectionUtils.find(getServiceItemsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof ReductionService;
@@ -267,7 +267,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public TeacherServiceNotes getTeacherServiceNotes() {
-        return (TeacherServiceNotes) CollectionUtils.find(getServiceItems(), new Predicate() {
+        return (TeacherServiceNotes) CollectionUtils.find(getServiceItemsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof TeacherServiceNotes;
@@ -281,7 +281,7 @@ public class TeacherService extends TeacherService_Base {
             ExecutionCourse executionCourse = professorship.getExecutionCourse();
             if (executionCourse.getExecutionPeriod() == getExecutionPeriod()) {
                 if (!executionCourse.isMasterDegreeDFAOrDEAOnly()) {
-                    supportLessons.addAll(professorship.getSupportLessons());
+                    supportLessons.addAll(professorship.getSupportLessonsSet());
                 }
             }
         }
@@ -289,7 +289,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public List<TeacherAdviseService> getTeacherAdviseServices() {
-        return (List<TeacherAdviseService>) CollectionUtils.select(getServiceItems(), new Predicate() {
+        return (List<TeacherAdviseService>) CollectionUtils.select(getServiceItemsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof TeacherAdviseService;
@@ -298,7 +298,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public List<TeacherServiceComment> getTeacherServiceComments() {
-        return (List<TeacherServiceComment>) CollectionUtils.select(getServiceItems(), new Predicate() {
+        return (List<TeacherServiceComment>) CollectionUtils.select(getServiceItemsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof TeacherServiceComment;
@@ -331,16 +331,6 @@ public class TeacherService extends TeacherService_Base {
         setTeacherServiceLock(null);
         new TeacherServiceLog(this, BundleUtil.getString(Bundle.TEACHER_CREDITS,
                 "label.teacher.unlockTeacherCredits", getExecutionPeriod().getQualifiedName()));
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem> getServiceItems() {
-        return getServiceItemsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog> getTeacherServiceLog() {
-        return getTeacherServiceLogSet();
     }
 
 }

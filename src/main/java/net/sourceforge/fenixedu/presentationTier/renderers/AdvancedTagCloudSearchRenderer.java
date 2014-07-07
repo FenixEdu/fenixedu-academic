@@ -131,7 +131,7 @@ public class AdvancedTagCloudSearchRenderer extends TagCloudRenderer {
             return false;
         }
 
-        for (UnitFile file : tag.getTaggedFiles()) {
+        for (UnitFile file : tag.getTaggedFilesSet()) {
             if (file.hasUnitFileTags(materializeSelected(tag.getUnit()))) {
                 return true;
             }

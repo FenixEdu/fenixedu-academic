@@ -38,7 +38,7 @@ public class CreditsPersonFunctionsSharedQueueJob extends CreditsPersonFunctions
         ExecutionSemester previousExecutionSemester =
                 getExecutionSemester().getExecutionYear().getPreviousExecutionYear()
                         .getExecutionSemesterFor(getExecutionSemester().getSemester());
-        for (PersonFunction personFunction : previousExecutionSemester.getPersonFunction()) {
+        for (PersonFunction personFunction : previousExecutionSemester.getPersonFunctionSet()) {
             if (personFunction instanceof PersonFunctionShared) {
                 PersonFunctionShared personFunctionShared = (PersonFunctionShared) personFunction;
                 SharedFunction sharedFunction = personFunctionShared.getSharedFunction();

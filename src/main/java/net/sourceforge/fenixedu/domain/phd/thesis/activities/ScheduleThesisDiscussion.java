@@ -86,7 +86,7 @@ public class ScheduleThesisDiscussion extends PhdThesisActivity {
     }
 
     private void notifyJuryElements(final PhdThesisProcess process, final PhdThesisProcessBean bean) {
-        for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
+        for (final ThesisJuryElement juryElement : process.getThesisJuryElementsSet()) {
             final PhdParticipant participant = juryElement.getParticipant();
             sendAlertToJuryElement(process.getIndividualProgramProcess(), participant, bean);
         }

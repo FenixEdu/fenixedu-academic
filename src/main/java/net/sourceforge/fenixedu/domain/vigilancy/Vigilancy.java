@@ -158,7 +158,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     public Collection<ExecutionCourse> getAssociatedExecutionCourses() {
 
-        return this.getWrittenEvaluation().getAssociatedExecutionCourses();
+        return this.getWrittenEvaluation().getAssociatedExecutionCoursesSet();
 
     }
 
@@ -168,7 +168,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
         if (groupEmail != null) {
             emails.add(groupEmail);
         }
-        for (ExecutionCourse course : getWrittenEvaluation().getAssociatedExecutionCourses()) {
+        for (ExecutionCourse course : getWrittenEvaluation().getAssociatedExecutionCoursesSet()) {
             String mail = course.getSite().getMail();
             if (mail != null) {
                 emails.add(mail);
@@ -192,7 +192,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
     }
 
     public boolean hasPointsAttributed() {
-        Collection<Vigilancy> vigilancies = this.getWrittenEvaluation().getVigilancies();
+        Collection<Vigilancy> vigilancies = this.getWrittenEvaluation().getVigilanciesSet();
         for (Vigilancy vigilancy : vigilancies) {
             if (vigilancy.isAttended()) {
                 return true;
@@ -233,7 +233,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     protected boolean isTeacherForCourse(Person person) {
         Teacher teacher = person.getTeacher();
-        return (teacher != null && teacher.teachesAny(this.getWrittenEvaluation().getAssociatedExecutionCourses()));
+        return (teacher != null && teacher.teachesAny(this.getWrittenEvaluation().getAssociatedExecutionCoursesSet()));
     }
 
     protected boolean isExamCoordinatorForGroup(Person person) {

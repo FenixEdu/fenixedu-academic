@@ -180,24 +180,4 @@ public class Recipient extends Recipient_Base {
         return builder.toString();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Sender> getSenders() {
-        return getSendersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessagesTos() {
-        return getMessagesTosSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessagesCcs() {
-        return getMessagesCcsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessages() {
-        return getMessagesSet();
-    }
-
 }

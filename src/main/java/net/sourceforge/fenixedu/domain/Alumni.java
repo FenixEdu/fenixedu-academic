@@ -159,7 +159,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public List<Job> getJobs() {
-        ArrayList<Job> jobs = new ArrayList<Job>(getStudent().getPerson().getJobs());
+        ArrayList<Job> jobs = new ArrayList<Job>(getStudent().getPerson().getJobsSet());
         Collections.sort(jobs, Job.REVERSE_COMPARATOR_BY_BEGIN_DATE);
         return jobs;
     }
@@ -247,7 +247,7 @@ public class Alumni extends Alumni_Base {
             if (person.getStudent() != null) {
 
                 if (bean.getStudentNumber() == null || person.getStudent().getNumber().equals(bean.getStudentNumber())) {
-                    for (Registration registration : (bean.getDegreeType() == null ? person.getStudent().getRegistrations() : person
+                    for (Registration registration : (bean.getDegreeType() == null ? person.getStudent().getRegistrationsSet() : person
                             .getStudent().getRegistrationsByDegreeType(bean.getDegreeType()))) {
 
                         if (registration.isConcluded()) {
@@ -280,7 +280,7 @@ public class Alumni extends Alumni_Base {
         if (!StringUtils.isEmpty(personName)) {
             for (Person person : Person.readPersonsByNameAndRoleType(personName, RoleType.ALUMNI)) {
                 if (matchStudentNumber(person, studentNumber) && matchDocumentIdNumber(person, documentIdNumber)) {
-                    for (Registration registration : person.getStudent().getRegistrations()) {
+                    for (Registration registration : person.getStudent().getRegistrationsSet()) {
                         if (registration.isConcluded()) {
                             resultRegistrations.add(registration);
                         }
@@ -291,7 +291,7 @@ public class Alumni extends Alumni_Base {
             if (studentNumber != null) {
                 Student student = Student.readStudentByNumber(studentNumber);
                 if (student != null && matchDocumentIdNumber(student.getPerson(), documentIdNumber)) {
-                    for (Registration registration : student.getRegistrations()) {
+                    for (Registration registration : student.getRegistrationsSet()) {
                         if (registration.isConcluded()) {
                             resultRegistrations.add(registration);
                         }
@@ -302,7 +302,7 @@ public class Alumni extends Alumni_Base {
                 if (!persons.isEmpty()) {
                     Person person = persons.iterator().next();
                     if (matchStudentNumber(person, studentNumber) && person.getStudent() != null) {
-                        for (Registration registration : person.getStudent().getRegistrations()) {
+                        for (Registration registration : person.getStudent().getRegistrationsSet()) {
                             if (registration.isConcluded()) {
                                 resultRegistrations.add(registration);
                             }
@@ -323,7 +323,7 @@ public class Alumni extends Alumni_Base {
                 boolean match = true;
 
                 if (!StringUtils.isEmpty(telephoneNumber) || !StringUtils.isEmpty(email) || !StringUtils.isEmpty(mobileNumber)) {
-                    if (registration.getPerson().getPartyContacts().isEmpty()) {
+                    if (registration.getPerson().getPartyContactsSet().isEmpty()) {
                         continue;
                     }
                     if (!StringUtils.isEmpty(mobileNumber) && !registration.getPerson().hasAnyPartyContact(MobilePhone.class)) {
@@ -335,7 +335,7 @@ public class Alumni extends Alumni_Base {
                     if (!StringUtils.isEmpty(email) && !registration.getPerson().hasAnyPartyContact(EmailAddress.class)) {
                         continue;
                     }
-                    for (PartyContact contact : registration.getPerson().getPartyContacts()) {
+                    for (PartyContact contact : registration.getPerson().getPartyContactsSet()) {
                         if (!StringUtils.isEmpty(mobileNumber) && contact.isMobile()
                                 && !mobileNumber.equals(contact.getPresentationValue())) {
                             match = false;
@@ -394,7 +394,7 @@ public class Alumni extends Alumni_Base {
                 if (!person.hasRole(RoleType.ALUMNI) || person.getStudent() == null) {
                     continue;
                 }
-                for (Registration registration : person.getStudent().getRegistrations()) {
+                for (Registration registration : person.getStudent().getRegistrationsSet()) {
                     if (!registration.isConcluded()) {
                         continue;
                     }
@@ -440,7 +440,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public boolean hasAnyPendingIdentityRequests() {
-        for (AlumniIdentityCheckRequest request : getIdentityRequests()) {
+        for (AlumniIdentityCheckRequest request : getIdentityRequestsSet()) {
             if (request.getApproved() == null) {
                 return true;
             }
@@ -451,7 +451,7 @@ public class Alumni extends Alumni_Base {
     public AlumniIdentityCheckRequest getLastIdentityRequest() {
         Set<AlumniIdentityCheckRequest> orderedSet =
                 new TreeSet<AlumniIdentityCheckRequest>(new ReverseComparator(new BeanComparator("creationDateTime")));
-        for (AlumniIdentityCheckRequest request : getIdentityRequests()) {
+        for (AlumniIdentityCheckRequest request : getIdentityRequestsSet()) {
             orderedSet.add(request);
         }
         return orderedSet.size() != 0 ? orderedSet.iterator().next() : null;
@@ -475,7 +475,7 @@ public class Alumni extends Alumni_Base {
 
     public void delete() {
         setStudent(null);
-        getIdentityRequests().clear();
+        getIdentityRequestsSet().clear();
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
@@ -483,7 +483,7 @@ public class Alumni extends Alumni_Base {
     public boolean isRecoveringPassword() {
         boolean hasPasswordRequestAccepted = false;
         boolean hasPasswordRequest = false;
-        for (AlumniIdentityCheckRequest request : getIdentityRequests()) {
+        for (AlumniIdentityCheckRequest request : getIdentityRequestsSet()) {
             if (AlumniRequestType.PASSWORD_REQUEST.equals(request.getRequestType())) {
                 if (!hasPasswordRequest) {
                     hasPasswordRequest = true;
@@ -505,11 +505,6 @@ public class Alumni extends Alumni_Base {
                 address.setValid();
             }
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest> getIdentityRequests() {
-        return getIdentityRequestsSet();
     }
 
 }

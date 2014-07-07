@@ -56,7 +56,7 @@ public class ReadExecutionDegreesByExecutionYearAndType {
     public static List run(final DegreeType typeOfCourse) {
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        final Collection<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegrees = executionYear.getExecutionDegreesSet();
         final List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList<InfoExecutionDegree>();
         for (final ExecutionDegree executionDegree : executionDegrees) {
             final Degree degree = executionDegree.getDegreeCurricularPlan().getDegree();

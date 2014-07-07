@@ -110,7 +110,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         List<PhdIndividualProgramProcess> phdIndividualProgramProcessList = new ArrayList<PhdIndividualProgramProcess>();
 
         for (PhdProgram program : Bennu.getInstance().getPhdProgramsSet()) {
-            phdIndividualProgramProcessList.addAll(program.getIndividualProgramProcesses());
+            phdIndividualProgramProcessList.addAll(program.getIndividualProgramProcessesSet());
         }
 
         return phdIndividualProgramProcessList;
@@ -130,7 +130,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 
     private void collectStudentCurricularPlansFor(final ExecutionYear executionYear, final Set<StudentCurricularPlan> result) {
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesByType(this.getDegreeType())) {
-            result.addAll(executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans());
+            result.addAll(executionDegree.getDegreeCurricularPlan().getStudentCurricularPlansSet());
         }
     }
 
@@ -442,7 +442,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 
         // Bolseiro (info. oficial)
         boolean sasFound = false;
-        for (StudentStatute statute : process.getStudent().getStudentStatutes()) {
+        for (StudentStatute statute : process.getStudent().getStudentStatutesSet()) {
             if (statute.getStatuteType() == StudentStatuteType.SAS_GRANT_OWNER
                     && statute.isValidInExecutionPeriod(executionYear.getFirstExecutionPeriod())) {
                 sasFound = true;
@@ -514,7 +514,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 
             // Nº ECTS equivalência/substituição/dispensa
             double totalCreditsDismissed = 0d;
-            for (Credits credits : registration.getLastStudentCurricularPlan().getCredits()) {
+            for (Credits credits : registration.getLastStudentCurricularPlan().getCreditsSet()) {
                 if (credits.isEquivalence()) {
                     totalCreditsDismissed += credits.getEnrolmentsEcts();
                 }
@@ -551,7 +551,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         // ist id dos orientadores
         int count = 0;
         StringBuilder guidings = new StringBuilder();
-        for (PhdParticipant phdParticipant : process.getGuidings()) {
+        for (PhdParticipant phdParticipant : process.getGuidingsSet()) {
             if (phdParticipant.isInternal()) {
                 if (count > 0) {
                     guidings.append(";");
@@ -565,7 +565,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         // ist id dos co-orientadores
         int countAssistantGuidings = 0;
         StringBuilder assistantGuidings = new StringBuilder();
-        for (PhdParticipant phdParticipant : process.getAssistantGuidings()) {
+        for (PhdParticipant phdParticipant : process.getAssistantGuidingsSet()) {
             if (phdParticipant.isInternal()) {
                 if (countAssistantGuidings > 0) {
                     assistantGuidings.append(";");
@@ -579,7 +579,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         // Nome do Orientador Externo
         int countExternalGuidings = 0;
         StringBuilder externalGuidingNames = new StringBuilder();
-        for (PhdParticipant phdParticipant : process.getGuidings()) {
+        for (PhdParticipant phdParticipant : process.getGuidingsSet()) {
             if (!phdParticipant.isInternal()) {
                 if (countExternalGuidings > 0) {
                     externalGuidingNames.append(";");
@@ -596,7 +596,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         // Nome do Co-Orientador Externo
         int countExternalAssistantGuidings = 0;
         StringBuilder externalAssistantGuidingNames = new StringBuilder();
-        for (PhdParticipant phdParticipant : process.getAssistantGuidings()) {
+        for (PhdParticipant phdParticipant : process.getAssistantGuidingsSet()) {
             if (!phdParticipant.isInternal()) {
                 if (countExternalAssistantGuidings > 0) {
                     externalAssistantGuidingNames.append(";");

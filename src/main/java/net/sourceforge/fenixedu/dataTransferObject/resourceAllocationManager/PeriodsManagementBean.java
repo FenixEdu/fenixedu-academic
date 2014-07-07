@@ -136,13 +136,13 @@ public class PeriodsManagementBean implements Serializable {
 
         Multimap<OccupationPeriodType, OccupationPeriodBean> map = HashMultimap.create();
 
-        setDegrees(new ArrayList<ExecutionDegree>(executionYear.getExecutionDegrees()));
+        setDegrees(new ArrayList<ExecutionDegree>(executionYear.getExecutionDegreesSet()));
 
         Collections.sort(degrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 
         for (ExecutionDegree degree : degrees) {
 
-            Collection<OccupationPeriodReference> references = degree.getOccupationPeriodReferences();
+            Collection<OccupationPeriodReference> references = degree.getOccupationPeriodReferencesSet();
 
             for (OccupationPeriodReference reference : references) {
 

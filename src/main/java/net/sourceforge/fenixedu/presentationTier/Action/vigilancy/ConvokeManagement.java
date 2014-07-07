@@ -101,7 +101,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 
         bean.setExamCoordinator(coordinator);
         if (coordinator != null) {
-            bean.setVigilantGroups(coordinator.getVigilantGroups());
+            bean.setVigilantGroups(coordinator.getVigilantGroupsSet());
         } else {
             bean.setVigilantGroups(getVigilantGroups(request, bean.getExecutionYear()));
         }
@@ -331,10 +331,10 @@ public class ConvokeManagement extends FenixDispatchAction {
         bean.setExamCoordinator(coordinator);
         bean.setWrittenEvaluation(writtenEvaluation);
 
-        Collection<VigilantGroup> allGroups = coordinator.getVigilantGroups();
+        Collection<VigilantGroup> allGroups = coordinator.getVigilantGroupsSet();
 
         bean.setVigilantGroups(allGroups);
-        VigilantGroup group = writtenEvaluation.getAssociatedExecutionCourses().iterator().next().getVigilantGroup();
+        VigilantGroup group = writtenEvaluation.getAssociatedExecutionCoursesSet().iterator().next().getVigilantGroup();
         StrategySugestion sugestion = group.sugestVigilantsToConvoke(writtenEvaluation);
 
         bean.setVigilantsSugestion(sugestion.getVigilantSugestion());
@@ -424,7 +424,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         bean.setShowPointsWeight((pointsWeight != null) ? Boolean.valueOf(pointsWeight) : Boolean.FALSE);
         ExamCoordinator coordinator = getCoordinatorForCurrentYear(request);
         bean.setExamCoordinator(coordinator);
-        bean.setVigilantGroups(coordinator.getVigilantGroups());
+        bean.setVigilantGroups(coordinator.getVigilantGroupsSet());
         String executionYear = request.getParameter("executionYear");
         ExecutionYear executionYearObj =
                 executionYear != null ? (ExecutionYear) FenixFramework.getDomainObject(executionYear) : null;

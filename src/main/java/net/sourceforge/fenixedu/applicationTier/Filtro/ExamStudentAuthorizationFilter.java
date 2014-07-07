@@ -69,8 +69,8 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
         try {
             final Evaluation evaluation = FenixFramework.getDomainObject(writtenEvaluationOID);
 
-            for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
-                for (final Attends attend : executionCourse.getAttends()) {
+            for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCoursesSet()) {
+                for (final Attends attend : executionCourse.getAttendsSet()) {
                     if (attend.getRegistration().getPerson().getUsername().equals(studentUsername)) {
                         return true;
                     }

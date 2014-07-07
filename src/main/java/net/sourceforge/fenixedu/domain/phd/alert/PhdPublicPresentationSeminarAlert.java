@@ -81,7 +81,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
     private String getGuidersNames(final PhdIndividualProgramProcess process) {
         final StringBuilder builder = new StringBuilder();
-        final Iterator<PhdParticipant> values = process.getGuidings().iterator();
+        final Iterator<PhdParticipant> values = process.getGuidingsSet().iterator();
         while (values.hasNext()) {
             builder.append(values.next().getName()).append(values.hasNext() ? ", " : "");
         }
@@ -168,7 +168,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private void generateMessageForGuiders() {
-        for (final PhdParticipant guiding : getProcess().getGuidings()) {
+        for (final PhdParticipant guiding : getProcess().getGuidingsSet()) {
             if (guiding.isInternal()) {
                 generateMessage(UserGroup.of(((InternalPhdParticipant) guiding).getPerson().getUser()));
             } else {

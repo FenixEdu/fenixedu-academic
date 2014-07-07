@@ -125,7 +125,7 @@ public class Project extends Project_Base {
         setGradeScale(gradeScale);
         setDescription((description != null) ? description : "");
 
-        if (!getProjectSubmissions().isEmpty()) {
+        if (!getProjectSubmissionsSet().isEmpty()) {
             if (!getGrouping().equals(grouping) || !getOnlineSubmissionsAllowed().equals(onlineSubmissionsAllowed)
                     || !getMaxSubmissionsToKeep().equals(maxSubmissionsToKeep)) {
                 throw new DomainException("error.project.onlineSubmissionOptionsCannotBeChangedBecauseSubmissionsAlreadyExist");
@@ -134,7 +134,7 @@ public class Project extends Project_Base {
         }
 
         setOnlineSubmissionProperties(onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping);
-        final Collection<Department> departmentsList = getDeparments();
+        final Collection<Department> departmentsList = getDeparmentsSet();
         departmentsList.clear();
         departmentsList.addAll(departments);
 
@@ -203,7 +203,7 @@ public class Project extends Project_Base {
     public int countProjectSubmissionsForStudentGroup(StudentGroup studentGroup) {
         int count = 0;
 
-        for (ProjectSubmission projectSubmission : getProjectSubmissions()) {
+        for (ProjectSubmission projectSubmission : getProjectSubmissionsSet()) {
             if (projectSubmission.getStudentGroup() == studentGroup) {
                 count++;
             }
@@ -224,7 +224,7 @@ public class Project extends Project_Base {
     }
 
     public boolean isCanComment() {
-        for (ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+        for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
             final Professorship professorship = executionCourse.getProfessorshipForCurrentUser();
             if (professorship != null) {
                 return true;
@@ -235,7 +235,7 @@ public class Project extends Project_Base {
 
     @Override
     public void delete() {
-        if (!getProjectSubmissions().isEmpty()) {
+        if (!getProjectSubmissionsSet().isEmpty()) {
             throw new DomainException("error.project.cannotDeleteBecauseHasSubmissionsAssociated");
         }
         if (getProjectDepartmentGroup() != null) {
@@ -251,7 +251,7 @@ public class Project extends Project_Base {
     public List<ProjectSubmission> getProjectSubmissionsByStudentGroup(StudentGroup studentGroup) {
         List<ProjectSubmission> result = new ArrayList<ProjectSubmission>();
 
-        for (ProjectSubmission projectSubmission : getProjectSubmissions()) {
+        for (ProjectSubmission projectSubmission : getProjectSubmissionsSet()) {
             if (projectSubmission.getStudentGroup() == studentGroup) {
                 result.add(projectSubmission);
             }
@@ -277,7 +277,7 @@ public class Project extends Project_Base {
         final Map<StudentGroup, ProjectSubmission> lastProjectSubmissionByStudentGroup =
                 new HashMap<StudentGroup, ProjectSubmission>();
 
-        for (final ProjectSubmission projectSubmission : getProjectSubmissions()) {
+        for (final ProjectSubmission projectSubmission : getProjectSubmissionsSet()) {
             final StudentGroup studentGroup = projectSubmission.getStudentGroup();
 
             if (studentGroup.wasDeleted()) {
@@ -299,7 +299,7 @@ public class Project extends Project_Base {
         final Map<StudentGroup, ProjectSubmission> lastProjectSubmissionByStudentGroup =
                 new HashMap<StudentGroup, ProjectSubmission>();
 
-        for (final ProjectSubmission projectSubmission : getProjectSubmissions()) {
+        for (final ProjectSubmission projectSubmission : getProjectSubmissionsSet()) {
             final StudentGroup studentGroup = projectSubmission.getStudentGroup();
 
             if (!studentGroup.wasDeleted()) {
@@ -330,7 +330,7 @@ public class Project extends Project_Base {
     public List<ProjectSubmissionLog> getProjectSubmissionLogsByStudentGroup(StudentGroup studentGroup) {
         List<ProjectSubmissionLog> result = new ArrayList<ProjectSubmissionLog>();
 
-        for (ProjectSubmissionLog projectSubmissionLog : getProjectSubmissionLogs()) {
+        for (ProjectSubmissionLog projectSubmissionLog : getProjectSubmissionLogsSet()) {
             if (projectSubmissionLog.getStudentGroup() == studentGroup) {
                 result.add(projectSubmissionLog);
             }
@@ -390,21 +390,6 @@ public class Project extends Project_Base {
     @Override
     public String getPresentationName() {
         return BundleUtil.getString(Bundle.APPLICATION, "label.project") + " " + getName();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Department> getDeparments() {
-        return getDeparmentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
-        return getProjectSubmissionsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
-        return getProjectSubmissionLogsSet();
     }
 
 }

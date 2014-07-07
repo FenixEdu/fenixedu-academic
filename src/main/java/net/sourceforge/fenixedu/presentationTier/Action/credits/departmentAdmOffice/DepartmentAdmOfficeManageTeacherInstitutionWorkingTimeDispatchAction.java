@@ -69,7 +69,7 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
             HttpServletRequest request) {
 
         User userView = Authenticate.getUser();
-        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCreditsSet();
 
         if (teacher != null) {
             Department teacherWorkingDepartment = teacher.getCurrentWorkingDepartment();

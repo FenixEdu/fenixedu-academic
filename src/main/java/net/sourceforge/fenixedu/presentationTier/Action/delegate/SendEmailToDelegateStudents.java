@@ -229,7 +229,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
                 return getCurricularCoursesBeans(delegateFunction, curricularCourses, executionYear);
             } else if (!delegateFunction.getPerson().getCoordinatorsSet().isEmpty()) {
                 Set<CurricularCourse> curricularCourses =
-                        getDegreesCurricularCoursesFromCoordinatorRoles(delegateFunction.getPerson().getCoordinators(),
+                        getDegreesCurricularCoursesFromCoordinatorRoles(delegateFunction.getPerson().getCoordinatorsSet(),
                                 executionYear);
                 return getCurricularCoursesBeans(delegateFunction, curricularCourses, executionYear);
             }
@@ -245,7 +245,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
         List<DelegateCurricularCourseBean> result = new ArrayList<DelegateCurricularCourseBean>();
 
         for (CurricularCourse curricularCourse : curricularCourses) {
-            for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+            for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
                 if (curricularCourse.hasAnyExecutionCourseIn(executionSemester)) {
                     for (DegreeModuleScope scope : curricularCourse.getDegreeModuleScopes()) {
                         if (scope.isActiveForAcademicInterval(executionSemester.getAcademicInterval())) {

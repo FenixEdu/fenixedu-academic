@@ -98,14 +98,4 @@ public class AccountabilityType extends AccountabilityType_Base {
         setTypeName(typeName);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Accountability> getAccountabilities() {
-        return getAccountabilitiesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule> getConnectionRules() {
-        return getConnectionRulesSet();
-    }
-
 }

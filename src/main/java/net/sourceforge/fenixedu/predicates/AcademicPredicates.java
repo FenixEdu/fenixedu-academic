@@ -218,7 +218,7 @@ public class AcademicPredicates {
                 }
             }
 
-            for (IndividualCandidacyPersonalDetails candidacyDetails : person.getIndividualCandidacies()) {
+            for (IndividualCandidacyPersonalDetails candidacyDetails : person.getIndividualCandidaciesSet()) {
                 IndividualCandidacy candidacy = candidacyDetails.getCandidacy();
                 Collection<Degree> candidacyDegrees = candidacy.getAllDegrees();
                 if (candidacyDegrees.isEmpty()) {
@@ -230,7 +230,7 @@ public class AcademicPredicates {
                 }
             }
 
-            for (PhdIndividualProgramProcess programProcess : person.getPhdIndividualProgramProcesses()) {
+            for (PhdIndividualProgramProcess programProcess : person.getPhdIndividualProgramProcessesSet()) {
                 if (allowedPrograms.contains(programProcess.getPhdProgram())) {
                     return true; // 4.
                 }

@@ -91,7 +91,7 @@ public class SchoolClass extends SchoolClass_Base {
 
     public void delete() {
         check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
-        getAssociatedShifts().clear();
+        getAssociatedShiftsSet().clear();
         super.setExecutionDegree(null);
         super.setExecutionPeriod(null);
         setRootDomainObject(null);
@@ -160,11 +160,11 @@ public class SchoolClass extends SchoolClass_Base {
         if (shift == null) {
             throw new NullPointerException();
         }
-        if (!this.getAssociatedShifts().contains(shift)) {
-            this.getAssociatedShifts().add(shift);
+        if (!this.getAssociatedShiftsSet().contains(shift)) {
+            this.getAssociatedShiftsSet().add(shift);
         }
-        if (!shift.getAssociatedClasses().contains(this)) {
-            shift.getAssociatedClasses().add(this);
+        if (!shift.getAssociatedClassesSet().contains(this)) {
+            shift.getAssociatedClassesSet().add(this);
         }
     }
 
@@ -173,16 +173,16 @@ public class SchoolClass extends SchoolClass_Base {
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         final Set<Shift> shifts = new HashSet<Shift>();
-        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             if (curricularCourse.hasScopeForCurricularYear(getAnoCurricular(), getExecutionPeriod())) {
-                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
                     if (executionCourse.getExecutionPeriod() == getExecutionPeriod()) {
                         shifts.addAll(executionCourse.getAssociatedShifts());
                     }
                 }
             }
         }
-        shifts.removeAll(getAssociatedShifts());
+        shifts.removeAll(getAssociatedShiftsSet());
         return shifts;
     }
 
@@ -194,16 +194,6 @@ public class SchoolClass extends SchoolClass_Base {
 
     public AcademicInterval getAcademicInterval() {
         return getExecutionPeriod().getAcademicInterval();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse> getAssociatedInquiriesCourses() {
-        return getAssociatedInquiriesCoursesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Shift> getAssociatedShifts() {
-        return getAssociatedShiftsSet();
     }
 
 }

@@ -549,7 +549,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
 
         final ExecutionCourse executionCourse = getExecutionCourse(request);
         final List<Registration> studentList = new ArrayList<Registration>();
-        for (final Attends attends : executionCourse.getAttends()) {
+        for (final Attends attends : executionCourse.getAttendsSet()) {
             if (!studentList.contains(attends.getRegistration()) && attends.getRegistration().isActive()) {
                 studentList.add(attends.getRegistration());
             }
@@ -627,7 +627,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
         final TestScope testScope = executionCourse.getTestScope();
         List<DistributedTest> distributedTestList = new ArrayList<DistributedTest>();
         if (testScope != null) {
-            distributedTestList = new ArrayList<>(testScope.getDistributedTests());
+            distributedTestList = new ArrayList<>(testScope.getDistributedTestsSet());
         }
         request.setAttribute("distributedTests", distributedTestList);
         return doForward(request, "showDistributedTests");
@@ -707,7 +707,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
         final Set<Shift> associatedShifts = executionCourse.getAssociatedShifts();
         List<Shift> shiftList = new ArrayList<Shift>();
         for (Shift shift : associatedShifts) {
-            Collection<Registration> shiftStudents = shift.getStudents();
+            Collection<Registration> shiftStudents = shift.getStudentsSet();
             if (!students.containsAll(shiftStudents)) {
                 shiftList.add(shift);
             }
@@ -723,7 +723,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
         final List<Registration> studentList = new ArrayList<Registration>();
         final ExecutionCourse executionCourse = getExecutionCourse(request);
-        final Collection<Attends> attendList = executionCourse.getAttends();
+        final Collection<Attends> attendList = executionCourse.getAttendsSet();
         final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
         final Set<Registration> students = distributedTest.findStudents();
         for (Attends attend : attendList) {
@@ -1289,16 +1289,16 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
             }
         }
 
-        String[] questionCodes = new String[test.getTestQuestions().size()];
-        String[] optionsShuffle = new String[test.getTestQuestions().size()];
-        String[] questionTypes = new String[test.getTestQuestions().size()];
-        for (int i = 0; i < test.getTestQuestions().size(); i++) {
+        String[] questionCodes = new String[test.getTestQuestionsSet().size()];
+        String[] optionsShuffle = new String[test.getTestQuestionsSet().size()];
+        String[] questionTypes = new String[test.getTestQuestionsSet().size()];
+        for (int i = 0; i < test.getTestQuestionsSet().size(); i++) {
             questionCodes[i] = request.getParameter("questionCode" + i);
             optionsShuffle[i] = request.getParameter("optionShuffle" + i);
             questionTypes[i] = request.getParameter("questionType" + i);
         }
-        Response[] userResponse = new Response[test.getTestQuestions().size()];
-        for (int i = 0; i < test.getTestQuestions().size(); i++) {
+        Response[] userResponse = new Response[test.getTestQuestionsSet().size()];
+        for (int i = 0; i < test.getTestQuestionsSet().size(); i++) {
             if (new Integer(questionTypes[i]).intValue() == QuestionType.STR) {
                 userResponse[i] = new ResponseSTR(request.getParameter("question" + i));
             } else if (new Integer(questionTypes[i]).intValue() == QuestionType.NUM) {
@@ -1440,7 +1440,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
 
     private String createDefaultDistributedTestInfo(Test test) {
         return MessageFormat.format(BundleUtil.getString(Bundle.APPLICATION, "message.distributeTest.evaluation"), new Object[] {
-                test.getTitle(), test.getTestQuestions().size() });
+                test.getTitle(), test.getTestQuestionsSet().size() });
     }
 
     private String createDefaultDistributedInquiryInfo() {

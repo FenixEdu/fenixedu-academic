@@ -224,7 +224,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
         // The occupation period is shared by multiple types, a new one must be
         // created!
-        if (this.occupationPeriod.getExecutionDegrees().size() != getReferences().size()) {
+        if (this.occupationPeriod.getExecutionDegreesSet().size() != getReferences().size()) {
             this.occupationPeriod = new OccupationPeriod(intervals.iterator());
 
             // Period has changed, lets change the references so they point to

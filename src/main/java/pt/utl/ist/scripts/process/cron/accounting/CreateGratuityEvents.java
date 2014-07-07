@@ -39,9 +39,8 @@ public class CreateGratuityEvents extends CronTask {
     private int GratuityEvent_TOTAL_CREATED = 0;
 
     private void generateGratuityEventsForAllStudents(final ExecutionYear executionYear) {
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
-            for (final StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan()
-                    .getStudentCurricularPlans()) {
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+            for (final StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan().getStudentCurricularPlansSet()) {
                 generateGratuityEvents(executionYear, studentCurricularPlan);
             }
         }

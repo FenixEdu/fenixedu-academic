@@ -141,18 +141,13 @@ public class TeacherCredits extends TeacherCredits_Base {
 
     public TeacherCreditsDocument getLastTeacherCreditsDocument() {
         TeacherCreditsDocument lastTeacherCreditsDocument = null;
-        for (TeacherCreditsDocument teacherCreditsDocument : getTeacherCreditsDocument()) {
+        for (TeacherCreditsDocument teacherCreditsDocument : getTeacherCreditsDocumentSet()) {
             if (lastTeacherCreditsDocument == null
                     || lastTeacherCreditsDocument.getUploadTime().isBefore(teacherCreditsDocument.getUploadTime())) {
                 lastTeacherCreditsDocument = teacherCreditsDocument;
             }
         }
         return lastTeacherCreditsDocument;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCreditsDocument> getTeacherCreditsDocument() {
-        return getTeacherCreditsDocumentSet();
     }
 
 }

@@ -92,7 +92,7 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
         SupportLesson supportLesson = null;
         if (!StringUtils.isEmpty(supportLesssonID)) {
             supportLesson = FenixFramework.getDomainObject(supportLesssonID);
-            if (!professorship.getSupportLessons().contains(supportLesson)) {
+            if (!professorship.getSupportLessonsSet().contains(supportLesson)) {
                 return mapping.findForward("teacher-not-found");
             }
         }
@@ -104,7 +104,7 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
     private boolean isTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
             HttpServletRequest request) {
         User userView = Authenticate.getUser();
-        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCreditsSet();
         List<Unit> workingPlacesByPeriod =
                 teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
                         executionSemester.getEndDateYearMonthDay());

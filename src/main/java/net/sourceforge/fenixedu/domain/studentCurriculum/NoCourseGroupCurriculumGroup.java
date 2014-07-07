@@ -108,7 +108,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 
     @Override
     public boolean hasDegreeModule(DegreeModule degreeModule) {
-        for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
+        for (final CurriculumModule curriculumModule : this.getCurriculumModulesSet()) {
             if (curriculumModule.hasDegreeModule(degreeModule)) {
                 return true;
             }
@@ -118,7 +118,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 
     @Override
     public boolean hasCourseGroup(CourseGroup courseGroup) {
-        for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
             if (!curriculumModule.isLeaf()) {
                 final CurriculumGroup group = (CurriculumGroup) curriculumModule;
                 if (group.hasCourseGroup(courseGroup)) {

@@ -36,7 +36,7 @@ public class ReadExecutionPeriodsByExecutionYear {
                         .readCurrentExecutionYear();
 
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
         }
         return infoExecutionPeriods;

@@ -40,7 +40,7 @@ public class VigilantGroupsForPoints implements DataProvider {
         ExamCoordinator coordinator = bean.getExamCoordinator();
 
         Collection<VigilantGroup> vigilantGroups =
-                (coordinator == null) ? bean.getVigilantGroups() : coordinator.getVigilantGroups();
+                (coordinator == null) ? bean.getVigilantGroups() : coordinator.getVigilantGroupsSet();
 
         List<VigilantGroup> previousVigilantGroups = null;
         if (coordinator != null) {

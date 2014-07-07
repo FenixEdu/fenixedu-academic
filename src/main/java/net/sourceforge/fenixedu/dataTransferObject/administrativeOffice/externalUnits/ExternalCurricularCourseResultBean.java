@@ -60,7 +60,7 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
     }
 
     public int getNumberOfExternalEnrolments() {
-        return getExternalCurricularCourse().getExternalEnrolments().size();
+        return getExternalCurricularCourse().getExternalEnrolmentsSet().size();
     }
 
     @Override
@@ -111,7 +111,7 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
 
     static private void getChildsWithType(final List<ExternalCurricularCourse> result, final Unit unit) {
 
-        result.addAll(unit.getExternalCurricularCourses());
+        result.addAll(unit.getExternalCurricularCoursesSet());
 
         switch (unit.getType()) {
         case COUNTRY:

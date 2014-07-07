@@ -92,7 +92,7 @@ public class WrittenEvaluationRoomDistribution {
     private List<Registration> readEnroledStudentsInWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
         final List<Registration> result =
                 new ArrayList<Registration>(writtenEvaluation.getWrittenEvaluationEnrolmentsSet().size());
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation.getWrittenEvaluationEnrolments()) {
+        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation.getWrittenEvaluationEnrolmentsSet()) {
             result.add(writtenEvaluationEnrolment.getStudent());
         }
         return result;
@@ -100,8 +100,8 @@ public class WrittenEvaluationRoomDistribution {
 
     private List<Registration> readAllStudentsAttendingExecutionCourses(WrittenEvaluation writtenEvaluation) {
         final List<Registration> result = new ArrayList<Registration>();
-        for (final ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
-            for (final Attends attend : executionCourse.getAttends()) {
+        for (final ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCoursesSet()) {
+            for (final Attends attend : executionCourse.getAttendsSet()) {
                 if (!result.contains(attend.getRegistration())) {
                     result.add(attend.getRegistration());
                 }

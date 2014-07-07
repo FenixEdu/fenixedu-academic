@@ -165,7 +165,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 
     public PhdCandidacyFeedbackRequestElement getPhdCandidacyFeedbackRequestElement(
             final PhdCandidacyFeedbackRequestProcess process) {
-        for (final PhdCandidacyFeedbackRequestElement element : getCandidacyFeedbackRequestElements()) {
+        for (final PhdCandidacyFeedbackRequestElement element : getCandidacyFeedbackRequestElementsSet()) {
             if (element.isFor(process)) {
                 return element;
             }
@@ -212,16 +212,6 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
         }
 
         return null;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement> getThesisJuryElements() {
-        return getThesisJuryElementsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement> getCandidacyFeedbackRequestElements() {
-        return getCandidacyFeedbackRequestElementsSet();
     }
 
 }

@@ -76,7 +76,7 @@ public class ReadTeacherServiceDistributionByCourse {
         Map<String, Boolean> executionCoursesMap = new HashMap<String, Boolean>();
 
         for (CompetenceCourse cc : competenceCourseList) {
-            for (CurricularCourse curricularCourseEntry : cc.getAssociatedCurricularCourses()) {
+            for (CurricularCourse curricularCourseEntry : cc.getAssociatedCurricularCoursesSet()) {
 
                 for (ExecutionSemester executionPeriodEntry : executionPeriodList) {
 
@@ -200,7 +200,7 @@ public class ReadTeacherServiceDistributionByCourse {
     private void fillExecutionCourseDTOWithTeachers(DistributionTeacherServicesByCourseDTO dto, ExecutionCourse executionCourse,
             Department department) {
 
-        for (Professorship professorShipEntry : executionCourse.getProfessorships()) {
+        for (Professorship professorShipEntry : executionCourse.getProfessorshipsSet()) {
             Teacher teacher = professorShipEntry.getTeacher();
 
             if (teacher == null) {
@@ -234,7 +234,7 @@ public class ReadTeacherServiceDistributionByCourse {
             ExecutionSemester executionSemester) {
         String campus = "";
 
-        for (ExecutionDegree executionDegreeEntry : curricularCourse.getDegreeCurricularPlan().getExecutionDegrees()) {
+        for (ExecutionDegree executionDegreeEntry : curricularCourse.getDegreeCurricularPlan().getExecutionDegreesSet()) {
             if (executionDegreeEntry.getExecutionYear() == executionSemester.getExecutionYear()) {
                 campus = executionDegreeEntry.getCampus().getName();
                 break;

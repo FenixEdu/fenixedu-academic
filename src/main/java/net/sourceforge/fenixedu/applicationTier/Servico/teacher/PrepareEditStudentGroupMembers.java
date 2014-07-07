@@ -50,11 +50,11 @@ public class PrepareEditStudentGroupMembers {
         }
 
         final List<Attends> groupingAttends = new ArrayList<Attends>();
-        groupingAttends.addAll(studentGroup.getGrouping().getAttends());;
+        groupingAttends.addAll(studentGroup.getGrouping().getAttendsSet());;
 
         final Collection<StudentGroup> studentsGroups = studentGroup.getGrouping().getStudentGroupsSet();
         for (final StudentGroup studentGroupIter : studentsGroups) {
-            for (final Attends attend : studentGroupIter.getAttends()) {
+            for (final Attends attend : studentGroupIter.getAttendsSet()) {
                 groupingAttends.remove(attend);
             }
         }

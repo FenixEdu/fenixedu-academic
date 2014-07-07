@@ -129,7 +129,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final Degree degree = getDegree();
         final String degreeCurricularPlanID = getDegreeCurricularPlanID();
         if (degree != null && degreeCurricularPlanID != null) {
-            for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+            for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
                 if (degreeCurricularPlanID.equals(degreeCurricularPlan.getExternalId())) {
                     return degreeCurricularPlan;
                 }
@@ -146,9 +146,9 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final String executionPeriodID = getExecutionPeriodID();
         if (degreeCurricularPlan != null && executionPeriodID != null) {
-            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
                 final ExecutionYear executionYear = executionDegree.getExecutionYear();
-                for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+                for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
                     if (executionSemester.getExternalId().equals(executionPeriodID)) {
                         return executionSemester;
                     }
@@ -181,9 +181,9 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         if (degreeCurricularPlan != null) {
-            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
                 final ExecutionYear executionYear = executionDegree.getExecutionYear();
-                for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+                for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
                     if (executionSemester.getState() != PeriodState.CLOSED) {
                         if (mostRecentExecutionPeriod == null) {
                             mostRecentExecutionPeriod = executionSemester;
@@ -228,9 +228,9 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final List<SelectItem> executionPeriodSelectItems = new ArrayList<SelectItem>();
 
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
-            for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+            for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
                 if (executionSemester.getState() != PeriodState.CLOSED) {
                     executionPeriodSelectItems.add(new SelectItem(executionSemester.getExternalId(), executionSemester.getName()
                             + " " + executionYear.getYear()));
@@ -257,13 +257,13 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final CurricularYear curricularYear = getCurricularYear();
         final ExecutionSemester executionSemester = getExecutionPeriod();
-        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             if (curricularYear == null
                     || curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
                             executionSemester)) {
-                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
                     if (executionCourse.getExecutionPeriod() == executionSemester) {
-                        for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+                        for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
 
                             if (evaluation instanceof WrittenEvaluation) {
                                 if (!(evaluation instanceof Exam) || ((Exam) evaluation).isExamsMapPublished()) {
@@ -360,7 +360,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final ExecutionSemester executionSemester = getExecutionPeriod();
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final ExecutionYear executionYear = executionSemester.getExecutionYear();
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
             if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
                 if (executionSemester.getSemester().intValue() == 1 && executionDegree.getPeriodLessonsFirstSemester() != null) {
                     result[0] = executionDegree.getPeriodLessonsFirstSemester().getStart();
@@ -384,7 +384,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final ExecutionSemester executionSemester = getExecutionPeriod();
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final ExecutionYear executionYear = executionSemester.getExecutionYear();
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
             if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
                 if (executionSemester.getSemester().intValue() == 1 && executionDegree.getPeriodExamsFirstSemester() != null) {
                     result[0] = executionDegree.getPeriodExamsFirstSemester().getEnd();

@@ -46,9 +46,4 @@ public class AnnualCreditsState extends AnnualCreditsState_Base {
         return annualCreditsState;
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits> getAnnualTeachingCredits() {
-        return getAnnualTeachingCreditsSet();
-    }
-
 }

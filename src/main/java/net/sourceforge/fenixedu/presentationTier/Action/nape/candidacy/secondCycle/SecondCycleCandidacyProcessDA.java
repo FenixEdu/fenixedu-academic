@@ -68,14 +68,14 @@ public class SecondCycleCandidacyProcessDA extends
 
     @Override
     protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-        Collection<IndividualCandidacyProcess> processes = process.getChildProcesses();
+        Collection<IndividualCandidacyProcess> processes = process.getChildProcessesSet();
         List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses =
                 new ArrayList<IndividualCandidacyProcess>();
         Degree selectedDegree = getChooseDegreeBean(request).getDegree();
 
         for (IndividualCandidacyProcess child : processes) {
             if ((selectedDegree == null)
-                    || ((SecondCycleIndividualCandidacyProcess) child).getCandidacy().getSelectedDegrees()
+                    || ((SecondCycleIndividualCandidacyProcess) child).getCandidacy().getSelectedDegreesSet()
                             .contains(selectedDegree)) {
                 selectedDegreesIndividualCandidacyProcesses.add(child);
             }

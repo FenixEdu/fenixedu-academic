@@ -150,18 +150,18 @@ public class Shift extends Shift_Base {
 
             final ExecutionCourse executionCourse = getExecutionCourse();
 
-            for (; !getAssociatedLessonsSet().isEmpty(); getAssociatedLessons().iterator().next().delete()) {
+            for (; !getAssociatedLessonsSet().isEmpty(); getAssociatedLessonsSet().iterator().next().delete()) {
                 ;
             }
-            for (; !getAssociatedShiftProfessorshipSet().isEmpty(); getAssociatedShiftProfessorship().iterator().next().delete()) {
+            for (; !getAssociatedShiftProfessorshipSet().isEmpty(); getAssociatedShiftProfessorshipSet().iterator().next().delete()) {
                 ;
             }
-            for (; !getShiftDistributionEntriesSet().isEmpty(); getShiftDistributionEntries().iterator().next().delete()) {
+            for (; !getShiftDistributionEntriesSet().isEmpty(); getShiftDistributionEntriesSet().iterator().next().delete()) {
                 ;
             }
 
-            getAssociatedClasses().clear();
-            getCourseLoads().clear();
+            getAssociatedClassesSet().clear();
+            getCourseLoadsSet().clear();
             if (getShiftGroupingProperties() != null) {
                 getShiftGroupingProperties().delete();
             }
@@ -186,7 +186,7 @@ public class Shift extends Shift_Base {
     }
 
     public ExecutionCourse getExecutionCourse() {
-        CourseLoad courseLoad = getCourseLoads().iterator().next();
+        CourseLoad courseLoad = getCourseLoadsSet().iterator().next();
         if (courseLoad != null) {
             return courseLoad.getExecutionCourse();
         } else {
@@ -200,7 +200,7 @@ public class Shift extends Shift_Base {
 
     private void shiftTypeManagement(Collection<ShiftType> types, ExecutionCourse executionCourse) {
         if (executionCourse != null) {
-            getCourseLoads().clear();
+            getCourseLoadsSet().clear();
             for (ShiftType shiftType : types) {
                 CourseLoad courseLoad = executionCourse.getCourseLoadByShiftType(shiftType);
                 if (courseLoad != null) {
@@ -212,7 +212,7 @@ public class Shift extends Shift_Base {
 
     public List<ShiftType> getTypes() {
         List<ShiftType> result = new ArrayList<ShiftType>();
-        for (CourseLoad courseLoad : getCourseLoads()) {
+        for (CourseLoad courseLoad : getCourseLoadsSet()) {
             result.add(courseLoad.getType());
         }
         return result;
@@ -220,7 +220,7 @@ public class Shift extends Shift_Base {
 
     public SortedSet<ShiftType> getSortedTypes() {
         SortedSet<ShiftType> result = new TreeSet<ShiftType>();
-        for (CourseLoad courseLoad : getCourseLoads()) {
+        for (CourseLoad courseLoad : getCourseLoadsSet()) {
             result.add(courseLoad.getType());
         }
         return result;
@@ -228,7 +228,7 @@ public class Shift extends Shift_Base {
 
     public boolean containsType(ShiftType shiftType) {
         if (shiftType != null) {
-            for (CourseLoad courseLoad : getCourseLoads()) {
+            for (CourseLoad courseLoad : getCourseLoadsSet()) {
                 if (courseLoad.getType().equals(shiftType)) {
                     return true;
                 }
@@ -254,7 +254,7 @@ public class Shift extends Shift_Base {
     }
 
     public BigDecimal getTotalHours() {
-        Collection<Lesson> lessons = getAssociatedLessons();
+        Collection<Lesson> lessons = getAssociatedLessonsSet();
         BigDecimal lessonTotalHours = BigDecimal.ZERO;
         for (Lesson lesson : lessons) {
             lessonTotalHours = lessonTotalHours.add(lesson.getTotalHours());
@@ -264,7 +264,7 @@ public class Shift extends Shift_Base {
 
     public Duration getTotalDuration() {
         Duration duration = Duration.ZERO;
-        Collection<Lesson> lessons = getAssociatedLessons();
+        Collection<Lesson> lessons = getAssociatedLessonsSet();
         for (Lesson lesson : lessons) {
             duration = duration.plus(lesson.getTotalDuration());
         }
@@ -273,7 +273,7 @@ public class Shift extends Shift_Base {
 
     public BigDecimal getMaxLessonDuration() {
         BigDecimal maxHours = BigDecimal.ZERO;
-        for (Lesson lesson : getAssociatedLessons()) {
+        for (Lesson lesson : getAssociatedLessonsSet()) {
             BigDecimal lessonHours = lesson.getUnitHours();
             if (maxHours.compareTo(lessonHours) == -1) {
                 maxHours = lessonHours;
@@ -284,7 +284,7 @@ public class Shift extends Shift_Base {
 
     public BigDecimal getUnitHours() {
         BigDecimal hours = BigDecimal.ZERO;
-        Collection<Lesson> lessons = getAssociatedLessons();
+        Collection<Lesson> lessons = getAssociatedLessonsSet();
         for (Lesson lesson : lessons) {
             hours = hours.add(lesson.getUnitHours());
         }
@@ -293,7 +293,7 @@ public class Shift extends Shift_Base {
 
     public double getHoursOnSaturdaysOrNightHours(int nightHour) {
         double hours = 0;
-        Collection<Lesson> lessons = this.getAssociatedLessons();
+        Collection<Lesson> lessons = this.getAssociatedLessonsSet();
         for (Lesson lesson : lessons) {
             if (lesson.getDiaSemana().equals(new DiaSemana(DiaSemana.SABADO))) {
                 hours += lesson.getUnitHours().doubleValue();
@@ -305,7 +305,7 @@ public class Shift extends Shift_Base {
     }
 
     public int getNumberOfLessonInstances() {
-        Collection<Lesson> lessons = getAssociatedLessons();
+        Collection<Lesson> lessons = getAssociatedLessonsSet();
         int totalLessonsDates = 0;
         for (Lesson lesson : lessons) {
             totalLessonsDates += lesson.getFinalNumberOfLessonInstances();
@@ -315,7 +315,7 @@ public class Shift extends Shift_Base {
 
     public BigDecimal getCourseLoadWeeklyAverage() {
         BigDecimal weeklyHours = BigDecimal.ZERO;
-        for (CourseLoad courseLoad : getCourseLoads()) {
+        for (CourseLoad courseLoad : getCourseLoadsSet()) {
             weeklyHours = weeklyHours.add(courseLoad.getWeeklyHours());
         }
         return weeklyHours;
@@ -323,7 +323,7 @@ public class Shift extends Shift_Base {
 
     public BigDecimal getCourseLoadTotalHours() {
         BigDecimal weeklyHours = BigDecimal.ZERO;
-        for (CourseLoad courseLoad : getCourseLoads()) {
+        for (CourseLoad courseLoad : getCourseLoadsSet()) {
             weeklyHours = weeklyHours.add(courseLoad.getTotalQuantity());
         }
         return weeklyHours;
@@ -333,22 +333,22 @@ public class Shift extends Shift_Base {
         if (schoolClass == null) {
             throw new NullPointerException();
         }
-        if (!this.getAssociatedClasses().contains(schoolClass)) {
-            this.getAssociatedClasses().add(schoolClass);
+        if (!this.getAssociatedClassesSet().contains(schoolClass)) {
+            this.getAssociatedClassesSet().add(schoolClass);
         }
-        if (!schoolClass.getAssociatedShifts().contains(this)) {
-            schoolClass.getAssociatedShifts().add(this);
+        if (!schoolClass.getAssociatedShiftsSet().contains(this)) {
+            schoolClass.getAssociatedShiftsSet().add(this);
         }
     }
 
     public Double getAvailableShiftPercentage(Professorship professorship) {
         Double availablePercentage = 100.0;
-        for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
+        for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
             if (degreeTeachingService.getProfessorship() != professorship) {
                 availablePercentage -= degreeTeachingService.getPercentage();
             }
         }
-        for (NonRegularTeachingService nonRegularTeachingService : getNonRegularTeachingServices()) {
+        for (NonRegularTeachingService nonRegularTeachingService : getNonRegularTeachingServicesSet()) {
             if (nonRegularTeachingService.getProfessorship() != professorship
                     && (getCourseLoadsSet().size() != 1 || !containsType(ShiftType.LABORATORIAL))) {
                 availablePercentage -= nonRegularTeachingService.getPercentage();
@@ -406,7 +406,7 @@ public class Shift extends Shift_Base {
     public String getClassesPrettyPrint() {
         StringBuilder builder = new StringBuilder();
         int index = 0;
-        for (SchoolClass schoolClass : getAssociatedClasses()) {
+        for (SchoolClass schoolClass : getAssociatedClassesSet()) {
             builder.append(schoolClass.getNome());
             index++;
             if (index < getAssociatedClassesSet().size()) {
@@ -526,7 +526,7 @@ public class Shift extends Shift_Base {
     }
 
     public boolean hasSchoolClassForDegreeType(DegreeType degreeType) {
-        for (SchoolClass schoolClass : getAssociatedClasses()) {
+        for (SchoolClass schoolClass : getAssociatedClassesSet()) {
             if (schoolClass.getExecutionDegree().getDegreeType() == degreeType) {
                 return true;
             }
@@ -612,7 +612,7 @@ public class Shift extends Shift_Base {
 
     public List<StudentGroup> getAssociatedStudentGroups(Grouping grouping) {
         List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (StudentGroup studentGroup : getAssociatedStudentGroups()) {
+        for (StudentGroup studentGroup : getAssociatedStudentGroupsSet()) {
             if (studentGroup.getGrouping() == grouping) {
                 result.add(studentGroup);
             }
@@ -628,66 +628,6 @@ public class Shift extends Shift_Base {
             }
         }
         return false;
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry> getShiftDistributionEntries() {
-        return getShiftDistributionEntriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
-        return getAssociatedSummariesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer> getInquiryCoursesAnswers() {
-        return getInquiryCoursesAnswersSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.StudentGroup> getAssociatedStudentGroups() {
-        return getAssociatedStudentGroupsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.CourseLoad> getCourseLoads() {
-        return getCourseLoadsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftProfessorship> getAssociatedShiftProfessorship() {
-        return getAssociatedShiftProfessorshipSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Lesson> getAssociatedLessons() {
-        return getAssociatedLessonsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftEnrolment> getShiftEnrolments() {
-        return getShiftEnrolmentsSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.SchoolClass> getAssociatedClasses() {
-        return getAssociatedClassesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.NonRegularTeachingService> getNonRegularTeachingServices() {
-        return getNonRegularTeachingServicesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService> getDegreeTeachingServices() {
-        return getDegreeTeachingServicesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getStudents() {
-        return getStudentsSet();
     }
 
 }

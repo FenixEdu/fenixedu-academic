@@ -176,7 +176,7 @@ public class SimulateTest {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
         Test test = FenixFramework.getDomainObject(testId);
-        List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+        List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestionsSet());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (int i = 0; i < testQuestionList.size(); i++) {
             TestQuestion testQuestionExample = testQuestionList.get(i);

@@ -40,7 +40,7 @@ public class RemoverTurno {
         if (shift == null) {
             return Boolean.FALSE;
         }
-        final SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(shift.getAssociatedClasses(), new Predicate() {
+        final SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(shift.getAssociatedClassesSet(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
                 final SchoolClass schoolClass = (SchoolClass) arg0;
@@ -50,7 +50,7 @@ public class RemoverTurno {
         if (schoolClass == null) {
             return Boolean.FALSE;
         }
-        shift.getAssociatedClasses().remove(schoolClass);
+        shift.getAssociatedClassesSet().remove(schoolClass);
         return Boolean.TRUE;
     }
 

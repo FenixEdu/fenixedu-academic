@@ -263,7 +263,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     public RegistrationState getNext() {
         List<RegistrationState> sortedRegistrationsStates =
-                new ArrayList<RegistrationState>(getRegistration().getRegistrationStates());
+                new ArrayList<RegistrationState>(getRegistration().getRegistrationStatesSet());
         Collections.sort(sortedRegistrationsStates, DATE_COMPARATOR);
         for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(); iter.hasNext();) {
             RegistrationState state = iter.next();
@@ -279,7 +279,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     public RegistrationState getPrevious() {
         List<RegistrationState> sortedRegistrationsStates =
-                new ArrayList<RegistrationState>(getRegistration().getRegistrationStates());
+                new ArrayList<RegistrationState>(getRegistration().getRegistrationStatesSet());
         Collections.sort(sortedRegistrationsStates, DATE_COMPARATOR);
         for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(sortedRegistrationsStates.size()); iter
                 .hasPrevious();) {

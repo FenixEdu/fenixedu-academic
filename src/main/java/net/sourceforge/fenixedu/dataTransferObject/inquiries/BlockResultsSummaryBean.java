@@ -44,7 +44,7 @@ public class BlockResultsSummaryBean implements Serializable {
             ResultPersonCategory personCategory) {
         setInquiryBlock(inquiryBlock);
         setBlockResultClassification(getInquiryResultQuestion(inquiryResults));
-        for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+        for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
             if (inquiryGroupQuestion.isToPresentStandardResults()) {
                 getGroupsResults().add(new GroupResultsSummaryBean(inquiryGroupQuestion, inquiryResults, person, personCategory));
             }

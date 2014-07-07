@@ -57,9 +57,4 @@ public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGen
         return new RegistryCode(this, request);
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode> getRegistryCode() {
-        return getRegistryCodeSet();
-    }
-
 }

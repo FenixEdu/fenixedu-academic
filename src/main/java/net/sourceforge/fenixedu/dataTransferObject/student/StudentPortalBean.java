@@ -98,8 +98,7 @@ public class StudentPortalBean implements Serializable {
             }
 
             private boolean isStudentEnrolled(WrittenEvaluation writtenEvaluation) {
-                for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation
-                        .getWrittenEvaluationEnrolments()) {
+                for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation.getWrittenEvaluationEnrolmentsSet()) {
                     if (writtenEvaluationEnrolment.getStudent() != null
                             && writtenEvaluationEnrolment.getStudent().getStudent() == getStudent()) {
                         return true;
@@ -110,7 +109,7 @@ public class StudentPortalBean implements Serializable {
 
             private boolean isStudentEnrolled(Grouping grouping) {
                 for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
-                    for (Attends attends : studentGroup.getAttends()) {
+                    for (Attends attends : studentGroup.getAttendsSet()) {
                         if (attends.getAluno().getStudent() == getStudent()) {
                             return true;
                         }
@@ -291,8 +290,7 @@ public class StudentPortalBean implements Serializable {
             }
 
             public void setRoom(WrittenEvaluation writtenEvaluation) {
-                for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation
-                        .getWrittenEvaluationEnrolments()) {
+                for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation.getWrittenEvaluationEnrolmentsSet()) {
                     if (writtenEvaluationEnrolment.getStudent() != null
                             && writtenEvaluationEnrolment.getStudent().getStudent() == getStudent()) {
                         if (writtenEvaluationEnrolment.getRoom() != null) {

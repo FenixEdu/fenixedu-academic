@@ -106,7 +106,7 @@ public class QualificationDA extends FenixDispatchAction {
             HttpServletResponse response) {
         Person person = getPersonSelectedFromParameter(request);
 
-        Collection<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Collection<PersonInformationLog> logsList = person.getPersonInformationLogsSet();
         request.setAttribute("person", person);
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");

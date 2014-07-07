@@ -27,7 +27,7 @@ public class ExecutionCourseLogProfessorshipProvider implements DataProvider {
     @Override
     public Object provide(final Object source, final Object currentValue) {
         final SearchExecutionCourseLogBean searchExecutionCourseLogBean = (SearchExecutionCourseLogBean) source;
-        return searchExecutionCourseLogBean.getExecutionCourse().getProfessorships();
+        return searchExecutionCourseLogBean.getExecutionCourse().getProfessorshipsSet();
     }
 
     @Override

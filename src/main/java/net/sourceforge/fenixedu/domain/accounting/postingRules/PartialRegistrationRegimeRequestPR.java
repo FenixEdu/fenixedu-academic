@@ -93,7 +93,7 @@ public class PartialRegistrationRegimeRequestPR extends PartialRegistrationRegim
     public static PartialRegistrationRegimeRequestPR readMostRecentPostingRuleForExecutionYear(ExecutionYear executionYear) {
         PartialRegistrationRegimeRequestPR mostRecent = null;
 
-        for (PartialRegistrationRegimeRequestPR postingRule : executionYear.getPartialRegistrationRegimeRequestPostingRules()) {
+        for (PartialRegistrationRegimeRequestPR postingRule : executionYear.getPartialRegistrationRegimeRequestPostingRulesSet()) {
             if (mostRecent == null) {
                 mostRecent = postingRule;
                 continue;

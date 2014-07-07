@@ -228,7 +228,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         Map<Person, EvalueesMap> evaluees = new HashMap<Person, EvalueesMap>();
         final Person loggedPerson = getLoggedPerson(request);
-        for (TeacherEvaluationProcess process : loggedPerson.getTeacherEvaluationProcessFromEvaluator()) {
+        for (TeacherEvaluationProcess process : loggedPerson.getTeacherEvaluationProcessFromEvaluatorSet()) {
             if (!evaluees.containsKey(process.getEvaluee())) {
                 evaluees.put(process.getEvaluee(), new EvalueesMap(process.getEvaluee()));
             }
@@ -250,7 +250,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
         final Person loggedPerson = getLoggedPerson(request);
         SortedSet<TeacherEvaluationProcess> openProcesses =
                 new TreeSet<TeacherEvaluationProcess>(TeacherEvaluationProcess.COMPARATOR_BY_INTERVAL);
-        for (TeacherEvaluationProcess teacherEvaluationProcess : evaluee.getTeacherEvaluationProcessFromEvaluee()) {
+        for (TeacherEvaluationProcess teacherEvaluationProcess : evaluee.getTeacherEvaluationProcessFromEvalueeSet()) {
             if (teacherEvaluationProcess.getEvaluator().equals(loggedPerson)) {
                 openProcesses.add(teacherEvaluationProcess);
             }

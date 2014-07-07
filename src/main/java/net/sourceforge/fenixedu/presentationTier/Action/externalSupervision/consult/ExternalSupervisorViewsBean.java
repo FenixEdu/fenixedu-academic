@@ -165,7 +165,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
     }
 
     public boolean supervisorHasPermission() {
-        Collection<Registration> allRegistrations = student.getStudent().getRegistrations();
+        Collection<Registration> allRegistrations = student.getStudent().getRegistrationsSet();
         for (Registration iterator : allRegistrations) {
             if (iterator.getRegistrationProtocol() == protocol) {
                 return true;
@@ -176,7 +176,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
 
     public boolean supervisorHasPermission(boolean isOmnipotent, Set<RegistrationProtocol> jurisdictions) {
         if (isOmnipotent) {
-            Collection<Registration> allRegistrations = student.getStudent().getRegistrations();
+            Collection<Registration> allRegistrations = student.getStudent().getRegistrationsSet();
             for (Registration regIter : allRegistrations) {
                 for (RegistrationProtocol protIter : jurisdictions) {
                     if (regIter.getRegistrationProtocol() == protIter) {
@@ -195,7 +195,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
         if (student.getStudent().getLastActiveRegistration() != null) {
             return false;
         }
-        Collection<Registration> registrations = student.getStudent().getRegistrations();
+        Collection<Registration> registrations = student.getStudent().getRegistrationsSet();
         for (Registration iterator : registrations) {
             if (iterator.getNumberOfCurriculumEntries() > 0) {
                 return false;
@@ -208,7 +208,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
     public List<StudentCurricularPlan> generateAllStudentCurricularPlans() {
         List<StudentCurricularPlan> curricularPlans = new ArrayList<StudentCurricularPlan>();
         for (Person person : students) {
-            for (Registration registration : person.getStudent().getRegistrations()) {
+            for (Registration registration : person.getStudent().getRegistrationsSet()) {
                 if (registration.getRegistrationAgreement() == protocol.getRegistrationAgreement()
                         && registration.hasAnyActiveState(executionYear)) {
                     if (executionDegree != null) {
@@ -216,7 +216,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
                             continue;
                         }
                     }
-                    for (StudentCurricularPlan curricularPlan : registration.getStudentCurricularPlans()) {
+                    for (StudentCurricularPlan curricularPlan : registration.getStudentCurricularPlansSet()) {
                         curricularPlans.add(curricularPlan);
                     }
                 }

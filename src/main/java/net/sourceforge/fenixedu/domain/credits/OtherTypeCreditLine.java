@@ -49,7 +49,7 @@ public class OtherTypeCreditLine extends OtherTypeCreditLine_Base {
     public static List<OtherTypeCreditLine> readByTeacherAndExecutionPeriod(Teacher teacher, ExecutionSemester executionSemester) {
         List<OtherTypeCreditLine> result = new ArrayList<OtherTypeCreditLine>();
 
-        for (OtherTypeCreditLine otherTypeCreditLine : teacher.getOtherTypeCreditLines()) {
+        for (OtherTypeCreditLine otherTypeCreditLine : teacher.getOtherTypeCreditLinesSet()) {
             if (otherTypeCreditLine.getExecutionPeriod().equals(executionSemester)) {
                 result.add(otherTypeCreditLine);
             }

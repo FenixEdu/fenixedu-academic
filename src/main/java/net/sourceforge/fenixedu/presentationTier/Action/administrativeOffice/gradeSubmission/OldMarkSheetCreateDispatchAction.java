@@ -128,7 +128,7 @@ public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAct
         request.setAttribute("rectifyBean", rectifyBean);
         request.setAttribute("msID", form.get("msID"));
 
-        List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluations());
+        List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluationsSet());
         Collections.sort(enrolmentEvaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
         request.setAttribute("enrolmentEvaluations", enrolmentEvaluations);
         return mapping.findForward("rectifyMarkSheetStep1");

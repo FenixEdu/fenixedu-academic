@@ -53,7 +53,7 @@ public class ReadOldIquiriesSummaryByDegreeID {
             throw new FenixServiceException("nullDegreeId");
         }
 
-        Collection<OldInquiriesSummary> oldInquiriesSummaryList = degree.getAssociatedOldInquiriesSummaries();
+        Collection<OldInquiriesSummary> oldInquiriesSummaryList = degree.getAssociatedOldInquiriesSummariesSet();
 
         CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
 

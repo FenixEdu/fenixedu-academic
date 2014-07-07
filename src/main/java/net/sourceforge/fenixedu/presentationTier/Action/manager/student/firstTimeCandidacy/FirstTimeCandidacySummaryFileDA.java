@@ -69,7 +69,7 @@ public class FirstTimeCandidacySummaryFileDA extends FenixDispatchAction {
 
     private StudentCandidacy findCandidacy(Integer studentNumber) {
         final Student student = Student.readStudentByNumber(studentNumber);
-        final Collection<Registration> registrations = student.getRegistrations();
+        final Collection<Registration> registrations = student.getRegistrationsSet();
         if (registrations != null && registrations.size() > 0) {
             return registrations.iterator().next().getStudentCandidacy();
         }

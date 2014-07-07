@@ -135,7 +135,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 
     public double getTotalHoursAfter20AndSaturdays() {
         int minutesAfter20AndSaturday = 0;
-        for (Lesson lesson : getShift().getAssociatedLessons()) {
+        for (Lesson lesson : getShift().getAssociatedLessonsSet()) {
             for (Interval lessonInterval : lesson.getAllLessonIntervals()) {
                 if (lessonInterval.getStart().getDayOfWeek() == DateTimeConstants.SATURDAY) {
                     minutesAfter20AndSaturday +=

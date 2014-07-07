@@ -110,7 +110,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     public List<InfoTeacher> getInfoLecturingTeachers() {
         final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
-        for (final Professorship professorship : getExecutionCourse().getProfessorships()) {
+        for (final Professorship professorship : getExecutionCourse().getProfessorshipsSet()) {
             result.add(InfoTeacher.newInfoFromDomain(professorship.getPerson()));
         }
 
@@ -149,7 +149,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     private Integer getNumberOfLessons(final Collection<Shift> shifts) {
         int result = 0;
         for (final Shift shift : shifts) {
-            result += shift.getAssociatedLessons().size();
+            result += shift.getAssociatedLessonsSet().size();
         }
         return result;
     }
@@ -163,7 +163,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             result++;
         }
 
-        Iterator iter = getExecutionCourse().getAssociatedBibliographicReferences().iterator();
+        Iterator iter = getExecutionCourse().getAssociatedBibliographicReferencesSet().iterator();
         while (iter.hasNext()) {
             BibliographicReference bibliographicReference = (BibliographicReference) iter.next();
             if (bibliographicReference.getTitle() != null && bibliographicReference.getTitle().length() > MIN_LENGTH) {
@@ -206,7 +206,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             numberOfFieldsFilled++;
         }
 
-        Iterator iter = getExecutionCourse().getAssociatedBibliographicReferences().iterator();
+        Iterator iter = getExecutionCourse().getAssociatedBibliographicReferencesSet().iterator();
         while (iter.hasNext()) {
             BibliographicReference bibliographicReference = (BibliographicReference) iter.next();
             if (bibliographicReference.getTitle().length() > MIN_LENGTH) {
@@ -350,7 +350,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             @Override
             public boolean evaluate(Object o) {
                 InfoLesson infoLesson = (InfoLesson) o;
-                if (infoLesson.getInfoShift().getShift().getCourseLoads().size() == 1) {
+                if (infoLesson.getInfoShift().getShift().getCourseLoadsSet().size() == 1) {
                     return infoLesson.getInfoShift().getShift().containsType(lessonType);
                 }
                 return false;

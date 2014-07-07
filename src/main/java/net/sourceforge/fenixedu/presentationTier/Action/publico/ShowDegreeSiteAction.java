@@ -115,7 +115,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
         Unit unit = degree.getUnit();
         if (unit != null) {
             AnnouncementBoard board = null;
-            for (AnnouncementBoard unitBoard : unit.getBoards()) {
+            for (AnnouncementBoard unitBoard : unit.getBoardsSet()) {
                 if (unitBoard.isPublicToRead()) {
                     board = unitBoard;
                     break;

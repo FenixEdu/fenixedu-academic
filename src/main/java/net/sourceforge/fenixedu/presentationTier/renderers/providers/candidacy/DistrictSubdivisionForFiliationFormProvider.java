@@ -53,7 +53,7 @@ public class DistrictSubdivisionForFiliationFormProvider implements DataProvider
     private Set<String> transformToStringCollection(final District district) {
         final SortedSet<String> result = new TreeSet<String>();
 
-        for (final DistrictSubdivision each : district.getDistrictSubdivisions()) {
+        for (final DistrictSubdivision each : district.getDistrictSubdivisionsSet()) {
             result.add(each.getName());
         }
 

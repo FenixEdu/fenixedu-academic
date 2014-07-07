@@ -46,13 +46,13 @@ public class ReadCurricularCoursesByDegree {
                 ExecutionDegree.getByDegreeCurricularPlanNameAndExecutionYear(degreeName, executionYear);
 
         if (executionDegree == null || executionDegree.getDegreeCurricularPlan() == null
-                || executionDegree.getDegreeCurricularPlan().getCurricularCourses() == null
-                || executionDegree.getDegreeCurricularPlan().getCurricularCourses().isEmpty()) {
+                || executionDegree.getDegreeCurricularPlan().getCurricularCoursesSet() == null
+                || executionDegree.getDegreeCurricularPlan().getCurricularCoursesSet().isEmpty()) {
             throw new NonExistingServiceException();
         }
 
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-        for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
+        for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCoursesSet()) {
             infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
 
@@ -65,7 +65,7 @@ public class ReadCurricularCoursesByDegree {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
 

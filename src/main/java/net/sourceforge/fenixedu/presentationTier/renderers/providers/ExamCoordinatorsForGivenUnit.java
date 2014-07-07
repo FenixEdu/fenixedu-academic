@@ -47,7 +47,7 @@ public class ExamCoordinatorsForGivenUnit implements DataProvider {
         }
         VigilantGroup group = bean.getSelectedVigilantGroup();
         if (group != null) {
-            coordinators.removeAll(group.getExamCoordinators());
+            coordinators.removeAll(group.getExamCoordinatorsSet());
         }
 
         Collections.sort(coordinators, new BeanComparator("person.name"));

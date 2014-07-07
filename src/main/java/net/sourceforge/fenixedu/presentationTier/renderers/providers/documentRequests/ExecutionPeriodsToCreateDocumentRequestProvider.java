@@ -37,7 +37,7 @@ public class ExecutionPeriodsToCreateDocumentRequestProvider implements DataProv
         final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
 
         if (documentRequestCreateBean.getExecutionYear() != null) {
-            return documentRequestCreateBean.getExecutionYear().getExecutionPeriods();
+            return documentRequestCreateBean.getExecutionYear().getExecutionPeriodsSet();
         }
 
         return Collections.EMPTY_LIST;

@@ -72,7 +72,7 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
     }
 
     public ReimbursementGuideSituation getActiveReimbursementGuideSituation() {
-        return (ReimbursementGuideSituation) CollectionUtils.find(getReimbursementGuideSituations(), new Predicate() {
+        return (ReimbursementGuideSituation) CollectionUtils.find(getReimbursementGuideSituationsSet(), new Predicate() {
             @Override
             public boolean evaluate(Object obj) {
                 ReimbursementGuideSituation situation = (ReimbursementGuideSituation) obj;
@@ -105,16 +105,6 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
         } else {
             setCreationYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry> getReimbursementGuideEntries() {
-        return getReimbursementGuideEntriesSet();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation> getReimbursementGuideSituations() {
-        return getReimbursementGuideSituationsSet();
     }
 
 }

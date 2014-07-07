@@ -62,8 +62,7 @@ public class ManageDepartmentCreditsPool extends FenixDispatchAction {
     protected DepartmentCreditsBean getDepartmentCreditsBean() {
         User userView = Authenticate.getUser();
         DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
-        departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(userView.getPerson()
-                .getManageableDepartmentCredits()));
+        departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(userView.getPerson().getManageableDepartmentCreditsSet()));
         return departmentCreditsBean;
     }
 

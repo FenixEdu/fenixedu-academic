@@ -59,7 +59,7 @@ public class FlunkedReportFile extends FlunkedReportFile_Base {
             if (checkDegreeType(getDegreeType(), degree)) {
                 for (final Registration registration : degree.getRegistrationsSet()) {
                     LinkedList<RegistrationState> states = new LinkedList<RegistrationState>();
-                    states.addAll(registration.getRegistrationStates());
+                    states.addAll(registration.getRegistrationStatesSet());
                     CollectionUtils.filter(states, new Predicate() {
                         @Override
                         public boolean evaluate(Object item) {

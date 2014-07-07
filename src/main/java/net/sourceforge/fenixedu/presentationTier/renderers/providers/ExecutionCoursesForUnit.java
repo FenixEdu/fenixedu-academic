@@ -51,7 +51,7 @@ public class ExecutionCoursesForUnit implements DataProvider {
         Set<ExecutionCourse> courses = new HashSet<ExecutionCourse>();
         if (unit == null) {
             // Add pre-bolonha competenceCourses
-            courses.addAll(getExecutionCoursesFromCompetenceCourses(department.getCompetenceCourses()));
+            courses.addAll(getExecutionCoursesFromCompetenceCourses(department.getCompetenceCoursesSet()));
             unit = department.getDepartmentUnit();
         }
 

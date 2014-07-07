@@ -65,7 +65,7 @@ public abstract class DebtsFile extends DebtsFile_Base {
         }
 
         if (ResidenceYear.hasCurrentYear()) {
-            for (final ResidenceMonth month : ResidenceYear.getCurrentYear().getMonths()) {
+            for (final ResidenceMonth month : ResidenceYear.getCurrentYear().getMonthsSet()) {
                 for (final ResidenceEvent residenceEvent : month.getEventsSet()) {
                     if (residenceEvent.isOpen() && residenceEvent.getPaymentLimitDate().isAfterNow()) {
                         getEventsForPerson(result, residenceEvent.getPerson()).add(residenceEvent);
