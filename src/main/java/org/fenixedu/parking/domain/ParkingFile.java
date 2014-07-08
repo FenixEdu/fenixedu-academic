@@ -38,10 +38,4 @@ public class ParkingFile extends ParkingFile_Base {
         setNewParkingDocument(null);
         super.delete();
     }
-
-    @Deprecated
-    public boolean hasNewParkingDocument() {
-        return getNewParkingDocument() != null;
-    }
-
 }

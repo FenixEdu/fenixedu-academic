@@ -38,7 +38,7 @@
 			<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
 		</fr:layout>
 	</fr:view>
-	<logic:empty name="parkingParty" property="parkingRequests">
+	<logic:empty name="parkingParty" property="parkingRequestsSet">
 		<logic:equal name="parkingParty" property="hasAllNecessaryPersonalInfo" value="false">
 			<p class="infoop2">
 				<bean:message key="message.personalDataCondition" bundle="PARKING_RESOURCES" /><br/>
@@ -87,7 +87,7 @@
 			</logic:notEqual>
 		</logic:notEqual>
 	</logic:empty>
-	<logic:notEmpty name="parkingParty" property="parkingRequests">
+	<logic:notEmpty name="parkingParty" property="parkingRequestsSet">
 		<p>
 			<bean:message key="label.read.parkingRegulation" bundle="PARKING_RESOURCES" />: 
 			<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>files/viver-IST/gestao-estacionamento/reg_estac.pdf" target="_blank">
@@ -134,7 +134,7 @@
 		
 		
 		<bean:define id="parkingPartyOrRequest" name="parkingParty"/>
-		<logic:notEmpty name="parkingParty" property="vehicles">
+		<logic:notEmpty name="parkingParty" property="vehiclesSet">
 			<h3 class="separator2 mtop2"><bean:message key="label.actualState" bundle="PARKING_RESOURCES"/></h3>
 			<fr:view name="parkingParty" schema="show.parkingParty.cardValidPeriod">
 				<fr:layout name="tabular">
@@ -143,7 +143,7 @@
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
-		<logic:empty name="parkingParty" property="vehicles">
+		<logic:empty name="parkingParty" property="vehiclesSet">
 			<h3 class="separator2 mtop2"><bean:message key="label.request" bundle="PARKING_RESOURCES"/></h3>
 			<bean:define id="parkingPartyOrRequest" name="parkingParty" property="lastRequest"/>
 		</logic:empty>
@@ -169,7 +169,7 @@
 		
 		<p class="mtop1 mbottom025"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES" /></strong></p>
 		<table class="tstyle1 thright thlight mtop025 mbottom1">
-		<logic:iterate id="vehicle" name="parkingPartyOrRequest" property="vehicles">
+		<logic:iterate id="vehicle" name="parkingPartyOrRequest" property="vehiclesSet">
 			<tr>
 				<th><bean:message key="label.vehicleMake" bundle="PARKING_RESOURCES"/>:</th>
 				<td><bean:write name="vehicle" property="vehicleMake"/></td>

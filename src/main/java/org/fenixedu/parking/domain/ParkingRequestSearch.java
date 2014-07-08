@@ -129,7 +129,7 @@ public class ParkingRequestSearch implements Serializable {
                 final Student student = ((Person) parkingParty.getParty()).getStudent();
                 if (degreeType.equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
                     for (PhdIndividualProgramProcess phdIndividualProgramProcess : student.getPerson()
-                            .getPhdIndividualProgramProcesses()) {
+                            .getPhdIndividualProgramProcessesSet()) {
                         if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
                             return true;
                         }
