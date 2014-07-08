@@ -181,7 +181,7 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 	<bean:define id="factoryName" value="parkingRequestFactoryCreator"/>
 	<bean:define id="type" value="org.fenixedu.parking.domain.ParkingRequest$ParkingRequestFactoryCreator"/>
 
-	<logic:notEmpty name="parkingParty" property="parkingRequests">
+	<logic:notEmpty name="parkingParty" property="parkingRequestsSet">
 		<bean:define id="method" value="editParkingRequest"/>
 		<bean:define id="action" value="edit"/>
 		<bean:define id="factoryName" value="parkingRequestFactoryEditor"/>

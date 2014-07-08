@@ -520,7 +520,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     private void setupParkingRequests(HttpServletRequest request, Party party, String carPlateNumber, Long parkingCardNumber)
             throws FenixServiceException {
         if (party.getParkingParty() != null) {
-            request.setAttribute("parkingRequests", party.getParkingParty().getParkingRequests());
+            request.setAttribute("parkingRequests", party.getParkingParty().getParkingRequestsSet());
         }
         request.setAttribute("searchPartyBean", new SearchParkingPartyBean(party, carPlateNumber, parkingCardNumber));
     }
@@ -546,7 +546,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        if (parkingParty.hasAnyVehicles()) {
+        if (!parkingParty.getVehiclesSet().isEmpty()) {
             if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) {
                 dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid")); // in case of error validation
             } else {

@@ -708,7 +708,8 @@ public class ParkingRequest extends ParkingRequest_Base {
 
         public ParkingRequestFactoryCreator(ParkingParty parkingParty) {
             super(parkingParty);
-            if ((!getParkingParty().hasAnyParkingRequests()) && parkingParty.getParty().getParkingPartyHistoriesSet().size() != 0) {
+            if ((getParkingParty().getParkingRequestsSet().isEmpty())
+                    && parkingParty.getParty().getParkingPartyHistoriesSet().size() != 0) {
                 Vehicle firstVehicle = parkingParty.getFirstVehicle();
                 if (firstVehicle != null) {
                     setFirstCarPlateNumber(firstVehicle.getPlateNumber());
@@ -789,8 +790,8 @@ public class ParkingRequest extends ParkingRequest_Base {
             setDriverLicenseFileName(parkingRequest.getDriverLicenseFileName());
             setDriverLicenseDeliveryType(parkingRequest.getDriverLicenseDeliveryType());
 
-            if (!parkingRequest.getVehicles().isEmpty()) {
-                Vehicle firstVehicle = parkingRequest.getVehicles().iterator().next();
+            if (!parkingRequest.getVehiclesSet().isEmpty()) {
+                Vehicle firstVehicle = parkingRequest.getVehiclesSet().iterator().next();
                 setFirstVechicleID(firstVehicle.getExternalId());
                 setFirstCarMake(firstVehicle.getVehicleMake());
                 setFirstCarPlateNumber(firstVehicle.getPlateNumber());
@@ -804,7 +805,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                 setFirstCarDeclarationDeliveryType(firstVehicle.getAuthorizationDeclarationDeliveryType());
             }
 
-            if (parkingRequest.getVehicles().size() > 1) {
+            if (parkingRequest.getVehiclesSet().size() > 1) {
                 Iterator<Vehicle> vehicles = parkingRequest.getVehiclesSet().iterator();
                 vehicles.next();
                 Vehicle secondVehicle = vehicles.next();
@@ -886,7 +887,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     public boolean hasVehicleContainingPlateNumber(String plateNumber) {
         String plateNumberLowerCase = plateNumber.toLowerCase();
-        for (Vehicle vehicle : getVehicles()) {
+        for (Vehicle vehicle : getVehiclesSet()) {
             if (vehicle.getPlateNumber().toLowerCase().contains(plateNumberLowerCase)) {
                 return true;
             }
@@ -928,7 +929,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     public void delete() {
         if (canBeDeleted()) {
-            for (; getVehicles().size() != 0; getVehicles().iterator().next().delete()) {
+            for (; getVehiclesSet().size() != 0; getVehiclesSet().iterator().next().delete()) {
                 ;
             }
             deleteDriverLicenseDocument();
@@ -944,125 +945,5 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     public boolean getHasHistory() {
         return getParkingParty().getParty().getParkingPartyHistoriesSet().size() != 0;
-    }
-
-    @Deprecated
-    public java.util.Set<Vehicle> getVehicles() {
-        return getVehiclesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyVehicles() {
-        return !getVehiclesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasParkingRequestType() {
-        return getParkingRequestType() != null;
-    }
-
-    @Deprecated
-    public boolean hasParkingRequestState() {
-        return getParkingRequestState() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhone() {
-        return getPhone() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasFirstCarPropertyRegistryDocumentState() {
-        return getFirstCarPropertyRegistryDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasRequestedAs() {
-        return getRequestedAs() != null;
-    }
-
-    @Deprecated
-    public boolean hasFirstCarOwnerIdDocumentState() {
-        return getFirstCarOwnerIdDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasFirstCarInsuranceDocumentState() {
-        return getFirstCarInsuranceDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasCreationDate() {
-        return getCreationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasNote() {
-        return getNote() != null;
-    }
-
-    @Deprecated
-    public boolean hasDriverLicenseDeliveryType() {
-        return getDriverLicenseDeliveryType() != null;
-    }
-
-    @Deprecated
-    public boolean hasDriverLicenseDocument() {
-        return getDriverLicenseDocument() != null;
-    }
-
-    @Deprecated
-    public boolean hasSecondCarOwnerIdDocumentState() {
-        return getSecondCarOwnerIdDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasFirstCarDeclarationDocumentState() {
-        return getFirstCarDeclarationDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasParkingParty() {
-        return getParkingParty() != null;
-    }
-
-    @Deprecated
-    public boolean hasSecondCarDeclarationDocumentState() {
-        return getSecondCarDeclarationDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasEmail() {
-        return getEmail() != null;
-    }
-
-    @Deprecated
-    public boolean hasLimitlessAccessCard() {
-        return getLimitlessAccessCard() != null;
-    }
-
-    @Deprecated
-    public boolean hasSecondCarPropertyRegistryDocumentState() {
-        return getSecondCarPropertyRegistryDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasMobile() {
-        return getMobile() != null;
-    }
-
-    @Deprecated
-    public boolean hasSecondCarInsuranceDocumentState() {
-        return getSecondCarInsuranceDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasDriverLicenseDocumentState() {
-        return getDriverLicenseDocumentState() != null;
     }
 }

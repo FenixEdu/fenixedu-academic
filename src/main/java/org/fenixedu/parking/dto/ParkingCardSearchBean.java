@@ -92,7 +92,7 @@ public class ParkingCardSearchBean implements Serializable {
     public void doSearch() {
         getSearchedParkingParties().clear();
         for (ParkingParty parkingParty : Bennu.getInstance().getParkingPartiesSet()) {
-            if (parkingParty.hasAnyVehicles() && satisfiesSearch(parkingParty)) {
+            if (!parkingParty.getVehiclesSet().isEmpty() && satisfiesSearch(parkingParty)) {
                 getSearchedParkingParties().add(parkingParty);
             }
         }

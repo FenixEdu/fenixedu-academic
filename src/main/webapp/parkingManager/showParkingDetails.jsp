@@ -92,7 +92,7 @@
 
 <p class="mtop1 mbottom025"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES" /></strong></p>
 
-<logic:iterate id="vehicle" name="parkingParty" property="vehicles">
+<logic:iterate id="vehicle" name="parkingParty" property="vehiclesSet">
 <table class="tstyle1 thright thlight mvert025 mbottom1">
 	<tr>
 		<th><bean:message key="label.vehicleMake" bundle="PARKING_RESOURCES"/>:</th>

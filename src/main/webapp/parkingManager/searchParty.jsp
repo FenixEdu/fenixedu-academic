@@ -71,7 +71,7 @@
 			</p>
 			<%--
 			<p class="mtop15 mbottom05">
-				<logic:empty name="parkingParty" property="vehicles">
+				<logic:empty name="parkingParty" property="vehiclesSet">
 					<strong><bean:message key="label.user" bundle="PARKING_RESOURCES"/></strong>
 				</logic:empty>
 			</p>
@@ -90,7 +90,7 @@
 					<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/></html:link>
 				</logic:notEmpty>
 
-				<bean:size id="historySize" name="parkingParty" property="party.parkingPartyHistories"/>
+				<bean:size id="historySize" name="parkingParty" property="party.parkingPartyHistoriesSet"/>
 				<logic:notEqual name="historySize" value="0">
 					 | <html:link page="<%= "/parking.do?method=showParkingPartyHistory&amp;externalId=" +  parkingParty.getExternalId()%>">
 					<bean:message key="link.viewHistory" bundle="PARKING_RESOURCES"/></html:link>
@@ -104,7 +104,7 @@
 				</fr:layout>
 			</fr:view>
 			
-			<logic:notEmpty name="parkingParty" property="vehicles">
+			<logic:notEmpty name="parkingParty" property="vehiclesSet">
 				<p class="mtop15">
 					<strong><bean:message key="label.driverLicense"	bundle="PARKING_RESOURCES" /></strong>
 				</p>
@@ -131,7 +131,7 @@
 			
 				<p class="mtop1 mbottom025"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES" /></strong></p>
 
-				<logic:iterate id="vehicle" name="parkingParty" property="vehicles">
+				<logic:iterate id="vehicle" name="parkingParty" property="vehiclesSet">
 				<table class="tstyle1 thright thlight mvert025 mbottom1">
 					<tr>
 						<th><bean:message key="label.vehicleMake" bundle="PARKING_RESOURCES"/>:</th>
