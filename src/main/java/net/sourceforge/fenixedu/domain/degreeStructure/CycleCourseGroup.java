@@ -79,7 +79,6 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
         final String suffix = getGraduateTitleSuffix(executionYear, locale);
         if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
             result.append(" ").append(suffix);
-            result.append(" ").append("-");
         }
 
         result.append(" ").append(degreeFilteredName);

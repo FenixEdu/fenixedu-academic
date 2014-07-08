@@ -6,25 +6,22 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
 
 <logic:present role="role(MANAGER)">
-	<h3><bean:message key="student.registrationConclusionProcess"
-		bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-
-	<bean:define id="cycleCurriculumGroupId" name="cycleCurriculumGroup"
-		property="externalId" />
-		
-	<bean:define id="registrationId" name="cycleCurriculumGroup" property="studentCurricularPlan.registration.externalId" />
-
-	<fr:edit name="cycleCurriculumGroup"
-		schema="CycleCurriculumGroup.editConclusionInformation">
+	<h3><bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
+	
+	<bean:define id="registrationId" name="registration" property="externalId" />
+	 
+	<fr:edit name="registration"
+		schema="Registration.editConclusionInformation">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05" />
+			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05" />			
+			<fr:destination name="cancel"
+				path="<%="/registrationConclusion.do?method=show&registrationId=" + registrationId%>" />
+			<fr:destination name="success" 
+			path="<%="/registrationConclusion.do?method=show&registrationId=" + registrationId%>" />
+
 		</fr:layout>
-		<fr:destination name="cancel"
-			path="<%="/registrationConclusion.do?method=show&registrationId=" + registrationId%>" />
-		<fr:destination name="success" 
-			path="<%="/registrationConclusion.do?method=show&registrationId=" + registrationId%>" />
-		
 	</fr:edit>
+
 </logic:present>
 
 
