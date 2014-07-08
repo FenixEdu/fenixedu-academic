@@ -44,7 +44,10 @@ public class ThesisSite extends ThesisSite_Base {
     public void delete() {
         setThesis(null);
         super.delete();
-
     }
 
+    @Override
+    public String getReversePath() {
+        return super.getReversePath() + "/" + getThesis().getExternalId();
+    }
 }
