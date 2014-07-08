@@ -39,7 +39,7 @@
 
 <!--  PARKING PARTY -->
 
-<logic:notEmpty name="parkingParty" property="vehicles">
+<logic:notEmpty name="parkingParty" property="vehiclesSet">
 <p class="mtop15 mbottom025"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong></p>		
 <table class="tstyle1 thright thlight mtop025 mbottom1">
 	<tr>
@@ -60,7 +60,7 @@
 
 <p class="mtop1 mbottom025"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES" /></strong></p>
 <table class="tstyle1 thright thlight mtop025 mbottom1">
-<logic:iterate id="vehicle" name="parkingParty" property="vehicles">
+<logic:iterate id="vehicle" name="parkingParty" property="vehiclesSet">
 	<tr>
 		<th><bean:message key="label.vehicleMake" bundle="PARKING_RESOURCES"/>:</th>
 		<td><bean:write name="vehicle" property="vehicleMake"/></td>
@@ -154,7 +154,7 @@
 		</fr:layout>
 </fr:view>
 
-<logic:notEmpty name="parkingRequest" property="vehicles">
+<logic:notEmpty name="parkingRequest" property="vehiclesSet">
 <p class="mtop15 mbottom025"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong></p>		
 <table class="tstyle1 thright thlight mtop025 mbottom1">
 	<tr>
@@ -176,7 +176,7 @@
 
 <p class="mtop1 mbottom025"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES" /></strong></p>
 <table class="tstyle1 thright thlight mtop025 mbottom1">
-<logic:iterate id="vehicle" name="parkingRequest" property="vehicles">
+<logic:iterate id="vehicle" name="parkingRequest" property="vehiclesSet">
 	<tr>
 		<th><bean:message key="label.vehicleMake" bundle="PARKING_RESOURCES"/>:</th>
 		<td><bean:write name="vehicle" property="vehicleMake"/></td>

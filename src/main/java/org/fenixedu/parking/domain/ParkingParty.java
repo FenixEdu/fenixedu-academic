@@ -128,7 +128,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public List<ParkingRequest> getOrderedParkingRequests() {
-        List<ParkingRequest> requests = new ArrayList<ParkingRequest>(getParkingRequests());
+        List<ParkingRequest> requests = new ArrayList<ParkingRequest>(getParkingRequestsSet());
         Collections.sort(requests, new BeanComparator("creationDate"));
         return requests;
     }
@@ -243,7 +243,7 @@ public class ParkingParty extends ParkingParty_Base {
                     }
                 }
                 if (!roles.contains(RoleType.STUDENT)) {
-                    for (PhdIndividualProgramProcess phdIndividualProgramProcess : person.getPhdIndividualProgramProcesses()) {
+                    for (PhdIndividualProgramProcess phdIndividualProgramProcess : person.getPhdIndividualProgramProcessesSet()) {
                         if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
                             roles.add(RoleType.STUDENT);
                             break;
@@ -298,7 +298,7 @@ public class ParkingParty extends ParkingParty_Base {
                 }
             }
             PersonContractSituation currentEmployeeContractSituation =
-                    person.hasEmployee() ? person.getEmployee().getCurrentEmployeeContractSituation() : null;
+                    person.getEmployee() != null ? person.getEmployee().getCurrentEmployeeContractSituation() : null;
             if (currentEmployeeContractSituation != null) {
                 Unit currentUnit = person.getEmployee().getCurrentWorkingPlace();
                 String thisOccupation =
@@ -322,7 +322,7 @@ public class ParkingParty extends ParkingParty_Base {
                 }
             }
 
-            if (person.hasResearcher()) {
+            if (person.getResearcher() != null) {
                 StringBuilder stringBuilder =
                         new StringBuilder(BundleUtil.getStringFromResourceBundle("resources.ParkingResources",
                                 "message.person.identification", new String[] { RoleType.RESEARCHER.getLocalizedName(),
@@ -334,9 +334,9 @@ public class ParkingParty extends ParkingParty_Base {
                 }
 
                 PersonContractSituation currentResearcherContractSituation =
-                        person.hasResearcher() ? person.getResearcher().getCurrentContractedResearcherContractSituation() : null;
+                        person.getResearcher() != null ? person.getResearcher().getCurrentContractedResearcherContractSituation() : null;
                 if (currentResearcherContractSituation != null) {
-                    Unit currentUnit = person.hasEmployee() ? person.getEmployee().getCurrentWorkingPlace() : null;
+                    Unit currentUnit = person.getEmployee() != null ? person.getEmployee().getCurrentWorkingPlace() : null;
                     if (currentUnit != null) {
                         stringBuilder.append(currentUnit.getName()).append("<br/>");
                     }
@@ -378,7 +378,7 @@ public class ParkingParty extends ParkingParty_Base {
                     occupations.add(stringBuilder.toString());
                 }
 
-                for (PhdIndividualProgramProcess phdIndividualProgramProcess : person.getPhdIndividualProgramProcesses()) {
+                for (PhdIndividualProgramProcess phdIndividualProgramProcess : person.getPhdIndividualProgramProcessesSet()) {
                     if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
                         String thisOccupation =
                                 getOccupation(RoleType.STUDENT.getLocalizedName(), student.getNumber().toString(),
@@ -470,7 +470,7 @@ public class ParkingParty extends ParkingParty_Base {
             for (; getVehiclesSet().size() != 0; getVehiclesSet().iterator().next().delete()) {
                 ;
             }
-            for (; getParkingRequests().size() != 0; getParkingRequests().iterator().next().delete()) {
+            for (; getParkingRequestsSet().size() != 0; getParkingRequestsSet().iterator().next().delete()) {
                 ;
             }
             setRootDomainObject(null);
@@ -540,7 +540,7 @@ public class ParkingParty extends ParkingParty_Base {
                         return student.getNumber();
                     }
                 }
-                for (PhdIndividualProgramProcess phdIndividualProgramProcess : person.getPhdIndividualProgramProcesses()) {
+                for (PhdIndividualProgramProcess phdIndividualProgramProcess : person.getPhdIndividualProgramProcessesSet()) {
                     if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
                         return student.getNumber();
                     }
@@ -648,7 +648,7 @@ public class ParkingParty extends ParkingParty_Base {
                 return person.getPartyClassification() != PartyClassification.PERSON;
             }
             if (getParkingGroup().getGroupName().equalsIgnoreCase("2º ciclo")) {
-                if (person.hasStudent()) {
+                if (person.getStudent() != null) {
                     return canRequestUnlimitedCard(person.getStudent());
                 } else {
                     return Boolean.FALSE;
@@ -664,7 +664,7 @@ public class ParkingParty extends ParkingParty_Base {
                 return false;
             }
             if (getParkingGroup().getGroupName().equalsIgnoreCase("3º ciclo")) {
-                if (person.hasStudent()) {
+                if (person.getStudent() != null) {
                     Registration registration =
                             getRegistrationByDegreeType(person.getStudent(), DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA);
                     return registration != null && registration.isActive();
@@ -730,7 +730,8 @@ public class ParkingParty extends ParkingParty_Base {
 
     public boolean canRequestUnlimitedCard(Student student) {
         if (student != null && student.getPerson().getPersonRole(RoleType.STUDENT) != null) {
-            for (PhdIndividualProgramProcess phdIndividualProgramProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
+            for (PhdIndividualProgramProcess phdIndividualProgramProcess : student.getPerson()
+                    .getPhdIndividualProgramProcessesSet()) {
                 if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
                     return true;
                 }
@@ -833,135 +834,4 @@ public class ParkingParty extends ParkingParty_Base {
         Collections.sort(vehicles, new BeanComparator("plateNumber"));
         return vehicles.size() > 1 ? vehicles.get(1) : null;
     }
-
-    @Deprecated
-    public java.util.Set<ParkingRequest> getParkingRequests() {
-        return getParkingRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyParkingRequests() {
-        return !getParkingRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasAnyVehicles() {
-        return !getVehiclesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasCardNumber() {
-        return getCardNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasFirstCarPropertyRegistryDocumentState() {
-        return getFirstCarPropertyRegistryDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasRequestedAs() {
-        return getRequestedAs() != null;
-    }
-
-    @Deprecated
-    public boolean hasAcceptedRegulation() {
-        return getAcceptedRegulation() != null;
-    }
-
-    @Deprecated
-    public boolean hasFirstCarOwnerIdDocumentState() {
-        return getFirstCarOwnerIdDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasPhdNumber() {
-        return getPhdNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasParty() {
-        return getParty() != null;
-    }
-
-    @Deprecated
-    public boolean hasCardStartDate() {
-        return getCardStartDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasFirstCarInsuranceDocumentState() {
-        return getFirstCarInsuranceDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasUsedNumber() {
-        return getUsedNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasDriverLicenseDeliveryType() {
-        return getDriverLicenseDeliveryType() != null;
-    }
-
-    @Deprecated
-    public boolean hasDriverLicenseDocument() {
-        return getDriverLicenseDocument() != null;
-    }
-
-    @Deprecated
-    public boolean hasParkingGroup() {
-        return getParkingGroup() != null;
-    }
-
-    @Deprecated
-    public boolean hasSecondCarOwnerIdDocumentState() {
-        return getSecondCarOwnerIdDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasFirstCarDeclarationDocumentState() {
-        return getFirstCarDeclarationDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasNotes() {
-        return getNotes() != null;
-    }
-
-    @Deprecated
-    public boolean hasAuthorized() {
-        return getAuthorized() != null;
-    }
-
-    @Deprecated
-    public boolean hasSecondCarDeclarationDocumentState() {
-        return getSecondCarDeclarationDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasSecondCarPropertyRegistryDocumentState() {
-        return getSecondCarPropertyRegistryDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasSecondCarInsuranceDocumentState() {
-        return getSecondCarInsuranceDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasDriverLicenseDocumentState() {
-        return getDriverLicenseDocumentState() != null;
-    }
-
-    @Deprecated
-    public boolean hasCardEndDate() {
-        return getCardEndDate() != null;
-    }
-
 }
