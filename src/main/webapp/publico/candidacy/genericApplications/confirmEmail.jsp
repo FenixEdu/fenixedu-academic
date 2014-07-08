@@ -692,7 +692,7 @@
 					<% } %>
 				</td>
 				<td>
-					<% if (recomentation.getLetterOfRecomentation() != null) { %>
+					<% if (recomentation.getLetterOfRecomentation() == null) { %>
 						<a href="<%= request.getContextPath() +  resendRequestUrl + "&recomentationId=" + recomentation.getExternalId() %>">
 							<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.request.resend"/>
 						</a>
@@ -701,7 +701,7 @@
 			</logic:present>
 			<logic:notPresent name="recommendationBean">
 				<td>
-					<% if (recomentation.getLetterOfRecomentation() == null) { %>
+					<% if (recomentation.getLetterOfRecomentation() != null) { %>
 						<a href="<%= request.getContextPath() +  "/publico/genericApplications.do?method=downloadRecomendationFile&fileExternalId=" + recomentation.getLetterOfRecomentation().getExternalId() %>">
 							<%= recomentation.getLetterOfRecomentation().getFilename() %>
 						</a>
