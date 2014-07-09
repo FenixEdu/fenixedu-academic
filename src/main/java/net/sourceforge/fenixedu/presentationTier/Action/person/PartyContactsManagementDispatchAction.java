@@ -55,6 +55,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "person", path = "/partyContacts", functionality = VisualizePersonalInfo.class)
@@ -331,6 +332,37 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         return mapping.findForward("visualizePersonalInformation");
+    }
+
+    public ActionForward saveNamesDivision(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final String[] givenNames = request.getParameter("given").split(" ");
+        final String[] familyNames =
+                (request.getParameter("family").equals("")) ? new String[0] : request.getParameter("family").split(" ");
+        Person person = AccessControl.getPerson();
+        final String[] fullName = person.getName().split(" ");
+        if (fullName.length != givenNames.length + familyNames.length) {
+            return null;
+        }
+        int i;
+        for (i = 0; i < givenNames.length; i++) {
+            if (!fullName[i].equals(givenNames[i])) {
+                return null;
+            }
+        }
+        for (int j = 0; j < familyNames.length; i++, j++) {
+            if (!fullName[i].equals(familyNames[j])) {
+                return null;
+            }
+        }
+        setPersonNameDivision(person, request.getParameter("given"), request.getParameter("family"));
+        return null;
+    }
+
+    @Atomic
+    private void setPersonNameDivision(Person person, String gNames, String fNames) {
+        person.setGivenNames(gNames);
+        person.setFamilyNames(fNames);
     }
 
     public ActionForward requestValidationToken(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

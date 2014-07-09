@@ -18,6 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@ page import="net.sourceforge.fenixedu.domain.Person" %>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -647,11 +648,174 @@
 		</fr:layout>
 	</fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
-		<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
+		<bean:message key="button.update.nickname" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:submit>
 </fr:form>
 
-<fr:view name="LOGGED_USER_ATTRIBUTE" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+<!------------- Partial Names ------------------>
+
+
+<link href="<%= request.getContextPath() %>/CSS/jqTheme/ui.base.css" rel="stylesheet"></link>
+<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery-ui.js"></script>
+<%
+	final Person p = (Person) person;
+	final String[] nameParts = p.getName().split(" ");
+	final int init_pos = (p.getGivenNames() == null ) ? 0 : p.getGivenNames().split(" ").length - 1;
+%>
+
+<style >
+#slider .ui-slider-range { 
+	background: #009ee3; 
+}
+
+#slider .ui-slider-handle { 
+	border-color: transparent; 
+	background: transparent;
+	outline: none;
+	
+}
+
+#sliderIMG {
+    position:absolute;
+    margin: -5px 0px 0px -15px;
+}
+
+.test {
+	width: 42px;
+	height:10px;
+	color: red;
+}
+
+.partialName {
+    padding-right: 15px;
+    padding-bottom: 5px;
+	display:table-cell;
+}
+</style>
+
+<script>
+$(function() {
+	var names = [];
+	var slider_values = $.makeArray($('.partialName').map(function(i,e){return $(e).position().left + $(e).width() - 10}));
+	
+	<%
+	for(int i = 0; i < nameParts.length; i++) {
+	%>
+		names.push( "<%= nameParts[i] %>" );
+	<%
+	}
+	%>
+    var last_i = -1;
+	var slider = $( "#slider" ).slider({
+	      range: "min",
+	      min: 0,
+	      max: $('.partialName').last().position().left + $('.partialName').last().width(),
+	      slide: function( event, ui ) {
+	        var i = findSelectedNames(ui.value);
+			var GNames = names.slice(0,i).toString().replace(/\,/g, ' ');
+			var FNames = names.slice(i).toString().replace(/\,/g, ' ');
+	        slider.slider('value', slider_values[i-1]);
+	        $("#sliderIMG").css('left', $('.ui-slider-handle').position().left);
+			if(last_i != i) {
+				last_i = i;
+				$.post($('#saveNames').attr('href'), { given: GNames, family: FNames  })
+					.done(function() {
+					        $('#GNames').text(GNames);
+					        $('#FNames').text(FNames);							
+						});
+		    }
+	    	return false;
+	      }
+	});
+	function findSelectedNames(value) {
+	    var i;
+	    for(i = 1; i < slider_values.length; i++) {
+	    	if(value < slider_values[i]) {
+	        	break;
+	        }
+	    }
+	    return i;
+	}
+});
+
+$(document).ready(function(){
+	//slider
+	$('#slider').width($('.partialName').last().position().left + $('.partialName').last().width());
+	$('#slider').slider('value', $('#name<%= init_pos %>').position().left + $('#name<%= init_pos %>').width() - 10);
+	//image
+	$('#sliderIMG').height($('.ui-slider-handle').height() * 1.5);
+	$('#sliderIMG').width($('.ui-slider-handle').width() * 1.5);
+    $("#sliderIMG").css('top', $('.ui-slider-handle').position().top);
+    $('#sliderIMG').css('left',$('#name<%= init_pos %>').position().left + $('#name<%= init_pos %>').width() - 10);
+});
+
+</script>
+
+<br>
+<p><bean:message key="label.partialNames" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
+
+<table class="tstyle2 thleft thlight mtop15 thwhite">
+	<tr>
+		<th><bean:message key="label.givenNames"/>:</th>
+		<td > <span id="GNames">${person.givenNames}</span> </td>
+	</tr>
+	<tr>
+		<th><bean:message key="label.familyNames" />:</th>
+		<td ><span id="FNames">${person.familyNames}</span></td>
+	</tr>
+</table>
+
+<div class="partialNameSelector">
+<%
+	int name_size = 0;
+	for(int idx = 0; idx < nameParts.length; idx++) {
+%>
+	<div class="partialName" id="name<%= idx %>"><span><%= nameParts[idx] %></span></div>
+<%
+}
+%>
+<div id="slider" style="overflow-y:visible;">
+	<img src="<%= request.getContextPath() %>/images/text_slider.png" id="sliderIMG"/>
+</div>
+</div>
+<a class="hide btn btn-primary" href="${pageContext.request.contextPath}/person/partyContacts.do?method=saveNamesDivision" id="saveNames">
+	<bean:message key="button.update.partialName" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+</a>
+	
+<!-- End Division of Names -->
+
+
+<fr:view name="LOGGED_USER_ATTRIBUTE" property="person">
+	<fr:schema type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">
+	    <fr:slot name="name" key="label.person.name">
+	        <fr:property name="size" value="50"/>
+	    </fr:slot> 
+	   <fr:slot name="gender" key="label.person.sex" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	    <fr:slot name="idDocumentType" key="label.person.identificationDocumentType">
+	        <fr:property name="excludedValues" value="CITIZEN_CARD" />
+	    </fr:slot>
+	    <fr:slot name="documentIdNumber" key="label.person.identificationDocumentNumber"/>
+	    <fr:slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace"/> 
+	    <fr:slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate"/>
+	    <fr:slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate"/>
+	    <fr:slot name="socialSecurityNumber" key="label.person.contributorNumber"/>
+	    <fr:slot name="profession" key="label.person.occupation"/>
+	    <fr:slot name="maritalStatus" key="label.person.maritalStatus"/>
+	    <fr:slot name="dateOfBirthYearMonthDay" key="label.person.birth"/>
+	    <fr:slot name="country" layout="menu-select" key="label.person.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
+	        <fr:property name="format" value="${countryNationality}"/>
+	        <fr:property name="sortBy" value="name=asc" />
+	        <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	    </fr:slot> 
+	    <fr:slot name="countryOfBirth" layout="menu-select" key="label.person.countryOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+	        <fr:property name="format" value="${name}"/>
+	        <fr:property name="sortBy" value="name=asc" />
+	        <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	    </fr:slot>
+	    <fr:slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
+	    <fr:slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
+	    <fr:slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
+	</fr:schema>
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight mtop15 thwhite"/>
 	</fr:layout>	
