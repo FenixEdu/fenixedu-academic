@@ -160,7 +160,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     public ActionForward bindEmailWithHashCodeAndSendMailWithLink(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
-        if (getIndividualCandidacyProcessBean() == null) { //if locale changes after a validation error
+        if (getObjectFromViewState("PublicAccessCandidacy.preCreationForm") == null) { //if locale changes after a validation error
             return preparePreCreationOfCandidacy(mapping, form, request, response);
         }
         ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
