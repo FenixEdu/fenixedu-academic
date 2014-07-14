@@ -276,7 +276,8 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
         }
 
-        if (getActiveFileForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) == null) {
+        if (!getCandidacy().getMobilityProgram().getRegistrationAgreement().isOnlyAllowedDegreeEnrolment()
+                && getActiveFileForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) == null) {
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
         }
 
@@ -374,7 +375,8 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     List<ReceptionEmailExecutedAction> getAllReceptionEmailNotifications() {
         List<ReceptionEmailExecutedAction> list = new ArrayList<ReceptionEmailExecutedAction>();
 
-        for (ErasmusCandidacyProcessExecutedAction executedAction : ((MobilityApplicationProcess) getCandidacyProcess()).getErasmusCandidacyProcessExecutedActionSet()) {
+        for (ErasmusCandidacyProcessExecutedAction executedAction : ((MobilityApplicationProcess) getCandidacyProcess())
+                .getErasmusCandidacyProcessExecutedActionSet()) {
             if (executedAction.isReceptionEmailExecutedAction()
                     && executedAction.getSubjectMobilityIndividualApplicationProcessSet().contains(this)) {
                 list.add((ReceptionEmailExecutedAction) executedAction);
