@@ -318,6 +318,6 @@ public enum SchoolLevelType implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        return BundleUtil.getString(Bundle.ENUMERATION, name());
+        return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
     }
 }

@@ -56,7 +56,7 @@ import pt.ist.fenixframework.Atomic;
 
 public class PersonalInformationBean implements Serializable {
 
-    static private final LocalDate limitDate = new LocalDate(2013, 12, 16);
+    static private final LocalDate limitDate = new LocalDate(2014, 12, 16);
 
     static public boolean isPastLimitDate() {
         return new LocalDate().isAfter(limitDate);
