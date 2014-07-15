@@ -3,7 +3,26 @@
 {% block topbar %}
 
 <div class="row">
-	<script id="ist-bar" data-logout="https://fenix.tecnico.ulisboa.pt/logoff.do" data-login="https://fenix.tecnico.ulisboa.pt/loginPage.jsp" data-fluid="true" data-lang="{{currentLocale.language}}"  data-next-param="service" src="https://barra.tecnico.ulisboa.pt/site_media/static/js/barra.js"></script>
+	<script id="ist-bar" data-logout="https://fenix.tecnico.ulisboa.pt/logout" data-login="https://fenix.tecnico.ulisboa.pt/login" data-fluid="true" data-lang="{{currentLocale.language}}"  data-next-param="service" src="https://barra.tecnico.ulisboa.pt/site_media/static/js/barra.js"></script>
 </div>
 
+{% endblock %}
+
+{% block footer %}
+<footer class="row" role="contentinfo" >
+		<div class="col-sm-2 text-center">
+			<a class="brand" href="http://fenixedu.org"><img src="{{contextPath}}/themes/ashes/img/logo_fenixedu_footer.svg" alt="Powered by FenixEdu"></a>
+		</div>
+		<p class="col-sm-10">
+			<span>{{config.applicationCopyright.content}}</span>
+			<a href="" onclick="openSupport(); return false;">
+				{{i18n('resources.ApplicationResources', 'support.Contact')}}
+			</a>
+		</p>
+</footer>
+<div class="modal fade" id="supportModal"></div>
+<script>
+openSupport = function() { $('#supportModal').load('{{contextPath}}/themes/ashes-ist/supportModal.jsp'); $('#supportModal').modal('show');
+	window.current$functionality = '{{functionality.externalId}}'; };
+</script>
 {% endblock %}
