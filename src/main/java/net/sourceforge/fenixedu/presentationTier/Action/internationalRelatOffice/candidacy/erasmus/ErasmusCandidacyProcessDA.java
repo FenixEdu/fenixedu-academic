@@ -289,6 +289,14 @@ public class ErasmusCandidacyProcessDA extends
         return prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles(mapping, form, request, response);
     }
 
+    public ActionForward executeSendEmailToMissingShiftsProcesses(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+
+        executeActivity(getProcess(request), "SendEmailToMissingShiftsProcesses", null);
+
+        return prepareExecuteViewChildProcessWithMissingShifts(mapping, form, request, response);
+    }
+
     private MobilityCoordinator getErasmusCoordinator(HttpServletRequest request) {
         return (MobilityCoordinator) getDomainObject(request, "erasmusCoordinatorExternalId");
     }

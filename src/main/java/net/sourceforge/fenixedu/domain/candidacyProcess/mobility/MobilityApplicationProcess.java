@@ -89,6 +89,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
         activities.add(new RemoveTeacherFromCoordinators());
         activities.add(new ViewChildProcessWithMissingRequiredDocumentFiles());
         activities.add(new SendEmailToMissingRequiredDocumentsProcesses());
+        activities.add(new SendEmailToMissingShiftsProcesses());
         activities.add(new EditCandidacyPeriod());
         activities.add(new SendReceptionEmail());
         activities.add(new EditReceptionEmailMessage());
@@ -762,6 +763,44 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     }
 
+    static private class SendEmailToMissingShiftsProcesses extends Activity<MobilityApplicationProcess> {
+
+        @Override
+        public void checkPreConditions(MobilityApplicationProcess process, User userView) {
+            if (!isManager(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
+
+        @Override
+        protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, User userView, Object object) {
+            MobilityApplicationPeriod candidacyPeriod = process.getCandidacyPeriod();
+
+            MobilityEmailTemplate emailTemplateFor =
+                    candidacyPeriod.getEmailTemplateFor(MobilityEmailTemplateType.MISSING_ENROLMENTS);
+
+            emailTemplateFor.sendMultiEmailFor(process.getProcessesMissingShifts());
+
+            return process;
+        }
+
+        @Override
+        public Boolean isVisibleForAdminOffice() {
+            return false;
+        }
+
+        @Override
+        public Boolean isVisibleForCoordinator() {
+            return false;
+        }
+
+        @Override
+        public Boolean isVisibleForGriOffice() {
+            return false;
+        }
+
+    }
+
     static private class SendReceptionEmail extends Activity<MobilityApplicationProcess> {
         @Override
         public void checkPreConditions(MobilityApplicationProcess process, User userView) {
@@ -864,6 +903,17 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     public List<MobilityIndividualApplicationProcess> getProcessesMissingDocuments() {
         List<MobilityIndividualApplicationProcess> results = new ArrayList<MobilityIndividualApplicationProcess>();
         for (IndividualCandidacyProcess icp : getChildsWithMissingRequiredDocuments()) {
+            if (icp instanceof MobilityIndividualApplicationProcess) {
+                MobilityIndividualApplicationProcess miap = ((MobilityIndividualApplicationProcess) icp);
+                results.add(miap);
+            }
+        }
+        return results;
+    }
+
+    public List<MobilityIndividualApplicationProcess> getProcessesMissingShifts() {
+        List<MobilityIndividualApplicationProcess> results = new ArrayList<MobilityIndividualApplicationProcess>();
+        for (IndividualCandidacyProcess icp : getChildsWithMissingShifts()) {
             if (icp instanceof MobilityIndividualApplicationProcess) {
                 MobilityIndividualApplicationProcess miap = ((MobilityIndividualApplicationProcess) icp);
                 results.add(miap);

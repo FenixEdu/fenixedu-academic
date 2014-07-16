@@ -229,6 +229,17 @@ public class Attends extends Attends_Base {
         return false;
     }
 
+    public boolean hasAllShiftEnrolments() {
+        Set<ShiftType> shiftTypes = this.getExecutionCourse().getShiftTypes();
+        Set<ShiftType> foundShiftTypes = new HashSet<ShiftType>();
+        for (Shift shift : this.getExecutionCourse().getAssociatedShifts()) {
+            if (shift.getStudentsSet().contains(this.getRegistration())) {
+                foundShiftTypes.addAll(shift.getTypes());
+            }
+        }
+        return foundShiftTypes.size() == shiftTypes.size();
+    }
+
     public FinalMark getFinalMark() {
         for (Mark mark : getAssociatedMarksSet()) {
             if (mark instanceof FinalMark) {

@@ -155,6 +155,49 @@ public enum MobilityEmailTemplateType {
 
     },
 
+    MISSING_ENROLMENTS {
+
+        @Override
+        public void sendEmailFor(MobilityEmailTemplate mobilityEmailTemplate, DegreeOfficePublicCandidacyHashCode hashCode) {
+
+            MobilityIndividualApplicationProcess miap =
+                    ((MobilityIndividualApplicationProcess) hashCode.getIndividualCandidacyProcess());
+
+            StringBuilder missingDocs = new StringBuilder();
+            for (IndividualCandidacyDocumentFileType missingDocumentType : miap.getMissingRequiredDocumentFiles()) {
+                missingDocs.append("- ").append(missingDocumentType.localizedName(Locale.ENGLISH)).append("\n");
+            }
+
+            String subject =
+                    StringUtils.isEmpty(mobilityEmailTemplate.getSubject()) ? MessageFormat.format(
+                            BundleUtil.getString(Bundle.CANDIDATE, "message.erasmus.missing.required.documents.email.subject"),
+                            Unit.getInstitutionAcronym()) : mobilityEmailTemplate.getSubject();
+            String body =
+                    StringUtils.isEmpty(mobilityEmailTemplate.getBody()) ? BundleUtil.getString(Bundle.CANDIDATE,
+                            "message.erasmus.missing.required.documents.email.body") : mobilityEmailTemplate.getBody();
+
+            if (body.contains("[missing_documents]")) {
+                body = body.replace("[missing_documents]", missingDocs.toString());
+            }
+
+            if (body.contains("[application_submission_end_date]")) {
+                body = body.replace("[application_submission_end_date]", miap.getCandidacyEnd().toString("dd/MM/yyyy"));
+            }
+
+            sendEmail(subject, body, hashCode.getEmail());
+        }
+
+        @Override
+        public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
+                Collection<MobilityIndividualApplicationProcess> processes) {
+            for (MobilityIndividualApplicationProcess process : processes) {
+                sendEmailFor(mobilityEmailTemplate, process.getCandidacyHashCode());
+            }
+
+        }
+
+    },
+
     CANDIDATE_ACCEPTED {
 
         private static final String APPLICATION_ACCESS_LINK =
