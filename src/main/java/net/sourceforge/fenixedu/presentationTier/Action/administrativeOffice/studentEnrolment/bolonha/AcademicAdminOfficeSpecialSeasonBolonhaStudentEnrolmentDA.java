@@ -51,7 +51,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({
         @Forward(name = "showDegreeModulesToEnrol",
                 path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
-        @Forward(name = "showStudentEnrollmentMenu", path = "/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules"),
+        @Forward(name = "showStudentEnrollmentMenu",
+                path = "/academicAdministration/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules"),
         @Forward(name = "changeSpecialSeasonCode",
                 path = "/academicAdminOffice/student/enrollment/bolonha/chooseSpecialSeasonCode.jsp") })
 public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends AcademicAdminOfficeBolonhaStudentEnrollmentDA {
