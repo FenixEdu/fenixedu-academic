@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -155,7 +156,7 @@ public enum MobilityEmailTemplateType {
 
     },
 
-    MISSING_ENROLMENTS {
+    MISSING_SHIFTS {
 
         @Override
         public void sendEmailFor(MobilityEmailTemplate mobilityEmailTemplate, DegreeOfficePublicCandidacyHashCode hashCode) {
@@ -163,9 +164,10 @@ public enum MobilityEmailTemplateType {
             MobilityIndividualApplicationProcess miap =
                     ((MobilityIndividualApplicationProcess) hashCode.getIndividualCandidacyProcess());
 
-            StringBuilder missingDocs = new StringBuilder();
-            for (IndividualCandidacyDocumentFileType missingDocumentType : miap.getMissingRequiredDocumentFiles()) {
-                missingDocs.append("- ").append(missingDocumentType.localizedName(Locale.ENGLISH)).append("\n");
+            StringBuilder missingShifts = new StringBuilder();
+
+            for (ExecutionCourse course : miap.getMissingShifts()) {
+                missingShifts.append("- ").append(course.getName()).append("\n");
             }
 
             String subject =
@@ -176,12 +178,8 @@ public enum MobilityEmailTemplateType {
                     StringUtils.isEmpty(mobilityEmailTemplate.getBody()) ? BundleUtil.getString(Bundle.CANDIDATE,
                             "message.erasmus.missing.required.documents.email.body") : mobilityEmailTemplate.getBody();
 
-            if (body.contains("[missing_documents]")) {
-                body = body.replace("[missing_documents]", missingDocs.toString());
-            }
-
-            if (body.contains("[application_submission_end_date]")) {
-                body = body.replace("[application_submission_end_date]", miap.getCandidacyEnd().toString("dd/MM/yyyy"));
+            if (body.contains("[missing_shifts]")) {
+                body = body.replace("[missing_shifts]", missingShifts.toString());
             }
 
             sendEmail(subject, body, hashCode.getEmail());

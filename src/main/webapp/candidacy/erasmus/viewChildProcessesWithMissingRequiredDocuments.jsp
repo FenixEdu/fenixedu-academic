@@ -38,6 +38,10 @@
 	<bean:define id="childProcessName" name="childProcessName" />
 	<bean:size id="candidacyProcessesSize" name="candidacyProcesses" />
 		
+	<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
+		<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+	</html:link>
+		
 		<logic:present role="role(MANAGER)">
 			<ul>
 				<li>
@@ -61,7 +65,7 @@
 				<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
 							
 				<fr:property name="sortParameter" value="sortBy"/>
-	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'/>
+	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles&amp;processId=" + processId.toString() %>'/>
     	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacyState,candidacyDate=desc" : request.getParameter("sortBy") %>"/>
 			</fr:layout>
 		</fr:view>

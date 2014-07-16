@@ -777,7 +777,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
             MobilityApplicationPeriod candidacyPeriod = process.getCandidacyPeriod();
 
             MobilityEmailTemplate emailTemplateFor =
-                    candidacyPeriod.getEmailTemplateFor(MobilityEmailTemplateType.MISSING_ENROLMENTS);
+                    candidacyPeriod.getEmailTemplateFor(MobilityEmailTemplateType.MISSING_SHIFTS);
 
             emailTemplateFor.sendMultiEmailFor(process.getProcessesMissingShifts());
 
