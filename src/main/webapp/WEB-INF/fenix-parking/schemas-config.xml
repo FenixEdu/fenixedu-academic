@@ -392,8 +392,14 @@
 
 <schema name="edit.vehicleBean" type="org.fenixedu.parking.dto.VehicleBean">
 	<slot name="deleteVehicle" key="label.deleteVehicle"/>
-	<slot name="vehicleMake" key="label.vehicleMake"/>
-	<slot name="vehiclePlateNumber" key="label.vehiclePlateNumber"/>	
+	<slot name="vehicleMake" key="label.vehicleMake">
+		<property name="size" value="25"/>
+		<property name="maxLength" value="40"/>
+	</slot>
+	<slot name="vehiclePlateNumber" key="label.vehiclePlateNumber">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
 </schema>	
 
 <schema name="show.parkingRequest.noDetail"
