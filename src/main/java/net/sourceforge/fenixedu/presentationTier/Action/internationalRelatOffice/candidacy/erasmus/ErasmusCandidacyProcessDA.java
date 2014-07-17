@@ -286,6 +286,8 @@ public class ErasmusCandidacyProcessDA extends
 
         executeActivity(getProcess(request), "SendEmailToMissingRequiredDocumentsProcesses", null);
 
+        request.setAttribute("sentEmail", true);
+
         return prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles(mapping, form, request, response);
     }
 
@@ -293,6 +295,8 @@ public class ErasmusCandidacyProcessDA extends
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         executeActivity(getProcess(request), "SendEmailToMissingShiftsProcesses", null);
+
+        request.setAttribute("sentEmail", true);
 
         return prepareExecuteViewChildProcessWithMissingShifts(mapping, form, request, response);
     }

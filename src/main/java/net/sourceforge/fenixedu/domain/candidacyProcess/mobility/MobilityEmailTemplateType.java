@@ -172,11 +172,11 @@ public enum MobilityEmailTemplateType {
 
             String subject =
                     StringUtils.isEmpty(mobilityEmailTemplate.getSubject()) ? MessageFormat.format(
-                            BundleUtil.getString(Bundle.CANDIDATE, "message.erasmus.missing.required.documents.email.subject"),
+                            BundleUtil.getString(Bundle.CANDIDATE, "message.erasmus.missing.shifts.email.subject"),
                             Unit.getInstitutionAcronym()) : mobilityEmailTemplate.getSubject();
             String body =
                     StringUtils.isEmpty(mobilityEmailTemplate.getBody()) ? BundleUtil.getString(Bundle.CANDIDATE,
-                            "message.erasmus.missing.required.documents.email.body") : mobilityEmailTemplate.getBody();
+                            "message.erasmus.missing.shifts.email.body") : mobilityEmailTemplate.getBody();
 
             if (body.contains("[missing_shifts]")) {
                 body = body.replace("[missing_shifts]", missingShifts.toString());

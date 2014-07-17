@@ -28,19 +28,27 @@
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
+<bean:define id="process" name="process" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess" />
+<bean:define id="processId" name="process" property="externalId" />
+<bean:define id="childProcessName" name="childProcessName" />
 
-<em><bean:message key="label.erasmus.candidacy" bundle="APPLICATION_RESOURCES"/></em>
+<em><bean:message key="label.erasmus.candidacy" bundle="APPLICATION_RESOURCES"/></em> | 
+
+<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
+	<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+</html:link>
+
+<logic:equal name="sentEmail" value="true">
+	<br/>
+	<br/>
+	<div class="infoop5">
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.email.sent"/>
+	</div>
+</logic:equal>
 
 <h2><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES" /></h2>
 	
-	<bean:define id="process" name="process" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess" />
-	<bean:define id="processId" name="process" property="externalId" />
-	<bean:define id="childProcessName" name="childProcessName" />
 	<bean:size id="candidacyProcessesSize" name="candidacyProcesses" />
-		
-	<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
-		<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
-	</html:link>
 		
 		<logic:present role="role(MANAGER)">
 			<ul>
