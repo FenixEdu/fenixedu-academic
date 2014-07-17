@@ -55,9 +55,8 @@ public abstract class CreateThesisFile {
 
         Group scientificCouncil = RoleGroup.get(roleType);
         Group commissionMembers = ScientificCommissionGroup.get(thesis.getDegree());
-        Group student = thesis.getStudent().getPerson().getPersonGroup();
         Group thesisGroup = ThesisReadersGroup.get(thesis);
-        final Group permittedGroup = scientificCouncil.or(commissionMembers).or(student).or(thesisGroup);
+        final Group permittedGroup = scientificCouncil.or(commissionMembers).or(thesisGroup);
 
         ThesisFile file = new ThesisFile(fileName, fileName, bytes, permittedGroup);
 
