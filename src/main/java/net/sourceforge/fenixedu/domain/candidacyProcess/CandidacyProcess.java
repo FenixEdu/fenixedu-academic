@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -108,7 +109,8 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     public static <T extends CandidacyProcess> T getCandidacyProcessByExecutionInterval(Class<T> clazz,
             final ExecutionInterval executionInterval) {
         for (T process : getAllInstancesOf(clazz)) {
-            if (process.getCandidacyPeriod() != null && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval())) {
+            if (process.getCandidacyPeriod() != null
+                    && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval())) {
                 return process;
             }
         }
@@ -171,6 +173,28 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
             public boolean evaluate(Object arg0) {
                 IndividualCandidacyProcess process = (IndividualCandidacyProcess) arg0;
                 return !process.isCandidacyCancelled() && process.isProcessMissingRequiredDocumentFiles();
+            }
+
+        }, childs);
+
+        return childs;
+    }
+
+    public List<IndividualCandidacyProcess> getChildsWithMissingShifts() {
+        List<IndividualCandidacyProcess> childs = new ArrayList<IndividualCandidacyProcess>();
+
+        CollectionUtils.select(getChildProcessesSet(), new Predicate() {
+
+            @Override
+            public boolean evaluate(Object arg0) {
+                boolean hasNotMissingShifts = true;
+                IndividualCandidacyProcess process = (IndividualCandidacyProcess) arg0;
+                for (Attends attends : process.getCandidacy().getPersonalDetails().getPerson().getCurrentAttends()) {
+                    if (!attends.hasAllShiftEnrolments()) {
+                        hasNotMissingShifts = false;
+                    }
+                }
+                return !process.isCandidacyCancelled() && !hasNotMissingShifts;
             }
 
         }, childs);

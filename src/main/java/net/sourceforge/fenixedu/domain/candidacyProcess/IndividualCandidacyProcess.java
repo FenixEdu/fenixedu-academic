@@ -20,11 +20,14 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
@@ -350,6 +353,16 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     protected abstract void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile);
 
     public abstract List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles();
+
+    public List<ExecutionCourse> getMissingShifts() {
+        HashSet<ExecutionCourse> missingShifts = new HashSet<ExecutionCourse>();
+        for (Attends attends : this.getCandidacy().getPersonalDetails().getPerson().getCurrentAttends()) {
+            if (!attends.hasAllShiftEnrolments()) {
+                missingShifts.add(attends.getExecutionCourse());
+            }
+        }
+        return new ArrayList<ExecutionCourse>(missingShifts);
+    }
 
     public boolean isProcessMissingRequiredDocumentFiles() {
         return !getMissingRequiredDocumentFiles().isEmpty();

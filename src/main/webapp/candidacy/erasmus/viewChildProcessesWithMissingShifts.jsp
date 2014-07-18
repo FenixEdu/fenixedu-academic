@@ -53,8 +53,8 @@
 		<logic:present role="role(MANAGER)">
 			<ul>
 				<li>
-					<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=executeSendEmailToMissingRequiredDocumentsProcesses&amp;processId=" + processId.toString() %>'>
-						<bean:message key="label.erasmus.send.email.to.missing.required.documents" bundle="ACADEMIC_OFFICE_RESOURCES" />
+					<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=executeSendEmailToMissingShiftsProcesses&amp;processId=" + processId.toString() %>'>
+						<bean:message key="label.erasmus.send.email.to.missing.shifts" bundle="ACADEMIC_OFFICE_RESOURCES" />
 					</html:link>
 				</li>
 			</ul>
@@ -62,8 +62,8 @@
 	<p><strong><bean:message key="title.erasmus.application.process.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	
 	<%-- show child processes --%>
-	<logic:notEmpty name="process" property="childsWithMissingRequiredDocuments" >
-		<fr:view name="process" property="childsWithMissingRequiredDocuments" schema="ErasmusIndividualCandidacy.missing.required.documents.list">
+	<logic:notEmpty name="process" property="childsWithMissingShifts" >
+		<fr:view name="process" property="childsWithMissingShifts" schema="ErasmusIndividualCandidacy.missing.shifts.list">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
@@ -73,12 +73,12 @@
 				<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
 							
 				<fr:property name="sortParameter" value="sortBy"/>
-	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles&amp;processId=" + processId.toString() %>'/>
+	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecuteViewChildProcessWithMissingShifts&amp;processId=" + processId.toString() %>'/>
     	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacyState,candidacyDate=desc" : request.getParameter("sortBy") %>"/>
 			</fr:layout>
 		</fr:view>
 		<bean:size id="childProcessesSize" name="childProcesses" />
 		
-		<p class="mvert05"><bean:message key="label.numberOfCandidates" bundle="APPLICATION_RESOURCES" />: <strong><%= process.getChildsWithMissingRequiredDocuments().size() %></strong></p>
+		<p class="mvert05"><bean:message key="label.numberOfCandidates" bundle="APPLICATION_RESOURCES" />: <strong><%= process.getChildsWithMissingShifts().size() %></strong></p>
 		
 	</logic:notEmpty>
