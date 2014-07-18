@@ -52,6 +52,8 @@ import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
@@ -391,12 +393,17 @@ public class ViewTeacherService extends FenixBackingBean {
 
             for (TeacherExecutionCourseServiceDTO teacher : entry.getTeacherExecutionCourseServiceList()) {
                 spreadsheet.newRow();
-                String description = teacher.getDescription();
+                spreadsheet.addCell(teacher.getTeacherUsername());
+                spreadsheet.addCell(teacher.getTeacherName());
+
+                PeriodFormatter periodFormatter =
+                        new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2).appendHours().appendSuffix(":")
+                                .appendMinutes().toFormatter();
+                spreadsheet.addCell(periodFormatter.print(teacher.getTimeSpentByTeacher().toPeriod()));
+
                 if (!teacher.getTeacherOfDepartment()) {
-                    description += " " + BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.hours");
+                    spreadsheet.addCell(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.hours"));
                 }
-                spreadsheet.addCell(description);
-                spreadsheet.mergeCells(spreadsheet.getRow().getRowNum(), spreadsheet.getRow().getRowNum(), 0, teacherColumns - 1);
             }
 
         }

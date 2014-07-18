@@ -43,6 +43,8 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
     public class TeacherExecutionCourseServiceDTO {
         private final String teacherExternalId;
 
+        private final String teacherUsername;
+
         private final String teacherName;
 
         private final Double hoursSpentByTeacher;
@@ -51,9 +53,10 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 
         private final Boolean teacherOfDepartment;
 
-        public TeacherExecutionCourseServiceDTO(String teacherExternalId, String teacherName, Double hoursSpentByTeacher,
-                Duration timeSpentByTeacher, Boolean teacherOfDepartment) {
+        public TeacherExecutionCourseServiceDTO(String teacherExternalId, String teacherUsername, String teacherName,
+                Double hoursSpentByTeacher, Duration timeSpentByTeacher, Boolean teacherOfDepartment) {
             this.teacherExternalId = teacherExternalId;
+            this.teacherUsername = teacherUsername;
             this.teacherName = teacherName;
             this.hoursSpentByTeacher = hoursSpentByTeacher;
             this.timeSpentByTeacher = timeSpentByTeacher;
@@ -73,13 +76,19 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
             return teacherExternalId;
         }
 
+        public String getTeacherUsername() {
+            return teacherUsername;
+        }
+
         public String getTeacherName() {
             return teacherName;
         }
 
         public String getDescription() {
-            StringBuilder finalString = new StringBuilder(teacherName);
+            StringBuilder finalString = new StringBuilder(teacherUsername);
 
+            finalString.append(" - ");
+            finalString.append(teacherName);
             finalString.append(" - ");
             PeriodFormatter periodFormatter =
                     new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2).appendHours().appendSuffix(":")
@@ -516,10 +525,10 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
         }
     }
 
-    public void addTeacherToExecutionCourse(String keyExecutionCourse, String externalIdTeacher, String name,
+    public void addTeacherToExecutionCourse(String keyExecutionCourse, String externalIdTeacher, String username, String name,
             Double hoursSpentByTeacher, Duration timeSpentByTeacher, boolean teacherBelongsToDepartment) {
         TeacherExecutionCourseServiceDTO teacher =
-                new TeacherExecutionCourseServiceDTO(externalIdTeacher, name, hoursSpentByTeacher, timeSpentByTeacher,
+                new TeacherExecutionCourseServiceDTO(externalIdTeacher, username, name, hoursSpentByTeacher, timeSpentByTeacher,
                         teacherBelongsToDepartment);
 
         ExecutionCourseDistributionServiceEntryDTO executionCourseEntry = executionCourseMap.get(keyExecutionCourse);
