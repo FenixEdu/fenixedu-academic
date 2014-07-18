@@ -188,9 +188,11 @@ public class ErasmusCandidacyProcessDA extends
         MobilityApplicationProcess process = getProcess(request);
         ErasmusVacancyBean bean = getErasmusVacancyBean();
 
-        if (process.getCandidacyPeriod().existsFor(bean.getMobilityAgreement(), bean.getDegree())) {
-            addActionMessage(request, "error.erasmus.insert.vacancy.already.exists");
-            return mapping.findForward("insert-university-agreement");
+        for (Degree degree : bean.getDegrees()) {
+            if (process.getCandidacyPeriod().existsFor(bean.getMobilityAgreement(), degree)) {
+                addActionMessage(request, "error.erasmus.insert.vacancy.already.exists");
+                return mapping.findForward("insert-university-agreement");
+            }
         }
 
         executeActivity(getProcess(request), "InsertMobilityQuota", bean);

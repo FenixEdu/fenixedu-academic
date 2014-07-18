@@ -546,8 +546,10 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
         protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, User userView, Object object) {
             ErasmusVacancyBean bean = (ErasmusVacancyBean) object;
 
-            MobilityQuota.createVacancy(process.getCandidacyPeriod(), bean.getDegree(), bean.getMobilityProgram(),
-                    bean.getUniversity(), bean.getNumberOfVacancies());
+            for (Degree degree : bean.getDegrees()) {
+                MobilityQuota.createVacancy(process.getCandidacyPeriod(), degree, bean.getMobilityProgram(),
+                        bean.getUniversity(), bean.getNumberOfVacancies());
+            }
 
             return process;
         }

@@ -71,6 +71,7 @@
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="chooseCountryPostback" path="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&method=chooseCountry&amp;processId=" + processId.toString() %>"/>
+		<fr:destination name="chooseMobilityProgramPostback" path="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&method=chooseMobilityProgram&amp;processId=" + processId.toString() %>"/>
 		<fr:destination name="chooseUniversityPostback" path="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&method=chooseUniversity&amp;processId=" + processId.toString() %>"/>
 	</fr:edit>
 </fr:form>
@@ -112,7 +113,16 @@
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
 	</fr:view>
-		
+	
+	<p>
+				<fr:edit name="individualCandidacyProcessBean" schema="ErasmusVacancy.modify.choosen.degree">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        			<fr:property name="columnClasses" value="width12em,width40em,tdclear error0"/>
+					</fr:layout>
+				</fr:edit>
+			</p>
+
 	<logic:notEqual name="onlyAllowedDegreeEnrolment" value="true">
 		<div class="mtop3">		
 			<p><em><bean:message key="message.erasmus.select.courses.of.associated.degrees" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
@@ -150,15 +160,10 @@
 			</tr>
 			</logic:iterate>
 			</table>
-		
-			<p>
-				<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>:
-				<fr:view	name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
-			</p>
 			
 		</div>
 	</logic:notEqual>
-	
+
 	<logic:equal name="onlyAllowedDegreeEnrolment" value="true">
 		<div class="mtop3">		
 			<fr:edit id="mobility.individual.application" name="mobilityIndividualApplicationProcessBean">
