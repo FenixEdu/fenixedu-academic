@@ -123,19 +123,19 @@ public class BibliographicReferences implements Serializable {
     public static class BibliographicReference implements Comparable<BibliographicReference>, Serializable {
         private static final long serialVersionUID = 7998864914358693747L;
 
-        private final String year;
+        private String year;
 
-        private final String title;
+        private String title;
 
-        private final String authors;
+        private String authors;
 
-        private final String reference;
+        private String reference;
 
-        private final String url;
+        private String url;
 
-        private final BibliographicReferenceType type;
+        private BibliographicReferenceType type;
 
-        private final int order;
+        private int order;
 
         public BibliographicReference(String year, String title, String authors, String reference, String url,
                 BibliographicReferenceType type, int order) {
@@ -183,6 +183,34 @@ public class BibliographicReferences implements Serializable {
             return order;
         }
 
+        public void setYear(String year) {
+            this.year = year;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public void setAuthors(String authors) {
+            this.authors = authors;
+        }
+
+        public void setReference(String reference) {
+            this.reference = reference;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public void setType(BibliographicReferenceType type) {
+            this.type = type;
+        }
+
+        public void setOrder(int order) {
+            this.order = order;
+        }
+
         @Override
         public int compareTo(BibliographicReference bibliographicReference) {
             return getOrder() - bibliographicReference.getOrder();
@@ -225,5 +253,4 @@ public class BibliographicReferences implements Serializable {
     public List<BibliographicReference> getSecondaryBibliographicReferences() {
         return bibliographicReferences.stream().filter(BibliographicReference::isSecondary).collect(Collectors.toList());
     }
-
 }
