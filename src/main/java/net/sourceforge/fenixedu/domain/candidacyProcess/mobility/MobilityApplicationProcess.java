@@ -776,32 +776,20 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
         protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, User userView, Object object) {
             MobilityApplicationPeriod candidacyPeriod = process.getCandidacyPeriod();
 
-            try {
-
-                MobilityEmailTemplate emailTemplateFor =
-                        candidacyPeriod.getEmailTemplateFor(MobilityEmailTemplateType.MISSING_SHIFTS);
-
-                emailTemplateFor.sendMultiEmailFor(process.getProcessesMissingShifts());
-
-                return process;
-            } catch (NullPointerException e) {
-                String programName = "";
+            MobilityEmailTemplate emailTemplateFor =
+                    candidacyPeriod.getEmailTemplateFor(MobilityEmailTemplateType.MISSING_SHIFTS);
+            if (emailTemplateFor == null) {
                 for (MobilityProgram mobilityProgram : candidacyPeriod.getMobilityPrograms()) {
-                    boolean foundMissing = false;
                     for (MobilityEmailTemplate mobilityEmailTemplate : mobilityProgram.getEmailTemplatesSet()) {
                         if (mobilityEmailTemplate.getType().equals(MobilityEmailTemplateType.MISSING_SHIFTS)) {
-                            foundMissing = true;
-                            break;
+                            throw new DomainException("error.missing.shifts.template.not.found", mobilityProgram.getName().getContent());
                         }
                     }
-                    if (foundMissing) {
-                        continue;
-                    } else {
-                        programName = mobilityProgram.getName().getContent();
-                    }
                 }
-                throw new DomainException("error.missing.shifts.template.not.found", programName);
             }
+
+            emailTemplateFor.sendMultiEmailFor(process.getProcessesMissingShifts());            
+            return process;
         }
 
         @Override
