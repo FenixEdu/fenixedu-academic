@@ -96,7 +96,7 @@
 		</p>
 	</logic:equal>
 	</logic:present>
-
+	
 	<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
 
 		<p class="mbottom05"><strong><bean:message key="label.erasmus.filter.applications.by" bundle="CANDIDATE_RESOURCES" /></strong></p>
@@ -182,6 +182,9 @@
 		<logic:present role="role(INTERNATIONAL_RELATION_OFFICE)">
 			<li>
 				<html:link action="<%= "/caseHandlingMobilityApplicationProcess.do?method=manageEmailTemplates&processId=" + processId %>">Manage Email Templates</html:link>
+			</li>
+			<li>
+				<html:link action="<%= "/caseHandlingMobilityApplicationProcess.do?method=prepareExecuteViewChildProcessWithMissingShifts&processId=" + processId %>">View students with incomplete enrollment in shifts</html:link>
 			</li>
 		</logic:present>
 		</ul>

@@ -288,7 +288,23 @@ public class ErasmusCandidacyProcessDA extends
 
         executeActivity(getProcess(request), "SendEmailToMissingRequiredDocumentsProcesses", null);
 
+        request.setAttribute("sentEmail", true);
+
         return prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles(mapping, form, request, response);
+    }
+
+    public ActionForward executeSendEmailToMissingShiftsProcesses(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+
+        try {
+            executeActivity(getProcess(request), "SendEmailToMissingShiftsProcesses", null);
+
+            request.setAttribute("sentEmail", true);
+        } catch (DomainException e) {
+            request.setAttribute("emailError", e.getLocalizedMessage());
+        }
+
+        return prepareExecuteViewChildProcessWithMissingShifts(mapping, form, request, response);
     }
 
     private MobilityCoordinator getErasmusCoordinator(HttpServletRequest request) {

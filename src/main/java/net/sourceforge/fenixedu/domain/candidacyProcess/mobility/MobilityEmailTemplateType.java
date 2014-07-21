@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -139,6 +140,46 @@ public enum MobilityEmailTemplateType {
 
             if (body.contains("[application_submission_end_date]")) {
                 body = body.replace("[application_submission_end_date]", miap.getCandidacyEnd().toString("dd/MM/yyyy"));
+            }
+
+            sendEmail(subject, body, hashCode.getEmail());
+        }
+
+        @Override
+        public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
+                Collection<MobilityIndividualApplicationProcess> processes) {
+            for (MobilityIndividualApplicationProcess process : processes) {
+                sendEmailFor(mobilityEmailTemplate, process.getCandidacyHashCode());
+            }
+
+        }
+
+    },
+
+    MISSING_SHIFTS {
+
+        @Override
+        public void sendEmailFor(MobilityEmailTemplate mobilityEmailTemplate, DegreeOfficePublicCandidacyHashCode hashCode) {
+
+            MobilityIndividualApplicationProcess miap =
+                    ((MobilityIndividualApplicationProcess) hashCode.getIndividualCandidacyProcess());
+
+            StringBuilder missingShifts = new StringBuilder();
+
+            for (ExecutionCourse course : miap.getMissingShifts()) {
+                missingShifts.append("- ").append(course.getName()).append("\n");
+            }
+
+            String subject =
+                    StringUtils.isEmpty(mobilityEmailTemplate.getSubject()) ? MessageFormat.format(
+                            BundleUtil.getString(Bundle.CANDIDATE, "message.erasmus.missing.shifts.email.subject"),
+                            Unit.getInstitutionAcronym()) : mobilityEmailTemplate.getSubject();
+            String body =
+                    StringUtils.isEmpty(mobilityEmailTemplate.getBody()) ? BundleUtil.getString(Bundle.CANDIDATE,
+                            "message.erasmus.missing.shifts.email.body") : mobilityEmailTemplate.getBody();
+
+            if (body.contains("[missing_shifts]")) {
+                body = body.replace("[missing_shifts]", missingShifts.toString());
             }
 
             sendEmail(subject, body, hashCode.getEmail());

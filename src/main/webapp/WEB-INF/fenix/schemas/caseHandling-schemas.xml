@@ -2867,6 +2867,20 @@
 	<slot name="candidacyFileType.localizedName" />
 </schema>
 
+<schema name="ErasmusIndividualCandidacy.missing.shifts.list" extends="ErasmusIndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
+	<remove name="validatedByGri" />
+	<remove name="validatedByMobilityCoordinator" />
+	<slot name="candidacyHashCode.email" key="label.email" bundle="ACADEMIC_OFFICE_RESOURCES" />
+	<slot name="missingShifts" key="label.erasmus.missing.shifts" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<property name="eachLayout" value="values"/>
+    	<property name="eachSchema" value="Enrolment.name"/>		
+	</slot>
+</schema>
+
+<schema name="Enrolment.name" type="net.sourceforge.fenixedu.domain.ExecutionCourse" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="name" />
+</schema>
+
 <schema name="MobilityIndividualApplicationProcess.show.not.viewed.learning.agreements" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
