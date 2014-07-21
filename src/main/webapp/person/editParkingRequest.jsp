@@ -295,7 +295,7 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 				type="<%= type %>">
 						<fr:layout>
 							<fr:property name="size" value="25"/>
-							<fr:property name="maxLength" value="20"/>
+							<fr:property name="maxLength" value="40"/>
 						</fr:layout>
 			</fr:edit>
 			<span class="error0 mtop025">
@@ -585,7 +585,7 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 						type="<%= type %>">
 							<fr:layout>
 								<fr:property name="size" value="25"/>
-								<fr:property name="maxLength" value="20"/>
+								<fr:property name="maxLength" value="40"/>
 							</fr:layout>					
 				</fr:edit>
 				<span class="error0 mtop025">
