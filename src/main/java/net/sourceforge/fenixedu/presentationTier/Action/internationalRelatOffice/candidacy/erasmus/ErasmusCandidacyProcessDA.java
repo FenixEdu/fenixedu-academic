@@ -294,9 +294,13 @@ public class ErasmusCandidacyProcessDA extends
     public ActionForward executeSendEmailToMissingShiftsProcesses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
-        executeActivity(getProcess(request), "SendEmailToMissingShiftsProcesses", null);
+        try {
+            executeActivity(getProcess(request), "SendEmailToMissingShiftsProcesses", null);
 
-        request.setAttribute("sentEmail", true);
+            request.setAttribute("sentEmail", true);
+        } catch (DomainException e) {
+            request.setAttribute("emailError", e.getLocalizedMessage());
+        }
 
         return prepareExecuteViewChildProcessWithMissingShifts(mapping, form, request, response);
     }

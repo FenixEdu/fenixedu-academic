@@ -38,6 +38,16 @@
 	<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 </html:link>
 
+<% final String error = (String) request.getAttribute("emailError"); %>
+
+<logic:present name="emailError">
+	<br/>
+	<br/>
+	<div class="infoop5_2">
+		<%= error %>
+	</div>
+</logic:present>
+
 <logic:equal name="sentEmail" value="true">
 	<br/>
 	<br/>
