@@ -776,12 +776,32 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
         protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, User userView, Object object) {
             MobilityApplicationPeriod candidacyPeriod = process.getCandidacyPeriod();
 
-            MobilityEmailTemplate emailTemplateFor =
-                    candidacyPeriod.getEmailTemplateFor(MobilityEmailTemplateType.MISSING_SHIFTS);
+            try {
 
-            emailTemplateFor.sendMultiEmailFor(process.getProcessesMissingShifts());
+                MobilityEmailTemplate emailTemplateFor =
+                        candidacyPeriod.getEmailTemplateFor(MobilityEmailTemplateType.MISSING_SHIFTS);
 
-            return process;
+                emailTemplateFor.sendMultiEmailFor(process.getProcessesMissingShifts());
+
+                return process;
+            } catch (NullPointerException e) {
+                String programName = "";
+                for (MobilityProgram mobilityProgram : candidacyPeriod.getMobilityPrograms()) {
+                    boolean foundMissing = false;
+                    for (MobilityEmailTemplate mobilityEmailTemplate : mobilityProgram.getEmailTemplatesSet()) {
+                        if (mobilityEmailTemplate.getType().equals(MobilityEmailTemplateType.MISSING_SHIFTS)) {
+                            foundMissing = true;
+                            break;
+                        }
+                    }
+                    if (foundMissing) {
+                        continue;
+                    } else {
+                        programName = mobilityProgram.getName().getContent();
+                    }
+                }
+                throw new DomainException("error.missing.shifts.template.not.found", programName);
+            }
         }
 
         @Override
