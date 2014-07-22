@@ -14,12 +14,19 @@ import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVote;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
+
+import pt.ist.fenixframework.FenixFramework;
 
 @Task(englishTitle = "SendVoteResults")
 public class SendVoteResults extends CronTask {
@@ -85,12 +92,12 @@ public class SendVoteResults extends CronTask {
 
             DelegateElectionVotingPeriod lastVotingPeriod = delegateElection.getLastVotingPeriod();
 
-            if (delegateElection.getVotingPeriod() != null && lastVotingPeriod != null && lastVotingPeriod.isPastPeriod()
+            if (lastVotingPeriod != null && lastVotingPeriod.isPastPeriod()
                     && !delegateElection.getSentResultsToCandidates().booleanValue()) {
 
                 delegateElection.setSentResultsToCandidates(Boolean.TRUE);
 
-                final Set<String> emails = new HashSet<String>();
+                final Set<Person> emails = new HashSet<Person>();
                 final VoteMap voteMap = new VoteMap();
                 int maxNameSize = 0;
 
@@ -100,7 +107,8 @@ public class SendVoteResults extends CronTask {
                     }
                     final Student student = delegateElectionVote.getStudent();
                     final Person person = student.getPerson();
-                    emails.add(person.getEmail());
+
+                    emails.add(person);
                     voteMap.put(student, delegateElectionVote);
                     maxNameSize = Math.max(maxNameSize, person.getName().length());
                 }
@@ -132,13 +140,11 @@ public class SendVoteResults extends CronTask {
 
                 stringBuilder.append(msgSuffix);
                 final String msg = stringBuilder.toString();
-
                 final String subject = subjectPrefix + delegateElection.getDegree().getSigla();
 
-                new Email(fromName, from, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST, emails, subject, msg);
-                final Set<String> toMe = new HashSet<String>();
-                toMe.add("luis.cruz@ist.utl.pt");
-                new Email(fromName, from, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST, toMe, subject, msg);
+                final Sender sender = FenixFramework.getDomainObject("4264902526932");
+                new Message(sender, Collections.singleton(new ConcreteReplyTo(from)), Collections.EMPTY_LIST,
+                        Collections.EMPTY_LIST, Collections.singleton(new Recipient(emails)), subject, msg, Collections.EMPTY_SET);
 
                 getLogger().debug("Sent: " + emails.size() + " emails for: " + delegateElection.getDegree().getSigla());
             }
