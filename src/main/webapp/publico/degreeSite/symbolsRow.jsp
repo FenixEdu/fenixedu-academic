@@ -35,7 +35,7 @@
 
 <% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
 <div id="header_links">
-	<a href="<%= fenixUrl %>/loginPage.jsp">Login <%= PortalConfiguration.getInstance().getApplicationTitle().getContent() %><!--bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/--></a>
+	<a href="<%= fenixUrl %>/login">Login <%= PortalConfiguration.getInstance().getApplicationTitle().getContent() %><!--bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/--></a>
 	| <a href="<%= institutionUrl %>/pt/sobre-IST/contacto">Contactos</a>
 	| <a href="<%= institutionUrl %>/html/mapadosite/">Mapa do Site</a>
 </div>

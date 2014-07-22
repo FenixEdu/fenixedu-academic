@@ -47,7 +47,7 @@
 	<div id="authentication">
 		<logic:notPresent name="LOGGED_USER_ATTRIBUTE">
 			<h1 id="logout">
-				<!-- NO_CHECKSUM --><html:link styleClass="button" href="loginPage.jsp">Login</html:link>
+				<!-- NO_CHECKSUM --><html:link styleClass="button" href="${pageContext.request.contextPath}/login">Login</html:link>
 			</h1>
 		</logic:notPresent>
 		
@@ -63,7 +63,7 @@
 			<% } %>
 			
 			<h1 id="logout">
-				<a class="button" href="<%=request.getContextPath()%>/logoff.do"><bean:message key="link.logout" bundle="GLOBAL_RESOURCES" /></a>
+				<a class="button" href="${pageContext.request.contextPath}/logout"><bean:message key="link.logout" bundle="GLOBAL_RESOURCES" /></a>
 			</h1>
 		</logic:present>
 	</div>

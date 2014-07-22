@@ -20,21 +20,30 @@ package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 /**
+ * Filter to map old login URLs to the new standard login URL: '/login'.
  * 
  * @author Luis Cruz
+ * 
+ * @deprecated
+ *             This filter is scheduled to be removed in the next major version,
+ *             thus disrupting existing links.
  */
+@Deprecated
+@WebFilter(urlPatterns = { "/loginPage.jsp", "/privado", "/privado/" }, dispatcherTypes = { DispatcherType.REQUEST,
+        DispatcherType.FORWARD })
 public class LoginPageFilter implements Filter {
 
     @Override
@@ -48,9 +57,9 @@ public class LoginPageFilter implements Filter {
     @Override
     public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) throws IOException,
             ServletException {
-        final HttpServletRequest request = (HttpServletRequest) req;
         final HttpServletResponse response = (HttpServletResponse) res;
-        RequestUtils.sendLoginRedirect(request, response);
+        response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+        response.setHeader("Location", CoreConfiguration.getConfiguration().applicationUrl() + "/login");
     }
 
 }

@@ -39,10 +39,6 @@
 		<% }%>
 		<!-- NO_CHECKSUM --><a class="page-button" href="<%= request.getContextPath() + "/siteMap.do" %>">
 			<bean:message key="local.site.map" bundle="GLOBAL_RESOURCES"/></a>
-		<% if(AccessControl.getPerson() != null){%>
-		<!-- NO_CHECKSUM --><a class="page-button" href="<%= request.getContextPath() + "/exceptionHandlingAction.do?method=prepareSupportHelp" %>">
-			<bean:message key="local.support.form" bundle="GLOBAL_RESOURCES"/></a>
-		<% }%>
 		</center>
 		</div>
 	</div>
@@ -80,7 +76,7 @@
 		}
 		
 		.page-button {
-			font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+			font-family: 'Roboto', sans-serif;
 			display: inline-block;
 			margin-bottom: 0px;
 			font-weight: normal;

@@ -52,7 +52,7 @@
 	<div id="logoist">
 		<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><img src="${pageContext.request.contextPath}/api/bennu-portal/configuration/logo" /></a>
 	</div>
-	<div id="header_links"><a href="https://fenix.ist.utl.pt/loginPage.jsp">Login <%=PortalConfiguration.getInstance().getApplicationTitle().getContent() %></a> | <a href="#">Contactos</a></div>
+	<div id="header_links"><a href="https://fenix.ist.utl.pt/login">Login <%=PortalConfiguration.getInstance().getApplicationTitle().getContent() %></a> | <a href="#">Contactos</a></div>
 <!-- END HEADER -->
 <!--START MAIN CONTENT -->
 

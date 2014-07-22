@@ -67,7 +67,7 @@ public class LogOffAction extends Action {
             }
         } else {
             Authenticate.logout(session);
-            result = new ActionForward("/loginPage.jsp");
+            response.sendRedirect(request.getContextPath() + "/login");
         }
 
         return result;
