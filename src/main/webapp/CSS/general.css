@@ -140,7 +140,7 @@ border-bottom: 1px solid #f2e5a6;
 div#help_box p { margin: 0.25em 0; }
 
 
-.infoop2, infoop5 { margin: 0.5em 0;}
+.infoop2, infoop5, infoop5_2 { margin: 0.5em 0;}
 
 .first { margin-top: 0; margin-bottom: 1em;}
 .simpleblock1, .simpleblock2, .simpleblock3, .simpleblock4, .simpleblock5 { margin: 1.5em 0em; padding: 0.5em 1em;}
@@ -1943,8 +1943,15 @@ select.degrees {
 	padding: 0.5em 0.75em;
 	border-bottom: 1px solid #cce5c7;
 	}
-
-.infoop5 p { margin: 0.25em 0; }
+	
+.infoop5_2 {
+	background-color: #F6ECEC;
+	vertical-align: middle;
+	padding: 0.5em 0.75em;
+	border-bottom: 1px solid #E6C8C8;
+	}
+ 
+.infoop5, infoop5_2 p { margin: 0.25em 0; }
 	
 .infoop6 { /* equal to infoop2 but without forced margins on paragraphs */
 	background-color: #faf5de; /*faf5de,f2e5a6 or f5fade,e5f2a6 */

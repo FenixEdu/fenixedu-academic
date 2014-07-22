@@ -124,6 +124,7 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.util.Bundle;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -346,7 +347,8 @@ public class Registration extends Registration_Base {
         for (; !getExternalEnrolmentsSet().isEmpty(); getExternalEnrolmentsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getRegistrationDataByExecutionYearSet().isEmpty(); getRegistrationDataByExecutionYearSet().iterator().next().delete()) {
+        for (; !getRegistrationDataByExecutionYearSet().isEmpty(); getRegistrationDataByExecutionYearSet().iterator().next()
+                .delete()) {
             ;
         }
         for (; !getAcademicServiceRequestsSet().isEmpty(); getAcademicServiceRequestsSet().iterator().next().delete()) {
@@ -409,8 +411,8 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getFirstStudentCurricularPlan() {
-        return !getStudentCurricularPlansSet().isEmpty() ? (StudentCurricularPlan) Collections.min(getStudentCurricularPlansSet(),
-                StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE) : null;
+        return !getStudentCurricularPlansSet().isEmpty() ? (StudentCurricularPlan) Collections.min(
+                getStudentCurricularPlansSet(), StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE) : null;
     }
 
     public List<StudentCurricularPlan> getSortedStudentCurricularPlans() {
@@ -713,8 +715,7 @@ public class Registration extends Registration_Base {
 
     final public String getFinalAverageDescription(final CycleType cycleType) {
         final Integer finalAverage = getFinalAverage(cycleType);
-        return finalAverage == null ? null : BundleUtil.getString(Bundle.ENUMERATION, 
-                finalAverage.toString());
+        return finalAverage == null ? null : BundleUtil.getString(Bundle.ENUMERATION, finalAverage.toString());
     }
 
     final public String getFinalAverageQualified() {
@@ -753,7 +754,7 @@ public class Registration extends Registration_Base {
                 final CurricularCourse enrolmentCurricularCourse = enrolment.getCurricularCourse();
                 if (enrolmentCurricularCourse == curricularCourse
                         || (enrolmentCurricularCourse.getCompetenceCourse() != null && enrolmentCurricularCourse
-                        .getCompetenceCourse() == curricularCourse.getCompetenceCourse())
+                                .getCompetenceCourse() == curricularCourse.getCompetenceCourse())
                         || hasGlobalEquivalence(curricularCourse, enrolmentCurricularCourse)) {
                     enrolments.add(enrolment);
                 }
@@ -1118,7 +1119,8 @@ public class Registration extends Registration_Base {
         result.addAll(getEnrolmentsExecutionYears());
 
         if (this.isBolonha()) {
-            Registration source = getSourceRegistration() != null ? getSourceRegistration() : getSourceRegistrationForTransition();
+            Registration source =
+                    getSourceRegistration() != null ? getSourceRegistration() : getSourceRegistrationForTransition();
             if (source != null) {
                 source.getAllRelatedRegistrationsEnrolmentsExecutionYears(result);
             }
@@ -1903,11 +1905,11 @@ public class Registration extends Registration_Base {
         final StudentCurricularPlan toAsk =
                 getStudentCurricularPlan(getStartExecutionYear()) == null ? getFirstStudentCurricularPlan() : getStudentCurricularPlan(getStartExecutionYear());
 
-                if (toAsk == null) {
-                    return StringUtils.EMPTY;
-                }
+        if (toAsk == null) {
+            return StringUtils.EMPTY;
+        }
 
-                return toAsk.getPresentationName(getStartExecutionYear());
+        return toAsk.getPresentationName(getStartExecutionYear());
     }
 
     public String getDegreeNameWithDescription() {
@@ -2277,7 +2279,8 @@ public class Registration extends Registration_Base {
     }
 
     public RegistrationState getFirstRegistrationState() {
-        return !getRegistrationStatesSet().isEmpty() ? Collections.min(getRegistrationStatesSet(), RegistrationState.DATE_COMPARATOR) : null;
+        return !getRegistrationStatesSet().isEmpty() ? Collections.min(getRegistrationStatesSet(),
+                RegistrationState.DATE_COMPARATOR) : null;
     }
 
     final public RegistrationState getLastRegistrationState(final ExecutionYear executionYear) {
@@ -3597,36 +3600,12 @@ public class Registration extends Registration_Base {
             return false;
         }
 
-        if (hasBeenSeniorForTheLastTwoConsecutiveYears(executionYear)) {
-            return false;
-        }
-
         return getDegreeType().hasSeniorEligibility(this, executionYear);
     }
 
     private boolean hasAlreadySeniorStatute(ExecutionYear executionYear) {
         for (SeniorStatute seniorStatute : getSeniorStatuteSet()) {
             if (seniorStatute.isValidOnAnyExecutionPeriodFor(executionYear)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean hasBeenSeniorForTheLastTwoConsecutiveYears(ExecutionYear executionYear) {
-        if (!isSenior(executionYear)) {
-            return false;
-        }
-        if (!isSenior(executionYear.getPreviousExecutionYear())) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean isSenior(ExecutionYear executionYear) {
-        for (SeniorStatute seniorStatute : getSeniorStatuteSet()) {
-            if (seniorStatute.isValidOnAnyExecutionPeriodFor(executionYear.getPreviousExecutionYear())) {
                 return true;
             }
         }
@@ -3761,7 +3740,7 @@ public class Registration extends Registration_Base {
                 if (registrationState.getExecutionYear() == executionYear
                         && (registrationState.isActive() || registrationState.getStateType() == RegistrationStateType.TRANSITED)
                         && (previous.getStateType() == RegistrationStateType.EXTERNAL_ABANDON
-                        || previous.getStateType() == RegistrationStateType.INTERRUPTED || previous.getStateType() == RegistrationStateType.FLUNKED)) {
+                                || previous.getStateType() == RegistrationStateType.INTERRUPTED || previous.getStateType() == RegistrationStateType.FLUNKED)) {
                     return true;
                 }
             }
@@ -3856,11 +3835,12 @@ public class Registration extends Registration_Base {
     public void exportValues(StringBuilder result) {
         Formatter formatter = new Formatter(result);
         final Student student = getStudent();
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC,"label.ingression"), getIngression() == null ? " - " : getIngression()
-                .getFullDescription());
-        formatter.format("%s: %d\n", BundleUtil.getString(Bundle.ACADEMIC,"label.studentNumber"), student.getNumber());
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC,"label.Student.Person.name"), student.getPerson().getName());
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC,"label.degree"), getDegree().getPresentationName());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.ingression"),
+                getIngression() == null ? " - " : getIngression().getFullDescription());
+        formatter.format("%s: %d\n", BundleUtil.getString(Bundle.ACADEMIC, "label.studentNumber"), student.getNumber());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.Student.Person.name"), student.getPerson()
+                .getName());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.degree"), getDegree().getPresentationName());
         formatter.close();
     }
 
@@ -3992,7 +3972,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isValidForRAIDES() {
-        return isActive() && isBolonha() && !getDegreeType().isEmpty() && !RAIDES_MOBILITY.contains(getRegistrationAgreement());
+        return FenixConfigurationManager.getConfiguration().getRaidesRequestInfo() && isActive() && isBolonha()
+                && !getDegreeType().isEmpty() && !RAIDES_MOBILITY.contains(getRegistrationAgreement());
     }
 
 }

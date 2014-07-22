@@ -87,6 +87,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.predicates.StudentPredicates;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.InvocationResult;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
@@ -1778,7 +1779,8 @@ public class Student extends Student_Base {
     }
 
     public boolean isValidAndActivePhdProcess(PhdIndividualProgramProcess phdProcess) {
-        return phdProcess.isProcessActive() && hasValidInsuranceEvent();
+        return FenixConfigurationManager.getConfiguration().getRaidesRequestInfo() && phdProcess.isProcessActive()
+                && hasValidInsuranceEvent();
     }
 
     public boolean hasValidInsuranceEvent() {

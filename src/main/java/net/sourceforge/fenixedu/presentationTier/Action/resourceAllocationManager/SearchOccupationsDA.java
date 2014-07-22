@@ -144,7 +144,7 @@ public class SearchOccupationsDA extends FenixDispatchAction {
 
     private static String getPresentationString(Occupation occupation) {
         if (occupation.getClass().equals(Occupation.class)) {
-            return occupation.getSummary();
+            return occupation.getSubject();
         }
         if (occupation instanceof EventSpaceOccupation) {
             return ((EventSpaceOccupation) occupation).getPresentationString();

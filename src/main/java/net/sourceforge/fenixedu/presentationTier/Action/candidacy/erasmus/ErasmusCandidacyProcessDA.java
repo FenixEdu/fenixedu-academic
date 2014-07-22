@@ -69,7 +69,9 @@ import com.google.common.base.Predicates;
         @Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
         @Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
         @Forward(name = "view-child-process-with-missing.required-documents",
-                path = "/candidacy/erasmus/viewChildProcessesWithMissingRequiredDocuments.jsp") })
+                path = "/candidacy/erasmus/viewChildProcessesWithMissingRequiredDocuments.jsp"),
+        @Forward(name = "view-child-process-with-missing.shifts",
+                path = "/candidacy/erasmus/viewChildProcessesWithMissingShifts.jsp") })
 public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
@@ -346,13 +348,25 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
         return mapping.findForward("view-child-process-with-missing.required-documents");
     }
 
+    public ActionForward prepareExecuteViewChildProcessWithMissingShifts(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        setCandidacyProcessInformation(request, getProcess(request));
+        setCandidacyProcessInformation(form, getProcess(request));
+        List<MobilityApplicationProcess> candidacyProcesses =
+                getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval());
+
+        request.setAttribute("candidacyProcesses", candidacyProcesses);
+
+        return mapping.findForward("view-child-process-with-missing.shifts");
+    }
+
     public static class ErasmusCandidacyDegreesProvider implements DataProvider {
 
         @Override
         public Object provide(Object source, Object currentValue) {
             final List<Degree> degrees =
                     new ArrayList<Degree>(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-                            DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_DEGREE));
+                            DegreeType.BOLONHA_MASTER_DEGREE));
 
             degrees.remove(Degree.readBySigla("MSCIT"));
 
@@ -363,7 +377,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
         @Override
         public Converter getConverter() {
-            return new DomainObjectKeyConverter();
+            return null;
         }
 
     }

@@ -179,6 +179,9 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "phd.public.candidacy.submission.link")
         public String getPhdPublicCandidacySubmissionLink();
 
+        @ConfigurationProperty(key = "raides.request.info", defaultValue = "false")
+        public Boolean getRaidesRequestInfo();
+
         @ConfigurationProperty(key = "receipt.min.year.to.create", defaultValue = "2006")
         public Integer getReceiptMinYearToCreate();
 

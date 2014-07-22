@@ -617,7 +617,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             }
             return "";
         } catch (IllegalDataAccessException idae) {
-            addErrorMessage(BundleUtil.getString(Bundle.APPLICATION, "message.teacger.evaluation.editMarks", ExecutionSemester
+            addErrorMessage(BundleUtil.getString(Bundle.APPLICATION, "message.teacher.evaluation.editMarks", ExecutionSemester
                     .readActualExecutionSemester().getExecutionYear().getName(), ExecutionSemester.readActualExecutionSemester()
                     .getName()));
             return "";
@@ -894,7 +894,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     private Space getRoom(final String roomID) throws FenixServiceException {
-        for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsSet()) {
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
+                .getWrittenEvaluationSpaceOccupationsSet()) {
             if (roomOccupation.getRoom().getExternalId().equals(roomID)) {
                 return roomOccupation.getRoom();
             }
@@ -956,7 +957,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getNames() throws FenixServiceException {
         final List<SelectItem> result =
                 new ArrayList<SelectItem>(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsSet().size());
-        for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsSet()) {
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
+                .getWrittenEvaluationSpaceOccupationsSet()) {
             result.add(new SelectItem(roomOccupation.getRoom().getExternalId(), (roomOccupation.getRoom()).getName()));
         }
         return result;

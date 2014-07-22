@@ -359,7 +359,7 @@ public class CurriculumRenderer extends InputRenderer {
 
             if (entry instanceof OptionalEnrolment) {
                 final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) entry;
-                return code + optionalEnrolment.getCurricularCourse().getName(entry.getExecutionPeriod());
+                return code + optionalEnrolment.getCurricularCourse().getNameI18N(entry.getExecutionPeriod()).getContent();
             } else {
                 return code + entry.getName().getContent();
             }

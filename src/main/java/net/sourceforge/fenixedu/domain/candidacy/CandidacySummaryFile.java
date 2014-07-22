@@ -34,7 +34,7 @@ public class CandidacySummaryFile extends CandidacySummaryFile_Base {
     }
 
     private Group createPermittedGroup(Person candidacyStudent) {
-        return UserGroup.of(candidacyStudent.getUser()).or(RoleGroup.get(RoleType.ADMINISTRATOR));
+        return UserGroup.of(candidacyStudent.getUser()).or(RoleGroup.get(RoleType.MANAGER));
     }
 
 }

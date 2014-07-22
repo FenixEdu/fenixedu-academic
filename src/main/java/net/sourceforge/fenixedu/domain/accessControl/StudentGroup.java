@@ -322,6 +322,9 @@ public class StudentGroup extends FenixGroup {
             return false;
         }
         for (final Registration registration : user.getPerson().getStudent().getRegistrationsSet()) {
+            if (executionCourse != null && registration.getAttendingExecutionCoursesFor().contains(executionCourse)) {
+                return true;
+            }
             if (registration.isActive()) {
                 if (degreeType != null && registration.getDegree().getDegreeType() != degreeType) {
                     continue;

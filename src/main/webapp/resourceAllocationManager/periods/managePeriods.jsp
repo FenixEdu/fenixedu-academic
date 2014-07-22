@@ -398,7 +398,7 @@
 					</div>
 					<div class="modal-body">
 						<fr:form action="/periods.do?method=managePeriods">
-							<fr:edit name="managementBean">
+							<fr:edit id="managementBean2" name="managementBean">
 								<fr:schema bundle="SOP_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.PeriodsManagementBean">
 									<fr:slot name="executionYear" layout="menu-select-postback">
 										<fr:property name="from" value="years"/>

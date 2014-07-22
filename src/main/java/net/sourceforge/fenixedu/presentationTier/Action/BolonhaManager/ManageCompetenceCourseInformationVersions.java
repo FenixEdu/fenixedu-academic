@@ -77,6 +77,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
         @Forward(name = "viewVersions", path = "/bolonhaManager/competenceCourseVersions/viewVersions.jsp"),
         @Forward(name = "viewVersionDetails", path = "/bolonhaManager/competenceCourseVersions/viewVersionDetails.jsp"),
         @Forward(name = "editBiblio", path = "/bolonhaManager/competenceCourseVersions/editBibliography.jsp"),
+        @Forward(name = "editBibliographicReference",
+                path = "/bolonhaManager/competenceCourseVersions/editBibliographicReference.jsp"),
         @Forward(name = "viewInformationDetails",
                 path = "/bolonhaManager/competenceCourseVersions/viewCompetenceCourseInformation.jsp") })
 public class ManageCompetenceCourseInformationVersions extends FenixDispatchAction {
@@ -157,7 +159,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
             } else if (period != null
                     && course.findCompetenceCourseInformationForExecutionPeriod(period).getCompetenceCourseLoadsSet().size() > 0) {
                 load =
-                        new CompetenceCourseLoadBean(course.findCompetenceCourseInformationForExecutionPeriod(period).getCompetenceCourseLoadsSet().iterator().next());
+                        new CompetenceCourseLoadBean(course.findCompetenceCourseInformationForExecutionPeriod(period)
+                                .getCompetenceCourseLoadsSet().iterator().next());
             } else {
                 load = new CompetenceCourseLoadBean();
             }
@@ -217,6 +220,35 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                 (CreateReferenceBean) RenderUtils.getViewState("createReference").getMetaObject().getObject();
         bean.setReferences(bean.getReferences().with(referenceBean.getYear(), referenceBean.getTitle(),
                 referenceBean.getAuthors(), referenceBean.getReference(), referenceBean.getUrl(), referenceBean.getType()));
+        RenderUtils.invalidateViewState("createReference");
+        return viewBibliography(mapping, form, request, response);
+    }
+
+    public ActionForward prepareEditBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException {
+        CompetenceCourseInformationRequestBean bean =
+                (CompetenceCourseInformationRequestBean) RenderUtils.getViewState("editVersion").getMetaObject().getObject();
+
+        Integer index = Integer.parseInt(request.getParameter("index"));
+
+        request.setAttribute("editBean", new EditReferenceBean(bean.getReferences().getBibliographicReference(index)));
+        request.setAttribute("bean", bean);
+
+        return mapping.findForward("editBibliographicReference");
+    }
+
+    public ActionForward editBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException {
+
+        CompetenceCourseInformationRequestBean bean =
+                (CompetenceCourseInformationRequestBean) RenderUtils.getViewState("editVersion").getMetaObject().getObject();
+        EditReferenceBean referenceBean =
+                (EditReferenceBean) RenderUtils.getViewState("editReference").getMetaObject().getObject();
+
+        bean.setReferences(bean.getReferences().replacing(referenceBean.getOrder(), referenceBean.getYear(),
+                referenceBean.getTitle(), referenceBean.getAuthors(), referenceBean.getReference(), referenceBean.getUrl(),
+                referenceBean.getType()));
+
         RenderUtils.invalidateViewState("createReference");
         return viewBibliography(mapping, form, request, response);
     }

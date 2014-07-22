@@ -18,8 +18,8 @@
  */
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -69,12 +69,12 @@ public class ThesisReadersGroup extends FenixGroup {
             DateTime time = thesis.getDocumentsAvailableAfter();
 
             if (time.isAfter(when)) {
-                return Collections.emptySet();
+                return getThesisMembers();
             }
         }
 
         if (thesis.getVisibility() == null) {
-            return Collections.emptySet();
+            return getThesisMembers();
         }
 
         switch (thesis.getVisibility()) {
@@ -83,7 +83,7 @@ public class ThesisReadersGroup extends FenixGroup {
         case PUBLIC:
             return AnyoneGroup.get().getMembers(when);
         default:
-            return Collections.emptySet();
+            return getThesisMembers();
         }
     }
 
@@ -98,12 +98,12 @@ public class ThesisReadersGroup extends FenixGroup {
             DateTime time = thesis.getDocumentsAvailableAfter();
 
             if (time.isAfter(when)) {
-                return false;
+                return getThesisMembers().contains(user);
             }
         }
 
         if (thesis.getVisibility() == null) {
-            return false;
+            return getThesisMembers().contains(user);
         }
 
         switch (thesis.getVisibility()) {
@@ -112,7 +112,7 @@ public class ThesisReadersGroup extends FenixGroup {
         case PUBLIC:
             return AnyoneGroup.get().isMember(user, when);
         default:
-            return false;
+            return getThesisMembers().contains(user);
         }
     }
 
@@ -132,5 +132,12 @@ public class ThesisReadersGroup extends FenixGroup {
     @Override
     public int hashCode() {
         return Objects.hashCode(thesis);
+    }
+
+    private Set<User> getThesisMembers() {
+        Set<User> members =
+                thesis.getParticipationsSet().stream().map((p) -> p.getPerson().getUser()).collect(Collectors.toSet());
+        members.add(thesis.getStudent().getPerson().getUser());
+        return members;
     }
 }
