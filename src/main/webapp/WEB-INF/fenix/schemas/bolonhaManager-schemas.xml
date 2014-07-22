@@ -247,7 +247,23 @@
 		<slot name="url">
 			<property name="size" value="70"/>
 		</slot>
-</schema>    
+</schema>
+
+<schema name="edit.reference.from.bean" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.EditReferenceBean" bundle="BOLONHA_MANAGER_RESOURCES">
+		<slot name="title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="70"/>
+		</slot>
+		<slot name="authors" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="70"/>
+		</slot>
+	    <slot name="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<slot name="reference">
+			<property name="size" value="70"/>
+		</slot>
+		<slot name="url">
+			<property name="size" value="70"/>
+		</slot>
+</schema> 
 
 <schema name="view.competenceCourseInformation" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation" bundle="APPLICATION_RESOURCES">
 		<slot name="executionPeriod.executionYear.year" key="label.executionYear"/>

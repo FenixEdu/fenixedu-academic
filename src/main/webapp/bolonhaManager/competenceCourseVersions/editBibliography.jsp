@@ -65,7 +65,7 @@
 					</fr:layout>
 				</fr:view>
 				<div class="dinline forminline">	
-				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=editBibliography&index=" + index + "#biblio" + index%>">
+				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=prepareEditBibliographicReference&index=" + index + "#biblio" + index%>">
 					<fr:edit name="bean" id="editVersion" visible="false"/>
 					<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
 					<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
@@ -111,7 +111,7 @@
 						</fr:layout>
 					</fr:view>					
 					<div class="dinline forminline">	
-					<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=editBibliography&index=" + index + "#biblio" + index%>">
+					<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=prepareEditBibliographicReference&index=" + index + "#biblio" + index%>">
 						<fr:edit name="bean" id="editVersion" visible="false"/>
 						<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
 						<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
@@ -148,7 +148,7 @@
 				</fr:layout>
 			</fr:view>
 			<div class="dinline forminline">	
-			<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=editBibliography&index=" + index + "#biblio" + index%>">
+			<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=prepareEditBibliographicReference&index=" + index + "#biblio" + index%>">
 				<fr:edit name="bean" id="editVersion" visible="false"/>
 				<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
 				<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
@@ -191,7 +191,7 @@
 					</fr:layout>
 				</fr:view>					
 				<div class="dinline forminline">	
-				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=editBibliography&index=" + index + "#biblio" + index%>">
+				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=prepareEditBibliographicReference&index=" + index + "#biblio" + index%>">
 					<fr:edit name="bean" id="editVersion" visible="false"/>
 					<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
 					<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
