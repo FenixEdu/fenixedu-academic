@@ -94,7 +94,9 @@ public class FenixInitializer implements ServletContextListener {
         startContactValidationServices();
 
         registerChecksumFilterRules();
-        registerUncaughtExceptionHandler();
+        if (FenixConfigurationManager.getConfiguration().useLegacyErrorHandling()) {
+            registerUncaughtExceptionHandler();
+        }
 
         initializeFenixAPI();
         registerPresentationStrategy();
@@ -278,6 +280,13 @@ public class FenixInitializer implements ServletContextListener {
         });
     }
 
+    /**
+     * Registers the custom exception handler.
+     * 
+     * @deprecated You should use Bennu's own Exception Handling mechanisms.
+     *             This handler is scheduler to be removed in version 4.0.
+     */
+    @Deprecated
     private void registerUncaughtExceptionHandler() {
         ExceptionHandlerFilter.setExceptionHandler((request, response, t) -> {
             if (response.isCommitted()) {

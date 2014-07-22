@@ -29,6 +29,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 public final class DefaultForwards {
 
+    /**
+     * @deprecated Use Bennu's own Exception Handling mechanisms.
+     *             This class is scheduler to be removed in version 4.0.
+     */
+    @Deprecated
     @Mapping(path = "/showErrorPageRegistered", parameter = "/exception/errorRegistered.jsp")
     public static class ShowErrorPageRegistered extends ForwardAction {
     }

@@ -262,6 +262,12 @@ public class FenixConfigurationManager {
                 defaultValue = "2005/2006")
         public String getYearForFromMarkSheetManagment();
 
+        @ConfigurationProperty(
+                key = "legacy.error.handling",
+                description = "Whether to keep using the legacy error handling mechanisms instead of Bennu's building error handling.",
+                defaultValue = "true")
+        public Boolean useLegacyErrorHandling();
+
     }
 
     private static HostAccessControl hostAccessControl = new HostAccessControl(getConfiguration().getHostControlName());

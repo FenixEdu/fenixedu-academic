@@ -65,7 +65,11 @@ import com.google.common.base.Strings;
 
 /**
  * @author João Mota
+ * 
+ * @deprecated Use Bennu's own Exception Handling mechanisms.
+ *             This class is scheduler to be removed in version 4.0.
  */
+@Deprecated
 @Mapping(path = "/exceptionHandlingAction")
 public final class ExceptionHandlingAction extends FenixDispatchAction {
 
@@ -84,6 +88,12 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
         }
     }
 
+    /**
+     * @deprecated Use Bennu's own Exception Handling mechanisms.
+     *             This class is scheduler to be removed in version 4.0.
+     *
+     */
+    @Deprecated
     @Mapping(path = "/showErrorPage")
     public static class ShowErrorPageAction extends Action {
         @Override
@@ -223,8 +233,7 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
         builder.append("]");
         appendNewLine(builder, 1);
 
-        generateLabel(builder,
-                BundleUtil.getString(net.sourceforge.fenixedu.util.Bundle.APPLICATION, "label.type.single"))
+        generateLabel(builder, BundleUtil.getString(net.sourceforge.fenixedu.util.Bundle.APPLICATION, "label.type.single"))
                 .append("[").append(getRequestTypeAsString(requestBean)).append("]");
         appendNewLine(builder, 1);
 
@@ -259,8 +268,7 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
             generateLabel(builder, "Username");
             builder.append("[").append(loggedPerson.getUsername()).append("]");
         } else {
-            builder.append(BundleUtil.getString(net.sourceforge.fenixedu.util.Bundle.APPLICATION,
-                    "support.mail.session.error"));
+            builder.append(BundleUtil.getString(net.sourceforge.fenixedu.util.Bundle.APPLICATION, "support.mail.session.error"));
         }
     }
 
