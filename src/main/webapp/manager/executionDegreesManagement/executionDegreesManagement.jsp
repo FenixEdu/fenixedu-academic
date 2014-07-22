@@ -103,44 +103,64 @@
 						<bean:write name="executionDegree" property="executionYear.year" /> 
 					</td>
 					<td class='listClasses'>
-						<bean:define id="periodLessonsFirstSemester" name="executionDegree" property="periodLessonsFirstSemester" />
-						<dt:format pattern="dd/MM/yyyy">
-							<bean:write name="periodLessonsFirstSemester" property="start.time" />
-						</dt:format>
-						<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
-						<dt:format pattern="dd/MM/yyyy">
-							<bean:write name="periodLessonsFirstSemester" property="end.time" />
-						</dt:format>
+						<logic:notEmpty name="executionDegree" property="periodLessonsFirstSemester">
+							<bean:define id="periodLessonsFirstSemester" name="executionDegree" property="periodLessonsFirstSemester" />
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="periodLessonsFirstSemester" property="start.time" />
+							</dt:format>
+							<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="periodLessonsFirstSemester" property="end.time" />
+							</dt:format>
+						</logic:notEmpty>
+						<logic:empty name="executionDegree" property="periodLessonsFirstSemester">
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.periodNotDefined" />
+						</logic:empty>
 					</td>
 					<td class='listClasses'>
-						<bean:define id="periodExamsFirstSemester" name="executionDegree" property="periodExamsFirstSemester" />
-						<dt:format pattern="dd/MM/yyyy">
-							<bean:write name="periodExamsFirstSemester" property="start.time" />
-						</dt:format>
-						<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
-						<dt:format pattern="dd/MM/yyyy">
-							<bean:write name="periodExamsFirstSemester" property="end.time" />
-						</dt:format>
+						<logic:notEmpty name="executionDegree" property="periodExamsFirstSemester">
+							<bean:define id="periodExamsFirstSemester" name="executionDegree" property="periodExamsFirstSemester" />
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="periodExamsFirstSemester" property="start.time" />
+							</dt:format>
+							<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="periodExamsFirstSemester" property="end.time" />
+							</dt:format>
+						</logic:notEmpty>
+						<logic:empty name="executionDegree" property="periodExamsFirstSemester">
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.periodNotDefined" />
+						</logic:empty>
 					</td>
 					<td class='listClasses'>
-						<bean:define id="periodLessonsSecondSemester" name="executionDegree" property="periodLessonsSecondSemester" />
-						<dt:format pattern="dd/MM/yyyy">
-							<bean:write name="periodLessonsSecondSemester" property="start.time" />
-						</dt:format>
-						<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
-						<dt:format pattern="dd/MM/yyyy">
-							<bean:write name="periodLessonsSecondSemester" property="end.time" />
-						</dt:format>
+						<logic:notEmpty name="executionDegree" property="periodLessonsSecondSemester">
+							<bean:define id="periodLessonsSecondSemester" name="executionDegree" property="periodLessonsSecondSemester" />
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="periodLessonsSecondSemester" property="start.time" />
+							</dt:format>
+							<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="periodLessonsSecondSemester" property="end.time" />
+							</dt:format>
+						</logic:notEmpty>
+						<logic:empty name="executionDegree" property="periodLessonsSecondSemester">
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.periodNotDefined" />
+						</logic:empty>
 					</td>
 					<td class='listClasses'>
-						<bean:define id="periodExamsSecondSemester" name="executionDegree" property="periodExamsSecondSemester" />
-						<dt:format pattern="dd/MM/yyyy">
-							<bean:write name="periodExamsSecondSemester" property="start.time" />
-						</dt:format>
-						<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
-						<dt:format pattern="dd/MM/yyyy">
-							<bean:write name="periodExamsSecondSemester" property="end.time" />
-						</dt:format>
+						<logic:notEmpty name="executionDegree" property="periodExamsSecondSemester">
+							<bean:define id="periodExamsSecondSemester" name="executionDegree" property="periodExamsSecondSemester" />
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="periodExamsSecondSemester" property="start.time" />
+							</dt:format>
+							<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="periodExamsSecondSemester" property="end.time" />
+							</dt:format>
+						</logic:notEmpty>
+						<logic:empty name="executionDegree" property="periodExamsSecondSemester">
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.periodNotDefined" />
+						</logic:empty>
 					</td>
 					<td class='listClasses'>
 						<logic:notEmpty name="executionDegree" property="periodExamsSpecialSeason">
