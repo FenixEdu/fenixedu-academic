@@ -166,6 +166,8 @@
 	<tr>
 		<th><bean:message key="label.studentGroupNumber" />
 		</th>
+		<th><bean:message key="label.username" />
+		</th>
 		<th><bean:message key="label.numberWord" />
 		</th>
 		<th><bean:message key="label.nameWord" />
@@ -185,6 +187,10 @@
 				</td>
 			
 				<td>
+					<bean:write name="infoSiteStudentInformation" property="username"/>
+				</td>	
+			
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>	
 			
@@ -202,6 +208,10 @@
 				<td>
 					<bean:write name="infoStudentGroup" property="groupNumber"/>
 				</td>
+			
+				<td>
+					<bean:write name="infoSiteStudentInformation" property="username"/>
+				</td>	
 			
 				<td>
 					<bean:write name="infoSiteStudentInformation" property="number"/>

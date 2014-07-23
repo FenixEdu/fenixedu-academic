@@ -40,6 +40,10 @@
 			<td><bean:write name="registration" property="student.person.name"/></td>
 		</tr>
 		<tr>
+			<td><b><bean:message key="label.username"/></b></td>
+			<td><bean:write name="registration" property="person.username"/></td>
+		</tr>
+		<tr>
 			<td><b><bean:message key="label.markSheet.number"/></b></td>
 			<td><bean:write name="registration" property="number"/></td>
 		</tr>

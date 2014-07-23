@@ -55,7 +55,7 @@
 		<ul class="mvert15">
 			<li>
 				<html:link page="<%="/studentGroupManagement.do?method=viewShiftsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-					<bean:message key=""/>
+					<bean:message key="link.backToShiftsAndGroups"/>
 				</html:link>
 			</li>
 	    </ul>
@@ -95,6 +95,9 @@
 	<table class="tstyle4 mtop05">
 		<tr>
 			<th>
+				<bean:message key="label.username" />
+			</th>
+			<th>
 				<bean:message key="label.numberWord" />
 			</th>
 			<th>
@@ -117,6 +120,9 @@
 			<bean:define id="infoStudentGroup" name="infoSiteStudentAndGroup" property="infoStudentGroup"/>	
 			<bean:define id="infoSiteStudentInformation" name="infoSiteStudentAndGroup" property="infoSiteStudentInformation"/>
 			<tr>	
+				<td class="acenter">
+					<bean:write name="infoSiteStudentInformation" property="username"/>
+				</td>
 				<td class="acenter">
 					<bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>

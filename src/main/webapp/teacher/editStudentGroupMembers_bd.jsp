@@ -74,6 +74,8 @@
 	<tr>
 		<th>
 		</th>
+		<th><bean:message key="label.username" />
+		</th>
 		<th><bean:message key="label.teacher.StudentNumber" />
 		</th>
 		<th><bean:message key="label.teacher.StudentName" />
@@ -90,6 +92,8 @@
 			<bean:write name="infoSiteStudentInformation" property="username" />
 			</html:multibox>
 			</td>	
+			<td class="acenter"><bean:write name="infoSiteStudentInformation" property="username"/>
+			</td>
 			<td class="acenter"><bean:write name="infoSiteStudentInformation" property="number"/>
 			</td>	
 			</td>	
@@ -143,6 +147,8 @@
 	<tr>
 		<th>
 		</th>
+		<th><bean:message key="label.username" />
+		</th>
 		<th><bean:message key="label.teacher.StudentNumber" />
 		</th>
 		<th><bean:message key="label.teacher.StudentName" />
@@ -160,6 +166,8 @@
 			<bean:write name="infoPerson" property="username"/>
 			</html:multibox>
 			</td>	
+			<td class="acenter"><bean:write name="infoPerson" property="username"/>
+			</td>
 			<td class="acenter"><bean:write name="infoStudent" property="number"/>
 			</td>	
 			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		

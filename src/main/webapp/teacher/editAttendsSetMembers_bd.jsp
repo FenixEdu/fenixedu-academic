@@ -79,6 +79,9 @@
 			<th>
 			</th>
 			<th>
+				<bean:message key="label.username" />
+			</th>
+			<th>
 				<bean:message key="label.teacher.StudentNumber" />
 			</th>
 			<logic:notPresent name="showPhotos">
@@ -100,6 +103,9 @@
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentsToRemove" property="studentsToRemove">
 					<bean:write name="infoPerson" property="username" />
 					</html:multibox>
+				</td>
+				<td>
+					<bean:write name="infoPerson" property="username" />
 				</td>
 				<td>
 					<bean:write name="infoStudent" property="number" />
@@ -187,10 +193,13 @@
 					<bean:write name="infoStudent" property="externalId"/>
 				</html:multibox>
 			</td>	
+			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>
+			<td>
+				<bean:write name="infoPerson" property="username"/>
+			</td>
 			<td>
 				<bean:write name="infoStudent" property="number"/>
 			</td>
-			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>	
 			<logic:notPresent name="showPhotos">
 				<td class="acenter">
 					<bean:define id="person" name="infoPerson" property="person"/>

@@ -88,18 +88,19 @@ public class WriteMarks {
     private static void addMark(List<AttendsMark> result, StudentMark studentMark, Attends attend,
             List<DomainException> exceptionList) {
         if (studentMark.mark.length() - studentMark.mark.indexOf('.') - 1 > 2) {
-            exceptionList.add(new DomainException("error.mark.more.than.two.decimals", studentMark.studentNumber.toString()));
+            exceptionList.add(new DomainException("error.mark.more.than.two.decimals", studentMark.studentNumber));
         } else {
             result.add(new AttendsMark(attend.getExternalId(), studentMark.mark));
         }
     }
 
-    private static Attends findAttend(final ExecutionCourse executionCourse, final Integer studentNumber,
+    private static Attends findAttend(final ExecutionCourse executionCourse, final String studentNumber,
             final List<DomainException> exceptionList) {
 
         final List<Attends> activeAttends = new ArrayList<Attends>(2);
         for (final Attends attend : executionCourse.getAttendsSet()) {
-            if (attend.getRegistration().getNumber().equals(studentNumber)
+            final Student student = attend.getRegistration().getStudent();
+            if ((student.getPerson().getUsername().equals(studentNumber) || student.getNumber().toString().equals(studentNumber))
                     && (isActive(attend) || belongsToActiveExternalCycle(attend))) {
                 activeAttends.add(attend);
             }
@@ -110,9 +111,9 @@ public class WriteMarks {
         }
 
         if (activeAttends.isEmpty()) {
-            exceptionList.add(new DomainException("errors.student.without.active.attends", studentNumber.toString()));
+            exceptionList.add(new DomainException("errors.student.without.active.attends", studentNumber));
         } else {
-            exceptionList.add(new DomainException("errors.student.with.several.active.attends", studentNumber.toString()));
+            exceptionList.add(new DomainException("errors.student.with.several.active.attends", studentNumber));
         }
 
         return null;
@@ -196,10 +197,10 @@ public class WriteMarks {
     }
 
     public static class StudentMark implements Serializable {
-        private final Integer studentNumber;
+        private final String studentNumber;
         private final String mark;
 
-        public StudentMark(final Integer studentNumber, final String mark) {
+        public StudentMark(final String studentNumber, final String mark) {
             this.studentNumber = studentNumber;
             this.mark = mark;
         }

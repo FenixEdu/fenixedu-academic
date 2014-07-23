@@ -122,6 +122,9 @@ public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
             HtmlTableCell usernameCell = row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.username"));
             usernameCell.setRowspan(rowSpan);
 
+            HtmlTableCell numberCell = row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.number"));
+            numberCell.setRowspan(rowSpan);
+
             HtmlTableCell numberOfEnrolmentsCell =
                     row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.numberOfEnrollments"));
             numberOfEnrolmentsCell.setRowspan(rowSpan);
@@ -173,6 +176,7 @@ public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
                     row.createCell().setBody(htmlImage);
                 }
                 row.createCell(attends.getRegistration().getStudent().getPerson().getUsername());
+                row.createCell(attends.getRegistration().getNumber().toString());
                 if (attends.getEnrolment() == null) {
                     row.createCell("--");
                 } else {

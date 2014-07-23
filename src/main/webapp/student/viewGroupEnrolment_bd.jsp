@@ -68,6 +68,8 @@
 		
 		<th width="5%">
 		</th>
+		<th width="10%"><bean:message key="label.username" />
+		</th>
 		<th width="10%"><bean:message key="label.numberWord" />
 		</th>
 		<th width="35%"><bean:message key="label.nameWord" />
@@ -81,9 +83,11 @@
 				<input alt="input.studentsAutomaticallyEnroled" type="checkbox" name="studentsAutomaticallyEnroled" checked disabled>
 				</td>	
 				
+				<bean:define id="infoPerson" name="infoUserStudent" property="infoPerson"/>		
+				<td><bean:write name="infoPerson" property="username"/>
+				</td>
 				<td><bean:write name="infoUserStudent" property="number"/>
 				</td>	
-				<bean:define id="infoPerson" name="infoUserStudent" property="infoPerson"/>		
 				<td><bean:write name="infoPerson" property="nome"/>
 				</td>
 				<td><bean:write name="infoPerson" property="email"/>
@@ -112,9 +116,11 @@
 				<bean:write name="infoPerson" property="username"/>
 				</html:multibox>
 				</td>	
+				<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		
+				<td width="10%"><bean:write name="infoPerson" property="username"/>
+				</td>
 				<td width="10%"><bean:write name="infoStudent" property="number"/>
 				</td>	
-				<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		
 				<td width="35%"><bean:write name="infoPerson" property="nome"/>
 				</td>
 				<td width="20%"><bean:write name="infoPerson" property="email"/>
