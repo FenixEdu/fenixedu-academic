@@ -68,8 +68,14 @@ public class FindPersonAction extends FenixDispatchAction {
         String documentIdNumber = getStringFromRequest(request, "documentIdNumber");
         request.setAttribute("documentIdNumber", documentIdNumber);
 
-        String mechanoGraphicalNumber = getStringFromRequest(request, "mechanoGraphicalNumber");
+        String mechanoGraphicalNumber = getStringFromRequest(request, "mechanoGraphicalNumber").replace(" ", "");
         request.setAttribute("mechanoGraphicalNumber", mechanoGraphicalNumber);
+
+        if (!mechanoGraphicalNumber.matches("-?\\d+")) {
+            addActionMessage("errorMechanoGraphicalNumber", request, "error.mechanoGraphicalNumber",
+                    getStringFromRequest(request, "mechanoGraphicalNumber"));
+            return prepareFindPerson(mapping, actionForm, request, response);
+        }
 
         SearchParameters searchParameters =
                 new SearchPerson.SearchParameters(name, email, username, documentIdNumber, null, null, null, null, null, null,
