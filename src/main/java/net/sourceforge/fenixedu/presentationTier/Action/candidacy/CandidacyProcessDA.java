@@ -57,6 +57,7 @@ import org.fenixedu.bennu.portal.EntryPoint;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.jsoup.helper.StringUtil;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -99,7 +100,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
     protected void setExecutionInterval(final HttpServletRequest request) {
         final String executionIntervalId = (String) getFromRequest(request, "executionIntervalId");
-        if (executionIntervalId != null) {
+        if (executionIntervalId != null && !StringUtil.isBlank(executionIntervalId)) {
             request.setAttribute("executionInterval", FenixFramework.getDomainObject(executionIntervalId));
         }
     }
