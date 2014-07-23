@@ -18,53 +18,17 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.bennu.portal.domain.PortalConfiguration"%>
-<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
-<%@ page import="java.util.Locale"%>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<tiles:insert page="/layout/istLayout.jsp">
+	<tiles:put name="title" value="/commons/functionalities/normalTitle.jsp" />
+	<tiles:put name="titleString" value="Instituto Superior Técnico" />
 
-<html:xhtml/>
+	<tiles:put name="bundle" value="TITLES_RESOURCES" />	
+	<tiles:put name="serviceName" value="Instituto Superior Técnico" />                 	
+	<tiles:put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+	<tiles:put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
+	<tiles:put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />	
+	<tiles:put name="footer" value="/publico/degreeSite/footer.jsp" />
 
-<h2><bean:message key ="title.register.user" bundle="APPLICATION_RESOURCES"/></h2>
-
-
-<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
-
-<logic:present name="person">
-	
-	<div class="infoop2">
-		<p><bean:message key="message.register.user" arg0="<%=PortalConfiguration.getInstance().getApplicationTitle().getContent()%>" bundle="APPLICATION_RESOURCES"/></p>
-		<strong><bean:message key="message.requirements"/>:</strong>
-		<ul>
-			<li><bean:message key="message.pass.size"/></li>
-			<li><bean:message key="message.pass.classes"/></li>
-			<li><bean:message key="message.pass.weak"/></li>			
-		</ul>
-	</div>
-	
-	<html:form action="/internationalRegistration.do?method=updateUserPassword">
-		<table class="tstyle5 thlight thright">
-			<html:hidden property="hashCode" value="<%= request.getParameter("hash") %>"/>
-			<!-- password -->
-			<tr>
-				<th><bean:message bundle="HTMLALT_RESOURCES" key="password.password"/>:</th>
-				<td><html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password"/></td>
-			</tr>
-			<!-- retype password -->
-			<tr>
-				<th><bean:message bundle="HTMLALT_RESOURCES" key="password.retypePassword"/>:</th>
-				<td><html:password bundle="HTMLALT_RESOURCES" altKey="password.retypePassword" property="retypedPassword"/></td>
-			</tr>
-		</table>
-		<p>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" property="ok" />
-		</p>
-	</html:form>
-	
-	
-</logic:present>
-
-
-
+	<tiles:put name="body" value="/publico/candidacy/internationalRegistration_bd.jsp"/>
+</tiles:insert>

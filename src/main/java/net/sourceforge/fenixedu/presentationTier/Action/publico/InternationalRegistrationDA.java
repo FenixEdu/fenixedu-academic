@@ -39,8 +39,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "external", path = "/internationalRegistration", scope = "request", parameter = "method", validate = true,
         attribute = "internationalRegistrationForm", formBean = "internationalRegistrationForm",
         formBeanClass = InternationalRegistrationForm.class)
-@Forwards({ @Forward(name = "international-registration", path = "international-registration"),
-        @Forward(name = "success", path = "success") })
+@Forwards({ @Forward(name = "international-registration", path = "/publico/candidacy/internationalRegistration.jsp"),
+        @Forward(name = "success", path = "/publico/candidacy/internationalRegistrationSuccess.jsp") })
 public class InternationalRegistrationDA extends FenixDispatchAction {
 
     public ActionForward showInternationalRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
