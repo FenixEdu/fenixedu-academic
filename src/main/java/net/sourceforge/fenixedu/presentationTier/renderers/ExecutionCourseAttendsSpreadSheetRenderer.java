@@ -88,10 +88,10 @@ public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
         }
 
         private String getGroupURL(StudentGroup studentGroup) {
-            StringBuilder stringBuilder = new StringBuilder("/viewStudentGroupInformation.do?");
+            StringBuilder stringBuilder = new StringBuilder("/studentGroupManagement.do?");
             stringBuilder.append("studentGroupCode=" + studentGroup.getExternalId());
             stringBuilder.append("&method=viewStudentGroupInformation");
-            stringBuilder.append("&objectCode=" + bean.getExecutionCourse().getExternalId());
+            stringBuilder.append("&executionCourseID=" + bean.getExecutionCourse().getExternalId());
             stringBuilder.append("&groupPropertiesCode=" + studentGroup.getGrouping().getExternalId());
             return stringBuilder.toString();
         }
@@ -122,16 +122,19 @@ public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
             HtmlTableCell usernameCell = row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.username"));
             usernameCell.setRowspan(rowSpan);
 
-            HtmlTableCell numberOfEnrolmentsCell = row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.numberOfEnrollments"));
+            HtmlTableCell numberOfEnrolmentsCell =
+                    row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.numberOfEnrollments"));
             numberOfEnrolmentsCell.setRowspan(rowSpan);
 
-            HtmlTableCell enrolmentStateCell1 = row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.attends.enrollmentState"));
+            HtmlTableCell enrolmentStateCell1 =
+                    row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.attends.enrollmentState"));
             enrolmentStateCell1.setRowspan(rowSpan);
 
             HtmlTableCell degreeCell = row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.Degree"));
             degreeCell.setRowspan(rowSpan);
 
-            HtmlTableCell registrationStateCell = row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.registration.state"));
+            HtmlTableCell registrationStateCell =
+                    row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.registration.state"));
             registrationStateCell.setRowspan(rowSpan);
 
             HtmlTableCell nameCell = row1.createCell(BundleUtil.getString(Bundle.APPLICATION, "label.name"));

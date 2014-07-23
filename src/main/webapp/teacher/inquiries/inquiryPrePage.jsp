@@ -70,14 +70,12 @@
 		</logic:notEmpty>
 	</logic:iterate>
 
-<%-- 
---%>
 	<p class="separator2 mtop25"><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></p>
 	<logic:iterate id="professorship" name="executionCourse" property="professorships" type="net.sourceforge.fenixedu.domain.Professorship">
 		<% if (professorship.getPerson() == AccessControl.getPerson()) { %>
 			<logic:notEmpty name="professorship" property="teachingInquiry">
 				<bean:define id="teachingInquiryID" name="professorship" property="teachingInquiry.externalId" />
-				<html:link href="<%= request.getContextPath() + "/coordinator/viewInquiriesResults.do?method=showFilledTeachingInquiry&filledTeachingInquiryId=" + teachingInquiryID %>" target="_blank">
+				<html:link page="<%= "/teachingInquiry.do?method=showFilledTeachingInquiry&filledTeachingInquiryId=" + teachingInquiryID %>" target="_blank">
 					<bean:write name="professorship" property="teacher.person.name"/> 
 				</html:link>
 			</logic:notEmpty>

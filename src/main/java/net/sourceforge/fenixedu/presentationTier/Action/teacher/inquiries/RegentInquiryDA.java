@@ -29,13 +29,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryBlockDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.RegentInquiryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.RegentTeacherResultsResume;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGroupsResumeResult;
@@ -43,12 +41,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
@@ -198,59 +192,6 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
         request.setAttribute("regentInquiryBean", regentInquiryBean);
 
         return forward(request, "/teacher/inquiries/regentInquiry.jsp");
-    }
-
-    public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        Professorship professorship = FenixFramework.getDomainObject(getFromRequest(request, "professorshipOID").toString());
-
-        TeacherInquiryTemplate teacherInquiryTemplate =
-                TeacherInquiryTemplate.getTemplateByExecutionPeriod(professorship.getExecutionCourse().getExecutionPeriod());
-        InquiryTeacherAnswer inquiryTeacherAnswer = professorship.getInquiryTeacherAnswer();
-
-        Set<InquiryBlockDTO> teacherInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-        for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocksSet()) {
-            teacherInquiryBlocks.add(new InquiryBlockDTO(inquiryTeacherAnswer, inquiryBlock));
-        }
-
-        request.setAttribute("executionPeriod", professorship.getExecutionCourse().getExecutionPeriod());
-        request.setAttribute("executionCourse", professorship.getExecutionCourse());
-        request.setAttribute("person", professorship.getPerson());
-        request.setAttribute("teacherInquiryBlocks", teacherInquiryBlocks);
-        return actionMapping.findForward("teacherInquiry");
-    }
-
-    public ActionForward showDelegateInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        ExecutionCourse executionCourse =
-                FenixFramework.getDomainObject(getFromRequest(request, "executionCourseOID").toString());
-        ExecutionDegree executionDegree =
-                FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
-
-        DelegateInquiryTemplate delegateInquiryTemplate =
-                DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
-        InquiryDelegateAnswer inquiryDelegateAnswer = null;
-        for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswersSet()) {
-            if (delegateAnswer.getExecutionDegree() == executionDegree) {
-                inquiryDelegateAnswer = delegateAnswer;
-                break;
-            }
-        }
-
-        Set<InquiryBlockDTO> delegateInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocksSet()) {
-            delegateInquiryBlocks.add(new InquiryBlockDTO(inquiryDelegateAnswer, inquiryBlock));
-        }
-
-        Integer year = inquiryDelegateAnswer != null ? inquiryDelegateAnswer.getDelegate().getCurricularYear().getYear() : null;
-        request.setAttribute("year", year);
-        request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
-        request.setAttribute("executionCourse", executionCourse);
-        request.setAttribute("executionDegree", executionDegree);
-        request.setAttribute("delegateInquiryBlocks", delegateInquiryBlocks);
-        return actionMapping.findForward("delegateInquiry");
     }
 
     public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

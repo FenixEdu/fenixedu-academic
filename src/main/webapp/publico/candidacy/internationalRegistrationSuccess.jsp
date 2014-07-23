@@ -18,23 +18,17 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@page import="net.sourceforge.fenixedu.domain.Installation"%>
-<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
-<%@ page import="java.util.Locale"%>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<tiles:insert page="/layout/istLayout.jsp">
+	<tiles:put name="title" value="/commons/functionalities/normalTitle.jsp" />
+	<tiles:put name="titleString" value="Instituto Superior Técnico" />
 
-<html:xhtml/>
+	<tiles:put name="bundle" value="TITLES_RESOURCES" />	
+	<tiles:put name="serviceName" value="Instituto Superior Técnico" />                 	
+	<tiles:put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+	<tiles:put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
+	<tiles:put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />	
+	<tiles:put name="footer" value="/publico/degreeSite/footer.jsp" />
 
-<h2><bean:message key ="title.register.user" bundle="APPLICATION_RESOURCES"/></h2>
-
-<div class="infoop2 mvert15">
-	<bean:define id="username" name="person" property="username" type="java.lang.String"/>
-	<p><bean:message key="message.register.success" bundle="APPLICATION_RESOURCES" arg0="<%= username %>" /></p>
-
-</div>
-
-
-
+	<tiles:put name="body" value="/publico/candidacy/internationalRegistrationSuccess_bd.jsp"/>
+</tiles:insert>

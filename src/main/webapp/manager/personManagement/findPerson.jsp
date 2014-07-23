@@ -21,11 +21,22 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.findPerson" /></h2>
 <br />
 <span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<logic:messagesPresent message="true" property="errorMechanoGraphicalNumber">
+	<p>
+		<div class="infoop5_2">
+			<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES" property="errorMechanoGraphicalNumber">
+				<bean:write name="messages" />
+			</html:messages>
+		</div>
+	</p>
+</logic:messagesPresent>
 
 <div class="well" style="width: 70%">
 	<bean:message bundle="MANAGER_RESOURCES" key="info.manager.findPerson"/>
