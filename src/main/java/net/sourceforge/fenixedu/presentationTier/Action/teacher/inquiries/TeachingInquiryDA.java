@@ -29,25 +29,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryBlockDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGroupsResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiriesCourseResultBean;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
@@ -55,6 +51,7 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
@@ -68,10 +65,24 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/teachingInquiry", module = "teacher", functionality = ManageExecutionCourseDA.class)
+@Forwards({
+        @Forward(name = "showFilledTeachingInquiry", path = "/coordinator/inquiries/showFilledTeachingInquiry.jsp"),
+        @Forward(name = "showFilledTeachingInquiry_v2", path = "/coordinator/inquiries/showFilledTeachingInquiry_v2.jsp"),
+        @Forward(name = "showCourseInquiryResult", path = "/teacher/inquiries/showCourseInquiryResult.jsp", useTile = false,
+                tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
+        @Forward(name = "showCourseInquiryResult_v2", path = "/teacher/inquiries/showCourseInquiryResult_v2.jsp",
+                useTile = false, tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
+        @Forward(name = "showTeachingInquiryResult", path = "/teacher/inquiries/showTeachingInquiryResult.jsp", useTile = false,
+                tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
+        @Forward(name = "showTeachingInquiryResult_v2", path = "/teacher/inquiries/showTeachingInquiryResult_v2.jsp",
+                useTile = false, tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")) })
 public class TeachingInquiryDA extends ExecutionCourseBaseAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -201,38 +212,6 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
         return forward(request, "/teacher/inquiries/teacherInquiry.jsp");
     }
 
-    public ActionForward showDelegateInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        ExecutionCourse executionCourse =
-                FenixFramework.getDomainObject(getFromRequest(request, "executionCourseOID").toString());
-        ExecutionDegree executionDegree =
-                FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
-
-        DelegateInquiryTemplate delegateInquiryTemplate =
-                DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
-        InquiryDelegateAnswer inquiryDelegateAnswer = null;
-        for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswersSet()) {
-            if (delegateAnswer.getExecutionDegree() == executionDegree) {
-                inquiryDelegateAnswer = delegateAnswer;
-                break;
-            }
-        }
-
-        Set<InquiryBlockDTO> delegateInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocksSet()) {
-            delegateInquiryBlocks.add(new InquiryBlockDTO(inquiryDelegateAnswer, inquiryBlock));
-        }
-
-        Integer year = inquiryDelegateAnswer != null ? inquiryDelegateAnswer.getDelegate().getCurricularYear().getYear() : null;
-        request.setAttribute("year", year);
-        request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
-        request.setAttribute("executionCourse", executionCourse);
-        request.setAttribute("executionDegree", executionDegree);
-        request.setAttribute("delegateInquiryBlocks", delegateInquiryBlocks);
-        return actionMapping.findForward("delegateInquiry");
-    }
-
     public ActionForward postBackTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final TeacherInquiryBean teacherInquiryBean = getRenderedObject("teacherInquiryBean");
@@ -324,6 +303,22 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
         return actionMapping.findForward(getTeachingInquiryResultTemplate(teachingResult));
     }
 
+    public ActionForward showFilledTeachingInquiry(ActionMapping actionMapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        final TeachingInquiry teachingInquiry = getDomainObject(request, "filledTeachingInquiryId");
+        request.setAttribute("teachingInquiry", teachingInquiry);
+
+        final ExecutionSemester executionPeriod = teachingInquiry.getProfessorship().getExecutionCourse().getExecutionPeriod();
+        if (executionPeriod.getSemester() == 2 && executionPeriod.getYear().equals("2007/2008")) {
+            return actionMapping.findForward("showFilledTeachingInquiry");
+        }
+
+        request.setAttribute("teachingInquiryDTO", new TeachingInquiryDTO(teachingInquiry.getProfessorship()));
+        PortalLayoutInjector.skipLayoutOn(request);
+        return actionMapping.findForward("showFilledTeachingInquiry_v2");
+    }
+
     private static String getTeachingInquiryResultTemplate(final StudentInquiriesTeachingResult teachingResult) {
         final ExecutionSemester executionPeriod = teachingResult.getProfessorship().getExecutionCourse().getExecutionPeriod();
         if (executionPeriod.getSemester() == 2 && executionPeriod.getYear().equals("2007/2008")) {
@@ -335,13 +330,16 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
     private Collection<StudentInquiriesCourseResultBean> populateStudentInquiriesCourseResults(final Professorship professorship) {
         Map<ExecutionDegree, StudentInquiriesCourseResultBean> courseResultsMap =
                 new HashMap<ExecutionDegree, StudentInquiriesCourseResultBean>();
-        for (StudentInquiriesCourseResult studentInquiriesCourseResult : professorship.getExecutionCourse().getStudentInquiriesCourseResultsSet()) {
+        for (StudentInquiriesCourseResult studentInquiriesCourseResult : professorship.getExecutionCourse()
+                .getStudentInquiriesCourseResultsSet()) {
             courseResultsMap.put(studentInquiriesCourseResult.getExecutionDegree(), new StudentInquiriesCourseResultBean(
                     studentInquiriesCourseResult));
         }
 
-        for (Professorship otherTeacherProfessorship : professorship.isResponsibleFor() ? professorship.getExecutionCourse().getProfessorshipsSet() : Collections.singletonList(professorship)) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
+        for (Professorship otherTeacherProfessorship : professorship.isResponsibleFor() ? professorship.getExecutionCourse()
+                .getProfessorshipsSet() : Collections.singletonList(professorship)) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
+                    .getStudentInquiriesTeachingResultsSet()) {
                 if (studentInquiriesTeachingResult.getInternalDegreeDisclosure()) {
                     courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
                             studentInquiriesTeachingResult);
