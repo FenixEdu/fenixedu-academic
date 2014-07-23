@@ -75,7 +75,6 @@ public class WriteMarks {
             final Attends attend = findAttend(executionCourse, studentMark.studentNumber, exceptionList);
             if (attend != null) {
                 addMark(result, studentMark, attend, exceptionList);
-                result.add(new AttendsMark(attend.getExternalId(), studentMark.mark));
             }
         }
 
