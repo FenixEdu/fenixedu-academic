@@ -74,7 +74,7 @@ public class WriteMarks {
         for (final StudentMark studentMark : marks) {
             final Attends attend = findAttend(executionCourse, studentMark.studentNumber, exceptionList);
             if (attend != null) {
-                result.add(new AttendsMark(attend.getExternalId(), studentMark.mark));
+                addMark(result, studentMark, attend, exceptionList);
             }
         }
 
@@ -83,6 +83,15 @@ public class WriteMarks {
         }
 
         return result;
+    }
+
+    private static void addMark(List<AttendsMark> result, StudentMark studentMark, Attends attend,
+            List<DomainException> exceptionList) {
+        if (studentMark.mark.length() - studentMark.mark.indexOf('.') - 1 > 2) {
+            exceptionList.add(new DomainException("error.mark.more.than.two.decimals", studentMark.studentNumber.toString()));
+        } else {
+            result.add(new AttendsMark(attend.getExternalId(), studentMark.mark));
+        }
     }
 
     private static Attends findAttend(final ExecutionCourse executionCourse, final Integer studentNumber,
