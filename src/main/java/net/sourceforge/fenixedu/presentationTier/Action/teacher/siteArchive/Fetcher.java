@@ -35,7 +35,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherRequestWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherServletResponseWrapper;
-import net.sourceforge.fenixedu.presentationTier.servlets.FileDownloadServlet;
+
+import org.fenixedu.bennu.io.domain.GenericFile;
+import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 
 import com.google.common.io.ByteStreams;
 
@@ -173,7 +175,7 @@ public class Fetcher {
 
     private void writeFileToStream(String url, OutputStream stream) throws IOException {
         if (url.startsWith(File.getFileDownloadPrefix())) {
-            File fileFromURL = FileDownloadServlet.getFileFromURL(url);
+            GenericFile fileFromURL = FileDownloadServlet.getFileFromURL(url);
             if (fileFromURL != null) {
                 InputStream inputStream = fileFromURL.getStream();
                 ByteStreams.copy(inputStream, stream);
