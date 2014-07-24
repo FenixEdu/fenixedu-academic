@@ -27,10 +27,6 @@
 
 <h2><bean:message key="label.vigilancy.manageVigilantsInGroups.title" bundle="VIGILANCY_RESOURCES"/></h2>
 
-<ul>
-	<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.back"/></html:link></li>
-</ul>
-
 <logic:notEmpty name="vigilants">
 <div class="warning0">
 	<bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.unableToRemoveVigilantsDueToConvokes"/>
@@ -53,6 +49,11 @@
 	</html:messages>
 </logic:messagesPresent>
 
+<ul>
+	<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.back"/></html:link></li>
+</ul>
+
+<logic:present name="bean">
 <fr:form action="/vigilancy/vigilantGroupManagement.do?method=addVigilantsToGroup">
 
 <p class="mbottom05"><strong><bean:message key="label.vigilancy.manageDepartmentVigilants" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
@@ -107,4 +108,4 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.add" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
-
+</logic:present>
