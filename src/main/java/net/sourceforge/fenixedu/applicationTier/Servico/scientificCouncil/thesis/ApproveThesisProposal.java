@@ -225,7 +225,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     }
 
     private String getAnnouncementSubject(Thesis thesis, String key, Locale locale) {
-        return getMessage(key, locale, thesis.getStudent().getPerson().getName());
+        return getMessage(locale, key, thesis.getStudent().getPerson().getName());
     }
 
     private String getAnnouncementBody(Thesis thesis, String key, Locale locale) {
