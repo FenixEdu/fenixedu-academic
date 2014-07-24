@@ -15,7 +15,9 @@ import net.sourceforge.fenixedu.util.ContentType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
+import org.fenixedu.bennu.scheduler.annotation.Task;
 
+@Task(englishTitle = "SetStudentPhotosFromCandidacies", readOnly = false)
 public class SetStudentPhotosFromCandidacies extends CronTask {
 
     @Override
