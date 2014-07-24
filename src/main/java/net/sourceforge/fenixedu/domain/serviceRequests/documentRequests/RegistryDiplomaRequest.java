@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.util.Bundle;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
@@ -239,27 +238,23 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 
     @Override
     public String getGraduateTitle(Locale locale) {
-        StringBuilder result = new StringBuilder();
-
         CycleType cycleType = getRequestedCycle();
-        Degree degree = getDegree();
-        final DegreeType degreeType = getDegreeType();
-        result.append(degreeType.getGraduateTitle(cycleType, getLanguage()));
-        final String degreeFilteredName = degree.getFilteredName(getConclusionYear(), getLanguage());
-        result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, getLanguage(), "label.in"));
         List<DegreeCurricularPlan> degreeCurricularPlansForYear =
                 getDegree().getDegreeCurricularPlansForYear(getConclusionYear());
         if (degreeCurricularPlansForYear.size() == 1) {
             DegreeCurricularPlan dcp = degreeCurricularPlansForYear.iterator().next();
             CycleCourseGroup cycleCourseGroup = dcp.getCycleCourseGroup(cycleType);
             if (cycleCourseGroup != null) {
-                String graduateTitleSuffix = cycleCourseGroup.getGraduateTitleSuffix(getConclusionYear(), getLanguage());
-                if (!StringUtils.isEmpty(graduateTitleSuffix) && !degreeFilteredName.contains(graduateTitleSuffix.trim())) {
-                    result.append(" ").append(graduateTitleSuffix);
-                    result.append(" ").append("-");
-                }
+                return cycleCourseGroup.getGraduateTitle(getConclusionYear(), getLanguage());
             }
         }
+
+        StringBuilder result = new StringBuilder();
+        Degree degree = getDegree();
+        final DegreeType degreeType = getDegreeType();
+        result.append(degreeType.getGraduateTitle(cycleType, getLanguage()));
+        final String degreeFilteredName = degree.getFilteredName(getConclusionYear(), getLanguage());
+        result.append(" ").append(BundleUtil.getString(Bundle.APPLICATION, getLanguage(), "label.in"));
         result.append(" ").append(degreeFilteredName);
 
         return result.toString();
