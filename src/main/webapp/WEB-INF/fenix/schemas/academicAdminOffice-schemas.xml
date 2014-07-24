@@ -1903,9 +1903,9 @@
 </schema>
 
 
-<schema type="net.sourceforge.fenixedu.domain.ExecutionSemester" bundle="ACADEMIC_OFFICE_RESOURCES" name="xpto">
+<schema type="net.sourceforge.fenixedu.domain.ExecutionSemester" bundle="ACADEMIC_OFFICE_RESOURCES" name="candidacy.enrolment.periods">
 	<slot name="executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsForStudentCurricularPlanProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsForCandidacyRegistrationProvider" />
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
 		<property name="destination" value="postBack" />
 	</slot>
