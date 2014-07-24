@@ -40,6 +40,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
+import com.google.common.base.Strings;
+import com.google.common.primitives.Ints;
+
 @StrutsFunctionality(app = ManagerPersonManagementApp.class, path = "find-person", titleKey = "label.manager.findPerson")
 @Mapping(path = "/findPerson", module = "manager")
 @Forwards({ @Forward(name = "findPerson", path = "/manager/personManagement/findPerson.jsp"),
@@ -71,9 +74,8 @@ public class FindPersonAction extends FenixDispatchAction {
         String mechanoGraphicalNumber = getStringFromRequest(request, "mechanoGraphicalNumber").replace(" ", "");
         request.setAttribute("mechanoGraphicalNumber", mechanoGraphicalNumber);
 
-        if (!mechanoGraphicalNumber.matches("-?\\d+")) {
-            addActionMessage("errorMechanoGraphicalNumber", request, "error.mechanoGraphicalNumber",
-                    getStringFromRequest(request, "mechanoGraphicalNumber"));
+        if (!Strings.isNullOrEmpty(mechanoGraphicalNumber) && Ints.tryParse(mechanoGraphicalNumber) == null) {
+            addActionMessage(request, "error.mechanoGraphicalNumber", getStringFromRequest(request, "mechanoGraphicalNumber"));
             return prepareFindPerson(mapping, actionForm, request, response);
         }
 

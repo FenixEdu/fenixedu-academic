@@ -28,19 +28,17 @@
 <br />
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<logic:messagesPresent message="true" property="errorMechanoGraphicalNumber">
-	<p>
-		<div class="infoop5_2">
-			<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES" property="errorMechanoGraphicalNumber">
-				<bean:write name="messages" />
-			</html:messages>
-		</div>
-	</p>
-</logic:messagesPresent>
-
 <div class="well" style="width: 70%">
 	<bean:message bundle="MANAGER_RESOURCES" key="info.manager.findPerson"/>
 </div>
+
+<logic:messagesPresent message="true">
+	<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES">
+	<p>
+		<span class="error0"><bean:write name="messages" /></span>
+	</p>
+	</html:messages>
+</logic:messagesPresent>
 
 <fr:form action="/findPerson.do?method=findPerson">
 <table>
