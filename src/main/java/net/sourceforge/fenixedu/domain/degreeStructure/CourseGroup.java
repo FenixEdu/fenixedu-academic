@@ -48,6 +48,8 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
 
+import com.google.common.base.Strings;
+
 public class CourseGroup extends CourseGroup_Base {
 
     static public List<CourseGroup> readCourseGroups() {
@@ -313,10 +315,11 @@ public class CourseGroup extends CourseGroup_Base {
         for (Context context : getChildContextsSet()) {
             DegreeModule degreeModule = context.getChildDegreeModule();
             if (degreeModule != excludedModule) {
-                if (degreeModule.getName() != null && StringFormatter.normalize(degreeModule.getName()).equals(normalizedName)) {
+                if (!Strings.isNullOrEmpty(degreeModule.getName())
+                        && StringFormatter.normalize(degreeModule.getName()).equals(normalizedName)) {
                     return false;
                 }
-                if (degreeModule.getNameEn() != null
+                if (!Strings.isNullOrEmpty(degreeModule.getNameEn())
                         && StringFormatter.normalize(degreeModule.getNameEn()).equals(normalizedNameEn)) {
                     return false;
                 }
