@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
 import net.sourceforge.fenixedu.dataTransferObject.MergeSlotDTO;
 import net.sourceforge.fenixedu.domain.Person;
@@ -360,7 +359,7 @@ public class MergePersonsDA extends FenixDispatchAction {
         Student studentToRemove = domainObject2.getStudent();
 
         if (studentToRemove != null) {
-            DeleteObjectByOID.run(studentToRemove.getExternalId());
+            studentToRemove.delete();
             request.setAttribute("studentRemoved", true);
         }
 
