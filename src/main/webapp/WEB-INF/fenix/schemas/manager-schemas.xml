@@ -377,13 +377,13 @@
 	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>				
 </schema>
 
-<schema name="EditUserLoginPeriod" type="org.fenixedu.bennu.user.management.UserLoginPeriod" bundle="MANAGER_RESOURCES">
+<schema name="EditUserLoginPeriod" type="org.fenixedu.bennu.core.domain.UserLoginPeriod" bundle="MANAGER_RESOURCES">
 		<slot name="beginDate" required="true" />
         <slot name="endDate" required="true" />
         <setter signature="edit(beginDate, endDate)" />
 </schema>
 
-<schema name="CreateUserLoginPeriod" type="org.fenixedu.bennu.user.management.UserLoginPeriod" bundle="MANAGER_RESOURCES" constructor="user, beginDate, endDate">
+<schema name="CreateUserLoginPeriod" type="org.fenixedu.bennu.core.domain.UserLoginPeriod" bundle="MANAGER_RESOURCES" constructor="user, beginDate, endDate">
         <slot name="user" hidden="true"/>
         <slot name="beginDate" required="true" />
         <slot name="endDate" required="true" />
@@ -601,16 +601,14 @@
 </schema>
 
 <schema name="selectPerson" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean" bundle="MANAGER_RESOURCES">
-	<slot name="personName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.managerName">
+	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.managerName">
 		<property name="size" value="70"/>
 		<property name="rawSlotName" value="name"/>
 		<property name="indicatorShown" value="true"/>
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
 		<property name="args" value="slot=name,size=30"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 		<property name="minChars" value="4"/>
-		<property name="labelField" value="person.name"/>
-		<property name="format" value="${text}"/>
+		<property name="labelField" value="name"/>
 	</slot>
 </schema>
 
@@ -782,26 +780,18 @@
 	<slot name="executionInterval.qualifiedName" key="label.executionInterval" read-only="true" />
 	<slot name="oldCode" key="label.paymentCodeMapping.oldCode" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
-		<property name="labelField" value="code"/>
 		<property name="format" value="${code} (${state})"/>
 		<property name="indicatorShown" value="true"/>
-				
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.accounting.SearchPaymentCodesByExecutionYear"/>
 		<property name="args" value="executionYearOid=${executionInterval.OID}"/>
-		
-		<property name="className" value="net.sourceforge.fenixedu.domain.accounting.PaymentCode"/>
 		<property name="minChars" value="4"/>
 	</slot>
 	<slot name="newCode" key="label.paymentCodeMapping.newCode" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
-		<property name="labelField" value="code"/>
 		<property name="format" value="${code} (${state})"/>
 		<property name="indicatorShown" value="true"/>
-				
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.accounting.SearchPaymentCodesByExecutionYear"/>
 		<property name="args" value="executionYearOid=${executionInterval.OID}"/>
-		
-		<property name="className" value="net.sourceforge.fenixedu.domain.accounting.PaymentCode"/>
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>

@@ -21,13 +21,12 @@ package net.sourceforge.fenixedu.dataTransferObject.person;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 
 public class PersonNameBean implements Serializable {
 
     private boolean external;
 
-    private PersonName personName;
+    private Person person;
     private String name;
 
     public String getName() {
@@ -40,21 +39,16 @@ public class PersonNameBean implements Serializable {
 
     public PersonNameBean() {
         super();
-        setPersonName(null);
+        setPerson(null);
         external = false;
     }
 
-    public PersonName getPersonName() {
-        return personName;
-    }
-
-    public void setPersonName(PersonName personName) {
-        this.personName = personName;
-    }
-
     public Person getPerson() {
-        PersonName personName = getPersonName();
-        return (personName != null) ? personName.getPerson() : null;
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public boolean isExternal() {

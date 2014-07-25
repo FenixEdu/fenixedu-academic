@@ -247,11 +247,10 @@
 
 <schema name="thesis.bean.selectPerson.internal.orientator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
         extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
-    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
-        <property name="labelField" value="text"/>
-        <property name="format" value="${text}"/>
+        <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
         <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
         <property name="args" value="slot=name"/>
@@ -261,11 +260,10 @@
 
 <schema name="thesis.bean.selectPerson.internal.coorientator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
         extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
-    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
-        <property name="labelField" value="text"/>
-        <property name="format" value="${text}"/>
+        <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
         <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
         <property name="args" value="slot=name"/>
@@ -275,11 +273,10 @@
 
 <schema name="thesis.bean.selectPerson.internal.president" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
         extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
-    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
-        <property name="labelField" value="text"/>
-        <property name="format" value="${text}"/>
+        <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
         <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPresidentForThesis"/>
         <property name="args" value="thesis=${thesis.externalId}"/>
@@ -289,11 +286,10 @@
 
 <schema name="thesis.bean.selectPerson.internal.vowel" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
         extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
-    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
-        <property name="labelField" value="text"/>
-        <property name="format" value="${text}"/>
+        <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
         <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
         <property name="args" value="slot=name"/>
@@ -309,11 +305,10 @@
         <property name="destination" value="changePersonType"/>
         <property name="classes" value="nobullet liinline"/>
     </slot>
-    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
-        <property name="labelField" value="text"/>
-        <property name="format" value="${text}"/>
+        <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
         <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons"/>
         <property name="args" value="slot=name"/>

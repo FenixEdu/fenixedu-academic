@@ -34,11 +34,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
@@ -114,6 +116,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.HumanName;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.IdDocument;
 import net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject;
@@ -152,7 +155,6 @@ import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.PersonNameFormatter;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -163,12 +165,15 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.UserLoginPeriod;
+import org.fenixedu.bennu.core.domain.UserProfile;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.bennu.user.management.UserLoginPeriod;
-import org.fenixedu.bennu.user.management.UserManager;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -181,6 +186,7 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
 
 public class Person extends Person_Base {
@@ -230,76 +236,110 @@ public class Person extends Person_Base {
     }
 
     @Override
+    public void setUser(User user) {
+        super.setUser(user);
+        if (getProfile() != null) {
+            getProfile().setAvatarUrl(
+                    CoreConfiguration.getConfiguration().applicationUrl()
+                            + "/person/retrievePersonalPhoto.do?method=retrieveByUUID&uuid=" + user.getUsername());
+        }
+    }
+
+    @Override
+    public MultiLanguageString getPartyName() {
+        Builder builder = new LocalizedString.Builder();
+        for (Locale locale : CoreConfiguration.supportedLocales()) {
+            builder.with(locale, getName());
+        }
+        return MultiLanguageString.fromLocalizedString(builder.build());
+    }
+
+    @Override
     public void setPartyName(final MultiLanguageString partyName) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public String getName() {
-        return super.getPartyName().getPreferedContent();
+        if (getProfile() != null) {
+            return getProfile().getFullName();
+        }
+        if (super.getPartyName() != null) {
+            return super.getPartyName().getPreferedContent();
+        }
+        return null;
     }
 
     @Override
     public void setName(final String name) {
-
-        if (name == null || StringUtils.isEmpty(name.trim())) {
-            throw new DomainException("error.person.empty.name");
+        ensureUserProfile();
+        if (getProfile().getGivenNames() == null && getProfile().getFamilyNames() == null) {
+            HumanName split = HumanName.decompose(name, false);
+            getProfile().changeName(split.getGivenNames(), split.getFamilyNames(), getProfile().getDisplayName());
+        } else {
+            throw new Error("Could not edit person name using unseparated name input");
         }
-
-        final String formattedName = PersonNameFormatter.prettyPrint(name);
-        String oldName = getPartyName() == null ? null : getPartyName().getPreferedContent();
-
-        MultiLanguageString partyName = super.getPartyName();
-        partyName =
-                partyName == null ? new MultiLanguageString(Locale.getDefault(), formattedName) : partyName.with(
-                        Locale.getDefault(), formattedName);
-
-        super.setPartyName(partyName);
-
-        PersonName personName = getPersonName();
-        personName = personName == null ? new PersonName(this) : personName;
-        personName.setName(formattedName);
-
-        logSetterNullString("log.personInformation.edit.generalTemplate.personalData", oldName, name, "label.name");
     }
 
+    /**
+     * @deprecated Use {@link UserProfile#getGivenNames()}
+     */
+    @Deprecated
     @Override
-    public void setGivenNames(final String name) {
-        final String formattedName = PersonNameFormatter.prettyPrint(name);
-        super.setGivenNames(formattedName);
+    public String getGivenNames() {
+        if (getProfile() != null) {
+            return getProfile().getGivenNames();
+        }
+        if (super.getGivenNames() != null) {
+            super.getGivenNames();
+        }
+        return HumanName.decompose(getName(), false).getGivenNames();
     }
 
+    /**
+     * @deprecated Use {@link UserProfile#changeName(String, String, String)}
+     */
+    @Override
+    @Deprecated
+    public void setGivenNames(final String name) {
+        ensureUserProfile();
+        getProfile().changeName(name, getProfile().getFamilyNames(), getProfile().getDisplayName());
+    }
+
+    /**
+     * @deprecated Use {@link UserProfile#getFamilyNames()}
+     */
+    @Deprecated
+    @Override
+    public String getFamilyNames() {
+        if (getProfile() != null) {
+            return getProfile().getFamilyNames();
+        }
+        if (super.getFamilyNames() != null) {
+            super.getFamilyNames();
+        }
+        return HumanName.decompose(getName(), false).getFamilyNames();
+    }
+
+    /**
+     * @deprecated Use {@link UserProfile#changeName(String, String, String)}
+     */
+    @Deprecated
     @Override
     public void setFamilyNames(final String name) {
-        final String formattedName = PersonNameFormatter.prettyPrint(name);
-        super.setFamilyNames(formattedName);
+        ensureUserProfile();
+        getProfile().changeName(getProfile().getGivenNames(), null, getProfile().getDisplayName());
     }
 
+    @Deprecated
     public void setNames(final String name, final String givenNames, final String familyNames) {
-        // These trimmed names are used to make it easier on comparing strings.
-        // Fields are trimmed and will be null if arguments are null or empty.
-        // This avoids checking isEmpty() repeatidly.
-        final String trimmedGivenNames = (givenNames == null || givenNames.trim().isEmpty()) ? null : givenNames.trim();
-        final String trimmedFamilyNames = (familyNames == null || familyNames.trim().isEmpty()) ? null : familyNames.trim();
-        final String trimmedName = (name == null || name.trim().isEmpty()) ? null : name.trim();
-
-        final String composedName =
-                (trimmedGivenNames == null) ? trimmedFamilyNames : ((trimmedFamilyNames == null ? trimmedGivenNames : trimmedGivenNames
-                        + " " + trimmedFamilyNames));
-
-        if (composedName != null) {
-            if (trimmedName == null || !trimmedName.equals(composedName)) {
-                throw new DomainException("error.net.sourceforge.fenixedu.domain.Person.namesCorrectlyPartitioned");
-            } else {
-                if (trimmedGivenNames == null) {
-                    throw new DomainException("error.person.noGivenNamesWithFamily");
-                }
-            }
+        ensureUserProfile();
+        if (givenNames != null || familyNames != null) {
+            getProfile().changeName(givenNames, familyNames, getProfile().getDisplayName());
+        } else {
+            HumanName split = HumanName.decompose(name, false);
+            getProfile().changeName(split.getGivenNames(), split.getFamilyNames(), getProfile().getDisplayName());
         }
-
-        setName(name);
-        setGivenNames(givenNames);
-        setFamilyNames(familyNames);
     }
 
     @Override
@@ -375,7 +415,7 @@ public class Person extends Person_Base {
 
     public void createUser() {
         if (getUser() == null) {
-            setUser(UserManager.createDynamicUser(this));
+            setUser(new User(getProfile()));
         } else {
             throw new DomainException("error.person.already.has.user");
         }
@@ -484,7 +524,7 @@ public class Person extends Person_Base {
     }
 
     public Person editByPublicCandidate(final PersonBean personBean) {
-        setName(personBean.getName());
+        setNames(personBean.getName(), personBean.getGivenNames(), personBean.getFamilyNames());
         setGender(personBean.getGender());
         setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
         setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
@@ -950,9 +990,7 @@ public class Person extends Person_Base {
         }
 
         // personal info
-        setName(fullName);
-        setGivenNames(personBean.getGivenNames());
-        setFamilyNames(familyName);
+        setNames(fullName, givenNames, familyName);
 
         setGender(personBean.getGender());
         setProfession(personBean.getProfession());
@@ -1544,6 +1582,13 @@ public class Person extends Person_Base {
         }
     }
 
+    @Override
+    public void setDisableSendEmails(Boolean disableSendEmails) {
+        ensureUserProfile();
+        super.setDisableSendEmails(disableSendEmails);
+        getProfile().setEmail(getEmailForSendingEmails());
+    }
+
     @Deprecated
     public Registration readStudentByDegreeType(final DegreeType degreeType) {
         for (final Registration registration : this.getStudents()) {
@@ -1759,21 +1804,32 @@ public class Person extends Person_Base {
         return findPerson(name.replace('%', ' '), size);
     }
 
+    public static Stream<Person> findPersonStream(final String name, final int size) {
+        return Stream.concat(PersonName.findPersonStream(name, size).map(n -> n.getPerson()), UserProfile
+                .searchByName(name, size).map(p -> p.getPerson()).filter(Objects::nonNull));
+    }
+
+    public static Stream<Person> findInternalPersonStream(final String name, final int size) {
+        return Stream.concat(
+                PersonName.findInternalPersonStream(name, size).map(n -> n.getPerson()),
+                UserProfile.searchByName(name, size).map(p -> p.getPerson()).filter(Objects::nonNull)
+                        .filter(p -> !p.isExternalPerson()));
+    }
+
+    public static Stream<Person> findExternalPersonStream(final String name, final int size) {
+        return Stream.concat(
+                PersonName.findExternalPersonStream(name, size).map(n -> n.getPerson()),
+                UserProfile.searchByName(name, size).map(p -> p.getPerson()).filter(Objects::nonNull)
+                        .filter(p -> p.isExternalPerson()));
+    }
+
     public static Collection<Person> findPerson(final String name, final int size) {
-        final Collection<Person> people = new ArrayList<Person>();
-        for (final PersonName personName : PersonName.findPerson(name, size)) {
-            people.add(personName.getPerson());
-        }
-        return people;
+        return findPersonStream(name, size).collect(Collectors.toSet());
     }
 
     public static Collection<Person> findPerson(final String name, final int size,
             final com.google.common.base.Predicate<Person> predicate) {
-        final Collection<Person> people = new ArrayList<Person>();
-        for (final PersonName personName : PersonName.findPerson(name, size, predicate)) {
-            people.add(personName.getPerson());
-        }
-        return people;
+        return findPersonStream(name, size).filter(p -> predicate.apply(p)).collect(Collectors.toSet());
     }
 
     public static Collection<Person> readPersonsByName(final String name) {
@@ -2565,6 +2621,9 @@ public class Person extends Person_Base {
 
     @Override
     public String getNickname() {
+        if (getProfile() != null) {
+            return getProfile().getDisplayName();
+        }
         final String nickname = super.getNickname();
         return nickname == null ? getName() : nickname;
     }
@@ -2572,10 +2631,8 @@ public class Person extends Person_Base {
     @Override
     @Atomic
     public void setNickname(final String nickname) {
-        if (!validNickname(nickname)) {
-            throw new DomainException("error.invalid.nickname");
-        }
-        super.setNickname(nickname);
+        ensureUserProfile();
+        getProfile().changeName(getProfile().getGivenNames(), getProfile().getFamilyNames(), nickname);
     }
 
     private static final Set<String> namePartsToIgnore = new HashSet<String>(5);
@@ -2766,19 +2823,15 @@ public class Person extends Person_Base {
     }
 
     public static Collection<Person> findPerson(final String name) {
-        final Collection<Person> people = new ArrayList<Person>();
-        for (final PersonName personName : PersonName.findPerson(name, Integer.MAX_VALUE)) {
-            people.add(personName.getPerson());
-        }
-        return people;
+        return findPerson(name, Integer.MAX_VALUE);
     }
 
     public static Collection<Person> findInternalPerson(final String name) {
-        final Collection<Person> people = new ArrayList<Person>();
-        for (final PersonName personName : PersonName.findInternalPerson(name, Integer.MAX_VALUE)) {
-            people.add(personName.getPerson());
-        }
-        return people;
+        return findInternalPerson(name, Integer.MAX_VALUE);
+    }
+
+    public static Collection<Person> findInternalPerson(final String name, int maxHits) {
+        return findInternalPersonStream(name, maxHits).collect(Collectors.toSet());
     }
 
     public static Collection<Person> findInternalPersonByNameAndRole(final String name, final RoleType roleType) {
@@ -2802,11 +2855,11 @@ public class Person extends Person_Base {
     }
 
     public static Collection<Person> findExternalPerson(final String name) {
-        final Collection<Person> people = new ArrayList<Person>();
-        for (final PersonName personName : PersonName.findExternalPerson(name, Integer.MAX_VALUE)) {
-            people.add(personName.getPerson());
-        }
-        return people;
+        return findExternalPerson(name, Integer.MAX_VALUE);
+    }
+
+    public static Collection<Person> findExternalPerson(final String name, int maxHits) {
+        return findExternalPersonStream(name, maxHits).collect(Collectors.toSet());
     }
 
     public static Collection<Person> findPersonByDocumentID(final String documentIDValue) {
@@ -3887,7 +3940,7 @@ public class Person extends Person_Base {
         super.setFiscalCode(value);
     }
 
-    @ConsistencyPredicate
+    @Deprecated
     public final boolean namesCorrectlyPartitioned() {
         if (StringUtils.isEmpty(getGivenNames()) && StringUtils.isEmpty(getFamilyNames())) {
             return true;
@@ -4392,4 +4445,26 @@ public class Person extends Person_Base {
         return getPersonRolesSet().contains(role);
     }
 
+    public void ensureUserProfile() {
+        if (getProfile() == null) {
+            String givenNames = super.getGivenNames();
+            String familyNames = super.getFamilyNames();
+            if (Strings.isNullOrEmpty(givenNames) && Strings.isNullOrEmpty(familyNames) && !Strings.isNullOrEmpty(getName())) {
+                HumanName name = HumanName.decompose(getName(), false);
+                givenNames = name.getGivenNames();
+                familyNames = name.getFamilyNames();
+            }
+            String displayName = super.getNickname();
+            if (displayName != null && !HumanName.namesMatch(givenNames + " " + familyNames, displayName)) {
+                displayName = null;
+            }
+            UserProfile profile = new UserProfile(givenNames, familyNames, displayName, getEmailForSendingEmails(), null);
+            setProfile(profile);
+            if (getUser() != null) {
+                getUser().setProfile(profile);
+                profile.setAvatarUrl(CoreConfiguration.getConfiguration().applicationUrl()
+                        + "/person/retrievePersonalPhoto.do?method=retrieveByUUID&uuid=" + getUser().getUsername());
+            }
+        }
+    }
 }

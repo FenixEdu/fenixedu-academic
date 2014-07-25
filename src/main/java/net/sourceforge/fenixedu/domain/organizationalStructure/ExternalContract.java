@@ -24,7 +24,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -42,11 +41,6 @@ public class ExternalContract extends ExternalContract_Base {
         super.init(person, beginDate, endDate, institution);
         AccountabilityType accountabilityType = AccountabilityType.readByType(AccountabilityTypeEnum.WORKING_CONTRACT);
         setAccountabilityType(accountabilityType);
-
-        PersonName personName = person.getPersonName();
-        if (personName != null) {
-            personName.setIsExternalPerson(true);
-        }
     }
 
     public void edit(String name, String address, String phone, String mobile, String homepage, String email, Unit institution) {

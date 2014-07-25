@@ -20,15 +20,12 @@ package net.sourceforge.fenixedu.dataTransferObject.person;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 
 public class ExternalPersonBean extends PersonBean {
 
     private Unit unitDomainReference;
 
     private UnitName unitNameDomainReference;
-
-    private PersonName personName;
 
     private String unitName;
 
@@ -60,17 +57,6 @@ public class ExternalPersonBean extends PersonBean {
         if (unitName != null) {
             this.unitNameDomainReference = unitName;
             setUnit(unitName.getUnit());
-        }
-    }
-
-    public PersonName getPersonName() {
-        return personName;
-    }
-
-    public void setPersonName(PersonName personName) {
-        if (personName != null) {
-            this.personName = personName;
-            setPerson(personName.getPerson());
         }
     }
 }

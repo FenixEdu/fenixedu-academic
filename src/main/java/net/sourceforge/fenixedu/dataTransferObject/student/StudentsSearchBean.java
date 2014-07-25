@@ -20,13 +20,14 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
@@ -109,11 +110,8 @@ public class StudentsSearchBean implements Serializable {
                 students.add(person.getStudent());
             }
         } else if (!StringUtils.isEmpty(getName())) {
-            for (final PersonName personName : PersonName.find(getName(), Integer.MAX_VALUE)) {
-                if (personName.getPerson().getStudent() != null) {
-                    students.add(personName.getPerson().getStudent());
-                }
-            }
+            students.addAll(Person.findPersonStream(getName(), Integer.MAX_VALUE).map(p -> p.getStudent())
+                    .filter(Objects::nonNull).collect(Collectors.toSet()));
         } else if (!StringUtils.isEmpty(getUsername())) {
             User user = User.findByUsername(getUsername());
             if (user != null && user.getPerson().getStudent() != null) {

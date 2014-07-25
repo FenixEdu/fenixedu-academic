@@ -45,7 +45,6 @@
 			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.ReductionServiceBean">
 				<fr:slot name="teacher" layout="autoComplete">
 					<fr:property name="size" value="80"/>
-					<fr:property name="labelField" value="person.name"/>
 					<fr:property name="format" value="${person.name} (${person.username})"/>
 					<fr:property name="indicatorShown" value="true"/>
 					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachersByNameOrISTID"/>

@@ -20,20 +20,20 @@ package net.sourceforge.fenixedu.dataTransferObject.residenceManagement;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.person.PersonName;
+import net.sourceforge.fenixedu.domain.Person;
 
 public class ResidenceRoleManagementBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private PersonName personName;
+    private Person person;
     private String name;
 
-    public void setPersonName(PersonName personName) {
-        this.personName = personName;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public PersonName getPersonName() {
-        return personName;
+    public Person getPerson() {
+        return person;
     }
 
     public void setName(String name) {

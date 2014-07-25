@@ -726,13 +726,11 @@
 		</slot>
 		<slot name="istId" layout="autoComplete" key="label.name.or.id">
 				<property name="size" value="50"/>
-				<property name="labelField" value="name"/>
 				<property name="format" value="${name} / ${istUsername}"/>
 				<property name="args" value="slot=name,size=20"/>
 				<property name="minChars" value="2"/>
 				<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
 				<property name="indicatorShown" value="true"/>		
-				<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>
 		</slot>
 	</schema>
 	

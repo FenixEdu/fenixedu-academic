@@ -26,7 +26,8 @@ public class StorkToPersonBeanTranslation {
         personBean.setIdDocumentType(IDDocumentType.FOREIGNER_IDENTITY_CARD);
         personBean.setDocumentIdNumber(attrManagement.getIdentificationNumber());
         personBean.setEmail(attrManagement.getEmail());
-        personBean.setName(attrManagement.getStorkFullname());
+        personBean.setGivenNames(attrManagement.getStorkName());
+        personBean.setFamilyNames(attrManagement.getStorkFamilyName());
         personBean.setDateOfBirth(attrManagement.getBirthDate());
         personBean.setNationality(attrManagement.getStorkNationality());
         personBean.setCountryOfBirth(attrManagement.getStorkCountryOfBirth());

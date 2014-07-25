@@ -59,10 +59,10 @@
 		</html:link></p>
 		
 		<p>	
-			<bean:define id="loginPeriods" name="person" property="user.loginPeriod" />
+			<bean:define id="loginPeriods" name="person" property="user.loginValiditySet" />
 			<logic:notEmpty name="loginPeriods">							
 				<fr:view name="loginPeriods">
-					<fr:schema type="org.fenixedu.bennu.user.management.UserLoginPeriod" bundle="MANAGER_RESOURCES">
+					<fr:schema type="org.fenixedu.bennu.core.domain.UserLoginPeriod" bundle="MANAGER_RESOURCES">
 						<fr:slot name="beginDate" />
 						<fr:slot name="endDate" />
 					</fr:schema>

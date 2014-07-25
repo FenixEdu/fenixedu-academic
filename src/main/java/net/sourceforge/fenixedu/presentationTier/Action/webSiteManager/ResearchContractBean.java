@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract.ResearchContractType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 
 import org.joda.time.YearMonthDay;
 
@@ -32,7 +31,7 @@ public class ResearchContractBean implements Serializable {
 
     private Boolean externalPerson;
 
-    private PersonName personName;
+    private Person person;
 
     private String personNameString;
 
@@ -75,7 +74,7 @@ public class ResearchContractBean implements Serializable {
     }
 
     public ResearchContractBean() {
-        setPersonName(null);
+        setPerson(null);
         setUnit(null);
         setExternalPerson(Boolean.FALSE);
         setPersonNameString(null);
@@ -98,16 +97,11 @@ public class ResearchContractBean implements Serializable {
     }
 
     public Person getPerson() {
-        PersonName personName = getPersonName();
-        return personName != null ? personName.getPerson() : null;
+        return person;
     }
 
-    public PersonName getPersonName() {
-        return personName;
-    }
-
-    public void setPersonName(PersonName personName) {
-        this.personName = personName;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public ResearchUnit getUnit() {

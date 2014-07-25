@@ -70,13 +70,11 @@
 			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.manageExternalSupervision.ManageExternalSupervisionBean" bundle="DIRECTIVE_COUNCIL_RESOURCES">
 				<fr:slot name="newSupervisor" layout="autoComplete" key="label.showSupervisors.nameOrId" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 					<fr:property name="size" value="35" />
-					<fr:property name="labelField" value="name" />
 					<fr:property name="format" value="${name} - <strong>${istUsername}</strong>" />
 					<fr:property name="args" value="slot=name,size=20" />
 					<fr:property name="minChars" value="3" />
 					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID" />
 					<fr:property name="indicatorShown" value="true" />
-					<fr:property name="className" value="net.sourceforge.fenixedu.domain.Person" />
 					<fr:property name="required" value="true"/>
 				</fr:slot>
 				<fr:destination name="invalid" path="/manageExternalSupervision.do?method=invalidAddSupervisor"/>

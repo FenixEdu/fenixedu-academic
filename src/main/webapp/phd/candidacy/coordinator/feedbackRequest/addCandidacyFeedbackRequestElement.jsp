@@ -26,7 +26,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElementBean"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.coordinator.feedbackRequest.PhdCandidacyFeedbackRequestDA"%>
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.PersonName"%>
 
 <logic:notEmpty name="elementBean">
 	
@@ -108,13 +107,12 @@
 					<%-- INTERNAL jury type slots --%>
 	
 					<logic:equal name="elementBean" property="participantType.name" value="INTERNAL">
-						<fr:slot name="personName" layout="autoComplete" required="true">
+						<fr:slot name="person" layout="autoComplete" required="true">
 							<fr:property name="size" value="50"/>
 							<fr:property name="labelField" value="name"/>
 							<fr:property name="indicatorShown" value="true"/>		
 							<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
 							<fr:property name="args" value="size=50"/>
-							<fr:property name="className" value="<%= PersonName.class.getName() %>"/>
 							<fr:property name="minChars" value="4"/>				
 						</fr:slot>
 						<fr:slot name="title" />

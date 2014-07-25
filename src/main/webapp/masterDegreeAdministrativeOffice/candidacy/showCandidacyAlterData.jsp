@@ -88,7 +88,6 @@
 							<fr:property name="indicatorShown" value="true"/>
 							<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeUnits"/>
 							<fr:property name="args" value="slot=name,size=50"/>
-							<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 							<fr:property name="minChars" value="3"/>
 							<fr:property name="rawSlotName" value="institutionName"/>
 						</fr:slot>
@@ -98,7 +97,6 @@
 							<fr:property name="indicatorShown" value="true"/>
 							<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeDesignations"/>
 							<fr:property name="args" value="slot=description,size=50"/>
-							<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 							<fr:property name="minChars" value="3"/>
 					    </fr:slot>
 					<% } else { %>
@@ -108,7 +106,6 @@
 							<fr:property name="indicatorShown" value="true"/>		
 							<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
 							<fr:property name="args" value="slot=name,size=20"/>
-							<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 							<fr:property name="minChars" value="2"/>
 							<fr:property name="rawSlotName" value="institutionName"/>
 						</fr:slot>	

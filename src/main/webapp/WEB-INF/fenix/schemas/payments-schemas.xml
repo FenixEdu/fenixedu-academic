@@ -117,12 +117,10 @@
 	</slot>
 	<slot name="contributorPartySocialSecurityNumber" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
-		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartySocialSecurityNumber"/>
 		<property name="args" value="slot=socialSecurityNumber"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
 		<property name="rawSlotName" value="contributorNumber" />
@@ -148,12 +146,10 @@
 <schema name="createReceiptBean.create.notRequired" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
 	<slot name="contributorPartySocialSecurityNumber" layout="autoComplete" >
 		<property name="size" value="70"/>
-		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartySocialSecurityNumber"/>
 		<property name="args" value="slot=socialSecurityNumber"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
 		<property name="rawSlotName" value="contributorNumber" />
@@ -175,12 +171,10 @@
 	</slot>
 	<slot name="contributorPartySocialSecurityNumber" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
-		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartySocialSecurityNumber"/>
 		<property name="args" value="slot=socialSecurityNumber"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
 		<property name="rawSlotName" value="contributorNumber" />
@@ -445,12 +439,10 @@
 	<slot name="contributorParty" layout="autoComplete"
 			validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.CreateOtherPartyPaymentBean.contributorParty.socialSecurityNumber">
 		<property name="size" value="70"/>
-		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${name}"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartiesBySocialSecurityNumber"/>
 		<property name="args" value="slot=socialSecurityNumber"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
 	</slot>
@@ -521,12 +513,10 @@
 	</slot>
 	<slot name="contributorPartySocialSecurityNumber" layout="autoComplete" key="label.contributor" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
-		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartySocialSecurityNumber"/>
 		<property name="args" value="slot=socialSecurityNumber"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
 		<property name="rawSlotName" value="contributorNumber" />

@@ -214,7 +214,6 @@ public class FenixBootstrapper {
         Bennu bennu = Bennu.getInstance();
         User adminUser = User.findByUsername(adminSection.getAdminUsername());
         final Person person = new Person(adminUser);
-        person.setName(adminSection.getAdminName());
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));

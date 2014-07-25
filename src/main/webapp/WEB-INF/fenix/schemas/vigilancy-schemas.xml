@@ -623,12 +623,10 @@ extends="presentSimpleConvokesWithoutLink">
 		<slot name="externalCourse" key="label.vigilancy.name" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="maxCount" value="30"/>
 			<property name="size" value="40"/>
-			<property name="labelField" value="nome"/>
+			<property name="format" value="${nome} (${degreePresentationString})"/>
 			<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchCurrentExecutionCourses"/>
 			<property name="args" value="slot=nome"/>
-			<property name="className" value="net.sourceforge.fenixedu.domain.ExecutionCourse"/>				
 			<property name="minChars" value="3"/>	
-			<property name="format" value="${nome} (${degreePresentationString})"/>
 		</slot>
 </schema>
 

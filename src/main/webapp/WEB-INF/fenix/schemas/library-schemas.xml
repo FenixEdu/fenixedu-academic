@@ -160,11 +160,10 @@
 </schema>
 
 <schema name="library.card.create.person" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="LIBRARY_RESOURCES">
-	 <slot name="personName" layout="autoComplete" key="label.card.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	 <slot name="person" layout="autoComplete" key="label.card.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="80"/>
-		<property name="labelField" value="name"/>		
-		<property name="rawSlotName" value="name"/>		
-		<property name="format" value="${text}"/>
+		<property name="labelField" value="name"/>
+		<property name="rawSlotName" value="name"/>	
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons"/>
 		<property name="args" value="slot=name"/>
@@ -205,7 +204,6 @@
 	<slot name="documentIdNumber" key="label.identificationNumber" bundle="MANAGER_RESOURCES"/>
 	<slot name="unitNameDomainReference" layout="autoComplete" key="label.card.unitName">
 		<property name="size" value="80"/>
-		<property name="labelField" value="unit.name"/>		
 		<property name="rawSlotName" value="unitName"/>		
 		<property name="format" value="${unit.presentationNameWithParents}"/>
 		<property name="indicatorShown" value="true"/>		

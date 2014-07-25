@@ -445,11 +445,9 @@
 		<slot name="childInstitution" key="label.formation.institution.child" layout="autoComplete" bundle="ALUMNI_RESOURCES">
 			<property name="size" value="50"/>
 			<property name="labelField" value="name"/>
-			<property name="format" value="${partyName}"/>
 			<property name="indicatorShown" value="true"/>
 			<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.alumni.SearchOtherFormationInstitutions"/>
 			<property name="args" value="slot=partyName"/>
-			<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
 			<property name="minChars" value="3"/>
 			<property name="maxCount" value="10"/>
 			<property name="rawSlotName" value="foreignUnit"/>
@@ -465,11 +463,9 @@
 		<slot name="childInstitution" key="label.formation.institution.child" layout="autoComplete" bundle="ALUMNI_RESOURCES">
 			<property name="size" value="50"/>
 			<property name="labelField" value="name"/>
-			<property name="format" value="${partyName}"/>
 			<property name="indicatorShown" value="true"/>
 			<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.alumni.SearchOtherFormationInstitutions"/>
 			<property name="args" value="slot=partyName"/>
-			<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
 			<property name="minChars" value="3"/>
 			<property name="maxCount" value="10"/>
 			<property name="rawSlotName" value="foreignUnit"/>

@@ -7246,6 +7246,15 @@ relation ContestGroupPeriodSelectionResultNotification {
 	}
 }
 
+relation PersonUserProfile {
+    Person playsRole person {
+        multiplicity 0..1;
+    }
+    .org.fenixedu.bennu.core.domain.UserProfile playsRole profile {
+        multiplicity 0..1;
+    }
+}
+
 relation DomainOperationLogPerson {
 	DomainOperationLog playsRole domainOperationLogs {
 		multiplicity*;

@@ -22,15 +22,20 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Predicate;
 
+@Deprecated
 public class PersonName extends PersonName_Base implements Comparable<PersonName> {
+    private static final Logger logger = LoggerFactory.getLogger(PersonName.class);
 
     public static class PersonNameLimitedOrderedSet extends TreeSet<PersonName> {
 
@@ -117,6 +122,39 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 
     public boolean match(String[] parts) {
         return containsAll(getName(), parts);
+    }
+
+    public static Stream<PersonName> findPersonStream(String name, int size) {
+        if (logger.isTraceEnabled()) {
+            long time = System.currentTimeMillis();
+            Stream<PersonName> matches = findPerson(name, size).stream();
+
+            logger.trace("Name search for '{}' took {}ms", name, System.currentTimeMillis() - time);
+            return matches;
+        }
+        return findPerson(name, size).stream();
+    }
+
+    public static Stream<PersonName> findInternalPersonStream(String name, int size) {
+        if (logger.isTraceEnabled()) {
+            long time = System.currentTimeMillis();
+            Stream<PersonName> matches = findInternalPerson(name, size).stream();
+
+            logger.trace("Name search for '{}' took {}ms", name, System.currentTimeMillis() - time);
+            return matches;
+        }
+        return findInternalPerson(name, size).stream();
+    }
+
+    public static Stream<PersonName> findExternalPersonStream(String name, int size) {
+        if (logger.isTraceEnabled()) {
+            long time = System.currentTimeMillis();
+            Stream<PersonName> matches = findExternalPerson(name, size).stream();
+
+            logger.trace("Name search for '{}' took {}ms", name, System.currentTimeMillis() - time);
+            return matches;
+        }
+        return findExternalPerson(name, size).stream();
     }
 
     public static void find(final PersonNameLimitedOrderedSet personNameLimitedOrderedSet, final String name, final int size) {

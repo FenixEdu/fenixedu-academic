@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceRoleManagementBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -46,8 +45,7 @@ public class ResidenceRoleManagementDA extends FenixDispatchAction {
 
     public ActionForward addResidenceRoleManagemenToPerson(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        PersonName personName = getResidenceRoleManagementBean().getPersonName();
-        addPersonToRole(personName.getPerson(), getResidenceRoleManagement());
+        addPersonToRole(getResidenceRoleManagementBean().getPerson(), getResidenceRoleManagement());
         return residencePersonsManagement(mapping, actionForm, request, response);
 
     }
