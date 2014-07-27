@@ -27,6 +27,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "webSiteManager", path = "/manageUnitAnnouncementBoard", functionality = ListSitesAction.class)
@@ -40,7 +41,12 @@ public class AnnouncementForwardAction extends FenixAction {
                         + request.getParameter("oid") + "&announcementBoardId=" + request.getParameter("announcementBoardId")
                         + "&returnAction=" + request.getParameter("returnAction") + "&returnMethod="
                         + request.getParameter("returnMethod") + "&tabularVersion=" + request.getParameter("tabularVersion");
-        ActionForward forward = new ActionForward(forwardTo);
+
+        forwardTo =
+                GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), "/messaging" + forwardTo,
+                        request.getSession());
+        forwardTo = forwardTo.substring(10);
+        ActionForward forward = new ActionForward(forwardTo, true);
         forward.setModule("/messaging");
         return forward;
     }

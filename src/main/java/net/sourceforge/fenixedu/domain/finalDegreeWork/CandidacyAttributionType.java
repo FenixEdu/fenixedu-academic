@@ -43,6 +43,6 @@ public enum CandidacyAttributionType {
     }
 
     public String getSimpleLabel() {
-        return BundleUtil.getString(Bundle.ENUMERATION, name());
+        return BundleUtil.getString(Bundle.ENUMERATION, this.getClass().getSimpleName() + "." + name());
     }
 }

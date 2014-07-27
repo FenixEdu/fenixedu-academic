@@ -197,29 +197,6 @@
         <put name="body" value="/publico/showDirectThesisDetails.jsp"/>
     </definition>
 
-    <definition name="definition.public.internship" page="/layout/iaesteLayout.jsp">
-    	<put name="title" value="public.internship.main" />
-    	<put name="bundle" value="TITLES_RESOURCES" />
-    </definition>
-    
-    <definition name="internship.candidacy" extends="definition.public.internship">
-    	<put name="title" value="public.internship.candidacy" />
-    	<put name="bundle" value="TITLES_RESOURCES" />
-    	<put name="body" value="/publico/internship/candidacy.jsp"/>
-    </definition>
-
-    <definition name="internship.candidacy.rules" extends="definition.public.internship">
-        <put name="title" value="public.internship.rules" />
-    	<put name="bundle" value="TITLES_RESOURCES" />
-    	<put name="body" value="/publico/internship/candidacyRules.jsp"/>
-    </definition>
-
-    <definition name="internship.candidacy.final" extends="definition.public.internship">
-        <put name="title" value="public.internship.final" />
-    	<put name="bundle" value="TITLES_RESOURCES" />
-    	<put name="body" value="/publico/internship/candidacyFinal.jsp"/>
-    </definition>
-
     <definition name="definition.candidacy.process" extends="definition.public.mainPageIST" >
 		<put name="bundle" value="TITLES_RESOURCES" />	
         <put name="serviceName" value="Instituto Superior Técnico" />                 	

@@ -309,7 +309,7 @@
 			</span>
 			
 			<p id="remove-paragraph" class="mvert025" style="display: <%= ((Announcement) request.getAttribute("announcement")).getPhotoUrl() != null &&  ((Announcement) request.getAttribute("announcement")).getPhotoUrl().length() > 0 ? "block" : "none" %>">
-				<a onclick="document.getElementById('remove-paragraph').setAttribute('style', 'display:none'); document.getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value',''); document.getElementById('photo').childNodes[1].setAttribute('src', '');">Remover</a>
+				<a onclick="document.getElementById('remove-paragraph').setAttribute('style', 'display:none'); document.getElementById('photoUrl').childNodes[1].childNodes[1].childNodes[1].setAttribute('value',''); document.getElementById('photo').childNodes[1].setAttribute('src', '');">Remover</a>
 			</p>
 		</td>	
 	</tr>
@@ -334,7 +334,7 @@
 				<div style="display: inline">
 					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %>
 					
-					<div class="announcement_gallery" onclick="<%= "document.getElementById('remove-paragraph').setAttribute('style', 'display:block'); document.getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value','" + downloadUrl + "'); document.getElementById('photo').childNodes[1].setAttribute('src', '" + downloadUrl + "'); new_image = new Image(); new_image.src='" + downloadUrl + "'; set_image_size(document.getElementById('photo').childNodes[1], new_image); "%>" style="border-style:none;">
+					<div class="announcement_gallery" onclick="<%= "document.getElementById('remove-paragraph').setAttribute('style', 'display:block'); document.getElementById('photoUrl').childNodes[1].childNodes[1].childNodes[1].setAttribute('value','" + downloadUrl + "'); document.getElementById('photo').childNodes[1].setAttribute('src', '" + downloadUrl + "'); new_image = new Image(); new_image.src='" + downloadUrl + "'; set_image_size(document.getElementById('photo').childNodes[1], new_image); "%>" style="border-style:none;">
 						<table>
 							<tr>
 							<td>

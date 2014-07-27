@@ -359,7 +359,7 @@
 				<img src="#" name="announcement"/>
 			</span>
 			
-			<p id="remove-paragraph" class="mvert025" style="display:none"><a onclick="getElementById('remove-paragraph').setAttribute('style', 'display:none'); getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value',''); getElementById('photo').childNodes[1].setAttribute('src', '');">Remover</a></p>
+			<p id="remove-paragraph" class="mvert025" style="display:none"><a onclick="getElementById('remove-paragraph').setAttribute('style', 'display:none'); getElementById('photoUrl').childNodes[1].childNodes[1].childNodes[1].setAttribute('value',''); getElementById('photo').childNodes[1].setAttribute('src', '');">Remover</a></p>
 		</td>	
 	</tr>
 	
@@ -380,7 +380,7 @@
 				%>
 				
 				<div style="display: inline">
-						<div class="announcement_gallery" onclick="<%= "getElementById('remove-paragraph').setAttribute('style', 'display:block'); getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value','" + downloadUrl + "'); getElementById('photo').childNodes[1].setAttribute('src', '" + downloadUrl + "'); new_image = new Image(); new_image.src='" + downloadUrl + "'; set_image_size(getElementById('photo').childNodes[1], new_image); "%>" style="border-style:none;">
+						<div class="announcement_gallery" onclick="<%= "getElementById('remove-paragraph').setAttribute('style', 'display:block'); getElementById('photoUrl').childNodes[1].childNodes[1].childNodes[1].setAttribute('value','" + downloadUrl + "'); getElementById('photo').childNodes[1].setAttribute('src', '" + downloadUrl + "'); new_image = new Image(); new_image.src='" + downloadUrl + "'; set_image_size(getElementById('photo').childNodes[1], new_image); "%>" style="border-style:none;">
 						<table>
 							<tr>
 							<td>

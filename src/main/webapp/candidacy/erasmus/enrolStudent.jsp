@@ -34,37 +34,33 @@
 	<div class="error0">
 		<bean:message bundle="INTERNATIONAL_RELATIONS_OFFICE"  key="label.enrolstudent.nullcandidacy"/>
 	</div>
-		<bean:define id="process" name="process" />
-		<bean:define id="action" name="action"/>
-		<html:form action="<%= action.toString() %>" method="POST">
-			<html:hidden property="withRules" value="false"/>
-			<html:hidden property="method" value="doEnrol"/>
-			<html:hidden property="processId" value="<%= ((MobilityIndividualApplicationProcess) process).getExternalId().toString() %>"/>
-			<p class="mtop025 mbottom1">		
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value = 'listProcessAllowedActivities'"><bean:message bundle="APPLICATION_RESOURCES"  key="label.back"/></html:submit>			
-			</p>
-		</html:form>
-
+	<bean:define id="process" name="process" />
+	<bean:define id="action" name="action"/>
+	<html:form action="<%= action.toString() %>" method="POST">
+		<html:hidden property="withRules" value="false"/>
+		<html:hidden property="method" value="doEnrol"/>
+		<html:hidden property="processId" value="<%= ((MobilityIndividualApplicationProcess) process).getExternalId().toString() %>"/>
+		<p class="mtop025 mbottom1">		
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value = 'listProcessAllowedActivities'"><bean:message bundle="APPLICATION_RESOURCES"  key="label.back"/></html:submit>			
+		</p>
+	</html:form>
 </logic:equal>
 
 <logic:equal name="restrictEnrollment" value="true">
 
-		<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.academicAdminOffice" /></em>
-		<h2>
-			<bean:write name="bolonhaStudentEnrollmentBean"  property="funcionalityTitle" />
-		</h2>
-	
-		<bean:define id="periodSemester" name="bolonhaStudentEnrollmentBean" property="executionPeriod.semester" />
-		<bean:define id="executionYearName" name="bolonhaStudentEnrollmentBean" property="executionPeriod.executionYear.year" />
-		<bean:define id="process" name="process" />
+	<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.academicAdminOffice" /></em>
+	<h2>
+		<bean:write name="bolonhaStudentEnrollmentBean"  property="funcionalityTitle" />
+	</h2>
+
+	<bean:define id="periodSemester" name="bolonhaStudentEnrollmentBean" property="executionPeriod.semester" />
+	<bean:define id="executionYearName" name="bolonhaStudentEnrollmentBean" property="executionPeriod.executionYear.year" />
+	<bean:define id="process" name="process" />
 	
 	
 	<fr:form action="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=enrolStudent&processId=" + ((MobilityIndividualApplicationProcess) process).getExternalId() %>">
-		
-	
-		<fr:edit id="studentEnrolment"
-				 name="bolonhaStudentEnrollmentBean" schema="xpto">
-				
+			
+		<fr:edit id="studentEnrolment" name="bolonhaStudentEnrollmentBean" schema="candidacy.enrolment.periods">				
 			<fr:destination name="postBack" path="/caseHandlingMobilityIndividualApplicationProcess.do?method=postBack"/>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value=""/>

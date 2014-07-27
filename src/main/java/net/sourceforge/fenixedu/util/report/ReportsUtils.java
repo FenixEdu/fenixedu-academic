@@ -32,12 +32,19 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
 import javax.print.PrintService;
+import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.MediaPrintableArea;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
+import javax.print.attribute.standard.Sides;
 
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRException;
@@ -49,7 +56,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.FontKey;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.export.PdfFont;
 import net.sf.jasperreports.engine.util.JRLoader;
@@ -133,8 +139,7 @@ public class ReportsUtils extends PropertiesManager {
 
         if (jasperPrint != null) {
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            export(new JRPdfExporter(), Collections.singletonList(jasperPrint), baos, (PrintService) null,
-                    (PrintRequestAttributeSet) null);
+            export(new JRPdfExporter(), Collections.singletonList(jasperPrint), baos, (PrintRequestAttributeSet) null);
             return baos.toByteArray();
         }
 
@@ -169,7 +174,7 @@ public class ReportsUtils extends PropertiesManager {
         }
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        export(new JRPdfExporter(), partials, baos, (PrintService) null, (PrintRequestAttributeSet) null);
+        export(new JRPdfExporter(), partials, baos, (PrintRequestAttributeSet) null);
         return baos.toByteArray();
     }
 
@@ -213,8 +218,9 @@ public class ReportsUtils extends PropertiesManager {
             final JasperPrint jasperPrint = createJasperPrint(key, parameters, dataSource);
             final PrintService printService = FenixConfigurationManager.getPrinterManager().getPrintServiceByName(printerName);
             if (jasperPrint != null && printService != null) {
-                export(new JRPrintServiceExporter(), Collections.singletonList(jasperPrint), (ByteArrayOutputStream) null,
-                        printService, createPrintRequestAttributeSet(210, 297));
+
+                final byte[] pdf = exportToPdfFileAsByteArray(key, parameters, dataSource);
+                print(printService, pdf);
 
                 logger.info("Printer Job Sent");
 
@@ -230,12 +236,24 @@ public class ReportsUtils extends PropertiesManager {
 
                 return false;
             }
-        } catch (JRException e) {
+        } catch (JRException | PrintException e) {
             logger.info("Unable to print");
             logger.error(e.getMessage(), e);
             return false;
         }
 
+    }
+
+    private static void print(PrintService printService, byte[] pdf) throws PrintException {
+        final DocPrintJob job = printService.createPrintJob();
+        final Doc doc = new SimpleDoc(pdf, DocFlavor.BYTE_ARRAY.PDF, null);
+
+        final PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+        aset.add(new Copies(1));
+        aset.add(MediaSizeName.ISO_A4);
+        aset.add(Sides.ONE_SIDED);
+
+        job.print(doc, aset);
     }
 
     static private JasperPrint createJasperPrint(final String key, final Map parameters, Collection dataSource)
@@ -274,8 +292,7 @@ public class ReportsUtils extends PropertiesManager {
     }
 
     static private void export(final JRAbstractExporter exporter, final List<JasperPrint> prints,
-            final ByteArrayOutputStream stream, final PrintService printService,
-            final PrintRequestAttributeSet printRequestAttributeSet) throws JRException {
+            final ByteArrayOutputStream stream, final PrintRequestAttributeSet printRequestAttributeSet) throws JRException {
         exporter.setParameter(JRExporterParameter.FONT_MAP, createFontMap());
 
         if (prints.size() == 1) {
@@ -286,10 +303,6 @@ public class ReportsUtils extends PropertiesManager {
 
         if (stream != null) {
             exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
-        }
-
-        if (printService != null) {
-            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE, printService);
         }
 
         if (printRequestAttributeSet != null) {
