@@ -1507,6 +1507,14 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         }
         int groupCounter = 0;
         int maxNumberGroupProposals = 0;
+        if (scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup() != null) {
+            maxNumberGroupProposals = scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup().intValue();
+        } else {
+            for (final FinalDegreeWorkGroup group : groups) {
+                maxNumberGroupProposals =
+                        Math.max(maxNumberGroupProposals, group.getGroupProposalsSortedByPreferenceOrder().size());
+            }
+        }
         for (final FinalDegreeWorkGroup group : groups) {
             final Row row = spreadsheet.getRow(groupCounter++);
             for (int i = group.getGroupStudentsSet().size(); i++ < maxNumStudentsPerGroup; row.setCell("")) {
@@ -1516,8 +1524,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             for (final GroupProposal groupProposal : groupProposals) {
                 row.setCell(groupProposal.getFinalDegreeWorkProposal().getProposalNumber().toString());
             }
-            for (int i = groupProposals.size(); i++ < scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup().intValue(); row
-                    .setCell("")) {
+            for (int i = groupProposals.size(); i++ < maxNumberGroupProposals; row.setCell("")) {
                 ;
             }
             if (group.getProposalAttributed() != null) {
@@ -1527,7 +1534,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             } else {
                 row.setCell("");
             }
-            maxNumberGroupProposals = Math.max(maxNumberGroupProposals, groupProposals.size());
         }
         for (int i = 0; i < maxNumberGroupProposals; spreadsheet.setHeader("Proposta de pref. " + ++i)) {
             ;

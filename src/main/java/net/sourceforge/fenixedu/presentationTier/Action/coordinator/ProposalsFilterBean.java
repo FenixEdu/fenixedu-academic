@@ -168,7 +168,8 @@ public class ProposalsFilterBean implements Serializable {
     public String toString() {
         StringBuffer label = new StringBuffer();
         List<String> filters = new ArrayList<String>();
-        final String string = BundleUtil.getString(Bundle.ENUMERATION, getStatus().getStatus().name());
+        final ProposalStatusType status = getStatus().getStatus();
+        final String string = BundleUtil.getString(Bundle.ENUMERATION, status.getClass().getSimpleName() + "." + status.name());
         filters.add(string);
         if (getAttribution() != AttributionFilter.ALL) {
             filters.add(RenderUtils.getEnumString(getAttribution()));
