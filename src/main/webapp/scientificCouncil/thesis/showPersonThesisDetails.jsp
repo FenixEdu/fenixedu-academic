@@ -99,7 +99,7 @@
 								<bean:write name="registration" property="degreeNameWithDescription"/>
 							</td>
 							<td>
-								<bean:write name="registration" property="registrationAgreement.description"/>
+								<bean:write name="registration" property="registrationProtocol.description.content"/>
 							</td>
 							<td>
 								<bean:write name="registration" property="activeStateType.description"/>

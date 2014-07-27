@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
@@ -141,7 +140,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     final public EventType getEventType() {
-        return RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement()) ? null : EventType.APPROVEMENT_CERTIFICATE_REQUEST;
+        return getRegistration().getRegistrationProtocol().isExempted() ? null : EventType.APPROVEMENT_CERTIFICATE_REQUEST;
     }
 
     @Override

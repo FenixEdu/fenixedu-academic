@@ -74,7 +74,7 @@ import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
 import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Bundle;
 
@@ -502,7 +502,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
             }
             registration = bean.getRegistration();
         } else {
-            registration = new Registration(getPerson(), dcp, getCandidacy(), RegistrationAgreement.NORMAL, null, executionYear);
+            registration = new Registration(getPerson(), dcp, getCandidacy(), RegistrationProtocol.getDefault(), null, executionYear);
         }
 
         return registration;

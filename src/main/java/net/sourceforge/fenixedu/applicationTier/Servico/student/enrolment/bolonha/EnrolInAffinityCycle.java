@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.candidacy.MDCandidacy;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.student.AffinityCyclesManagement;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
@@ -94,7 +94,7 @@ public class EnrolInAffinityCycle {
                 final MDCandidacy candidacy = createMDCandidacy(student, cycleCourseGroupToEnrol, executionSemester);
                 final Registration newRegistration =
                         new Registration(student.getPerson(), cycleCourseGroupToEnrol.getParentDegreeCurricularPlan(), candidacy,
-                                RegistrationAgreement.NORMAL, cycleCourseGroupToEnrol.getCycleType());
+                                RegistrationProtocol.getDefault(), cycleCourseGroupToEnrol.getCycleType());
 
                 newRegistration.setSourceRegistration(studentCurricularPlan.getRegistration());
                 newRegistration.getActiveState().setResponsiblePerson(null);

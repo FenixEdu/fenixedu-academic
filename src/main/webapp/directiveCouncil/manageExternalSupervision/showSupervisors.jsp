@@ -26,7 +26,7 @@
 
 <html:xhtml/>
 <bean:define id="rpId" name="sessionBean" property="registrationProtocol.externalId"/>
-<bean:define id="agreement" name="sessionBean" property="registrationAgreement.name"/>
+<bean:define id="agreement" name="sessionBean" property="registrationProtocol.code"/>
 
 <h2><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="title.externalSupervisorsManagement"/></h2>
 
@@ -34,7 +34,7 @@
 	<bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="link.back"/>
 </html:link></p>
 
-<p class="mtop15 mbottom05"><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="label.showSupervisors.agreement"/><strong><fr:view name="sessionBean" property="registrationAgreement.description"/></strong></p>
+<p class="mtop15 mbottom05"><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="label.showSupervisors.agreement"/><strong><fr:view name="sessionBean" property="registrationProtocol.description.content"/></strong></p>
 
 <logic:notEmpty name="sessionBean" property="supervisors">
 	<fr:view name="sessionBean" property="supervisors">

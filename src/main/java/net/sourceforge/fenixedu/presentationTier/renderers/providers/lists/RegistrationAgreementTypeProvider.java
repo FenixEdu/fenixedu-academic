@@ -18,24 +18,29 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.lists;
 
-import java.util.Arrays;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class RegistrationAgreementTypeProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-
-        return Arrays.asList(RegistrationAgreement.values());
+        final SortedSet<RegistrationProtocol> result = new TreeSet<>(RegistrationProtocol.AGREEMENT_COMPARATOR);
+        result.addAll(Bennu.getInstance().getRegistrationProtocolsSet());
+        return result;
     }
 
     @Override
     public Converter getConverter() {
-        return new EnumConverter();
+        return new DomainObjectKeyConverter();
     }
 
 }

@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 public class ManageExternalSupervisionBean implements Serializable {
 
     private RegistrationProtocol registrationProtocol;
-    private RegistrationAgreement registrationAgreement;
     private Person newSupervisor;
 
     public ManageExternalSupervisionBean() {
@@ -39,7 +38,6 @@ public class ManageExternalSupervisionBean implements Serializable {
     public ManageExternalSupervisionBean(RegistrationProtocol registrationProtocol) {
         this();
         this.registrationProtocol = registrationProtocol;
-        this.registrationAgreement = registrationProtocol.getRegistrationAgreement();
     }
 
     public RegistrationProtocol getRegistrationProtocol() {
@@ -50,12 +48,14 @@ public class ManageExternalSupervisionBean implements Serializable {
         this.registrationProtocol = registrationProtocol;
     }
 
+    @Deprecated
     public RegistrationAgreement getRegistrationAgreement() {
-        return registrationAgreement;
+        return registrationProtocol == null ? null : registrationProtocol.getRegistrationAgreement();
     }
 
+    @Deprecated
     public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-        this.registrationAgreement = registrationAgreement;
+        throw new Error("This is not the method you are looking for. Go back to the dark side from whence you came.");
     }
 
     public Person getNewSupervisor() {

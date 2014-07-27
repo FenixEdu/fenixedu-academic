@@ -26,123 +26,141 @@ import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 
+@Deprecated
 public enum RegistrationAgreement {
 
-    NORMAL(true, true, true, false),
+    NORMAL(true, true, true, false, false, false, true, false),
 
-    AFA(false, false, false, false),
+    ALIEN(true, true, true, false, true, false, true, false),
 
-    MA(false, false, false, false),
+    AFA(false, false, false, false, false, true, true, false),
 
-    NC(false, false, false, false),
+    MA(false, false, false, false, false, true, true, false),
 
-    ERASMUS(false, false, true, false),
+    NC(false, false, false, false, false, false, true, false),
 
-    SOCRATES(false, false, true, false),
+    ERASMUS(false, false, true, false, false, true, false, false),
 
-    SOCRATES_ERASMUS(false, false, true, false),
+    SOCRATES(false, false, true, false, false, false, true, true),
 
-    TEMPUS(false, false, true, false),
+    SOCRATES_ERASMUS(false, false, true, false, false, false, false, true),
 
-    BILATERAL_AGREEMENT(false, false, true, false),
+    TEMPUS(false, false, true, false, false, false, true, false),
 
-    ALFA2(false, false, true, false),
+    BILATERAL_AGREEMENT(false, false, true, false, false, false, false, false),
 
-    UNIFOR(false, false, true, false),
+    ALFA2(false, false, true, false, false, false, true, false),
 
-    TIME(false, false, true, false),
+    UNIFOR(false, false, true, false, false, false, true, false),
 
-    TOTAL(false, true, true, false),
+    TIME(false, false, true, false, false, true, true, false),
 
-    OTHER_EXTERNAL(false, false, true, false),
+    TOTAL(false, true, true, false, false, false, true, false),
 
-    MITP(false, true, true, false),
+    OTHER_EXTERNAL(false, false, true, false, false, false, true, false),
 
-    SMILE(false, false, true, false),
+    MITP(false, true, true, false, false, false, true, false),
 
-    ANGOLA_TELECOM(false, true, true, false),
+    SMILE(false, false, true, false, false, false, false, false),
 
-    ERASMUS_MUNDUS(false, false, true, false),
+    ANGOLA_TELECOM(false, true, true, false, false, false, true, false),
 
-    ALMEIDA_GARRETT(false, false, true, false),
+    ERASMUS_MUNDUS(false, false, true, false, false, false, true, true),
 
-    INOV_IST(false, false, true, false),
+    ALMEIDA_GARRETT(false, false, true, false, false, false, false, true),
 
-    TECMIC(false, false, true, false),
+    INOV_IST(false, false, true, false, false, false, false, false),
 
-    IST_UCP(false, false, true, false),
+    TECMIC(false, false, true, false, false, false, false, false),
 
-    IST_USP(false, false, true, false),
+    IST_UCP(false, false, true, false, false, false, true, false),
 
-    CLUSTER(false, false, true, false),
+    IST_USP(false, false, true, false, false, false, false, false),
 
-    EUSYSBIO(false, false, true, false),
+    CLUSTER(false, false, true, false, false, false, true, false),
 
-    IST_ISA(false, false, true, false),
+    EUSYSBIO(false, false, true, false, false, false, true, false),
 
-    IST_PHARMACY_FACULTY(false, false, true, false),
+    IST_ISA(false, false, true, false, false, false, true, false),
 
-    IBERO_SANTANDER(false, false, true, false),
+    IST_PHARMACY_FACULTY(false, false, true, false, false, false, true, false),
 
-    BRAZIL_SANTANDER(false, false, true, false),
+    IBERO_SANTANDER(false, false, true, false, false, false, false, false),
 
-    CHINA_AGREEMENTS(false, false, true, false),
+    BRAZIL_SANTANDER(false, false, true, false, false, false, true, false),
 
-    RUSSIA_AGREEMENTS(false, false, true, false),
+    CHINA_AGREEMENTS(false, false, true, false, false, false, true, false),
 
-    AFRICA_AGREEMENTS(false, false, true, false),
+    RUSSIA_AGREEMENTS(false, false, true, false, false, false, false, false),
 
-    BRAZIL_AGREEMENTS(false, false, true, false),
+    AFRICA_AGREEMENTS(false, false, true, false, false, false, true, false),
 
-    INDIA_AGREEMENTS(false, false, true, false),
+    BRAZIL_AGREEMENTS(false, false, true, false, false, false, false, false),
 
-    JAPAN_AGREEMENTS(false, false, true, false),
+    INDIA_AGREEMENTS(false, false, true, false, false, false, true, false),
 
-    THAILAND_AGREEMENTS(false, false, true, false),
+    JAPAN_AGREEMENTS(false, false, true, false, false, false, true, false),
 
-    SCIENCE_WITHOUT_BORDERS(false, false, true, false),
+    THAILAND_AGREEMENTS(false, false, true, false, false, false, true, false),
 
-    USA_AGREEMENTS(false, true, true, false),
+    SCIENCE_WITHOUT_BORDERS(false, false, true, false, false, false, false, false),
 
-    KIC_INNOENERGY(false, false, true, true),
+    USA_AGREEMENTS(false, true, true, false, false, false, true, false),
 
-    KIC_RENE(false, false, true, true),
+    KIC_INNOENERGY(false, false, true, true, false, false, true, false),
 
-    KIC_SELECT(false, false, true, true),
+    KIC_RENE(false, false, true, true, false, false, true, false),
 
-    KIC_ENTECH(false, false, true, true),
+    KIC_SELECT(false, false, true, true, false, false, true, false),
 
-    KIC_CLEAN_COAL(false, false, true, true),
+    KIC_ENTECH(false, false, true, true, false, false, true, false),
 
-    DOUBLE_DEGREE_CLUSTER(false, false, true, false),
+    KIC_CLEAN_COAL(false, false, true, true, false, false, true, false),
 
-    DOUBLE_DEGREE_BRAZIL(false, false, true, false),
+    DOUBLE_DEGREE_CLUSTER(false, false, true, false, false, false, true, false),
 
-    DOUBLE_DEGREE_FRANCE(false, false, true, false),
+    DOUBLE_DEGREE_BRAZIL(false, false, true, false, false, false, true, false),
 
-    DOUBLE_DEGREE_ITALY(false, false, true, false),
+    DOUBLE_DEGREE_FRANCE(false, false, true, false, false, false, true, false),
 
-    DOUBLE_DEGREE_CHINA(false, false, true, false),
+    DOUBLE_DEGREE_ITALY(false, false, true, false, false, false, true, false),
 
-    DOUBLE_DEGREE_NETHERLANDS(false, false, true, false),
+    DOUBLE_DEGREE_CHINA(false, false, true, false, false, false, true, false),
 
-    IS_LINK(false, false, true, false);
+    DOUBLE_DEGREE_NETHERLANDS(false, false, true, false, false, false, true, false),
 
-    private boolean enrolmentByStudentAllowed;
+    IS_LINK(false, false, true, false, false, false, true, false);
 
-    private boolean payGratuity;
+    private final boolean enrolmentByStudentAllowed;
 
-    private boolean allowsIDCard;
+    private final boolean payGratuity;
 
-    private boolean onlyAllowedDegreeEnrolment;
+    private final boolean allowsIDCard;
+
+    private final boolean onlyAllowedDegreeEnrolment;
+
+    private final boolean isAlien;
+
+    private final boolean allowDissertationCandidacyWithoutChecks;
+
+    private final boolean isForOfficialMobilityReporting;
+
+    private final boolean attemptAlmaMatterFromPrecedent;
 
     private RegistrationAgreement(final boolean enrolmentByStudentAllowed, final boolean payGratuity, final boolean allowsIDCard,
-            final boolean onlyAllowedDegreeEnrolment) {
+            final boolean onlyAllowedDegreeEnrolment, final boolean isAlien,
+            final boolean allowDissertationCandidacyWithoutChecks, final boolean isForOfficialMobilityReporting,
+            final boolean attemptAlmaMatterFromPrecedent) {
         this.enrolmentByStudentAllowed = enrolmentByStudentAllowed;
         this.payGratuity = payGratuity;
         this.allowsIDCard = allowsIDCard;
         this.onlyAllowedDegreeEnrolment = onlyAllowedDegreeEnrolment;
+        this.isAlien = isAlien;
+        this.allowDissertationCandidacyWithoutChecks = allowDissertationCandidacyWithoutChecks;
+        this.isForOfficialMobilityReporting = isForOfficialMobilityReporting;
+        this.attemptAlmaMatterFromPrecedent = attemptAlmaMatterFromPrecedent;
     }
 
     public boolean isNormal() {
@@ -171,6 +189,22 @@ public enum RegistrationAgreement {
 
     public boolean isOnlyAllowedDegreeEnrolment() {
         return onlyAllowedDegreeEnrolment;
+    }
+
+    public boolean isAlien() {
+        return isAlien;
+    }
+
+    public boolean allowDissertationCandidacyWithoutChecks() {
+        return allowDissertationCandidacyWithoutChecks;
+    }
+
+    public boolean isForOfficialMobilityReporting() {
+        return isForOfficialMobilityReporting;
+    }
+
+    public boolean attemptAlmaMatterFromPrecedent() {
+        return attemptAlmaMatterFromPrecedent;
     }
 
     public static RegistrationAgreement getByLegacyCode(int code) {
@@ -203,6 +237,10 @@ public enum RegistrationAgreement {
 
     public String getQualifiedName() {
         return getClass().getSimpleName() + "." + name();
+    }
+
+    public LocalizedString getDescriptionLocalized() {
+        return BundleUtil.getLocalizedString(Bundle.ENUMERATION, getQualifiedName());
     }
 
     public String getDescription() {

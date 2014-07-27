@@ -299,7 +299,7 @@ public class StudentInquiryBean implements Serializable {
 
         inquiryCourseAnswer.setNumberOfEnrolments(InquiryCourseAnswer.getNumberOfEnrolments(getInquiryRegistry()));
         inquiryCourseAnswer.setResponseDateTime(endTime);
-        inquiryCourseAnswer.setStudentType(getInquiryRegistry().getRegistration().getRegistrationAgreement());
+        inquiryCourseAnswer.setRegistrationProtocol(getInquiryRegistry().getRegistration().getRegistrationProtocol());
         inquiryCourseAnswer.setStudyDaysSpentInExamsSeason(getInquiryRegistry().getStudyDaysSpentInExamsSeason());
         for (Shift enrolledShift : getInquiryRegistry().getRegistration().getShiftsFor(getInquiryRegistry().getExecutionCourse())) {
             inquiryCourseAnswer.addEnrolledShifts(enrolledShift);

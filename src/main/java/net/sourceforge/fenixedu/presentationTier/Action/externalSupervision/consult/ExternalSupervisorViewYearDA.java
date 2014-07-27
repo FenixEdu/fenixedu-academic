@@ -127,7 +127,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction {
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.append(BundleUtil.getString(Bundle.APPLICATION, "label.students"));
         strBuilder.append("_");
-        strBuilder.append(bean.getProtocol().getRegistrationAgreement().getName());
+        strBuilder.append(bean.getProtocol().getCode());
         strBuilder.append("_");
         strBuilder.append(bean.getExecutionYear().getName());
         return strBuilder.toString();

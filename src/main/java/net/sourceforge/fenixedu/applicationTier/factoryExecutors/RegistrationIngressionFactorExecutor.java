@@ -40,7 +40,7 @@ public class RegistrationIngressionFactorExecutor {
             setRegistration(registration);
 
             if (hasRegistration()) {
-                setRegistrationAgreement(getRegistration().getRegistrationAgreement());
+                setRegistrationProtocol(getRegistration().getRegistrationProtocol());
                 setAgreementInformation(getRegistration().getAgreementInformation());
                 setIngression(getRegistration().getIngression());
                 setEntryPhase(getRegistration().getEntryPhase());
@@ -49,7 +49,7 @@ public class RegistrationIngressionFactorExecutor {
 
         @Override
         public Object execute() {
-            getRegistration().setRegistrationAgreement(getRegistrationAgreement());
+            getRegistration().setRegistrationProtocol(getRegistrationProtocol());
             getRegistration().setAgreementInformation(getAgreementInformation());
             getRegistration().setIngression(getIngression());
             getRegistration().setEntryPhase(getEntryPhase());

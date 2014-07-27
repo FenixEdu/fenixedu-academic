@@ -276,7 +276,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
         }
 
-        if (!getCandidacy().getMobilityProgram().getRegistrationAgreement().isOnlyAllowedDegreeEnrolment()
+        if (!getCandidacy().getMobilityProgram().getRegistrationProtocol().isOnlyAllowedDegreeEnrolment()
                 && getActiveFileForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) == null) {
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
         }

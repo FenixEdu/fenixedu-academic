@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFir
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty;
 import net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlanForAliens;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlanForFirstTimeInstitutionStudents;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityForStudentsInSecondCurricularYear;
@@ -53,6 +54,11 @@ public class GratuityPaymentPlanManager {
 
     private static PaymentPlan makePaymentPlan(final PaymentPlanBean paymentPlanBean,
             final DegreeCurricularPlan degreeCurricularPlan) {
+
+        if (paymentPlanBean.isForAlien()) {
+            return new FullGratuityPaymentPlanForAliens(paymentPlanBean.getExecutionYear(),
+                    degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());            
+        }
 
         if (paymentPlanBean.isForPartialRegime()) {
 

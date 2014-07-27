@@ -51,7 +51,7 @@
 </div>
 
 <h1><bean:write name="application.name"/></h1>
-<bean:define id="mobilityProgram" name="candidacyDocumentUploadBean" property="individualCandidacyProcess.candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description"/>
+<bean:define id="mobilityProgram" name="candidacyDocumentUploadBean" property="individualCandidacyProcess.candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationProtocol.description.content"/>
 <h1><strong><bean:write name="mobilityProgram"/></strong></h1>
 
 

@@ -126,8 +126,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
         request.setAttribute("executionDegreeBean", executionDegreeBean);
         request.setAttribute("ingressionInformationBean", ingressionInformationBean);
 
-        if (ingressionInformationBean.getRegistrationAgreement() != null
-                && !ingressionInformationBean.getRegistrationAgreement().isNormal()) {
+        if (ingressionInformationBean.getRegistrationProtocol() != null
+                && !ingressionInformationBean.getRegistrationProtocol().isEnrolmentByStudentAllowed()) {
             request.setAttribute("choosePersonBean", new ChoosePersonBean());
         }
 

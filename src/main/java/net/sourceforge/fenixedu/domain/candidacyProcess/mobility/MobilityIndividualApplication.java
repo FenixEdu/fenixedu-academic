@@ -239,7 +239,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
             final CycleType cycleType, final Ingression ingression) {
 
         final Registration registration =
-                new Registration(person, degreeCurricularPlan, getMobilityProgram().getRegistrationAgreement(), cycleType,
+                new Registration(person, degreeCurricularPlan, getMobilityProgram().getRegistrationProtocol(), cycleType,
                         ((ExecutionYear) getCandidacyExecutionInterval()));
 
         // Standalone group will be necessary for minor subjects

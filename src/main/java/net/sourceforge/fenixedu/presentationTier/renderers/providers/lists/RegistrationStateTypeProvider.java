@@ -30,15 +30,6 @@ public class RegistrationStateTypeProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        // List<RegistrationAgreement> types = new
-        // ArrayList<RegistrationAgreement>();
-        //
-        // for (RegistrationAgreement typeToDisplay :
-        // RegistrationAgreement.values()) {
-        // types.add(typeToDisplay);
-        // }
-        //
-        // return types;
         return Arrays.asList(RegistrationStateType.values());
     }
 

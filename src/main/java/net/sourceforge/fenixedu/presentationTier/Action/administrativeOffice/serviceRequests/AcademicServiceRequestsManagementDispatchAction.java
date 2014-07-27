@@ -48,7 +48,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
@@ -410,8 +409,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
             academicServiceRequest = specialSeasonRequest;
         }
 
-        if (RegistrationAgreement.MOBILITY_AGREEMENTS.contains(academicServiceRequest.getRegistration()
-                .getRegistrationAgreement())) {
+        if (academicServiceRequest.getRegistration().getRegistrationProtocol().isMobilityAgreement()) {
             sendEmail = false;
         }
 

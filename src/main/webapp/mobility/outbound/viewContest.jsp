@@ -46,7 +46,7 @@
 %>
 <h2 class="separator2">
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.contest"/>:
-	<%= mobilityAgreement.getMobilityProgram().getRegistrationAgreement().getDescription() %>
+	<%= mobilityAgreement.getMobilityProgram().getRegistrationProtocol().getDescription().getContent() %>
 </h2>
 
 <h3>

@@ -43,7 +43,7 @@
 				<fr:property name="destination" value="postBack"/>
 			</fr:slot>
 			<fr:slot name="mobilityProgram" layout="menu-select-postback" key="label.mobility.program" >
-				<fr:property name="format" value="${registrationAgreement.description}" />
+				<fr:property name="format" value="${registrationProtocol.description.content}" />
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$MobilityApplicationsMobilityProgramsProvider" />
 				<fr:property name="destination" value="postBack"/>
 			</fr:slot>

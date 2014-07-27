@@ -54,7 +54,7 @@
 </fr:hasMessages>
 
 <bean:define id="processId" name="process" property="externalId" />
-<bean:define id="onlyAllowedDegreeEnrolment" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationAgreement.onlyAllowedDegreeEnrolment"/>
+<bean:define id="onlyAllowedDegreeEnrolment" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationProtocol.onlyAllowedDegreeEnrolment"/>
 
 <fr:form action='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&amp;processId=%s", processId.toString()) %>'>
 

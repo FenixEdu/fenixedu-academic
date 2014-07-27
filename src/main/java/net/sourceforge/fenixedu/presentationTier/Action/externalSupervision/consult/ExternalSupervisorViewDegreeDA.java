@@ -148,7 +148,7 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction {
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.append(BundleUtil.getString(Bundle.APPLICATION, "label.students.lowercase"));
         strBuilder.append("_");
-        strBuilder.append(bean.getProtocol().getRegistrationAgreement().getName());
+        strBuilder.append(bean.getProtocol().getCode());
         strBuilder.append("_");
         strBuilder.append(bean.getExecutionDegree().getDegree().getSigla());
         strBuilder.append("_");

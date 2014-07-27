@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
@@ -76,13 +76,9 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 
     @Override
     public boolean isFreeProcessed() {
-        if (getDocumentRequestType() == DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE
-                && (RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement()) || RegistrationAgreement.EXEMPTED_AGREEMENTS
-                        .contains(getRegistration().getRegistrationAgreement()))) {
-            return true;
-        } else {
-            return false;
-        }
+        return getDocumentRequestType() == DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE
+                && (getRegistration().getRegistrationProtocol().isMobilityAgreement() || getRegistration()
+                        .getRegistrationProtocol().isExempted());
     }
 
     @Override
@@ -148,8 +144,8 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 
     @Override
     final public EventType getEventType() {
-        return RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())
-                || RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement()) ? null : EventType.APPROVEMENT_CERTIFICATE_REQUEST;
+        final RegistrationProtocol protocol = getRegistration().getRegistrationProtocol();
+        return protocol.isExempted() || protocol.isMobilityAgreement() ? null : EventType.APPROVEMENT_CERTIFICATE_REQUEST;
     }
 
     @Override
@@ -308,7 +304,7 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
     }
 
     private boolean isMobilityStudent() {
-        return RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement());
+        return getRegistration().getRegistrationProtocol().isMobilityAgreement();
     }
 
 }

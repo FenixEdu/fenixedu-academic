@@ -70,8 +70,8 @@ public class RegistrationReportFile extends RegistrationReportFile_Base {
                             final Registration firstRegistration = findFirstRegistration(registration.getStudent());
                             reportIngression(row, firstRegistration);
 
-                            if (registration.getRegistrationAgreement() != null) {
-                                row.setCell(registration.getRegistrationAgreement().getName());
+                            if (registration.getRegistrationProtocol() != null) {
+                                row.setCell(registration.getRegistrationProtocol().getCode());
                             } else {
                                 row.setCell("");
                             }

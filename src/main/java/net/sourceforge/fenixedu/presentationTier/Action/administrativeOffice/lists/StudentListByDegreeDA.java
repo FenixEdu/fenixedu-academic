@@ -53,7 +53,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -172,8 +172,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             final Set<Registration> registrations, final ExecutionYear executionYear) {
         final List<RegistrationWithStateForExecutionYearBean> result = new ArrayList<RegistrationWithStateForExecutionYearBean>();
         for (final Registration registration : registrations) {
-            if (searchBean.hasAnyRegistrationAgreements()
-                    && !searchBean.getRegistrationAgreements().contains(registration.getRegistrationAgreement())) {
+            if (searchBean.hasAnyRegistrationProtocol()
+                    && !searchBean.getRegistrationProtocols().contains(registration.getRegistrationProtocol())) {
                 continue;
             }
 
@@ -334,10 +334,10 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         }
 
         spreadsheet.newHeaderRow();
-        if (searchBean.hasAnyRegistrationAgreements()) {
+        if (searchBean.hasAnyRegistrationProtocol()) {
             spreadsheet.addHeader(getResourceMessage("label.registrationAgreement") + ":");
-            for (RegistrationAgreement agreement : searchBean.getRegistrationAgreements()) {
-                spreadsheet.addHeader(agreement.getDescription());
+            for (RegistrationProtocol protocol : searchBean.getRegistrationProtocols()) {
+                spreadsheet.addHeader(protocol.getDescription().getContent());
             }
         }
         spreadsheet.newHeaderRow();
@@ -381,7 +381,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
             spreadsheet.addCell(lastRegistrationState.getStateType().getDescription());
             spreadsheet.addCell(lastRegistrationState.getStateDate().toString("yyyy-MM-dd"));
-            spreadsheet.addCell(registration.getRegistrationAgreement().getName());
+            spreadsheet.addCell(registration.getRegistrationProtocol().getCode());
 
             if (extendedInfo) {
                 spreadsheet.addCell(getAlmaMater(person, registration));
@@ -451,10 +451,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             }
         }
 
-        if (registration.getRegistrationAgreement() == RegistrationAgreement.ALMEIDA_GARRETT
-                || registration.getRegistrationAgreement() == RegistrationAgreement.ERASMUS_MUNDUS
-                || registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES
-                || registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES_ERASMUS) {
+        if (registration.getRegistrationProtocol().attemptAlmaMatterFromPrecedent()) {
 
             if (registration.getStudentCandidacy() == null) {
                 return EMPTY;
@@ -486,10 +483,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             }
         }
 
-        if (registration.getRegistrationAgreement() == RegistrationAgreement.ALMEIDA_GARRETT
-                || registration.getRegistrationAgreement() == RegistrationAgreement.ERASMUS_MUNDUS
-                || registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES
-                || registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES_ERASMUS) {
+        if (registration.getRegistrationProtocol().attemptAlmaMatterFromPrecedent()) {
 
             if (registration.getStudentCandidacy() == null) {
                 return EMPTY;

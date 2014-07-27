@@ -18,9 +18,7 @@
  */
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -28,13 +26,9 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.util.Season;
 
 public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base {
-
-    static public final List<RegistrationAgreement> FREE_PAYMENT_AGREEMENTS = Arrays.asList(RegistrationAgreement.AFA,
-            RegistrationAgreement.MA);
 
     protected ExamDateCertificateRequest() {
         super();
@@ -127,10 +121,7 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 
     @Override
     public boolean isFree() {
-        if (FREE_PAYMENT_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) {
-            return true;
-        }
-        return super.isFree();
+        return getRegistration().getRegistrationProtocol().isMilitaryAgreement() || super.isFree();
     }
 
 }

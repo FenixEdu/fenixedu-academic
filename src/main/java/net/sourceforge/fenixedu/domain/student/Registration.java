@@ -177,16 +177,10 @@ public class Registration extends Registration_Base {
         COMPARATOR_BY_NUMBER_AND_ID.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    private static final List<RegistrationAgreement> RAIDES_MOBILITY = Arrays.asList(RegistrationAgreement.ALMEIDA_GARRETT,
-            RegistrationAgreement.BILATERAL_AGREEMENT, RegistrationAgreement.ERASMUS, RegistrationAgreement.SOCRATES_ERASMUS,
-            RegistrationAgreement.SMILE, RegistrationAgreement.IST_USP, RegistrationAgreement.BRAZIL_AGREEMENTS,
-            RegistrationAgreement.SCIENCE_WITHOUT_BORDERS, RegistrationAgreement.RUSSIA_AGREEMENTS,
-            RegistrationAgreement.IBERO_SANTANDER, RegistrationAgreement.TECMIC, RegistrationAgreement.INOV_IST);
-
     private Registration() {
         super();
         setRootDomainObject(Bennu.getInstance());
-        setRegistrationAgreement(RegistrationAgreement.NORMAL);
+        setRegistrationProtocol(RegistrationProtocol.getDefault());
     }
 
     private Registration(final Person person, final DateTime start, final Integer registrationNumber, final Degree degree) {
@@ -199,62 +193,90 @@ public class Registration extends Registration_Base {
     }
 
     public Registration(final Person person, final StudentCandidacy studentCandidacy) {
-        this(person, null, RegistrationAgreement.NORMAL, null, studentCandidacy);
+        this(person, null, RegistrationProtocol.getDefault(), null, studentCandidacy);
     }
 
     public Registration(final Person person, final Integer studentNumber, final Degree degree) {
-        this(person, studentNumber, RegistrationAgreement.NORMAL, null, degree);
+        this(person, studentNumber, RegistrationProtocol.getDefault(), null, degree);
     }
 
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan) {
-        this(person, degreeCurricularPlan, RegistrationAgreement.NORMAL, null, null);
+        this(person, degreeCurricularPlan, RegistrationProtocol.getDefault(), null, null);
     }
 
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType) {
-        this(person, degreeCurricularPlan, RegistrationAgreement.NORMAL, cycleType, null);
+        this(person, degreeCurricularPlan, RegistrationProtocol.getDefault(), cycleType, null);
+    }
+
+    @Deprecated
+    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+            final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear) {
+        this(person, degreeCurricularPlan, RegistrationProtocol.serveRegistrationProtocol(agreement), cycleType, executionYear);
     }
 
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear) {
-
-        this(person, null, agreement, executionYear, degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null);
+            final RegistrationProtocol protocol, final CycleType cycleType, final ExecutionYear executionYear) {
+        this(person, null, protocol, executionYear, degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null);
         createStudentCurricularPlan(person, degreeCurricularPlan, cycleType, executionYear);
+    }
+
+    @Deprecated
+    public static Registration createRegistrationWithCustomStudentNumber(final Person person,
+            final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy studentCandidacy,
+            final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear,
+            Integer studentNumber) {
+        return createRegistrationWithCustomStudentNumber(person, degreeCurricularPlan, studentCandidacy,
+                RegistrationProtocol.serveRegistrationProtocol(agreement), cycleType, executionYear, studentNumber);
     }
 
     public static Registration createRegistrationWithCustomStudentNumber(final Person person,
             final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy studentCandidacy,
-            final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear,
+            final RegistrationProtocol protocol, final CycleType cycleType, final ExecutionYear executionYear,
             Integer studentNumber) {
         final Degree degree = degreeCurricularPlan == null ? null : degreeCurricularPlan.getDegree();
         Registration registration = new Registration(person, calculateStartDate(executionYear), studentNumber, degree);
         registration.setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
         registration.setRequestedChangeDegree(false);
         registration.setRequestedChangeBranch(false);
-        registration.setRegistrationAgreement(agreement == null ? RegistrationAgreement.NORMAL : agreement);
+        registration.setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
         registration.createStudentCurricularPlan(person, degreeCurricularPlan, cycleType, executionYear);
         registration.setStudentCandidacyInformation(studentCandidacy);
 
         return registration;
     }
 
+    @Deprecated
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy candidacy,
             final RegistrationAgreement agreement, final CycleType cycleType) {
-        this(person, degreeCurricularPlan, candidacy, agreement, cycleType, null);
+        this(person, degreeCurricularPlan, candidacy, RegistrationProtocol.serveRegistrationProtocol(agreement), cycleType);
     }
 
+    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy candidacy,
+            final RegistrationProtocol protocol, final CycleType cycleType) {
+        this(person, degreeCurricularPlan, candidacy, protocol, cycleType, null);
+    }
+
+    @Deprecated
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
             final StudentCandidacy studentCandidacy, final RegistrationAgreement agreement, final CycleType cycleType,
             final ExecutionYear executionYear) {
+        this(person, degreeCurricularPlan, studentCandidacy, RegistrationProtocol.serveRegistrationProtocol(agreement),
+                cycleType, executionYear);
+    }
 
-        this(person, degreeCurricularPlan, agreement, cycleType, executionYear);
+    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+            final StudentCandidacy studentCandidacy, final RegistrationProtocol protocol, final CycleType cycleType,
+            final ExecutionYear executionYear) {
+
+        this(person, degreeCurricularPlan, protocol, cycleType, executionYear);
         setStudentCandidacyInformation(studentCandidacy);
         EventGenerator.generateNecessaryEvents(getLastStudentCurricularPlan(), person, executionYear);
     }
 
-    private Registration(final Person person, final Integer registrationNumber, final RegistrationAgreement agreement,
+    private Registration(final Person person, final Integer registrationNumber, final RegistrationProtocol protocol,
             final ExecutionYear executionYear, final StudentCandidacy studentCandidacy) {
 
-        this(person, registrationNumber, agreement, executionYear, getDegreeFromCandidacy(studentCandidacy));
+        this(person, registrationNumber, protocol, executionYear, getDegreeFromCandidacy(studentCandidacy));
         setStudentCandidacyInformation(studentCandidacy);
     }
 
@@ -262,7 +284,7 @@ public class Registration extends Registration_Base {
         return studentCandidacy == null ? null : studentCandidacy.getExecutionDegree().getDegree();
     }
 
-    private Registration(final Person person, final Integer registrationNumber, final RegistrationAgreement agreement,
+    private Registration(final Person person, final Integer registrationNumber, final RegistrationProtocol protocol,
             final ExecutionYear executionYear, final Degree degree) {
 
         this(person, calculateStartDate(executionYear), registrationNumber, degree);
@@ -270,7 +292,7 @@ public class Registration extends Registration_Base {
         setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
         setRequestedChangeDegree(false);
         setRequestedChangeBranch(false);
-        setRegistrationAgreement(agreement == null ? RegistrationAgreement.NORMAL : agreement);
+        setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
     }
 
     private void setStudentCandidacyInformation(final StudentCandidacy studentCandidacy) {
@@ -1396,7 +1418,7 @@ public class Registration extends Registration_Base {
         for (RegistrationNumber registrationNumber : Bennu.getInstance().getRegistrationNumbersSet()) {
             if (registrationNumber.getNumber().intValue() == number.intValue()
                     && registrationNumber.getRegistration().getDegreeType() == degreeType
-                    && registrationNumber.getRegistration().getRegistrationAgreement().isNormal() == normalAgreement) {
+                    && (registrationNumber.getRegistration().getRegistrationProtocol() == RegistrationProtocol.getDefault()) == normalAgreement) {
                 registrations.add(registrationNumber.getRegistration());
             }
         }
@@ -3010,7 +3032,7 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasToPayGratuityOrInsurance() {
-        return getInterruptedStudies() ? false : getRegistrationAgreement().isToPayGratuity();
+        return getInterruptedStudies() ? false : getRegistrationProtocol().isToPayGratuity();
     }
 
     final public DiplomaRequest getDiplomaRequest(final CycleType cycleType) {
@@ -3286,15 +3308,22 @@ public class Registration extends Registration_Base {
         return null;
     }
 
-    final public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-        if (registrationAgreement == null) {
-            registrationAgreement = RegistrationAgreement.NORMAL;
+    @Override
+    public void setRegistrationProtocol(RegistrationProtocol registrationProtocol) {
+        if (registrationProtocol == null) {
+            registrationProtocol = RegistrationProtocol.getDefault();
         }
-        super.setRegistrationProtocol(RegistrationProtocol.serveRegistrationProtocol(registrationAgreement));
-
-        if (registrationAgreement != null && !registrationAgreement.isNormal() && getExternalRegistrationData() == null) {
+        super.setRegistrationProtocol(registrationProtocol);
+        if (registrationProtocol != null && registrationProtocol.isEnrolmentByStudentAllowed() && !registrationProtocol.isAlien()
+                && getExternalRegistrationData() == null) {
             new ExternalRegistrationData(this);
         }
+
+    }
+
+    @Deprecated
+    final public void setRegistrationAgreement(RegistrationAgreement agreement) {
+        setRegistrationProtocol(agreement == null ? null : RegistrationProtocol.serveRegistrationProtocol(agreement));
     }
 
     final public boolean hasGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
@@ -3454,6 +3483,7 @@ public class Registration extends Registration_Base {
         return result;
     }
 
+    @Deprecated
     public RegistrationAgreement getRegistrationAgreement() {
         return super.getRegistrationProtocol().getRegistrationAgreement();
     }
@@ -3501,7 +3531,7 @@ public class Registration extends Registration_Base {
                 RegistrationStateCreator.createState(registration, person, when, RegistrationStateType.REGISTERED);
             }
 
-            registration.setRegistrationAgreement(getRegistrationAgreement());
+            registration.setRegistrationProtocol(getRegistrationProtocol());
             registration.setSourceRegistration(this);
 
             changeAttends(registration, when);
@@ -3532,7 +3562,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isEnrolmentByStudentAllowed() {
-        return isActive() && getRegistrationAgreement().isEnrolmentByStudentAllowed()
+        return isActive() && getRegistrationProtocol().isEnrolmentByStudentAllowed()
                 && getDegreeTypesToEnrolByStudent().contains(getDegreeType());
     }
 
@@ -3973,7 +4003,7 @@ public class Registration extends Registration_Base {
 
     public boolean isValidForRAIDES() {
         return FenixConfigurationManager.getConfiguration().getRaidesRequestInfo() && isActive() && isBolonha()
-                && !getDegreeType().isEmpty() && !RAIDES_MOBILITY.contains(getRegistrationAgreement());
+                && !getDegreeType().isEmpty() && getRegistrationProtocol().isForOfficialMobilityReporting();
     }
 
 }

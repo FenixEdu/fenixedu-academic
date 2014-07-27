@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -170,11 +169,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork {
             throw new NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException();
         }
 
-        if (registration.getRegistrationAgreement() != RegistrationAgreement.ERASMUS
-                && registration.getRegistrationAgreement() != RegistrationAgreement.AFA
-                && registration.getRegistrationAgreement() != RegistrationAgreement.MA
-                && registration.getRegistrationAgreement() != RegistrationAgreement.TIME) {
-
+        if (!registration.getRegistrationProtocol().allowDissertationCandidacyWithoutChecks()) {
             CycleCurriculumGroup firstCycleCurriculumGroup = studentCurricularPlan.getFirstCycle();
             if (firstCycleCurriculumGroup != null) {
                 final Double completedCreditsFirstCycle = firstCycleCurriculumGroup.getAprovedEctsCredits();

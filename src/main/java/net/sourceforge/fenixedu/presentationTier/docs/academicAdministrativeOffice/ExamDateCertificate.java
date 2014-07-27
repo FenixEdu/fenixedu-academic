@@ -142,10 +142,10 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
 
     private String getStudentNumber() {
         final Registration registration = getDocumentRequest().getRegistration();
-        if (ExamDateCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+        if (registration.getRegistrationProtocol().isMilitaryAgreement()) {
             final String agreementInformation = registration.getAgreementInformation();
             if (!StringUtils.isEmpty(agreementInformation)) {
-                return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
+                return registration.getRegistrationProtocol().getCode() + SINGLE_SPACE + agreementInformation;
             }
         }
         return registration.getStudent().getNumber().toString();

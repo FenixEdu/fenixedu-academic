@@ -118,7 +118,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     }
 
     public boolean isRegistrationEnrolmentByStudentAllowed(final Registration registration) {
-        return registration.getRegistrationAgreement().isEnrolmentByStudentAllowed()
+        return registration.getRegistrationProtocol().isEnrolmentByStudentAllowed()
                 && registration.getDegreeTypesToEnrolByStudent().contains(registration.getDegreeType());
     }
 

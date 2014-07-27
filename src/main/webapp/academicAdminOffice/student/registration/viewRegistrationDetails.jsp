@@ -146,7 +146,7 @@
 						</html:link>
 					</span>
 				</logic:equal>
-				<logic:equal name="registration" property="registrationAgreement.normal" value="false">
+				<logic:equal name="registration" property="registrationProtocol.enrolmentByStudentAllowed" value="false">
 					<span class="dblock pbottom03">	
 						<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 						<html:link page="/manageExternalRegistrationData.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="externalId">

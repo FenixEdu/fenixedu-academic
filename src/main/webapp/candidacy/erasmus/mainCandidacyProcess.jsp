@@ -290,7 +290,7 @@
 		<fr:view name="childProcesses">
 			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="candidacyDate" key="label.candidacy.date" />
-				<fr:slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
+				<fr:slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationProtocol.description.content" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
 				<fr:slot name="personalDetails.name" key="label.name" />			
 				<fr:slot name="candidacy.mobilityStudentData.selectedOpening.degree.sigla" key="label.Degree" />
 				<fr:slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>

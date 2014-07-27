@@ -77,8 +77,8 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
     }
 
     private int comparePrograms(final OutboundMobilityCandidacyContest o) {
-        return getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription()
-                .compareTo(o.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription());
+        return getMobilityAgreement().getMobilityProgram().getRegistrationProtocol().getDescription()
+                .compareTo(o.getMobilityAgreement().getMobilityProgram().getRegistrationProtocol().getDescription());
     }
 
     private int compareUniversities(final OutboundMobilityCandidacyContest o) {

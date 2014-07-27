@@ -67,7 +67,7 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
@@ -1981,8 +1981,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private boolean isToPayImprovementOfApprovedEnrolments() {
-        final RegistrationAgreement registrationAgreement = getRegistration().getRegistrationAgreement();
-        return registrationAgreement != RegistrationAgreement.MA && registrationAgreement != RegistrationAgreement.AFA;
+        final RegistrationProtocol protocol = getRegistration().getRegistrationProtocol();
+        return protocol.isMilitaryAgreement();
     }
 
     final public List<Enrolment> getEnroledImprovements() {

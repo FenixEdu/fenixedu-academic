@@ -29,7 +29,10 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplica
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class SendReceptionEmailBean implements java.io.Serializable {
 
@@ -49,13 +52,24 @@ public class SendReceptionEmailBean implements java.io.Serializable {
     public SendReceptionEmailBean(final MobilityApplicationProcess mobilityApplicationProcess) {
         this.mobilityApplicationProcess = mobilityApplicationProcess;
         includeOnlyProcessWithNoReceptionEmail = true;
-        mobilityProgram = MobilityProgram.getByRegistrationAgreement(RegistrationAgreement.ERASMUS);
-        emailSubject =
-                mobilityApplicationProcess.getCandidacyPeriod()
-                        .getEmailTemplateFor(mobilityProgram, MobilityEmailTemplateType.IST_RECEPTION).getSubject();
-        emailBody =
-                mobilityApplicationProcess.getCandidacyPeriod()
-                        .getEmailTemplateFor(mobilityProgram, MobilityEmailTemplateType.IST_RECEPTION).getBody();
+        setMobilityProgram(findSomeDefaultMobilityProgram());
+    }
+
+    // Look for erasmus program
+    private MobilityProgram findSomeDefaultMobilityProgram() {
+        for (final Program program : Bennu.getInstance().getProgramsSet()) {
+            if (program instanceof MobilityProgram) {
+                final MobilityProgram mobilityProgram = (MobilityProgram) program;
+                final RegistrationProtocol protocol = mobilityProgram.getRegistrationProtocol();
+                if (!protocol.isEnrolmentByStudentAllowed() && !protocol.isToPayGratuity() && protocol.allowsIDCard()
+                        && !protocol.isOnlyAllowedDegreeEnrolment() && !protocol.isAlien()
+                        && protocol.allowDissertationCandidacyWithoutChecks() && !protocol.isForOfficialMobilityReporting()
+                        && !protocol.attemptAlmaMatterFromPrecedent()) {
+                    return mobilityProgram;
+                }
+            }
+        }
+        return null;
     }
 
     public void removeProcess(MobilityIndividualApplicationProcess individualCandidacyProcess) {

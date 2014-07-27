@@ -233,7 +233,7 @@ public class SeparationCyclesManagement {
         activeState.setStateDate(getBeginDate(sourceStudentCurricularPlan, getExecutionPeriod()));
         activeState.setResponsiblePerson(null);
         registration.setSourceRegistration(sourceStudentCurricularPlan.getRegistration());
-        registration.setRegistrationAgreement(sourceStudentCurricularPlan.getRegistration().getRegistrationAgreement());
+        registration.setRegistrationProtocol(sourceStudentCurricularPlan.getRegistration().getRegistrationProtocol());
 
         return registration;
     }

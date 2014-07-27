@@ -57,7 +57,7 @@
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="competenceCourseStatisticsForm">
                   <form-property type="java.lang.String" name="executionYearID"></form-property>
-                  <form-property type="java.lang.String" name="registrationAgreement"></form-property>
+                  <form-property type="java.lang.String" name="registrationProtocol"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentManagementForm">

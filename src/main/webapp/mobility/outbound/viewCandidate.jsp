@@ -190,7 +190,7 @@
 								<bean:write name="registration" property="degreeNameWithDescription"/>
 							</td>
 							<td>
-								<bean:write name="registration" property="registrationAgreement.description"/>
+								<bean:write name="registration" property="registrationProtocol.description.content"/>
 							</td>
 							<td>
 								<bean:write name="registration" property="activeStateType.description"/>
@@ -294,7 +294,7 @@
 														<% final String name = unit.getName(); %>
 														<strong><%= name %></strong>
 														<%= name.length() >= 70 ? "<br/>" : "" %>&nbsp;-&nbsp;
-														<%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %>
+														<%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationProtocol().getDescription().getContent() %>
 														<%= country == null ? "" : "(" + country.getName() + ")" %>
 														<span style="float: right;">
 															<% if (submission.getSelectedCandidacy() == null) { %>

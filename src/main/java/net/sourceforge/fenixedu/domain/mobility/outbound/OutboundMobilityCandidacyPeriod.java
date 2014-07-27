@@ -38,12 +38,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -217,12 +217,12 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
                 final OutboundMobilityCandidacyContestGroup group = contest.getOutboundMobilityCandidacyContestGroup();
                 final MobilityAgreement mobilityAgreement = contest.getMobilityAgreement();
                 final MobilityProgram mobilityProgram = mobilityAgreement.getMobilityProgram();
-                final RegistrationAgreement registrationAgreement = mobilityProgram.getRegistrationAgreement();
+                final RegistrationProtocol registrationProtocol = mobilityProgram.getRegistrationProtocol();
                 final UniversityUnit universityUnit = mobilityAgreement.getUniversityUnit();
                 final Country country = universityUnit.getCountry();
 
                 final Row candidacyRow = spreadsheetCandidates.addRow();
-                candidacyRow.setCell(getString("label.mobility.program"), registrationAgreement.getDescription());
+                candidacyRow.setCell(getString("label.mobility.program"), registrationProtocol.getDescription().getContent());
                 candidacyRow.setCell(getString("label.country"), country == null ? "" : country.getLocalizedName().toString());
                 candidacyRow.setCell(getString("label.university"), universityUnit.getPresentationName());
                 candidacyRow.setCell(getString("label.degrees"), group.getDescription());

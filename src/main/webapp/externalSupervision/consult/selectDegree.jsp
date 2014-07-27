@@ -49,7 +49,7 @@
 			<logic:present name="selectProtocol">
 				<logic:equal name="selectProtocol" value="true">
 					<fr:slot name="protocol" layout="menu-select" key="label.selectYear.agreement" required="true">
-						<fr:property name="format" value="${registrationAgreement}"/>
+						<fr:property name="format" value="${code}"/>
 						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RegistrationProtocolsAllowedForUserProvider"/>
 						<fr:property name="saveOptions" value="true"/>
 					</fr:slot>
