@@ -226,7 +226,7 @@ max-width: 231px;
 			<p style="margin-bottom: 10px;"><bean:message key="message.phd.public.candidacy.ready.to.validate" bundle="PHD_RESOURCES" /></p>
 			<p>
 				<strong>
-					<input type=button onClick="parent.location='<%= request.getContextPath() + "/applications/phd/validateApplication?processId=" + processId %>'" value='<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »'>
+					<input type=button onClick="parent.location='<%= request.getContextPath() + "/publico/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateApplication&processId=" + processId %>'" value='<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »'>
 				</strong>
 			</p>
 		</div>
