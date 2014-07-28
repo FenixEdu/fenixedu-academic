@@ -21,18 +21,38 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
+import java.text.ParseException;
+
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PhotoType;
+import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
+import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.util.ByteArray;
+import net.sourceforge.fenixedu.util.ContentType;
+
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+
 /**
+ * FIXME: remove on the next major version
+ * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@Deprecated
 public class PersonInformationFromUniqueCardDTO {
 
     private static final Logger logger = LoggerFactory.getLogger(PersonInformationFromUniqueCardDTO.class);
 
-    private String name;
+    private String givenNames;
+
+    private String familyNames;
 
     private String gender;
 
@@ -76,12 +96,20 @@ public class PersonInformationFromUniqueCardDTO {
 
     private byte[] photo;
 
-    public String getName() {
-        return name;
+    public String getGivenNames() {
+        return givenNames;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGivenNames(String givenNames) {
+        this.givenNames = givenNames;
+    }
+
+    public String getFamilyNames() {
+        return familyNames;
+    }
+
+    public void setFamilyNames(String familyNames) {
+        this.familyNames = familyNames;
     }
 
     public String getGender() {
@@ -239,7 +267,8 @@ public class PersonInformationFromUniqueCardDTO {
     public void print() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("\nname: " + name);
+        builder.append("\ngivenNames: " + givenNames);
+        builder.append("\nfamilyNames: " + familyNames);
         builder.append("\ngender: " + gender);
         builder.append("\ndocumentIdNumber: " + documentIdNumber);
         builder.append("\ndocumentIdEmissionLocation: " + documentIdEmissionLocation);
@@ -277,6 +306,72 @@ public class PersonInformationFromUniqueCardDTO {
 
     public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
         this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
+    }
+
+    public void edit(Person person) throws ParseException {
+        final String dateFormat = "dd MM yyyy";
+
+        if (!StringUtils.isEmpty(getGivenNames())) {
+            person.setGivenNames(getGivenNames());
+        }
+        if (!StringUtils.isEmpty(getFamilyNames())) {
+            person.setFamilyNames(getFamilyNames());
+        }
+        if (!StringUtils.isEmpty(getGender())) {
+            person.setGender(getGender().equalsIgnoreCase("m") ? Gender.MALE : Gender.FEMALE);
+        }
+
+        if (getIdentificationDocumentExtraDigit() != null) {
+            person.setIdentificationDocumentExtraDigit(getIdentificationDocumentExtraDigit().replaceAll("\\s", "")); //remove white spaces
+        }
+        if (getIdentificationDocumentSeriesNumber() != null) {
+            person.setIdentificationDocumentSeriesNumber(getIdentificationDocumentSeriesNumber().replaceAll("\\s", "")); //remove white spaces
+        }
+
+        if (!StringUtils.isEmpty(getDocumentIdEmissionLocation())) {
+            person.setEmissionLocationOfDocumentId(getDocumentIdEmissionLocation());
+        }
+        if (!StringUtils.isEmpty(getDocumentIdEmissionDate())) {
+            person.setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(DateFormatUtil.parse(dateFormat,
+                    getDocumentIdEmissionDate())));
+        }
+        if (!StringUtils.isEmpty(getDocumentIdExpirationDate())) {
+            person.setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(DateFormatUtil.parse(dateFormat,
+                    getDocumentIdExpirationDate())));
+        }
+        if (!StringUtils.isEmpty(getFiscalNumber())) {
+            person.setSocialSecurityNumber(getFiscalNumber());
+        }
+        if (!StringUtils.isEmpty(getBirthDate())) {
+            person.setDateOfBirthYearMonthDay(YearMonthDay.fromDateFields(DateFormatUtil.parse(dateFormat, getBirthDate())));
+        }
+        if (!StringUtils.isEmpty(getNationality())) {
+            person.setNationality(Country.readByThreeLetterCode(getNationality()));
+        }
+        if (!StringUtils.isEmpty(getMotherName())) {
+            person.setNameOfMother(getMotherName());
+        }
+        if (!StringUtils.isEmpty(getFatherName())) {
+            person.setNameOfFather(getFatherName());
+        }
+
+        if (getPhoto() != null) {
+            person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.JPG, new ByteArray(getPhoto())));
+        }
+
+        final PhysicalAddressData physicalAddress = new PhysicalAddressData();
+        physicalAddress.setAddress(getAddress());
+        physicalAddress.setAreaCode(getPostalCode());
+        physicalAddress.setAreaOfAreaCode(getPostalArea());
+        physicalAddress.setArea(getLocality());
+        physicalAddress.setParishOfResidence(getParish());
+        physicalAddress.setDistrictSubdivisionOfResidence(getMunicipality());
+        physicalAddress.setDistrictOfResidence(getDistrict());
+        physicalAddress.setCountryOfResidence(Country.readByTwoLetterCode(getCountry()));
+
+        if (!physicalAddress.isEmpty()) {
+            person.setDefaultPhysicalAddressData(physicalAddress, true);
+        }
     }
 
 }

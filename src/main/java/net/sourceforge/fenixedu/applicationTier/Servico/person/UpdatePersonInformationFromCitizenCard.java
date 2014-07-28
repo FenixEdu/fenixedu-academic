@@ -31,9 +31,11 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import pt.ist.fenixframework.Atomic;
 
 /**
- * @author - Shezad Anavarali (shezad@ist.utl.pt)
+ * FIXME: To delete on the next major version
  * 
+ * @author - Shezad Anavarali (shezad@ist.utl.pt)
  */
+@Deprecated
 public class UpdatePersonInformationFromCitizenCard {
 
     @Atomic
@@ -49,7 +51,7 @@ public class UpdatePersonInformationFromCitizenCard {
         }
 
         try {
-            person.editFromBean(personDTO);
+            personDTO.edit(person);
         } catch (ParseException e) {
             throw new DomainException("UpdatePersonInformationFromCitizenCard.error.dateParseError", e);
         }

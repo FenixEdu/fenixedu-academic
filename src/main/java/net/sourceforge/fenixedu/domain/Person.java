@@ -151,8 +151,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.ByteArray;
-import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringFormatter;
@@ -183,7 +181,6 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Strings;
@@ -559,68 +556,12 @@ public class Person extends Person_Base {
         return this;
     }
 
+    /**
+     * FIXME: remove on the next major version
+     */
+    @Deprecated
     public void editFromBean(final PersonInformationFromUniqueCardDTO personDTO) throws ParseException {
-        final String dateFormat = "dd MM yyyy";
-
-        if (!StringUtils.isEmpty(personDTO.getName())) {
-            setName(personDTO.getName());
-        }
-        if (!StringUtils.isEmpty(personDTO.getGender())) {
-            setGender(personDTO.getGender().equalsIgnoreCase("m") ? Gender.MALE : Gender.FEMALE);
-        }
-
-        if (personDTO.getIdentificationDocumentExtraDigit() != null) {
-            setIdentificationDocumentExtraDigit(personDTO.getIdentificationDocumentExtraDigit().replaceAll("\\s", "")); //remove white spaces
-        }
-        if (personDTO.getIdentificationDocumentSeriesNumber() != null) {
-            setIdentificationDocumentSeriesNumber(personDTO.getIdentificationDocumentSeriesNumber().replaceAll("\\s", "")); //remove white spaces
-        }
-
-        if (!StringUtils.isEmpty(personDTO.getDocumentIdEmissionLocation())) {
-            setEmissionLocationOfDocumentId(personDTO.getDocumentIdEmissionLocation());
-        }
-        if (!StringUtils.isEmpty(personDTO.getDocumentIdEmissionDate())) {
-            setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(DateFormatUtil.parse(dateFormat,
-                    personDTO.getDocumentIdEmissionDate())));
-        }
-        if (!StringUtils.isEmpty(personDTO.getDocumentIdExpirationDate())) {
-            setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(DateFormatUtil.parse(dateFormat,
-                    personDTO.getDocumentIdExpirationDate())));
-        }
-        if (!StringUtils.isEmpty(personDTO.getFiscalNumber())) {
-            setSocialSecurityNumber(personDTO.getFiscalNumber());
-        }
-        if (!StringUtils.isEmpty(personDTO.getBirthDate())) {
-            setDateOfBirthYearMonthDay(YearMonthDay.fromDateFields(DateFormatUtil.parse(dateFormat, personDTO.getBirthDate())));
-        }
-        if (!StringUtils.isEmpty(personDTO.getNationality())) {
-            setNationality(Country.readByThreeLetterCode(personDTO.getNationality()));
-        }
-        if (!StringUtils.isEmpty(personDTO.getMotherName())) {
-            setNameOfMother(personDTO.getMotherName());
-        }
-        if (!StringUtils.isEmpty(personDTO.getFatherName())) {
-            setNameOfFather(personDTO.getFatherName());
-        }
-
-        if (personDTO.getPhoto() != null) {
-            setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.JPG, new ByteArray(personDTO.getPhoto())));
-        }
-
-        final PhysicalAddressData physicalAddress = new PhysicalAddressData();
-        physicalAddress.setAddress(personDTO.getAddress());
-        physicalAddress.setAreaCode(personDTO.getPostalCode());
-        physicalAddress.setAreaOfAreaCode(personDTO.getPostalArea());
-        physicalAddress.setArea(personDTO.getLocality());
-        physicalAddress.setParishOfResidence(personDTO.getParish());
-        physicalAddress.setDistrictSubdivisionOfResidence(personDTO.getMunicipality());
-        physicalAddress.setDistrictOfResidence(personDTO.getDistrict());
-        physicalAddress.setCountryOfResidence(Country.readByTwoLetterCode(personDTO.getCountry()));
-
-        if (!physicalAddress.isEmpty()) {
-            setDefaultPhysicalAddressData(physicalAddress, true);
-        }
-
+        personDTO.edit(this);
     }
 
     public void edit(final String name, final String address, final String phone, final String mobile, final String homepage,
