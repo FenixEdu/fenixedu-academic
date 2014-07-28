@@ -10,7 +10,7 @@
     <groupId>pt.ist</groupId>
     <artifactId>fenix</artifactId>
     <packaging>jar</packaging>
-    <version>3.8.0-SNAPSHOT</version>
+    <version>3.7.3</version>
 
     <name>FenixEdu Core</name>
     <url>http://fenixedu.org</url>
