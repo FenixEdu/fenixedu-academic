@@ -613,6 +613,12 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         Person loggedPerson = getLoggedPerson(request);
         ExamCoordinator coordinator = loggedPerson.getCurrentExamCoordinator();
+
+        if (coordinator == null) {
+            addActionMessage(request, "error.no.coordinators.available", ExecutionYear.readCurrentExecutionYear().getName());
+            return mapping.findForward("editVigilantsInGroups");
+        }
+
         Department department = getDepartment(coordinator.getUnit());
 
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
@@ -800,6 +806,9 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             bean.setSelectedDepartment(getDepartment(unit));
             bean.setVigilantGroups(groups);
             bean.setExamCoordinator(coordinator);
+        } else {
+            addActionMessage(request, "error.no.coordinators.available", selectedYear.getName());
+            request.setAttribute("error.examCoordinators", true);
         }
         request.setAttribute("bean", bean);
     }

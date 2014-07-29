@@ -27,6 +27,14 @@
 
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.manageVigilantGroups"/></h2>
 
+<logic:messagesPresent message="true">
+	<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
+	<p>
+		<span class="error0"><bean:write name="messages" /></span>
+	</p>
+	</html:messages>
+</logic:messagesPresent>
+
 <logic:present name="bean" property="executionYear">
 	<logic:equal name="bean" property="executionYear.current" value="true">
 		<ul>
@@ -79,15 +87,6 @@
 	</fr:form>
 </div>
 </logic:equal>
-
-
-<logic:messagesPresent message="true">
-	<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
-	<p>
-		<span class="error0"><bean:write name="messages" /></span>
-	</p>
-	</html:messages>
-</logic:messagesPresent>
 
 <logic:equal name="show" value="groups">
 <logic:notEmpty name="bean" property="vigilantGroups">

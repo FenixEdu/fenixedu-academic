@@ -35,6 +35,7 @@
 	</p>
 </logic:messagesPresent>
 
+<logic:present name="bean">
 <logic:present name="bean" property="executionYear">
 	<logic:equal name="bean" property="executionYear.current" value="true">
 		<ul>
@@ -328,3 +329,4 @@
 <script type="text/javascript" language="javascript">
 switchGlobal();
 </script>
+</logic:present>
