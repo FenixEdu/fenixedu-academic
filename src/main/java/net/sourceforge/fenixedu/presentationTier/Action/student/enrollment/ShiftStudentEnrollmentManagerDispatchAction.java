@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadShiftsToEnroll;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.UnEnrollStudentFromShift;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -207,6 +208,9 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         final List<ShiftToEnrol> shiftsToEnrol;
         try {
             shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration);
+        } catch (OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan exception) {
+            addActionMessage(request, "error.enrollment.period.closed", exception.getMessage());
+            return mapping.getInputForward();
         } catch (FenixServiceException exception) {
             addActionMessage(request, exception.getMessage());
             return mapping.getInputForward();
