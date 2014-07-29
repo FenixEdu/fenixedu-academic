@@ -124,6 +124,7 @@ public class ClassEnrollmentAuthorizationFilter {
             buffer.append(startDateString);
             buffer.append(" - ");
             buffer.append(endDateString);
+            buffer.append(" (").append(enrolmentPeriodInClasses.getExecutionPeriod().getExecutionYear().getName()).append(")");
             return new OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(buffer.toString());
         }
         return null;
