@@ -259,7 +259,9 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
             }
         } else {
             if ((getSelectedCurricularCourses() == null || getSelectedCurricularCourses().isEmpty())
-                    || (!getSelectedCurricularCourses().isEmpty() && getDegree() == getMostDominantDegreeFromCourses())) {
+                    || (!getSelectedCurricularCourses().isEmpty() && getDegree() == getMostDominantDegreeFromCourses())
+                    || getMobilityStudentDataBean().getSelectedMobilityProgram().getRegistrationAgreement()
+                            .isOnlyAllowedDegreeEnrolment()) {
                 selectedDegree = getDegree();
             } else {
                 throw new DomainException("error.mobility.application.process.courses.and.degree.selection.dont.match");

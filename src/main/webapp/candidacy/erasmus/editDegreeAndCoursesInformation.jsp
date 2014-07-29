@@ -166,7 +166,7 @@
 
 	<logic:equal name="onlyAllowedDegreeEnrolment" value="true">
 		<div class="mtop3">		
-			<fr:edit id="mobility.individual.application" name="mobilityIndividualApplicationProcessBean">
+			<fr:edit id="mobility.individual.application" name="individualCandidacyProcessBean">
 				<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 					<fr:slot name="degree" key="label.mobility.degree" layout="menu-select-postback">
 						<fr:property name="format" value="${presentationName}" />
