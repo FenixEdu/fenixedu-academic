@@ -25,19 +25,26 @@ import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.StringNormalizer;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @StrutsFunctionality(app = AcademicAdministrationApplication.class, path = "degree-jurisdiction",
         titleKey = "label.degreeJurisdiction.title", accessGroup = "academic(MANAGE_AUTHORIZATIONS)")
@@ -48,30 +55,62 @@ public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAct
     @EntryPoint
     public ActionForward manageJurisdictions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        DegreeJurisdictionManagementBean bean = new DegreeJurisdictionManagementBean();
-        AdministrativeOffice alameda = FenixFramework.getDomainObject("2461016260610");
-        AdministrativeOffice tagus = FenixFramework.getDomainObject("2461016260611");
-        AdministrativeOffice posgrad = FenixFramework.getDomainObject("2461016260609");
+        JsonArray programs = new JsonArray();
 
-        request.setAttribute("degrees", bean);
-        request.setAttribute("alamedaOffice", alameda);
-        request.setAttribute("tagusOffice", tagus);
-        request.setAttribute("posgradOffice", posgrad);
+        for (Degree degree : Bennu.getInstance().getDegreesSet()) {
+            JsonObject json = new JsonObject();
+            json.addProperty("id", degree.getExternalId());
+            json.addProperty("name", degree.getPresentationName());
+            json.addProperty("acronym", degree.getSigla());
+            json.addProperty("office", degree.getAdministrativeOffice().getExternalId());
+            programs.add(json);
+        }
+
+        for (PhdProgram program : Bennu.getInstance().getPhdProgramsSet()) {
+            JsonObject json = new JsonObject();
+            json.addProperty("id", program.getExternalId());
+            json.addProperty("name", program.getPresentationName());
+            json.addProperty("acronym", program.getAcronym());
+            json.addProperty("office", program.getAdministrativeOffice().getExternalId());
+            programs.add(json);
+        }
+
+        request.setAttribute("programs", programs);
+
+        JsonArray offices = new JsonArray();
+
+        int i = 0;
+        for (AdministrativeOffice office : Bennu.getInstance().getAdministrativeOfficesSet()) {
+            JsonObject json = new JsonObject();
+            json.addProperty("id", office.getExternalId());
+            json.addProperty("name", office.getUnit().getName());
+            json.addProperty("acronym", acronym(office.getUnit().getName()));
+            json.addProperty("idx", i++);
+            offices.add(json);
+        }
+
+        request.setAttribute("offices", offices);
         return mapping.findForward("manageJurisdictions");
     }
 
-    public ActionForward changeDegreeJurisdiction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        String programOid = request.getParameter("programOid");
-        String officeOid = request.getParameter("officeOid");
-        String togglePreset = request.getParameter("togglePreset");
-        if (togglePreset != null) {
-            request.setAttribute("togglePreset", togglePreset);
+    // Unit.getAcronym is not reliable
+    private String acronym(String name) {
+        StringBuilder builder = new StringBuilder();
+        for (char c : StringNormalizer.normalizeAndRemoveAccents(name).toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                builder.append(c);
+            }
         }
+        return builder.toString();
+    }
 
+    public ActionForward changeDegreeJurisdiction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        JsonObject json = new JsonParser().parse(request.getReader()).getAsJsonObject();
+        String programOid = json.get("program").getAsString();
+        String officeOid = json.get("office").getAsString();
         changeDegreeJurisdiction(programOid, officeOid);
-
-        return manageJurisdictions(mapping, actionForm, request, response);
+        return null;
     }
 
     @Atomic
