@@ -173,7 +173,9 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
         request.setAttribute(getIndividualCandidacyProcessBeanName(), readIndividualCandidacyProcessBean(request));
         request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
         request.setAttribute("mobilityIndividualApplicationProcessBean", readMobilityDegreeInformation(request));
+
         RenderUtils.invalidateViewState();
+
         return mapping.findForward("edit-degree-courses-information");
     }
 
@@ -372,11 +374,13 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     public ActionForward chooseUniversity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         MobilityIndividualApplicationProcessBean bean = getIndividualCandidacyProcessBean();
+        DegreeCourseInformationBean degreeBean = readDegreeCourseInformationBean(request);
         bean.getMobilityStudentDataBean().setMobilityAgreement();
-        request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-        request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+        request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+        request.setAttribute("degreeCourseInformationBean", degreeBean);
 
         RenderUtils.invalidateViewState();
+
         return mapping.findForward("edit-degree-courses-information");
     }
 
