@@ -19,11 +19,18 @@
 package net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus;
 
 import java.util.Locale;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.FenixStringTools;
+
+import org.jsoup.helper.StringUtil;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class LearningAgreementDocument extends FenixReport {
@@ -33,6 +40,8 @@ public class LearningAgreementDocument extends FenixReport {
     static final protected char END_CHAR = ' ';
     static final protected int LINE_LENGTH = 70;
     static final protected String LINE_BREAK = "\n";
+    static final protected String YEAR_TEXT = "Y.";
+    static final protected String SEMESTER_TEXT = "Sem.";
 
     public LearningAgreementDocument(MobilityIndividualApplicationProcess process) {
         this.process = process;
@@ -60,13 +69,55 @@ public class LearningAgreementDocument extends FenixReport {
         StringBuilder result = new StringBuilder();
 
         for (CurricularCourse course : process.getCandidacy().getCurricularCoursesSet()) {
+            String yearAndSemester = buildYearAndSemester(course);
+
             result.append(
                     FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(MultiLanguageString.en)
-                            + " (" + course.getDegree().getSigla() + ")", LINE_LENGTH, END_CHAR, course.getEctsCredits()
-                            .toString())).append(LINE_BREAK);
+                            + " (" + course.getDegree().getSigla() + ")" + yearAndSemester, LINE_LENGTH, END_CHAR, course
+                            .getEctsCredits().toString())).append(LINE_BREAK);
         }
 
         return result.toString();
+    }
+
+    private String buildYearAndSemester(CurricularCourse course) {
+        String year = "";
+        String semester = "";
+
+        if (course.getParentContextsSet().size() > 1
+                && ((MobilityApplicationProcess) process.getCandidacyProcess()).getForSemester().equals(
+                        ErasmusApplyForSemesterType.SECOND_SEMESTER)) {
+            TreeSet<Integer> years = new TreeSet<Integer>();
+            for (Context context : course.getParentContextsSet()) {
+                years.add(context.getCurricularYear());
+            }
+            if (years.size() == 1) {
+                year = YEAR_TEXT + years.iterator().next();
+            }
+
+            semester = SEMESTER_TEXT + "2";
+        } else if (course.getParentContextsSet().size() == 1) {
+            Context context = course.getParentContextsSet().iterator().next();
+            year = YEAR_TEXT + context.getCurricularYear();
+            semester = SEMESTER_TEXT + (context.containsSemester(1) ? "1" : "2");
+        } else {
+            TreeSet<Integer> years = new TreeSet<Integer>();
+            TreeSet<Integer> semesters = new TreeSet<Integer>();
+            for (Context context : course.getParentContextsSet()) {
+                years.add(context.getCurricularYear());
+                semesters.add(context.containsSemester(1) ? 1 : 2);
+            }
+            if (years.size() == 1) {
+                year = YEAR_TEXT + years.iterator().next();
+            }
+            if (semesters.size() == 1) {
+                semester = SEMESTER_TEXT + semesters.iterator().next();
+            }
+        }
+
+        String yearAndSemester = year + (StringUtil.isBlank(semester) || StringUtil.isBlank(year) ? "" : " - ") + semester;
+        yearAndSemester = (StringUtil.isBlank(yearAndSemester) ? "" : " - ") + yearAndSemester;
+        return yearAndSemester;
     }
 
     @Override

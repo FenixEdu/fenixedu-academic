@@ -34,6 +34,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 public class InfoStudentTestQuestionMark extends InfoObject {
     private String studentName;
 
+    private String studentUsername;
+
     private Integer studentNumber;
 
     private String studentExternalId;
@@ -74,6 +76,14 @@ public class InfoStudentTestQuestionMark extends InfoObject {
         this.studentName = studentName;
     }
 
+    public String getStudentUsername() {
+        return studentUsername;
+    }
+
+    public void setStudentUsername(String studentUsername) {
+        this.studentUsername = studentUsername;
+    }
+
     public Integer getStudentNumber() {
         return studentNumber;
     }
@@ -111,6 +121,7 @@ public class InfoStudentTestQuestionMark extends InfoObject {
                         .getDegree().getSigla() : "-");
                 if (studentTestQuestion.getStudent().getPerson() != null) {
                     setStudentName(studentTestQuestion.getStudent().getPerson().getName());
+                    setStudentUsername(studentTestQuestion.getStudent().getPerson().getUsername());
                 }
             }
             addTestQuestionMark(studentTestQuestion.getTestQuestionMark());

@@ -63,7 +63,7 @@ function cleanSelect() {
 
 <ul>
 	<li>
-		<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+		<html:link page="<%="/studentGroupManagement.do?method=viewShiftsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 	    	<bean:message key="link.backToShiftsAndGroups"/>
     	</html:link>
     </li>
@@ -108,6 +108,8 @@ function cleanSelect() {
 	<tr>
 		<th>
 		</th>
+		<th><bean:message key="label.username" />
+		</th>
 		<th><bean:message key="label.teacher.StudentNumber" />
 		</th>
 		<th><bean:message key="label.teacher.StudentName" />
@@ -124,9 +126,11 @@ function cleanSelect() {
 			<bean:write name="infoStudent" property="externalId"/>
 			</html:multibox>
 			</td>
+			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		
+			<td><bean:write name="infoPerson" property="username"/>
+			</td>
 			<td><bean:write name="infoStudent" property="number"/>
 			</td>	
-			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		
 			<td><bean:write name="infoPerson" property="nome"/>
 			</td>
 			<td><bean:write name="infoPerson" property="email"/>

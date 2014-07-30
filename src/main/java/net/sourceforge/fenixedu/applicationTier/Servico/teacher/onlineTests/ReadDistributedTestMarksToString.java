@@ -40,10 +40,12 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -60,11 +62,13 @@ public class ReadDistributedTestMarksToString {
             throw new InvalidArgumentsServiceException();
         }
         StringBuilder result = new StringBuilder();
-        result.append("Número\tNome\t");
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.username")).append("\t");
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.number")).append("\t");
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.name")).append("\t");
         for (int i = 1; i <= distributedTest.getNumberOfQuestions().intValue(); i++) {
             result.append("P").append(i).append("\t");
         }
-        result.append("Nota");
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.grade")).append("\t");
 
         Double maximumMark = distributedTest.calculateMaximumDistributedTestMark();
         if (maximumMark.doubleValue() > 0) {
@@ -75,7 +79,8 @@ public class ReadDistributedTestMarksToString {
         DecimalFormat percentageFormat = new DecimalFormat("#%");
 
         for (Registration registration : distributedTest.findStudents()) {
-            result.append("\n").append(registration.getNumber());
+            result.append("\n").append(registration.getPerson().getUsername());
+            result.append("\t").append(registration.getNumber());
             result.append("\t");
             result.append(registration.getStudent().getPerson().getName());
             result.append("\t");
@@ -105,7 +110,9 @@ public class ReadDistributedTestMarksToString {
 
     protected String run(String executionCourseId, String[] distributedTestCodes) throws FenixServiceException {
         StringBuilder result = new StringBuilder();
-        result.append("Número\tNome\t");
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.username")).append("\t");
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.number")).append("\t");
+        result.append(BundleUtil.getString(Bundle.APPLICATION, "label.name")).append("\t");
 
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         List<Registration> studentsFromAttendsList =
@@ -141,6 +148,8 @@ public class ReadDistributedTestMarksToString {
 
         for (Registration registration : studentList) {
             result.append("\n");
+            result.append(registration.getPerson().getUsername());
+            result.append("\t");
             result.append(registration.getNumber());
             result.append("\t");
             result.append(registration.getPerson().getName());
@@ -193,7 +202,7 @@ public class ReadDistributedTestMarksToString {
             }
         }
 
-        Collections.sort(sortedStudents, new BeanComparator("number"));
+        Collections.sort(sortedStudents, new BeanComparator("person.username"));
         return sortedStudents;
     }
 

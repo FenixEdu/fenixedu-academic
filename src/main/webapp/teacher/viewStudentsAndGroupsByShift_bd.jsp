@@ -227,6 +227,9 @@
 	<table class="tstyle4 mtop05">
 		<tr>
 			<th>
+				<bean:message key="label.username" />
+			</th>
+			<th>
 				<bean:message key="label.numberWord" />
 			</th>
 			<th>
@@ -249,6 +252,9 @@
 			<bean:define id="infoStudentGroup" name="infoSiteStudentAndGroup" property="infoStudentGroup"/>	
 			<bean:define id="infoSiteStudentInformation" name="infoSiteStudentAndGroup" property="infoSiteStudentInformation"/>
 			<tr>	
+				<td class="acenter">
+					<bean:write name="infoSiteStudentInformation" property="username"/>
+				</td>
 				<td class="acenter">
 					<bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>

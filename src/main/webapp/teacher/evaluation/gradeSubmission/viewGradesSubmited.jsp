@@ -30,7 +30,7 @@
 <fr:view name="marksSubmited"
 		 schema="markSheet.teacher.gradeSubmission.view.submited.marks">
 		<fr:layout name="tabular">
-			<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
+			<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.person.username"/>
 			<fr:property name="classes" value="tstyle4"/>
 		    <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>

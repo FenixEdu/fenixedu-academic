@@ -290,6 +290,9 @@
 	<table class="tstyle4 mtop05">
 	<tr>
 		<th>
+			<bean:message key="label.username" />
+		</th>
+		<th>
 			<bean:message key="label.numberWord" />
 		</th>
 		<logic:notPresent name="showPhotos">
@@ -309,6 +312,9 @@
 		<bean:define id="person" name="element" property="registration.person" /> 
 		<bean:define id="student" name="element" property="registration.student" /> 
 		<tr>		
+			<td class="acenter">
+				<bean:write name="person" property="username"/>
+			</td>
 			<td class="acenter">
 				<bean:write name="student" property="number"/>
 			</td>

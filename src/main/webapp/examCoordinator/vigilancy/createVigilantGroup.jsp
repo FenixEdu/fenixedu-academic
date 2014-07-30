@@ -27,6 +27,20 @@
 
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.newVigilantGroup.title"/></h2>
 
+<logic:messagesPresent message="true">
+	<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
+		<p class="mtop1 mvert05">
+			<span class="error0"><bean:write name="messages" /></span>
+		</p>
+	</html:messages>
+</logic:messagesPresent>
+
+<ul>
+	<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.back"/></html:link></li>
+</ul>
+
+<logic:notPresent name="error.examCoordinators">
+
 <fr:form action="/vigilancy/vigilantGroupManagement.do?method=createVigilantGroup">
 
 <fr:edit id="createVigilantGroup" name="bean" visible="false"/>
@@ -76,4 +90,4 @@
 </p>
 
 </fr:form>
-           
+</logic:notPresent>

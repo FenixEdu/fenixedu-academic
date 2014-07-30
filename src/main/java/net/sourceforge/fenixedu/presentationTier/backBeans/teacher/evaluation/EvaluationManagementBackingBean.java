@@ -638,7 +638,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         if (this.writtenEvaluationEnrolments == null) {
             this.writtenEvaluationEnrolments =
                     new ArrayList(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationEnrolmentsSet());
-            Collections.sort(this.writtenEvaluationEnrolments, new BeanComparator("student.number"));
+            Collections.sort(this.writtenEvaluationEnrolments, new BeanComparator("student.person.username"));
         }
         return this.writtenEvaluationEnrolments;
     }
@@ -724,7 +724,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         InputStream inputStream = null;
         try {
             inputStream = fileItem.getInputStream();
-            final Map<Integer, String> marks = loadMarks(inputStream);
+            final Map<String, String> marks = loadMarks(inputStream);
 
             WriteMarks.writeByStudent(getExecutionCourseID(), getEvaluationID(), buildStudentMarks(marks));
 
@@ -749,16 +749,16 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    private List<StudentMark> buildStudentMarks(Map<Integer, String> marks) {
+    private List<StudentMark> buildStudentMarks(Map<String, String> marks) {
         final List<StudentMark> result = new ArrayList<StudentMark>();
-        for (final Entry<Integer, String> entry : marks.entrySet()) {
+        for (final Entry<String, String> entry : marks.entrySet()) {
             result.add(new StudentMark(entry.getKey(), entry.getValue()));
         }
         return result;
     }
 
-    private Map<Integer, String> loadMarks(final InputStream inputStream) throws IOException {
-        final Map<Integer, String> marks = new HashMap<Integer, String>();
+    private Map<String, String> loadMarks(final InputStream inputStream) throws IOException {
+        final Map<String, String> marks = new HashMap<String, String>();
 
         final InputStreamReader input = new InputStreamReader(inputStream);
         final BufferedReader reader = new BufferedReader(input);
@@ -782,7 +782,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                 if (mark == null) {
                     throw new Exception();
                 }
-                marks.put(Integer.valueOf(studentNumber), mark);
+                marks.put(studentNumber, mark);
             }
         } catch (Exception e) {
             throw new IOException("error.file.badFormat");
@@ -1362,6 +1362,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     private List<Object> getStudentsEnroledListHeaders() {
         final List<Object> headers = new ArrayList<Object>();
+        headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.username"));
         headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.number"));
         headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.name"));
         headers.add(BundleUtil.getString(Bundle.APPLICATION, "label.room"));
@@ -1377,6 +1378,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         for (WrittenEvaluationEnrolment enrolment : getWrittenEvaluationEnrolments()) {
             final Row newRow = spreadsheet.addRow();
+            newRow.setCell(enrolment.getStudent().getPerson().getUsername());
             newRow.setCell(enrolment.getStudent().getNumber().toString());
             newRow.setCell(enrolment.getStudent().getPerson().getName());
             newRow.setCell(enrolment.getRoom() != null ? enrolment.getRoom().getName() : "-");

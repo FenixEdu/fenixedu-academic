@@ -423,6 +423,10 @@ public class ConvokeManagement extends FenixDispatchAction {
         bean.setShowStartPoints((startPoints != null) ? Boolean.valueOf(startPoints) : Boolean.FALSE);
         bean.setShowPointsWeight((pointsWeight != null) ? Boolean.valueOf(pointsWeight) : Boolean.FALSE);
         ExamCoordinator coordinator = getCoordinatorForCurrentYear(request);
+        if (coordinator == null) {
+            addActionMessage(request, "error.no.coordinators.available", ExecutionYear.readCurrentExecutionYear().getName());
+            return;
+        }
         bean.setExamCoordinator(coordinator);
         bean.setVigilantGroups(coordinator.getVigilantGroupsSet());
         String executionYear = request.getParameter("executionYear");

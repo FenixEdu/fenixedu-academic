@@ -240,6 +240,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                 attend = (Attends) iterAttendsList.next();
 
+                infoSiteStudentInformation.setUsername(attend.getRegistration().getPerson().getUsername());
                 infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
                 studentGroupAttendInformationList.add(infoSiteStudentInformation);

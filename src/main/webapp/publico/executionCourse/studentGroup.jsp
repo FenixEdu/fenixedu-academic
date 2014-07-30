@@ -139,6 +139,9 @@
 			<bean:message key="label.student.group.number"/>
 		</th>
 		<th>
+			<bean:message key="label.username"/>
+		</th>
+		<th>
 			<bean:message key="label.student.number"/>
 		</th>
 		<th>
@@ -150,6 +153,9 @@
 		<tr>
 			<td>
 				<bean:write name="studentGroup" property="groupNumber"/>
+			</td>
+			<td>
+				<bean:write name="student" property="person.username"/>
 			</td>
 			<td>
 				<bean:write name="student" property="number"/>

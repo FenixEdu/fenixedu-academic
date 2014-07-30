@@ -154,6 +154,8 @@
 <table class="tstyle4">
 	<tbody>   
 	<tr>
+		<th><bean:message key="label.username" />
+		</th>
 		<th><bean:message key="label.numberWord" />
 		</th>
 		<th><bean:message key="label.nameWord" />
@@ -167,6 +169,9 @@
  		<bean:define id="username" name="LOGGED_USER_ATTRIBUTE" property="username" type="java.lang.String"/>
 		<logic:equal name="infoSiteStudentInformation" property="username" value="<%= username %>">
 			<tr class="highlight">
+				<td>
+					<bean:write name="infoSiteStudentInformation" property="username"/>
+				</td>
 				<td>
 					<bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>
@@ -187,6 +192,8 @@
 
 		<logic:notEqual name="infoSiteStudentInformation" property="username" value="<%= username %>">
 			<tr>
+				<td><bean:write name="infoSiteStudentInformation" property="username"/>
+				</td>
 				<td><bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>
 				<td><bean:write name="infoSiteStudentInformation" property="name"/>

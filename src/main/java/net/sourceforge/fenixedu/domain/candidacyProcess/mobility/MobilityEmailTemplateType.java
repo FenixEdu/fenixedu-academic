@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocum
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -237,6 +238,13 @@ public enum MobilityEmailTemplateType {
 
             if (body.contains("[registration_link]")) {
                 body = body.replace("[registration_link]", link);
+            }
+            final Registration registration = hashCode.getIndividualCandidacyProcess().getCandidacy().getRegistration();
+            if (registration == null) {
+                throw new NullPointerException("Students have not yet been registered.");
+            }
+            if (body.contains("[username]")) {
+                body = body.replace("[username]", registration.getPerson().getUsername());
             }
 
             sendEmail(subject, body, hashCode.getEmail());

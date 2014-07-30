@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -60,6 +61,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -427,13 +429,24 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
             HttpServletResponse response) throws FenixActionException {
         PersonBean bean = getRenderedObject("personBean");
         String id = bean.getUsername();
-        Student student = Student.readStudentByNumber(Integer.valueOf(id));
+        Person person = null;
+        final User user = User.findByUsername(id);
+        if (user != null) {
+            person = user.getPerson();
+        } else {
+            try {
+                final Student student = Student.readStudentByNumber(Integer.valueOf(id));
+                if (student != null) {
+                    person = student.getPerson();
+                }
+            } catch (NumberFormatException e) {
+            }
+        }
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(request.getParameter("executionCourseID"));
 
-        if (student != null) {
+        if (person != null) {
             try {
-                new EnrollStudentInShifts().run(executionCourse.getRegistration(student.getPerson()),
-                        request.getParameter("shiftID"));
+                new EnrollStudentInShifts().run(executionCourse.getRegistration(person), request.getParameter("shiftID"));
             } catch (FenixServiceException e) {
                 final ActionErrors actionErrors = new ActionErrors();
                 actionErrors.add("error", new ActionMessage("label.invalid.student.number"));

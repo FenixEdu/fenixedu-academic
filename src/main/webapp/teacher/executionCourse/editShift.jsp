@@ -78,6 +78,9 @@
 		<table class="tstyle1">
 			<tr>
 				<th>
+					<bean:message key="label.username"/>
+				</th>
+				<th>
 					<bean:message key="label.number"/>
 				</th>
 				<logic:notPresent name="showPhotos">
@@ -94,6 +97,9 @@
 			<logic:iterate id="registration" name="registrations">
 				<bean:define id="registrationID" name="registration" property="externalId"/>
 				<tr>
+					<td>
+						<bean:write name="registration" property="person.username"/>
+					</td>
 					<td>
 						<bean:write name="registration" property="person.student.number"/>
 					</td>

@@ -18,6 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="org.joda.time.DateTime"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -74,7 +75,7 @@
 		
 	<h2 class="mtop1"><bean:message key="title.educational.background" bundle="CANDIDATE_RESOURCES"/></h2>
 	
-	<p><strong><bean:message key="title.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES"/></strong></p>
+	<p><strong><bean:message key="title.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES" arg0="<%= Integer.toString(DateTime.now().getYear()) %>" /></strong></p>
 	<p style="margin-bottom: 0.5em;"><bean:message key="label.degree.candidacy.for.graduated.person.institution.attended" bundle="CANDIDATE_RESOURCES"/>: <span class="redtxt">*</span></p>
 	<div class="flowerror">
 	<fr:edit id="individualCandidacyProcessBean.institutionUnitName"

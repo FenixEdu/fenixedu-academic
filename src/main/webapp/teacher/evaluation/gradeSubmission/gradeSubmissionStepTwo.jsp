@@ -82,7 +82,7 @@
 		<fr:edit id="marksToSubmit" name="submissionBean" property="marksToSubmit" 
 				 schema="markSheet.teacher.gradeSubmission.marksToSubmit" layout="tabular-editable">
 			<fr:layout>
-				<fr:property name="sortBy" value="attends.aluno.number"/>
+				<fr:property name="sortBy" value="attends.registration.person.username"/>
 				<fr:property name="classes" value="tstyle4"/>
 				<fr:property name="columnClasses" value="acenter,,,acenter,,,"/>
 			</fr:layout>

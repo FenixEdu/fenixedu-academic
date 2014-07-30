@@ -72,6 +72,7 @@
 				<br/>
 				<table>
 					<tr>
+						<th class="listClasses-header"><bean:message key="label.username"/></th>
 						<th class="listClasses-header"><bean:message key="label.number"/></th>
 						<th class="listClasses-header"><bean:message key="label.name"/></th>
 						<th class="listClasses-header"><bean:message key="label.Degree"/></th>
@@ -87,6 +88,7 @@
 			<% if (new Integer(studentIndex).equals(new Integer(0))) {%>
 				<bean:define id="studentCode" name="studentTestQuestion" property="studentExternalId"/>
 				<tr>
+				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentUsername"/></td>
 				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentNumber"/></td>
 				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentName"/></td>
 				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentDegree"/></td>
