@@ -52,6 +52,8 @@ public class PersonBean implements Serializable {
     // personal information
     private String name; // read only
 
+    private String nickname;
+
     private String givenNames;
 
     private String familyNames;
@@ -231,6 +233,7 @@ public class PersonBean implements Serializable {
 
     private void initPerson(Person person) {
         setName(person.getName());
+        setNickname(person.getNickname());
         setGivenNames(person.getGivenNames());
         setFamilyNames(person.getFamilyNames());
         setUsername(person.getUsername());
@@ -685,5 +688,13 @@ public class PersonBean implements Serializable {
 
     public void setEidentifier(final String eidentifier) {
         this.eidentifier = eidentifier;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

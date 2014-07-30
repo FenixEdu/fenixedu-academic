@@ -23,33 +23,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication.PersonalAreaApp;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.bennu.portal.StrutsFunctionality;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@StrutsFunctionality(app = PersonalAreaApp.class, descriptionKey = "label.person.visualizeInformation", path = "information",
-        titleKey = "label.person.visualizeInformation")
-@Mapping(path = "/visualizePersonalInfo", module = "person", parameter = "/person/visualizePersonalInfo.jsp")
-public class VisualizePersonalInfo extends ForwardAction {
+@Mapping(module = "person", path = "/updateNickname", functionality = VisualizePersonalInfo.class)
+@Forwards({ @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp") })
+public class UpdateNicknameDA extends FenixDispatchAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        PersonBean person = new PersonBean(getLoggedUser());
-        request.setAttribute("personBean", person);
-        return super.execute(mapping, form, request, response);
-    }
+    public ActionForward updateNickname(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        PersonBean personBean = getRenderedObject("nickname");
+        Person person = getLoggedPerson(request);
 
-    private Person getLoggedUser() {
-        User user = Authenticate.getUser();
-        return (user == null) ? null : user.getPerson();
+        try {
+            person.setNickname(personBean.getNickname());
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey());
+            request.setAttribute("personBean", new PersonBean(person));
+        }
+
+        return mapping.findForward("visualizePersonalInformation");
     }
 }

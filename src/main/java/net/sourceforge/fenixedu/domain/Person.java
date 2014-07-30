@@ -1284,13 +1284,16 @@ public class Person extends Person_Base {
     }
 
     private boolean canBeDeleted() {
-        return getPartyContactsSet().isEmpty() && getChildsSet().isEmpty() && getParentsSet().isEmpty() && getDomainObjectActionLogsSet().isEmpty()
-                && getExportGroupingReceiversSet().isEmpty() && getPersistentGroupsSet().isEmpty() && getAssociatedQualificationsSet().isEmpty()
-                && getAssociatedAlteredCurriculumsSet().isEmpty() && getEnrolmentEvaluationsSet().isEmpty() && getExportGroupingSendersSet().isEmpty()
-                && getResponsabilityTransactionsSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty() && getEmployee() == null
-                && getTeacher() == null && getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty() && !hasAnyPersonFunctions()
-                && (getHomepage() == null || getHomepage().isDeletable()) && getInternalParticipantsSet().isEmpty()
-                && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet().isEmpty();
+        return getPartyContactsSet().isEmpty() && getChildsSet().isEmpty() && getParentsSet().isEmpty()
+                && getDomainObjectActionLogsSet().isEmpty() && getExportGroupingReceiversSet().isEmpty()
+                && getPersistentGroupsSet().isEmpty() && getAssociatedQualificationsSet().isEmpty()
+                && getAssociatedAlteredCurriculumsSet().isEmpty() && getEnrolmentEvaluationsSet().isEmpty()
+                && getExportGroupingSendersSet().isEmpty() && getResponsabilityTransactionsSet().isEmpty()
+                && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty() && getEmployee() == null
+                && getTeacher() == null && getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty()
+                && !hasAnyPersonFunctions() && (getHomepage() == null || getHomepage().isDeletable())
+                && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty()
+                && getCreateJobsSet().isEmpty();
     }
 
     public ExternalContract getExternalContract() {
@@ -2567,6 +2570,7 @@ public class Person extends Person_Base {
     }
 
     @Override
+    @Atomic
     public void setNickname(final String nickname) {
         if (!validNickname(nickname)) {
             throw new DomainException("error.invalid.nickname");
@@ -3227,8 +3231,8 @@ public class Person extends Person_Base {
     }
 
     public Qualification getLastQualification() {
-        return !getAssociatedQualificationsSet().isEmpty() ? Collections
-                .max(getAssociatedQualificationsSet(), Qualification.COMPARATOR_BY_YEAR) : null;
+        return !getAssociatedQualificationsSet().isEmpty() ? Collections.max(getAssociatedQualificationsSet(),
+                Qualification.COMPARATOR_BY_YEAR) : null;
     }
 
     public boolean hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(final ExecutionYear executionYear) {
