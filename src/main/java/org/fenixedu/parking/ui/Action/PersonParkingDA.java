@@ -60,7 +60,7 @@ import pt.ist.fenixframework.Atomic;
 import com.google.common.io.ByteStreams;
 
 @StrutsFunctionality(app = PersonalAreaApp.class, path = "parking", titleKey = "label.parking", bundle = "ParkingResources")
-@Mapping(module = "parkingManager", path = "/personParking", input = "/parking.do?method=prepareEditParking&page=0",
+@Mapping(module = "parkingManager", path = "/personParking", input = "/personParking.do?method=prepareEditParking&page=0",
         formBean = "personParkingForm", validate = false)
 @Forwards({ @Forward(name = "prepareParking", path = "/person/parkingRequest.jsp"),
         @Forward(name = "editParkingRequest", path = "/person/editParkingRequest.jsp") })

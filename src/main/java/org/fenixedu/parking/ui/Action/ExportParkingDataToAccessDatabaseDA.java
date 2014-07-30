@@ -39,6 +39,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.parking.domain.ParkingGroup;
@@ -47,6 +49,7 @@ import org.fenixedu.parking.domain.Vehicle;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -81,7 +84,13 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         OpenFileBean openFileBean = getRenderedObject();
         if (openFileBean != null) {
-
+            if (openFileBean.getInputStream() == null) {
+                ActionMessages actionMessages = new ActionMessages();
+                actionMessages.add("file", new ActionMessage("error.no.file"));
+                saveMessages(request, actionMessages);
+                RenderUtils.invalidateViewState();
+                return prepareExportFile(mapping, actionForm, request, response);
+            }
             File dbFile = FileUtils.copyToTemporaryFile(openFileBean.getInputStream());
             Database database = Database.open(dbFile, Boolean.FALSE, Boolean.TRUE);
             Table table = database.getTable("XML");
@@ -289,7 +298,13 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         OpenFileBean openFileBean = getRenderedObject();
         if (openFileBean != null) {
-
+            if (openFileBean.getInputStream() == null) {
+                ActionMessages actionMessages = new ActionMessages();
+                actionMessages.add("file", new ActionMessage("error.no.file"));
+                saveMessages(request, actionMessages);
+                RenderUtils.invalidateViewState();
+                return prepareExportFile(mapping, actionForm, request, response);
+            }
             File dbFile = FileUtils.copyToTemporaryFile(openFileBean.getInputStream());
             Database database = Database.open(dbFile, Boolean.FALSE, Boolean.TRUE);
             Table xmlTable = database.getTable("XML");
@@ -456,7 +471,9 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         newRow[1] = parkingParty.getCardNumber().toString();
         newRow[2] = 3;
         newRow[3] = Boolean.TRUE;
-        newRow[4] = Integer.valueOf(convertParkingGroupToAccessDB(parkingParty.getParkingGroup())).intValue();
+        newRow[4] =
+                parkingParty.getParkingGroup() != null ? Integer.valueOf(
+                        convertParkingGroupToAccessDB(parkingParty.getParkingGroup())).intValue() : "";
         newRow[5] = 1;
         newRow[6] = 0;
         newRow[7] = new YearMonthDay(2000, 1, 1).toDateTimeAtMidnight().toDate();
