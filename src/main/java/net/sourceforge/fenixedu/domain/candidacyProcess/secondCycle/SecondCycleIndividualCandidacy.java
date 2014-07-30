@@ -183,6 +183,14 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
         getSelectedDegreesSet().addAll(selectedDegreeList);
 
+        for (Degree degree : selectedDegreeList) {
+            if (getSecondCycleIndividualCandidacySeriesGradeForDegree(degree) == null) {
+                SecondCycleIndividualCandidacySeriesGrade newSCICSeriesGrade = new SecondCycleIndividualCandidacySeriesGrade();
+                newSCICSeriesGrade.setDegree(degree);
+                getIndividualCandidacySeriesGradeSet().add(newSCICSeriesGrade);
+            }
+        }
+
         IndividualCandidacyEvent individualCandidacyEvent = getEvent();
         if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
             individualCandidacyEvent.open();
@@ -229,6 +237,14 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         }
 
         getSelectedDegreesSet().addAll(selectedDegreeList);
+
+        for (Degree degree : selectedDegreeList) {
+            if (getSecondCycleIndividualCandidacySeriesGradeForDegree(degree) == null) {
+                SecondCycleIndividualCandidacySeriesGrade newSCICSeriesGrade = new SecondCycleIndividualCandidacySeriesGrade();
+                newSCICSeriesGrade.setDegree(degree);
+                getIndividualCandidacySeriesGradeSet().add(newSCICSeriesGrade);
+            }
+        }
 
         IndividualCandidacyEvent individualCandidacyEvent = getEvent();
         if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
