@@ -134,7 +134,7 @@
 <schema name="net.sourceforge.fenixedu.domain.organizationalStructure.Unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="MANAGER_RESOURCES" > 
 	<slot name="name" key="unitName"/>
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.Person.nickname" type="net.sourceforge.fenixedu.domain.Person"> 
+<schema name="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean.nickname" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean"> 
 	<slot name="nickname" key="label.person.nickname">
 		<property name="size" value="50"/>
 	</slot>

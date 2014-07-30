@@ -32,11 +32,17 @@
 
 <h2><bean:message key="label.person.title.personalConsult"/></h2>
 
+<logic:messagesPresent message="true">
+	<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+		<p class="mtop1 mvert05">
+			<span class="error0"><bean:write name="messages" /></span>
+		</p>
+	</html:messages>
+</logic:messagesPresent>
+
 <p>
     <span class="error0"><!-- Error messages go here --><html:errors /></span>
 </p>
-
-
 		
 <span class="mtop5 mbottom5">		
 	<html:link action="/partyContacts.do?method=viewStudentLog">
@@ -45,7 +51,7 @@
 </span>
 		
 <script type="text/javascript" src="<%=request.getContextPath()%>/CSS/scripts/checkall.js"></script>
-
+	
     <!-- Photo -->
 	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 		<tr>
@@ -72,8 +78,7 @@
             </tr>
         </tbody>
     </table>
-	
-	
+    
 	<p> 
 		<span class="mtop1 mbottom0">
 			<html:link page="/uploadPhoto.do?method=prepare">
@@ -636,11 +641,11 @@
 		<td class="infoop"><strong><bean:message key="label.person.title.personal.info" /></strong></td>
 	</tr>
 </table>
-<fr:form action="/visualizePersonalInfo.do">
+<fr:form action="/updateNickname.do?method=updateNickname">
 	<p class="mtop15">
 		<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
 	</p>
-	<fr:edit id="nickname" name="LOGGED_USER_ATTRIBUTE" property="person" schema="net.sourceforge.fenixedu.domain.Person.nickname">
+	<fr:edit id="nickname" name="personBean" schema="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean.nickname">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
 			<fr:property name="columnClasses" value=",,tdclear "/>
