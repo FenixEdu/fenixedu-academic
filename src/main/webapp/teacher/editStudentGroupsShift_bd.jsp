@@ -209,7 +209,7 @@
 			<td>
 				<logic:notEmpty name="infoSiteStudentsAndShiftByStudentGroup" property="infoSiteStudentInformationList">
 					<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentsAndShiftByStudentGroup" property="infoSiteStudentInformationList" >
-						<bean:write name="infoSiteStudentInformation" property="number"/>
+						<bean:write name="infoSiteStudentInformation" property="username"/>
 					</logic:iterate>
 				</logic:notEmpty>
 				<logic:empty name="infoSiteStudentsAndShiftByStudentGroup" property="infoSiteStudentInformationList">

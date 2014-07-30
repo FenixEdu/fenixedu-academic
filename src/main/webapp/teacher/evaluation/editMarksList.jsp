@@ -131,6 +131,10 @@
 	
 			<h:dataTable value="#{evaluationManagementBackingBean.executionCourseAttends}" var="attends" styleClass="tstyle4">
 				<h:column>
+					<f:facet name="header"><h:outputText value="#{bundle['label.username']}"/></f:facet>
+					<h:outputText value="#{attends.registration.person.username}" />
+				</h:column>
+				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.number']}"/></f:facet>
 					<h:outputText value="#{attends.registration.number}" />
 				</h:column>

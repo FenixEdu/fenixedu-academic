@@ -87,6 +87,9 @@
 		<th>
 		</th>
 		<th>
+			<bean:message key="label.username" />
+		</th>
+		<th>
 			<bean:message key="label.teacher.StudentNumber" />
 		</th>
 		<logic:notPresent name="showPhotos">
@@ -109,6 +112,9 @@
 					<bean:write name="infoSiteStudentInformation" property="username"/>
 				</html:multibox>
 			</td>	
+			<td>
+				<bean:write name="infoSiteStudentInformation" property="username"/>
+			</td>
 			<td>
 				<bean:write name="infoSiteStudentInformation" property="number"/>
 			</td>

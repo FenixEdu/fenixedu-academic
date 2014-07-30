@@ -221,6 +221,7 @@
 </schema>
 
 <schema name="markSheet.view.evaluation" type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="enrolment.studentCurricularPlan.student.person.username" key="label.username"/>
 	<slot name="enrolment.studentCurricularPlan.student.number" key="label.number"/>
 	<slot name="enrolment.studentCurricularPlan.student.person.name" key="label.student.name"/>
 	<slot name="examDate" key="label.evaluationDate"/>		
@@ -341,8 +342,9 @@
 		type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherMarkBean">
 		
 	<slot name="toSubmitMark" key="label.toSubmit" />		
-	<slot name="attends.aluno.number" key="label.markSheet.number" read-only="true"/>
-	<slot name="attends.aluno.person.name" key="label.markSheet.name" read-only="true"/>
+	<slot name="attends.registration.person.username" key="label.markSheet.username" read-only="true"/>
+	<slot name="attends.registration.number" key="label.markSheet.number" read-only="true"/>
+	<slot name="attends.registration.person.name" key="label.markSheet.name" read-only="true"/>
 	<slot name="enrolmentEvaluationType" key="label.enrolmentEvaluationType" read-only="true"/>
 	<slot name="gradeValue" key="label.markToSubmit" read-only="true"/>
 	<slot name="evaluationDate" key="label.markSheet.evaluationDate" >
@@ -424,6 +426,7 @@
 
 <schema name="markSheet.teacher.gradeSubmission.view.submited.marks" bundle="APPLICATION_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
+	<slot name="enrolment.studentCurricularPlan.student.person.username" key="label.username"/>
 	<slot name="enrolment.studentCurricularPlan.student.number" key="label.number"/>
 	<slot name="enrolment.studentCurricularPlan.student.person.name" key="label.name"/>	
 	<slot name="gradeValue" key="label.grade"/>		

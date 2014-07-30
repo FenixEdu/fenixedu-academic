@@ -35,6 +35,9 @@
 <table class="tab_complex" cellspacing="1" cellpadding="2">
 	<tr>
 		<th nowrap>
+			<bean:message key="label.username"/>
+		</th>
+		<th nowrap>
 			<bean:message key="label.number"/>
 		</th>
 		<th nowrap>
@@ -71,6 +74,9 @@
 	<logic:iterate id="attendEntry" name="attendsMap">
 		<bean:define id="attends" name="attendEntry" property="key"/>
 		<tr>
+			<td nowrap>
+				<bean:write name="attends" property="registration.person.username"/>
+			</td>
 			<td nowrap>
 				<bean:write name="attends" property="registration.number"/>
 			</td>

@@ -92,6 +92,7 @@ function cleanSelect() {
 	</tr>
 	
 	<tr><td></td>
+		<th class="listClasses-header"><bean:message key="label.username"/></th>
 		<th class="listClasses-header"><bean:message key="label.number"/></th>
 		<th class="listClasses-header"><bean:message key="label.name"/></th>
 		<td class="listClasses-header"></td>
@@ -99,6 +100,7 @@ function cleanSelect() {
 	
 	<logic:iterate id="student" name="studentList"> 
 		<tr><td></td>
+			<td class="listClasses"><bean:write name="student" property="person.username"/></td>
 			<td class="listClasses"><bean:write name="student" property="number"/></td>
 			<td class="listClasses"><bean:write name="student" property="person.name"/></td>
 			<td class="listClasses">

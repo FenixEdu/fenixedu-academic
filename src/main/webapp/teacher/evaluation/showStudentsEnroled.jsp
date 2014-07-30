@@ -99,6 +99,9 @@
 			<h:outputText value="<table class='tstyle4'>" escape="false" />
 				<h:outputText value="<tr>" escape="false" />
 					<h:outputText value="<th>" escape="false" />
+						<h:outputText value="#{bundle['label.username']}"/>
+					<h:outputText value="</th>" escape="false" />
+					<h:outputText value="<th>" escape="false" />
 						<h:outputText value="#{bundle['label.number']}"/>
 					<h:outputText value="</th>" escape="false" />
 					<h:outputText value="<th>" escape="false" />
@@ -114,6 +117,9 @@
 
 				<fc:dataRepeater value="#{evaluationManagementBackingBean.writtenEvaluationEnrolments}" var="writtenEvaluationEnrolment">
 					<h:outputText value="<tr>" escape="false" />
+						<h:outputText value="<td>" escape="false" />
+							<h:outputText value="#{writtenEvaluationEnrolment.student.person.username}" />
+						<h:outputText value="</td>" escape="false" />
 						<h:outputText value="<td>" escape="false" />
 							<h:outputText value="#{writtenEvaluationEnrolment.student.number}" />
 						<h:outputText value="</td>" escape="false" />
