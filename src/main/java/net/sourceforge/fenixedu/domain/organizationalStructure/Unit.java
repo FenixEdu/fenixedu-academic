@@ -224,7 +224,7 @@ public class Unit extends Unit_Base {
                 && getCandidacyPrecedentDegreeInformationsSet().isEmpty() && getExamCoordinatorsSet().isEmpty()
                 && getExternalRegistrationDatasSet().isEmpty() && getFilesSet().isEmpty() && getPersistentGroupsSet().isEmpty()
                 && getExternalCourseLoadRequestsSet().isEmpty() && getExternalProgramCertificateRequestsSet().isEmpty()
-                && !getUnitGroupSet().isEmpty();
+                && getUnitGroupSet().isEmpty();
     }
 
     @Override
