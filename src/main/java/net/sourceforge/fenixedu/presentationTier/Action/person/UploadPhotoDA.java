@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto;
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
 import net.sourceforge.fenixedu.domain.Photograph;
@@ -40,6 +41,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -144,6 +146,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
 
         UploadOwnPhoto.run(new ByteArray(photo.getFileInputStream()).getBytes(),
                 ContentType.getContentType(photo.getContentType()));
+        request.setAttribute("personBean", new PersonBean(Authenticate.getUser().getPerson()));
         return mapping.findForward("visualizePersonalInformation");
     }
 
