@@ -886,7 +886,7 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
     }
 
     class EnrolmentInstructions  {
-    	String instructions;
+        LocalizedString instructions;
     }
 
     class EnrolmentPeriod  {

@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -32,7 +33,7 @@ public class EnrolmentInstructions extends EnrolmentInstructions_Base {
     public EnrolmentInstructions(final ExecutionSemester executionSemester) {
         this();
         setExecutionSemester(executionSemester);
-        setInstructions("");
+        setInstructions(new LocalizedString());
     }
 
     @Atomic
