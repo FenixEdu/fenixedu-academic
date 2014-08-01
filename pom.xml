@@ -33,26 +33,6 @@
                     <meminitial>1536</meminitial>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>de.sandroboehme.lesscss</groupId>
-                <artifactId>lesscss-maven-plugin</artifactId>
-                <version>1.6.1.1.0</version>
-                <configuration>
-                    <sourceDirectory>${project.basedir}/src/main/less/themes/ashes/less</sourceDirectory>
-                    <outputDirectory>${project.build.directory}/classes/META-INF/resources/themes/ashes/css</outputDirectory>
-                    <compress>true</compress>
-                    <includes>
-                        <include>style.less</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -76,6 +56,11 @@
             <groupId>org.fenixedu</groupId>
             <artifactId>fenixedu-id-cards</artifactId>
             <version>1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>ashes-theme</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
