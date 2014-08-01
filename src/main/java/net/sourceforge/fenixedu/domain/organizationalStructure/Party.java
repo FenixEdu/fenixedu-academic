@@ -100,6 +100,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public abstract String getPartyPresentationName();
 
+    public abstract MultiLanguageString getPartyName();
+
+    public abstract void setPartyName(MultiLanguageString partyName);
+
     public abstract void setName(String name);
 
     public abstract String getName();
@@ -109,14 +113,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         setRootDomainObject(Bennu.getInstance());
         createAccount(AccountType.INTERNAL);
         createAccount(AccountType.EXTERNAL);
-    }
-
-    @Override
-    public void setPartyName(MultiLanguageString partyName) {
-        if (partyName == null || partyName.isEmpty()) {
-            throw new DomainException("error.Party.empty.partyName");
-        }
-        super.setPartyName(partyName);
     }
 
     @Deprecated

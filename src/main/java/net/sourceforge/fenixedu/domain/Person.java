@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain;
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -42,7 +41,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
-import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -92,12 +90,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.domain.person.HumanName;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.IdDocument;
 import net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
@@ -139,7 +135,6 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
 
 public class Person extends Person_Base {
@@ -195,85 +190,49 @@ public class Person extends Person_Base {
 
     @Override
     public String getName() {
-        if (getProfile() != null) {
-            return getProfile().getFullName();
-        }
-        if (super.getPartyName() != null) {
-            return super.getPartyName().getPreferedContent();
-        }
-        return null;
+        return getProfile().getFullName();
     }
 
     @Override
     public void setName(final String name) {
-        ensureUserProfile();
-        if (getProfile().getGivenNames() == null && getProfile().getFamilyNames() == null) {
-            HumanName split = HumanName.decompose(name, false);
-            getProfile().changeName(split.getGivenNames(), split.getFamilyNames(), getProfile().getDisplayName());
-        } else {
-            throw new Error("Could not edit person name using unseparated name input");
-        }
+        throw new UnsupportedOperationException();
     }
 
     /**
      * @deprecated Use {@link UserProfile#getGivenNames()}
      */
     @Deprecated
-    @Override
     public String getGivenNames() {
-        if (getProfile() != null) {
-            return getProfile().getGivenNames();
-        }
-        if (super.getGivenNames() != null) {
-            super.getGivenNames();
-        }
-        return HumanName.decompose(getName(), false).getGivenNames();
+        return getProfile().getGivenNames();
     }
 
     /**
      * @deprecated Use {@link UserProfile#changeName(String, String, String)}
      */
-    @Override
     @Deprecated
     public void setGivenNames(final String name) {
-        ensureUserProfile();
-        getProfile().changeName(name, getProfile().getFamilyNames(), getProfile().getDisplayName());
+        throw new UnsupportedOperationException();
     }
 
     /**
      * @deprecated Use {@link UserProfile#getFamilyNames()}
      */
     @Deprecated
-    @Override
     public String getFamilyNames() {
-        if (getProfile() != null) {
-            return getProfile().getFamilyNames();
-        }
-        if (super.getFamilyNames() != null) {
-            super.getFamilyNames();
-        }
-        return HumanName.decompose(getName(), false).getFamilyNames();
+        return getProfile().getFamilyNames();
     }
 
     /**
      * @deprecated Use {@link UserProfile#changeName(String, String, String)}
      */
     @Deprecated
-    @Override
     public void setFamilyNames(final String name) {
-        ensureUserProfile();
-        getProfile().changeName(getProfile().getGivenNames(), name, getProfile().getDisplayName());
+        throw new UnsupportedOperationException();
     }
 
     @Deprecated
     public void setNames(final String name, final String givenNames, final String familyNames) {
-        ensureUserProfile();
-        if (givenNames != null || familyNames != null) {
-            getProfile().changeName(givenNames, familyNames, getProfile().getDisplayName());
-        } else {
-            HumanName split = HumanName.decompose(name, false);
-            getProfile().changeName(split.getGivenNames(), split.getFamilyNames(), getProfile().getDisplayName());
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -341,10 +300,11 @@ public class Person extends Person_Base {
         createUser();
     }
 
-    public Person(User user) {
+    public Person(UserProfile profile) {
         super();
+        setUser(profile.getUser());
+        setProfile(profile);
         setMaritalStatus(MaritalStatus.UNKNOWN);
-        setUser(user);
     }
 
     public void createUser() {
@@ -495,14 +455,6 @@ public class Person extends Person_Base {
         return this;
     }
 
-    /**
-     * FIXME: remove on the next major version
-     */
-    @Deprecated
-    public void editFromBean(final PersonInformationFromUniqueCardDTO personDTO) throws ParseException {
-        personDTO.edit(this);
-    }
-
     public void edit(final String name, final String address, final String phone, final String mobile, final String homepage,
             final String email) {
         setName(name);
@@ -542,14 +494,6 @@ public class Person extends Person_Base {
         }
 
         return this;
-    }
-
-    @Deprecated
-    public void update(final InfoPersonEditor updatedPersonalData, final Country country) {
-        updateProperties(updatedPersonalData);
-        if (country != null) {
-            setCountry(country);
-        }
     }
 
     /**
@@ -713,7 +657,6 @@ public class Person extends Person_Base {
 
         // personal info
         if (givenNames != null || familyName != null) {
-            ensureUserProfile();
             getProfile().changeName(givenNames, familyName, null);
         } else {
             if ((givenNames != null || familyName != null) && !fullName.equals(composedName)) {
@@ -791,9 +734,6 @@ public class Person extends Person_Base {
         if (getStudent() != null) {
             getStudent().delete();
         }
-        if (getPersonName() != null) {
-            getPersonName().delete();
-        }
 
         getManageableDepartmentCreditsSet().clear();
         getThesisEvaluationParticipantsSet().clear();
@@ -827,7 +767,6 @@ public class Person extends Person_Base {
 
     @Override
     public void setDisableSendEmails(Boolean disableSendEmails) {
-        ensureUserProfile();
         super.setDisableSendEmails(disableSendEmails);
         getProfile().setEmail(getEmailForSendingEmails());
     }
@@ -980,8 +919,7 @@ public class Person extends Person_Base {
     }
 
     public static Stream<Person> findPersonStream(final String name, final int size) {
-        return Stream.concat(PersonName.findPersonStream(name, size).map(n -> n.getPerson()), UserProfile
-                .searchByName(name, size).map(p -> p.getPerson()).filter(Objects::nonNull));
+        return UserProfile.searchByName(name, size).map(p -> p.getPerson()).filter(Objects::nonNull);
     }
 
     public static Collection<Person> findPerson(final String name, final int size) {
@@ -1589,67 +1527,15 @@ public class Person extends Person_Base {
         return accountabilityTypeEnum == AccountabilityTypeEnum.WORKING_CONTRACT;
     }
 
-    @Override
+    @Deprecated
     public String getNickname() {
-        if (getProfile() != null) {
-            return getProfile().getDisplayName();
-        }
-        final String nickname = super.getNickname();
-        return nickname == null ? getName() : nickname;
+        return getProfile().getDisplayName();
     }
 
-    @Override
+    @Deprecated
     @Atomic
     public void setNickname(final String nickname) {
-        ensureUserProfile();
-        getProfile().changeName(getProfile().getGivenNames(), getProfile().getFamilyNames(), nickname);
-    }
-
-    private static final Set<String> namePartsToIgnore = new HashSet<String>(5);
-    static {
-        namePartsToIgnore.add("de");
-        namePartsToIgnore.add("da");
-        namePartsToIgnore.add("do");
-        namePartsToIgnore.add("a");
-        namePartsToIgnore.add("e");
-        namePartsToIgnore.add("i");
-        namePartsToIgnore.add("o");
-        namePartsToIgnore.add("u");
-    }
-
-    private boolean validNickname(final String name) {
-        if (name != null && name.length() > 0) {
-            final String normalizedName = StringNormalizer.normalize(name.replace('-', ' '));
-            final String normalizedPersonName = StringNormalizer.normalize(getName().replace('-', ' '));
-
-            final String[] nameParts = normalizedName.split(" ");
-            final String[] personNameParts = normalizedPersonName.split(" ");
-            int matches = 0;
-            for (final String namePart : nameParts) {
-                if (!contains(personNameParts, namePart)) {
-                    return false;
-                }
-                if (!namePartsToIgnore.contains(namePart)) {
-                    matches++;
-                }
-            }
-            if (matches >= 2) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean contains(final String[] strings, final String xpto) {
-        if (xpto == null) {
-            return false;
-        }
-        for (final String string : strings) {
-            if (string.length() == xpto.length() && string.hashCode() == xpto.hashCode() && string.equals(xpto)) {
-                return true;
-            }
-        }
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     public String getHomepageWebAddress() {
@@ -2711,28 +2597,5 @@ public class Person extends Person_Base {
                 return person.getUser() != null;
             }
         }).transform(personToUser).toSet();
-    }
-
-    public void ensureUserProfile() {
-        if (getProfile() == null) {
-            String givenNames = super.getGivenNames();
-            String familyNames = super.getFamilyNames();
-            if (Strings.isNullOrEmpty(givenNames) && Strings.isNullOrEmpty(familyNames) && !Strings.isNullOrEmpty(getName())) {
-                HumanName name = HumanName.decompose(getName(), false);
-                givenNames = name.getGivenNames();
-                familyNames = name.getFamilyNames();
-            }
-            String displayName = super.getNickname();
-            if (displayName != null && !HumanName.namesMatch(givenNames + " " + familyNames, displayName)) {
-                displayName = null;
-            }
-            UserProfile profile = new UserProfile(givenNames, familyNames, displayName, getEmailForSendingEmails(), null);
-            setProfile(profile);
-            if (getUser() != null) {
-                getUser().setProfile(profile);
-                profile.setAvatarUrl(CoreConfiguration.getConfiguration().applicationUrl() + "/user/photo/"
-                        + getUser().getUsername());
-            }
-        }
     }
 }

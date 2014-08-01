@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecu
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
-import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
@@ -73,7 +72,6 @@ public class FenixInitializer implements ServletContextListener {
         }
 
         Installation.ensureInstallation();
-        loadPersonNames();
         loadUnitNames();
         startContactValidationServices();
 
@@ -135,13 +133,6 @@ public class FenixInitializer implements ServletContextListener {
 
     private void startContactValidationServices() {
         PhoneValidationUtils.getInstance();
-    }
-
-    private void loadPersonNames() {
-        long start = System.currentTimeMillis();
-        PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
-        long end = System.currentTimeMillis();
-        logger.info("Load of all person names took: " + (end - start) + "ms.");
     }
 
     private void loadUnitNames() {

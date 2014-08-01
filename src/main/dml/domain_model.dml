@@ -2527,12 +2527,9 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
     }
     
     class organizationalStructure.Party  {              
-        MultiLanguageString partyName;
     }
 
         class Person extends organizationalStructure.Party {
-        	String givenNames;
-        	String familyNames;
             YearMonthDay dateOfBirthYearMonthDay;
             String districtOfBirth;
             String districtSubdivisionOfBirth;
@@ -2546,7 +2543,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
             MaritalStatus maritalStatus;
             String nameOfFather;
             String nameOfMother;
-            String nickname;
             String parishOfBirth;
             String profession;
             String eidentifier;
@@ -2568,6 +2564,7 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
 			}
 
         class organizationalStructure.Unit extends organizationalStructure.Party {
+            MultiLanguageString partyName;
             String acronym;
             String code;
             YearMonthDay beginDateYearMonthDay;
@@ -2650,15 +2647,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
 
     class person.IdDocumentTypeObject  {
         IDDocumentType value;
-    }
-
-    class person.PersonName  {
-        Boolean isExternalPerson;
-        String name;
-    }
-
-    class person.PersonNamePart  {
-        String namePart;
     }
 
     class reimbursementGuide.ReimbursementGuide  {
@@ -4871,7 +4859,7 @@ relation PersonUserProfile {
         multiplicity 0..1;
     }
     .org.fenixedu.bennu.core.domain.UserProfile playsRole profile {
-        multiplicity 0..1;
+        multiplicity 1..1;
     }
 }
 
@@ -7882,20 +7870,6 @@ relation PersonDepartment {
     }
 }
 
-relation PersonNamePersonNamePart {
-    person.PersonName playsRole personName {
-        multiplicity *;
-    }
-    person.PersonNamePart playsRole personNamePart {
-        multiplicity *;
-    }
-}
-
-relation PersonPersonName {
-    Person playsRole person;
-    person.PersonName playsRole personName;
-}
-
 relation PersonTeacher {
     Teacher playsRole teacher;
     Person playsRole person;
@@ -9086,20 +9060,6 @@ relation RootDomainObjectPersistentGroupMembers {
 relation RootDomainObjectPersonAccount {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PersonAccount playsRole personAccounts {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPersonName {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    person.PersonName playsRole personName {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPersonNamePart {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    person.PersonNamePart playsRole personNamePart {
         multiplicity *;
     }
 }

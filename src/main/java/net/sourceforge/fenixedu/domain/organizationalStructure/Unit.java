@@ -94,6 +94,9 @@ public class Unit extends Unit_Base {
 
     @Override
     public void setPartyName(MultiLanguageString partyName) {
+        if (partyName == null || partyName.isEmpty()) {
+            throw new DomainException("error.Party.empty.partyName");
+        }
         super.setPartyName(partyName);
         setName(partyName.getPreferedContent());
     }

@@ -328,9 +328,8 @@ public class FenixBootstrapper {
     }
 
     static void createManagerUser(AdminUserSection adminSection, SchoolSetupSection schoolSetupSection) {
-        Bennu bennu = Bennu.getInstance();
         User adminUser = User.findByUsername(adminSection.getAdminUsername());
-        final Person person = new Person(adminUser);
+        final Person person = new Person(adminUser.getProfile());
         RoleType.grant(RoleType.SCIENTIFIC_COUNCIL, adminUser);
         RoleType.grant(RoleType.PERSONNEL_SECTION, adminUser);
         RoleType.grant(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE, adminUser);
@@ -338,7 +337,6 @@ public class FenixBootstrapper {
         RoleType.grant(RoleType.SPACE_MANAGER_SUPER_USER, adminUser);
         RoleType.grant(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, adminUser);
         RoleType.grant(RoleType.BOLONHA_MANAGER, adminUser);
-        person.setRootDomainObject(bennu);
         person.setCountry(Country.readDefault());
         person.setCountryOfBirth(Country.readDefault());
 

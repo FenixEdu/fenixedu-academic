@@ -39,12 +39,14 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.HumanName;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.UserProfile;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -386,11 +388,12 @@ public class DegreeCandidateDTO implements IFileLine {
     }
 
     public Person createPerson(String username) {
-        User user = new User(username);
+        HumanName split = HumanName.decompose(StringFormatter.prettyPrint(getName()), false);
+        UserProfile profile = new UserProfile(split.getGivenNames(), split.getFamilyNames(), null, null, null);
+        new User(username, profile);
 
-        final Person person = new Person(user);
+        final Person person = new Person(profile);
 
-        person.setName(StringFormatter.prettyPrint(getName()));
         person.setGender(getGender());
         person.setIdentification(getDocumentIdNumber(), IDDocumentType.IDENTITY_CARD);
 

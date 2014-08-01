@@ -78,7 +78,7 @@ public class UpdateEmergencyContactDA extends FenixDispatchAction {
         Person person = getLoggedPerson(request);
 
         try {
-            EmergencyContact.updateEmergencyContact(person, emergencyContactBean);
+            EmergencyContact.updateEmergencyContact(person.getProfile(), emergencyContactBean.getContact());
         } catch (DomainException e) {
             addActionMessage(request, e.getKey());
             request.setAttribute("personBean", new PersonBean(person));

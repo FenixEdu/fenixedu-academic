@@ -178,7 +178,6 @@ public class EmailAddress extends EmailAddress_Base {
     private void updateProfileEmail() {
         if (getParty() != null && getParty() instanceof Person) {
             Person person = (Person) getParty();
-            person.ensureUserProfile();
             person.getProfile().setEmail(person.getEmailForSendingEmails());
         }
     }

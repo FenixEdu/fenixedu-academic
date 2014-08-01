@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA.EmergencyContactBean;
+import org.fenixedu.bennu.core.domain.UserProfile;
+
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 
 public class EmergencyContact extends EmergencyContact_Base {
 
@@ -9,20 +11,18 @@ public class EmergencyContact extends EmergencyContact_Base {
         super();
     }
 
-    public EmergencyContact(String contact, Person person) {
+    protected EmergencyContact(UserProfile profile, String contact) {
         super();
-        super.setContact(contact);
-        person.ensureUserProfile();
-        person.getProfile().setEmergencyContact(this);
+        setContact(contact);
+        setProfile(profile);
     }
 
-    @Atomic
-    public static void updateEmergencyContact(Person person, EmergencyContactBean bean) {
-        person.ensureUserProfile();
-        if (person.getProfile().getEmergencyContact() == null) {
-            new EmergencyContact(bean.getContact(), person);
+    @Atomic(mode = TxMode.WRITE)
+    public static void updateEmergencyContact(UserProfile profile, String contact) {
+        if (profile.getEmergencyContact() == null) {
+            new EmergencyContact(profile, contact);
         } else {
-            person.getProfile().getEmergencyContact().setContact(bean.getContact());
+            profile.getEmergencyContact().setContact(contact);
         }
     }
 }
