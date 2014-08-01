@@ -110,7 +110,7 @@
 	<slot name="evaluationMethodEn"/>
 </schema>
 
-<schema name="editCompetenceCourseLoad.semestrial" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean" bundle="BOLONHA_MANAGER_RESOURCES">
+<schema name="editCompetenceCourseLoad.semestrial" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoadBean" bundle="BOLONHA_MANAGER_RESOURCES">
 	<slot name="theoreticalHours" key="theoreticalLesson">
 		<property name="size" value="2"/>
 	</slot>
@@ -140,7 +140,7 @@
 	</slot>
 </schema>
 
-<schema name="editCompetenceCourseLoad.anual.same.info" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean" bundle="BOLONHA_MANAGER_RESOURCES">
+<schema name="editCompetenceCourseLoad.anual.same.info" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoadBean" bundle="BOLONHA_MANAGER_RESOURCES">
 	<slot name="sameInformationForBothPeriods" layout="radio-postback">
 		<property name="destination" value="loadInformationPostBack"/>
 		<property name="classes" value="nobullet liinline"/>
@@ -174,7 +174,7 @@
 	</slot>
 </schema>
 
-<schema name="editCompetenceCourseLoad.anual.diferent.info" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean" bundle="BOLONHA_MANAGER_RESOURCES">
+<schema name="editCompetenceCourseLoad.anual.diferent.info" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoadBean" bundle="BOLONHA_MANAGER_RESOURCES">
 	<slot name="secondTheoreticalHours" key="theoreticalLesson">
 			<property name="size" value="2"/>
 	</slot>

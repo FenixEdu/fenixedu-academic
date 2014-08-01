@@ -16,13 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager;
+package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
-import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
 public class CompetenceCourseLoadBean implements Serializable {

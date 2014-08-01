@@ -68,7 +68,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ExecutionCoursePredicates;
-import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseManagementBean;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
@@ -2541,27 +2540,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     @Atomic
     public void dissociateCurricularCourse(final CurricularCourse curricularCourse) {
         super.removeAssociatedCurricularCourses(curricularCourse);
-    }
-
-    @Atomic
-    public static ExecutionCourse createExecutionCourse(final ExecutionCourseManagementBean bean) {
-        final ExecutionSemester executionSemester = bean.getSemester();
-
-        final ExecutionCourse existentExecutionCourse = executionSemester.getExecutionCourseByInitials(bean.getAcronym().trim());
-        if (existentExecutionCourse != null) {
-            throw new DomainException("error.executionCourse.with.acronym.for.semester.exists");
-        }
-
-        final ExecutionCourse executionCourse =
-                new ExecutionCourse(bean.getName(), bean.getAcronym().trim(), executionSemester, bean.getEntryPhase());
-
-        if (!bean.getCurricularCourseList().isEmpty()) {
-            for (CurricularCourse curricularCourse : bean.getCurricularCourseList()) {
-                executionCourse.associateCurricularCourse(curricularCourse);
-            }
-        }
-
-        return executionCourse;
     }
 
     public Double getEctsCredits() {
