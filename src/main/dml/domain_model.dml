@@ -885,8 +885,12 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         GradeScale gradeScale;
     }
 
+	/* The field 'tempInstructions' is to be removed on next major version
+	 * 		TODO: Replace String with LocalizedString
+	 */
     class EnrolmentInstructions  {
     	String instructions;
+        LocalizedString tempInstructions;
     }
 
     class EnrolmentPeriod  {

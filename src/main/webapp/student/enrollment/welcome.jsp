@@ -31,7 +31,7 @@
 %>
 
 <logic:present name="executionSemester" property="enrolmentInstructions">
-	<bean:write name="executionSemester" property="enrolmentInstructions.instructions" filter="false"/>
+	<bean:write name="executionSemester" property="enrolmentInstructions.tempInstructions.content" filter="false"/>
 </logic:present>
 
 <bean:define id="registrationOid" name="registration" property="externalId" />
