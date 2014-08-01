@@ -399,15 +399,15 @@ public class FenixAPIv1 {
             case EVALUATION:
 
                 Set<FenixCourse> fenixCourses =
-                        FluentIterable.from(((EvaluationEventBean) eventBean).getCourses())
-                                .transform(new Function<ExecutionCourse, FenixCourse>() {
+                FluentIterable.from(((EvaluationEventBean) eventBean).getCourses())
+                .transform(new Function<ExecutionCourse, FenixCourse>() {
 
-                                    @Override
-                                    public FenixCourse apply(ExecutionCourse course) {
-                                        return new FenixCourse(course);
-                                    }
+                    @Override
+                    public FenixCourse apply(ExecutionCourse course) {
+                        return new FenixCourse(course);
+                    }
 
-                                }).toSet();
+                }).toSet();
                 event = new FenixEvaluationEvent(eventPeriod, rooms, title, fenixCourses);
                 break;
             }
@@ -876,8 +876,12 @@ public class FenixAPIv1 {
     @Produces(JSON_UTF8)
     @Path("canteen")
     @FenixAPIPublic
-    public String canteen() {
-        return FenixAPICanteen.get();
+    public String canteen(@QueryParam("day") String day) {
+        validateDay(day);
+        if (StringUtils.isBlank(day)) {
+            day = dataFormatDay.format(new Date());
+        }
+        return FenixAPICanteen.get(day);
     }
 
     @GET
