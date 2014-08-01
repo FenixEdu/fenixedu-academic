@@ -30,9 +30,10 @@ import net.sourceforge.fenixedu.domain.PhotoType;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.io.ByteStreams;
 
 /**
  * 
@@ -54,7 +55,7 @@ public class StorePersonalPhoto {
     }
 
     private static void storePersonalPhoto(byte[] contents, ContentType contentType, Person person) {
-        person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, contentType, new ByteArray(contents)));
+        person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, contentType, contents));
     }
 
     @Atomic
@@ -62,7 +63,7 @@ public class StorePersonalPhoto {
             IOException {
         check(AcademicPredicates.MANAGE_PHD_PROCESSES);
         person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.getContentType(photoBean.getContentType()),
-                new ByteArray(photoBean.getFileInputStream())));
+                ByteStreams.toByteArray(photoBean.getFileInputStream())));
 
     }
 }

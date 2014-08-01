@@ -27,7 +27,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.imgscalr.Scalr;
@@ -45,7 +44,7 @@ public abstract class Picture extends Picture_Base {
     }
 
     public byte[] getBytes() {
-        return getPictureData().getBytes();
+        return getPictureData();
     }
 
     public void setupPictureMetadata(byte[] pictureData) {
@@ -73,8 +72,8 @@ public abstract class Picture extends Picture_Base {
         }
     }
 
-    static public ByteArray writeImage(BufferedImage image, ContentType fileFormat) {
-        return new ByteArray(writeImageAsBytes(image, fileFormat));
+    static public byte[] writeImage(BufferedImage image, ContentType fileFormat) {
+        return writeImageAsBytes(image, fileFormat);
     }
 
     /**

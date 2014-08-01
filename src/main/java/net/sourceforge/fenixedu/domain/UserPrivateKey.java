@@ -21,8 +21,6 @@ package net.sourceforge.fenixedu.domain;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-import net.sourceforge.fenixedu.util.ByteArray;
-
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
@@ -40,7 +38,7 @@ public class UserPrivateKey extends UserPrivateKey_Base {
         SecretKey skey = kgen.generateKey();
         byte[] raw = skey.getEncoded();
 
-        setPrivateKey(new ByteArray(raw));
+        setPrivateKey(raw);
         setPrivateKeyCreation(new DateTime());
         setPrivateKeyValidity(getPrivateKeyCreation().plusYears(1));
     }

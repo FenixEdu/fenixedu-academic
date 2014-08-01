@@ -36,11 +36,11 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 import com.google.common.io.BaseEncoding;
+import com.google.common.io.ByteStreams;
 
 public class PhotographUploadBean implements Serializable {
     public class UnableToProcessTheImage extends Exception {
@@ -88,7 +88,7 @@ public class PhotographUploadBean implements Serializable {
     }
 
     public void setFileInputStream(InputStream inputStream) throws IOException {
-        this.rawContents = (inputStream != null) ? new ByteArray(inputStream).getBytes() : null;
+        this.rawContents = (inputStream != null) ? ByteStreams.toByteArray(inputStream) : null;
     }
 
     public String getBase64RawThumbnail() {

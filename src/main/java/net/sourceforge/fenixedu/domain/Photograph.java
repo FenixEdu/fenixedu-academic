@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -75,7 +74,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         setSubmission(new DateTime());
     }
 
-    public Photograph(PhotoType photoType, ContentType contentType, ByteArray original) {
+    public Photograph(PhotoType photoType, ContentType contentType, byte[] original) {
         this();
         setPhotoType(photoType);
         new PictureOriginal(this, original, contentType);
@@ -184,7 +183,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     private BufferedImage read(PictureOriginal original) {
-        BufferedImage image = Picture.readImage(original.getPictureData().getBytes());
+        BufferedImage image = Picture.readImage(original.getPictureData());
         BufferedImage result = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
         result.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
         return result;
@@ -193,7 +192,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     public byte[] getCustomAvatar(int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
         PictureOriginal original = getOriginal();
         BufferedImage image =
-                original.getPictureFileFormat() == ContentType.JPG ? Picture.readImage(original.getPictureData().getBytes()) : read(original);
+                original.getPictureFileFormat() == ContentType.JPG ? Picture.readImage(original.getPictureData()) : read(original);
         return processImage(image, xRatio, yRatio, width, height, pictureMode);
     }
 
@@ -206,7 +205,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     @Deprecated
-    static private ByteArray compressImage(byte[] content, ContentType contentType) {
+    static private byte[] compressImage(byte[] content, ContentType contentType) {
         BufferedImage image;
         try {
             image = ImageIO.read(new ByteArrayInputStream(content));
@@ -220,7 +219,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
                 Math.min((double) COMPRESSED_PHOTO_WIDTH / image.getWidth(), (double) COMPRESSED_PHOTO_HEIGHT / image.getHeight());
 
         if (resizeFactor == 1) {
-            return new ByteArray(content);
+            return content;
         }
 
         // resize image
@@ -244,7 +243,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         } catch (IOException e) {
             throw new DomainException("photograph.compress.errorWritingImage", e);
         }
-        return new ByteArray(outputStream.toByteArray());
+        return outputStream.toByteArray();
     }
 
     @Override
@@ -273,7 +272,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         BufferedImage image = Picture.readImage(photo);
         BufferedImage jpeg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
         jpeg.createGraphics().drawImage(image, 0, 0, color, null);
-        return Picture.writeImage(jpeg, ContentType.JPG).getBytes();
+        return Picture.writeImage(jpeg, ContentType.JPG);
     }
 
     public byte[] exportAsJPEG(byte[] photo) {
@@ -306,7 +305,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
             break;
         }
         scaled = Scalr.resize(transformed, Method.QUALITY, Mode.FIT_EXACT, width, height);
-        return Picture.writeImage(scaled, ContentType.PNG).getBytes();
+        return Picture.writeImage(scaled, ContentType.PNG);
     }
 
 }

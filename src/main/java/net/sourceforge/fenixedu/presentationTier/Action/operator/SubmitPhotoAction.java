@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.struts.action.ActionForm;
@@ -50,6 +49,8 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.io.ByteStreams;
 
 @StrutsFunctionality(app = OperatorApplication.class, path = "submit-photo", titleKey = "link.operator.submitPhoto")
 @Mapping(module = "operator", path = "/submitPhoto")
@@ -142,6 +143,6 @@ public class SubmitPhotoAction extends FenixDispatchAction {
             throw new DomainException("error.operatorPhotoUpload.invalid.username");
         }
         person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.getContentType(photo.getContentType()),
-                new ByteArray(photo.getFileInputStream())));
+                ByteStreams.toByteArray(photo.getFileInputStream())));
     }
 }

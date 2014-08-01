@@ -124,7 +124,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 
         Cipher cipher = Cipher.getInstance("AES");
 
-        SecretKeySpec skeySpec = new SecretKeySpec(user.getPrivateKey().getPrivateKey().getBytes(), "AES");
+        SecretKeySpec skeySpec = new SecretKeySpec(user.getPrivateKey().getPrivateKey(), "AES");
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
 
         byte[] encrypted =

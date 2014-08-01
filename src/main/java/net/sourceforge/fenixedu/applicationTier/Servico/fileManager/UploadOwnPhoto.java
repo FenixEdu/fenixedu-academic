@@ -29,9 +29,10 @@ import net.sourceforge.fenixedu.domain.PhotoType;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.io.ByteStreams;
 
 /**
  * @author Pedro Santos (pmrsa)
@@ -42,7 +43,7 @@ public class UploadOwnPhoto {
     static public void run(byte[] contents, ContentType contentType) {
         check(RolePredicates.PERSON_PREDICATE);
         Person person = AccessControl.getPerson();
-        person.setPersonalPhoto(new Photograph(PhotoType.USER, contentType, new ByteArray(contents)));
+        person.setPersonalPhoto(new Photograph(PhotoType.USER, contentType, contents));
     }
 
     /**
@@ -57,7 +58,7 @@ public class UploadOwnPhoto {
      */
     @Atomic
     static public void upload(final PhotographUploadBean photo, final Person person) throws FileNotFoundException, IOException {
-        person.setPersonalPhoto(new Photograph(PhotoType.USER, ContentType.getContentType(photo.getContentType()), new ByteArray(
-                photo.getFileInputStream())));
+        person.setPersonalPhoto(new Photograph(PhotoType.USER, ContentType.getContentType(photo.getContentType()), ByteStreams
+                .toByteArray(photo.getFileInputStream())));
     }
 }

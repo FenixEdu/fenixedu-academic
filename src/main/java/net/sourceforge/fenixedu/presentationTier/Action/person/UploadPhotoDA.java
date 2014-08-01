@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA.EmergencyContactBean;
 import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.struts.action.ActionForm;
@@ -50,6 +49,8 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import com.google.common.io.ByteStreams;
 
 /**
  * Action to upload personal photographs.
@@ -130,7 +131,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
         String filename = request.getParameter("file");
         FileInputStream file = new FileInputStream(filename);
         DataOutputStream output = new DataOutputStream(response.getOutputStream());
-        output.write(new ByteArray(file).getBytes());
+        output.write(ByteStreams.toByteArray(file));
         output.close();
         return null;
     }
@@ -140,7 +141,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
         PhotographUploadBean photo = getRenderedObject();
         RenderUtils.invalidateViewState();
 
-        UploadOwnPhoto.run(new ByteArray(photo.getFileInputStream()).getBytes(),
+        UploadOwnPhoto.run(ByteStreams.toByteArray(photo.getFileInputStream()),
                 ContentType.getContentType(photo.getContentType()));
         final Person person = Authenticate.getUser().getPerson();
         request.setAttribute("personBean", new PersonBean(person));

@@ -276,12 +276,6 @@ valueType net.sourceforge.fenixedu.domain.util.EmailAddressList as EmailAddressL
 }
 
 
-valueType net.sourceforge.fenixedu.util.ByteArray as ByteArray {
-    externalizeWith {
-        bytearray getBytes();
-    }
-}
-
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope {
     externalizeWith {
         Integer getType();
@@ -1085,7 +1079,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     	Integer width;
     	Integer height;
     	ContentType pictureFileFormat;
-    	ByteArray pictureData;
+    	bytearray pictureData;
     }
     
     class photograph.PictureOriginal extends photograph.Picture {
@@ -6232,7 +6226,7 @@ class ExternalUser  {
 	
 	
 class UserPrivateKey {
-    ByteArray privateKey;
+    bytearray privateKey;
     DateTime privateKeyCreation;
     DateTime privateKeyValidity;
 }

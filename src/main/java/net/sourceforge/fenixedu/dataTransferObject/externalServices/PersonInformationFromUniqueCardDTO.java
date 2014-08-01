@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.PhotoType;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.commons.lang.StringUtils;
@@ -356,7 +355,7 @@ public class PersonInformationFromUniqueCardDTO {
         }
 
         if (getPhoto() != null) {
-            person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.JPG, new ByteArray(getPhoto())));
+            person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.JPG, getPhoto()));
         }
 
         final PhysicalAddressData physicalAddress = new PhysicalAddressData();

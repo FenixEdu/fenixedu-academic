@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocum
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.photograph.Picture;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -44,8 +43,7 @@ public class SetStudentPhotosFromCandidacies extends CronTask {
                                 if (contentType != null) {
                                     withContentType++;
                                     if (chew(content)) {
-                                        final Photograph p =
-                                                new Photograph(PhotoType.INSTITUTIONAL, contentType, new ByteArray(content));
+                                        final Photograph p = new Photograph(PhotoType.INSTITUTIONAL, contentType, content);
                                         p.setState(PhotoState.APPROVED);
                                         person.setPersonalPhoto(p);
                                         fixed++;
