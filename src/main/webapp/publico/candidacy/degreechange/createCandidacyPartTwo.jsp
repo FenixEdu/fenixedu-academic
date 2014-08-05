@@ -261,6 +261,7 @@
 			</div>
 	
 			<p style="margin-bottom: 0.5em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</p>
+			<div class="flowerror">
 			<fr:edit id="individualCandidacyProcessBean.observations"
 				name="individualCandidacyProcessBean"
 				schema="PublicCandidacyProcessBean.observations">
@@ -268,6 +269,7 @@
 			    <fr:property name="labelExcluded" value="true"/>
 			  </fr:layout>
 			</fr:edit>
+			</div>
 
 			<h3><bean:message key="message.is.student.of.utl.network" bundle="CANDIDATE_RESOURCES"/> <span class="red">*</span></h3>
 			<div>

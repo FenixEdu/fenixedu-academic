@@ -1932,7 +1932,7 @@
     	<property name="columns" value="40" />
     	<property name="rows" value="3" />
     	<property name="maxlength" value="250"/>
-		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+		<validator class="pt.ist.fenixWebFramework.rendererExtensions.validators.TextLengthValidator">
 			<property name="type" value="character"/>
 			<property name="length" value="250"/>
 		</validator>			 			
