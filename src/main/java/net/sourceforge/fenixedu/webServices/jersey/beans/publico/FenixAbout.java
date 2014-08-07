@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.commons.i18n.I18N;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
 import com.google.common.base.Function;
@@ -116,19 +117,16 @@ public class FenixAbout {
 
     @JsonRawValue
     public String getRss() {
-
-        final JsonObject jObjPt = new JsonObject();
-        final JsonObject jObjEn = new JsonObject();
+        String locale = I18N.getLocale().toString().replace("_", "-");
         final JsonObject jArr = new JsonObject();
 
-        jObjPt.addProperty("news", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlPt());
-        jObjPt.addProperty("events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlPt());
-
-        jObjEn.addProperty("news", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlEn());
-        jObjEn.addProperty("events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlEn());
-
-        jArr.add("pt-PT", jObjPt);
-        jArr.add("en-GB", jObjEn);
+        if ("en-GB".equalsIgnoreCase(locale)) {
+            jArr.addProperty("news", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlEn());
+            jArr.addProperty("events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlEn());
+        } else {
+            jArr.addProperty("news", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlPt());
+            jArr.addProperty("events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlPt());
+        }
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonElement je = new JsonParser().parse(jArr.toString());
