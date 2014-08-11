@@ -1370,55 +1370,49 @@ public class FenixAPIv1 {
     public Response spaceBlueprint(@PathParam("id") String oid, final @QueryParam("format") String format) {
 
         final boolean isDwgFormat = format != null && format.equals("dwg");
-        final Space spaceDomainObject = getDomainObject(oid, Space.class);
-        final Space space;
+        final Space space = getDomainObject(oid, Space.class);
 
-        if (spaceDomainObject != null) {
-            space = SpaceBlueprintsDWGProcessor.getSuroundingSpaceMostRecentBlueprint(spaceDomainObject);
-            if (space == null) {
-                return Response.noContent().build();
-            }
-        } else {
+        if (space == null) {
             return Response.noContent().build();
         }
 
         StreamingOutput stream;
 
-        final Optional<BlueprintFile> optional = space.getBlueprintFile();
-        if (optional.isPresent()) {
-            if (isDwgFormat) {
-                final InputStream inputStream = optional.get().getStream();
-                stream = new StreamingOutput() {
-                    @Override
-                    public void write(OutputStream output) throws IOException, WebApplicationException {
-                        ByteStreams.copy(inputStream, output);
-                    }
-                };
-            } else {
-                stream = new StreamingOutput() {
-                    @Override
-                    public void write(OutputStream os) throws IOException, WebApplicationException {
-                        Boolean isToViewOriginalSpaceBlueprint = false;
-                        Boolean viewBlueprintNumbers = true;
-                        Boolean isToViewIdentifications = true;
-                        Boolean isToViewDoorNumbers = false;
-                        BigDecimal scalePercentage = new BigDecimal(100);
-                        DateTime now = new DateTime();
-                        try {
-                            SpaceBlueprintsDWGProcessor.writeBlueprint(space, now, isToViewOriginalSpaceBlueprint,
-                                    viewBlueprintNumbers, isToViewIdentifications, isToViewDoorNumbers, scalePercentage, os);
-                        } catch (UnavailableException e) {
-                            throw newApplicationError(Status.BAD_REQUEST, "problem found", "problem found");
-                        }
-                        os.flush();
-                    }
-                };
+        if (isDwgFormat) {
+            Optional<BlueprintFile> optional = space.getBlueprintFile();
+            if (!optional.isPresent()) {
+                optional = SpaceBlueprintsDWGProcessor.getSuroundingSpaceMostRecentBlueprint(space).getBlueprintFile();
             }
-            final String contentType = isDwgFormat ? "application/dwg" : "image/jpeg";
-            final String filename = space.getExternalId() + (isDwgFormat ? ".dwg" : ".jpg");
-            return Response.ok(stream, contentType).header("Content-Disposition", "attachment; filename=" + filename).build();
+            final InputStream inputStream = optional.get().getStream();
+            stream = new StreamingOutput() {
+                @Override
+                public void write(OutputStream output) throws IOException, WebApplicationException {
+                    ByteStreams.copy(inputStream, output);
+                }
+            };
+        } else {
+            stream = new StreamingOutput() {
+                @Override
+                public void write(OutputStream os) throws IOException, WebApplicationException {
+                    Boolean isToViewOriginalSpaceBlueprint = false;
+                    Boolean viewBlueprintNumbers = true;
+                    Boolean isToViewIdentifications = true;
+                    Boolean isToViewDoorNumbers = false;
+                    BigDecimal scalePercentage = new BigDecimal(100);
+                    DateTime now = new DateTime();
+                    try {
+                        SpaceBlueprintsDWGProcessor.writeBlueprint(space, now, isToViewOriginalSpaceBlueprint,
+                                viewBlueprintNumbers, isToViewIdentifications, isToViewDoorNumbers, scalePercentage, os);
+                    } catch (UnavailableException e) {
+                        throw newApplicationError(Status.BAD_REQUEST, "problem found", "problem found");
+                    }
+                    os.flush();
+                }
+            };
         }
-        return Response.noContent().build();
+        final String contentType = isDwgFormat ? "application/dwg" : "image/jpeg";
+        final String filename = space.getExternalId() + (isDwgFormat ? ".dwg" : ".jpg");
+        return Response.ok(stream, contentType).header("Content-Disposition", "attachment; filename=" + filename).build();
     }
 
     private FenixSpace.Room getFenixRoom(Space room, java.util.Calendar rightNow) {
