@@ -117,10 +117,10 @@ public class FenixAbout {
 
     @JsonRawValue
     public String getRss() {
-        String locale = I18N.getLocale().toString().replace("_", "-");
+        Locale locale = I18N.getLocale();
         final JsonObject jArr = new JsonObject();
 
-        if ("en-GB".equalsIgnoreCase(locale)) {
+        if (Locale.UK.equals(locale)) {
             jArr.addProperty("news", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrlEn());
             jArr.addProperty("events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrlEn());
         } else {
