@@ -160,6 +160,7 @@
 						
 
 		<h2 class="mtop15 mbottom05"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/></h2>
+		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.observations"
 			name="individualCandidacyProcessBean"
 			schema="PublicCandidacyProcessBean.observations">
@@ -167,6 +168,7 @@
 		    <fr:property name="labelExcluded" value="true"/>
 		  </fr:layout>
 		</fr:edit>
+		</div>
 
 	</logic:notEmpty>
 	

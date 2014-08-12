@@ -264,6 +264,7 @@
 		</div>
 
 		<p style="margin-bottom: 0.5em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.observations"
 			name="individualCandidacyProcessBean"
 			schema="PublicCandidacyProcessBean.observations">
@@ -271,6 +272,7 @@
 		    <fr:property name="labelExcluded" value="true"/>
 		  </fr:layout>
 		</fr:edit>
+		</div>
 
 		<h2 style="margin-top: 1em;"><bean:message key="title.second.cycle.honor.declaration" bundle="CANDIDATE_RESOURCES"/></h2>
 		<p><bean:message key="message.second.cycle.honor.declaration.detail" bundle="CANDIDATE_RESOURCES"/></p>

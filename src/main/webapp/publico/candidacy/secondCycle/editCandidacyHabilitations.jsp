@@ -303,6 +303,7 @@
 		</logic:empty>
 
 		<p style="margin-bottom: 0.5em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.observations"
 			name="individualCandidacyProcessBean"
 			schema="PublicCandidacyProcessBean.observations">
@@ -310,6 +311,7 @@
 		    <fr:property name="labelExcluded" value="true"/>
 		  </fr:layout>
 		</fr:edit>
+		</div>
 		
 		<p class="mtop15">
 			<html:submit onclick="document.getElementById(\"skipValidationId\").value=\"false\"; document.getElementById('methodId').value='editCandidacyQualifications'; this.form.submit();"><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>
