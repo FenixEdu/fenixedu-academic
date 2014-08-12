@@ -82,6 +82,9 @@
 			
 			<fr:link 	name="view" link="${downloadUrl}" label="label.view,PHD_RESOURCES"
 						order="0" contextRelative="false" hasContext="false" />
+			<fr:link 	name="delete" link="/phdIndividualProgramProcess.do?method=deleteGuidanceDocument&phdDocument=${externalId}&processId=${processId}"
+						label="label.delete,PHD_RESOURCES"
+						order="0" />
 			
 			<fr:property name="sortBy" value="documentType=asc" />
 		</fr:layout>
