@@ -37,7 +37,7 @@
 				
 	<h:outputText value="<h2>#{viewTeacherService.departmentName}</h2> <p />" escape="false"/>
 	
-	<h:form>
+	<h:form id="teacherServiceByCourseForm">
 		<h:panelGrid columns="1" styleClass="search">
 			<h:panelGrid columns="2" styleClass="search">
 				<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="aright" />
@@ -46,7 +46,7 @@
 					<f:selectItems binding="#{viewTeacherService.executionYearItems}"/>
 				</fc:selectOneMenu>
 			 	<h:outputText value="#{bundle['label.common.courseSemester']}&nbsp;" escape="false" styleClass="aright" />
-				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionPeriodID}"
+				<fc:selectOneMenu id="selectedExecutionPeriodID" value="#{viewTeacherService.selectedExecutionPeriodID}"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionPeriodsItems}"/>
 				</fc:selectOneMenu>
@@ -57,17 +57,13 @@
 					<f:selectItems binding="#{viewTeacherService.viewOptionsItems}"/>
 				</h:selectManyCheckbox>
 			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<h:commandButton action="#{viewTeacherService.exportTeacherServiceByCourseToXLS}" value="#{bundle['label.teacherService.exportToExcel'] }" >
+				</h:commandButton>
+			</h:panelGrid>
 		</h:panelGrid>
-		
-		
-		
 	</h:form>	
-	
-	<h:form>
-		<h:commandLink action="#{viewTeacherService.exportTeacherServiceByCourseToXLS}" value="#{bundle['label.teacherService.exportToExcel'] }" >
-		</h:commandLink>
-	</h:form>
-	
+
 	
 	<h:outputText value="<br/>" escape="false" />
 	

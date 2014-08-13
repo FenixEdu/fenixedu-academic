@@ -58,9 +58,9 @@ import org.joda.time.format.PeriodFormatterBuilder;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 /**
- * 
+ *
  * @author amak, jpmsit
- * 
+ *
  */
 public class ViewTeacherService extends FenixBackingBean {
 
@@ -266,7 +266,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
         List<String> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
-        Object[] args =
+        Object[] args = 
                 { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getExternalId(), ExecutionPeriodsIDs };
 
         this.executionCourseServiceDTO =
@@ -351,61 +351,64 @@ public class ViewTeacherService extends FenixBackingBean {
     }
 
     private void fillSpreadSheedResults(final StyledExcelSpreadsheet spreadsheet) {
-
+        boolean bothSemestersSelected = this.selectedExecutionPeriodID.equals(BOTH_SEMESTERS_ID);
         for (ExecutionCourseDistributionServiceEntryDTO entry : this.executionCourseServiceDTO) {
-            int teacherColumns =
-                    NUMBER_OF_FIXED_COLUMNS + HOURS_PER_SHIFT_INFORMATION_COLUMNS + STUDENT_ENROLMENT_INFORMATION_COLUMNS
-                            + COURSE_INFORMATION_COLUMNS + STUDENTS_PER_SHIFT_INFORMATION_COLUMNS;
-            spreadsheet.newRow();
-            spreadsheet.addCell(entry.getExecutionCourseName());
-            spreadsheet.addCell(entry.getExecutionCourseCampus());
-            spreadsheet.addCell(entry.getExecutionCourseDegreeList());
-            spreadsheet.addCell(entry.getCurricularYearListString());
-            spreadsheet.addCell(entry.getExecutionCourseSemester());
 
-            spreadsheet.addCell(entry.getExecutionCourseFirstTimeEnrollementStudentNumber());
-            spreadsheet.addCell(entry.getExecutionCourseSecondTimeEnrollementStudentNumber());
-
-            spreadsheet.addCell(entry.getExecutionCourseStudentsTotalNumber());
-
-            spreadsheet.addCell(entry.getExecutionCourseTheoreticalHours());
-            spreadsheet.addCell(entry.getExecutionCoursePraticalHours());
-            spreadsheet.addCell(entry.getExecutionCourseLaboratorialHours());
-            spreadsheet.addCell(entry.getExecutionCourseTheoPratHours());
-            spreadsheet.addCell(entry.getExecutionCourseSeminaryHours());
-            spreadsheet.addCell(entry.getExecutionCourseProblemsHours());
-            spreadsheet.addCell(entry.getExecutionCourseTutorialOrientationHours());
-            spreadsheet.addCell(entry.getExecutionCourseFieldWorkHours());
-            spreadsheet.addCell(entry.getExecutionCourseTrainingPeriodHours());
-
-            spreadsheet.addCell(entry.getExecutionCourseTotalHours());
-            spreadsheet.addCell(entry.getExecutionCourseDurationBalance());
-
-            spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByTheoreticalShift());
-            spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByPraticalShift());
-            spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByLaboratorialShift());
-            spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByTheoPraticalShift());
-            spreadsheet.addCell(entry.getExecutionCourseStudentsNumberBySeminaryShift());
-            spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByProblemsShift());
-            spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByTutorialOrientationShift());
-            spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByFieldWorkShift());
-            spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByTrainingPeriodShift());
-
-            for (TeacherExecutionCourseServiceDTO teacher : entry.getTeacherExecutionCourseServiceList()) {
+            boolean isInSelectedSemester = this.selectedExecutionPeriodID.equals(entry.getExecutionCourseSemester());
+            if (bothSemestersSelected || isInSelectedSemester) {
+                int teacherColumns =
+                        NUMBER_OF_FIXED_COLUMNS + HOURS_PER_SHIFT_INFORMATION_COLUMNS + STUDENT_ENROLMENT_INFORMATION_COLUMNS
+                        + COURSE_INFORMATION_COLUMNS + STUDENTS_PER_SHIFT_INFORMATION_COLUMNS;
                 spreadsheet.newRow();
-                spreadsheet.addCell(teacher.getTeacherUsername());
-                spreadsheet.addCell(teacher.getTeacherName());
+                spreadsheet.addCell(entry.getExecutionCourseName());
+                spreadsheet.addCell(entry.getExecutionCourseCampus());
+                spreadsheet.addCell(entry.getExecutionCourseDegreeList());
+                spreadsheet.addCell(entry.getCurricularYearListString());
+                spreadsheet.addCell(entry.getExecutionCourseSemester());
 
-                PeriodFormatter periodFormatter =
-                        new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2).appendHours().appendSuffix(":")
-                                .appendMinutes().toFormatter();
-                spreadsheet.addCell(periodFormatter.print(teacher.getTimeSpentByTeacher().toPeriod()));
+                spreadsheet.addCell(entry.getExecutionCourseFirstTimeEnrollementStudentNumber());
+                spreadsheet.addCell(entry.getExecutionCourseSecondTimeEnrollementStudentNumber());
 
-                if (!teacher.getTeacherOfDepartment()) {
-                    spreadsheet.addCell(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.hours"));
+                spreadsheet.addCell(entry.getExecutionCourseStudentsTotalNumber());
+
+                spreadsheet.addCell(entry.getExecutionCourseTheoreticalHours());
+                spreadsheet.addCell(entry.getExecutionCoursePraticalHours());
+                spreadsheet.addCell(entry.getExecutionCourseLaboratorialHours());
+                spreadsheet.addCell(entry.getExecutionCourseTheoPratHours());
+                spreadsheet.addCell(entry.getExecutionCourseSeminaryHours());
+                spreadsheet.addCell(entry.getExecutionCourseProblemsHours());
+                spreadsheet.addCell(entry.getExecutionCourseTutorialOrientationHours());
+                spreadsheet.addCell(entry.getExecutionCourseFieldWorkHours());
+                spreadsheet.addCell(entry.getExecutionCourseTrainingPeriodHours());
+
+                spreadsheet.addCell(entry.getExecutionCourseTotalHours());
+                spreadsheet.addCell(entry.getExecutionCourseDurationBalance());
+
+                spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByTheoreticalShift());
+                spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByPraticalShift());
+                spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByLaboratorialShift());
+                spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByTheoPraticalShift());
+                spreadsheet.addCell(entry.getExecutionCourseStudentsNumberBySeminaryShift());
+                spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByProblemsShift());
+                spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByTutorialOrientationShift());
+                spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByFieldWorkShift());
+                spreadsheet.addCell(entry.getExecutionCourseStudentsNumberByTrainingPeriodShift());
+
+                for (TeacherExecutionCourseServiceDTO teacher : entry.getTeacherExecutionCourseServiceList()) {
+                    spreadsheet.newRow();
+                    spreadsheet.addCell(teacher.getTeacherUsername());
+                    spreadsheet.addCell(teacher.getTeacherName());
+
+                    PeriodFormatter periodFormatter =
+                            new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2).appendHours()
+                            .appendSuffix(":").appendMinutes().toFormatter();
+                    spreadsheet.addCell(periodFormatter.print(teacher.getTimeSpentByTeacher().toPeriod()));
+
+                    if (!teacher.getTeacherOfDepartment()) {
+                        spreadsheet.addCell(BundleUtil.getString(Bundle.DEPARTMENT_MEMBER, "label.teacherService.hours"));
+                    }
                 }
             }
-
         }
     }
 
