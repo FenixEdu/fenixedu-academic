@@ -234,7 +234,7 @@ public class ViewTeacherService extends FenixBackingBean {
         Person person = getUserView().getPerson();
         Department currentWorkingDepartment =
                 person.getEmployee() != null ? person.getEmployee().getCurrentDepartmentWorkingPlace() : null;
-                return currentWorkingDepartment == null ? null : currentWorkingDepartment.getRealName();
+        return currentWorkingDepartment == null ? null : currentWorkingDepartment.getRealName();
     }
 
     public String getTeacherService() throws FenixServiceException, ParseException {
@@ -266,8 +266,8 @@ public class ViewTeacherService extends FenixBackingBean {
 
         List<String> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
-        Object[] args =
-            { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getExternalId(), ExecutionPeriodsIDs };
+        Object[] args = 
+                { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getExternalId(), ExecutionPeriodsIDs };
 
         this.executionCourseServiceDTO =
                 ReadTeacherServiceDistributionByCourse.runReadTeacherServiceDistributionByCourse(getUserView().getPerson()
@@ -358,7 +358,7 @@ public class ViewTeacherService extends FenixBackingBean {
             if (bothSemestersSelected || isInSelectedSemester) {
                 int teacherColumns =
                         NUMBER_OF_FIXED_COLUMNS + HOURS_PER_SHIFT_INFORMATION_COLUMNS + STUDENT_ENROLMENT_INFORMATION_COLUMNS
-                                + COURSE_INFORMATION_COLUMNS + STUDENTS_PER_SHIFT_INFORMATION_COLUMNS;
+                        + COURSE_INFORMATION_COLUMNS + STUDENTS_PER_SHIFT_INFORMATION_COLUMNS;
                 spreadsheet.newRow();
                 spreadsheet.addCell(entry.getExecutionCourseName());
                 spreadsheet.addCell(entry.getExecutionCourseCampus());
@@ -401,7 +401,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
                     PeriodFormatter periodFormatter =
                             new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2).appendHours()
-                                    .appendSuffix(":").appendMinutes().toFormatter();
+                            .appendSuffix(":").appendMinutes().toFormatter();
                     spreadsheet.addCell(periodFormatter.print(teacher.getTimeSpentByTeacher().toPeriod()));
 
                     if (!teacher.getTeacherOfDepartment()) {

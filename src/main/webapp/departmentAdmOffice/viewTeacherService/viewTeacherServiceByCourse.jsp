@@ -58,8 +58,8 @@
 				</h:selectManyCheckbox>
 			</h:panelGrid>
 			<h:panelGrid columns="1">
-			<h:commandButton action="#{viewTeacherService.exportTeacherServiceByCourseToXLS}" value="#{bundle['label.teacherService.exportToExcel'] }" >
-			</h:commandButton>
+				<h:commandButton action="#{viewTeacherService.exportTeacherServiceByCourseToXLS}" value="#{bundle['label.teacherService.exportToExcel'] }" >
+				</h:commandButton>
 			</h:panelGrid>
 		</h:panelGrid>
 	</h:form>	
