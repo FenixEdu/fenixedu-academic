@@ -56,13 +56,22 @@ public class SeparateSecondCycle extends CronTask {
                                 .info("1 - Repeating separate for: "
                                         + studentCurricularPlan.getRegistration().getStudent().getNumber());
 
-                        separateByStudentNumberProcedure(studentCurricularPlan.getRegistration().getStudent(),
-                                studentCurricularPlan.getDegreeCurricularPlan());
+                        try {
+                            separateByStudentNumberProcedure(studentCurricularPlan.getRegistration().getStudent(),
+                                    studentCurricularPlan.getDegreeCurricularPlan());
+                        } catch (Exception e) { //abort transaction and continue
+                            getLogger().error("Repeating separate student", e);
+                        }
                     } else {
 
                         getLogger().info(
                                 "Separating Student: " + studentCurricularPlan.getRegistration().getStudent().getNumber());
-                        separateStudentProcedure(studentCurricularPlan);
+
+                        try {
+                            separateStudentProcedure(studentCurricularPlan);
+                        } catch (Exception e) { //abort transaction and continue
+                            getLogger().error("Separating students with rules", e);
+                        }
                     }
 
                 } else if (studentCurricularPlan.hasRegistration() && studentCurricularPlan.getRegistration().isConcluded()) {
@@ -71,8 +80,13 @@ public class SeparateSecondCycle extends CronTask {
                         getLogger()
                                 .info("2 - Repeating separate for: "
                                         + studentCurricularPlan.getRegistration().getStudent().getNumber());
-                        separateByStudentNumberProcedure(studentCurricularPlan.getRegistration().getStudent(),
-                                studentCurricularPlan.getDegreeCurricularPlan());
+                        try {
+                            separateByStudentNumberProcedure(studentCurricularPlan.getRegistration().getStudent(),
+                                    studentCurricularPlan.getDegreeCurricularPlan());
+
+                        } catch (Exception e) { //abort transaction and continue
+                            getLogger().error("Repeating separate student", e);
+                        }
                     }
                 }
             }
@@ -122,21 +136,13 @@ public class SeparateSecondCycle extends CronTask {
 
     @Atomic(mode = TxMode.WRITE)
     private void separateStudentProcedure(StudentCurricularPlan studentCurricularPlan) {
-        try {
-            new SeparationCyclesManagement().separateSecondCycle(studentCurricularPlan);
-        } catch (final Exception e) {
-            getLogger().error("Separating students with rules", e);
-        }
+        new SeparationCyclesManagement().separateSecondCycle(studentCurricularPlan);
     }
 
     @Atomic(mode = TxMode.WRITE)
     private void separateByStudentNumberProcedure(Student student, DegreeCurricularPlan dcp) {
         final Registration registration = student.getMostRecentRegistration(dcp);
-        try {
-            new SeparateByStudentNumber().separateSecondCycle(registration.getLastStudentCurricularPlan());
-        } catch (final Exception e) {
-            getLogger().error("Repeating separate student", e);
-        }
+        new SeparateByStudentNumber().separateSecondCycle(registration.getLastStudentCurricularPlan());
     }
 
     private class SeparateByStudentNumber extends SeparationCyclesManagement {
