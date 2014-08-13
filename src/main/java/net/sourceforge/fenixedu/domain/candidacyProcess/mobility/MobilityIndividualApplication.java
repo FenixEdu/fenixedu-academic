@@ -183,9 +183,9 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
     }
 
     boolean hasProcessWithAcceptNotificationAtDate(final DateTime dateTime) {
-        return getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction() != null
-                && getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction().getWhenOccured()
-                        .isBefore(dateTime);
+        return getMostRecentApprovedLearningAgreement() == null
+                || (getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction() != null && getMostRecentApprovedLearningAgreement()
+                        .getMostRecentSentEmailAcceptedStudentAction().getWhenOccured().isBefore(dateTime));
     }
 
     public List<ApprovedLearningAgreementDocumentFile> getActiveApprovedLearningAgreements() {

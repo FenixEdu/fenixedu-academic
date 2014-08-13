@@ -355,9 +355,13 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     public boolean isStudentAcceptedAtDate(final DateTime dateTime) {
-        return !isCandidacyCancelled() && !isCandidacyRejected() && getValidatedByMobilityCoordinator() && getValidatedByGri()
-                && getCandidacy().getMostRecentApprovedLearningAgreement() != null
-                && getCandidacy().getMostRecentApprovedLearningAgreement().getUploadTime().isBefore(dateTime);
+        return !isCandidacyCancelled()
+                && !isCandidacyRejected()
+                && getValidatedByMobilityCoordinator()
+                && getValidatedByGri()
+                && ((getCandidacy().getMostRecentApprovedLearningAgreement() != null && getCandidacy()
+                        .getMostRecentApprovedLearningAgreement().getUploadTime().isBefore(dateTime)) || getMobilityProgram()
+                        .getRegistrationAgreement().isOnlyAllowedDegreeEnrolment());
     }
 
     public boolean isStudentAcceptedAndNotifiedAtDate(final DateTime dateTime) {
