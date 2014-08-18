@@ -19,24 +19,32 @@
 
 --%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<html:xhtml/>
 
+<h2>${fr:message('resources.StudentResources', 'label.enrollment.courses')}</h2>
 
-<logic:present role="role(STUDENT)">
+<div class="alert alert-danger">
+    <html:messages id="messages" message="true" bundle="STUDENT_RESOURCES">
+        ${messages}
+    </html:messages>
+</div>
+<c:if test="${start != null}">
+    <div class="col-sm-3">
+        <dl class="dl-horizontal">
+            <dt>${fr:message('resources.StudentResources', 'label.time.current')}</dt>
+            <dd>${now.toString('HH:mm:ss')}</dd>
 
-    <h2><bean:message key="label.enrollment.courses" bundle="STUDENT_RESOURCES"/></h2>
-    
-	<logic:messagesPresent message="true">
-		<ul class="mtop15 mbottom1 nobullet list2">
-			<html:messages id="messages" message="true" bundle="STUDENT_RESOURCES">
-				<li><span class="error0"><bean:write name="messages" /></span></li>
-			</html:messages>
-		</ul>
-	</logic:messagesPresent>
-    
-   
-</logic:present>
+            <dt>${fr:message('resources.StudentResources', 'label.enrolment.begin')}</dt>
+            <dd>${start.toString('HH:mm:ss')}</dd>
 
+            <dt>${fr:message('resources.StudentResources', 'label.time.remaining')}</dt>
+            <dd>${remaining}</dd>
+        </dl>
+    </div>
+    <div class="col-sm-2">
+       <a class="btn btn-primary" href="${pageContext.request.contextPath}/student/bolonhaStudentEnrollment.do?method=prepare&registrationOid=${registration.externalId}">
+            <span class="glyphicon glyphicon-refresh"></span> ${fr:message('resources.ApplicationResources', 'button.update')}
+        </a>
+    </div>
+</c:if>

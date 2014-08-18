@@ -25,8 +25,6 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%><html:xhtml/>
 
-<logic:present role="role(STUDENT)">
-
 <%
 	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	request.setAttribute("executionSemester", executionSemester);
@@ -38,11 +36,6 @@
 
 <bean:define id="registrationOid" name="registration" property="externalId" />
 
-<fr:form action="/bolonhaStudentEnrollment.do?method=prepare&registrationOid=${registrationOid}">
-	<p class="mtop15">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message  key="label.continue" bundle="APPLICATION_RESOURCES"/></html:submit>
-	</p>
-</fr:form>
-
-
-</logic:present>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/student/bolonhaStudentEnrollment.do?method=prepare&registrationOid=${registrationOid}">
+    ${fr:message('resources.ApplicationResources', 'label.continue')}
+</a>

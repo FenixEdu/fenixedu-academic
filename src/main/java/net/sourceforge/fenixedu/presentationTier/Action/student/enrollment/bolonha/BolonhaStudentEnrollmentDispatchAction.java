@@ -33,6 +33,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.Stude
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -73,9 +77,14 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         final Registration registration = getDomainObject(request, "registrationOid");
+        request.setAttribute("registration", registration);
         return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration.getLastStudentCurricularPlan(),
                 ExecutionSemester.readActualExecutionSemester());
     }
+
+    private static final PeriodFormatter FORMATTER = new PeriodFormatterBuilder().printZeroAlways().appendHours()
+            .appendSuffix("h").appendSeparator(" ").appendMinutes().appendSuffix("m").appendSeparator(" ").appendSeconds()
+            .appendSuffix("s").toFormatter();
 
     @Override
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -85,6 +94,16 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
                 StudentCurricularPlanEnrolmentPreConditions.checkPreConditionsToEnrol(studentCurricularPlan, executionSemester);
 
         if (!result.isValid()) {
+            if (result.getEnrolmentPeriod() != null) {
+                DateTime now = DateTime.now().withMillisOfSecond(0);
+                DateTime start = result.getEnrolmentPeriod().getStartDateDateTime();
+                Period period = new Period(start.getMillis() - now.getMillis());
+                if (start.toLocalDate().equals(now.toLocalDate())) {
+                    request.setAttribute("now", now);
+                    request.setAttribute("start", start);
+                    request.setAttribute("remaining", FORMATTER.print(period));
+                }
+            }
             addActionMessage(request, result.message(), result.args());
             return mapping.findForward("enrollmentCannotProceed");
         }

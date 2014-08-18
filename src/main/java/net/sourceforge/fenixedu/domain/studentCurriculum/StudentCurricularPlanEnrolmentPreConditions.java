@@ -34,6 +34,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         private boolean valid = false;
         private String message;
         private String[] args;
+        private EnrolmentPeriod period;
 
         private EnrolmentPreConditionResult valid(final boolean value) {
             this.valid = value;
@@ -50,12 +51,21 @@ public class StudentCurricularPlanEnrolmentPreConditions {
             return this;
         }
 
+        private EnrolmentPreConditionResult withPeriod(EnrolmentPeriod period) {
+            this.period = period;
+            return this;
+        }
+
         public String message() {
             return this.message;
         }
 
         public String[] args() {
             return this.args;
+        }
+
+        public EnrolmentPeriod getEnrolmentPeriod() {
+            return period;
         }
 
         static public EnrolmentPreConditionResult createTrue() {
@@ -72,8 +82,9 @@ public class StudentCurricularPlanEnrolmentPreConditions {
      */
     static private EnrolmentPreConditionResult outOfPeriodResult(final String periodType, final EnrolmentPeriod nextPeriod) {
         if (nextPeriod != null) {
-            return createFalse("message.out.curricular.course.enrolment.period." + periodType, nextPeriod.getStartDateDateTime()
-                    .toString(DEFAULT_DATE_FORMAT), nextPeriod.getEndDateDateTime().toString(DEFAULT_DATE_FORMAT));
+            return createFalse("message.out.curricular.course.enrolment.period." + periodType,
+                    nextPeriod.getStartDateDateTime().toString(DEFAULT_DATE_FORMAT),
+                    nextPeriod.getEndDateDateTime().toString(DEFAULT_DATE_FORMAT)).withPeriod(nextPeriod);
         } else {
             return createFalse("message.out.curricular.course.enrolment.period." + periodType + ".noDates");
         }
