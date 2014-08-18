@@ -48,9 +48,16 @@
             </fr:layout>
         </fr:edit>
 
-        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-            <bean:message bundle="APPLICATION_RESOURCES" key="label.continue" />
-        </html:submit>
+
+        <div class="infoop">
+            <bean:message key="label.data.authorization.information.enrolment" bundle="STUDENT_RESOURCES" />
+        </div>
+
+        <p>
+            <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+                <bean:message bundle="APPLICATION_RESOURCES" key="label.continue" />
+            </html:submit>
+        </p>
     </fr:form>
 
     <p class="mtop2"><em><bean:message key="label.enrollment.personalData.changes" /></em></p>
