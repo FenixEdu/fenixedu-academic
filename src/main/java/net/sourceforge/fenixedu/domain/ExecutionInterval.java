@@ -86,10 +86,15 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
         return false;
     }
 
+    @Deprecated
     public Over23CandidacyPeriod getOver23CandidacyPeriod() {
         final List<Over23CandidacyPeriod> candidacyPeriods =
                 (List<Over23CandidacyPeriod>) getCandidacyPeriods(Over23CandidacyPeriod.class);
         return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
+    }
+
+    public List<Over23CandidacyPeriod> getOver23CandidacyPeriods() {
+        return (List<Over23CandidacyPeriod>) getCandidacyPeriods(Over23CandidacyPeriod.class);
     }
 
     public boolean hasOver23CandidacyPeriod() {

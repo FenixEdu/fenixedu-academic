@@ -30,7 +30,7 @@
 
 	<ul>
 		<li>
-			Maiores de 23 anos - 
+			1º Ciclo - 
 			<bean:write name="over23Size" /> - 
 			<html:link action="/candidacyPaymentCodes.do?method=prepareCreatePaymentCodes&type=OVER_23_INDIVIDUAL_CANDIDACY_PROCESS" >Criar Referências</html:link>
 		</li>

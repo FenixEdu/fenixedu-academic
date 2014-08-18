@@ -53,7 +53,7 @@
 
 
 
-<h1>Candidato: Maiores de 23 anos (1º Ciclo)</h1>
+<h1>Candidato: 1º Ciclo</h1>
 
 <p>Ao Concurso Especial de Acesso destinado a Maiores de 23 anos podem candidatar-se os indivíduos que, cumulativamente:</p>
 

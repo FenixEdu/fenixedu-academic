@@ -43,15 +43,17 @@ public class Over23CandidacyPeriod extends Over23CandidacyPeriod_Base {
         if (candidacyProcess == null) {
             throw new DomainException("error.Over23CandidacyPeriod.invalid.candidacy.process", args);
         }
-        checkIfCanCreate(executionInterval);
+        checkIfCanCreate(executionInterval, start, end);
         super.init(executionInterval, start, end);
         addCandidacyProcesses(candidacyProcess);
     }
 
-    private void checkIfCanCreate(final ExecutionInterval executionInterval) {
-        if (executionInterval.hasOver23CandidacyPeriod()) {
-            throw new DomainException("error.Over23CandidacyPeriod.executionInterval.already.contains.candidacyPeriod.type",
-                    executionInterval.getName());
+    private void checkIfCanCreate(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+        for (final Over23CandidacyPeriod period : executionInterval.getOver23CandidacyPeriods()) {
+            if (period.intercept(start, end)) {
+                throw new DomainException("error.SecondCycleCandidacyPeriod.interception", executionInterval.getName(),
+                        start.toString("dd/MM/yyyy HH:mm"), end.toString("dd/MM/yyyy HH:mm"));
+            }
         }
     }
 

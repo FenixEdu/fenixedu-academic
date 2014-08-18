@@ -43,7 +43,7 @@
 	<li>Concurso Especial de Acesso
 		<ul style="margin-top: 0.5em;">
 			<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>html/perfil/candidato/lic/curso-medio.shtml">Titulares de Cursos MÃ©dios e Superiores</a></li>
-			<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href='<%= request.getContextPath() + "/candidaturas/lic/maiores_vinte_tres" %>'>Maiores de 23 anos</a></li>
+			<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href='<%= request.getContextPath() + "/candidaturas/lic/maiores_vinte_tres" %>'>1º Ciclo</a></li>
 		</ul>
 	</li>
 </ul>
