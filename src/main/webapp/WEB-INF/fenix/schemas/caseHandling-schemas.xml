@@ -1932,7 +1932,7 @@
     	<property name="columns" value="40" />
     	<property name="rows" value="3" />
     	<property name="maxlength" value="250"/>
-		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+		<validator class="pt.ist.fenixWebFramework.rendererExtensions.validators.TextLengthValidator">
 			<property name="type" value="character"/>
 			<property name="length" value="250"/>
 		</validator>			 			
@@ -2204,7 +2204,7 @@
 
 <schema name="MobilityIndividualApplicationProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" bundle="ACADEMIC_OFFICE_RESOURCES"
 		extends="IndividualCandidacyProcess.view">
-	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" >
+	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationProtocol.description.content" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" >
 		<property name="classes" value="bold" />
 	</slot>
 	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
@@ -2326,7 +2326,7 @@
 
 <schema name="MobilityIndividualApplicationProcess.choose.program" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="selectedMobilityProgram" key="label.mobility.available.programs" layout="menu-select">
-		<property name="format" value="${registrationAgreement}" />
+		<property name="format" value="${name.content}" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.MobilityProgramProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
@@ -2350,7 +2350,7 @@
 
 <schema name="ErasmusIndividualCandidacyProcess.university.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="selectedMobilityProgram" key="label.mobility.program" layout="menu-select-postback">
-		<property name="format" value="${name}" />
+		<property name="format" value="${name.content}" />
 		<property name="destination" value="chooseMobilityProgramPostback"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.MobilityProgramProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -2813,7 +2813,7 @@
 
 <schema name="MobilityChooseProgramBean.selectMobilityProgram" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$ChooseMobilityProgramBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="mobilityProgram" layout="menu-select-postback" key="label.mobility.program" >
-		<property name="format" value="${registrationAgreement.description}" />
+		<property name="format" value="${registrationProtocol.description.content}" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$MobilityApplicationsMobilityProgramsProvider" />
 	</slot>
 </schema>
@@ -2883,14 +2883,14 @@
 
 <schema name="MobilityIndividualApplicationProcess.show.not.viewed.learning.agreements" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
-	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
+	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationProtocol.description.content" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	<slot name="personalDetails.name" key="label.name" />
 	<slot name="candidacy.mostRecentApprovedLearningAgreement.uploadTime" key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES" />
 </schema>
 
 <schema name="MobilityIndividualApplicationProcess.show.not.viewed.alerts.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
-	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
+	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationProtocol.description.content" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	<slot name="personalDetails.name" key="label.name" />
 	<slot name="mostRecentAlert.whenCreated" key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES" />
 </schema>
@@ -2900,7 +2900,7 @@
 	<slot name="personalDetails.name" key="label.name" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="mobilityProgram" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES">
-		<property name="format" value="${registrationAgreement.description}" />
+		<property name="format" value="${registrationProtocol.description.content}" />
 	</slot>
 	<slot name="validatedByGri" key="label.erasmus.validated.by.gri" />
 	<slot name="validatedByMobilityCoordinator" key="label.erasmus.validated.by.coordinator" />

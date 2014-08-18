@@ -71,7 +71,7 @@
 </div>
 
 <h1><bean:write name="application.name"/></h1>
-<bean:define id="mobilityProgram" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationAgreement.description"/>
+<bean:define id="mobilityProgram" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationProtocol.description.content"/>
 <h1><strong><bean:write name="mobilityProgram"/></strong></h1>
 
 <logic:equal name="individualCandidacyProcess" property="isCandidacyProcessWithEidentifer" value="false">

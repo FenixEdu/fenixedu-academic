@@ -255,7 +255,7 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(registration.getRegimeType(executionYear) != null ? registration.getRegimeType(executionYear).getName() : "");
 
         // Tipo de Aluno (AFA, AM, ERASMUS, etc)
-        row.setCell(registration.getRegistrationAgreement() != null ? registration.getRegistrationAgreement().getName() : "");
+        row.setCell(registration.getRegistrationProtocol() != null ? registration.getRegistrationProtocol().getCode() : "");
 
         // Regime de Ingresso no Curso Actual (código)
         Ingression ingression = sourceRegistration.getIngression();

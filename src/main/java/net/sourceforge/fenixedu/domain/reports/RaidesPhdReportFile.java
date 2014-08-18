@@ -644,8 +644,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         }
 
         // Tipo de Acordo (AFA, AM, ERASMUS, etc)
-        row.setCell(registration != null ? registration.getRegistrationAgreement() != null ? registration
-                .getRegistrationAgreement().getName() : "" : "");
+        row.setCell(registration != null ? registration.getRegistrationProtocol() != null ? registration
+                .getRegistrationProtocol().getCode() : "" : "");
 
         // Data de Apresentação Pública da CAT
         if (process.getSeminarProcess() != null && process.getSeminarProcess().getPresentationDate() != null) {

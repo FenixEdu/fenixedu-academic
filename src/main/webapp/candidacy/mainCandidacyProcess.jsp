@@ -32,7 +32,7 @@
 <%-- no candidacy process for current year --%>
 <logic:empty name="process">
 	<h2><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></h2>
-	
+
 	<bean:message key="label.candidacy.no.candidacies.for.current.year" bundle="APPLICATION_RESOURCES" />:
 	 <logic:equal name="canCreateProcess" value="true">
 		<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareCreateNewProcess"%>'>
@@ -44,11 +44,34 @@
 		<br/>
 		<br/>
 		<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
-			<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId">
-				<html:option value=""><!-- w3c complient --></html:option>
-				<html:options collection="executionIntervals" property="externalId" labelProperty="name"/>
-			</html:select>
-			<html:submit><bean:message key="label.choose"/> </html:submit>
+			<table class="tstyle4 thlight thright mtop025">
+				<tr>
+					<th><bean:message key="label.executionYear" bundle="APPLICATION_RESOURCES" /></th>
+					<td>
+						<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" onchange="this.form.submit();">
+							<html:option value=""><!-- w3c complient --></html:option>
+							<html:options collection="executionIntervals" property="externalId" labelProperty="qualifiedName"/>
+						</html:select>
+					</td>
+				</tr>
+				<logic:notEmpty name="candidacyProcesses">
+				<tr>
+					<th><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES" /></th>
+					<td>
+						<html:select bundle="HTMLALT_RESOURCES" property="selectedProcessId">
+							<html:option value=""><!-- w3c complient --></html:option>
+							<html:options collection="candidacyProcesses" property="externalId" labelProperty="candidacyPeriod.presentationName"/>
+						</html:select>
+					</td>
+				</tr>
+				</logic:notEmpty>
+				<tr>
+					<td> </td>
+					<td><html:submit><bean:message key="label.choose"/> </html:submit></td>
+				</tr>
+			</table>
+			
+			
 		</html:form>
 		<br/>
 		<br/>
@@ -77,11 +100,32 @@
 	<logic:greaterThan name="executionIntervalsSize" value="1">
 		<br/>
 		<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
-			<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" value="<%= executionIntervalId.toString() %>">
-				<html:option value=""><!-- w3c complient --></html:option>
-				<html:options collection="executionIntervals" property="externalId" labelProperty="name"/>
-			</html:select>
-			<html:submit><bean:message key="label.choose"/> </html:submit>
+			<table class="tstyle4 thlight thright mtop025">
+				<tr>
+					<th><bean:message key="label.executionYear" bundle="APPLICATION_RESOURCES" /></th>
+					<td>
+						<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" onchange="this.form.submit();">
+							<html:option value=""><!-- w3c complient --></html:option>
+							<html:options collection="executionIntervals" property="externalId" labelProperty="qualifiedName"/>
+						</html:select>
+					</td>
+				</tr>
+				<logic:notEmpty name="candidacyProcesses">
+				<tr>
+					<th><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES" /></th>
+					<td>
+						<html:select bundle="HTMLALT_RESOURCES" property="selectedProcessId">
+							<html:option value=""><!-- w3c complient --></html:option>
+							<html:options collection="candidacyProcesses" property="externalId" labelProperty="candidacyPeriod.presentationName"/>
+						</html:select>
+					</td>
+				</tr>
+				</logic:notEmpty>
+				<tr>
+					<td> </td>
+					<td><html:submit><bean:message key="label.choose"/> </html:submit></td>
+				</tr>
+			</table>
 			
 			<p><bean:message key="label.hide.cancelled.candidacies" bundle="CANDIDATE_RESOURCES"/>
 			<fr:edit id="hide.cancelled.candidacies" name="hideCancelledCandidacies" slot="value">
@@ -171,7 +215,7 @@
 					<bean:write name="hash" property="email"/>
 				</td>
 				<td>
-					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/lic/vinte_tres_anos/submissao?hash=<%= code %>">Candidaturas Maiores de 23 anos</a>
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/lic/vinte_tres_anos/submissao?hash=<%= code %>">Candidaturas 1º Ciclo</a>
 				</td>
 				<td>
 					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/segundo_ciclo/submissao?hash=<%= code %>">Candidatura Segundo Ciclo</a>

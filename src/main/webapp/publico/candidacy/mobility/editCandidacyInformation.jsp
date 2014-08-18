@@ -50,7 +50,7 @@
 </div>
 
 <h1><bean:write name="application.name"/></h1>
-<bean:define id="mobilityProgram" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationAgreement.description"/>
+<bean:define id="mobilityProgram" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationProtocol.description.content"/>
 <h1><strong><bean:write name="mobilityProgram"/></strong></h1>
 
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"/>
@@ -140,6 +140,7 @@
 		</logic:equal>
 		
 		<h2 class="mtop15 mbottom05"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/></h2>
+		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.observations"
 			name="individualCandidacyProcessBean"
 			schema="PublicCandidacyProcessBean.observations">
@@ -147,6 +148,7 @@
 		    <fr:property name="labelExcluded" value="true"/>
 		  </fr:layout>
 		</fr:edit>
+		</div>
 		
 	
 	<p class="mtop15">	

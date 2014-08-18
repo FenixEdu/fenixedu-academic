@@ -39,6 +39,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
+import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteGuidanceDocument;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadGuidanceDocument;
@@ -512,6 +514,14 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
         PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) getRenderedObject("documentBean");
 
         ExecuteProcessActivity.run(getProcess(request), UploadGuidanceDocument.class, bean);
+        return manageGuidanceDocuments(mapping, form, request, response);
+    }
+
+    public ActionForward deleteGuidanceDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdGuidanceDocument document = getDomainObject(request, "phdDocument");
+
+        ExecuteProcessActivity.run(getProcess(request), DeleteGuidanceDocument.class, document);
         return manageGuidanceDocuments(mapping, form, request, response);
     }
 

@@ -311,9 +311,10 @@
 </schema>
 
 <schema name="ingression.information" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="registrationAgreement" key="label.registrationAgreement" layout="menu-postback">
+	<slot name="registrationProtocol" key="label.registrationAgreement" layout="menu-select-postback">
 		<property name="destination" value="agreementPostBack"/>
 		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.RegistrationAgreementProvider" />
+		<property name="format" value="${description.content}" />
 	</slot>
 	<slot name="ingression" key="label.ingression.short" layout="menu-select-postback"  >
 		<property name="format" value="${name} - ${description}" />
@@ -329,9 +330,10 @@
 </schema>
 
 <schema name="ingression.information.requestAgreementInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="registrationAgreement" key="label.registrationAgreement" layout="menu-postback">
+	<slot name="registrationProtocol" key="label.registrationAgreement" layout="menu-select-postback">
 		<property name="destination" value="agreementPostBack"/>
 		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.RegistrationAgreementProvider" />
+		<property name="format" value="${description.content}" />
 	</slot>
 	<slot name="agreementInformation" key="label.agreementInformation">
 		<property name="size" value="10"/>
@@ -358,7 +360,7 @@
 
 <schema name="ingression.information-edit" bundle="ACADEMIC_OFFICE_RESOURCES" extends="ingression.information"
 		type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" >
-	<remove name="registrationAgreement"/>
+	<remove name="registrationProtocol"/>
 </schema>
 
 
@@ -415,7 +417,7 @@
 </schema>
 
 <schema name="student.show.ingressionInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="registrationAgreement" key="label.registrationAgreement" />
+	<slot name="registrationProtocol.description.content" key="label.registrationAgreement" />
 	<slot name="ingression" layout="format"  >
 		<property name="format" value="${name} - ${description}" />
 	</slot>		
@@ -467,7 +469,7 @@
     </slot>	
 	<slot name="degreeNameWithDescription" key="label.degree" />
 	<slot name="activeStateType" key="label.currentState" />
-	<slot name="registrationAgreement" key="label.registrationAgreement" />	
+	<slot name="registrationProtocol.description.content" key="label.registrationAgreement" />
 	<slot name="numberEnroledCurricularCoursesInCurrentYear" key="label.numberEnroledCurricularCoursesInCurrentYear" />
 </schema>
 
@@ -494,7 +496,7 @@
 
 <schema name="student.registrationDetail.short" extends="student.registrationsToList"  
 		type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<remove name="registrationAgreement" />
+	<remove name="registrationProtocol" />
 </schema>
 
 
@@ -1937,7 +1939,7 @@
 
 <schema name="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityProgram.description"
 		type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram">
-	<slot name="registrationAgreement.description"/>
+	<slot name="registrationProtocol.description.content"/>
 </schema>
   
 <schema name="person.photo" type="net.sourceforge.fenixedu.domain.Person">

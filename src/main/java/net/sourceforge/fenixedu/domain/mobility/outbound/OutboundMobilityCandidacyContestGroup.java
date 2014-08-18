@@ -38,10 +38,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -231,7 +231,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
                         row2.setCell(getString("label.degrees"), contestFromCandidacy.getOutboundMobilityCandidacyContestGroup()
                                 .getDescription());
                         row2.setCell(getString("label.mobility.program"), mobilityAgreement.getMobilityProgram()
-                                .getRegistrationAgreement().getDescription());
+                                .getRegistrationProtocol().getDescription().getContent());
                         row2.setCell(getString("label.country"), country == null ? "" : country.getName());
                         row2.setCell(getString("label.university"), unit.getPresentationName());
                     }

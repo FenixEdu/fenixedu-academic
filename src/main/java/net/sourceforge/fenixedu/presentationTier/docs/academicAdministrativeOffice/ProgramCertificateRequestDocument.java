@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -170,10 +169,10 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
     private String getStudentNumber() {
         final Registration registration = getDocumentRequest().getRegistration();
-        if (CourseLoadRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+        if (registration.getRegistrationProtocol().isMilitaryAgreement()) {
             final String agreementInformation = registration.getAgreementInformation();
             if (!StringUtils.isEmpty(agreementInformation)) {
-                return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
+                return registration.getRegistrationProtocol().getCode() + SINGLE_SPACE + agreementInformation;
             }
         }
         return registration.getStudent().getNumber().toString();

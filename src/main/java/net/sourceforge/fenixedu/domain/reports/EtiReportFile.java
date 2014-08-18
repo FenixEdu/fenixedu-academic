@@ -135,7 +135,7 @@ public class EtiReportFile extends EtiReportFile_Base {
         final EnrolmentEvaluation improvement = enrolment.getLatestFinalImprovementEnrolmentEvaluation();
         row.setCell(improvement == null ? "" : improvement.getGradeValue());
 
-        row.setCell(registration.getRegistrationAgreement().getName());
+        row.setCell(registration.getRegistrationProtocol().getCode());
         row.setCell(countPreviousEnrolments(curricularCourse, executionSemesterForPreviousEnrolmentCount, student));
         Attends attends = null; // enrolment.getAttendsFor(executionSemester);
         for (final Attends a : enrolment.getAttendsSet()) {

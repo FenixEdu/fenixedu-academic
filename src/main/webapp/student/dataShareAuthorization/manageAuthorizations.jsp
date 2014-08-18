@@ -54,4 +54,8 @@
             </fr:layout>
         </fr:edit>
     </fr:form>
+    
+    <div class="infoop">
+    	<bean:message key="label.data.authorization.information" bundle="STUDENT_RESOURCES" />
+    </div>
 </logic:present>

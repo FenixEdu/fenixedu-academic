@@ -773,6 +773,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         final PaymentPlanBean paymentPlanBean = new PaymentPlanBean(ExecutionYear.readCurrentExecutionYear());
 
         paymentPlanBean.setMain(true);
+        paymentPlanBean.setForAlien(false);
         paymentPlanBean.setForFirstTimeInstitutionStudents(false);
         paymentPlanBean.setForPartialRegime(false);
         paymentPlanBean.setForStudentEnroledOnSecondSemesterOnly(false);
@@ -796,6 +797,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         final PaymentPlanBean paymentPlanBean = new PaymentPlanBean(ExecutionYear.readCurrentExecutionYear());
 
         paymentPlanBean.setMain(true);
+        paymentPlanBean.setForAlien(false);
         paymentPlanBean.setForFirstTimeInstitutionStudents(false);
         paymentPlanBean.setForPartialRegime(false);
         paymentPlanBean.setForStudentEnroledOnSecondSemesterOnly(false);

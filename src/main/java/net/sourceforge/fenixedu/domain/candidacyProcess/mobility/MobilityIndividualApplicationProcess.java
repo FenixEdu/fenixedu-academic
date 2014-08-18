@@ -276,7 +276,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
         }
 
-        if (!getCandidacy().getMobilityProgram().getRegistrationAgreement().isOnlyAllowedDegreeEnrolment()
+        if (!getCandidacy().getMobilityProgram().getRegistrationProtocol().isOnlyAllowedDegreeEnrolment()
                 && getActiveFileForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) == null) {
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
         }
@@ -355,9 +355,13 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     public boolean isStudentAcceptedAtDate(final DateTime dateTime) {
-        return !isCandidacyCancelled() && !isCandidacyRejected() && getValidatedByMobilityCoordinator() && getValidatedByGri()
-                && getCandidacy().getMostRecentApprovedLearningAgreement() != null
-                && getCandidacy().getMostRecentApprovedLearningAgreement().getUploadTime().isBefore(dateTime);
+        return !isCandidacyCancelled()
+                && !isCandidacyRejected()
+                && getValidatedByMobilityCoordinator()
+                && getValidatedByGri()
+                && ((getCandidacy().getMostRecentApprovedLearningAgreement() != null && getCandidacy()
+                        .getMostRecentApprovedLearningAgreement().getUploadTime().isBefore(dateTime)) || getMobilityProgram()
+                        .getRegistrationAgreement().isOnlyAllowedDegreeEnrolment());
     }
 
     public boolean isStudentAcceptedAndNotifiedAtDate(final DateTime dateTime) {

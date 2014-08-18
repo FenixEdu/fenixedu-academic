@@ -370,8 +370,8 @@
 				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	    			<fr:slot name="mobilityProgram" layout="autoComplete" key="label.mobilityProgram" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
     	    			<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.MobilityProgramProvider" />
-        				<fr:property name="labelField" value="registrationAgreement.description"/>
-        				<fr:property name="format" value="${registrationAgreement.description}"/>
+        				<fr:property name="labelField" value="registrationProtocol.description.content"/>
+        				<fr:property name="format" value="${registrationProtocol.description.content}"/>
         				<fr:property name="classes" value="inputsize500px"/>
         				<fr:property name="minChars" value="1"/>
         				<fr:property name="sortBy" value="presentationName"/>
@@ -508,7 +508,7 @@
 				<td><%= country == null ? "" : country.getLocalizedName().toString() %></td>
 				<td><%= contest.getMobilityAgreement().getUniversityUnit().getPresentationName() %></td>
 				<% if (outboundMobilityContextBean.getMobilityPrograms().size() > 1) { %>
-					<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %></td>
+					<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationProtocol().getDescription().getContent() %></td>
 				<% } %>
 				<td>
 						<span id="<%= showVacanciesID %>">

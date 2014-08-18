@@ -35,9 +35,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecu
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Installation;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.cms.OldCmsPortalBackend;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
@@ -100,7 +103,28 @@ public class FenixInitializer implements ServletContextListener {
 
         PortalBackendRegistry.registerPortalBackend(new OldCmsPortalBackend());
 
+        transferRegistrationAgreementsToProtocols();
+
         logger.info("Fenix initialized successfully");
+    }
+
+    private void transferRegistrationAgreementsToProtocols() {
+        long start = System.currentTimeMillis();
+        PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
+        RegistrationProtocol.importAndSyncFromRegistrationAgreements();
+        MobilityProgram.connectToRegistrationProtocols();
+        final Thread t = new Thread() {
+            @Override
+            public void run() {
+                long start = System.currentTimeMillis();
+                InquiryCourseAnswer.connectToRegistrationProtocols();
+                long end = System.currentTimeMillis();
+                logger.info("Transfer registration agreements to protocols for all InquiryCourseAnswer objects took: " + (end - start) + "ms.");
+            }
+        };
+        t.start();
+        long end = System.currentTimeMillis();
+        logger.info("Transfer registration agreements to protocols took: " + (end - start) + "ms.");
     }
 
     private void registerHealthchecks() {

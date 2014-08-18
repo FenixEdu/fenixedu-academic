@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressValidationBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
@@ -50,6 +51,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -330,6 +332,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
+        request.setAttribute("personBean", new PersonBean(Authenticate.getUser().getPerson()));
         return mapping.findForward("visualizePersonalInformation");
     }
 

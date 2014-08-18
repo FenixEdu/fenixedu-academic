@@ -31,7 +31,7 @@
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 
 <logic:notEmpty name="process">
-	<bean:define id="mobilityProgram" name="process" property="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description"/>
+	<bean:define id="mobilityProgram" name="process" property="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationProtocol.description.content"/>
 	<h2><bean:write name="process" property="displayName" />: <strong><bean:write name="mobilityProgram"/></strong></h2>
 </logic:notEmpty>
 

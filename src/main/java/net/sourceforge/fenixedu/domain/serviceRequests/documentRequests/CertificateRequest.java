@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentReque
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 abstract public class CertificateRequest extends CertificateRequest_Base {
 
@@ -141,7 +140,7 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
     @Override
     public boolean isFree() {
         if (getDocumentRequestType() == DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE
-                && RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) {
+                && getRegistration().getRegistrationProtocol().isMobilityAgreement()) {
             return true;
         }
         if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE

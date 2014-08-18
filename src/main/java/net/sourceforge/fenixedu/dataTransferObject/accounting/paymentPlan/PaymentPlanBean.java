@@ -43,6 +43,8 @@ public class PaymentPlanBean implements Serializable, PaymentsBean {
 
     private boolean forFirstTimeInstitutionStudents;
 
+    private boolean forAlien;
+
     private List<DegreeCurricularPlan> degreeCurricularPlans;
 
     private ExecutionYear executionYear;
@@ -109,6 +111,14 @@ public class PaymentPlanBean implements Serializable, PaymentsBean {
 
     public void setForFirstTimeInstitutionStudents(boolean forFirstTimeInstitutionStudents) {
         this.forFirstTimeInstitutionStudents = forFirstTimeInstitutionStudents;
+    }
+
+    public boolean isForAlien() {
+        return forAlien;
+    }
+
+    public void setForAlien(boolean isForAlien) {
+        this.forAlien = isForAlien;
     }
 
     @Override

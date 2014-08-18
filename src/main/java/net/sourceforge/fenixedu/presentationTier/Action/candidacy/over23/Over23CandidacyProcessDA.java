@@ -61,7 +61,7 @@ import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
         accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))",
         bundle = "ApplicationResources")
 @Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdministration",
-        formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
+        formBeanClass = Over23CandidacyProcessDA.Over23CandidacyProcessForm.class)
 @Forwards({ @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
         @Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
@@ -71,6 +71,18 @@ import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
         @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
         @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp") })
 public class Over23CandidacyProcessDA extends CandidacyProcessDA {
+
+    static public class Over23CandidacyProcessForm extends CandidacyProcessForm {
+        private String selectedProcessId;
+
+        public String getSelectedProcessId() {
+            return selectedProcessId;
+        }
+
+        public void setSelectedProcessId(String selectedProcessId) {
+            this.selectedProcessId = selectedProcessId;
+        }
+    }
 
     @Override
     protected Class getProcessType() {
@@ -90,17 +102,73 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     @Override
     protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         if (!hasExecutionInterval(request)) {
-            final List<ExecutionInterval> executionIntervals =
-                    ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+            final List<ExecutionInterval> executionIntervals = getExecutionIntervalsWithCandidacyPeriod();
+
             if (executionIntervals.size() == 1) {
-                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.iterator().next()));
-            } else {
-                request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-                request.setAttribute("executionIntervals", executionIntervals);
+                final ExecutionInterval executionInterval = executionIntervals.iterator().next();
+                final List<Over23CandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+
+                if (candidacyProcesses.size() == 1) {
+                    final Over23CandidacyProcess process = candidacyProcesses.iterator().next();
+                    setCandidacyProcessInformation(request, process);
+                    setCandidacyProcessInformation(actionForm, getProcess(request));
+                    request.setAttribute("candidacyProcesses", candidacyProcesses);
+                    ChooseDegreeBean chooseDegreeBean = getChooseDegreeBean(request);
+                    chooseDegreeBean.setCandidacyProcess(process);
+                    return;
+                }
             }
+
+            request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+            request.setAttribute("executionIntervals", executionIntervals);
+
         } else {
-            setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
+            final ExecutionInterval executionInterval = getExecutionInterval(request);
+            final Over23CandidacyProcess candidacyProcess = getCandidacyProcess(request, executionInterval);
+
+            if (candidacyProcess != null) {
+                setCandidacyProcessInformation(request, candidacyProcess);
+                setCandidacyProcessInformation(actionForm, getProcess(request));
+            } else {
+                final List<Over23CandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+
+                if (candidacyProcesses.size() == 1) {
+                    final Over23CandidacyProcess process = candidacyProcesses.iterator().next();
+                    setCandidacyProcessInformation(request, process);
+                    setCandidacyProcessInformation(actionForm, getProcess(request));
+                    request.setAttribute("candidacyProcesses", candidacyProcesses);
+                    ChooseDegreeBean chooseDegreeBean = getChooseDegreeBean(request);
+                    chooseDegreeBean.setCandidacyProcess(process);
+                    return;
+                }
+
+                request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+                request.setAttribute("executionIntervals", getExecutionIntervalsWithCandidacyPeriod());
+            }
+            request.setAttribute("candidacyProcesses", getCandidacyProcesses(executionInterval));
         }
+    }
+
+    private List<ExecutionInterval> getExecutionIntervalsWithCandidacyPeriod() {
+        return ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+    }
+
+    protected List<Over23CandidacyProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
+        final List<Over23CandidacyProcess> result = new ArrayList<Over23CandidacyProcess>();
+        for (final Over23CandidacyPeriod period : executionInterval.getOver23CandidacyPeriods()) {
+            result.add(period.getOver23CandidacyProcess());
+        }
+        return result;
+    }
+
+    protected void setCandidacyProcessInformation(final ActionForm actionForm, final Over23CandidacyProcess process) {
+        final Over23CandidacyProcessForm form = (Over23CandidacyProcessForm) actionForm;
+        form.setSelectedProcessId(process.getExternalId());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
+    }
+
+    protected ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
+        return (ChooseDegreeBean) request.getAttribute("chooseDegreeBean");
     }
 
     @Override
@@ -110,8 +178,16 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
     protected Over23CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval) {
-        return executionInterval.hasOver23CandidacyPeriod() ? executionInterval.getOver23CandidacyPeriod()
-                .getOver23CandidacyProcess() : null;
+        final String selectedProcessId = getStringFromRequest(request, "selectedProcessId");
+        if (selectedProcessId != null) {
+            for (final Over23CandidacyPeriod candidacyPeriod : executionInterval.getOver23CandidacyPeriods()) {
+                final Over23CandidacyProcess process = candidacyPeriod.getOver23CandidacyProcess();
+                if (process.getExternalId().equals(selectedProcessId)) {
+                    return process;
+                }
+            }
+        }
+        return null;
     }
 
     public ActionForward prepareExecuteSendInformationToJury(ActionMapping mapping, ActionForm actionForm,

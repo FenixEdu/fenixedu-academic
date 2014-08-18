@@ -117,7 +117,7 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
                     .getContent());
             row.setCell(5, erasmusIndividualCandidacyProcess.getCandidacy().getMobilityStudentData().getSelectedOpening()
                     .getMobilityAgreement().getUniversityUnit().getName());
-            row.setCell(6, erasmusIndividualCandidacyProcess.getMobilityProgram().getRegistrationAgreement().getDescription());
+            row.setCell(6, erasmusIndividualCandidacyProcess.getMobilityProgram().getRegistrationProtocol().getDescription().getContent());
             row.setCell(7, erasmusIndividualCandidacyProcess.getCandidacyHashCode().getEmail());
             row.setCell(8, erasmusIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getNameI18N().getContent());
             row.setCell(

@@ -49,8 +49,8 @@
 </div>
 
 <h1><bean:write name="application.name"/></h1>
-<bean:define id="mobilityProgram" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationAgreement.description"/>
-<bean:define id="onlyAllowedDegreeEnrolment" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationAgreement.onlyAllowedDegreeEnrolment"/>
+<bean:define id="mobilityProgram" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationProtocol.description.content"/>
+<bean:define id="onlyAllowedDegreeEnrolment" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationProtocol.onlyAllowedDegreeEnrolment"/>
 <h1><strong><bean:write name="mobilityProgram"/></strong></h1>
 
 <p class="steps">
@@ -102,7 +102,7 @@
 	</h2>
 	
 	<bean:define id="universityName" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedUniversity.nameI18n.content" type="String"/>
-	<bean:define id="programName" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationAgreement.description" type="String"/> 
+	<bean:define id="programName" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationProtocol.description.content" type="String"/> 
 	
 	<p class="mbottom05"><bean:message key="message.mobility.available.degrees.for.mobility.agreement" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= programName %>" arg1="<%= universityName %>"/></p>
 

@@ -615,7 +615,7 @@
 
 <schema name="Public.PhdProgramCandidacyProcess.qualification" type="net.sourceforge.fenixedu.domain.QualificationBean" bundle="PHD_RESOURCES">
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="includedValues" value="BACHELOR_DEGREE,MASTER_DEGREE,DOCTORATE_DEGREE,OTHER" />
+		<property name="includedValues" value="BACHELOR_DEGREE,DEGREE,MASTER_DEGREE,DOCTORATE_DEGREE,OTHER" />
 	</slot>
 	<slot name="mark"/>
 	<slot name="attendedBegin" layout="year-month" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

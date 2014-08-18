@@ -2043,6 +2043,9 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
                 class accounting.paymentPlans.FullGratuityPaymentPlan extends accounting.paymentPlans.GratuityPaymentPlan {
                 }
 
+	                class accounting.paymentPlans.FullGratuityPaymentPlanForAliens extends accounting.paymentPlans.FullGratuityPaymentPlan {
+    	            }
+
                 class accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends accounting.paymentPlans.GratuityPaymentPlan {
                 }
                 
@@ -4301,7 +4304,23 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
     }
     
     class student.RegistrationProtocol  {
-    	RegistrationAgreement registrationAgreement;
+        // TODO : delete this slot on next major version
+        RegistrationAgreement registrationAgreement;
+
+        String code;
+        Boolean enrolmentByStudentAllowed;
+        Boolean payGratuity;
+        Boolean allowsIDCard;
+        Boolean onlyAllowedDegreeEnrolment;
+        Boolean alien;
+        Boolean exempted;
+        Boolean mobility;
+        Boolean military;
+        Boolean allowDissertationCandidacyWithoutChecks;
+        Boolean forOfficialMobilityReporting; // RAIDES
+        Boolean attemptAlmaMatterFromPrecedent; // Spooky... but maintaining the logic
+
+        LocalizedString description;
     }
     
     class student.RegistrationRegime  {
@@ -5471,7 +5490,7 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     	String receptionEmailBody;
     }
     
-    
+    // TODO : delete this class on next major version 
     class institutionalRelations.academic.Program  {
     	RegistrationAgreement registrationAgreement;
     }
@@ -6647,6 +6666,7 @@ class inquiries.InquiryAnswer  {
         Integer numberOfEnrolments;
         Boolean committedFraud;
         InquiryGradesInterval grade;
+        // TODO : delete this slot on next major version
         RegistrationAgreement studentType;
         InquiryGradesInterval entryGrade;
         Long answerDuration;
@@ -18056,6 +18076,25 @@ relation PhdCustomAlertTargetGroup {
 		multiplicity 1..1;
 	}
 }
+
+relation RegistrationProtocolMobilityProgram {
+	public student.RegistrationProtocol playsRole registrationProtocol {
+		multiplicity 1..1;
+	} 
+	public candidacyProcess.mobility.MobilityProgram playsRole mobilityProgram {
+		multiplicity 0..1;
+	} 
+}
+
+relation RegistrationProtocolInquiryCourseAnswer {
+	public student.RegistrationProtocol playsRole registrationProtocol {
+		multiplicity 0..1;
+	} 
+	public inquiries.InquiryCourseAnswer playsRole inquiryCourseAnswer {
+		multiplicity *;
+	} 
+}
+
 
 /**
  * Former Remote Plugin

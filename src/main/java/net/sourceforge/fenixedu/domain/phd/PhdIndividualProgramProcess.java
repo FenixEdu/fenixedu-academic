@@ -84,6 +84,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.Conclude
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteAssistantGuiding;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteCustomAlert;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteGuidanceDocument;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteGuiding;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteJobInformation;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteQualification;
@@ -201,6 +202,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
         activities.add(new SendPhdEmail());
 
+        activities.add(new DeleteGuidanceDocument());
         activities.add(new UploadGuidanceDocument());
         activities.add(new EditPhdParticipant());
         activities.add(new TransferToAnotherProcess());

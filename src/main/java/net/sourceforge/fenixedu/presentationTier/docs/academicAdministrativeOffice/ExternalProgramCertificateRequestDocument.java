@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -72,10 +71,10 @@ public class ExternalProgramCertificateRequestDocument extends AdministrativeOff
 
     private String getStudentNumber() {
         final Registration registration = getDocumentRequest().getRegistration();
-        if (ExternalCourseLoadRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+        if (registration.getRegistrationProtocol().isMilitaryAgreement()) {
             final String agreementInformation = registration.getAgreementInformation();
             if (!StringUtils.isEmpty(agreementInformation)) {
-                return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
+                return registration.getRegistrationProtocol().getCode() + SINGLE_SPACE + agreementInformation;
             }
         }
         return registration.getStudent().getNumber().toString();

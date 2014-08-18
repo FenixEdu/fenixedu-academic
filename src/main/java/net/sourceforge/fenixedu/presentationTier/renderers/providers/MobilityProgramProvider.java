@@ -25,7 +25,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
@@ -40,8 +40,8 @@ public class MobilityProgramProvider implements AutoCompleteProvider<MobilityPro
         for (final Program program : Bennu.getInstance().getProgramsSet()) {
             if (program.isMobility()) {
                 final MobilityProgram mobilityProgram = (MobilityProgram) program;
-                final RegistrationAgreement registrationAgreement = mobilityProgram.getRegistrationAgreement();
-                final String name = StringNormalizer.normalize(registrationAgreement.getQualifiedName());
+                final RegistrationProtocol protocol = mobilityProgram.getRegistrationProtocol();
+                final String name = StringNormalizer.normalize(protocol.getCode());
                 if (name.indexOf(nvalue) >= 0) {
                     result.add(mobilityProgram);
                 }

@@ -50,10 +50,10 @@ public class ExternalSupervisionApplication extends Action {
             return mapping.findForward("welcome");
         }
 
-        switch (registrationProtocol.getRegistrationAgreement()) {
-        case AFA:
+        switch (registrationProtocol.getCode()) {
+        case "AFA":
             return mapping.findForward("welcome_AFA");
-        case MA:
+        case "MA":
             return mapping.findForward("welcome_MA");
         default:
             return mapping.findForward("welcome");

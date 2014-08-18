@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
@@ -41,24 +42,30 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
         this(candidacy, person, null, null);
     }
 
+    @Deprecated
     public RegisteredCandidacySituation(Candidacy candidacy, RegistrationAgreement registrationAgreement, CycleType cycleType,
+            Ingression ingression, EntryPhase entryPhase, Integer studentNumber) {
+        this(candidacy, RegistrationProtocol.serveRegistrationProtocol(registrationAgreement), cycleType, ingression, entryPhase, studentNumber);
+    }
+
+    public RegisteredCandidacySituation(Candidacy candidacy, RegistrationProtocol registrationProtocol, CycleType cycleType,
             Ingression ingression, EntryPhase entryPhase, Integer studentNumber) {
         super();
         init(candidacy, AccessControl.getPerson());
-        registerCandidacy(registrationAgreement, cycleType, studentNumber);
+        registerCandidacy(registrationProtocol, cycleType, studentNumber);
 
         ((StudentCandidacy) candidacy).setIngression(ingression);
         ((StudentCandidacy) candidacy).setEntryPhase(entryPhase);
     }
 
-    private RegisteredCandidacySituation(Candidacy candidacy, Person person, RegistrationAgreement registrationAgreement,
+    private RegisteredCandidacySituation(Candidacy candidacy, Person person, RegistrationProtocol registrationProtocol,
             CycleType cycleType) {
         super();
         init(candidacy, person == null ? AccessControl.getPerson() : person);
-        registerCandidacy(registrationAgreement, cycleType, null);
+        registerCandidacy(registrationProtocol, cycleType, null);
     }
 
-    private void registerCandidacy(RegistrationAgreement registrationAgreement, CycleType cycleType, Integer studentNumber) {
+    private void registerCandidacy(RegistrationProtocol registrationProtocol, CycleType cycleType, Integer studentNumber) {
         Person person = getCandidacy().getPerson();
         Registration registration = null;
 
@@ -66,7 +73,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
             DFACandidacy dfaCandidacy = ((DFACandidacy) getCandidacy());
             registration =
                     new Registration(person, dfaCandidacy.getExecutionDegree().getDegreeCurricularPlan(), dfaCandidacy,
-                            registrationAgreement, cycleType, dfaCandidacy.getExecutionDegree().getExecutionYear());
+                            registrationProtocol, cycleType, dfaCandidacy.getExecutionDegree().getExecutionYear());
 
             //person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
             dfaCandidacy.setRegistration(registration);

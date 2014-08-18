@@ -90,7 +90,7 @@
 	<fr:edit id="chosenParameters" name="searchParametersBean">
 		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES"
 			type="net.sourceforge.fenixedu.dataTransferObject.academicAdministration.SearchStudentsByDegreeParametersBean">
-			<fr:slot name="registrationAgreements" key="label.registrationAgreement" layout="option-select">
+			<fr:slot name="registrationProtocols" key="label.registrationAgreement" layout="option-select">
 				<fr:property name="providerClass"
 					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.RegistrationAgreementProvider" />
 				<fr:property name="classes" value="list2" />
@@ -168,7 +168,7 @@
 				<fr:slot name="registration.person.name" key="label.name" />
 				<fr:slot name="registration.degree.sigla" key="label.degree" />
 				<fr:slot name="activeStateType" key="label.registration.state" />
-				<fr:slot name="registration.registrationAgreement" key="label.registrationAgreement" />
+				<fr:slot name="registration.registrationProtocol" key="label.registrationAgreement" />
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thright thlight thcenter tdcenter" />

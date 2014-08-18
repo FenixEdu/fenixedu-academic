@@ -63,8 +63,6 @@ import net.sourceforge.fenixedu.util.ContentType;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -72,6 +70,9 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 @Path("/fenix/jersey/services")
 public class JerseyServices {
@@ -164,26 +165,26 @@ public class JerseyServices {
     @Path("users")
     @Produces(MediaType.APPLICATION_JSON)
     public String readUsers() {
-        JSONArray users = new JSONArray();
+        JsonArray users = new JsonArray();
         for (final User user : Bennu.getInstance().getUserSet()) {
             if (!StringUtils.isEmpty(user.getUsername()) && user.getPerson() != null) {
-                JSONObject json = new JSONObject();
-                json.put("istId", user.getUsername());
-                json.put("name", user.getPerson().getName());
+                JsonObject json = new JsonObject();
+                json.addProperty("istId", user.getUsername());
+                json.addProperty("name", user.getPerson().getName());
                 if (user.getPerson().getEmailForSendingEmails() != null) {
-                    json.put("email", user.getPerson().getEmailForSendingEmails());
+                    json.addProperty("email", user.getPerson().getEmailForSendingEmails());
                 }
                 users.add(json);
             }
         }
-        return users.toJSONString();
+        return users.toString();
     }
 
     @GET
     @Path("researchers")
     @Produces(MediaType.APPLICATION_JSON)
     public String readResearchers() {
-        JSONArray researchers = new JSONArray();
+        JsonArray researchers = new JsonArray();
 
         final Map<User, Set<Unit>> researchUnitMap = new HashMap<User, Set<Unit>>();
         for (final User user : Bennu.getInstance().getUserSet()) {
@@ -210,29 +211,25 @@ public class JerseyServices {
 
         for (final Entry<User, Set<Unit>> entry : researchUnitMap.entrySet()) {
             final User user = entry.getKey();
-            final Person person = user.getPerson();
-            if (!StringUtils.isEmpty(user.getUsername()) && person != null
-                    && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
-                JSONObject json = new JSONObject();
-                json.put("istId", user.getUsername());
+            JsonObject json = new JsonObject();
+            json.addProperty("istId", user.getUsername());
 
-                JSONArray array = new JSONArray();
-                for (Unit unit : entry.getValue()) {
-                    JSONObject element = new JSONObject();
-                    if (!Strings.isNullOrEmpty(unit.getAcronym())) {
-                        element.put("acronym", unit.getAcronym());
-                    }
-                    if (!Strings.isNullOrEmpty(unit.getName())) {
-                        element.put("name", unit.getName());
-                    }
-                    array.add(element);
+            JsonArray array = new JsonArray();
+            for (Unit unit : entry.getValue()) {
+                JsonObject element = new JsonObject();
+                if (!Strings.isNullOrEmpty(unit.getAcronym())) {
+                    element.addProperty("acronym", unit.getAcronym());
                 }
-
-                json.put("department", array);
-                researchers.add(json);
+                if (!Strings.isNullOrEmpty(unit.getName())) {
+                    element.addProperty("name", unit.getName());
+                }
+                array.add(element);
             }
+
+            json.add("department", array);
+            researchers.add(json);
         }
-        return researchers.toJSONString();
+        return researchers.toString();
     }
 
     private void add(final Map<User, Set<Unit>> researchUnitMap, final User user, final ResearchUnit unit) {
@@ -273,17 +270,17 @@ public class JerseyServices {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("readBolonhaDegrees")
     public static String readBolonhaDegrees() {
-        JSONArray infos = new JSONArray();
+        JsonArray infos = new JsonArray();
         for (Degree degree : Degree.readBolonhaDegrees()) {
             if (degree.isBolonhaMasterOrDegree()) {
-                JSONObject degreeInfo = new JSONObject();
-                degreeInfo.put("degreeOid", degree.getExternalId());
-                degreeInfo.put("name", degree.getPresentationName());
-                degreeInfo.put("degreeType", degree.getDegreeTypeName());
+                JsonObject degreeInfo = new JsonObject();
+                degreeInfo.addProperty("degreeOid", degree.getExternalId());
+                degreeInfo.addProperty("name", degree.getPresentationName());
+                degreeInfo.addProperty("degreeType", degree.getDegreeTypeName());
                 infos.add(degreeInfo);
             }
         }
-        return infos.toJSONString();
+        return infos.toString();
     }
 
     @SuppressWarnings("unchecked")
@@ -291,39 +288,39 @@ public class JerseyServices {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("readThesis")
     public static String readPhdThesis() {
-        JSONArray infos = new JSONArray();
+        JsonArray infos = new JsonArray();
 
         for (PhdIndividualProgramProcessNumber phdProcessNumber : Bennu.getInstance().getPhdIndividualProcessNumbersSet()) {
             PhdIndividualProgramProcess phdProcess = phdProcessNumber.getProcess();
             if (phdProcess.isConcluded()) {
-                JSONObject phdInfo = new JSONObject();
-                phdInfo.put("id", phdProcess.getExternalId());
-                phdInfo.put("author", phdProcess.getPerson().getIstUsername());
-                phdInfo.put("title", phdProcess.getThesisTitle());
+                JsonObject phdInfo = new JsonObject();
+                phdInfo.addProperty("id", phdProcess.getExternalId());
+                phdInfo.addProperty("author", phdProcess.getPerson().getIstUsername());
+                phdInfo.addProperty("title", phdProcess.getThesisTitle());
 
-                JSONArray schools = new JSONArray();
+                JsonArray schools = new JsonArray();
                 switch (phdProcess.getCollaborationType()) {
                 case NONE:
                 case WITH_SUPERVISION:
                 case ERASMUS_MUNDUS:
                 case OTHER:
-                    schools.add(Unit.getInstitutionName());
+                    schools.add(new JsonPrimitive(Unit.getInstitutionName().getContent()));
                     break;
                 default:
-                    schools.add(Unit.getInstitutionName());
-                    schools.add(phdProcess.getCollaborationType().getLocalizedName());
+                    schools.add(new JsonPrimitive(Unit.getInstitutionName().getContent()));
+                    schools.add(new JsonPrimitive(phdProcess.getCollaborationType().getLocalizedName()));
                 }
-                phdInfo.put("schools", schools);
+                phdInfo.add("schools", schools);
 
-                phdInfo.put("year", phdProcess.getConclusionDate().year().getAsShortText());
+                phdInfo.addProperty("year", phdProcess.getConclusionDate().year().getAsShortText());
 
-                phdInfo.put("month", phdProcess.getConclusionDate().monthOfYear().getAsShortText());
+                phdInfo.addProperty("month", phdProcess.getConclusionDate().monthOfYear().getAsShortText());
 
                 try {
-                    phdInfo.put("url", phdProcess.getThesisProcess().getProvisionalThesisDocument().getDownloadUrl());
+                    phdInfo.addProperty("url", phdProcess.getThesisProcess().getProvisionalThesisDocument().getDownloadUrl());
                 } catch (NullPointerException e) {
                 }
-                phdInfo.put("type", "phdthesis");
+                phdInfo.addProperty("type", "phdthesis");
                 infos.add(phdInfo);
             }
 
@@ -331,28 +328,27 @@ public class JerseyServices {
 
         for (Thesis t : Bennu.getInstance().getThesesSet()) {
             if (t.isEvaluated()) {
-                JSONObject mscInfo = new JSONObject();
-                mscInfo.put("id", t.getExternalId());
-                mscInfo.put("author", t.getStudent().getPerson().getIstUsername());
+                JsonObject mscInfo = new JsonObject();
+                mscInfo.addProperty("id", t.getExternalId());
+                mscInfo.addProperty("author", t.getStudent().getPerson().getIstUsername());
                 String title = t.getFinalFullTitle().getContent(MultiLanguageString.en);
                 if (title == null) {
                     title = t.getFinalFullTitle().getContent(MultiLanguageString.pt);
                 }
-                mscInfo.put("title", title);
-                mscInfo.put("year", t.getDiscussed().year().getAsShortText());
-                mscInfo.put("month", t.getDiscussed().monthOfYear().getAsShortText());
+                mscInfo.addProperty("title", title);
+                mscInfo.addProperty("year", t.getDiscussed().year().getAsShortText());
+                mscInfo.addProperty("month", t.getDiscussed().monthOfYear().getAsShortText());
 
-                JSONArray schools = new JSONArray();
-                schools.add(Unit.getInstitutionName());
-                mscInfo.put("schools", schools);
+                JsonArray schools = new JsonArray();
+                schools.add(new JsonPrimitive(Unit.getInstitutionName().getContent()));
+                mscInfo.add("schools", schools);
 
-                mscInfo.put("url", t.getDissertation().getDownloadUrl());
-                mscInfo.put("type", "mastersthesis");
+                mscInfo.addProperty("url", t.getDissertation().getDownloadUrl());
+                mscInfo.addProperty("type", "mastersthesis");
                 infos.add(mscInfo);
             }
         }
-        return infos.toJSONString();
-
+        return infos.toString();
     }
 
     @GET

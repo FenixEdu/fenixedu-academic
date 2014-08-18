@@ -59,7 +59,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -1837,7 +1836,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         for (Registration registration : this.getActiveRegistrations()) {
             if (registration.getStartDate() != null && registration.getStartExecutionYear().equals(entryYear)
                     && registration.isRegistered(currentExecutionYear)
-                    && !registration.getRegistrationAgreement().equals(RegistrationAgreement.ERASMUS)) {
+                    && !registration.getRegistrationProtocol().isMobilityAgreement()) {
                 studentsGivenEntryYear.add(registration.getActiveStudentCurricularPlan());
             }
         }

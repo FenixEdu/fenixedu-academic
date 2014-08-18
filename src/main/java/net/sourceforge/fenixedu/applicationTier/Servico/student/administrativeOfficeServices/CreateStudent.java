@@ -57,25 +57,16 @@ public class CreateStudent {
         StudentCandidacy studentCandidacy =
                 StudentCandidacy.createStudentCandidacy(executionDegreeBean.getExecutionDegree(), person);
 
-        new RegisteredCandidacySituation(studentCandidacy, ingressionInformationBean.getRegistrationAgreement(),
+        new RegisteredCandidacySituation(studentCandidacy, ingressionInformationBean.getRegistrationProtocol(),
                 executionDegreeBean.getCycleType(), ingressionInformationBean.getIngression(),
                 ingressionInformationBean.getEntryPhase(), personBean.getStudentNumber());
 
         // create registration
         Registration registration = studentCandidacy.getRegistration();
         if (registration == null) {
-            /*
-             * 26/08/2009 - Due to curriculum validation we must support creation of students, if necessary, with a custom student
-             * number (for students that are not in the system).
-             */
-            // registration = new Registration(person,
-            // executionDegreeBean.getDegreeCurricularPlan(), studentCandidacy,
-            // ingressionInformationBean.getRegistrationAgreement(),
-            // executionDegreeBean.getCycleType(), executionDegreeBean
-            // .getExecutionYear());
             registration =
                     Registration.createRegistrationWithCustomStudentNumber(person, executionDegreeBean.getDegreeCurricularPlan(),
-                            studentCandidacy, ingressionInformationBean.getRegistrationAgreement(),
+                            studentCandidacy, ingressionInformationBean.getRegistrationProtocol(),
                             executionDegreeBean.getCycleType(), executionDegreeBean.getExecutionYear(),
                             personBean.getStudentNumber());
         }

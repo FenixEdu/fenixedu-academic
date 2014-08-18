@@ -416,7 +416,7 @@
 									<div style="<%= styleString %>">
 										<%= unit.getPresentationName() %> -
 										<span style="color: gray; font-size: 110%"><%= country.getName() %></span>
-										<%= mobilityAgreement.getMobilityProgram().getRegistrationAgreement().getDescription() %>
+										<%= mobilityAgreement.getMobilityProgram().getRegistrationProtocol().getDescription().getContent() %>
 									</div>
 								</li>
     	    				<%
@@ -529,7 +529,7 @@
 									<div style="<%= styleString %>">
 										<%= unit.getPresentationName() %> -
 										<span style="color: gray; font-size: 110%"><%= country.getName() %></span>
-										<%= mobilityAgreement.getMobilityProgram().getRegistrationAgreement().getDescription() %>
+										<%= mobilityAgreement.getMobilityProgram().getRegistrationProtocol().getDescription().getContent() %>
 									</div>
 								</li>
     	    				<%

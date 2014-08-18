@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Approvem
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
@@ -84,21 +84,12 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
     /* ###################### */
 
     private boolean isMobility() {
-        RegistrationAgreement agreement = getDocumentRequest().getRegistration().getRegistrationAgreement();
-
-        if (RegistrationAgreement.MOBILITY_AGREEMENTS.contains(agreement)) {
-            return true;
-        }
-        return false;
+        final RegistrationProtocol protocol = getDocumentRequest().getRegistration().getRegistrationProtocol();
+        return protocol.isMobilityAgreement();
     }
 
     private String getMobilityProgramDescription() {
-
-        if (isMobility()) {
-            return getDocumentRequest().getRegistration().getRegistrationAgreement().getDescription(getLocale());
-        }
-
-        return "";
+        return isMobility() ? getDocumentRequest().getRegistration().getRegistrationProtocol().getDescription().getContent(getLocale()) : "";
     }
 
     final private void mapCycles(final SortedSet<ICurriculumEntry> entries) {
@@ -129,7 +120,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
             ApprovementMobilityCertificateRequest.filterEntries(entries, request, curriculum);
         }
 
-        if (RegistrationAgreement.MOBILITY_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+        if (registration.getRegistrationProtocol().isMobilityAgreement()) {
             entries.addAll(request.getStandaloneEntriesToReport());
         }
 

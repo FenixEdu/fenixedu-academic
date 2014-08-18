@@ -19,12 +19,11 @@
 package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 
 import org.joda.time.YearMonthDay;
 
@@ -34,10 +33,7 @@ import org.joda.time.YearMonthDay;
  */
 public class IngressionInformationBean implements Serializable {
 
-    static private final List<RegistrationAgreement> AGREEMENTS_TO_REQUEST_INFORMATION = Arrays.asList(RegistrationAgreement.AFA,
-            RegistrationAgreement.MA);
-
-    private RegistrationAgreement registrationAgreement;
+    private RegistrationProtocol registrationProtocol;
 
     private String agreementInformation;
 
@@ -53,21 +49,36 @@ public class IngressionInformationBean implements Serializable {
 
     public IngressionInformationBean() {
         super();
-        this.registrationAgreement = RegistrationAgreement.NORMAL;
+        this.registrationProtocol = RegistrationProtocol.getDefault();
         requestAgreementInformation = false;
     }
 
+    @Deprecated
     public RegistrationAgreement getRegistrationAgreement() {
-        return registrationAgreement;
+        return registrationProtocol == null ? null : registrationProtocol.getRegistrationAgreement();
     }
 
+    public RegistrationProtocol getRegistrationProtocol() {
+        return registrationProtocol;
+    }
+
+    @Deprecated
     public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-        this.registrationAgreement = registrationAgreement;
-        this.requestAgreementInformation = AGREEMENTS_TO_REQUEST_INFORMATION.contains(registrationAgreement);
+        setRegistrationProtocol(RegistrationProtocol.serveRegistrationProtocol(registrationAgreement));
     }
 
+    public void setRegistrationProtocol(RegistrationProtocol registrationProtocol) {
+        this.registrationProtocol = registrationProtocol;
+        this.requestAgreementInformation = registrationProtocol != null && registrationProtocol.isMilitaryAgreement();
+    }
+
+    @Deprecated
     public boolean hasRegistrationAgreement() {
         return getRegistrationAgreement() != null;
+    }
+
+    public boolean hasRegistrationProtocol() {
+        return getRegistrationProtocol() != null;
     }
 
     public String getAgreementInformation() {
@@ -106,7 +117,7 @@ public class IngressionInformationBean implements Serializable {
     }
 
     public void clearAgreement() {
-        this.registrationAgreement = RegistrationAgreement.NORMAL;
+        this.registrationProtocol = RegistrationProtocol.getDefault();
         this.agreementInformation = null;
     }
 

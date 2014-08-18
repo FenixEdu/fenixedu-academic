@@ -121,7 +121,7 @@
 														<% final String name = unit.getName(); %>
 														<strong><%= name %></strong>
 														<%= name.length() >= 70 ? "<br/>" : "" %>&nbsp;-&nbsp;
-														<%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %>
+														<%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationProtocol().getDescription().getContent() %>
 														<%= country == null ? "" : "(" + country.getName() + ")" %>
 														<% if (candidacyPeriod.isOpen()) { %>
 															<div style="float: right;">
@@ -244,7 +244,7 @@
 											<%  } %>
 										</td>
 										<td><%= contest.getMobilityAgreement().getUniversityUnit().getPresentationName() %></td>
-										<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %></td>
+										<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationProtocol().getDescription().getContent() %></td>
 										<td><%= contest.getVacancies() == null ? "" : contest.getVacancies().toString() %></td>
 										<td><%= contest.getOutboundMobilityCandidacyCount() %></td>
 										<td>

@@ -50,8 +50,8 @@
 </div>
 
 <h1><bean:write name="application.name"/></h1>
-<bean:define id="mobilityProgram" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationAgreement.description"/>
-<bean:define id="onlyAllowedDegreeEnrolment" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationAgreement.onlyAllowedDegreeEnrolment"/>
+<bean:define id="mobilityProgram" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationProtocol.description.content"/>
+<bean:define id="onlyAllowedDegreeEnrolment" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationProtocol.onlyAllowedDegreeEnrolment"/>
 <h1><strong><bean:write name="mobilityProgram"/></strong></h1>
 
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"/>

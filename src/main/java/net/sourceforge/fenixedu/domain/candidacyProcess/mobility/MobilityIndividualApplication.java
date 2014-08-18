@@ -183,9 +183,9 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
     }
 
     boolean hasProcessWithAcceptNotificationAtDate(final DateTime dateTime) {
-        return getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction() != null
-                && getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction().getWhenOccured()
-                        .isBefore(dateTime);
+        return getMostRecentApprovedLearningAgreement() == null
+                || (getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction() != null && getMostRecentApprovedLearningAgreement()
+                        .getMostRecentSentEmailAcceptedStudentAction().getWhenOccured().isBefore(dateTime));
     }
 
     public List<ApprovedLearningAgreementDocumentFile> getActiveApprovedLearningAgreements() {
@@ -239,7 +239,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
             final CycleType cycleType, final Ingression ingression) {
 
         final Registration registration =
-                new Registration(person, degreeCurricularPlan, getMobilityProgram().getRegistrationAgreement(), cycleType,
+                new Registration(person, degreeCurricularPlan, getMobilityProgram().getRegistrationProtocol(), cycleType,
                         ((ExecutionYear) getCandidacyExecutionInterval()));
 
         // Standalone group will be necessary for minor subjects
