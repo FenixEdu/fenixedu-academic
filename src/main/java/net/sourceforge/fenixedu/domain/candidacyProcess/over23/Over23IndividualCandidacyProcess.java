@@ -546,7 +546,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PHOTO);
         }
 
-        if (getActiveFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+        if (requireCV() && getActiveFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
         }
 
@@ -562,11 +562,21 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
         }
 
-        if (getActiveFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
+        if (requireFiscalIdDoc() && getActiveFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
         }
 
         return missingDocumentFiles;
+    }
+
+    private boolean requireCV() {
+        final Boolean doNotRequireCV = getCandidacy().getCandidacyProcess().getCandidacyProcess().getDoNotRequireCV();
+        return doNotRequireCV == null || !doNotRequireCV.booleanValue();
+    }
+
+    private boolean requireFiscalIdDoc() {
+        final Boolean doNotRequireFiscalIdDocument = getCandidacy().getCandidacyProcess().getCandidacyProcess().getDoNotRequireFiscalIdDocument();
+        return doNotRequireFiscalIdDocument == null || !doNotRequireFiscalIdDocument.booleanValue();
     }
 
     static private class SendEmailForApplicationSubmission extends Activity<Over23IndividualCandidacyProcess> {

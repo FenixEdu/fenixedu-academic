@@ -18,6 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess"%>
 <%@page import="org.joda.time.DateTime"%>
 <%@page import="net.sourceforge.fenixedu.domain.Installation"%>
 <%@ page language="java"%>
@@ -229,25 +230,38 @@
 </table>
 
 <logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
-<logic:equal name="individualCandidacyProcess" property="candidacy.event.open" value="true">
-<h2 style="margin-top: 1em;"><bean:message key="title.payment.details" bundle="CANDIDATE_RESOURCES"/></h2>
-
-<p><strong><bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/></strong></p>
-<table>
-	<tr>
-		<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
-		<td><bean:write name="sibsEntityCode"/></td>
-	</tr>
-	<tr>
-		<td><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></td>
-		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
-	</tr>
-	<tr>
-		<td><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></td>
-		<td><fr:view name="individualCandidacyProcess" property="candidacy.event.amountToPay"/></td>
-	</tr>
-</table>
-</logic:equal>
+	<logic:equal name="individualCandidacyProcess" property="candidacy.event.open" value="true">
+		<h2 style="margin-top: 1em;"><bean:message key="title.payment.details" bundle="CANDIDATE_RESOURCES"/></h2>
+		<%  final CandidacyProcess process = (CandidacyProcess) request.getAttribute("parentProcess"); %>
+		<table>
+			<tr>
+				<td>
+					<p>
+						<bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/>
+					</p>
+					<table>
+						<tr>
+							<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
+							<td><bean:write name="sibsEntityCode"/></td>
+						</tr>
+						<tr>
+							<td><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></td>
+							<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
+						</tr>
+						<tr>
+							<td><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></td>
+							<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+						</tr>
+					</table>
+				</td>		
+				<td>
+					<% if (process != null && process.getAlternantePaymentMethod() != null) { %>
+						<%= process.getAlternantePaymentMethod().getContent() %>
+					<% } %>
+				</td>		
+			</tr>
+		</table>
+	</logic:equal>
 </logic:notEmpty>
 
 

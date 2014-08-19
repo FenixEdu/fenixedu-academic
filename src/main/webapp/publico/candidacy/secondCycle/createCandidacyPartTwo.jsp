@@ -18,6 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess"%>
 <%@page import="org.joda.time.DateTime"%>
 <%@page import="net.sourceforge.fenixedu.domain.Installation"%>
 <%@ page language="java" %>
@@ -304,7 +305,19 @@
 		</div>
 
 		<h2 style="margin-top: 1em;"><bean:message key="title.second.cycle.honor.declaration" bundle="CANDIDATE_RESOURCES"/></h2>
-		<p><bean:message key="message.second.cycle.honor.declaration.detail" bundle="CANDIDATE_RESOURCES"/></p>
+		<p>
+		<%  final CandidacyProcess process = (CandidacyProcess) request.getAttribute("parentProcess");
+			if (process == null || process.getHonorAgreement() == null) {
+		%>
+				<bean:message key="message.second.cycle.honor.declaration.detail" bundle="CANDIDATE_RESOURCES"/>
+		<%	    
+			} else {
+		%>
+				<%= process.getHonorAgreement().getContent() %>
+		<%	    
+			}
+		%>
+		</p>
 		<p>
 			<fr:edit 	id="individualCandidacyProcessBean.honor.declaration"
 						name="individualCandidacyProcessBean"

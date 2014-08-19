@@ -18,6 +18,8 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="net.sourceforge.fenixedu.domain.PublicCandidacyHashCode"%>
+<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess"%>
 <%@page import="net.sourceforge.fenixedu.domain.Installation"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -58,7 +60,18 @@
 
 <h1><bean:write name="application.name" bundle="CANDIDATE_RESOURCES"/></h1>
 
-<bean:message key="message.form.details.submission.note.new" bundle="CANDIDATE_RESOURCES"/>
+<%
+	final CandidacyProcess process = (CandidacyProcess) request.getAttribute("parentProcess");
+	if (process == null || process.getSubmissionConditions() == null) {
+%>
+		<bean:message key="message.form.details.submission.note.new" bundle="CANDIDATE_RESOURCES"/>
+<%	    
+	} else {
+%>
+		<%= process.getSubmissionConditions().getContent() %>
+<%	    
+	}
+%>
 
 	<% 
 		if(locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
