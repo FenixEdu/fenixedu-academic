@@ -18,6 +18,9 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+
+<%-- WARNING: This JSP is used to generate the first year candidate report (printAllDocuments.jsp). Beware when editing it! --%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
