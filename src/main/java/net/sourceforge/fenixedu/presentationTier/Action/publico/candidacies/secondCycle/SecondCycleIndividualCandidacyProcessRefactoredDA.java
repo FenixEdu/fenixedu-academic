@@ -360,4 +360,12 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
         return MessageFormat.format(message, Installation.getInstance().getInstituitionURL());
     }
 
+    @Override
+    protected void setParentProcess(HttpServletRequest request) {
+        super.setParentProcess(request);
+        if (request.getAttribute("parentProcess") == null) {
+            request.setAttribute("parentProcess", getCurrentOpenParentProcess());
+        }
+    }
+
 }

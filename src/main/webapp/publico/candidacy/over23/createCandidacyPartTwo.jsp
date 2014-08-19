@@ -18,6 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess"%>
 <%@page import="net.sourceforge.fenixedu.domain.Installation"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -265,7 +266,19 @@
 		
 		
 		<h2 style="margin-top: 1em;"><bean:message key="title.over23.honor.declaration" bundle="CANDIDATE_RESOURCES"/></h2>
-		<p><bean:message key="message.over23.honor.declaration.detail" bundle="CANDIDATE_RESOURCES"/></p>
+		<p>
+		<%  final CandidacyProcess process = (CandidacyProcess) request.getAttribute("parentProcess");
+			if (process == null || process.getHonorAgreement() == null) {
+		%>
+				<bean:message key="message.over23.honor.declaration.detail" bundle="CANDIDATE_RESOURCES"/>
+		<%	    
+			} else {
+		%>
+				<%= process.getHonorAgreement().getContent() %>
+		<%	    
+			}
+		%>
+		</p>
 		<p>
 			<fr:edit 	id="individualCandidacyProcessBean.honor.declaration"
 						name="individualCandidacyProcessBean"

@@ -32,44 +32,44 @@ response.setStatus(403);
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<style>
 		body {
-			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-			font-size: 14px;
-			font-weight:300 !important;
-			background-color: #F6F4ED;
-			color: #4b565c;
+			font: 16px 'Roboto', sans-serif;
+			background-color: #F1F1F1;
+			font-weight:100;
+			color: #617383;
 		}
 		.container {
-			margin: 80px auto 0 auto;
-			width: 800px;
-			background-color: #f7f7f7;
-			padding: 0 0 20px 0;
-			-moz-border-radius: 2px;
-			-webkit-border-radius: 2px;
-			border-radius: 2px;
-			-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-			-webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-			box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+			margin: 120px auto 0 auto;
+			width: 700px;
+			background-color: white;
+			padding: 30px;
+			border-radius: 7px;
 		}
+		.content { margin-top: 25px; }
+		.right { float: right; }
+		.title {
+			border-bottom: 1px solid #eee;
+			padding-bottom: 15px;
+			font-size: 22px;
+			min-height: 35px;
+		}
+		p { margin-bottom: 0; }
+		a { color: #617383; }
 	</style>
 </head>
 
 <body>
 	<div class="container">
-		<table style="width: 95%; margin: 0 auto">
-			<tr>
-				<td style="width: 20%">
-					<img src="${pageContext.request.contextPath}/images/ID_FenixEdu.png" alt="FenixEdu"/>
-				</td>
-				<td style="width: 80%; text-align: right">
-					<h1><bean:message key="title.notAuthorized" bundle="GLOBAL_RESOURCES" /></h1>
-					<br/>
-					<p><bean:message key="error.exception.notAuthorized" bundle="APPLICATION_RESOURCES" /></p>
-					<c:if test="${empty LOGGED_USER_ATTRIBUTE}">
-						<br />
-						<a href="${pageContext.request.contextPath}/loginPage.jsp">Login</a>
-					</c:if>
-				</td>
-			</tr>
-		</table>
+		<div class="title">
+			<bean:message key="title.notAuthorized" bundle="GLOBAL_RESOURCES" />
+			<span class="right">
+				<img src="${pageContext.request.contextPath}/api/bennu-portal/configuration/logo"/>
+			</span>
+		</div>
+		<div class="content">
+			<bean:message key="error.exception.notAuthorized" bundle="APPLICATION_RESOURCES" />
+			<c:if test="${empty LOGGED_USER_ATTRIBUTE}">
+				<p><a href="${pageContext.request.contextPath}/login">Login</a></p>
+			</c:if>
+		</div>
 	</div>
 </body>

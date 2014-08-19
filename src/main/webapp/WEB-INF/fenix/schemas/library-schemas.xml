@@ -128,7 +128,7 @@
 	</slot>
 	<slot name="keywordsPt" key="label.thesis.Thesis.keywordsPt" />
 	<slot name="keywordsEn" key="label.thesis.Thesis.keywordsEn" />
-	<slot name="language" key="label.thesis.Thesis.language" />
+	<slot name="language.displayLanguage" key="label.thesis.Thesis.language" />
 	<slot name="orientation" layout="list" key="label.thesis.Thesis.orientation">
 		<property name="eachSchema" value="thesis.participant.name-with-alias" />
 		<property name="eachLayout" value="values" />
@@ -136,14 +136,6 @@
 	</slot>
 	<slot name="enrolment.executionYear.name" key="label.ExecutionYear.year" />
 	<slot name="discussed" key="label.thesis.Thesis.approvalDate" layout="no-time" />
-    <slot name="site" layout="link" key="label.thesis.Thesis.site">
-        <property name="useParent" value="false" />
-        <property name="linkFormat" value="${reversePath}" />
-        <property name="contextRelative" value="true" />
-        <property name="hasContext" value="true" />
-        <property name="hasChecksum" value="false" />
-        <property name="text" value="link"/>
-    </slot>
 	<slot name="extendedAbstract.filename" layout="link" key="label.thesis.Thesis.extendedAbstract">
 		<property name="useParent" value="true" />
 		<property name="linkFormat" value="${extendedAbstract.downloadUrl}" />

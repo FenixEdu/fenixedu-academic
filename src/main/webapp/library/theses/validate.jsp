@@ -185,3 +185,7 @@
 		<fr:property name="columnClasses" value="width12em,width35em," />
 	</fr:layout>
 </fr:view>
+
+<!-- NO_CHECKSUM --><a class="btn btn-primary" href="${pageContext.request.contextPath}/thesis/${thesis.externalId}" target="_blank">
+	${fr:message('resources.DomainResources', 'label.thesis.Thesis.site')}
+</a>

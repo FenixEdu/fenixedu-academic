@@ -18,6 +18,8 @@
  */
 package net.sourceforge.fenixedu.domain.thesis;
 
+import java.text.DecimalFormat;
+
 import net.sourceforge.fenixedu.domain.accessControl.ThesisReadersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -75,4 +77,10 @@ public class ThesisFile extends ThesisFile_Base {
         return false;
     }
 
+    public String getPrettyFileSize() {
+        long size = getSize();
+        final String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+    }
 }

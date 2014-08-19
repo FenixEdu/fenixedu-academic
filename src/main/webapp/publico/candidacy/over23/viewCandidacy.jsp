@@ -18,6 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -211,19 +212,33 @@
 </logic:notEmpty>
 
 <logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
-<p><bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/></p>
+	<%  final CandidacyProcess process = (CandidacyProcess) request.getAttribute("parentProcess"); %>
 <table>
 	<tr>
-		<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
-		<td><bean:write name="sibsEntityCode"/></td>
-	</tr>
-	<tr>
-		<td><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></td>
-		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
-	</tr>
-	<tr>
-		<td><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></td>
-		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+		<td>
+			<p>
+				<bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/>
+			</p>
+			<table>
+				<tr>
+					<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
+					<td><bean:write name="sibsEntityCode"/></td>
+				</tr>
+				<tr>
+					<td><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></td>
+					<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
+				</tr>
+				<tr>
+					<td><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></td>
+					<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+				</tr>
+			</table>
+		</td>		
+		<td>
+			<% if (process != null && process.getAlternantePaymentMethod() != null) { %>
+				<%= process.getAlternantePaymentMethod().getContent() %>
+			<% } %>
+		</td>		
 	</tr>
 </table>
 </logic:notEmpty>
