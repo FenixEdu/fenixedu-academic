@@ -18,6 +18,9 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+
+<%-- WARNING: This JSP is used to generate the first year candidate report (printAllDocuments.jsp). Beware when editing it! --%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -36,9 +39,9 @@
 	<body>
 		<logic:present name="LOGGED_USER_ATTRIBUTE">
 			<div class="mbottom2" style="font-size: 0.85em; margin-left: 3em;">
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: ${LOGGED_USER_ATTRIBUTE.person.name}</p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: ${LOGGED_USER_ATTRIBUTE.person.student.number} </p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername"  bundle="APPLICATION_RESOURCES"/> </strong>: ${LOGGED_USER_ATTRIBUTE.username} </p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: ${person.name}</p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: ${person.student.number} </p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername"  bundle="APPLICATION_RESOURCES"/> </strong>: ${person.username} </p>
 			</div>
 
 		</logic:present>
