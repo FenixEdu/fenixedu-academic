@@ -110,21 +110,22 @@ public class FenixInitializer implements ServletContextListener {
 
     private void transferRegistrationAgreementsToProtocols() {
         long start = System.currentTimeMillis();
-        PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
-        RegistrationProtocol.importAndSyncFromRegistrationAgreements();
-        MobilityProgram.connectToRegistrationProtocols();
-        final Thread t = new Thread() {
-            @Override
-            public void run() {
-                long start = System.currentTimeMillis();
-                InquiryCourseAnswer.connectToRegistrationProtocols();
-                long end = System.currentTimeMillis();
-                logger.info("Transfer registration agreements to protocols for all InquiryCourseAnswer objects took: " + (end - start) + "ms.");
-            }
-        };
-        t.start();
-        long end = System.currentTimeMillis();
-        logger.info("Transfer registration agreements to protocols took: " + (end - start) + "ms.");
+        // skip migration if the migration has already run
+        if (RegistrationProtocol.importAndSyncFromRegistrationAgreements()) {
+            MobilityProgram.connectToRegistrationProtocols();
+            final Thread t = new Thread() {
+                @Override
+                public void run() {
+                    long start = System.currentTimeMillis();
+                    InquiryCourseAnswer.connectToRegistrationProtocols();
+                    long end = System.currentTimeMillis();
+                    logger.info("Transfer registration agreements to protocols for all InquiryCourseAnswer objects took: " + (end - start) + "ms.");
+                }
+            };
+            t.start();
+            long end = System.currentTimeMillis();
+            logger.info("Transfer registration agreements to protocols took: " + (end - start) + "ms.");
+        }
     }
 
     private void registerHealthchecks() {

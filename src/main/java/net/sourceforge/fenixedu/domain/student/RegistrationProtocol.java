@@ -146,10 +146,12 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
 
     @Deprecated
     @Atomic
-    public static void importAndSyncFromRegistrationAgreements() {
+    public static boolean importAndSyncFromRegistrationAgreements() {
+        boolean needsMigration = false;
         for (final RegistrationAgreement agreement : RegistrationAgreement.values()) {
             final RegistrationProtocol protocol = serveRegistrationProtocol(agreement);
             if (protocol.getDescription() == null) {
+                needsMigration = true;
                 protocol.setDescription(agreement.getDescriptionLocalized());
                 protocol.setCode(agreement.getName());
                 protocol.setEnrolmentByStudentAllowed(agreement.isEnrolmentByStudentAllowed());
@@ -165,6 +167,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
                 protocol.setAttemptAlmaMatterFromPrecedent(agreement.attemptAlmaMatterFromPrecedent());
             }
         }
+        return needsMigration;
     }
 
     public static RegistrationProtocol getDefault() {
