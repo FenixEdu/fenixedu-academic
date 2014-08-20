@@ -496,7 +496,7 @@
 
 <schema name="student.registrationDetail.short" extends="student.registrationsToList"  
 		type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<remove name="registrationProtocol" />
+	<remove name="registrationProtocol.description.content" />
 </schema>
 
 
