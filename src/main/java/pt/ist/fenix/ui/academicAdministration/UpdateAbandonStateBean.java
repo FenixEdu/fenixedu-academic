@@ -187,7 +187,7 @@ public class UpdateAbandonStateBean implements Serializable {
     private String buildMessage(final Registration registration) {
         return RenderUtils.getFormatedResourceString(RESOURCE_BUNDLE, "message.academicAdministration.abandonState.mail.body",
                 registration.getLastStudentCurricularPlan().getName(), getWhenToAbandon().getQualifiedName(), getWhenToAbandon()
-                        .getPreviousExecutionPeriod().getQualifiedName(), getWhenToAbandon().getPreviousExecutionPeriod()
+                        .getPreviousExecutionPeriod().getPreviousExecutionPeriod().getQualifiedName(), getWhenToAbandon()
                         .getPreviousExecutionPeriod().getQualifiedName());
     }
 
