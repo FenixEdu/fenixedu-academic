@@ -4403,8 +4403,8 @@ public class Person extends Person_Base {
             setProfile(profile);
             if (getUser() != null) {
                 getUser().setProfile(profile);
-                profile.setAvatarUrl(CoreConfiguration.getConfiguration().applicationUrl()
-                        + "/person/retrievePersonalPhoto.do?method=retrieveByUUID&uuid=" + getUser().getUsername());
+                profile.setAvatarUrl(CoreConfiguration.getConfiguration().applicationUrl() + "/user/photo/"
+                        + getUser().getUsername());
             }
         }
     }
