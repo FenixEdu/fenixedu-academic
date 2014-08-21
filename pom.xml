@@ -10,7 +10,7 @@
     <groupId>pt.ist</groupId>
     <artifactId>fenix</artifactId>
     <packaging>jar</packaging>
-    <version>3.10.0-SNAPSHOT</version>
+    <version>3.10.0</version>
 
     <name>FenixEdu Core</name>
     <url>http://fenixedu.org</url>
@@ -45,7 +45,7 @@
         <connection>scm:git:git@github.com:fenixedu/fenix.git</connection>
         <developerConnection>scm:git:git@github.com:fenixedu/fenix.git</developerConnection>
         <url>http://fenixedu.org</url>
-        <tag>HEAD</tag>
+        <tag>v3.10.0</tag>
     </scm>
 
     <build>
