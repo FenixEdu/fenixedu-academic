@@ -1,8 +1,9 @@
 package pt.ist.fenix.user.management;
 
-import org.fenixedu.bennu.user.management.UsernameGenerator;
+import org.fenixedu.bennu.core.domain.User.UsernameGenerator;
+import org.fenixedu.bennu.core.domain.UserProfile;
 
-public class ISTUsernameGenerator extends UsernameGenerator<Object> {
+public class ISTUsernameGenerator implements UsernameGenerator {
 
     private final IstUsernameCounter counter;
 
@@ -11,7 +12,7 @@ public class ISTUsernameGenerator extends UsernameGenerator<Object> {
     }
 
     @Override
-    protected String doGenerate(Object ignored) {
+    public String doGenerate(UserProfile parameter) {
         return "ist" + counter.getNext();
     }
 

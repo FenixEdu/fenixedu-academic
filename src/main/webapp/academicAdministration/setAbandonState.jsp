@@ -4,8 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers"	prefix="fr"%>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
-
 <h2>
 	<bean:message key="label.academicAdministration.setAbandonState" bundle="FENIX_IST_RESOURCES"/>
 </h2>
@@ -20,7 +18,7 @@
 		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="pt.ist.fenix.ui.academicAdministration.UpdateAbandonStateBean">
 			<fr:slot name="whenToAbandon" layout="menu-select" key="message.execution.course.management.choose.semester" required="true">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
-				<fr:property name="format" value="${qualifiedName}" />
+				<fr:property name="format" value="\${qualifiedName}" />
 			</fr:slot>
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 mtop05 mbottom15" />

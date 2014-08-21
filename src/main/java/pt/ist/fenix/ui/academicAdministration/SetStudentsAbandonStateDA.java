@@ -11,16 +11,21 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "academicAdministration", path = "/setAbandonState", scope = "request", parameter = "method")
+@StrutsFunctionality(app = FenixISTAcademicApp.class, path = "set-abandon-state",
+        titleKey = "label.academicAdministration.setAbandonState")
+@Mapping(module = "academicAdministration", path = "/setAbandonState")
 @Forwards(value = { @Forward(name = "setAbandonState", path = "/academicAdministration/setAbandonState.jsp") })
 public class SetStudentsAbandonStateDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

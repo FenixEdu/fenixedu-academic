@@ -1,0 +1,179 @@
+<html ng-app="errorPageApp">
+	<head>
+		<title>{{i18n('resources.BennuPortalResources', 'label.error.occurred')}} · {{config.applicationTitle.content}}</title>
+		<meta charset="utf-8">
+		<script src="{{contextPath}}/bennu-portal/js/angular.min.js"></script>
+	</head>
+	<body ng-controller="ErrorCtrl">
+		<div class="container">
+			<div class="title">
+				<img src="{{contextPath}}/api/bennu-portal/configuration/logo" />
+				<span class="right">
+					{{i18n('resources.BennuPortalResources', 'label.error.occurred')}}
+				</span>
+			</div>
+			<div class="content" ng-show="!success">
+				<p>
+					{{i18n('resources.FenixIstResources', 'label.error.page.welcome')}}
+				</p>
+
+				<form ng-submit="sendForm()">
+					<input type="hidden" id="exceptionInfo" value="
+*** Error Message ***
+{{exception.localizedMessage}}
+
+
+*** Request Info ***
+User         | {{loggedUser.username}}
+
+Request URI  | {{request.requestURI}}
+
+Request URL  | {{request.requestURL}}
+
+Query String | {{request.queryString}}
+
+Method       | {{request.method}}
+
+Locale       | {{locale}}
+
+
+*** Request Parameters ***
+{% for entry in parameters %}
+[{{entry.key}}] {{entry.value}}
+
+{% endfor %}
+
+*** Request Attributes ***
+{% for entry in attributes %}
+[{{entry.key}}] {{entry.value}}
+
+{% endfor %}
+
+*** Stacktrace ***
+{{stackTrace}}
+" />
+					<div class="form-control">
+						<label for="email">{{i18n('resources.FenixIstResources', 'label.error.page.email')}}:</label>
+						<div class="form-input">
+							{% if loggedUser is null %}
+								<input type="email" ng-model="data.email" id="email" required />
+							{% else %}
+								<input type="email" ng-model="data.email" id="email" readonly ng-init="data.email = '{{loggedUser.email}}'" />
+							{% endif %}
+						</div>
+					</div>
+					<div class="form-control">
+						<label for="subject">{{i18n('resources.FenixIstResources', 'label.error.page.subject')}}</label>
+						<div class="form-input">
+							<input type="text" ng-model="data.subject" id="subject" required />
+						</div>
+					</div>
+					<div class="form-control">
+						<label for="description">{{i18n('resources.FenixIstResources', 'label.error.page.description')}}</label>
+						<div class="form-input">
+							<textarea ng-model="data.description" id="description" rows="5" required></textarea>
+							<small>{{i18n('resources.FenixIstResources', 'label.error.page.help')}}</small>
+						</div>
+					</div>
+					<input type="submit" value="{{i18n('resources.FenixIstResources', 'label.error.page.submit')}}" ng-if="!sending">
+					<input type="submit" disabled value="{{i18n('resources.FenixIstResources', 'label.error.page.submitting')}}..." ng-if="sending">
+				</form>
+			</div>
+			<div class="success" ng-if="success">
+				<h3>{{i18n('resources.FenixIstResources', 'message.error.page.submitted')}}</h3>
+				{{i18n('resources.FenixIstResources', 'message.error.page.submitted.body')}} <a href="mailto:{{config.supportEmailAddress}}">{{config.supportEmailAddress}}</a>.
+			</div>
+		</div>
+	</body>
+
+	<style>
+		body {
+			font: 15px 'Roboto', sans-serif;
+			background-color: #F1F1F1;
+			font-weight:100;
+			color: #617383;
+		}
+
+		.container {
+			margin: 120px auto 0 auto;
+			width: 800px;
+			background-color: white;
+			padding: 20px;
+			-moz-border-radius: 2px;
+			-webkit-border-radius: 2px;
+			border-radius: 5px;
+		}
+
+		.content {
+			margin: 20px auto 20px auto;
+		}
+
+		.right {
+			float: right;
+		}
+
+		.title {
+			border-bottom: 1px solid #eee;
+			padding-bottom: 15px;
+			font-size: 25px;
+		}
+
+		label {
+			width: 18%;
+			float: left;
+			text-align: right;
+			position: relative;
+			padding-right: 10px;
+			padding-top: 10px;
+		}
+
+		.form-control {
+			margin-bottom: 15px;
+		}
+
+		.form-input {
+			width: 75%;
+			float: left;
+			position: relative;
+		}
+
+		small {
+			color: #999;
+		}
+
+		input[type=submit] {
+			margin-left: 19%;
+			margin-top: 15px;
+		}
+
+		.form-input input, .form-input textarea {
+			display: block;
+			width: 100%;
+			max-width: 100%;
+			padding: 6px 12px;
+			font-size: 12px;
+			line-height: 1.42857143;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+			box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		}
+
+		.success {
+			text-align: center;
+		}
+	</style>
+
+	<script>
+		angular.module('errorPageApp', []).controller('ErrorCtrl', ['$scope', '$http', function($scope, $http) {
+			$scope.data = {}; $scope.success = false; $scope.sending = false; $scope.data.userAgent = "{{userAgent}}"; $scope.data.referer = "{{referer}}";
+			$scope.data.functionality = '{{functionality.externalId}}'; $scope.data.exceptionInfo = document.getElementById('exceptionInfo').value;
+			$scope.sendForm = function() {
+				$scope.sending = true;
+				$http.post('{{contextPath}}/api/fenix-ist/support-form', $scope.data).then(function () {
+					$scope.success = true;
+				});
+			}
+		}]);
+	</script>
+</html>
