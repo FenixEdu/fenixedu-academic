@@ -121,11 +121,10 @@ public class Section extends Section_Base {
         IntStream.range(0, ordered.size()).forEach(i -> ordered.get(i).setOrder(i));
     }
 
-
     private ArrayList<CmsContent> getOrderedSiblings() {
-        return getSiblings().stream().sorted().collect(Collectors.toCollection(ArrayList::new));
+        return getSiblings().stream().sorted().collect(Collectors.toCollection(ArrayList<CmsContent>::new));
     }
-    
+
     private Collection<? extends CmsContent> getSiblings() {
         return getSite() != null ? getSite().getAssociatedSectionSet() : getParent().getChildSet();
     }
