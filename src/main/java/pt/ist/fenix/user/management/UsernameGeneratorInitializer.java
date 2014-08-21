@@ -4,7 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import org.fenixedu.bennu.user.management.UsernameGenerator;
+import org.fenixedu.bennu.core.domain.User;
 
 @WebListener
 public class UsernameGeneratorInitializer implements ServletContextListener {
@@ -12,7 +12,7 @@ public class UsernameGeneratorInitializer implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         IstUsernameCounter counter = IstUsernameCounter.ensureSingleton();
-        UsernameGenerator.setDefault(new ISTUsernameGenerator(counter));
+        User.setUsernameGenerator(new ISTUsernameGenerator(counter));
     }
 
     @Override

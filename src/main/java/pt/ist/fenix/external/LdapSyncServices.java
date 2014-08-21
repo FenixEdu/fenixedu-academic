@@ -1,5 +1,7 @@
 package pt.ist.fenix.external;
 
+import java.text.ParseException;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,13 +20,12 @@ import javax.ws.rs.core.Response.Status;
 
 import net.sourceforge.fenixedu.FenixIstConfiguration;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.UpdatePersonInformationFromCitizenCard;
-import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.domain.User;
@@ -61,9 +62,19 @@ public class LdapSyncServices extends BennuRestResource {
     public Response updatePersonInformation(String json) {
         checkAccessControl();
         PersonInformationFromUniqueCardDTO personDTO = new Gson().fromJson(json, PersonInformationFromUniqueCardDTO.class);
+        Collection<Person> persons = Person.readByDocumentIdNumber(personDTO.getDocumentIdNumber());
+        if (persons.isEmpty() || persons.size() > 1) {
+            return Response.serverError().build();
+        }
+
+        Person person = persons.iterator().next();
+        if (person.getIdDocumentType() != IDDocumentType.IDENTITY_CARD) {
+            return Response.serverError().build();
+        }
+
         try {
-            UpdatePersonInformationFromCitizenCard.run(personDTO);
-        } catch (DomainException e) {
+            personDTO.edit(person);
+        } catch (ParseException e) {
             return Response.serverError().build();
         }
         return Response.ok().build();
