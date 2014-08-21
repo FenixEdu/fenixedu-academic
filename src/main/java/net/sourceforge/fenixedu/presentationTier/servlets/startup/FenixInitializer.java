@@ -94,7 +94,9 @@ public class FenixInitializer implements ServletContextListener {
         startContactValidationServices();
 
         registerChecksumFilterRules();
-        registerUncaughtExceptionHandler();
+        if (FenixConfigurationManager.getConfiguration().useLegacyErrorHandling()) {
+            registerUncaughtExceptionHandler();
+        }
 
         initializeFenixAPI();
         registerPresentationStrategy();
@@ -110,21 +112,22 @@ public class FenixInitializer implements ServletContextListener {
 
     private void transferRegistrationAgreementsToProtocols() {
         long start = System.currentTimeMillis();
-        PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
-        RegistrationProtocol.importAndSyncFromRegistrationAgreements();
-        MobilityProgram.connectToRegistrationProtocols();
-        final Thread t = new Thread() {
-            @Override
-            public void run() {
-                long start = System.currentTimeMillis();
-                InquiryCourseAnswer.connectToRegistrationProtocols();
-                long end = System.currentTimeMillis();
-                logger.info("Transfer registration agreements to protocols for all InquiryCourseAnswer objects took: " + (end - start) + "ms.");
-            }
-        };
-        t.start();
-        long end = System.currentTimeMillis();
-        logger.info("Transfer registration agreements to protocols took: " + (end - start) + "ms.");
+        // skip migration if the migration has already run
+        if (RegistrationProtocol.importAndSyncFromRegistrationAgreements()) {
+            MobilityProgram.connectToRegistrationProtocols();
+            final Thread t = new Thread() {
+                @Override
+                public void run() {
+                    long start = System.currentTimeMillis();
+                    InquiryCourseAnswer.connectToRegistrationProtocols();
+                    long end = System.currentTimeMillis();
+                    logger.info("Transfer registration agreements to protocols for all InquiryCourseAnswer objects took: " + (end - start) + "ms.");
+                }
+            };
+            t.start();
+            long end = System.currentTimeMillis();
+            logger.info("Transfer registration agreements to protocols took: " + (end - start) + "ms.");
+        }
     }
 
     private void registerHealthchecks() {
@@ -277,6 +280,13 @@ public class FenixInitializer implements ServletContextListener {
         });
     }
 
+    /**
+     * Registers the custom exception handler.
+     * 
+     * @deprecated You should use Bennu's own Exception Handling mechanisms.
+     *             This handler is scheduler to be removed in version 4.0.
+     */
+    @Deprecated
     private void registerUncaughtExceptionHandler() {
         ExceptionHandlerFilter.setExceptionHandler((request, response, t) -> {
             if (response.isCommitted()) {

@@ -865,10 +865,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
                     convertTimes(this.getEnrollmentEndDayDateYearMonthDay(), this.getEnrollmentEndTimeDateHourMinuteSecond());
 
             result.add(new EvaluationEventBean("Inicio das inscrições para " + description, enrollmentBegin, enrollmentBegin
-                    .plusHours(1), false, null, url + "/privado", null, executionCourses));
+                    .plusHours(1), false, null, url + "/login", null, executionCourses));
 
             result.add(new EvaluationEventBean("Fim das inscrições para " + description, enrollmentEnd.minusHours(1),
-                    enrollmentEnd, false, null, url + "/privado", null, executionCourses));
+                    enrollmentEnd, false, null, url + "/login", null, executionCourses));
         }
 
         Set<Space> rooms = new HashSet<>();

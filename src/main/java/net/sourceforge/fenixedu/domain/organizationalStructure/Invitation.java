@@ -24,9 +24,15 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
-import org.fenixedu.bennu.user.management.UserLoginPeriod;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.springframework.util.ReflectionUtils;
+
+import pt.ist.fenixframework.Atomic;
+
+import com.google.common.base.Objects;
 
 public class Invitation extends Invitation_Base {
 
@@ -45,6 +51,7 @@ public class Invitation extends Invitation_Base {
     }
 
     public void setInvitationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
+        migrateIntervals();
         checkInvitationDatesIntersection(getInvitedPerson(), beginDate, endDate);
         if (getBeginDate() == null) {
             // When editing from the constructor
@@ -102,7 +109,7 @@ public class Invitation extends Invitation_Base {
     }
 
     private UserLoginPeriod readExactPeriod() {
-        for (UserLoginPeriod period : getInvitedPerson().getUser().getLoginPeriodSet()) {
+        for (UserLoginPeriod period : getInvitedPerson().getUser().getLoginValiditySet()) {
             if (period.matches(getBeginDate().toLocalDate(), getEndDate().toLocalDate())) {
                 return period;
             }
@@ -150,4 +157,29 @@ public class Invitation extends Invitation_Base {
         return AccountabilityType.readByType(AccountabilityTypeEnum.INVITATION);
     }
 
+    @Atomic
+    private void migrateIntervals() {
+        User user = getInvitedPerson().getUser();
+        if (!user.getLoginPeriodSet().isEmpty() && user.getLoginValiditySet().isEmpty()) {
+            for (org.fenixedu.bennu.user.management.UserLoginPeriod old : user.getLoginPeriodSet()) {
+                migratePeriod(user, old);
+            }
+            user.setExpiration(null); // if null falls back to UserLoginPeriod instances
+        }
+    }
+
+    private void migratePeriod(User user, org.fenixedu.bennu.user.management.UserLoginPeriod old) {
+        for (UserLoginPeriod period : user.getLoginValiditySet()) {
+            if (Objects.equal(period.getBeginDate(), old.getBeginDate())) {
+                return; //nothing to do, already exists;
+            }
+        }
+        if (old.getEndDate() == null) {
+            UserLoginPeriod period = UserLoginPeriod.createOpenPeriod(user);
+            ReflectionUtils.invokeMethod(ReflectionUtils.findMethod(period.getClass().getSuperclass(), "setBeginDate"), period,
+                    old.getBeginDate());
+        } else {
+            new UserLoginPeriod(user, old.getBeginDate(), old.getEndDate());
+        }
+    }
 }

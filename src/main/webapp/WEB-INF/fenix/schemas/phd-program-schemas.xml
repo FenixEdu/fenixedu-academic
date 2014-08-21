@@ -517,10 +517,8 @@
 		<property name="size" value="50"/>
 		<property name="labelField" value="nameWithTitle"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.phd.SearchPhdParticipantsByProcess"/>
 		<property name="args" value="phdProcessOID=${individualProgramProcess.externalId}"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.phd.PhdParticipant"/>
 		<property name="minChars" value="3"/>				
 	</slot>
 </schema>
@@ -552,13 +550,12 @@
 
 <schema name="PhdProgramGuidingBean.edit.INTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean"
 	extends="PhdProgramGuidingBean.internal.or.external" bundle="PHD_RESOURCES">
-	<slot name="personName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" >
+	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" >
 		<property name="size" value="50"/>
-		<property name="labelField" value="person.name"/>
+		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
 		<property name="args" value="size=50"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>
 		<property name="minChars" value="4"/>				
 	</slot>
 	<slot name="title" />

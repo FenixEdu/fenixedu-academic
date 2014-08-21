@@ -482,7 +482,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     private Person retrievePersonFromParticipantBean(PhdThesisJuryElementBean participantBean) {
-        if (participantBean.getParticipant() == null && participantBean.getPersonName() != null) {
+        if (participantBean.getParticipant() == null) {
             return participantBean.getPerson();
         }
 

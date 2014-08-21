@@ -36,8 +36,6 @@
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDocumentRequestTypeProvider" />
 				<fr:property name="destination" value="postback" />
 			</fr:slot>
-			<fr:slot name="givenNames" required="true" />
-			<fr:slot name="familyNames" required="true" />
 			<fr:slot name="requestDate" required="true" />
 			<fr:slot name="language" >
 				<fr:property name="includedValues" value="pt, en" />

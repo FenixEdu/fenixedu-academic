@@ -39,7 +39,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -114,8 +113,7 @@ public class RequestUtils {
     }
 
     public static void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.getSession(true);
-        response.sendRedirect(FenixConfigurationManager.getConfiguration().getLoginPage());
+        response.sendRedirect(request.getContextPath() + "/login");
     }
 
 }

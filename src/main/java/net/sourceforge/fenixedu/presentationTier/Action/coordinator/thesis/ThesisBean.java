@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
@@ -49,7 +48,7 @@ public class ThesisBean implements Serializable {
     private Degree degree;
     private boolean internal;
     private String rawPersonName;
-    private PersonName personName;
+    private Person person;
     private UnitName unitName;
     private String rawUnitName;
 
@@ -66,7 +65,7 @@ public class ThesisBean implements Serializable {
 
         this.degree = null;
         this.student = null;
-        this.personName = null;
+        this.person = null;
         this.unitName = null;
         this.target = null;
 
@@ -111,17 +110,11 @@ public class ThesisBean implements Serializable {
     }
 
     public Person getPerson() {
-        PersonName personName = getPersonName();
-
-        if (personName == null) {
-            return null;
-        } else {
-            return personName.getPerson();
-        }
+        return person;
     }
 
-    public PersonName getPersonName() {
-        return this.personName;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public boolean isInternal() {
@@ -130,10 +123,6 @@ public class ThesisBean implements Serializable {
 
     public void setInternal(boolean internal) {
         this.internal = internal;
-    }
-
-    public void setPersonName(PersonName personName) {
-        this.personName = personName;
     }
 
     public Unit getUnit() {

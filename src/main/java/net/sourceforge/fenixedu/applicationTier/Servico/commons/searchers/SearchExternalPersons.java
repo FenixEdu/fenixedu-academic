@@ -20,13 +20,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.person.PersonName;
+import net.sourceforge.fenixedu.domain.Person;
 
-public class SearchExternalPersons extends SearchParties<PersonName> {
+public class SearchExternalPersons extends SearchParties<Person> {
 
     @Override
-    protected Collection<PersonName> search(String value, int size) {
-        return PersonName.findExternalPerson(value, size);
+    protected Collection<Person> search(String value, int size) {
+        return Person.findExternalPerson(value, size);
     }
 
 }

@@ -54,14 +54,6 @@
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ManagerFilter</filter-class>
 	</filter>
 	<filter>
-	    <filter-name>LoginPageFilter</filter-name>
-	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.LoginPageFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>CASFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.CASFilter</filter-class>
-    </filter>
-	<filter>
 	    <filter-name>MissingCandidacyInformationFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.MissingCandidacyInformationFilter</filter-class>
 	</filter>
@@ -78,10 +70,6 @@
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixAPILanguageFilter</filter-class>
 	</filter>
 	<!-- Filter Mapping -->
-	<filter-mapping>
- 		 <filter-name>LoginPageFilter</filter-name>
- 		 <url-pattern>/login</url-pattern>
-	</filter-mapping>
     <filter-mapping>
         <filter-name>ExceptionHandlerFilter</filter-name>
         <url-pattern>*.faces</url-pattern>
@@ -90,18 +78,6 @@
 		<filter-name>ManagerFilter</filter-name>
 		<url-pattern>/manager/*</url-pattern>
 	</filter-mapping>
-   	<filter-mapping>
-	    <filter-name>CASFilter</filter-name>
-	    <url-pattern>/loginCAS.do</url-pattern>
-    </filter-mapping>
-   	<filter-mapping>
-	    <filter-name>CASFilter</filter-name>
-	    <url-pattern>/loginPage.jsp</url-pattern>
-    </filter-mapping>
-   	<filter-mapping>
-	    <filter-name>CASFilter</filter-name>
-	    <url-pattern>/login.do</url-pattern>
-    </filter-mapping>
 	<filter-mapping>
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
 		<url-pattern>/candidate/*</url-pattern>

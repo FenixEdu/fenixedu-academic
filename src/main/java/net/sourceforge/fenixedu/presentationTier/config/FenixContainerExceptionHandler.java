@@ -26,6 +26,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -37,7 +39,11 @@ import org.slf4j.LoggerFactory;
 /**
  * 
  * @author Luis Cruz
+ * 
+ * @deprecated Use Bennu's own Exception Handling mechanisms.
+ *             This handler is scheduler to be removed in version 4.0.
  */
+@Deprecated
 public class FenixContainerExceptionHandler extends FenixExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(FenixContainerExceptionHandler.class);
@@ -45,6 +51,15 @@ public class FenixContainerExceptionHandler extends FenixExceptionHandler {
     @Override
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
             HttpServletRequest request, HttpServletResponse response) throws ServletException {
+
+        if (!FenixConfigurationManager.getConfiguration().useLegacyErrorHandling()) {
+            // Re-throw the exception, allowing the container to catch it
+            if (ex instanceof ServletException) {
+                throw (ServletException) ex;
+            } else {
+                throw new ServletException(ex);
+            }
+        }
 
         logger.error("Request at " + request.getRequestURI() + " threw an exception: ", ex);
 

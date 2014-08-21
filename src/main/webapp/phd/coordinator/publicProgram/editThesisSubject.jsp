@@ -50,7 +50,6 @@
 			<fr:slot name="teacher" key="label.phd.guiding" layout="autoComplete">
 				<fr:property name="size" value="80"/>
 				<fr:property name="labelField" value="person.name"/>
-				<fr:property name="format" value="${person.name}"/>
 				<fr:property name="indicatorShown" value="true"/>
 				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachersByName"/>
 				<fr:property name="args" value="slot=person.name"/>

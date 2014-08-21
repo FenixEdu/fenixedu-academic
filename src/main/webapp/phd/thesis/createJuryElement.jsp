@@ -28,7 +28,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.PersonName"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.academicAdminOffice.PhdThesisProcessDA"%>
 
 
@@ -92,14 +91,12 @@
 	
 						<%-- INTERNAL jury type slots --%>
 						<logic:equal name="thesisJuryElementBean" property="participantType.name" value="INTERNAL">
-							<fr:slot name="personName" layout="autoComplete">
+							<fr:slot name="person" layout="autoComplete">
 								<fr:property name="size" value="50"/>
-								<fr:property name="labelField" value="person.name"/>
-								<fr:property name="format" value="${person.name} (${person.user.username})" />
+								<fr:property name="format" value="${name} (${user.username})" />
 								<fr:property name="indicatorShown" value="true"/>		
 								<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
 								<fr:property name="args" value="size=50"/>
-								<fr:property name="className" value="<%= PersonName.class.getName() %>"/>
 								<fr:property name="minChars" value="4"/>	
 								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" />			
 							</fr:slot>

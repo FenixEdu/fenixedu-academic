@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -99,24 +100,23 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
         private ExecutionDegree findExecutionDegree(final ExecutionSemester executionSemester,
                 final DegreeCurricularPlan degreeCurricularPlan) {
-            return degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
+            return degreeCurricularPlan.getExecutionDegreeByAcademicInterval(executionSemester.getExecutionYear()
+                    .getAcademicInterval());
         }
 
         public Date getBegginingOfLessonPeriod(final ExecutionSemester executionSemester, final ExecutionDegree executionDegree) {
-            if (executionSemester.getSemester().intValue() == 1) {
-                return executionDegree.getPeriodLessonsFirstSemester().getStart();
-            } else if (executionSemester.getSemester().intValue() == 2) {
-                return executionDegree.getPeriodLessonsSecondSemester().getStart();
+            if (executionSemester != null) {
+                OccupationPeriod op = executionDegree.getPeriodLessons(executionSemester);
+                return op.getStartYearMonthDay().toDateMidnight().toDate();
             } else {
                 throw new DomainException("unsupported.execution.period.semester");
             }
         }
 
         public Date getEndOfExamsPeriod(final ExecutionSemester executionSemester, final ExecutionDegree executionDegree) {
-            if (executionSemester.getSemester().intValue() == 1) {
-                return executionDegree.getPeriodExamsFirstSemester().getEnd();
-            } else if (executionSemester.getSemester().intValue() == 2) {
-                return executionDegree.getPeriodExamsSecondSemester().getEnd();
+            if (executionSemester != null) {
+                OccupationPeriod op = executionDegree.getPeriodLessons(executionSemester);
+                return op.getEndYearMonthDay().toDateMidnight().toDate();
             } else {
                 throw new DomainException("unsupported.execution.period.semester");
             }

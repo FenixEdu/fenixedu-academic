@@ -81,7 +81,7 @@ public class EmailAddress extends EmailAddress_Base {
         this();
         super.init(party, type, defaultContact);
         checkParameters(value);
-        super.setValue(value);
+        setValue(value);
     }
 
     protected EmailAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
@@ -91,7 +91,7 @@ public class EmailAddress extends EmailAddress_Base {
         super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, visibleToAlumni,
                 defaultContact);
         checkParameters(value);
-        super.setValue(value);
+        setValue(value);
     }
 
     private void checkParameters(final String value) {
@@ -101,11 +101,30 @@ public class EmailAddress extends EmailAddress_Base {
     }
 
     @Override
+    public void setDefaultContact(Boolean defaultContact) {
+        super.setDefaultContact(defaultContact);
+        updateProfileEmail();
+    }
+
+    @Override
+    public void setValue(String value) {
+        super.setValue(value);
+        updateProfileEmail();
+    }
+
+    @Override
     public void setType(PartyContactType type) {
         if (PartyContactType.INSTITUTIONAL.equals(type)) {
             throw new DomainException("error.domain.contacts.EmailAddress.can.only.have.one.institutional.emailAddress");
         }
         super.setType(type);
+        updateProfileEmail();
+    }
+
+    @Override
+    public void setValid() {
+        super.setValid();
+        updateProfileEmail();
     }
 
     public boolean hasValue() {
@@ -126,7 +145,7 @@ public class EmailAddress extends EmailAddress_Base {
     public void edit(final String value) {
         if (!isInstitutionalType()) {
             if (!StringUtils.equals(value, getValue())) {
-                super.setValue(value);
+                setValue(value);
                 if (!waitsValidation()) {
                     new EmailValidation(this);
                 }
@@ -160,6 +179,14 @@ public class EmailAddress extends EmailAddress_Base {
     @Override
     public String getPresentationValue() {
         return getValue();
+    }
+
+    private void updateProfileEmail() {
+        if (getParty() != null && getParty() instanceof Person) {
+            Person person = (Person) getParty();
+            person.ensureUserProfile();
+            person.getProfile().setEmail(person.getEmailForSendingEmails());
+        }
     }
 
     @Override

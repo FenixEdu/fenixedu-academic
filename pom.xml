@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.fenixedu</groupId>
         <artifactId>fenix-framework-project</artifactId>
-        <version>2.0.1</version>
+        <version>2.1.0</version>
     </parent>
 
     <groupId>pt.ist</groupId>
     <artifactId>fenix</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.0</version>
+    <version>3.10.0</version>
 
     <name>FenixEdu Core</name>
     <url>http://fenixedu.org</url>
@@ -21,7 +21,7 @@
         <jasper.threads>1</jasper.threads>
         <skipTests>true</skipTests>
 
-        <version.org.fenixedu.bennu>3.1.0</version.org.fenixedu.bennu>
+        <version.org.fenixedu.bennu>3.3.1</version.org.fenixedu.bennu>
     </properties>
 
     <issueManagement>
@@ -46,7 +46,7 @@
         <connection>scm:git:git@github.com:fenixedu/fenix.git</connection>
         <developerConnection>scm:git:git@github.com:fenixedu/fenix.git</developerConnection>
         <url>http://fenixedu.org</url>
-        <tag>HEAD</tag>
+        <tag>v3.10.0</tag>
     </scm>
 
     <build>
@@ -150,7 +150,12 @@
         <dependency>
             <groupId>org.fenixedu</groupId>
             <artifactId>bennu-renderers</artifactId>
-            <version>4.1.0</version>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-spring</artifactId>
+            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>net.sf.jasperreports</groupId>

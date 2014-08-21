@@ -88,7 +88,7 @@
 
 <body>
 <% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
-<script id="ist-bar" data-logout="https://fenix.tecnico.ulisboa.pt/logoff.do" data-login="https://fenix.tecnico.ulisboa.pt/loginPage.jsp" data-fluid="true" data-lang="<%= I18N.getLocale().getLanguage() %>" <% if(Authenticate.getUser() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.tecnico.ulisboa.pt/site_media/static/js/barra.js"></script>
+<script id="ist-bar" data-logout="https://fenix.tecnico.ulisboa.pt/logout" data-login="https://fenix.tecnico.ulisboa.pt/login" data-fluid="true" data-lang="<%= I18N.getLocale().getLanguage() %>" <% if(Authenticate.getUser() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.tecnico.ulisboa.pt/site_media/static/js/barra.js"></script>
 <% } %>
 
 

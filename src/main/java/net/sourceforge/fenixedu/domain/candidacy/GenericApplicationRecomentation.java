@@ -22,10 +22,10 @@ import java.util.Random;
 
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -56,15 +56,25 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
     @Atomic
     public void sendEmailForRecommendation() {
         final String subject =
-                BundleUtil.getString(Bundle.CANDIDATE,
-                        "label.application.recomentation.email.subject", getGenericApplication().getName());
+                BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.email.subject", getGenericApplication()
+                        .getName());
         final String body =
-                BundleUtil
-                        .getString(Bundle.CANDIDATE,
-                                "label.application.recomentation.email.body", getTitle(), getName(), getGenericApplication()
-                                        .getName(),
-                                getGenericApplication().getGenericApplicationPeriod().getTitle().getContent(),
-                                generateConfirmationLink());
+                BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.email.body", getTitle(), getName(),
+                        getGenericApplication().getName(), getGenericApplication().getGenericApplicationPeriod().getTitle()
+                                .getContent(), generateConfirmationLink());
+
+        new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);
+    }
+
+    @Atomic
+    public void sendEmailForRecommendationDelete() {
+        final String subject =
+                BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.email.subject", getGenericApplication()
+                        .getName());
+        final String body =
+                BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.email.delete.body", getTitle(),
+                        getName(), getGenericApplication().getName(), getGenericApplication().getGenericApplicationPeriod()
+                                .getTitle().getContent());
 
         new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);
     }

@@ -38,10 +38,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.AuthorizationException;
+import org.fenixedu.bennu.core.filters.CasAuthenticationFilter;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
@@ -53,7 +53,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             HttpServletResponse response) throws Exception {
         try {
 
-            final User userView = doAuthentication(form, request);
+            if (!Authenticate.isLogged() && request.getAttribute(CasAuthenticationFilter.AUTHENTICATION_EXCEPTION_KEY) == null) {
+                response.sendRedirect(request.getContextPath() + "/login?callback=" + request.getRequestURL().toString());
+                return null;
+            }
+
+            final User userView = Authenticate.getUser();
 
             if (userView == null || userView.getPerson().getPersonRolesSet().isEmpty()) {
                 return getAuthenticationFailedForward(mapping, request, "errors.noAuthorization", "errors.noAuthorization");
@@ -247,14 +252,10 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return false;
     }
 
-    protected abstract User doAuthentication(ActionForm form, HttpServletRequest request);
-
     protected ActionForward getAuthenticationFailedForward(final ActionMapping mapping, final HttpServletRequest request,
             final String actionKey, final String messageKey) {
-        final ActionMessages actionErrors = new ActionMessages();
-        actionErrors.add(actionKey, new ActionMessage(messageKey));
-        saveErrors(request, actionErrors);
-        return new ActionForward("/loginPage.jsp");
+        Authenticate.logout(request.getSession());
+        return new ActionForward("/authenticationFailed.jsp");
     }
 
     private ActionForward handleSessionCreationAndGetForward(ActionMapping mapping, HttpServletRequest request, User userView,

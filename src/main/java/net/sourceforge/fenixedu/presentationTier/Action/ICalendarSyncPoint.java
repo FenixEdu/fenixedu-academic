@@ -61,7 +61,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
     private Calendar getClassCalendar(User user, DateTime validity, HttpServletRequest request) {
 
         List<EventBean> allEvents = getClasses(user);
-        String url = CoreConfiguration.getConfiguration().applicationUrl() + "/privado";
+        String url = CoreConfiguration.getConfiguration().applicationUrl() + "/login";
         EventBean event =
                 new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false, null,
                         url, "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Fénix para gerar nova chave");
@@ -110,7 +110,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
         List<EventBean> allEvents = getExams(user);
 
-        String url = CoreConfiguration.getConfiguration().applicationUrl() + "/privado";
+        String url = CoreConfiguration.getConfiguration().applicationUrl() + "/login";
         EventBean event =
                 new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false, null,
                         url, "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Fénix para gerar nova chave");

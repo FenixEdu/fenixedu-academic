@@ -362,12 +362,10 @@
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
 	<slot name="branchCurriculumGroup" key="label.branch" layout="autoComplete">
 		<property name="size" value="50"/>
-		<property name="labelField" value="name.content"/>
 		<property name="format" value="${name.content} (${studentCurricularPlan.name})"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchCurriculumGroupsForRegistration"/>
 		<property name="args" value="registrationID=${registration.externalId}"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup"/>
 		<property name="minChars" value="0"/>
 		<property name="rawSlotName" value="branch"/>
 	</slot>
@@ -457,7 +455,6 @@
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
 		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="2"/>
 	</slot>
 </schema>
@@ -535,7 +532,6 @@
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
 		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="2"/>
 	</slot>
 </schema>

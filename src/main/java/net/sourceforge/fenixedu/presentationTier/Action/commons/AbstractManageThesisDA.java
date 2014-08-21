@@ -78,7 +78,7 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
             return searchStudent(mapping, actionForm, request, response);
         }
 
-        bean.setPersonName(null);
+        bean.setPerson(null);
         bean.setRawPersonName(null);
         bean.setUnitName(null);
         bean.setRawUnitName(null);

@@ -30,5 +30,5 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <logic:notPresent name="LOGGED_USER_ATTRIBUTE">
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a  href="<%= request.getContextPath() %>/privado">Login</a>
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a  href="<%= request.getContextPath() %>/login">Login</a>
 </logic:notPresent>

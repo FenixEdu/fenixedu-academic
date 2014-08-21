@@ -52,6 +52,11 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 
+/**
+ * @deprecated Use Bennu's own Exception Handling mechanisms.
+ *             This class is scheduler to be removed in version 4.0.
+ */
+@Deprecated
 public class ExceptionInformation {
 
     //thread info

@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PhotoState;
 import net.sourceforge.fenixedu.domain.PhotoType;
 import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.domain.person.HumanName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.LocalDate;
@@ -130,7 +131,7 @@ public class PhotographFilterBean implements Serializable {
             if (getPersonType() != null && !person.hasRole(getPersonType())) {
                 return false;
             }
-            if (getName() != null && !person.getPersonName().match(name.toLowerCase().split(" "))) {
+            if (getName() != null && !HumanName.namesMatch(person.getName(), name)) {
                 return false;
             }
         } else {
@@ -138,5 +139,4 @@ public class PhotographFilterBean implements Serializable {
         }
         return true;
     }
-
 }

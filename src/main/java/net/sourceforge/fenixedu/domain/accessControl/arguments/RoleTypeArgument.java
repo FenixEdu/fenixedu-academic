@@ -22,6 +22,12 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.fenixedu.bennu.core.annotation.GroupArgumentParser;
 
+/**
+ * @deprecated
+ *             Use {@link RoleArgument} instead.
+ *
+ */
+@Deprecated
 @GroupArgumentParser
 public class RoleTypeArgument extends EnumArgument<RoleType> {
     @Override

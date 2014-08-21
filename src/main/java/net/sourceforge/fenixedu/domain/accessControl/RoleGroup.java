@@ -18,7 +18,9 @@
  */
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -30,57 +32,39 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.joda.time.DateTime;
 
-import com.google.common.base.Function;
-import com.google.common.base.Objects;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
-
 @GroupOperator("role")
 public class RoleGroup extends FenixGroup {
     private static final long serialVersionUID = -2312726475879576571L;
 
     @GroupArgument("")
-    private RoleType role;
+    private Role role;
 
     private RoleGroup() {
         super();
     }
 
-    private RoleGroup(RoleType role) {
-        this();
+    private RoleGroup(Role role) {
         this.role = role;
     }
 
     public static RoleGroup get(Role role) {
-        return get(role.getRoleType());
-    }
-
-    public static RoleGroup get(RoleType role) {
+        Objects.requireNonNull(role, "role");
         return new RoleGroup(role);
     }
 
-    private Role getRole() {
-        return Role.getRoleByRoleType(role);
+    public static RoleGroup get(RoleType roleType) {
+        return get(Role.getRoleByRoleType(roleType));
     }
 
     @Override
     public String getPresentationName() {
-        return getRole().getRoleType().getLocalizedName();
+        return role.getRoleType().getLocalizedName();
     }
 
     @Override
     public Set<User> getMembers() {
-        return FluentIterable.from(getRole().getAssociatedPersonsSet()).filter(new Predicate<Person>() {
-            @Override
-            public boolean apply(Person person) {
-                return person.getUser() != null;
-            }
-        }).transform(new Function<Person, User>() {
-            @Override
-            public User apply(Person person) {
-                return person.getUser();
-            }
-        }).toSet();
+        return role.getAssociatedPersonsSet().stream().filter((person) -> person.getUser() != null).map(Person::getUser)
+                .collect(Collectors.toSet());
     }
 
     /*
@@ -96,7 +80,7 @@ public class RoleGroup extends FenixGroup {
         if (user == null) {
             return false;
         }
-        return user.getPerson().hasRole(role);
+        return user.getPerson().hasPersonRoles(role);
     }
 
     /*
@@ -115,7 +99,7 @@ public class RoleGroup extends FenixGroup {
     @Override
     public boolean equals(Object object) {
         if (object instanceof RoleGroup) {
-            return Objects.equal(role, ((RoleGroup) object).role);
+            return role.equals(((RoleGroup) object).role);
         }
         return false;
     }

@@ -26,6 +26,11 @@ import net.sourceforge.fenixedu.domain.support.SupportRequestType;
 
 import org.fenixedu.bennu.portal.domain.MenuFunctionality;
 
+/**
+ * @deprecated Use Bennu's own Exception Handling mechanisms.
+ *             This class is scheduler to be removed in version 4.0.
+ */
+@Deprecated
 public class SupportRequestBean implements Serializable {
 
     private String responseEmail;

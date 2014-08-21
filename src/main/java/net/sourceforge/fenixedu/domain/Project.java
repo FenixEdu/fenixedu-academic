@@ -345,7 +345,7 @@ public class Project extends Project_Base {
                 .getProjectBeginDateTime(), this.getProjectBeginDateTime().plusHours(1), false, null, null,
                 this.getDescription(), Collections.singleton(executionCourse)));
         if (this.getOnlineSubmissionsAllowed()) {
-            String url = CoreConfiguration.getConfiguration().applicationUrl() + "/privado";
+            String url = CoreConfiguration.getConfiguration().applicationUrl() + "/login";
             result.add(new EvaluationEventBean("Fim " + this.getName() + " : " + executionCourse.getNome(), this
                     .getProjectEndDateTime().minusHours(1), this.getProjectEndDateTime(), false, null, url,
                     this.getDescription(), Collections.singleton(executionCourse)));

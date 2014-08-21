@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 
+@Deprecated
 public class PersonNamePart extends PersonNamePart_Base {
 
     public PersonNamePart(final String namePart) {

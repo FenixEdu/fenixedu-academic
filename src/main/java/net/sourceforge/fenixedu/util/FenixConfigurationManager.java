@@ -36,11 +36,13 @@ public class FenixConfigurationManager {
                 defaultValue = "0000")
         public String appInstitutionPIN();
 
+        @Deprecated
         @ConfigurationProperty(key = "barra.as.authentication.broker",
                 description = "CAS ticket validation through barra: https://fenix-ashes.ist.utl.pt/fenixWiki/Barra",
                 defaultValue = "false")
         public Boolean barraAsAuthenticationBroker();
 
+        @Deprecated
         @ConfigurationProperty(key = "barra.loginUrl",
                 description = "Login URL to use when barra is set as authentication broker")
         public String barraLoginUrl();
@@ -147,8 +149,9 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "lastYearForCredits", defaultValue = "2010/2011")
         public String getLastYearForCredits();
 
+        @Deprecated
         @ConfigurationProperty(key = "login.page", description = "absolute path to the login page",
-                defaultValue = "http://localhost:8080/fenix/privado")
+                defaultValue = "http://localhost:8080/fenix/login")
         public String getLoginPage();
 
         @ConfigurationProperty(key = "mailingList.host.name")
@@ -262,6 +265,12 @@ public class FenixConfigurationManager {
                 defaultValue = "2005/2006")
         public String getYearForFromMarkSheetManagment();
 
+        @ConfigurationProperty(
+                key = "legacy.error.handling",
+                description = "Whether to keep using the legacy error handling mechanisms instead of Bennu's building error handling.",
+                defaultValue = "true")
+        public Boolean useLegacyErrorHandling();
+
     }
 
     private static HostAccessControl hostAccessControl = new HostAccessControl(getConfiguration().getHostControlName());
@@ -284,10 +293,12 @@ public class FenixConfigurationManager {
         return PrinterManagerHolder.printerManager;
     }
 
+    @Deprecated
     public static Boolean isBarraAsAuthenticationBroker() {
         return barraAsAuthenticationBroker;
     }
 
+    @Deprecated
     public static void setBarraAsAuthenticationBroker(Boolean state) {
         barraAsAuthenticationBroker = state;
     }

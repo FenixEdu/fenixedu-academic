@@ -212,7 +212,6 @@
 				<fr:slot name="person" layout="autoComplete" key="label.person" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
   					<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.person.PersonAutoCompleteProvider" />
         			<fr:property name="labelField" value="presentationName"/>
-   	    			<fr:property name="format" value="${presentationName}"/>
       				<fr:property name="classes" value="inputsize500px"/>
        				<fr:property name="minChars" value="2"/>
        				<fr:property name="sortBy" value="presentationName"/>
@@ -259,7 +258,6 @@
        					<fr:property name="args" value="<%= providerArgs2 %>" />
        					<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider" />
         				<fr:property name="labelField" value="presentationName"/>
-   	    				<fr:property name="format" value="${presentationName}"/>
        					<fr:property name="classes" value="inputsize500px"/>
        					<fr:property name="minChars" value="2"/>
        					<fr:property name="sortBy" value="presentationName"/>
@@ -371,7 +369,6 @@
 	    			<fr:slot name="mobilityProgram" layout="autoComplete" key="label.mobilityProgram" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
     	    			<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.MobilityProgramProvider" />
         				<fr:property name="labelField" value="registrationProtocol.description.content"/>
-        				<fr:property name="format" value="${registrationProtocol.description.content}"/>
         				<fr:property name="classes" value="inputsize500px"/>
         				<fr:property name="minChars" value="1"/>
         				<fr:property name="sortBy" value="presentationName"/>
@@ -382,7 +379,6 @@
         					<fr:property name="args" value="<%= providerArgs %>" />
         					<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider" />
 	        				<fr:property name="labelField" value="presentationName"/>
-    	    				<fr:property name="format" value="${presentationName}"/>
         					<fr:property name="classes" value="inputsize500px"/>
         					<fr:property name="minChars" value="2"/>
         					<fr:property name="sortBy" value="presentationName"/>
@@ -392,7 +388,6 @@
     				<fr:slot name="unit" layout="autoComplete" key="label.university" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
         				<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExternalUniversityUnitAutoCompleteProvider" />
 	        			<fr:property name="labelField" value="presentationName"/>
-    	    			<fr:property name="format" value="${presentationName}"/>
         				<fr:property name="classes" value="inputsize500px"/>
         				<fr:property name="minChars" value="2"/>
         				<fr:property name="sortBy" value="presentationName"/>

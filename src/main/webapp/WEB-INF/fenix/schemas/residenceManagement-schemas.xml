@@ -176,14 +176,12 @@
 
 
 <schema name="residenceRoleManagment.searchPerson.autoComplete" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceRoleManagementBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
-	<slot name="personName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.name">
+	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.name">
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
 		<property name="args" value="slot=name,size=20"/>
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>
-		<property name="format" value="${name}"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>
+		<property name="indicatorShown" value="true"/>
 		<property name="minChars" value="3"/>
 		<property name="maxCount" value="100"/>		
 		<property name="rawSlotName" value="name"/>

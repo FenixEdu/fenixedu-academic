@@ -5421,6 +5421,7 @@ class candidacy.GenericApplication {
 	String applicationNumber;
 	String email;
 	String confirmationCode;
+	Boolean submitted;
 
 	String name;
     Gender gender;
@@ -7243,6 +7244,15 @@ relation ContestGroupPeriodSelectionResultNotification {
 	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole candidatesNotifiedOfSelectionResultsForPeriod {
 		multiplicity *;
 	}
+}
+
+relation PersonUserProfile {
+    Person playsRole person {
+        multiplicity 0..1;
+    }
+    .org.fenixedu.bennu.core.domain.UserProfile playsRole profile {
+        multiplicity 0..1;
+    }
 }
 
 relation DomainOperationLogPerson {

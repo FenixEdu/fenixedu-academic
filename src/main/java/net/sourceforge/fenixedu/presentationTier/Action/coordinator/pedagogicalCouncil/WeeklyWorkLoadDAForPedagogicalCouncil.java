@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @StrutsFunctionality(app = PedagogicalControlApp.class, path = "weekly-work-load", titleKey = "link.weekly.work.load",
         bundle = "ApplicationResources")
 @Mapping(module = "pedagogicalCouncil", path = "/weeklyWorkLoad", input = "/weeklyWorkLoad.do?method=prepare",
-        formBean = "weeklyWorkLoadForm")
+        formBean = "weeklyWorkLoadForm", validate = false)
 @Forwards(value = { @Forward(name = "showWeeklyWorkLoad", path = "/pedagogicalCouncil/weeklyWorkLoad.jsp") })
 public class WeeklyWorkLoadDAForPedagogicalCouncil extends WeeklyWorkLoadDA {
 }

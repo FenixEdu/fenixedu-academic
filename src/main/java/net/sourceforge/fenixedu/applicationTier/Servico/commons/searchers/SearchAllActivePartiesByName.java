@@ -21,9 +21,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 
 import org.joda.time.YearMonthDay;
 
@@ -35,10 +35,7 @@ public class SearchAllActivePartiesByName extends SearchParties<Party> {
         Collection<Party> result = new ArrayList<Party>();
         YearMonthDay currentDate = new YearMonthDay();
 
-        Collection<PersonName> persons = PersonName.find(value, size);
-        for (PersonName personName : persons) {
-            result.add(personName.getPerson());
-        }
+        result.addAll(Person.findPerson(value, size));
 
         Collection<UnitName> units = UnitName.find(value, size);
         for (UnitName unitName : units) {

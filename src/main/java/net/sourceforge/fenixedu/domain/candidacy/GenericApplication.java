@@ -26,10 +26,12 @@ import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
+import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
@@ -72,12 +74,12 @@ public class GenericApplication extends GenericApplication_Base {
 
     public void sendEmailForApplication() {
         final String subject =
-                BundleUtil.getString(Bundle.CANDIDATE, "label.application.email.subject",
-                        getGenericApplicationPeriod().getTitle().getContent());
+                BundleUtil.getString(Bundle.CANDIDATE, "label.application.email.subject", getGenericApplicationPeriod()
+                        .getTitle().getContent());
         final String body =
-                BundleUtil.getString(Bundle.CANDIDATE, "label.application.email.body",
-                        getApplicationNumber(), generateConfirmationLink(),
-                        getGenericApplicationPeriod().getTitle().getContent(), Unit.getInstitutionAcronym());
+                BundleUtil.getString(Bundle.CANDIDATE, "label.application.email.body", getApplicationNumber(),
+                        generateConfirmationLink(), getGenericApplicationPeriod().getTitle().getContent(),
+                        Unit.getInstitutionAcronym());
         new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);
     }
 
@@ -109,4 +111,10 @@ public class GenericApplication extends GenericApplication_Base {
         }
         return result;
     }
+
+    @Atomic
+    public void submitApplication() {
+        this.setSubmitted(true);
+    }
+
 }

@@ -43,24 +43,20 @@
 	<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.inquiries.AuditSelectPersonsECBean" bundle="APPLICATION_RESOURCES">
 		<fr:slot name="teacher" layout="autoComplete" key="teacher.docente" required="true">
 			<fr:property name="size" value="80"/>
-			<fr:property name="labelField" value="name"/>
 			<fr:property name="format" value="${name} / ${istUsername}"/>
 			<fr:property name="args" value="slot=name"/>
 			<fr:property name="minChars" value="3"/>
 			<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchEmployeesAndTeachers"/>
 			<fr:property name="indicatorShown" value="true"/>		
-			<fr:property name="className" value="net.sourceforge.fenixedu.domain.Person"/>
 			<fr:property name="errorStyleClass" value="error0"/>
 		</fr:slot>
 		<fr:slot name="student" layout="autoComplete" key="student" required="true">
 			<fr:property name="size" value="80"/>
-			<fr:property name="labelField" value="name"/>
 			<fr:property name="format" value="${name} / ${istUsername}"/>
 			<fr:property name="args" value="slot=name,size=30"/>
 			<fr:property name="minChars" value="3"/>
 			<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
 			<fr:property name="indicatorShown" value="true"/>		
-			<fr:property name="className" value="net.sourceforge.fenixedu.domain.Person"/>
 			<fr:property name="errorStyleClass" value="error0"/>
 		</fr:slot>
 	</fr:schema>

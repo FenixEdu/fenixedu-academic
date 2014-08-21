@@ -196,14 +196,13 @@
 		<property name="trueLabel" value="label.coordinator.thesis.edit.externalPerson"/>
 		<property name="bundle" value="DEFAULT"/>
 	</slot>
-	<slot name="personName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 		<property name="size" value="70"/>
 		<property name="rawSlotName" value="personNameString"/>
-		<property name="labelField" value="text"/>
+		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
 		<property name="args" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 		<property name="minChars" value="4"/>
 	</slot>
 	<slot name="begin"> 
@@ -221,14 +220,13 @@
 </schema>
 
 <schema name="create.researchContract.external" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean" extends="create.researchContract.internal" bundle="WEBSITEMANAGER_RESOURCES">
-	<slot name="personName" layout="autoComplete">
+	<slot name="person" layout="autoComplete">
 		<property name="size" value="70"/>
 		<property name="rawSlotName" value="personNameString"/>
-		<property name="labelField" value="text"/>
+		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons"/>
 		<property name="args" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>

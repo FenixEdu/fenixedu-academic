@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.phd;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 
 public class PhdParticipantBean implements Serializable {
 
@@ -32,7 +31,7 @@ public class PhdParticipantBean implements Serializable {
     private PhdParticipant participant;
     private PhdParticipantSelectType participantSelectType = null;
     private PhdParticipantType participantType = null;
-    private PersonName personName;
+    private Person person;
 
     private String name;
     private String title;
@@ -103,12 +102,12 @@ public class PhdParticipantBean implements Serializable {
         this.participantType = participantType;
     }
 
-    public PersonName getPersonName() {
-        return personName;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersonName(PersonName personName) {
-        this.personName = personName;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public String getName() {
@@ -187,17 +186,13 @@ public class PhdParticipantBean implements Serializable {
         return getParticipantType() == PhdParticipantType.INTERNAL;
     }
 
-    public Person getPerson() {
-        return getPersonName().getPerson();
-    }
-
     public boolean isExistingElement() {
         return getParticipantSelectType() == PhdParticipantSelectType.EXISTING;
     }
 
     public PhdParticipantBean setInternalParticipant(final Person person) {
         setParticipantType(PhdParticipantType.INTERNAL);
-        setPersonName(person.getPersonName());
+        setPerson(person);
         return this;
     }
 

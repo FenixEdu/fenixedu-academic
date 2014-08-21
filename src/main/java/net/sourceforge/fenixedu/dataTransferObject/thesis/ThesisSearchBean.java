@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.PersonNamePart;
+import net.sourceforge.fenixedu.domain.person.HumanName;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisLibraryState;
 
@@ -97,10 +97,7 @@ public class ThesisSearchBean implements Serializable {
         if (person.getUsername().equals(text)) {
             return true;
         }
-        if (person.getPersonName().match(PersonNamePart.getNameParts(text))) {
-            return true;
-        }
-        return false;
+        return HumanName.namesMatch(person.getName(), text);
     }
 
     public String getText() {

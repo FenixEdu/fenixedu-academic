@@ -292,7 +292,6 @@
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
 		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="2"/>
 		<property name="rawSlotName" value="precedentDegreeInformation.institutionName"/>
 	</slot>
@@ -340,7 +339,6 @@
 		<property name="indicatorShown" value="true"/>		
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
 		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="2"/>
 		<property name="rawSlotName" value="precedentDegreeInformation.institutionName"/>
 	</slot>
@@ -1741,7 +1739,6 @@
 		<property name="indicatorShown" value="true"/>
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnitsWithScore"/>
 		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="3"/>
 		<property name="rawSlotName" value="precedentDegreeInformation.institutionName"/>
 	</slot>
@@ -1754,7 +1751,6 @@
 		<property name="indicatorShown" value="true"/>
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
 		<property name="args" value="slot=name,size=50"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="1"/>
 		<property name="rawSlotName" value="precedentDegreeInformation.institutionName"/>
 	</slot>
@@ -1969,7 +1965,6 @@
 		<property name="indicatorShown" value="true"/>
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
 		<property name="args" value="slot=name,size=50"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="1"/>
 		<property name="rawSlotName" value="institutionName"/>
 	</slot>
