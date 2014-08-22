@@ -229,7 +229,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
             MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
             ConversationMessage message = (ConversationMessage) FenixFramework.getDomainObject(quotedMessageId);
 
-            String author = message.getCreator().getName() + " (" + message.getCreator().getIstUsername() + ")";
+            String author = message.getCreator().getName() + " (" + message.getCreator().getUsername() + ")";
 
             quotationText =
                     resources.getMessage(this.getLocale(request), "messaging.viewThread.quotationText", author, message.getBody()

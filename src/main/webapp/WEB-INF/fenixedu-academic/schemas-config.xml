@@ -195,8 +195,8 @@
     <slot name="name" layout="allow-case-change"/>
   </schema>
   
-  <schema name="person.istUsername" type="net.sourceforge.fenixedu.domain.Person">
-    <slot name="istUsername"/>
+  <schema name="person.username" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="username"/>
   </schema>
 
   <schema name="teacherPersonalExpectation.view-all-except-tutorComment" type="net.sourceforge.fenixedu.domain.Person">
@@ -660,7 +660,7 @@
 		</slot>
 		<slot name="istId" layout="autoComplete" key="label.name.or.id">
 				<property name="size" value="50"/>
-				<property name="format" value="${name} / ${istUsername}"/>
+				<property name="format" value="${name} / ${username}"/>
 				<property name="args" value="slot=name,size=20"/>
 				<property name="minChars" value="2"/>
 				<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>

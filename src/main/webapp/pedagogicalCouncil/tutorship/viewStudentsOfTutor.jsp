@@ -31,7 +31,7 @@
 	<bean:message key="label.return" bundle="APPLICATION_RESOURCES"/>
 </html:link>
 
-<h3><bean:write name="tutorshipIntention" property="teacher.person.name"/> - <bean:write name="tutorshipIntention" property="teacher.person.istUsername"/></h3>
+<h3><bean:write name="tutorshipIntention" property="teacher.person.name"/> - <bean:write name="tutorshipIntention" property="teacher.person.username"/></h3>
 		
 <fr:view name="tutorshipIntention" property="tutorships">
 	<fr:schema type="net.sourceforge.fenixedu.domain.Tutorship" bundle="APPLICATION_RESOURCES">

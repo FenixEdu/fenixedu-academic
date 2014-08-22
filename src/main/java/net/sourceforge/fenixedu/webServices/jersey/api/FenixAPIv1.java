@@ -984,7 +984,7 @@ public class FenixAPIv1 {
 
         for (Teacher teacher : responsibleCoordinatorsTeachers) {
             String teacherName = teacher.getPerson().getName();
-            String istId = teacher.getPerson().getIstUsername();
+            String istId = teacher.getPerson().getUsername();
             List<String> mails = getTeacherPublicMail(teacher);
             List<String> urls = getTeacherPublicWebAddress(teacher);
             teachers.add(new FenixTeacher(teacherName, istId, mails, urls));
@@ -1144,7 +1144,7 @@ public class FenixAPIv1 {
         for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
 
             String tname = professorship.getPerson().getName();
-            String istid = professorship.getPerson().getIstUsername();
+            String istid = professorship.getPerson().getUsername();
             List<String> mail = getTeacherPublicMail(professorship.getTeacher());
             List<String> url = getTeacherPublicWebAddress(professorship.getTeacher());
 

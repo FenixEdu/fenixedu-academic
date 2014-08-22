@@ -82,7 +82,7 @@ public class Teacher extends Teacher_Base {
 
         @Override
         public int compare(Teacher teacher1, Teacher teacher2) {
-            final int teacherIdCompare = teacher1.getPerson().getIstUsername().compareTo(teacher2.getPerson().getIstUsername());
+            final int teacherIdCompare = teacher1.getPerson().getUsername().compareTo(teacher2.getPerson().getUsername());
 
             if (teacher1.getCategory() == null && teacher2.getCategory() == null) {
                 return teacherIdCompare;
@@ -105,7 +105,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public String getTeacherId() {
-        return getPerson().getIstUsername();
+        return getPerson().getUsername();
     }
 
     public static Teacher readByIstId(String istId) {
@@ -926,7 +926,7 @@ public class Teacher extends Teacher_Base {
     public static List<Teacher> readByNumbers(Collection<String> teacherId) {
         List<Teacher> selectedTeachers = new ArrayList<Teacher>();
         for (final Teacher teacher : Bennu.getInstance().getTeachersSet()) {
-            if (teacherId.contains(teacher.getPerson().getIstUsername())) {
+            if (teacherId.contains(teacher.getPerson().getUsername())) {
                 selectedTeachers.add(teacher);
             }
             // This isn't necessary, its just a fast optimization.

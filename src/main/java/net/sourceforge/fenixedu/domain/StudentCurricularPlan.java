@@ -2596,7 +2596,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
             // if curriculum line is moved then change created by
 
-            curriculumLine.setCreatedBy(responsible != null ? responsible.getIstUsername() : curriculumLine.getCreatedBy());
+            curriculumLine.setCreatedBy(responsible != null ? responsible.getUsername() : curriculumLine.getCreatedBy());
         }
 
         runRules &= isBolonhaDegree();
@@ -2632,7 +2632,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
 
             // if curriculum line is moved then change created by
-            curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getIstUsername() : curriculumLine
+            curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getUsername() : curriculumLine
                     .getCreatedBy());
         }
     }

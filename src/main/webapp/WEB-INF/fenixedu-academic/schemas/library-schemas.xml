@@ -221,6 +221,6 @@
 </schema>
 
 <schema name="library.personWithUsername" type="net.sourceforge.fenixedu.domain.space.SpaceAttendances">
-	<slot name="person.istUsername" />
+	<slot name="person.username" />
 	<slot name="person.firstAndLastName" />
 </schema>

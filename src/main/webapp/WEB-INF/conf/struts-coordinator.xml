@@ -39,7 +39,7 @@
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="addCoordinator">
                   <form-property type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="newCoordinatorIstUsername"></form-property>
+                  <form-property type="java.lang.String" name="newCoordinatorUsername"></form-property>
                   <form-property type="java.lang.String[]" name="coordinatorsIds"></form-property>
             </form-bean>
             <!-- Bean to Choose the Situation for the Candidate  -->

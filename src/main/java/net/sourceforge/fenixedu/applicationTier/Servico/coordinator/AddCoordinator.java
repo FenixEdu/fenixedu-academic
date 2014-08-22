@@ -31,16 +31,16 @@ import pt.ist.fenixframework.FenixFramework;
 public class AddCoordinator {
 
     @Atomic
-    public static Boolean run(final String executionDegreeId, final String istUsername) throws FenixServiceException {
+    public static Boolean run(final String executionDegreeId, final String username) throws FenixServiceException {
 
-        final Person person = Person.readPersonByUsername(istUsername);
+        final Person person = Person.readPersonByUsername(username);
         if (person == null) {
-            throw new FenixServiceException("error.noEmployeeForIstUsername");
+            throw new FenixServiceException("error.noEmployeeForUsername");
         }
 
         final Employee employee = person.getEmployee();
         if (employee == null) {
-            throw new FenixServiceException("error.noEmployeeForIstUsername");
+            throw new FenixServiceException("error.noEmployeeForUsername");
         }
 
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
@@ -59,10 +59,10 @@ public class AddCoordinator {
     // Service Invokers migrated from Berserk
 
     @Atomic
-    public static Boolean runAddCoordinator(String executionDegreeId, String istUsername) throws FenixServiceException,
+    public static Boolean runAddCoordinator(String executionDegreeId, String username) throws FenixServiceException,
             NotAuthorizedException {
         ResponsibleDegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeId);
-        return run(executionDegreeId, istUsername);
+        return run(executionDegreeId, username);
     }
 
 }

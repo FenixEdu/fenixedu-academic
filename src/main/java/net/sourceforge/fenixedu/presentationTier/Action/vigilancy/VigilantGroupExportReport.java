@@ -96,7 +96,7 @@ public class VigilantGroupExportReport extends VigilantGroupManagement {
     private String getVigilantListAsString(List<VigilantWrapper> vigilants) {
         String vigilantList = "";
         for (VigilantWrapper vigilant : vigilants) {
-            vigilantList += vigilant.getPerson().getFirstAndLastName() + " (" + vigilant.getPerson().getIstUsername() + ")\n";
+            vigilantList += vigilant.getPerson().getFirstAndLastName() + " (" + vigilant.getPerson().getUsername() + ")\n";
         }
         return vigilantList;
     }

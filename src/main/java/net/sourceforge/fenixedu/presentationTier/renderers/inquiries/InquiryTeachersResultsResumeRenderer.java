@@ -72,7 +72,7 @@ public class InquiryTeachersResultsResumeRenderer extends OutputRenderer {
                 if (person.getEmployee() != null) {
                     teacherId = person.getEmployee().getEmployeeNumber().toString();
                 } else {
-                    teacherId = person.getIstUsername();
+                    teacherId = person.getUsername();
                 }
                 teacherId = " (" + teacherId + ") - ";
 

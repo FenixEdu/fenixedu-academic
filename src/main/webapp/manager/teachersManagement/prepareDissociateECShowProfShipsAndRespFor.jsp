@@ -35,7 +35,7 @@
 	<logic:present name="person">
 		<b>
 			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.teacher"/>&nbsp;
-			<bean:write name="person" property="istUsername"/>&nbsp;-&nbsp;
+			<bean:write name="person" property="username"/>&nbsp;-&nbsp;
 			<bean:write name="person" property="name"/>
 		</b>
 		<br /><br />	

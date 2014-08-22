@@ -88,7 +88,7 @@
 				<fr:property name="subSchema" value="person.photo" />
 				<fr:property name="subLayout" value="values"/>
 			</fr:slot>
-			<fr:slot name="istUsername" key="label.istid" >
+			<fr:slot name="username" key="label.username" >
 		    	<fr:property name="classes" value="nobullet noindent"/>  
 	    	</fr:slot>
 	    	<fr:slot name="personName" key="label.name">

@@ -179,7 +179,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction {
 
         spreadsheet.setHeaders(new String[] {
 
-        BundleUtil.getString(Bundle.APPLICATION, "label.istid"),
+        BundleUtil.getString(Bundle.APPLICATION, "label.username"),
 
         BundleUtil.getString(Bundle.APPLICATION, "label.number"),
 

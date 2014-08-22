@@ -65,7 +65,7 @@
 <br />
 
 <logic:present name="<%= PresentationConstants.ROLES %>" scope="request">
-	<html:link action="/manageRoles.do?method=showRoleOperationLogs" paramId="username" paramName="person" paramProperty="istUsername"><bean:message bundle="MANAGER_RESOURCES" key="link.show.roleoperationlog"/></html:link>
+	<html:link action="/manageRoles.do?method=showRoleOperationLogs" paramId="username" paramName="person" paramProperty="username"><bean:message bundle="MANAGER_RESOURCES" key="link.show.roleoperationlog"/></html:link>
 	
 	<table width="98%" border="0" cellpadding="0" cellspacing="0">
 		<tr>

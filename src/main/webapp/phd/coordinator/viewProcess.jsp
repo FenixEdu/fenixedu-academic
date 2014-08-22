@@ -126,7 +126,7 @@
 	<logic:notEmpty name="guidingsList">
 		<fr:view name="guidingsList">
 			<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="PHD_RESOURCES">
-				<fr:slot name="name" key="label.istid" >
+				<fr:slot name="name" key="label.username" >
 					<fr:property name="classes" value="nobullet noindent"/>   
 			   	</fr:slot>
 			   	<fr:slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
@@ -159,7 +159,7 @@
 	<logic:notEmpty name="assistantGuidingsList">
 		<fr:view name="assistantGuidingsList">
 			<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="PHD_RESOURCES">
-				<fr:slot name="name" key="label.istid" >
+				<fr:slot name="name" key="label.username" >
 					<fr:property name="classes" value="nobullet noindent"/>   
 			   	</fr:slot>
 			   	<fr:slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>

@@ -165,7 +165,7 @@
 <fr:view name="coordsBean" property="coordinators">
 	
 	<fr:schema type="net.sourceforge.fenixedu.domain.Coordinator" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<fr:slot name="person.istUsername" key="label.mecanographicNumber"/>
+		<fr:slot name="person.username" key="label.mecanographicNumber"/>
 		<fr:slot name="person.name" key="label.name"/>
 		<fr:slot name="responsible" key="label.protocol.responsible" layout="boolean-icon">
 			<fr:property name="contextRelative" value="true"/>
@@ -190,7 +190,7 @@
 		<fr:property name="bundle(delete)" value="SCIENTIFIC_COUNCIL_RESOURCES" />
 		<fr:property name="confirmationKey(delete)" value="label.remove.coordinator.certainty"/>
 		<fr:property name="confirmationBundle(delete)" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
-		<fr:property name="confirmationArgs(delete)" value="${person.name},${person.istUsername}"/>
+		<fr:property name="confirmationArgs(delete)" value="${person.name},${person.username}"/>
 		
 		<fr:property name="classes" value="tstyle1 thleft" />
 		<fr:property name="columnClasses" value=",,acenter mbottom-fix,,tdclear tderror1"/>
@@ -215,7 +215,7 @@
 			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.ExecutionDegreeCoordinatorsBean" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 				<fr:slot name="newCoordinator" layout="autoComplete" key="label.name.or.id" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 					<fr:property name="size" value="35" />
-					<fr:property name="format" value="${name} - <strong>${istUsername}</strong>" />
+					<fr:property name="format" value="${name} - <strong>${username}</strong>" />
 					<fr:property name="args" value="slot=name,size=20" />
 					<fr:property name="minChars" value="3" />
 					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID" />

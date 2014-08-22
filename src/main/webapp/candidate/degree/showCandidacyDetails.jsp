@@ -112,10 +112,10 @@
 </logic:equal>
 
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType" value="REGISTERED">
-	<bean:define id="istUsername" name="person" property="istUsername" />
+	<bean:define id="username" name="person" property="username" />
 	<div class="infoop2 mtop2" style="padding: 0.5em 1em;">
 		<p class="mvert025"><strong><bean:message key="label.attention"/></strong>:</p>
-		<p class="mvert025"><span><bean:message key="label.candidacy.institutional.email.creation.warning" arg0="<%=istUsername.toString()%>"/>:</span></p>
+		<p class="mvert025"><span><bean:message key="label.candidacy.institutional.email.creation.warning" arg0="<%=username.toString()%>"/>:</span></p>
 		<p class="mvert05">
 			<h3><html:link style="border-bottom: 1px solid #97b7ce;" href="https://ciist.ist.utl.pt/inscricoes/passo2.html"><bean:message key="link.candidacy.institutional.email.creation.nextStep"/> &gt;&gt;</html:link></h3>
 		</p>

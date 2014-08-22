@@ -69,7 +69,7 @@ public abstract class Event extends Event_Base {
 
         super.setRootDomainObject(Bennu.getInstance());
         super.setWhenOccured(new DateTime());
-        super.setCreatedBy(AccessControl.getPerson() != null ? AccessControl.getPerson().getIstUsername() : null);
+        super.setCreatedBy(AccessControl.getPerson() != null ? AccessControl.getPerson().getUsername() : null);
 
         changeState(EventState.OPEN, new DateTime());
     }

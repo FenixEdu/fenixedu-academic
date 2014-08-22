@@ -145,11 +145,11 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final DynaActionForm form = (DynaActionForm) actionForm;
         final Integer coordinatorNumber = (Integer) form.get("coordinatorNumber");
         final String executionDegreeID = (String) form.get("executionDegreeID");
-        String istUsername = Employee.readByNumber(coordinatorNumber).getPerson().getIstUsername();
+        String username = Employee.readByNumber(coordinatorNumber).getPerson().getUsername();
 
         try {
 
-            AddCoordinator.run(executionDegreeID, istUsername);
+            AddCoordinator.run(executionDegreeID, username);
 
         } catch (final IllegalDataAccessException e) {
             addMessage(request, "error.notAuthorized");

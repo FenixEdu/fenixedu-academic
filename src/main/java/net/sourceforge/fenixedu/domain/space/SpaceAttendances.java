@@ -24,9 +24,9 @@ import org.joda.time.DateTime;
 
 public class SpaceAttendances extends SpaceAttendances_Base {
 
-    public SpaceAttendances(String personIstUsername, String responsibleIstUsername, DateTime entranceTime) {
-        this.setPersonIstUsername(personIstUsername);
-        this.setResponsibleForEntranceIstUsername(responsibleIstUsername);
+    public SpaceAttendances(String personUsername, String responsibleUsername, DateTime entranceTime) {
+        this.setPersonUsername(personUsername);
+        this.setResponsibleForEntranceUsername(responsibleUsername);
         this.setEntranceTime(entranceTime);
     }
 
@@ -38,12 +38,12 @@ public class SpaceAttendances extends SpaceAttendances_Base {
     }
 
     public Person getPerson() {
-        return Person.readPersonByUsername(getPersonIstUsername());
+        return Person.readPersonByUsername(getPersonUsername());
     }
 
     public void exit(String responsibleUsername) {
         if (getOccupiedLibraryPlace() != null) {
-            setResponsibleForExitIstUsername(responsibleUsername);
+            setResponsibleForExitUsername(responsibleUsername);
             setExitTime(new DateTime());
             setOccupiedLibraryPlace(null);
         }

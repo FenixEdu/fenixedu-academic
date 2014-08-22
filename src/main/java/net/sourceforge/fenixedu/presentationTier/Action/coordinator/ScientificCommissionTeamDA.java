@@ -157,9 +157,9 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         VariantBean bean = getRenderedObject("usernameChoice");
         if (bean != null) {
-            String istUsername = bean.getString();
+            String username = bean.getString();
 
-            Person person = Person.readPersonByUsername(istUsername);
+            Person person = Person.readPersonByUsername(username);
             Employee employee = person == null ? null : person.getEmployee();
             if (employee == null) {
                 addActionMessage("addError", request, "error.coordinator.scientificComission.employee.doesNotExist");

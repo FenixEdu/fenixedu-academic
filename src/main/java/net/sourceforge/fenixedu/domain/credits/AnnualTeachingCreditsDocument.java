@@ -53,7 +53,7 @@ public class AnnualTeachingCreditsDocument extends AnnualTeachingCreditsDocument
     }
 
     private String getFilename(AnnualTeachingCredits annualTeachingCredits) {
-        return (annualTeachingCredits.getTeacher().getPerson().getIstUsername() + "_"
+        return (annualTeachingCredits.getTeacher().getPerson().getUsername() + "_"
                 + annualTeachingCredits.getAnnualCreditsState().getExecutionYear().getYear() + ".pdf").replaceAll(" ", "_")
                 .replaceAll("/", "_");
     }

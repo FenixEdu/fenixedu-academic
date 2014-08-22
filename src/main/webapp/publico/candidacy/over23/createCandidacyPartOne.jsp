@@ -92,7 +92,7 @@
 					<bean:message key="label.studentOrEmployeeNumber" bundle="CANDIDATE_RESOURCES"/>:
 				</td>
 				<td>
-					<fr:edit id="individualCandidacyProcessBean.istUsername"
+					<fr:edit id="individualCandidacyProcessBean.username"
 						name="individualCandidacyProcessBean" 
 						schema="PublicCandidacyProcess.candidacyDataBean.personNumber">
 						<fr:layout name="flow">

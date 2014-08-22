@@ -382,7 +382,7 @@
 	<slot name="teacher.person" key="label.name" layout="conditional-link">
 		<property name="visibleIf" value="homePageAvailable"/>
 		<property name="contextRelative" value="true"/>
-		<property name="linkFormat" value="/homepage/${istUsername}"/>	
+		<property name="linkFormat" value="/homepage/${username}"/>	
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="student.tutorship.tutorInfo.showName"/>
 		<property name="blankTarget" value="true"/>

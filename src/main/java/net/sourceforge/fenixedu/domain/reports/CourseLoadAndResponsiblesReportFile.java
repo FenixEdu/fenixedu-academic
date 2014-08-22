@@ -242,7 +242,7 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
                 if (stringBuilder.length() > 0) {
                     stringBuilder.append(", ");
                 }
-                stringBuilder.append(professorship.getTeacher().getPerson().getIstUsername());
+                stringBuilder.append(professorship.getTeacher().getPerson().getUsername());
             }
         }
         return stringBuilder.length() == 0 ? " " : stringBuilder.toString();

@@ -182,7 +182,7 @@
 	<slot name="qualifiedName"/>
 </schema>
 <schema name="executionCourseLog.professorship" type="net.sourceforge.fenixedu.domain.Professorship" bundle="APPLICATION_RESOURCES">
-	<slot name="person.istUsername"/>
+	<slot name="person.username"/>
 	<slot name="person.name" />
 </schema>
 

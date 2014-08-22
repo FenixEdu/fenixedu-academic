@@ -939,7 +939,7 @@
 	<slot name="role.roleType" key="label.roleType"/>
 	<slot name="operationType" key="label.operation"/>
 	<slot name="logDate" key="label.date"/>
-	<slot name="istUsername" key="label.who.was.granted.role"/>
-	<slot name="whoGrantedIstUsername" key="label.who.granted.role"/>
+	<slot name="username" key="label.who.was.granted.role"/>
+	<slot name="whoGrantedUsername" key="label.who.granted.role"/>
 </schema>
 

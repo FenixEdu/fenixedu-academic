@@ -215,10 +215,6 @@ public class InfoPerson extends InfoObject {
         return getPerson().getMainRoles();
     }
 
-    public String getIstUsername() {
-        return getPerson().getIstUsername();
-    }
-
     @Override
     public String getExternalId() {
         return getPerson().getExternalId();

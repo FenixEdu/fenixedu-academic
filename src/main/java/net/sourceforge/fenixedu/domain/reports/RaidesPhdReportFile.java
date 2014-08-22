@@ -557,7 +557,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
                 if (count > 0) {
                     guidings.append(";");
                 }
-                guidings.append(((InternalPhdParticipant) phdParticipant).getPerson().getIstUsername());
+                guidings.append(((InternalPhdParticipant) phdParticipant).getPerson().getUsername());
                 count++;
             }
         }
@@ -571,7 +571,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
                 if (countAssistantGuidings > 0) {
                     assistantGuidings.append(";");
                 }
-                assistantGuidings.append(((InternalPhdParticipant) phdParticipant).getPerson().getIstUsername());
+                assistantGuidings.append(((InternalPhdParticipant) phdParticipant).getPerson().getUsername());
                 countAssistantGuidings++;
             }
         }

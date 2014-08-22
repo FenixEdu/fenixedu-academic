@@ -1213,7 +1213,7 @@
         <property name="blankTarget" value="true"/>
         <property name="visibleIf" value="registrationAvailable"/>
 	</slot>
-	<slot name="person.istUsername" />
+	<slot name="person.username" />
 </schema>
 
 <schema name="PhdIndividualProgramProcess.view.registration.conclusion.bean" type="net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdRegistrationConclusionBean" bundle="PHD_RESOURCES">

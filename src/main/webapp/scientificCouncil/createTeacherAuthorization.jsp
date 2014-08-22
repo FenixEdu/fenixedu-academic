@@ -38,7 +38,7 @@
 		<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
 			type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.TeacherAuthorizationManagement$TeacherAuthorizationManagementBean">
 			
-			<fr:slot name="istUsername" key="label.istid" required="true" />
+			<fr:slot name="username" key="label.username" required="true" />
 			
 			<fr:slot name="lessonHours" key="label.lessonHours" required="true" />
 			

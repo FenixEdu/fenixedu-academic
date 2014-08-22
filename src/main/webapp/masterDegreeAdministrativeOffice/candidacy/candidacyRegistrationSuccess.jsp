@@ -27,7 +27,7 @@
 <h2><strong><bean:message key="message.candidacy.registerCandidacy.success" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 <br/>
 <h2><strong><bean:message key="label.person.title.personal.info" bundle="CANDIDATE_RESOURCES"/></strong></h2>
-<fr:view name="candidacy" schema="candidacy.show.candidacyWithIstUsername">
+<fr:view name="candidacy" schema="candidacy.show.candidacyWithUsername">
 	<fr:layout name="tabular" >
 		<fr:property name="classes" value="tstyle4"/>
         <fr:property name="columnClasses" value="listClasses,,"/>

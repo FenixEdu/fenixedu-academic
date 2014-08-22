@@ -22,7 +22,7 @@
 	<slot name="name"/>		
 	<slot name="documentIdNumber" />	
 	<slot name="idDocumentType"/>	
-	<slot name="istUsername" layout="null-as-label" key="label.institutional.userName">
+	<slot name="username" layout="null-as-label" key="label.institutional.userName">
         <property name="label" value="-"/>
     </slot>	
 </schema>
@@ -160,7 +160,7 @@
 
 <schema name="operator.photo.photo.details" type="net.sourceforge.fenixedu.domain.Person"
 	bundle="MANAGER_RESOURCES">
-	<slot name="user.username" key="label.operator.photo.person.istUsername" read-only="true" />
+	<slot name="user.username" key="label.operator.photo.person.username" read-only="true" />
 	<slot name="name" read-only="true" />
 	<slot name="dateOfBirthYearMonthDay" read-only="true" />
 	<slot name="gender" read-only="true" />

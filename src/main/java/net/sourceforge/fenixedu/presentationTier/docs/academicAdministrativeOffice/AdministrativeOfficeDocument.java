@@ -201,7 +201,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
     public String getReportFileName() {
         final StringBuilder result = new StringBuilder();
 
-        result.append(getDocumentRequest().getPerson().getIstUsername());
+        result.append(getDocumentRequest().getPerson().getUsername());
         result.append("-");
         result.append(new DateTime().toString(YYYYMMMDD, getLocale()));
         result.append("-");

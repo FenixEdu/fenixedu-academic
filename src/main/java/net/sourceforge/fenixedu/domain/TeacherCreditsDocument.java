@@ -85,7 +85,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
     }
 
     private String getFilename(Teacher teacher, ExecutionSemester executionSemester) {
-        return (teacher.getPerson().getIstUsername() + "_" + executionSemester.getName() + "_"
+        return (teacher.getPerson().getUsername() + "_" + executionSemester.getName() + "_"
                 + executionSemester.getExecutionYear().getYear() + ".html").replaceAll(" ", "_").replaceAll("/", "_");
     }
 
@@ -106,7 +106,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
         htmlText.append("<h1 style=\"text-align: center;\">").append(executionSemester.getName()).append(" ")
                 .append(executionSemester.getExecutionYear().getYear()).append("</h1>");
         htmlText.append("<table class=\"tb01\"><tr><td><strong>Nome:</strong>").append(teacher.getPerson().getName());
-        htmlText.append("</td><td><strong>Username:</strong>").append(teacher.getPerson().getIstUsername());
+        htmlText.append("</td><td><strong>Username:</strong>").append(teacher.getPerson().getUsername());
         htmlText.append("</td></tr><tr><td><strong>Categoria:</strong>");
 
         ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);

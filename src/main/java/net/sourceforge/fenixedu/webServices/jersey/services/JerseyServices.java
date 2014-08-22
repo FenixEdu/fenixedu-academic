@@ -295,7 +295,7 @@ public class JerseyServices {
             if (phdProcess.isConcluded()) {
                 JsonObject phdInfo = new JsonObject();
                 phdInfo.addProperty("id", phdProcess.getExternalId());
-                phdInfo.addProperty("author", phdProcess.getPerson().getIstUsername());
+                phdInfo.addProperty("author", phdProcess.getPerson().getUsername());
                 phdInfo.addProperty("title", phdProcess.getThesisTitle());
 
                 JsonArray schools = new JsonArray();
@@ -330,7 +330,7 @@ public class JerseyServices {
             if (t.isEvaluated()) {
                 JsonObject mscInfo = new JsonObject();
                 mscInfo.addProperty("id", t.getExternalId());
-                mscInfo.addProperty("author", t.getStudent().getPerson().getIstUsername());
+                mscInfo.addProperty("author", t.getStudent().getPerson().getUsername());
                 String title = t.getFinalFullTitle().getContent(MultiLanguageString.en);
                 if (title == null) {
                     title = t.getFinalFullTitle().getContent(MultiLanguageString.pt);

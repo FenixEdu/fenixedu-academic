@@ -149,14 +149,14 @@
 					</p>
 					<fr:view name="attendance" property="matches">
 						<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
-							<fr:slot name="istUsername" key="label.person.istUsername" />
+							<fr:slot name="username" key="label.person.username" />
 							<fr:slot name="name" key="label.person.name" />
 						</fr:schema>
 						<fr:layout name="tabular">
 							<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05" />
 
 							<fr:property name="link(view)" value="<%= "/libraryOperator.do?method=searchPerson&libraryId=" + libraryId %>" />
-							<fr:property name="param(view)" value="istUsername/personIstUsername" />
+							<fr:property name="param(view)" value="username/personUsername" />
 							<fr:property name="key(view)" value="link.view" />
 							<fr:property name="bundle(view)" value="LIBRARY_RESOURCES" />
 						</fr:layout>
@@ -177,10 +177,10 @@
 								<fr:property name="useParent" value="true" />
 								<fr:property name="moduleRelative" value="false" />
 								<fr:property name="contextRelative" value="true" />
-								<fr:property name="imageFormat" value="/user/photo/\${person.istUsername}" />
+								<fr:property name="imageFormat" value="/user/photo/\${person.username}" />
 							</fr:slot>
 							<fr:slot name="person.name" key="label.person.name" />
-							<fr:slot name="person.istUsername" key="label.person.istUsername" />
+							<fr:slot name="person.username" key="label.person.username" />
 							<fr:slot name="person.emailForSendingEmails" layout="null-as-label" key="label.card.person.email" />
 							<fr:slot name="person.mobile" key="label.person.mobile" />
 							
@@ -221,7 +221,7 @@
 								<fr:slot name="invitation.endDate" key="label.person.invitationValidUntil"/>
 								<fr:slot name="invitation.unit.name" key="label.card.unitName"/>
 								<fr:slot name="invitation.responsiblePerson.name" key="label.person.responsiblePerson"/>
-								<fr:slot name="invitation.responsiblePerson.istUsername" key="label.person.responsiblePerson.istID"/>
+								<fr:slot name="invitation.responsiblePerson.username" key="label.person.responsiblePerson.istID"/>
 							</logic:present>
 						</fr:schema>
 						<fr:layout name="tabular">
@@ -290,7 +290,7 @@
 					
 					<fr:view name="attendance" property="libraryAttendances">
 						<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.domain.space.SpaceAttendances">
-							<fr:slot name="person.istUsername" key="label.person.istUsername" />
+							<fr:slot name="person.username" key="label.person.username" />
 							<fr:slot name="person.firstAndLastName" key="label.person.name" />
 							<fr:slot name="occupationDesctiption" key="label.space.name" />
 						</fr:schema>
@@ -298,7 +298,7 @@
 							<fr:property name="order(view)" value="0" />
 							<fr:property name="link(view)" value="<%="/libraryOperator.do?method=searchPerson&libraryId=" + libraryId %>" />
 							<fr:property name="key(view)" value="link.view" />
-							<fr:property name="param(view)" value="personIstUsername/personIstUsername" />
+							<fr:property name="param(view)" value="personUsername/personUsername" />
 							<fr:property name="order(exit)" value="1" />
 							<fr:property name="link(exit)" value="<%="/libraryOperator.do?method=exitPlace&libraryId=" + libraryId %>" />
 							<fr:property name="key(exit)" value="link.exit" />

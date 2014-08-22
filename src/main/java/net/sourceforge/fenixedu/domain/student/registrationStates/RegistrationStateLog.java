@@ -62,7 +62,7 @@ public class RegistrationStateLog extends RegistrationStateLog_Base {
         setAction(action);
 
         if (person != null) {
-            setWho(person.getIstUsername());
+            setWho(person.getUsername());
         }
     }
 

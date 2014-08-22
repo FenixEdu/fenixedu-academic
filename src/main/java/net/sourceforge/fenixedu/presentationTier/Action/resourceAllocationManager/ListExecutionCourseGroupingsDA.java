@@ -149,7 +149,7 @@ public class ListExecutionCourseGroupingsDA extends FenixDispatchAction {
                     }
 
                     final Teacher teacher = professorship.getTeacher();
-                    responsibleForStringBuilder.append(teacher.getPerson().getIstUsername());
+                    responsibleForStringBuilder.append(teacher.getPerson().getUsername());
 
                     responsibleForStringBuilder.append(" ");
 

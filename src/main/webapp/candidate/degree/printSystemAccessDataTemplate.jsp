@@ -69,8 +69,8 @@
 					</tr>
 					<tr>
 						<td><strong><bean:message bundle="CANDIDATE_RESOURCES"
-							key="label.istUsername" /></strong></td>
-						<td><bean:write name="person" property="istUsername" /></td>
+							key="label.username" /></strong></td>
+						<td><bean:write name="person" property="username" /></td>
 					</tr>
 					<tr>
 						<td><strong><bean:message bundle="CANDIDATE_RESOURCES"

@@ -39,8 +39,8 @@ public class PersonInformationLog extends PersonInformationLog_Base {
         return getPerson() != null ? getPerson().getName() : StringUtils.EMPTY;
     }
 
-    public String getIstUsername() {
-        return getPerson() != null ? getPerson().getIstUsername() : StringUtils.EMPTY;
+    public String getUsername() {
+        return getPerson() != null ? getPerson().getUsername() : StringUtils.EMPTY;
     }
 
     private static String generateLabelDescription(String bundle, String key, String... args) {
@@ -54,8 +54,8 @@ public class PersonInformationLog extends PersonInformationLog_Base {
 
     public static String getPersonNameForLogDescription(Person person) {
         String personViewed;
-        if ((person.getIstUsername() != null) && !(person.getIstUsername().isEmpty())) {
-            personViewed = person.getIstUsername();
+        if ((person.getUsername() != null) && !(person.getUsername().isEmpty())) {
+            personViewed = person.getUsername();
         } else if ((person.getPartyName() != null) && !(person.getPartyName().isEmpty())) {
             personViewed = person.getName();
         } else {

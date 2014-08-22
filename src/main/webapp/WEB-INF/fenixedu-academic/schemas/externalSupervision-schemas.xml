@@ -25,7 +25,7 @@
 </schema>
 
 <schema name="view-student-info" type="net.sourceforge.fenixedu.domain.Person" bundle="EXTERNAL_SUPERVISION_RESOURCES">
-	<slot name="istUsername" key="label.showStats.istUsername" />
+	<slot name="username" key="label.showStats.username" />
 	<slot name="name" key="label.showStats.name"/>
 	<slot name="student.lastRegistration.degree" key="label.showStats.degreeSigla" layout="format">
 		<!-- <property name="eachSchema" value="registration.view-degree-sigla"/> -->

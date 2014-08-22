@@ -92,7 +92,7 @@
 			<fr:schema type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean" bundle="PHD_RESOURCES">
 				<fr:slot name="chosenPersonManually" layout="autoComplete" key="label.selectStudent.nameOrID" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 					<fr:property name="size" value="35" />
-					<fr:property name="format" value="${name} - <strong>${istUsername}</strong>" />
+					<fr:property name="format" value="${name} - <strong>${username}</strong>" />
 					<fr:property name="args" value="slot=name,size=20" />
 					<fr:property name="minChars" value="3" />
 					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID" />

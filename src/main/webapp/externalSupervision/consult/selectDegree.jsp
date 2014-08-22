@@ -94,7 +94,7 @@
 				<fr:property name="bundle(view-details)" value="EXTERNAL_SUPERVISION_RESOURCES" />
 				
 				<fr:property name="sortParameter" value="sortBy"/>
-				<fr:property name="sortableSlots" value="istUsername,name, student.number"/>
+				<fr:property name="sortableSlots" value="username,name, student.number"/>
             	<fr:property name="sortUrl" value="<%= "/viewDegree.do?method=showStudents&executionYearId=" + executionYearId.toString() + "&executionDegreeId=" + executionDegreeId.toString() + "&registrationProtocolId=" + registrationProtocolId.toString() + "&megavisor=" + megavisor.toString()%>"/>
             	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "student.number=desc" : request.getParameter("sortBy") %>"/>
             	
@@ -104,7 +104,7 @@
 			
 			<fr:schema type="net.sourceforge.fenixedu.domain.Person" bundle="EXTERNAL_SUPERVISION_RESOURCES">
 				<fr:slot name="student.number" key="label.selectDegree.studentNumber" />
-				<fr:slot name="istUsername" key="label.selectDegree.istUsername" />
+				<fr:slot name="username" key="label.selectDegree.username" />
 				<fr:slot name="name" key="label.selectDegree.name" />
 				<fr:slot name="student.activeRegistrations" key="label.selectDegree.executionDegree">
 					<fr:property name="eachSchema" value="registration.view-degree-sigla"/>

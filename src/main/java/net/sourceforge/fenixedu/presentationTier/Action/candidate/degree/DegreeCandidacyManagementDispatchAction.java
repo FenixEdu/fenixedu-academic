@@ -255,7 +255,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             request.setAttribute(
                     "aditionalInformation",
                     getResources(request).getMessage("label.candidacy.username.changed.message",
-                            userView.getPerson().getIstUsername(), Unit.getInstitutionAcronym()));
+                            userView.getPerson().getUsername(), Unit.getInstitutionAcronym()));
         } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
             request.setAttribute("registration", getCandidacy(request).getRegistration());
             request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodesSet());

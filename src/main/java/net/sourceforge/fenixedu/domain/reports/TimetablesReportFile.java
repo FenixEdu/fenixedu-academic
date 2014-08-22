@@ -103,7 +103,7 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
                                 final Row row = spreadsheet.addRow();
 
                                 // Nr Docente
-                                row.setCell(teacher.getPerson().getIstUsername());
+                                row.setCell(teacher.getPerson().getUsername());
 
                                 // Nome Docente
                                 row.setCell(teacher.getPerson().getName());

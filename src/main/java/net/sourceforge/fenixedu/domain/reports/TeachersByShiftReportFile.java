@@ -74,7 +74,7 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
                     }
                     Row row = spreadsheet.addRow();
                     row.setCell(executionSemester.getSemester());
-                    row.setCell(nonRegularTeachingService.getProfessorship().getPerson().getIstUsername());
+                    row.setCell(nonRegularTeachingService.getProfessorship().getPerson().getUsername());
                     row.setCell(shift.getExternalId());
                     row.setCell(shift.getNome());
                     row.setCell(shift.getExecutionCourse().getExternalId());
@@ -95,7 +95,7 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
 
                     Row row = spreadsheet.addRow();
                     row.setCell(executionSemester.getSemester());
-                    row.setCell(teacherService.getTeacher().getPerson().getIstUsername());
+                    row.setCell(teacherService.getTeacher().getPerson().getUsername());
                     row.setCell(shift.getExternalId());
                     row.setCell(shift.getNome());
                     row.setCell(shift.getExecutionCourse().getExternalId());

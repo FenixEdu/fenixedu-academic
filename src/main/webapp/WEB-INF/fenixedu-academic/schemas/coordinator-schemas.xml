@@ -317,7 +317,7 @@
 </schema>
 
 <schema name="coordinator.commissionTeam.addMemberByIstId" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
-    <slot name="string" key="label.istid">
+    <slot name="string" key="label.username">
     	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     </slot>
 </schema>

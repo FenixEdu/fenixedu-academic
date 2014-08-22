@@ -31,13 +31,13 @@ public class RoleOperationLog extends RoleOperationLog_Base {
         setOperationType(operationType);
         setLogDate(new DateTime());
         setRole(role);
-        setIstUsername(person.getIstUsername());
+        setUsername(person.getUsername());
         setPerson(person);
         if (whoGranted != null) {
-            setWhoGrantedIstUsername(whoGranted.getIstUsername());
+            setWhoGrantedUsername(whoGranted.getUsername());
             setPersonWhoGranted(whoGranted);
         } else {
-            setWhoGrantedIstUsername("No user");
+            setWhoGrantedUsername("No user");
         }
     }
 

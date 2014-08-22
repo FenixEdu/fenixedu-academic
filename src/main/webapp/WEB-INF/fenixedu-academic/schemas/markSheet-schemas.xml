@@ -147,7 +147,7 @@
 </schema>
 
 <schema name="presentPerson" type="net.sourceforge.fenixedu.domain.Person" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="istUsername" key="label.username"/>
+	<slot name="username" key="label.username"/>
 	<slot name="name" key="label.name"/>
 </schema>
 

@@ -168,7 +168,7 @@
         <property name="useParent" value="true" />
         <property name="visibleIf" value="homePageAvailable" />
         <property name="contextRelative" value="true" />
-        <property name="linkFormat" value="/homepage/${istUsername}" />
+        <property name="linkFormat" value="/homepage/${username}" />
         <property name="blankTarget" value="true" />
         <property name="hasContext" value="true" />
         <property name="hasChecksum" value="false" />

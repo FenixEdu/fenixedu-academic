@@ -100,7 +100,7 @@
 					<fr:property name="contextRelative" value="true" />
 					<fr:property name="useParent" value="true" />
 				</fr:slot>
-				<fr:slot name="studentCurricularPlan.registration.person.istUsername" key="label.username" readOnly="true" />
+				<fr:slot name="studentCurricularPlan.registration.person.username" key="label.username" readOnly="true" />
 				<fr:slot name="studentCurricularPlan.registration.person.name" key="label.name" readOnly="true" />
 				<fr:slot name="studentCurricularPlan.registration.registrationProtocol" key="label.registrationAgreement"
 					readOnly="true" />

@@ -167,7 +167,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
             Integer yearsInInstitution) {
         final Row row = spreadsheet.addRow();
         // Coluna "Nr mecanográfico"
-        row.setCell(teacher.getPerson().getIstUsername());
+        row.setCell(teacher.getPerson().getUsername());
         // Coluna "OID"
         row.setCell(teacher.getPerson().getExternalId());
         // Coluna "Tipo"

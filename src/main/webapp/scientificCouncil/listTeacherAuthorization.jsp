@@ -44,7 +44,7 @@
 </logic:present>
 <table class="tstyle4 thlight">
 <tr>
-	<th><bean:message key="label.istid" /></th>
+	<th><bean:message key="label.username" /></th>
 	<th><bean:message key="label.authorizedPerson"/></th>
 	<th><bean:message key="label.semester"/></th>
 	<th><bean:message key="label.state"/></th>

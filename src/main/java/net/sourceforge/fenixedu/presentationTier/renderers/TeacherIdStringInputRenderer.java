@@ -31,7 +31,7 @@ public class TeacherIdStringInputRenderer extends StringInputRenderer {
     protected HtmlComponent createTextField(Object object, Class type) {
 
         Teacher teacher = (Teacher) object;
-        String number = teacher.getPerson().getIstUsername();
+        String number = teacher.getPerson().getUsername();
 
         HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(number, type);
         formComponent.setConverter(new TeacherNumberConverter());

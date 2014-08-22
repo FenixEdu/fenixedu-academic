@@ -112,7 +112,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
     @Override
     protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
-        final String createdBy = getResponsiblePerson().getIstUsername();
+        final String createdBy = getResponsiblePerson().getUsername();
         for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesEnrolMap.entrySet()) {
 
             if (entry.getKey() == EnrolmentResultType.NULL) {

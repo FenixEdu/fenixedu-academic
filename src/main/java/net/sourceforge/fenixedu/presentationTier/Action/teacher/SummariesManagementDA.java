@@ -426,7 +426,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         request.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(professorshipLogged),
                 executionCourse, ListSummaryType.ALL_CONTENT, professorshipLogged));
         if (professorshipLogged.getTeacher() != null) {
-            request.setAttribute("teacherId", professorshipLogged.getTeacher().getPerson().getIstUsername());
+            request.setAttribute("teacherId", professorshipLogged.getTeacher().getPerson().getUsername());
         }
         request.setAttribute("summaries", teacherSummaries);
         return mapping.findForward("prepareShowSummaries");
@@ -858,7 +858,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
             dynaActionForm.set("teacher", bean.getTeacherChoose());
             dynaActionForm.set("teacherName", (bean.getTeacherName() != null) ? bean.getTeacherName() : "");
             dynaActionForm.set("teacherId",
-                    (bean.getTeacher() != null) ? String.valueOf(bean.getTeacher().getPerson().getIstUsername()) : "");
+                    (bean.getTeacher() != null) ? String.valueOf(bean.getTeacher().getPerson().getUsername()) : "");
         }
     }
 

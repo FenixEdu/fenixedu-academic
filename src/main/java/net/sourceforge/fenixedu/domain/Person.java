@@ -631,11 +631,6 @@ public class Person extends Person_Base {
         return user == null ? null : user.getUsername();
     }
 
-    @Deprecated
-    public String getIstUsername() {
-        return getUsername();
-    }
-
     public Role getPersonRole(final RoleType roleType) {
         for (final Role role : this.getPersonRolesSet()) {
             if (role.getRoleType().equals(roleType)) {
@@ -1659,8 +1654,8 @@ public class Person extends Person_Base {
     // static methods
     // -------------------------------------------------------------
 
-    public static Person readPersonByUsername(final String istUsername) {
-        final User user = User.findByUsername(istUsername);
+    public static Person readPersonByUsername(final String username) {
+        final User user = User.findByUsername(username);
         return user == null ? null : user.getPerson();
     }
 

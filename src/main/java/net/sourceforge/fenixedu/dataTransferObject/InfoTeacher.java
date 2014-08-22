@@ -70,7 +70,7 @@ public class InfoTeacher extends InfoObject {
     }
 
     public String getTeacherId() {
-        return getTeacher().getPerson().getIstUsername();
+        return getTeacher().getPerson().getUsername();
     }
 
     public InfoPerson getInfoPerson() {

@@ -98,7 +98,7 @@ public class ExportDegreeCandidaciesByDegreeForPasswordGeneration extends
                 writer.println(String.format("\nCurso %s - %s ", entry.getKey().getNameI18N().getContent(),
                         getCampus(entry.getKey()).getName()));
                 for (final Person person : entry.getValue()) {
-                    writer.println(person.getIstUsername());
+                    writer.println(person.getUsername());
                 }
             }
         } finally {

@@ -118,10 +118,10 @@ public class PersonRotationPaymentCodeGenerator extends PaymentCodeGenerator {
     }
 
     private static String getPersonCodeDigits(Person person) {
-        if (person.getIstUsername().length() > 9) {
-            throw new RuntimeException("SIBS Payment Code: " + person.getIstUsername() + " exceeded maximun size accepted");
+        if (person.getUsername().length() > 9) {
+            throw new RuntimeException("SIBS Payment Code: " + person.getUsername() + " exceeded maximun size accepted");
         }
-        return StringUtils.leftPad(person.getIstUsername().replace("ist", ""), PERSON_CODE_LENGTH, CODE_FILLER);
+        return StringUtils.leftPad(person.getUsername().replace("ist", ""), PERSON_CODE_LENGTH, CODE_FILLER);
     }
 
     @Override

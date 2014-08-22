@@ -65,7 +65,7 @@ public class StudentHighPerformanceQueueJob extends StudentHighPerformanceQueueJ
         SheetData<Registration> data = new SheetData<Registration>(highPerformants) {
             @Override
             protected void makeLine(Registration item) {
-                addCell("istId", item.getPerson().getIstUsername());
+                addCell("istId", item.getPerson().getUsername());
                 addCell("Nome", item.getPerson().getName());
                 double totalEcts = 0;
                 Collection<Enrolment> enrols = item.getEnrolments(semester);

@@ -66,7 +66,7 @@ public class MaxResponsibleForExceedHandler extends ExceptionHandler {
         StringBuilder arg1 = new StringBuilder();
         while (iterator.hasNext()) {
             InfoProfessorship infoResponsibleFor = (InfoProfessorship) iterator.next();
-            String teacherId = infoResponsibleFor.getInfoTeacher().getPerson().getIstUsername();
+            String teacherId = infoResponsibleFor.getInfoTeacher().getPerson().getUsername();
             String teacherName = infoResponsibleFor.getInfoTeacher().getInfoPerson().getNome();
             // MARK DELTA
             arg1.append("<a href='teacherSearchForExecutionCourseAssociation.do?method=doSearch&teacherId=").append(teacherId)

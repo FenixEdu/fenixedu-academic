@@ -49,7 +49,7 @@
 	<slot name="person.name" key="label.name"/>
 	<slot name="person.documentIdNumber" key="label.identificationNumber"/>		
 	<slot name="person.idDocumentType" key="label.idDocumentType"/>	
-	<slot name="person.istUsername" key="label.username"/>
+	<slot name="person.username" key="label.username"/>
 	<slot name="number" key="label.studentNumber"/>
 </schema>
 

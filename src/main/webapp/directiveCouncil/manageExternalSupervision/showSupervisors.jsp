@@ -47,13 +47,13 @@
 			<fr:property name="bundle(delete)" value="DIRECTIVE_COUNCIL_RESOURCES" />
 			<fr:property name="confirmationKey(delete)" value="label.showSupervisors.deleteSupervisor"/>
 			<fr:property name="confirmationBundle(delete)" value="DIRECTIVE_COUNCIL_RESOURCES"/>
-			<fr:property name="confirmationArgs(delete)" value="<%="${name},${istUsername}," + agreement.toString()%>"/>
+			<fr:property name="confirmationArgs(delete)" value="<%="${name},${username}," + agreement.toString()%>"/>
 			
 			<fr:property name="classes" value="tstyle1 thleft thlight mvert05" />
 			<fr:property name="columnClasses" value=",,,tdclear tderror1" />
 		</fr:layout>
 		<fr:schema type="net.sourceforge.fenixedu.domain.Person" bundle="DIRECTIVE_COUNCIL_RESOURCES">
-			<fr:slot name="istUsername" key="label.showSupervisors.supervisor.istUsername" />
+			<fr:slot name="username" key="label.showSupervisors.supervisor.username" />
 			<fr:slot name="name" key="label.showSupervisors.supervisor.name"/>
 		</fr:schema>
 	</fr:view>
@@ -70,7 +70,7 @@
 			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.manageExternalSupervision.ManageExternalSupervisionBean" bundle="DIRECTIVE_COUNCIL_RESOURCES">
 				<fr:slot name="newSupervisor" layout="autoComplete" key="label.showSupervisors.nameOrId" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 					<fr:property name="size" value="35" />
-					<fr:property name="format" value="${name} - <strong>${istUsername}</strong>" />
+					<fr:property name="format" value="${name} - <strong>${username}</strong>" />
 					<fr:property name="args" value="slot=name,size=20" />
 					<fr:property name="minChars" value="3" />
 					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID" />

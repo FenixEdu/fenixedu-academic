@@ -45,8 +45,8 @@
 
 <table class="tstyle5 thlight">
 	<tr>
-		<td><bean:message key="label.istId" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="COORDINATOR_RESOURCES"/></td>
-		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="newCoordinatorIstUsername" /></td>
+		<td><bean:message key="label.username" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="COORDINATOR_RESOURCES"/></td>
+		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="newCoordinatorUsername" /></td>
 	</tr>
 </table>
 
@@ -58,7 +58,7 @@
 	}
 </style>
 <p class="subtitled_description">
-	<bean:message key="label.istIdUsageDescription" bundle="COORDINATOR_RESOURCES"/>
+	<bean:message key="label.usernameUsageDescription" bundle="COORDINATOR_RESOURCES"/>
 </p>
 
 <p>

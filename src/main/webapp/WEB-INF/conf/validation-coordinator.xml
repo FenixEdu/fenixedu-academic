@@ -51,7 +51,7 @@
 	</form>
 	
 	<form name="addCoordinator">
-       <field property="newCoordinatorIstUsername" depends="required" page="1">
+       <field property="newCoordinatorUsername" depends="required" page="1">
         <arg0 key="message.teacherId" resource="true"/>
       </field>	   
 	</form>

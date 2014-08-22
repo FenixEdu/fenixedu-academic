@@ -55,7 +55,7 @@ Boolean canInsertReductionServiceCredits = canAproveReductionServiceCredits && !
 				<fr:property name="classes" value="column3" />
 				<fr:property name="moduleRelative" value="false" />
 				<fr:property name="contextRelative" value="true" />
-				<fr:property name="imageFormat" value="/user/photo/${teacher.person.istUsername}" />
+				<fr:property name="imageFormat" value="/user/photo/${teacher.person.username}" />
 			</fr:slot>
 			<fr:slot name="teacherService.teacher.person.presentationName" key="label.name"/>
 			<fr:slot name="requestCreditsReduction" key="label.requestedReductionCredits" layout="radio"/>

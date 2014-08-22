@@ -25,7 +25,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoPerson" property="nome"/><br />
-	<b><bean:message key="label.istid" bundle="APPLICATION_RESOURCES" /></b> <bean:write name="infoPerson" property="istUsername"/> <br />
+	<b><bean:message key="label.username" bundle="APPLICATION_RESOURCES" /></b> <bean:write name="infoPerson" property="username"/> <br />
 	<b> <bean:message key="label.teacher.department"/> </b> 
 		<logic:present name="teacherDepartment">
 			<bean:write name="teacherDepartment" property="name"/> 
@@ -161,7 +161,7 @@
 						<logic:equal name="isDepartmentManager" value="true">					
 							<td class="listClasses">
 								<bean:define id="removeLink">
-									 /removeProfessorship.do?teacherId=<bean:write name="infoPerson" property="istUsername"/>&amp;teacherId=<bean:write name="infoPerson" property="externalId"/>&amp;externalId=<bean:write name="infoPerson" property="externalId"/>&amp;executionCourseId=<bean:write name="professorship" property="infoExecutionCourse.externalId"/>&amp;executionYearId=<bean:write name="teacherExecutionCourseResponsabilities" property="executionYearId" />
+									 /removeProfessorship.do?teacherId=<bean:write name="infoPerson" property="username"/>&amp;teacherId=<bean:write name="infoPerson" property="externalId"/>&amp;externalId=<bean:write name="infoPerson" property="externalId"/>&amp;executionCourseId=<bean:write name="professorship" property="infoExecutionCourse.externalId"/>&amp;executionYearId=<bean:write name="teacherExecutionCourseResponsabilities" property="executionYearId" />
 								</bean:define>
 								<html:link page='<%= removeLink.toString() %>'>
 									<bean:message key="link.remove" />
@@ -190,7 +190,7 @@
 
 		<br />
 		<br />
-		<html:link page="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" paramId="teacherId" paramName="infoPerson" paramProperty="istUsername">
+		<html:link page="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" paramId="teacherId" paramName="infoPerson" paramProperty="username">
 			<bean:message key="link.professorship.addExecutionCourse"/>
 		</html:link>
 

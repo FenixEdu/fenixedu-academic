@@ -75,7 +75,7 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
                     + teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher().getPerson().getEmployee()
                             .getEmployeeNumber());
         } catch (NullPointerException e) {
-            parts.add(teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getIstUsername());
+            parts.add(teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getUsername());
         }
         parts.add(teacherEvaluation.getTeacherEvaluationProcess().getFacultyEvaluationProcess().getSuffix());
         return StringUtils.join(parts, "_") + "." + extension;

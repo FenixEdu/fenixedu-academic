@@ -39,4 +39,4 @@
 
 
 Username is : 
-<fr:view name="process" property="personalDetails.person.istUsername" />
+<fr:view name="process" property="personalDetails.person.username" />

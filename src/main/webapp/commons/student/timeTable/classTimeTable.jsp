@@ -40,7 +40,7 @@
 			<p>
 				<p><strong><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: ${person.name}</p>
 				<p><strong><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: ${person.student.number} </p>
-				<p><strong><bean:message  key="label.istUsername"  bundle="APPLICATION_RESOURCES"/> </strong>: ${person.username} </p>
+				<p><strong><bean:message  key="label.username"  bundle="APPLICATION_RESOURCES"/> </strong>: ${person.username} </p>
 			</p>
 		</logic:present>
 		

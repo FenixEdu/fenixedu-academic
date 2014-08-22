@@ -127,7 +127,7 @@
 									<bean:define id="email" name="professorship" property="person.email"/>
 									<a href="mailto:<%= email %>">
 										<bean:write name="professorship" property="person.name"/>
-										(<bean:write name="professorship" property="person.istUsername"/>)
+										(<bean:write name="professorship" property="person.username"/>)
 									</a>
 								</p>
 							</logic:equal>
@@ -140,7 +140,7 @@
 									<bean:define id="email" name="professorship" property="person.email"/>
 									<a href="mailto:<%= email %>">
 										<bean:write name="professorship" property="person.name"/>
-										(<bean:write name="professorship" property="person.istUsername"/>)
+										(<bean:write name="professorship" property="person.username"/>)
 									</a>
 								</p>
 							</logic:notEqual>

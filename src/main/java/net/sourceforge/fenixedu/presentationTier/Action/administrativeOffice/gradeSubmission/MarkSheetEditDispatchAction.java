@@ -63,7 +63,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         DynaActionForm form = (DynaActionForm) actionForm;
         MarkSheet markSheet = getDomainObject(form, "msID");
 
-        editBean.setTeacherId(markSheet.getResponsibleTeacher().getPerson().getIstUsername());
+        editBean.setTeacherId(markSheet.getResponsibleTeacher().getPerson().getUsername());
         editBean.setEvaluationDate(markSheet.getEvaluationDateDateTime().toDate());
         editBean.setMarkSheet(markSheet);
         editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(markSheet));

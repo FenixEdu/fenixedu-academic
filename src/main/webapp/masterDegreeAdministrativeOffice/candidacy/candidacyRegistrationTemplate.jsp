@@ -98,7 +98,7 @@
 										<strong><bean:message key="label.username" bundle="ADMIN_OFFICE_RESOURCES"/></strong>
 								    </td>
 									<td>      
-										<bean:write name="candidacy" property="person.istUsername"/>
+										<bean:write name="candidacy" property="person.username"/>
 								    </td>
 							    </tr>
 						    </table>

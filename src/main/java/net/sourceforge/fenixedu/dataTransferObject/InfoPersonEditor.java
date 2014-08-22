@@ -84,8 +84,6 @@ public class InfoPersonEditor extends InfoObject {
 
     private String username;
 
-    private String istUsername;
-
     private String password;
 
     private String codigoFiscal;
@@ -109,49 +107,6 @@ public class InfoPersonEditor extends InfoObject {
     private List infoAdvisories;
 
     public InfoPersonEditor() {
-    }
-
-    public InfoPersonEditor(String numeroDocumentoIdentificacao, IDDocumentType tipoDocumentoIdentificacao,
-            String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil, Date nascimento,
-            String nomePai, String nomeMae, String freguesiaNaturalidade, String concelhoNaturalidade,
-            String distritoNaturalidade, String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
-            String freguesiaMorada, String concelhoMorada, String distritoMorada, String telefone, String telemovel,
-            String email, String enderecoWeb, String numContribuinte, String profissao, String username, String istUsername,
-            String password, InfoCountryEditor infoPais, String codigoFiscal) {
-
-        setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
-        setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
-        setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
-        setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
-        setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
-        setNome(nome);
-        setSexo(sex);
-        setMaritalStatus(estadoCivil);
-        setNascimento(nascimento);
-        setNomePai(nomePai);
-        setNomeMae(nomeMae);
-        setFreguesiaNaturalidade(freguesiaNaturalidade);
-        setConcelhoNaturalidade(concelhoNaturalidade);
-        setDistritoNaturalidade(distritoNaturalidade);
-        setMorada(morada);
-        setLocalidade(localidade);
-        setCodigoPostal(codigoPostal);
-        setLocalidadeCodigoPostal(localidadeCodigoPostal);
-        setFreguesiaMorada(freguesiaMorada);
-        setConcelhoMorada(concelhoMorada);
-        setDistritoMorada(distritoMorada);
-        setTelefone(telefone);
-        setTelemovel(telemovel);
-        setEmail(email);
-        setEnderecoWeb(enderecoWeb);
-        setNumContribuinte(numContribuinte);
-        setProfissao(profissao);
-        setUsername(username);
-        setIstUsername(istUsername);
-        setPassword(password);
-        setInfoPais(infoPais);
-        setCodigoFiscal(codigoFiscal);
     }
 
     @Override
@@ -513,14 +468,6 @@ public class InfoPersonEditor extends InfoObject {
 
     public void setInfoTeacher(InfoTeacher infoTeacher) {
         this.infoTeacher = infoTeacher;
-    }
-
-    public String getIstUsername() {
-        return istUsername;
-    }
-
-    public void setIstUsername(String istUsername) {
-        this.istUsername = istUsername;
     }
 
     public PhysicalAddressData getPhysicalAddressData() {

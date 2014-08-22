@@ -134,7 +134,7 @@ public class LibraryAttendance implements Serializable {
 
     public LibraryAttendance(SpaceAttendances attendance, Space library) {
         setLibrary(library);
-        setPersonId(attendance.getPersonIstUsername());
+        setPersonId(attendance.getPersonUsername());
         if (attendance.getPerson() != null) {
             setPerson(attendance.getPerson());
         }
@@ -366,12 +366,12 @@ public class LibraryAttendance implements Serializable {
     @Atomic
     public void enterSpace() {
         Space space = getSelectedSpace() != null ? getSelectedSpace() : library;
-        setPersonAttendance(addAttendance(space, getPerson(), AccessControl.getPerson().getIstUsername()));
+        setPersonAttendance(addAttendance(space, getPerson(), AccessControl.getPerson().getUsername()));
     }
 
     @Atomic
     public void exitSpace() {
-        getPersonAttendance().exit(AccessControl.getPerson().getIstUsername());
+        getPersonAttendance().exit(AccessControl.getPerson().getUsername());
         if (getPerson() != null && getPerson().equals(getPersonAttendance().getPerson())) {
             setPersonAttendance(null);
             setSelectedSpace(null);
@@ -385,7 +385,7 @@ public class LibraryAttendance implements Serializable {
         if (!(SpaceUtils.currentAttendaceCount(space) < space.getAllocatableCapacity())) {
             throw new DomainException("error.space.maximumAttendanceExceeded");
         }
-        SpaceAttendances attendance = new SpaceAttendances(person.getIstUsername(), responsibleUsername, new DateTime());
+        SpaceAttendances attendance = new SpaceAttendances(person.getUsername(), responsibleUsername, new DateTime());
         space.addCurrentAttendance(attendance);
         space.addPastAttendances(attendance);
         return attendance;

@@ -41,7 +41,7 @@ public class TutorBean implements Serializable {
         setExecutionDegreeID(executionDegreeID);
         setDegreeCurricularPlanID(degreeCurricularPlanID);
         setTeacher(teacher);
-        setTeacherId(teacher.getPerson().getIstUsername());
+        setTeacherId(teacher.getPerson().getUsername());
         setTeacherName(teacher.getPerson().getName());
     }
 

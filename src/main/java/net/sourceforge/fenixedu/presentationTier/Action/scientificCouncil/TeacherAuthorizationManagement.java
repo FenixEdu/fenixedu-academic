@@ -72,7 +72,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
     public static class TeacherAuthorizationManagementBean implements Serializable {
-        private String istUsername;
+        private String username;
         private ProfessionalCategory professionalCategory;
         private ExecutionSemester executionSemester;
         private Double lessonHours;
@@ -83,12 +83,12 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
         public TeacherAuthorizationManagementBean() {
         }
 
-        public void setIstUsername(String istUsername) {
-            this.istUsername = istUsername;
+        public void setUsername(String username) {
+            this.username = username;
         }
 
-        public String getIstUsername() {
-            return istUsername;
+        public String getUsername() {
+            return username;
         }
 
         public void setProfessionalCategory(ProfessionalCategory professionalCategory) {
@@ -110,9 +110,9 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
         @Atomic
         ExternalTeacherAuthorization create() throws FenixActionException {
 
-            User user = User.findByUsername(getIstUsername());
+            User user = User.findByUsername(getUsername());
             if (user == null) {
-                throw new FenixActionException("label.invalid.istUsername");
+                throw new FenixActionException("label.invalid.username");
             }
             final Person person = user.getPerson();
 
@@ -246,7 +246,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                         continue;
                     }
 
-                    final String istUsername = parts[0].trim();
+                    final String username = parts[0].trim();
                     final ProfessionalCategory professionalCategory =
                             ProfessionalCategory.find(parts[1].trim(), CategoryType.TEACHER);
                     final String i = parts[2].trim();
@@ -257,8 +257,8 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                     final Boolean canHaveCard = Boolean.valueOf("S".equalsIgnoreCase(parts[4].trim()));
                     final Department department = Department.find(parts[5].trim());
 
-                    if (istUsername == null || istUsername.isEmpty() || User.findByUsername(istUsername) == null) {
-                        messages.add(BundleUtil.getString(Bundle.SCIENTIFIC, "label.message.istUsername.invalid",
+                    if (username == null || username.isEmpty() || User.findByUsername(username) == null) {
+                        messages.add(BundleUtil.getString(Bundle.SCIENTIFIC, "label.message.username.invalid",
                                 Integer.toString(lineCount), parts[0].trim()));
                         continue;
                     }
@@ -282,7 +282,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                     }
 
                     final TeacherAuthorizationManagementBean bean = new TeacherAuthorizationManagementBean();
-                    bean.setIstUsername(istUsername);
+                    bean.setUsername(username);
                     bean.setProfessionalCategory(professionalCategory);
                     bean.setLessonHours(lessonHours);
                     bean.setCanPark(canPark);
@@ -302,12 +302,11 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                 try {
                     bean.create();
                 } catch (final FenixActionException ex) {
-                    messages.add(BundleUtil.getString(Bundle.SCIENTIFIC, ex.getMessage(), bean.getIstUsername()));
+                    messages.add(BundleUtil.getString(Bundle.SCIENTIFIC, ex.getMessage(), bean.getUsername()));
                 }
             }
             return messages;
         }
-
     }
 
     @EntryPoint
@@ -354,7 +353,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
         } catch (FenixActionException e) {
             RenderUtils.invalidateViewState();
             request.setAttribute("bean", tamb);
-            addActionMessage(request, e.getMessage(), tamb.getIstUsername());
+            addActionMessage(request, e.getMessage(), tamb.getUsername());
             return mapping.findForward("createTeacherAuthorization");
         }
 

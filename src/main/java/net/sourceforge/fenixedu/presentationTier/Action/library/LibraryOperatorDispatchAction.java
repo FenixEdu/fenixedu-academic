@@ -108,7 +108,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
         LibraryAttendance attendance = getRenderedObject(renderId);
         if (attendance == null) {
             Space library = FenixFramework.getDomainObject(request.getParameter("libraryId"));
-            String personId = request.getParameter("personIstUsername");
+            String personId = request.getParameter("personUsername");
             if (personId != null) {
                 attendance = new LibraryAttendance(personId, library);
                 attendance.search();

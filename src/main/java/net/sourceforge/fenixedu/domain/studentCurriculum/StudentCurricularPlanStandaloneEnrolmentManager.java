@@ -188,7 +188,7 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 
                     checkIDegreeModuleToEvaluate(curricularCourse);
                     new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
-                            getExecutionSemester(), EnrollmentCondition.VALIDATED, getResponsiblePerson().getIstUsername());
+                            getExecutionSemester(), EnrollmentCondition.VALIDATED, getResponsiblePerson().getUsername());
                 }
             }
         }

@@ -34,7 +34,7 @@
 	</span>
 </p>
 
-<fr:view name="registration" schema="student.show.personInformationWithIstUsername">
+<fr:view name="registration" schema="student.show.personInformationWithUsername">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thright"/>
         <fr:property name="columnClasses" value="width18em,,tdclear tderror1"/>

@@ -47,7 +47,7 @@
 </logic:equal>
 <table class="tstyle2 tdcenter">
 	<tr>
-		<th><bean:message key="label.istid" bundle="APPLICATION_RESOURCES" /></th>
+		<th><bean:message key="label.username" bundle="APPLICATION_RESOURCES" /></th>
 		<th><bean:message key="label.name" /></th>
 		<logic:equal name="isResponsible" value="true">
 			<th><bean:message key="label.teacher.responsible" /></th>			
@@ -57,7 +57,7 @@
 	<logic:iterate id="professorship" name="executionCourse" property="professorships">
 	<bean:define id="person" name="professorship" property="person" />
 	<tr>
-		<td><bean:write name="person"  property="istUsername" /></td>
+		<td><bean:write name="person"  property="username" /></td>
 		<td><bean:write name="person" property="name" /></td>	
 		<logic:equal name="isResponsible" value="true">
 		<logic:equal name="professorship" property="responsibleFor" value="false">

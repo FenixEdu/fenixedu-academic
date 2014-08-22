@@ -62,7 +62,7 @@
 	        		<fr:property name="classes" value="nobullet noindent"/>
 	        		<fr:property name="eachSchema" value="executionCourseLog.professorship"/>
 	        		<fr:property name="eachLayout" value="values-dash"/>        		
-	        		<fr:property name="sortBy" value="person.istUsername"/>
+	        		<fr:property name="sortBy" value="person.username"/>
 	        		<fr:property name="selectAllShown" value="true"/>
 	    		</fr:slot>
 	    		<%-- <fr:slot name="viewPhoto" layout="option-select" bundle="APPLICATION_RESOURCES" key="label.viewPhoto"/>
@@ -97,7 +97,7 @@
 						<fr:property name="photoCellClasses" value="personalcard_photo"/>
 				   		<fr:property name="imageFormat" value="<%=request.getContextPath() + "/user/photo/${externalId}"%>"/>
 	    			</fr:slot>
-					<fr:slot name="person.istUsername" key="label.istid" >
+					<fr:slot name="person.username" key="label.username" >
 		        		<fr:property name="classes" value="nobullet noindent"/>   
 	    			</fr:slot>
 	    			<fr:slot name="person.name" key="label.name">

@@ -152,7 +152,7 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
 
         @Override
         public String toString() {
-            return teacher.getPerson().getIstUsername() + "[" + (intending ? "x" : " ") + "]";
+            return teacher.getPerson().getUsername() + "[" + (intending ? "x" : " ") + "]";
         }
     }
 

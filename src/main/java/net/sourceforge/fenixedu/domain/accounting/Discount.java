@@ -40,7 +40,7 @@ public class Discount extends Discount_Base {
         checkAmount(amount);
         setAmount(amount);
         if (person != null) {
-            setUsername(person.getIstUsername());
+            setUsername(person.getUsername());
         }
     }
 

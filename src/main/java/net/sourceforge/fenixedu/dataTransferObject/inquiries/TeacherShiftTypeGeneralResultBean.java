@@ -43,7 +43,7 @@ public class TeacherShiftTypeGeneralResultBean implements Serializable {
             if (getProfessorship().getPerson().getEmployee() != null) {
                 identifier = getProfessorship().getPerson().getEmployee().getEmployeeNumber().toString();
             } else {
-                identifier = getProfessorship().getPerson().getIstUsername();
+                identifier = getProfessorship().getPerson().getUsername();
             }
             return " (" + identifier + ") ";
         }

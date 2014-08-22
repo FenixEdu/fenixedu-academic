@@ -93,7 +93,7 @@ public class ReadTeacherServiceDistributionByTeachers {
                 } else {
                     Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getBalanceOfCreditsUntil(endPeriod));
                     String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
-                    returnDTO.addTeacher(teacher.getExternalId(), teacher.getPerson().getIstUsername(), category, teacher
+                    returnDTO.addTeacher(teacher.getExternalId(), teacher.getPerson().getUsername(), category, teacher
                             .getPerson().getName(), mandatoryLessonHours, accumulatedCredits);
                 }
 

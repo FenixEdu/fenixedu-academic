@@ -1409,8 +1409,8 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     }
     
     class RoleOperationLog  {
-    	String istUsername;
-    	String whoGrantedIstUsername;
+    	String username;
+    	String whoGrantedUsername;
     	DateTime logDate;
     	RoleOperationType operationType;
     }  
@@ -4087,11 +4087,11 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
     
     class space.SpaceAttendances {
-    	String personIstUsername;
-    	String responsibleForEntranceIstUsername;
+    	String personUsername;
+    	String responsibleForEntranceUsername;
     	DateTime entranceTime;
     	DateTime exitTime;
-    	String responsibleForExitIstUsername;
+    	String responsibleForExitUsername;
     }
 
     class student.curriculum.ConclusionProcess  {

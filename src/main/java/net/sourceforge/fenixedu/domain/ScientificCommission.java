@@ -70,7 +70,7 @@ public class ScientificCommission extends ScientificCommission_Base {
     public void delete() {
         ScientificCommissionLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
                 Bundle.MESSAGING, "log.degree.scientificcomission.removemember", this.getPerson().getName(), this.getPerson()
-                        .getIstUsername(), this.getExecutionDegree().getDegree().getPresentationName());
+                        .getUsername(), this.getExecutionDegree().getDegree().getPresentationName());
         setPerson(null);
         setExecutionDegree(null);
         setRootDomainObject(null);

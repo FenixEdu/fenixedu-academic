@@ -43,7 +43,7 @@
 	<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.inquiries.AuditSelectPersonsECBean" bundle="APPLICATION_RESOURCES">
 		<fr:slot name="teacher" layout="autoComplete" key="teacher.docente" required="true">
 			<fr:property name="size" value="80"/>
-			<fr:property name="format" value="${name} / ${istUsername}"/>
+			<fr:property name="format" value="${name} / ${username}"/>
 			<fr:property name="args" value="slot=name"/>
 			<fr:property name="minChars" value="3"/>
 			<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchEmployeesAndTeachers"/>
@@ -52,7 +52,7 @@
 		</fr:slot>
 		<fr:slot name="student" layout="autoComplete" key="student" required="true">
 			<fr:property name="size" value="80"/>
-			<fr:property name="format" value="${name} / ${istUsername}"/>
+			<fr:property name="format" value="${name} / ${username}"/>
 			<fr:property name="args" value="slot=name,size=30"/>
 			<fr:property name="minChars" value="3"/>
 			<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>

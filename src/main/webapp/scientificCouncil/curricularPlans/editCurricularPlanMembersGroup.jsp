@@ -61,7 +61,7 @@
 		<h:outputText value="<p><b>#{scouncilBundle['addNewMembers']}</b>:<p/>" escape="false" />		
 		
 		<h:panelGrid columns="3" style="infocell" columnClasses="infocell">
-			<h:outputText value="#{scouncilBundle['label.istid']}:" />
+			<h:outputText value="#{scouncilBundle['label.username']}:" />
 			
 			<h:inputText id="xpto" value="#{CurricularPlansMembersManagementBackingBean.istIdToAdd}" />
 

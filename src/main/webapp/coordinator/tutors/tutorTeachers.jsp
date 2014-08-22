@@ -65,7 +65,7 @@
                 type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.TutorTeachersManagementDispatchAction$TutorshipIntentionSelector">
                 <fr:slot name="department.acronym" key="label.teacher.department" readOnly="true" />
                 <fr:slot name="teacher.person.name" key="label.teacher.name" readOnly="true" />
-                <fr:slot name="teacher.person.istUsername" key="label.istUsername" readOnly="true" />
+                <fr:slot name="teacher.person.username" key="label.username" readOnly="true" />
                 <fr:slot name="intending" key="label.tutorship.intendsTutorship" />
                 <fr:slot name="previousParticipations" key="label.tutorship.previousParticipations" readOnly="true" />
             </fr:schema>

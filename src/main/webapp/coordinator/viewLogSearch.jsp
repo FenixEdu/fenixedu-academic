@@ -79,9 +79,9 @@
 				<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.coordinator.SearchDegreeLogBean" bundle="APPLICATION_RESOURCES">
 					<fr:slot name="person" layout="view-as-image">
 						<fr:property name="photoCellClasses" value="personalcard_photo"/>
-				   		<fr:property name="imageFormat" value="<%=request.getContextPath()+ "/user/photo/${istUsername}"%>"/>
+				   		<fr:property name="imageFormat" value="<%=request.getContextPath()+ "/user/photo/${username}"%>"/>
 	    			</fr:slot>
-					<fr:slot name="person.istUsername" key="label.istid" >
+					<fr:slot name="person.username" key="label.username" >
 		        		<fr:property name="classes" value="nobullet noindent"/>   
 	    			</fr:slot>
 	    			<fr:slot name="person.name" key="label.name">

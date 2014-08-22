@@ -53,7 +53,7 @@ public class RegistrationStateLog extends RegistrationStateLog_Base {
         return getPerson() != null ? getPerson().getName() : StringUtils.EMPTY;
     }
 
-    public String getIstUsername() {
-        return getPerson() != null ? getPerson().getIstUsername() : StringUtils.EMPTY;
+    public String getUsername() {
+        return getPerson() != null ? getPerson().getUsername() : StringUtils.EMPTY;
     }
 }

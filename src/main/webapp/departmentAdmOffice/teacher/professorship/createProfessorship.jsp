@@ -27,7 +27,7 @@
 <bean:define id="infoPerson" name="infoPerson" scope="request" />
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoPerson" property="nome"/><br />
-	<bean:define id="teacherId" name="infoPerson" property="istUsername"/>
+	<bean:define id="teacherId" name="infoPerson" property="username"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherId"/><br />
 	<%--<b><bean:message key="label.executionYear" /> </b> <bean:write name="executionYear" property="year" /> <br />--%>
 <%--	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherId" paramName="infoPerson" paramProperty="teacherId">
