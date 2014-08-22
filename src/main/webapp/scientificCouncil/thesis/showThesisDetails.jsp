@@ -54,6 +54,12 @@
     </html:messages>
 </logic:messagesPresent>
 
+<logic:messagesPresent message="true" property="success">
+	<html:messages id="message" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<p><span class="success0"><bean:write name="message" /></span></p>
+	</html:messages>
+</logic:messagesPresent>	
+
 <div style="margin-left: 35px; width: 90%;">
     <logic:equal name="thesis" property="submitted" value="true">
     	<html:link action="<%= "/manageSecondCycleThesis.do?method=approveProposal&amp;thesisOid=" + thesis.getExternalId() %>">
@@ -86,17 +92,28 @@
             <bean:message key="label.scientificCouncil.thesis.proposal.reject.confirm"/>
         </p>
 
-	    <fr:form action="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>">
-	        <fr:edit id="thesisRejection" name="thesis" schema="thesis.rejection.comment">
-	            <fr:layout name="tabular">
-		           <fr:property name="classes" value="thtop thlight mbottom0"/>
-		           <fr:property name="columnClasses" value="width125px,,tdclear tderror1"/>
-	            </fr:layout>
-	            <fr:destination name="cancel" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
-	            <fr:destination name="invalid" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
-	        </fr:edit>
+	    <fr:form action="<%= "/manageSecondCycleThesis.do?method=rejectThesis&amp;thesisOid=" + thesis.getExternalId() %>">
+			<fr:edit id="thesisRejection" name="rejectionCommentBean">
+				<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
+					type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ManageSecondCycleThesisDA$RejectionCommentBean">
+					<fr:slot name="comment" layout="longText"
+						validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:property name="columns" value="60" />
+						<fr:property name="rows" value="7" />
+					</fr:slot>
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="thtop thlight mbottom0" />
+					<fr:property name="columnClasses"
+						value="width125px,,tdclear tderror1" />
+				</fr:layout>
+				<fr:destination name="cancel"
+					path="<%="/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId()%>" />
+				<fr:destination name="invalid"
+					path="<%="/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId()%>" />
+			</fr:edit>
 
-	        <table class="mtop0 tgluetop">
+			<table class="mtop0 tgluetop">
 	        <tr>
 		        <td class="width125px">
 		        </td>
