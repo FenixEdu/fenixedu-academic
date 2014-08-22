@@ -170,7 +170,7 @@
 					</tr>
 	<%
 					}
-					if (enrolment.getThesesCount() == 0) {
+					if (enrolment.getThesesSet().size() == 0) {
 	%>
 						<tr>
 							<td>
