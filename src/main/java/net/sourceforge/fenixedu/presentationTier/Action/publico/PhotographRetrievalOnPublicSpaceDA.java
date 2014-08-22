@@ -28,21 +28,36 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/retrievePersonalPhoto", module = "publico")
 public class PhotographRetrievalOnPublicSpaceDA extends RetrievePersonalPhotoAction {
+    /**
+     * @deprecated use /user/photo/{username} instead
+     */
+    @Deprecated
     public ActionForward retrievePhotographOnPublicSpace(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
-        Person person = FenixFramework.getDomainObject(request.getParameter("personId"));
-        return retrievePhotograph(request, response, person);
+        final Person person = FenixFramework.getDomainObject(request.getParameter("personId"));
+        response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+        response.setHeader("Location",
+                CoreConfiguration.getConfiguration().applicationUrl() + "/user/photo/" + person.getUsername());
+        return null;
     }
 
+    /**
+     * @deprecated use /user/photo/{username} instead
+     */
+    @Deprecated
     public ActionForward retrieveByIstId(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        User user = User.findByUsername(request.getParameter("istId"));
-        return retrievePhotograph(request, response, user.getPerson());
+        final String uuid = request.getParameter("istId");
+
+        response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+        response.setHeader("Location", CoreConfiguration.getConfiguration().applicationUrl() + "/user/photo/" + uuid);
+        return null;
     }
 }

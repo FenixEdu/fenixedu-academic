@@ -62,7 +62,7 @@
 	<tr>
 		<td>
 			<div style="border: 1px solid #ddd; padding: 8px; margin: 0 20px 20px 0;">
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=<bean:write name="thesis" property="student.person.username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="thesis" property="student.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</div> 
 		</td>

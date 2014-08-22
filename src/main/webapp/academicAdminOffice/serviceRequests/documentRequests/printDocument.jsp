@@ -29,8 +29,8 @@
 <bean:define id="academicServiceRequest" name="academicServiceRequest" scope="request" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
 
 <div style="float: right;">
-	<bean:define id="personID" name="academicServiceRequest" property="registration.student.person.externalId"/>
-	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+	<bean:define id="personID" name="academicServiceRequest" property="registration.student.person.username"/>
+	<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
 <p class="mvert2">

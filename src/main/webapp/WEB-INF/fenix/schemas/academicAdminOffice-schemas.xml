@@ -1942,7 +1942,7 @@
 	<slot name="personalPhoto" layout="view-as-image">
 		<property name="classes" value="column3"/>
 		<property name="contextRelative" value="true"/>
-		<property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${person.externalId}"/>	
+		<property name="imageFormat" value="/user/photo/${person.username}"/>	
 	</slot>		
 </schema>
 

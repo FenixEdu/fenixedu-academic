@@ -170,9 +170,8 @@ public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
                 HtmlTableRow row = htmlTable.createRow();
                 if (bean.getViewPhoto()) {
                     HtmlImage htmlImage = new HtmlImage();
-                    htmlImage.setSource(RenderUtils.getContextRelativePath("")
-                            + "/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="
-                            + attends.getRegistration().getStudent().getPerson().getExternalId());
+                    htmlImage.setSource(RenderUtils.getContextRelativePath("") + "/user/photo/"
+                            + attends.getRegistration().getStudent().getPerson().getUsername());
                     row.createCell().setBody(htmlImage);
                 }
                 row.createCell(attends.getRegistration().getStudent().getPerson().getUsername());

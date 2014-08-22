@@ -32,7 +32,7 @@
 
 <logic:present name="personFunctions">
 	<bean:define id="teacher" name="LOGGED_USER_ATTRIBUTE" property="person.teacher"/>
-	<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="teacher" property="person.username"/></bean:define>
+	<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="teacher" property="person.username"/></bean:define>
 	<table class="headerTable"><tr>
 	<td><img src="<%= request.getContextPath() + url %>"/></td>
 	<td ><fr:view name="teacher">

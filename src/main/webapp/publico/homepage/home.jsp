@@ -41,8 +41,8 @@
         <tr>
             <th></th>
             <td>
-				<bean:define id="personId" name="homepage" property="person.externalId" type="java.lang.String" />
-				<div><img src="<%= request.getContextPath() +"/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=" + personId %>"  style="padding: 1em 0;" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></div>
+				<bean:define id="personId" name="homepage" property="person.username" type="java.lang.String" />
+				<div><img src="<%= request.getContextPath() +"/user/photo/" + personId %>"  style="padding: 1em 0;" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></div>
             </td>
         </tr>
 

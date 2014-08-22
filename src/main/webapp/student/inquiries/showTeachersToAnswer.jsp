@@ -52,9 +52,9 @@
 			%>
 			<tr>
 				<td class="aleft nowrap">
-					<logic:present name="teacherDto" property="personID">
-						<bean:define id="personID" name="teacherDto" property="personID"/>
-						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+					<logic:present name="teacherDto" property="teacher">
+						<bean:define id="personID" name="teacherDto" property="teacher.username"/>
+						<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 					</logic:present>												
 					<bean:write name="teacherDto" property="name"/>
 				</td>

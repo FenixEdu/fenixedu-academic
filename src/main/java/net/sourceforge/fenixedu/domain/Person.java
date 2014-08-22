@@ -237,8 +237,7 @@ public class Person extends Person_Base {
         super.setUser(user);
         if (getProfile() != null) {
             getProfile().setAvatarUrl(
-                    CoreConfiguration.getConfiguration().applicationUrl()
-                            + "/person/retrievePersonalPhoto.do?method=retrieveByUUID&uuid=" + user.getUsername());
+                    CoreConfiguration.getConfiguration().applicationUrl() + "/user/photo/" + getUser().getUsername());
         }
     }
 

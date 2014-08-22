@@ -45,8 +45,8 @@
                 <fr:property name="rowClasses" value="tdhl1,,,," />
             </fr:layout>
         </fr:view></td>
-        <td><bean:define id="personID" name="student" property="person.externalId" /> <html:img align="middle"
-            src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>"
+        <td><bean:define id="personID" name="student" property="person.username" /> <html:img align="middle"
+            src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>"
             altKey="personPhoto" bundle="IMAGE_RESOURCES" /></td>
     </tr>
 </table>

@@ -28,8 +28,8 @@
 <h2><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="title.section.viewStudent"/></h2>
 
 <div style="float: right;" class="printhidden">
-	<bean:define id="personID" name="sessionBean" property="student.externalId"/>
-	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+	<bean:define id="personID" name="sessionBean" property="student.username"/>
+	<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
 <bean:define id="personId" name="sessionBean" property="student.externalId"/>

@@ -34,7 +34,7 @@
 <h3><bean:message key="label.managementFunctionNote" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 
 <logic:present name="personFunctionBean">
-	<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="personFunctionBean" property="teacher.person.username"/></bean:define>
+	<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="personFunctionBean" property="teacher.person.username"/></bean:define>
 	<table class="headerTable"><tr>
 	<td><img src="<%= request.getContextPath() + url %>"/></td>
 	<td ><fr:view name="personFunctionBean">
@@ -126,7 +126,7 @@
 								<fr:property name="useParent" value="true" />
 								<fr:property name="moduleRelative" value="false" />
 								<fr:property name="contextRelative" value="true" />
-								<fr:property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=${person.istUsername}" />
+								<fr:property name="imageFormat" value="/user/photo/${person.istUsername}" />
 							</fr:slot>
 							<fr:slot name="childParty.presentationName" key="label.name"/>
 							<fr:slot name="percentage" key="label.teacher-dfp-student.percentage"/>

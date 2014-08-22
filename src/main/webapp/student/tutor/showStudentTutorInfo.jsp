@@ -50,7 +50,7 @@
 		<%-- Foto --%>
 		<div style="float: right;" class="printhidden">
 			<bean:define id="personId" name="personID" />
-			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personId.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+			<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personId.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 		</div>
 		<fr:view name="actualTutor" layout="tabular" schema="student.tutorship.tutorInfo" >
 			<fr:layout>
