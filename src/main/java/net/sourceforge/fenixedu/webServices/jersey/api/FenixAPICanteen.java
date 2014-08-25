@@ -27,22 +27,31 @@ import javax.ws.rs.core.Response;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager.ConfigurationProperties;
 
-import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import com.google.common.io.BaseEncoding;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class FenixAPICanteen {
 
     private static final Client HTTP_CLIENT = ClientBuilder.newClient();
 
-    private static String canteenInfo;
+    private static JsonObject canteenInfo;
     private static DateTime day;
+    public static final String datePattern = "dd/MM/yyyy";
 
-    public static String get() {
+    public static String get(String daySearch) {
 
-        if (StringUtils.isEmpty(canteenInfo) || oldInformation()) {
+        String locale = I18N.getLocale().toString().replace("_", "-");
+        if (canteenInfo == null || canteenInfo.isJsonNull() || oldInformation()) {
+
             String canteenUrl = FenixConfigurationManager.getConfiguration().getFenixApiCanteenUrl();
             try {
                 Response response =
@@ -50,18 +59,47 @@ public class FenixAPICanteen {
                                 .header("Authorization", getServiceAuth()).get();
 
                 if (response.getStatus() == 200) {
-                    canteenInfo = response.readEntity(String.class);
+                    JsonParser parser = new JsonParser();
+                    canteenInfo = (JsonObject) parser.parse(response.readEntity(String.class));
                     day = new DateTime();
-                    return canteenInfo;
                 } else {
                     return new JsonObject().toString();
                 }
             } catch (ProcessingException e) {
+                e.printStackTrace();
                 return new JsonObject().toString();
             }
         }
 
-        return canteenInfo;
+        JsonArray jsonArrayWithLang = canteenInfo.getAsJsonArray(locale);
+
+        DateTime dayToCompareStart;
+        DateTime dayToCompareEnd;
+
+        DateTime dateTime = DateTime.parse(daySearch, DateTimeFormat.forPattern(datePattern));
+        int dayOfWeek = dateTime.getDayOfWeek();
+        if (dayOfWeek != 7) {
+            dayToCompareStart = dateTime.minusDays(dayOfWeek);
+            dayToCompareEnd = dateTime.plusDays(7 - dayOfWeek);
+        } else {
+            dayToCompareStart = dateTime;
+            dayToCompareEnd = dateTime.plusDays(7);
+        }
+
+        JsonArray jsonResult = new JsonArray();
+        for (JsonElement jObj : jsonArrayWithLang) {
+
+            DateTime dateToCompare =
+                    DateTime.parse(((JsonObject) jObj).get("day").getAsString(), DateTimeFormat.forPattern(datePattern));
+
+            if (dateToCompare.isAfter(dayToCompareStart) && dateToCompare.isBefore(dayToCompareEnd)) {
+                jsonResult.add(jObj);
+            }
+        }
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        return gson.toJson(jsonResult);
+
     }
 
     private static Boolean oldInformation() {
