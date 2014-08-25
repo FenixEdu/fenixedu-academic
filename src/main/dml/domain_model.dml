@@ -2677,6 +2677,9 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 
                 class curricularRules.RestrictionEnroledDegreeModule extends curricularRules.PrecedenceRule {
                 }
+                
+                class curricularRules.RestrictionNotEnroledDegreeModule extends curricularRules.PrecedenceRule {
+                }
 
 
     class degree.enrollment.NotNeedToEnrollInCurricularCourse  {

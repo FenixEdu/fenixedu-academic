@@ -157,57 +157,58 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 if (getDegreeModule().isLeaf()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
                     if (curricularCourse.isOptionalCurricularCourse()) {
-                        result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
-                                .getName())));
+                        result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
+                                curricularRuleType.getName())));
                         break;
                     }
                 }
 
             case DEGREE_MODULES_SELECTION_LIMIT:
                 if (!getDegreeModule().isLeaf()) {
-                    result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
-                            .getName())));
+                    result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
+                            curricularRuleType.getName())));
                 }
                 break;
             case PRECEDENCY_BETWEEN_DEGREE_MODULES:
-                result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
-                        .getName())));
+                result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
+                        curricularRuleType.getName())));
                 break;
 
             case PRECEDENCY_APPROVED_DEGREE_MODULE:
             case PRECEDENCY_ENROLED_DEGREE_MODULE:
+            case RESTRICTION_NOT_ENROLED_DEGREE_MODULE:
             case ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR:
                 if (getDegreeModule().isLeaf()) {
-                    result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
-                            .getName())));
+                    result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
+                            curricularRuleType.getName())));
                 }
                 break;
 
             case EXCLUSIVENESS:
-                result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
-                        .getName())));
+                result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
+                        curricularRuleType.getName())));
                 break;
 
             case ANY_CURRICULAR_COURSE:
                 if (getDegreeModule().isLeaf()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
                     if (curricularCourse.isOptionalCurricularCourse()) {
-                        result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
-                                .getName())));
+                        result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
+                                curricularRuleType.getName())));
                     }
                 }
                 break;
 
             case EVEN_ODD:
                 if (getDegreeModule().isLeaf()) {
-                    result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
-                            .getName())));
+                    result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
+                            curricularRuleType.getName())));
                 }
                 break;
 
             case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
-                result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType
-                        .getName())));
+                result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
+                        curricularRuleType.getName())));
                 break;
 
             default:
@@ -669,6 +670,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             switch (CurricularRuleType.valueOf(selectedCurricularRuleType)) {
             case PRECEDENCY_APPROVED_DEGREE_MODULE:
             case PRECEDENCY_ENROLED_DEGREE_MODULE:
+            case RESTRICTION_NOT_ENROLED_DEGREE_MODULE:
                 getDegreeModules(CurricularCourse.class, result);
                 break;
 

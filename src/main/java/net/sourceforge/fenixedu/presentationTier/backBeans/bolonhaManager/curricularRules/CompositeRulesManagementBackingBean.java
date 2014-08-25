@@ -116,7 +116,7 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
     public String createCompositeRule() {
         try {
             CreateCompositeRule.run(LogicOperator.valueOf(getSelectedLogicOperator()), getSelectedCurricularRuleIDs());
-            setSelectedCurricularRuleIDs(null);
+            setSelectedCurricularRuleIDs(new String[] {});
             getCurricularRuleItems().setValue(readCurricularRulesLabels());
         } catch (NotAuthorizedException e) {
             addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));

@@ -24,13 +24,14 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication$CurricularPlansManagement" />
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="<i>#{bolonhaBundle['bolonhaManager']}</i>" escape="false"/>
 	<h:outputFormat value="<h2>#{bolonhaBundle['set.param']}</h2>" escape="false">
 		<f:param value="#{bolonhaBundle['curricularRule']}"/>
 	</h:outputFormat>
@@ -77,6 +78,7 @@
 			
 			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' 
 						|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE' 
+						|| CurricularRulesManagement.selectedCurricularRuleType == 'RESTRICTION_NOT_ENROLED_DEGREE_MODULE'
 						|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_BETWEEN_DEGREE_MODULES' 
 						|| CurricularRulesManagement.selectedCurricularRuleType == 'EXCLUSIVENESS'}">
 				<h:outputText value="<p><label>#{bolonhaBundle['curricularCourse']}:</label>" escape="false"/>
@@ -174,7 +176,8 @@
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' 
-						|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE'}">
+						|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE'
+						|| CurricularRulesManagement.selectedCurricularRuleType == 'RESTRICTION_NOT_ENROLED_DEGREE_MODULE'}">
 				<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['semester']}:</label>" escape="false"/>
 				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedSemester}">
 					<f:selectItem itemLabel="#{bolonhaBundle['both']}" itemValue="0"/>

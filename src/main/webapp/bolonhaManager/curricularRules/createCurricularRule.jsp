@@ -45,7 +45,7 @@
 		
 		<h:outputText value="<p><strong>#{bolonhaBundle['degreeModule.to.apply.rule']}:</strong> " escape="false"/>
 		<h:outputText value="<span class='attention'>#{CurricularRulesManagement.degreeModule.name}</span><p/>" escape="false"/>
-
+aaaaaaaaa
 		<h:panelGroup rendered="#{!empty CurricularRulesManagement.degreeModule.curricularRules}">
 		<h:outputText value="<p><strong>#{bolonhaBundle['existent.curricularRules']}: </strong><br/>" escape="false"/>
 			<h:outputText value="<ul>" escape="false"/>
@@ -71,7 +71,8 @@
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' 
-						|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE' 
+						|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE'
+						|| CurricularRulesManagement.selectedCurricularRuleType == 'RESTRICTION_NOT_ENROLED_DEGREE_MODULE' 
 						|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_BETWEEN_DEGREE_MODULES' 
 						|| CurricularRulesManagement.selectedCurricularRuleType == 'EXCLUSIVENESS'}">
 				<h:outputText value="<p><label>#{bolonhaBundle['curricularCourse']}:</label>" escape="false"/>
@@ -172,7 +173,8 @@
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' 
-						|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE'}">
+						|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE'
+						|| CurricularRulesManagement.selectedCurricularRuleType == 'RESTRICTION_NOT_ENROLED_DEGREE_MODULE'}">
 				<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['semester']}:</label>" escape="false"/>
 				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedSemester}">
 					<f:selectItem itemLabel="#{bolonhaBundle['both']}" itemValue="0"/>

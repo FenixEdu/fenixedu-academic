@@ -45,6 +45,9 @@ public class CurricularRulesManager {
         case PRECEDENCY_ENROLED_DEGREE_MODULE:
             return createRestrictionEnroledDegreeModule(toApplyRule, begin, end, parametersDTO);
 
+        case RESTRICTION_NOT_ENROLED_DEGREE_MODULE:
+            return createRestrictionNotEnroledDegreeModule(toApplyRule, begin, end, parametersDTO);
+
         case CREDITS_LIMIT:
             return createCreditsLimit(toApplyRule, begin, end, parametersDTO);
 
@@ -184,6 +187,17 @@ public class CurricularRulesManager {
                 (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
 
         return new RestrictionEnroledDegreeModule((CurricularCourse) toApplyRule, (CurricularCourse) enroledDegreeModule,
+                contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO(), begin, end);
+    }
+
+    private static CurricularRule createRestrictionNotEnroledDegreeModule(DegreeModule toApplyRule, ExecutionSemester begin,
+            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+
+        final DegreeModule notEnroledDegreeModule = FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeModuleID());
+        final CourseGroup contextCourseGroup =
+                (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
+
+        return new RestrictionNotEnroledDegreeModule((CurricularCourse) toApplyRule, (CurricularCourse) notEnroledDegreeModule,
                 contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO(), begin, end);
     }
 
