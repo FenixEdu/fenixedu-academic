@@ -348,22 +348,6 @@ valueType net.sourceforge.fenixedu.util.Money as Money {
     }
 }
 
-valueType net.sourceforge.fenixedu.util.OldPublicationType as OldPublicationType {
-    externalizeWith {
-        int getValue();
-    }
-
-    internalizeWith getEnum();
-}
-
-valueType net.sourceforge.fenixedu.util.OrientationType as OrientationType {
-    externalizeWith {
-        int getValue();
-    }
-
-    internalizeWith getEnum();
-}
-
 valueType net.sourceforge.fenixedu.util.PeriodState as PeriodState {
     externalizeWith {
         String getStateCode();
@@ -376,22 +360,6 @@ valueType net.sourceforge.fenixedu.util.ProposalState as ProposalState {
     externalizeWith {
         Integer getState();
     }
-}
-
-valueType net.sourceforge.fenixedu.util.ProviderRegimeType as ProviderRegimeType {
-    externalizeWith {
-        int getValue();
-    }
-
-    internalizeWith getEnum();
-}
-
-valueType net.sourceforge.fenixedu.util.PublicationType as PublicationType {
-    externalizeWith {
-        int getValue();
-    }
-
-    internalizeWith getEnum();
 }
 
 valueType net.sourceforge.fenixedu.util.Season as Season {
@@ -4576,7 +4544,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 
     class teacher.OldPublication  {
         DateTime lastModificationDateDateTime;
-        OldPublicationType oldPublicationType;
         String publication;
     }
 
@@ -4584,19 +4551,16 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         String description;
         DateTime lastModificationDateDateTime;
         Integer numberOfStudents;
-        OrientationType orientationType;
     }
 
     class teacher.PublicationsNumber  {
         Integer international;
         DateTime lastModificationDateDateTime;
         Integer national;
-        PublicationType publicationType;
     }
 
     class teacher.ServiceProviderRegime  {
         DateTime lastModificationDateDateTime;
-        ProviderRegimeType providerRegimeType;
     }
 
     class teacher.TeacherPersonalExpectation  {

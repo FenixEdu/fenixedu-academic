@@ -22,9 +22,6 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
-import net.sourceforge.fenixedu.domain.Teacher;
-
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
@@ -43,19 +40,6 @@ public class OldPublication extends OldPublication_Base {
         setTeacher(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
-    }
-
-    public void edit(InfoOldPublication infoOldPublication, Teacher teacher) {
-
-        if ((infoOldPublication == null) || (teacher == null)) {
-            throw new NullPointerException();
-        }
-
-        this.setLastModificationDate(infoOldPublication.getLastModificationDate());
-        this.setOldPublicationType(infoOldPublication.getOldPublicationType());
-        this.setPublication(infoOldPublication.getPublication());
-        this.setTeacher(teacher);
-
     }
 
     @Deprecated

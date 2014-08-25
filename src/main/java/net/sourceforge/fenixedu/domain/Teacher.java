@@ -57,17 +57,13 @@ import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import net.sourceforge.fenixedu.domain.teacher.Orientation;
-import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.PublicationType;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -1007,24 +1003,6 @@ public class Teacher extends Teacher_Base {
             }
         }
         return result;
-    }
-
-    public Orientation readOrientationByType(OrientationType orientationType) {
-        for (final Orientation orientation : this.getAssociatedOrientationsSet()) {
-            if (orientation.getOrientationType().equals(orientationType)) {
-                return orientation;
-            }
-        }
-        return null;
-    }
-
-    public PublicationsNumber readPublicationsNumberByType(PublicationType publicationType) {
-        for (final PublicationsNumber publicationsNumber : this.getAssociatedPublicationsNumbersSet()) {
-            if (publicationsNumber.getPublicationType().equals(publicationType)) {
-                return publicationsNumber;
-            }
-        }
-        return null;
     }
 
     public SortedSet<ExecutionCourse> getCurrentExecutionCourses() {

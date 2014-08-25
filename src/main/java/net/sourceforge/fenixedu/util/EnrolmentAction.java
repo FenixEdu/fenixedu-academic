@@ -21,51 +21,65 @@
  */
 package net.sourceforge.fenixedu.util;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author nmgo
  * @author lmre
  */
-public class EnrolmentAction extends FenixValuedEnum {
+public class EnrolmentAction implements Comparable<EnrolmentAction> {
 
     public static final int ENROL_TYPE = 1;
 
     public static final int UNENROL_TYPE = 2;
+
+    private final String name;
+    private final int value;
 
     public static final EnrolmentAction ENROL = new EnrolmentAction("enrol", EnrolmentAction.ENROL_TYPE);
 
     public static final EnrolmentAction UNENROL = new EnrolmentAction("unenrol", EnrolmentAction.UNENROL_TYPE);
 
     private EnrolmentAction(String name, int value) {
-        super(name, value);
-    }
-
-    public static EnrolmentAction getEnum(String actionType) {
-        return (EnrolmentAction) getEnum(EnrolmentAction.class, actionType);
+        this.name = name;
+        this.value = value;
     }
 
     public static EnrolmentAction getEnum(int actionType) {
-        return (EnrolmentAction) getEnum(EnrolmentAction.class, actionType);
-    }
-
-    public static Map getEnumMap() {
-        return getEnumMap(EnrolmentAction.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(EnrolmentAction.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(EnrolmentAction.class);
+        switch (actionType) {
+        case ENROL_TYPE:
+            return ENROL;
+        case UNENROL_TYPE:
+            return UNENROL;
+        default:
+            throw new IllegalArgumentException(actionType + " is not a valid enrolment action!");
+        }
     }
 
     @Override
     public String toString() {
-        return this.getName();
+        return this.name;
+    }
+
+    public int getValue() {
+        return this.value;
+    }
+
+    @Override
+    public int compareTo(EnrolmentAction other) {
+        return this.value - other.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof EnrolmentAction) {
+            EnrolmentAction other = (EnrolmentAction) obj;
+            return this.value == other.value;
+        }
+        return false;
     }
 
 }
