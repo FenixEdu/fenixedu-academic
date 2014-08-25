@@ -18,11 +18,19 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Locale;
+
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
 public class EnrolmentInstructions extends EnrolmentInstructions_Base {
+
+    /**
+     * TODO: remove the field 'tempInstructions' and convert the type of the field
+     * instructions from String to LocalizedString
+     */
 
     public EnrolmentInstructions() {
         super();
@@ -33,6 +41,7 @@ public class EnrolmentInstructions extends EnrolmentInstructions_Base {
         this();
         setExecutionSemester(executionSemester);
         setInstructions("");
+        setTempInstructions(new LocalizedString());
     }
 
     @Atomic
@@ -40,6 +49,15 @@ public class EnrolmentInstructions extends EnrolmentInstructions_Base {
         if (executionSemester.getEnrolmentInstructions() == null) {
             new EnrolmentInstructions(executionSemester);
         }
+    }
+
+    @Override
+    public LocalizedString getTempInstructions() {
+        LocalizedString instruction = super.getTempInstructions();
+        if (instruction != null) {
+            return instruction;
+        }
+        return new LocalizedString(Locale.getDefault(), getInstructions());
     }
 
 }
