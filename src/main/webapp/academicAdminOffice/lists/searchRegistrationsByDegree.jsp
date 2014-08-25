@@ -94,6 +94,8 @@
 				<fr:property name="providerClass"
 					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.RegistrationAgreementProvider" />
 				<fr:property name="classes" value="list2" />
+				<fr:property name="eachSchema" value="RegistrationProtocol.view.name.only"/>
+				<fr:property name="eachLayout" value="values"/>
 			</fr:slot>
 			<fr:slot name="registrationStateTypes" key="label.registrationState" layout="option-select">
 				<fr:property name="providerClass"

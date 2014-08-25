@@ -353,12 +353,14 @@
 	</slot>	
 </schema>
 
-
 <schema name="ingression.information-edit" bundle="ACADEMIC_OFFICE_RESOURCES" extends="ingression.information"
 		type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" >
 	<remove name="registrationProtocol"/>
 </schema>
 
+<schema name="RegistrationProtocol.view.name.only" type="net.sourceforge.fenixedu.domain.student.RegistrationProtocol" >
+	<slot name="description" />
+</schema>
 
 <schema name="student.show.personInformation"
 		type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES">
