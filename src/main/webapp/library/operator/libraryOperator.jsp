@@ -177,7 +177,7 @@
 								<fr:property name="useParent" value="true" />
 								<fr:property name="moduleRelative" value="false" />
 								<fr:property name="contextRelative" value="true" />
-								<fr:property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=\${person.istUsername}" />
+								<fr:property name="imageFormat" value="/user/photo/\${person.istUsername}" />
 							</fr:slot>
 							<fr:slot name="person.name" key="label.person.name" />
 							<fr:slot name="person.istUsername" key="label.person.istUsername" />

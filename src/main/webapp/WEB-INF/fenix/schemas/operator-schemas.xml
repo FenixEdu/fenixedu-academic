@@ -143,7 +143,7 @@
 		<property name="moduleRelative" value="false" />
 		<property name="contextRelative" value="true" />
 		<property name="imageFormat"
-			value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${person.externalId}" />
+			value="/user/photo/${person.username}" />
 	</slot>
 	<slot name="externalId" key="label.operator.photo.pending" layout="view-as-image" read-only="true">
 		<property name="classes" value="column3" />

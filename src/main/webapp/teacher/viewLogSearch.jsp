@@ -95,7 +95,7 @@
 				<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseLogBean" bundle="APPLICATION_RESOURCES">
 					<fr:slot name="person" layout="view-as-image">
 						<fr:property name="photoCellClasses" value="personalcard_photo"/>
-				   		<fr:property name="imageFormat" value="<%=request.getContextPath()+ "/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=${externalId}"%>"/>
+				   		<fr:property name="imageFormat" value="<%=request.getContextPath() + "/user/photo/${externalId}"%>"/>
 	    			</fr:slot>
 					<fr:slot name="person.istUsername" key="label.istid" >
 		        		<fr:property name="classes" value="nobullet noindent"/>   

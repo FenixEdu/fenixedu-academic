@@ -24,13 +24,15 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication$CurricularPlansManagement" />
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
 	<h:outputText value="<i>#{bolonhaBundle['bolonhaManager']}</i>" escape="false"/>
-	<h:outputFormat value="<h2>#{bolonhaBundle['delete.param']}</h2>" escape="false">
+	<h:outputFormat value="<h2>#{bolonhaBundle['edit.param']}</h2>" escape="false">
 		<f:param value="#{bolonhaBundle['curricularRule']}"/>
 	</h:outputFormat>
 	

@@ -431,7 +431,7 @@
 						<% for (final Person person : mobilityGroup.getMobilityCoordinatorSet()) { %>
 								<tr>
 									<td>
-										<div><img src="<%= request.getContextPath() +"/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=" + person.getExternalId() %>"  style="padding: 1em 0;" /></div>
+										<div><img src="<%= request.getContextPath() +"/user/photo/" + person.getExternalId() %>"  style="padding: 1em 0;" /></div>
 									</td>
 									<td><%= person.getUsername() %></td>
 									<td><%= person.getName() %></td>

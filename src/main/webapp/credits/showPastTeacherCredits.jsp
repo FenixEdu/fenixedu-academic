@@ -32,7 +32,7 @@
 <logic:present name="teacherBean">
 	<jsp:include page="teacherCreditsStyles.jsp"/>
 	
-	<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="teacherBean" property="teacher.person.username"/></bean:define>
+	<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="teacherBean" property="teacher.person.username"/></bean:define>
 	<table class="headerTable"><tr>
 	<td><img src="<%= request.getContextPath() + url %>"/></td>
 	<td ><fr:view name="teacherBean" property="teacher">

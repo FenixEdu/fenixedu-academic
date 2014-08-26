@@ -29,8 +29,8 @@
 <table class="personInfo mbottom1">
 	<tr>
 		<td class="personInfo_photo">
-			<bean:define id="personId" name="employee" property="person.externalId" type="java.lang.String" />
-			<div><img src="<%= request.getContextPath() +"/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=" + personId %>"/></div>		  
+			<bean:define id="personId" name="employee" property="person.username" type="java.lang.String" />
+			<div><img src="<%= request.getContextPath() + "/user/photo/" + personId %>"/></div>		  
 		</td>
 		<td class="personInfo_info">
 			<p class="mtop05 mbottom05" style="font-size: 1.1em;">

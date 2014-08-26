@@ -71,7 +71,7 @@
 				<logic:iterate id="person" name="people">
 					<tr>
 						<td class="search-clients-photo">
-							<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=<bean:write name="person" property="username"/></bean:define>
+							<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="person" property="username"/></bean:define>
 							<div>
 								<img width="60" height="60" src="<%= request.getContextPath() + url %>"/>
 							</div>

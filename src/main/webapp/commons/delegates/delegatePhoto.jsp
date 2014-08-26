@@ -27,6 +27,6 @@
 
 <logic:present name="delegateBean" property="delegate">
 	<div style="float: left; margin-right: 1em;">
-		<img src="${pageContext.request.contextPath}/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=${delegateBean.delegate.externalId}"/>
+		<img src="${pageContext.request.contextPath}/user/photo/${delegateBean.delegate.username}"/>
 	</div>
 </logic:present>

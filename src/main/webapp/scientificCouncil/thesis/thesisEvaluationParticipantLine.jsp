@@ -39,7 +39,7 @@
 		</html:link>
 	</td>
 	<td>
-		<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=<bean:write name="thesisEvaluationParticipant" property="person.username"/></bean:define>
+		<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="thesisEvaluationParticipant" property="person.username"/></bean:define>
 		<img src="<%= request.getContextPath() + url %>"/>
 	</td>	
 	<td>

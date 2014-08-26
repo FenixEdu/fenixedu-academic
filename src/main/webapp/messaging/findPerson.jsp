@@ -168,9 +168,9 @@
 			</table>
 
 			<logic:equal name="viewPhoto" value="true">
-				<bean:define id="personID" name="personalInfo" property="externalId" />
+				<bean:define id="personID" name="personalInfo" property="username" />
 				<html:img
-					src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>"
+					src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>"
 					altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 			</logic:equal>
 

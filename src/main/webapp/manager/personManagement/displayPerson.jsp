@@ -140,8 +140,8 @@ function check(e,v){
 			</table>
 
 			<logic:equal name="viewPhoto" value="true">
-		  		<bean:define id="personID" name="personalInfo" property="externalId"/>	  	    		  	  	
-	  			<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+		  		<bean:define id="personID" name="personalInfo" property="username"/>	  	    		  	  	
+	  			<html:img src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 		   	</logic:equal>
 
 			<table class="ppdetails">

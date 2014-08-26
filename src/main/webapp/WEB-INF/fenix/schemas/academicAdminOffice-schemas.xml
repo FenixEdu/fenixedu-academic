@@ -353,12 +353,14 @@
 	</slot>	
 </schema>
 
-
 <schema name="ingression.information-edit" bundle="ACADEMIC_OFFICE_RESOURCES" extends="ingression.information"
 		type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" >
 	<remove name="registrationProtocol"/>
 </schema>
 
+<schema name="RegistrationProtocol.view.name.only" type="net.sourceforge.fenixedu.domain.student.RegistrationProtocol" >
+	<slot name="description" />
+</schema>
 
 <schema name="student.show.personInformation"
 		type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -1942,7 +1944,7 @@
 	<slot name="personalPhoto" layout="view-as-image">
 		<property name="classes" value="column3"/>
 		<property name="contextRelative" value="true"/>
-		<property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${person.externalId}"/>	
+		<property name="imageFormat" value="/user/photo/${person.username}"/>	
 	</slot>		
 </schema>
 

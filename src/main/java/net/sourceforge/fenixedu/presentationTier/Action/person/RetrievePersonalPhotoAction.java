@@ -37,6 +37,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,11 +57,17 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(RetrievePersonalPhotoAction.class);
 
+    /**
+     * @deprecated use /user/photo/{username} instead
+     */
+    @Deprecated
     public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         final String uuid = request.getParameter("uuid");
-        final User user = User.findByUsername(uuid);
-        return user == null ? null : retrievePhotograph(request, response, user.getPerson());
+
+        response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+        response.setHeader("Location", CoreConfiguration.getConfiguration().applicationUrl() + "/user/photo/" + uuid);
+        return null;
     }
 
     public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -75,12 +82,19 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
         return null;
     }
 
+    /**
+     * @deprecated use /user/photo/{username} instead
+     */
+    @Deprecated
     public ActionForward retrieveByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         // DEBUG HERE
         final String personID = request.getParameter("personCode");
         final Person person = (Person) FenixFramework.getDomainObject(personID);
-        return retrievePhotograph(request, response, person);
+        response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+        response.setHeader("Location",
+                CoreConfiguration.getConfiguration().applicationUrl() + "/user/photo/" + person.getUsername());
+        return null;
     }
 
     public ActionForward retrievePendingByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -90,22 +104,6 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
         if (photo != null) {
             writePhoto(response, photo);
             return null;
-        }
-        writeUnavailablePhoto(response);
-        return null;
-    }
-
-    protected ActionForward retrievePhotograph(final HttpServletRequest request, final HttpServletResponse response,
-
-    final Person person) {
-        if (person != null) {
-            final Photograph personalPhoto = person.getPersonalPhoto();
-            if (personalPhoto != null) {
-                if (person.isPhotoAvailableToCurrentUser()) {
-                    writePhoto(response, personalPhoto);
-                    return null;
-                }
-            }
         }
         writeUnavailablePhoto(response);
         return null;

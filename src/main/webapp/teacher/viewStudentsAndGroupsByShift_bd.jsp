@@ -263,8 +263,8 @@
 				</td>
 				<logic:notPresent name="showPhotos">
 					<td class="acenter">
-						<bean:define id="personID" name="infoSiteStudentInformation" property="personID"/>
-						<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+						<bean:define id="personID" name="infoSiteStudentInformation" property="username"/>
+						<html:img src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 					</td>
 				</logic:notPresent>
 				<td>

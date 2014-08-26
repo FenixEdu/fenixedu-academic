@@ -84,8 +84,8 @@
 			<bean:message key="label.photo" bundle="ALUMNI_RESOURCES" />:
 		</th>
 		<td>
-			<bean:define id="personId" name="alumniData" property="person.externalId" />
-			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=" + personId.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
+			<bean:define id="personId" name="alumniData" property="person.username" />
+			<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personId.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 		</td>
 	</tr>
 

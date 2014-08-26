@@ -20,7 +20,8 @@
 --%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <html:xhtml/>
 
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
@@ -54,7 +55,7 @@
         
 		<li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&amp;selectCourses=true&amp;registrationOID=" + registration.getExternalId().toString()%>"><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>		
 
-        <%-- <li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.first.year.first.semester" /></li> --%>
+        <li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.first.year.first.semester" /></li>
     
     </ul>
 	</div>
