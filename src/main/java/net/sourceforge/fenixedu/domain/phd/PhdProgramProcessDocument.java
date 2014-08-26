@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Acad
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UnionGroup;
 import org.fenixedu.bennu.core.groups.UserGroup;
@@ -149,13 +150,13 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     }
 
     @Override
-    public boolean isPersonAllowedToAccess(Person person) {
-        if (person != null) {
-            if (getPhdProgramProcess().getPerson() == person
-                    || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(person.getUser())
-                    || getPhdProgramProcess().getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
-                    || getPhdProgramProcess().getIndividualProgramProcess().isGuiderOrAssistentGuider(person)
-                    || ExternalUser.isExternalUser(person.getUsername())) {
+    public boolean isAccessible(User user) {
+        if (user != null && user.getPerson() != null) {
+            if (getPhdProgramProcess().getPerson() == user.getPerson()
+                    || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(user)
+                    || getPhdProgramProcess().getIndividualProgramProcess().isCoordinatorForPhdProgram(user.getPerson())
+                    || getPhdProgramProcess().getIndividualProgramProcess().isGuiderOrAssistentGuider(user.getPerson())
+                    || ExternalUser.isExternalUser(user.getUsername())) {
                 return true;
             }
         }

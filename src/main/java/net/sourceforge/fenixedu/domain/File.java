@@ -59,6 +59,7 @@ public abstract class File extends File_Base {
         setAccessGroup(group.toPersistentGroup());
     }
 
+    @Override
     public boolean isPrivate() {
         return getPermittedGroup() == null || !getPermittedGroup().isMember(null);
     }
@@ -96,7 +97,7 @@ public abstract class File extends File_Base {
     }
 
     @Deprecated
-    public boolean isPersonAllowedToAccess(Person person) {
+    public final boolean isPersonAllowedToAccess(Person person) {
         return isAccessible(person != null ? person.getUser() : null);
     }
 

@@ -23,6 +23,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 
 /**
@@ -61,17 +62,17 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
     }
 
     @Override
-    public boolean isPersonAllowedToAccess(Person person) {
-        if (person == null) {
+    public boolean isAccessible(User user) {
+        if (user == null || user.getPerson() == null) {
             return false;
         }
-        if (person.equals(getOperator())) {
+        if (user.getPerson().equals(getOperator())) {
             return true;
         }
-        if (person.equals(getAddressee())) {
+        if (user.getPerson().equals(getAddressee())) {
             return true;
         }
-        return super.isPersonAllowedToAccess(person);
+        return super.isAccessible(user);
     }
 
     protected abstract Group computePermittedGroup();

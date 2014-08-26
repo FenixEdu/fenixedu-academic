@@ -162,15 +162,15 @@
 						<bean:define
 							id="aa" value="<%= "aa" + personIndex %>" /> <bean:define
 							id="id" value="<%= "id" + (personIndex.intValue() + 40) %>" /> 
-							<span> <button type="button" alt="input.input" type="button" value="+" data-toggle="collapse" data-target="#collapse${personID}">+</button>
+							<span> <button type="button" alt="input.input" type="button" value="+" data-toggle="collapse" data-target="#collapse${personalInfo.username}">+</button>
 					</span> <!-- </td>--></td>
 				</tr>
 			</table>
 
 			<logic:equal name="viewPhoto" value="true">
-				<bean:define id="personID" name="personalInfo" property="username" />
+				<bean:define id="personIDForPhoto" name="personalInfo" property="username" />
 				<html:img
-					src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>"
+					src="<%= request.getContextPath() + "/user/photo/" + personIDForPhoto.toString()%>"
 					altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 			</logic:equal>
 
@@ -199,7 +199,7 @@
 				</tr>
 			</table>
 
-			<div id="collapse${personID}" class="collapse">
+			<div id="collapse${personalInfo.username}" class="collapse">
 				<table class="ppdetails">
 
 					<logic:present name="personalInfo" property="employee">
