@@ -676,20 +676,6 @@ public enum DegreeType {
         return concreteName();
     }
 
-    public String getMinistryCode() {
-        return getCategory() == null ? StringUtils.EMPTY : String.valueOf(getCategory().getCode());
-    }
-
-    public Category getCategory() {
-        for (final Category category : Category.values()) {
-            if (category.getDegreeTypes().contains(this)) {
-                return category;
-            }
-        }
-
-        return null;
-    }
-
     abstract protected String concreteName();
 
     public String getQualifiedName() {
