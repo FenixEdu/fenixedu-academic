@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.NobodyGroup;
 
 import pt.ist.fenixframework.Atomic;
@@ -50,10 +51,12 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
     }
 
     @Override
-    public boolean isPersonAllowedToAccess(Person person) {
-        if (person == null) {
+    public boolean isAccessible(User user) {
+        if (user == null || user.getPerson() == null) {
             return false;
         }
+
+        Person person = user.getPerson();
 
         // Academic Administration Permissions
         for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(person,

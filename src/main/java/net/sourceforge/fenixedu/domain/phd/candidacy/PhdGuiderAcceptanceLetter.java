@@ -24,6 +24,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 
+import org.fenixedu.bennu.core.domain.User;
+
 public class PhdGuiderAcceptanceLetter extends PhdGuiderAcceptanceLetter_Base {
 
     protected PhdGuiderAcceptanceLetter() {
@@ -68,15 +70,15 @@ public class PhdGuiderAcceptanceLetter extends PhdGuiderAcceptanceLetter_Base {
     }
 
     @Override
-    public boolean isPersonAllowedToAccess(Person person) {
+    public boolean isAccessible(User user) {
         PhdIndividualProgramProcess process = (PhdIndividualProgramProcess) getPhdProgramProcess();
 
         if (!process.getCandidacyProcess().isPublicCandidacy()) {
-            return super.isPersonAllowedToAccess(person);
+            return super.isAccessible(user);
         }
 
         if (!process.getCandidacyProcess().getPublicPhdCandidacyPeriod().isOpen()) {
-            return super.isPersonAllowedToAccess(person);
+            return super.isAccessible(user);
         }
 
         return true;

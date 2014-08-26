@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
@@ -43,11 +44,12 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
     }
 
     @Override
-    public boolean isPersonAllowedToAccess(Person person) {
-        if (person != null && person.hasRole(RoleType.RECTORATE) && getSource().hasRegistryCode()) {
+    public boolean isAccessible(User user) {
+        if (user != null && user.getPerson() != null && user.getPerson().hasRole(RoleType.RECTORATE)
+                && getSource().hasRegistryCode()) {
             return true;
         }
-        return super.isPersonAllowedToAccess(person);
+        return super.isAccessible(user);
     }
 
     @Override
