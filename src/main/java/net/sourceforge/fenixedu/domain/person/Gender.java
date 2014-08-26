@@ -22,32 +22,14 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.util.Bundle;
 
-import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 public enum Gender implements IPresentableEnum {
 
     MALE, FEMALE;
-
-    /**
-     * This method has been deprecated, as it is only a proxy to @see
-     * GenderHelper#getSexLabelValues(Locale) It is strange that an enum
-     * belonging to the domain model objects should be dependent on struts as it
-     * is...
-     * 
-     * @deprecated
-     * 
-     * @param locale
-     *            The locale for the localized labels
-     * @return an array of LabelValueBean containing the name of the Gender and
-     *         its localized string version
-     */
-    @Deprecated
-    public static LabelValueBean[] getSexLabelValues(Locale locale) {
-        return GenderHelper.getSexLabelValues(locale);
-    }
 
     /**
      * Returns a localized String of Genders
@@ -59,7 +41,7 @@ public enum Gender implements IPresentableEnum {
      * @return A string representation based on chosen locale
      */
     public String toLocalizedString(Locale locale) {
-        return GenderHelper.toLocalizedString(this, locale);
+        return BundleUtil.getString(Bundle.APPLICATION, locale, name());
     }
 
     /**
@@ -70,7 +52,7 @@ public enum Gender implements IPresentableEnum {
      * @return A string representation based on chosen locale
      */
     public String toLocalizedString() {
-        return GenderHelper.toLocalizedString(this);
+        return BundleUtil.getString(Bundle.APPLICATION, I18N.getLocale(), name());
     }
 
     /**
@@ -84,7 +66,7 @@ public enum Gender implements IPresentableEnum {
      * @return A Gender parsed from the name or null if none is found
      */
     public static Gender parseGender(String name) {
-        return GenderHelper.parseGender(name);
+        return Gender.valueOf(name.toUpperCase());
     }
 
     @Override

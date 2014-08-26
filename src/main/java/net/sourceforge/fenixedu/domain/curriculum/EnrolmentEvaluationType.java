@@ -18,13 +18,8 @@
  */
 package net.sourceforge.fenixedu.domain.curriculum;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import net.sourceforge.fenixedu.util.Bundle;
 
-import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
@@ -41,30 +36,6 @@ public enum EnrolmentEvaluationType {
     SPECIAL_SEASON,
 
     EQUIVALENCE;
-
-    private static final Map<Locale, LabelValueBean[]> enrolmentEvaluationTypeLabelValuesByLocale =
-            new HashMap<Locale, LabelValueBean[]>(2);
-
-    private static LabelValueBean getLbv(final EnrolmentEvaluationType type, final Locale locale) {
-        return new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, locale, type.getQualifiedName()), type.toString());
-    }
-
-    public static LabelValueBean[] getLabelValues(Locale locale) {
-        if (locale == null) {
-            locale = Locale.getDefault();
-        }
-        LabelValueBean[] labelValueBeans = enrolmentEvaluationTypeLabelValuesByLocale.get(locale);
-        if (labelValueBeans != null) {
-            return labelValueBeans;
-        }
-
-        labelValueBeans =
-                new LabelValueBean[] { getLbv(NORMAL, locale), getLbv(IMPROVEMENT, locale), getLbv(SPECIAL_SEASON, locale),
-                        getLbv(EQUIVALENCE, locale) };
-        enrolmentEvaluationTypeLabelValuesByLocale.put(locale, labelValueBeans);
-
-        return labelValueBeans;
-    }
 
     public String getName() {
         return name();

@@ -27,11 +27,6 @@
  */
 package net.sourceforge.fenixedu.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.struts.util.LabelValueBean;
-
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class Season extends FenixUtil {
@@ -80,15 +75,6 @@ public class Season extends FenixUtil {
             return this.season.equals(aux.getseason());
         }
         return false;
-    }
-
-    public List toArrayList() {
-        List result = new ArrayList();
-        result.add(new LabelValueBean(Season.DEFAULT, null));
-        result.add(new LabelValueBean(Season.SEASON1_STRING, Season.SEASON1_STRING));
-        result.add(new LabelValueBean(Season.SEASON2_STRING, Season.SEASON2_STRING));
-        result.add(new LabelValueBean(Season.SPECIAL_SEASON_STRING, Season.SPECIAL_SEASON_STRING));
-        return result;
     }
 
     @Override
