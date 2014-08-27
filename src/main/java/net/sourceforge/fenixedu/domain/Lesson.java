@@ -743,9 +743,9 @@ public class Lesson extends Lesson_Base {
         if (!wasFinished()) {
             YearMonthDay startDateToSearch = getLessonStartDay();
             YearMonthDay endDateToSearch = getLessonEndDay();
+            final HourMinuteSecond b = getBeginHourMinuteSecond();
+            final HourMinuteSecond e = getEndHourMinuteSecond();
             for (final YearMonthDay yearMonthDay : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
-                final HourMinuteSecond b = getBeginHourMinuteSecond();
-                final HourMinuteSecond e = getEndHourMinuteSecond();
                 final DateTime start =
                         new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
                                 b.getHour(), b.getMinuteOfHour(), b.getSecondOfMinute(), 0);
@@ -756,6 +756,46 @@ public class Lesson extends Lesson_Base {
             }
         }
         return dates;
+    }
+
+    public boolean overlaps(final Interval interval) {
+        if (wasFinished()) {
+            return false;
+        }
+        final YearMonthDay startDateToSearch = getLessonStartDay();
+        if (startDateToSearch == null) {
+            return false;
+        }
+        final YearMonthDay endDateToSearch = getLessonEndDay();
+        if (endDateToSearch == null) {
+            return false;
+        }
+        final DateTime intervalStart = interval.getStart();
+        if (intervalStart.isAfter(endDateToSearch.toDateTimeAtMidnight().plusDays(1))) {
+            return false;
+        }
+        final DateTime intervalEnd = interval.getEnd();
+        if (intervalEnd.isBefore(startDateToSearch.toDateTimeAtMidnight())) {
+            return false;
+        }
+        final HourMinuteSecond b = getBeginHourMinuteSecond();
+        final HourMinuteSecond e = getEndHourMinuteSecond();
+        for (final YearMonthDay yearMonthDay : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
+            final DateTime start =
+                    new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+                            b.getHour(), b.getMinuteOfHour(), b.getSecondOfMinute(), 0);
+            if (start.isAfter(intervalEnd)) {
+                continue;
+            }
+            final DateTime end =
+                    new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+                            e.getHour(), e.getMinuteOfHour(), e.getSecondOfMinute(), 0);
+            if (end.isBefore(intervalStart)) {
+                continue;
+            }
+            return true;
+        }
+        return false;
     }
 
     public SortedSet<YearMonthDay> getAllLessonDates() {
