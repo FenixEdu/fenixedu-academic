@@ -21,7 +21,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -36,12 +38,77 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.struts.annotations.Input;
 import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.joda.time.DateTime;
 
 @Mapping(path = "/manageObjectives", module = "teacher", functionality = ManageExecutionCourseDA.class,
         formBean = "objectivesForm")
 public class ExecutionCourseObjectivesDA extends ManageExecutionCourseDA {
 
     // OBJECTIVES
+
+    public static class CurriculumFactoryEditCurriculum extends CurricularCourse.CurriculumFactory implements FactoryExecutor {
+        private Curriculum curriculum;
+
+        public CurriculumFactoryEditCurriculum(CurricularCourse curricularCourse) {
+            super(curricularCourse);
+            setLastModification(new DateTime());
+            curriculum = null;
+        }
+
+        public CurriculumFactoryEditCurriculum(Curriculum curriculum) {
+            super(curriculum.getCurricularCourse());
+            this.curriculum = curriculum;
+        }
+
+        public Curriculum getCurriculum() {
+            return curriculum;
+        }
+
+        public void setCurriculum(Curriculum curriculum) {
+            this.curriculum = curriculum;
+            if (curriculum != null) {
+                this.setGeneralObjectives(curriculum.getGeneralObjectives());
+                this.setGeneralObjectivesEn(curriculum.getGeneralObjectivesEn());
+                this.setOperacionalObjectives(curriculum.getOperacionalObjectives());
+                this.setOperacionalObjectivesEn(curriculum.getOperacionalObjectivesEn());
+                this.setProgram(curriculum.getProgram());
+                this.setProgramEn(curriculum.getProgramEn());
+            }
+        }
+
+        @Override
+        public Curriculum execute() {
+            final Curriculum curriculum = getCurriculum();
+            if (curriculum == null) {
+                final CurricularCourse curricularCourse = getCurricularCourse();
+                return curricularCourse == null ? null : curricularCourse.editCurriculum(getProgram(), getProgramEn(),
+                        getGeneralObjectives(), getGeneralObjectivesEn(), getOperacionalObjectives(),
+                        getOperacionalObjectivesEn(), getLastModification());
+            } else {
+                final DateTime dt = curriculum.getLastModificationDateDateTime();
+                curriculum.edit(getGeneralObjectives(), getOperacionalObjectives(), getProgram(), getGeneralObjectivesEn(),
+                        getOperacionalObjectivesEn(), getProgramEn());
+                curriculum.setLastModificationDateDateTime(dt);
+                return curriculum;
+            }
+        }
+    }
+
+    public static class CurriculumFactoryInsertCurriculum extends CurricularCourse.CurriculumFactory implements FactoryExecutor {
+        public CurriculumFactoryInsertCurriculum(CurricularCourse curricularCourse, ExecutionCourse executionCourse) {
+            super(curricularCourse);
+            setLastModification(executionCourse.getExecutionPeriod().getBeginDateYearMonthDay().toDateTimeAtMidnight());
+        }
+
+        @Override
+        public Curriculum execute() {
+            final CurricularCourse curricularCourse = getCurricularCourse();
+            return curricularCourse == null ? null : curricularCourse.insertCurriculum(getProgram(), getProgramEn(),
+                    getGeneralObjectives(), getGeneralObjectivesEn(), getOperacionalObjectives(), getOperacionalObjectivesEn(),
+                    getLastModification());
+        }
+
+    }
 
     @Input
     public ActionForward objectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,

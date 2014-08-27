@@ -21,19 +21,44 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
+import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person.AnyPersonSearchBean;
-import net.sourceforge.fenixedu.domain.Person.ExternalPersonBeanFactoryCreator;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ExternalPersonDA extends FenixDispatchAction {
+
+    public static class ExternalPersonBeanFactoryCreator extends ExternalPersonBean implements FactoryExecutor {
+        public ExternalPersonBeanFactoryCreator() {
+            super();
+        }
+
+        @Override
+        public Object execute() {
+            final Person person = new Person(this);
+            Unit unit = getUnit();
+            if (unit == null) {
+                unit = Unit.findFirstUnitByName(getUnitName());
+                if (unit == null) {
+                    throw new DomainException("error.unit.does.not.exist");
+                }
+            }
+            new ExternalContract(person, unit, new YearMonthDay(), null);
+            return person;
+        }
+    }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         AnyPersonSearchBean anyPersonSearchBean = getRenderedObject();

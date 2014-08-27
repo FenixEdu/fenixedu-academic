@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 import org.joda.time.DateTime;
@@ -161,7 +160,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
         } else if (academicServiceRequestBean.isToConclude() && hasExecutionDegree()) {
             final RegistrationState state =
-                    RegistrationStateCreator.createState(getRegistration(), academicServiceRequestBean.getResponsible(),
+                    RegistrationState.createRegistrationState(getRegistration(), academicServiceRequestBean.getResponsible(),
                             academicServiceRequestBean.getFinalSituationDate(), RegistrationStateType.REGISTERED);
 
             if (getRegistration().getActiveState() != state) {

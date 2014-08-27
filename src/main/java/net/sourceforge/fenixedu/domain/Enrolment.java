@@ -58,7 +58,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.InternalCreditsSourceCu
 import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -1210,23 +1209,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         } else {
             return "COMPULSORY_ENROLMENT";
         }
-    }
-
-    final public static class DeleteEnrolmentExecutor implements FactoryExecutor {
-
-        private final Enrolment enrolment;
-
-        public DeleteEnrolmentExecutor(Enrolment enrolment) {
-            super();
-            this.enrolment = enrolment;
-        }
-
-        @Override
-        public Object execute() {
-            enrolment.delete();
-            return null;
-        }
-
     }
 
     static public int countEvaluated(final List<Enrolment> enrolments) {

@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions;
@@ -120,7 +119,7 @@ public class EnrolInAffinityCycle {
 
         final Registration registration = studentCurricularPlan.getRegistration();
         final RegistrationState state =
-                RegistrationStateCreator.createState(registration, null, new DateTime(), RegistrationStateType.CONCLUDED);
+                RegistrationState.createRegistrationState(registration, null, new DateTime(), RegistrationStateType.CONCLUDED);
         state.setResponsiblePerson(null);
     }
 

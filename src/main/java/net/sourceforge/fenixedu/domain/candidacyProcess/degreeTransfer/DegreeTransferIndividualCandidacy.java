@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -143,7 +143,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
             setRegistration(registration);
 
             if (!registration.isActive()) {
-                RegistrationStateCreator.createState(registration, AccessControl.getPerson(), new DateTime(),
+                RegistrationState.createRegistrationState(registration, AccessControl.getPerson(), new DateTime(),
                         RegistrationStateType.REGISTERED);
             }
 
@@ -190,7 +190,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
                             previousRegistration.getDegreeCurricularPlanName(), candidacyExecutionInterval.getQualifiedName());
                 }
 
-                RegistrationStateCreator.createState(previousRegistration, AccessControl.getPerson(), previousExecutionYear
+                RegistrationState.createRegistrationState(previousRegistration, AccessControl.getPerson(), previousExecutionYear
                         .getEndDateYearMonthDay().toDateTimeAtMidnight(), RegistrationStateType.INTERNAL_ABANDON);
             }
 

@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
 
@@ -127,7 +126,7 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
             if (process.getRegistration() != null && !process.getRegistration().isActive()) {
                 RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
 
-                RegistrationStateCreator.createState(process.getRegistration(), AccessControl.getPerson(), new DateTime(),
+                RegistrationState.createRegistrationState(process.getRegistration(), AccessControl.getPerson(), new DateTime(),
                         registrationLastActiveState.getStateType());
             }
 

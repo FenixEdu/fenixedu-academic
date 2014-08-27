@@ -23,14 +23,17 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationStateLog;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateDeleter;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -41,6 +44,9 @@ import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
+import org.joda.time.DateTime;
+
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -54,6 +60,39 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
         @Forward(name = "viewRegistrationStateLogChanges",
                 path = "/academicAdminOffice/student/registration/viewRegistrationLogChanges.jsp"), })
 public class ManageRegistrationStateDA extends FenixDispatchAction {
+
+    public static class RegistrationStateDeleter extends VariantBean implements FactoryExecutor {
+
+        public RegistrationStateDeleter(String externalId) {
+            super();
+            setString(externalId);
+        }
+
+        @Override
+        public Object execute() {
+            FenixFramework.<RegistrationState> getDomainObject(getString()).delete();
+            return null;
+        }
+    }
+
+    public static class RegistrationStateCreator extends RegistrationStateBean implements FactoryExecutor {
+
+        public RegistrationStateCreator(Registration registration) {
+            super(registration);
+        }
+
+        private RegistrationStateCreator(Registration reg, Person responsible, DateTime creation, RegistrationStateType stateType) {
+            this(reg);
+            setResponsible(responsible);
+            setStateDateTime(creation);
+            setStateType(stateType);
+        }
+
+        @Override
+        public Object execute() {
+            return RegistrationState.createRegistrationState(this);
+        }
+    }
 
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

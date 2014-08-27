@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
@@ -81,7 +80,7 @@ public class ActivatePhdProgramProcessInWorkDevelopmentState extends PhdIndividu
                     "error.PhdIndividualProgramProcess.set.work.development.state.registration.last.state.is.not.active");
         }
 
-        RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), stateDate,
+        RegistrationState.createRegistrationState(process.getRegistration(), userView.getPerson(), stateDate,
                 registrationLastActiveState.getStateType());
 
         return process;

@@ -18,14 +18,17 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteHoliday;
 import net.sourceforge.fenixedu.domain.Holiday;
+import net.sourceforge.fenixedu.domain.Locality;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPeopleApp;
 
@@ -38,6 +41,8 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Partial;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -46,6 +51,62 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(module = "manager", path = "/manageHolidays")
 @Forwards(@Forward(name = "showHolidays", path = "/manager/showHolidays.jsp"))
 public class ManageHolidaysDA extends FenixDispatchAction {
+
+    public static class HolidayFactoryCreator implements Serializable, FactoryExecutor {
+        private Integer year;
+        private Integer monthOfYear;
+        private Integer dayOfMonth;
+        private Locality localityReference;
+
+        public Integer getDayOfMonth() {
+            return dayOfMonth;
+        }
+
+        public void setDayOfMonth(Integer dayOfMonth) {
+            this.dayOfMonth = dayOfMonth;
+        }
+
+        public Integer getMonthOfYear() {
+            return monthOfYear;
+        }
+
+        public void setMonthOfYear(Integer monthOfYear) {
+            this.monthOfYear = monthOfYear;
+        }
+
+        public Integer getYear() {
+            return year;
+        }
+
+        public void setYear(Integer year) {
+            this.year = year;
+        }
+
+        public Locality getLocality() {
+            return localityReference;
+        }
+
+        public void setLocality(Locality locality) {
+            if (locality != null) {
+                this.localityReference = locality;
+            }
+        }
+
+        @Override
+        public Holiday execute() {
+            Partial date = new Partial();
+            if (getYear() != null) {
+                date = date.with(DateTimeFieldType.year(), getYear());
+            }
+            if (getMonthOfYear() != null) {
+                date = date.with(DateTimeFieldType.monthOfYear(), getMonthOfYear());
+            }
+            if (getDayOfMonth() != null) {
+                date = date.with(DateTimeFieldType.dayOfMonth(), getDayOfMonth());
+            }
+            return new Holiday(date, getLocality());
+        }
+    }
 
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

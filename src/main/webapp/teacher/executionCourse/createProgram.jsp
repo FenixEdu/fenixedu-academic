@@ -49,7 +49,7 @@
 		<bean:define id="url" type="java.lang.String">/createProgram.do?method=createProgram&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
 		<logic:present name="curricularCourse" property="findLatestCurriculum">
 			<fr:edit name="curricularCourse" property="curriculumFactoryEditCurriculum"
-					schema="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumProgram"
+					schema="CurriculumFactoryInsertCurriculumProgram"
 					action="<%= url %>"
 					>
 				<fr:layout name="flow">
@@ -60,11 +60,11 @@
 			<%
 			net.sourceforge.fenixedu.domain.ExecutionCourse executionCourse = (net.sourceforge.fenixedu.domain.ExecutionCourse) pageContext.findAttribute("executionCourse");
 			net.sourceforge.fenixedu.domain.CurricularCourse curricularCourse = (net.sourceforge.fenixedu.domain.CurricularCourse) pageContext.findAttribute("curricularCourse");
-			net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculum curriculumFactoryInsertCurriculum = new net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculum(curricularCourse, executionCourse); 
+			net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseObjectivesDA.CurriculumFactoryInsertCurriculum curriculumFactoryInsertCurriculum = new net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseObjectivesDA.CurriculumFactoryInsertCurriculum(curricularCourse, executionCourse); 
 			request.setAttribute("curriculumFactoryInsertCurriculum", curriculumFactoryInsertCurriculum);
 			%>
 			<fr:edit name="curriculumFactoryInsertCurriculum"
-					schema="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumProgram"
+					schema="CurriculumFactoryInsertCurriculumProgram"
 					action="<%= url %>"
 					>
 				<fr:layout name="flow">

@@ -123,7 +123,7 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdR
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -1169,7 +1169,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         this.createState(PhdIndividualProgramProcessState.TRANSFERRED, getPerson(), remarks);
 
         if (getRegistration() != null && getRegistration().isActive()) {
-            RegistrationStateCreator.createState(getRegistration(), responsible, new DateTime(),
+            RegistrationState.createRegistrationState(getRegistration(), responsible, new DateTime(),
                     RegistrationStateType.INTERNAL_ABANDON);
         }
 

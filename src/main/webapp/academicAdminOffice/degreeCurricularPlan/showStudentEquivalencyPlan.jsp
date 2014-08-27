@@ -28,10 +28,10 @@
 <h2><bean:message key="title.student.equivalency.plan"/></h2>
 
 <logic:present name="selectedDegreeCurricularPlan">
-	<fr:edit id="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean"
+	<fr:edit id="StudentSearchBean"
 			name="studentSearchBean"
-			type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean"
-			schema="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean">
+			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentSearchBean"
+			schema="StudentSearchBean">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -40,10 +40,10 @@
 </logic:present>
 
 <logic:notPresent name="selectedDegreeCurricularPlan">
-	<fr:edit id="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan"
+	<fr:edit id="StudentSearchBeanWithDegreeCurricularPlan"
 			name="studentSearchBean"
-			type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean"
-			schema="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan">
+			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentSearchBean"
+			schema="StudentSearchBeanWithDegreeCurricularPlan">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>

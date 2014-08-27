@@ -35,46 +35,6 @@ import org.joda.time.DateTime;
 
 public class SpecializationDegreeGratuityByAmountPerEctsPR extends SpecializationDegreeGratuityByAmountPerEctsPR_Base {
 
-    public static class SpecializationDegreeGratuityByAmountPerEctsPREditor extends SpecializationDegreeGratuityPREditor {
-
-        private Money specializationDegreeAmountPerEctsCredit;
-
-        private SpecializationDegreeGratuityByAmountPerEctsPREditor() {
-            super();
-        }
-
-        public Money getSpecializationDegreeAmountPerEctsCredit() {
-            return specializationDegreeAmountPerEctsCredit;
-        }
-
-        public void setSpecializationDegreeAmountPerEctsCredit(final Money specializationDegreeAmountPerEctsCredit) {
-            this.specializationDegreeAmountPerEctsCredit = specializationDegreeAmountPerEctsCredit;
-        }
-
-        @Override
-        public Object execute() {
-            return ((SpecializationDegreeGratuityByAmountPerEctsPR) getSpecializationDegreeGratuityPR()).edit(getBeginDate(),
-                    getSpecializationDegreeTotalAmount(), getSpecializationDegreeAmountPerEctsCredit(),
-                    getSpecializationDegreePartialAcceptedPercentage());
-        }
-
-        public static SpecializationDegreeGratuityByAmountPerEctsPREditor buildFrom(
-                final SpecializationDegreeGratuityByAmountPerEctsPR rule) {
-            final SpecializationDegreeGratuityByAmountPerEctsPREditor result =
-                    new SpecializationDegreeGratuityByAmountPerEctsPREditor();
-            init(rule, result);
-            result.setSpecializationDegreeAmountPerEctsCredit(rule.getSpecializationDegreeAmountPerEctsCredit());
-
-            return result;
-        }
-
-        static private void init(final SpecializationDegreeGratuityPR o1, final SpecializationDegreeGratuityPREditor o2) {
-            o2.setSpecializationDegreeGratuityPR(o1);
-            o2.setSpecializationDegreePartialAcceptedPercentage(o1.getSpecializationDegreePartialAcceptedPercentage());
-            o2.setSpecializationDegreeTotalAmount(o1.getSpecializationDegreeTotalAmount());
-        }
-    }
-
     protected SpecializationDegreeGratuityByAmountPerEctsPR() {
         super();
     }

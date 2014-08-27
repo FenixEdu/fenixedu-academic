@@ -56,7 +56,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -667,89 +666,6 @@ public class CurricularCourse extends CurricularCourse_Base {
                 return getGeneralObjectivesEn() + " " + getOperacionalObjectivesEn();
             }
             return null;
-        }
-    }
-
-    public static class CurriculumFactoryInsertCurriculum extends CurriculumFactory implements FactoryExecutor {
-        public CurriculumFactoryInsertCurriculum(CurricularCourse curricularCourse, ExecutionCourse executionCourse) {
-            super(curricularCourse);
-            setLastModification(executionCourse.getExecutionPeriod().getBeginDateYearMonthDay().toDateTimeAtMidnight());
-        }
-
-        @Override
-        public Curriculum execute() {
-            final CurricularCourse curricularCourse = getCurricularCourse();
-            return curricularCourse == null ? null : curricularCourse.insertCurriculum(getProgram(), getProgramEn(),
-                    getGeneralObjectives(), getGeneralObjectivesEn(), getOperacionalObjectives(), getOperacionalObjectivesEn(),
-                    getLastModification());
-        }
-
-    }
-
-    public static class CurriculumFactoryEditCurriculum extends CurriculumFactory implements FactoryExecutor {
-        private Curriculum curriculum;
-
-        public CurriculumFactoryEditCurriculum(CurricularCourse curricularCourse) {
-            super(curricularCourse);
-            setLastModification(new DateTime());
-            curriculum = null;
-        }
-
-        public CurriculumFactoryEditCurriculum(Curriculum curriculum) {
-            super(curriculum.getCurricularCourse());
-            this.curriculum = curriculum;
-        }
-
-        public Curriculum getCurriculum() {
-            return curriculum;
-        }
-
-        public void setCurriculum(Curriculum curriculum) {
-            this.curriculum = curriculum;
-            populateCurriculum(this, curriculum);
-        }
-
-        @Override
-        public Curriculum execute() {
-            final Curriculum curriculum = getCurriculum();
-            if (curriculum == null) {
-                final CurricularCourse curricularCourse = getCurricularCourse();
-                return curricularCourse == null ? null : curricularCourse.editCurriculum(getProgram(), getProgramEn(),
-                        getGeneralObjectives(), getGeneralObjectivesEn(), getOperacionalObjectives(),
-                        getOperacionalObjectivesEn(), getLastModification());
-            } else {
-                final DateTime dt = curriculum.getLastModificationDateDateTime();
-                curriculum.edit(getGeneralObjectives(), getOperacionalObjectives(), getProgram(), getGeneralObjectivesEn(),
-                        getOperacionalObjectivesEn(), getProgramEn());
-                curriculum.setLastModificationDateDateTime(dt);
-                return curriculum;
-            }
-        }
-    }
-
-    public CurriculumFactoryEditCurriculum getCurriculumFactoryEditCurriculum() {
-        final CurriculumFactoryEditCurriculum curriculumFactoryEditCurriculum = new CurriculumFactoryEditCurriculum(this);
-        final Curriculum curriculum = findLatestCurriculum();
-        populateCurriculum(curriculumFactoryEditCurriculum, curriculum);
-        return curriculumFactoryEditCurriculum;
-    }
-
-    public CurriculumFactoryEditCurriculum getCurriculumFactoryEditCurriculum(ExecutionSemester period) {
-        final CurriculumFactoryEditCurriculum curriculumFactoryEditCurriculum = new CurriculumFactoryEditCurriculum(this);
-        final Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
-        populateCurriculum(curriculumFactoryEditCurriculum, curriculum);
-        return curriculumFactoryEditCurriculum;
-    }
-
-    private static void populateCurriculum(final CurriculumFactoryEditCurriculum curriculumFactoryEditCurriculum,
-            final Curriculum curriculum) {
-        if (curriculum != null) {
-            curriculumFactoryEditCurriculum.setGeneralObjectives(curriculum.getGeneralObjectives());
-            curriculumFactoryEditCurriculum.setGeneralObjectivesEn(curriculum.getGeneralObjectivesEn());
-            curriculumFactoryEditCurriculum.setOperacionalObjectives(curriculum.getOperacionalObjectives());
-            curriculumFactoryEditCurriculum.setOperacionalObjectivesEn(curriculum.getOperacionalObjectivesEn());
-            curriculumFactoryEditCurriculum.setProgram(curriculum.getProgram());
-            curriculumFactoryEditCurriculum.setProgramEn(curriculum.getProgramEn());
         }
     }
 
@@ -1461,79 +1377,113 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectives(ExecutionSemester period) {
-        return getObjectivesI18N(period).getContent(MultiLanguageString.pt);
-        /* if (isBolonhaDegree()) {
-             return getCompetenceCourse().getObjectives(period);
-         }
-         return getCurriculumFactoryEditCurriculum(period).getObjectives();*/
+        if (isBolonhaDegree()) {
+            return getCompetenceCourse().getObjectives(period);
+        }
+        Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
+        if (curriculum != null) {
+            return curriculum.getFullObjectives();
+        }
+        return null;
     }
 
     public String getObjectives() {
         if (isBolonhaDegree()) {
             return getCompetenceCourse().getObjectives();
         }
-        return getCurriculumFactoryEditCurriculum().getObjectives();
+        Curriculum curriculum = findLatestCurriculum();
+        if (curriculum != null) {
+            return curriculum.getFullObjectives();
+        }
+        return null;
     }
 
     public String getObjectivesEn(ExecutionSemester period) {
-        return getObjectivesI18N(period).getContent(MultiLanguageString.en);
-        /*if (isBolonhaDegree()) {
+        if (isBolonhaDegree()) {
             return getCompetenceCourse().getObjectivesEn(period);
         }
-        return getCurriculumFactoryEditCurriculum(period).getObjectivesEn();*/
+        Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
+        if (curriculum != null) {
+            return curriculum.getFullObjectivesEn();
+        }
+        return null;
     }
 
     public String getObjectivesEn() {
         if (isBolonhaDegree()) {
             return getCompetenceCourse().getObjectivesEn();
         }
-        return getCurriculumFactoryEditCurriculum().getObjectivesEn();
+        Curriculum curriculum = findLatestCurriculum();
+        if (curriculum != null) {
+            return curriculum.getFullObjectivesEn();
+        }
+        return null;
     }
 
     public MultiLanguageString getObjectivesI18N(ExecutionSemester period) {
         if (isBolonhaDegree()) {
-            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getObjectives(period)).with(
-                    MultiLanguageString.en, getCompetenceCourse().getObjectivesEn(period));
+            return getCompetenceCourse().getObjectivesI18N(period);
         }
-        return new MultiLanguageString(MultiLanguageString.pt, getCurriculumFactoryEditCurriculum(period).getObjectives()).with(
-                MultiLanguageString.en, getCurriculumFactoryEditCurriculum(period).getObjectivesEn());
+        Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
+        if (curriculum != null) {
+            return curriculum.getFullObjectivesI18N();
+        }
+        return new MultiLanguageString();
     }
 
     public String getProgram(ExecutionSemester period) {
         if (isBolonhaDegree()) {
             return getCompetenceCourse().getProgram(period);
         }
-        return getCurriculumFactoryEditCurriculum(period).getProgram();
+        Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
+        if (curriculum != null) {
+            return curriculum.getProgram();
+        }
+        return null;
     }
 
     public String getProgram() {
         if (isBolonhaDegree()) {
             return getCompetenceCourse().getProgram();
         }
-        return getCurriculumFactoryEditCurriculum().getProgram();
+        Curriculum curriculum = findLatestCurriculum();
+        if (curriculum != null) {
+            return curriculum.getProgram();
+        }
+        return null;
     }
 
     public String getProgramEn(ExecutionSemester period) {
         if (isBolonhaDegree()) {
             return getCompetenceCourse().getProgramEn(period);
         }
-        return getCurriculumFactoryEditCurriculum(period).getProgramEn();
+        Curriculum curriculum = findLatestCurriculum();
+        if (curriculum != null) {
+            return curriculum.getProgramEn();
+        }
+        return null;
     }
 
     public String getProgramEn() {
         if (isBolonhaDegree()) {
             return getCompetenceCourse().getProgramEn();
         }
-        return getCurriculumFactoryEditCurriculum().getProgramEn();
+        Curriculum curriculum = findLatestCurriculum();
+        if (curriculum != null) {
+            return curriculum.getProgramEn();
+        }
+        return null;
     }
 
     public MultiLanguageString getProgramI18N(ExecutionSemester period) {
         if (isBolonhaDegree()) {
-            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getProgram(period)).with(
-                    MultiLanguageString.en, getCompetenceCourse().getProgramEn(period));
+            return getCompetenceCourse().getProgramI18N(period);
         }
-        return new MultiLanguageString(MultiLanguageString.pt, getCurriculumFactoryEditCurriculum(period).getProgram()).with(
-                MultiLanguageString.en, getCurriculumFactoryEditCurriculum(period).getProgramEn());
+        Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
+        if (curriculum != null) {
+            return curriculum.getProgramI18N();
+        }
+        return new MultiLanguageString();
     }
 
     public MultiLanguageString getPrerequisitesI18N() {

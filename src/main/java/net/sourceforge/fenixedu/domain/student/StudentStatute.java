@@ -20,12 +20,10 @@ package net.sourceforge.fenixedu.domain.student;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -105,27 +103,6 @@ public class StudentStatute extends StudentStatute_Base {
         super.deleteDomainObject();
     }
 
-    public static class CreateStudentStatuteFactory extends ManageStudentStatuteBean implements FactoryExecutor {
-
-        public CreateStudentStatuteFactory(Student student) {
-            super(student);
-        }
-
-        @Override
-        public Object execute() {
-            switch (getStatuteType()) {
-
-            case SENIOR:
-                return new SeniorStatute(getStudent(), getRegistration(), getStatuteType(), getBeginExecutionPeriod(),
-                        getEndExecutionPeriod());
-
-            default:
-                return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod());
-
-            }
-        }
-    }
-
     public boolean overlapsWith(StudentStatute statute) {
 
         ExecutionSemester statuteBegin =
@@ -168,22 +145,6 @@ public class StudentStatute extends StudentStatute_Base {
                 setEndExecutionPeriod(statute.getEndExecutionPeriod());
             }
         }
-    }
-
-    public static class DeleteStudentStatuteFactory implements FactoryExecutor {
-
-        StudentStatute studentStatute;
-
-        public DeleteStudentStatuteFactory(StudentStatute studentStatute) {
-            this.studentStatute = studentStatute;
-        }
-
-        @Override
-        public Object execute() {
-            this.studentStatute.delete();
-            return true;
-        }
-
     }
 
     public boolean isGrantOwnerStatute() {

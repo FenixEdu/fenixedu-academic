@@ -23,9 +23,14 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -67,6 +72,21 @@ public class Curriculum extends Curriculum_Base {
         setRootDomainObject(null);
 
         deleteDomainObject();
+    }
+
+    public String getFullObjectives() {
+        return Stream.of(getGeneralObjectives(), getOperacionalObjectives()).filter(Objects::nonNull)
+                .collect(Collectors.joining(" "));
+    }
+
+    public String getFullObjectivesEn() {
+        return Stream.of(getGeneralObjectivesEn(), getOperacionalObjectivesEn()).filter(Objects::nonNull)
+                .collect(Collectors.joining(" "));
+    }
+
+    public MultiLanguageString getFullObjectivesI18N() {
+        return MultiLanguageString.fromLocalizedString(new LocalizedString.Builder()
+                .with(MultiLanguageString.pt, getFullObjectives()).with(MultiLanguageString.en, getFullObjectivesEn()).build());
     }
 
     public MultiLanguageString getGeneralObjectivesI18N() {

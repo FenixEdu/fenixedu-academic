@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,7 +37,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEve
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.bennu.core.domain.User;
@@ -47,55 +45,6 @@ import org.joda.time.DateTime;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 abstract public class DFAGratuityPR extends DFAGratuityPR_Base implements IGratuityPR {
-
-    abstract protected static class DFAGratuityPREditor implements FactoryExecutor, Serializable {
-
-        static private final long serialVersionUID = -5454487291500203873L;
-
-        private DateTime beginDate;
-
-        private Money dfaTotalAmount;
-
-        private BigDecimal dfaPartialAcceptedPercentage;
-
-        private DFAGratuityPR dfaGratuityPR;
-
-        protected DFAGratuityPREditor() {
-        }
-
-        public DateTime getBeginDate() {
-            return beginDate;
-        }
-
-        public void setBeginDate(DateTime beginDate) {
-            this.beginDate = beginDate;
-        }
-
-        public Money getDfaTotalAmount() {
-            return dfaTotalAmount;
-        }
-
-        public void setDfaTotalAmount(Money dfaTotalAmount) {
-            this.dfaTotalAmount = dfaTotalAmount;
-        }
-
-        public BigDecimal getDfaPartialAcceptedPercentage() {
-            return dfaPartialAcceptedPercentage;
-        }
-
-        public void setDfaPartialAcceptedPercentage(BigDecimal dfaPartialAcceptedPercentage) {
-            this.dfaPartialAcceptedPercentage = dfaPartialAcceptedPercentage;
-        }
-
-        public DFAGratuityPR getDfaGratuityPR() {
-            return this.dfaGratuityPR;
-        }
-
-        public void setDfaGratuityPR(final DFAGratuityPR dfaGratuityPR) {
-            this.dfaGratuityPR = dfaGratuityPR;
-        }
-
-    }
 
     protected DFAGratuityPR() {
         super();

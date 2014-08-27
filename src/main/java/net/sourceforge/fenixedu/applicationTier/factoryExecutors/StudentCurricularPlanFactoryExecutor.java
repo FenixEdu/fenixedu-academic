@@ -23,6 +23,7 @@ package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -30,7 +31,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.YearMonthDay;
 

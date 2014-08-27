@@ -21,12 +21,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.SeniorStatute;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
-import net.sourceforge.fenixedu.domain.student.StudentStatute.CreateStudentStatuteFactory;
-import net.sourceforge.fenixedu.domain.student.StudentStatute.DeleteStudentStatuteFactory;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -47,6 +48,43 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(path = "/studentStatutes", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "manageStatutes", path = "/academicAdminOffice/manageStatutes.jsp") })
 public class StudentStatutesDA extends FenixDispatchAction {
+
+    public static class CreateStudentStatuteFactory extends ManageStudentStatuteBean implements FactoryExecutor {
+
+        public CreateStudentStatuteFactory(Student student) {
+            super(student);
+        }
+
+        @Override
+        public Object execute() {
+            switch (getStatuteType()) {
+
+            case SENIOR:
+                return new SeniorStatute(getStudent(), getRegistration(), getStatuteType(), getBeginExecutionPeriod(),
+                        getEndExecutionPeriod());
+
+            default:
+                return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod());
+
+            }
+        }
+    }
+
+    public static class DeleteStudentStatuteFactory implements FactoryExecutor {
+
+        StudentStatute studentStatute;
+
+        public DeleteStudentStatuteFactory(StudentStatute studentStatute) {
+            this.studentStatute = studentStatute;
+        }
+
+        @Override
+        public Object execute() {
+            this.studentStatute.delete();
+            return true;
+        }
+
+    }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {

@@ -189,7 +189,7 @@
 </schema>
 
 <schema name="DFAGratuityPREditor.edit" 
-		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR$DFAGratuityPREditor"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PostingRulesManagementDA$DFAGratuityPREditor"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	
@@ -204,7 +204,7 @@
 </schema>
 
 <schema name="DFAGratuityByAmountPerEctsPREditor.edit" 
-		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR$DFAGratuityByAmountPerEctsPREditor"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PostingRulesManagementDA$DFAGratuityByAmountPerEctsPREditor"
 		extends="DFAGratuityPREditor.edit"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
@@ -217,26 +217,16 @@
 </schema>
 
 <schema name="DFAGratuityByNumberOfEnrolmentsPREditor.edit" 
-		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR$DFAGratuityByNumberOfEnrolmentsPREditor"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PostingRulesManagementDA$DFAGratuityByNumberOfEnrolmentsPREditor"
 		extends="DFAGratuityPREditor.edit"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
 		<property name="bundle" value="APPLICATION_RESOURCES" />
 	</slot>
-</schema>
-
-<schema name="DFAGratuityByEnrolmentsPREditor.edit" 
-		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByEnrolmentsPR$DFAGratuityByEnrolmentsPREditor"
-		extends="DFAGratuityPREditor.edit"
-		bundle="APPLICATION_RESOURCES">
-	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
-		<property name="bundle" value="APPLICATION_RESOURCES" />
-	</slot>
-	<slot name="dfaAmountPerEnrolment" /> 
 </schema>
 
 <schema name="SpecializationDegreeGratuityPREditor.edit" 
-		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityPR$SpecializationDegreeGratuityPREditor"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PostingRulesManagementDA$SpecializationDegreeGratuityPREditor"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	
@@ -251,7 +241,7 @@
 </schema>
 
 <schema name="SpecializationDegreeGratuityByAmountPerEctsPREditor.edit" 
-		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR$SpecializationDegreeGratuityByAmountPerEctsPREditor"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PostingRulesManagementDA$SpecializationDegreeGratuityByAmountPerEctsPREditor"
 		extends="SpecializationDegreeGratuityPREditor.edit"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="specializationDegreeGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">

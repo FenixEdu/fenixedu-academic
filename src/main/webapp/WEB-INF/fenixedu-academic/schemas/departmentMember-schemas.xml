@@ -18,8 +18,8 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="net.sourceforge.fenixedu.domain.Department.DepartmentDegreeBean"
-	type="net.sourceforge.fenixedu.domain.Department$DepartmentDegreeBean" bundle="MANAGER_RESOURCES">
+<schema name="DepartmentDegreeBean"
+	type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.department.DepartmentDegreesDAForAcademicAdministration$DepartmentDegreeBean" bundle="MANAGER_RESOURCES">
 	<slot name="department" key="label.department"
 		layout="menu-select-postback"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

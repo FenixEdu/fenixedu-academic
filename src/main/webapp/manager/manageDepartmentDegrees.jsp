@@ -36,7 +36,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="associate"/>
 
 		<fr:edit id="departmentDegreeBean" name="departmentDegreeBean"
-				schema="net.sourceforge.fenixedu.domain.Department.DepartmentDegreeBean" >
+				schema="DepartmentDegreeBean" >
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle1"/>
 		        <fr:property name="columnClasses" value=",,noborder"/>

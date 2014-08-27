@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -36,7 +35,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
@@ -49,7 +47,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
@@ -303,58 +300,35 @@ public abstract class RegistrationState extends RegistrationState_Base implement
         super.setStateDate(yearMonthDay.toDateTimeAtMidnight());
     }
 
-    public static class RegistrationStateDeleter extends VariantBean implements FactoryExecutor {
-
-        public RegistrationStateDeleter(String externalId) {
-            super();
-            setString(externalId);
-        }
-
-        @Override
-        public Object execute() {
-            FenixFramework.<RegistrationState> getDomainObject(getString()).delete();
-            return null;
-        }
+    public static RegistrationState createRegistrationState(Registration registration, Person responsible, DateTime creation,
+            RegistrationStateType stateType) {
+        RegistrationStateBean bean = new RegistrationStateBean(registration);
+        bean.setResponsible(responsible);
+        bean.setStateDateTime(creation);
+        bean.setStateType(stateType);
+        return createRegistrationState(bean);
     }
 
-    public static class RegistrationStateCreator extends RegistrationStateBean implements FactoryExecutor {
+    public static RegistrationState createRegistrationState(RegistrationStateBean bean) {
+        RegistrationState createdState = null;
 
-        public RegistrationStateCreator(Registration registration) {
-            super(registration);
+        final RegistrationState previousState = bean.getRegistration().getStateInDate(bean.getStateDateTime());
+        if (previousState == null) {
+            createdState =
+                    RegistrationState.createState(bean.getRegistration(), null, bean.getStateDateTime(), bean.getStateType());
+        } else {
+            createdState = (RegistrationState) StateMachine.execute(previousState, bean);
         }
+        createdState.setRemarks(bean.getRemarks());
 
-        private RegistrationStateCreator(Registration reg, Person responsible, DateTime creation, RegistrationStateType stateType) {
-            this(reg);
-            setResponsible(responsible);
-            setStateDateTime(creation);
-            setStateType(stateType);
+        final RegistrationState nextState = createdState.getNext();
+        if (nextState != null && !createdState.getValidNextStates().contains(nextState.getStateType().name())) {
+            throw new DomainException("error.cannot.add.registrationState.incoherentState");
         }
-
-        public static RegistrationState createState(Registration reg, Person responsible, DateTime creation,
-                RegistrationStateType stateType) {
-            return (RegistrationState) new RegistrationStateCreator(reg, responsible, creation, stateType).execute();
-        }
-
-        @Override
-        public Object execute() {
-            RegistrationState createdState = null;
-
-            final RegistrationState previousState = getRegistration().getStateInDate(getStateDateTime());
-            if (previousState == null) {
-                createdState = RegistrationState.createState(getRegistration(), null, getStateDateTime(), getStateType());
-            } else {
-                createdState = (RegistrationState) StateMachine.execute(previousState, this);
-            }
-            createdState.setRemarks(getRemarks());
-
-            final RegistrationState nextState = createdState.getNext();
-            if (nextState != null && !createdState.getValidNextStates().contains(nextState.getStateType().name())) {
-                throw new DomainException("error.cannot.add.registrationState.incoherentState");
-            }
-            net.sourceforge.fenixedu.domain.student.RegistrationStateLog.createRegistrationStateLog(getRegistration(),
-                    Bundle.MESSAGING, "log.registration.registrationstate.added", getStateType().getDescription(), getRemarks());
-            return createdState;
-        }
+        net.sourceforge.fenixedu.domain.student.RegistrationStateLog.createRegistrationStateLog(bean.getRegistration(),
+                Bundle.MESSAGING, "log.registration.registrationstate.added", bean.getStateType().getDescription(),
+                bean.getRemarks());
+        return createdState;
     }
 
     public boolean isActive() {

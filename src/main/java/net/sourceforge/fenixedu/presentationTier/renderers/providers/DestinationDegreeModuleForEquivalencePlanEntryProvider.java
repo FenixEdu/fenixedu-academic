@@ -22,8 +22,8 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
-import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntryCreator;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencePlanEntryCreator;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

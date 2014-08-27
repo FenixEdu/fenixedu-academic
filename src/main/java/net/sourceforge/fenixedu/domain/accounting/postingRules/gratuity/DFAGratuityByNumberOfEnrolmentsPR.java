@@ -38,33 +38,6 @@ public class DFAGratuityByNumberOfEnrolmentsPR extends DFAGratuityByNumberOfEnro
 
     private static final int SCALE_FOR_INTERMEDIATE_CALCULATIONS = 8;
 
-    public static class DFAGratuityByNumberOfEnrolmentsPREditor extends DFAGratuityPREditor {
-
-        private DFAGratuityByNumberOfEnrolmentsPREditor() {
-            super();
-        }
-
-        @Override
-        public Object execute() {
-            return ((DFAGratuityByNumberOfEnrolmentsPR) getDfaGratuityPR()).edit(getBeginDate(), getDfaTotalAmount(),
-                    getDfaPartialAcceptedPercentage());
-        }
-
-        public static DFAGratuityByNumberOfEnrolmentsPREditor buildFrom(final DFAGratuityByNumberOfEnrolmentsPR rule) {
-            final DFAGratuityByNumberOfEnrolmentsPREditor result = new DFAGratuityByNumberOfEnrolmentsPREditor();
-            init(rule, result);
-
-            return result;
-        }
-
-        static private void init(final DFAGratuityPR o1, final DFAGratuityPREditor o2) {
-            o2.setDfaGratuityPR(o1);
-            o2.setDfaPartialAcceptedPercentage(o1.getDfaPartialAcceptedPercentage());
-            o2.setDfaTotalAmount(o1.getDfaTotalAmount());
-        }
-
-    }
-
     protected DFAGratuityByNumberOfEnrolmentsPR() {
         super();
     }

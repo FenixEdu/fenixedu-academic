@@ -107,8 +107,8 @@
    		<property name="config" value="intermediate" />		
 	</slot>
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumObjectives"
-		type="net.sourceforge.fenixedu.domain.CurricularCourse$CurriculumFactoryInsertCurriculum">
+<schema name="CurriculumFactoryInsertCurriculumObjectives"
+		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseObjectivesDA$CurriculumFactoryInsertCurriculum">
 	<slot name="curriculum" hidden="true"/>
 	<slot name="generalObjectives" layout="rich-text">
    		<property name="safe" value="true" />
@@ -135,8 +135,8 @@
    		<property name="config" value="intermediate" />		
 	</slot>
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumProgram"
-		type="net.sourceforge.fenixedu.domain.CurricularCourse$CurriculumFactoryInsertCurriculum">
+<schema name="CurriculumFactoryInsertCurriculumProgram"
+		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseObjectivesDA$CurriculumFactoryInsertCurriculum">
 	<slot name="curriculum" hidden="true"/>
 	<slot name="program" layout="rich-text">
    		<property name="safe" value="true" />

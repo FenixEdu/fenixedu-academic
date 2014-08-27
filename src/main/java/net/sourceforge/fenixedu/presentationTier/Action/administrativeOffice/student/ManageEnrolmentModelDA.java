@@ -27,10 +27,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.student.ManageEnrolmentModelBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear.EnrolmentModelFactoryEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
@@ -99,6 +100,18 @@ public class ManageEnrolmentModelDA extends FenixDispatchAction {
             }
 
             return executionYearList;
+        }
+    }
+
+    public static class EnrolmentModelFactoryEditor extends ManageEnrolmentModelBean implements FactoryExecutor {
+        public EnrolmentModelFactoryEditor(final Registration registration) {
+            super(registration);
+        }
+
+        @Override
+        public Object execute() {
+            getRegistration().setEnrolmentModelForExecutionYear(getExecutionYear(), getEnrolmentModel());
+            return null;
         }
     }
 }

@@ -35,44 +35,6 @@ import org.joda.time.DateTime;
 
 public class DFAGratuityByAmountPerEctsPR extends DFAGratuityByAmountPerEctsPR_Base {
 
-    public static class DFAGratuityByAmountPerEctsPREditor extends DFAGratuityPREditor {
-
-        private Money dfaAmountPerEctsCredit;
-
-        private DFAGratuityByAmountPerEctsPREditor() {
-            super();
-        }
-
-        public Money getDfaAmountPerEctsCredit() {
-            return dfaAmountPerEctsCredit;
-        }
-
-        public void setDfaAmountPerEctsCredit(final Money dfaAmountPerEctsCredit) {
-            this.dfaAmountPerEctsCredit = dfaAmountPerEctsCredit;
-        }
-
-        @Override
-        public Object execute() {
-            return ((DFAGratuityByAmountPerEctsPR) getDfaGratuityPR()).edit(getBeginDate(), getDfaTotalAmount(),
-                    getDfaAmountPerEctsCredit(), getDfaPartialAcceptedPercentage());
-        }
-
-        public static DFAGratuityByAmountPerEctsPREditor buildFrom(final DFAGratuityByAmountPerEctsPR rule) {
-            final DFAGratuityByAmountPerEctsPREditor result = new DFAGratuityByAmountPerEctsPREditor();
-            init(rule, result);
-            result.setDfaAmountPerEctsCredit(rule.getDfaAmountPerEctsCredit());
-
-            return result;
-        }
-
-        static private void init(final DFAGratuityPR o1, final DFAGratuityPREditor o2) {
-            o2.setDfaGratuityPR(o1);
-            o2.setDfaPartialAcceptedPercentage(o1.getDfaPartialAcceptedPercentage());
-            o2.setDfaTotalAmount(o1.getDfaTotalAmount());
-        }
-
-    }
-
     protected DFAGratuityByAmountPerEctsPR() {
         super();
     }

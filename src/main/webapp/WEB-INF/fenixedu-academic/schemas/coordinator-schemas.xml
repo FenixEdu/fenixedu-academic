@@ -378,7 +378,7 @@
 	<setter signature="createEquivalencePlan(sourceDegreeCurricularPlan)"/>
 </schema>
 
-<schema name="EquivalencePlanEntry.Creator.addOriginDegreeModule" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry$EquivalencePlanEntryCreator" bundle="APPLICATION_RESOURCES">
+<schema name="EquivalencePlanEntry.Creator.addOriginDegreeModule" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencePlanEntryCreator" bundle="APPLICATION_RESOURCES">
     <slot name="originDegreeModuleToAdd" type="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
     		layout="menu-select" key="label.degreeModule">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OriginDegreeModuleForEquivalencePlanEntryProvider"/>
@@ -387,7 +387,7 @@
     <setter signature="addOrigin(originDegreeModuleToAdd)"/>
 </schema>
 
-<schema name="EquivalencePlanEntry.Creator.addDestinationDegreeModule" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry$EquivalencePlanEntryCreator" bundle="APPLICATION_RESOURCES">
+<schema name="EquivalencePlanEntry.Creator.addDestinationDegreeModule" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencePlanEntryCreator" bundle="APPLICATION_RESOURCES">
     <slot name="destinationDegreeModuleToAdd" type="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
     		layout="menu-select" key="label.degreeModule">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DestinationDegreeModuleForEquivalencePlanEntryProvider"/>
@@ -396,7 +396,7 @@
     <setter signature="addDestination(destinationDegreeModuleToAdd)"/>
 </schema>
 
-<schema name="EquivalencePlanEntry.Creator.setNonListFields" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry$EquivalencePlanEntryCreator" bundle="APPLICATION_RESOURCES">
+<schema name="EquivalencePlanEntry.Creator.setNonListFields" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencePlanEntryCreator" bundle="APPLICATION_RESOURCES">
     <slot name="originLogicOperator" type="net.sourceforge.fenixedu.domain.util.LogicOperator"
     		layout="menu-select" key="label.left.hand.operator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
@@ -417,15 +417,15 @@
     <slot name="ectsCredits" key="label.ects.credits"/>
 </schema>
 
-<schema name="EquivalencePlanEntry.Creator.create" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry$EquivalencePlanEntryCreator" bundle="APPLICATION_RESOURCES">
+<schema name="EquivalencePlanEntry.Creator.create" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencePlanEntryCreator" bundle="APPLICATION_RESOURCES">
     <setter signature="execute()"/>
 </schema>
 
-<schema name="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean" type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean" bundle="APPLICATION_RESOURCES">
+<schema name="StudentSearchBean" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentSearchBean" bundle="APPLICATION_RESOURCES">
 	<slot name="studentNumber"/>
 </schema>
 
-<schema name="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan" type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean" bundle="APPLICATION_RESOURCES">
+<schema name="StudentSearchBeanWithDegreeCurricularPlan" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentSearchBean" bundle="APPLICATION_RESOURCES">
 	<slot name="studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="10"/>
 	</slot>
@@ -436,13 +436,7 @@
     </slot>
 </schema>
 
-<schema name="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan-edit-degree-curricular-plan" 
-		type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean" 
-		extends="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan">
-	<remove name="studentNumber" />
-</schema>
-
-<schema name="StudentEquivalencyPlanEntryCreator.addOrigin" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">
+<schema name="StudentEquivalencyPlanEntryCreator.addOrigin" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">
     <slot name="originDegreeModuleToAdd" type="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
     		layout="menu-select" key="label.degreeModule">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OriginDegreeModuleForStudentEquivalencyPlanEntryCreatorProvider"/>
@@ -451,7 +445,7 @@
     <setter signature="addOrigin(originDegreeModuleToAdd)"/>
 </schema>
 
-<schema name="StudentEquivalencyPlanEntryCreator.addDestination" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">
+<schema name="StudentEquivalencyPlanEntryCreator.addDestination" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">
     <slot name="destinationDegreeModuleToAdd" type="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
     		layout="menu-select" key="label.degreeModule">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DestinationDegreeModuleForStudentEquivalencyPlanEntryCreatorProvider"/>
@@ -460,7 +454,7 @@
     <setter signature="addDestination(destinationDegreeModuleToAdd)"/>
 </schema>
 
-<schema name="StudentEquivalencyPlanEntryCreator.setNonListFields" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">
+<schema name="StudentEquivalencyPlanEntryCreator.setNonListFields" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">
     <slot name="originLogicOperator" type="net.sourceforge.fenixedu.domain.util.LogicOperator"
     		layout="menu-select" key="label.left.hand.operator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
@@ -481,7 +475,7 @@
     <slot name="ectsCredits" key="label.ects.credits"/>
 </schema>
 
-<schema name="StudentEquivalencyPlanEntryCreator.create" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">
+<schema name="StudentEquivalencyPlanEntryCreator.create" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">
     <setter signature="execute()"/>
 </schema>
 

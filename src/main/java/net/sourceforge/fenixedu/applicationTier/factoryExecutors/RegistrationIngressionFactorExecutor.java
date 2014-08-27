@@ -20,9 +20,9 @@ package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

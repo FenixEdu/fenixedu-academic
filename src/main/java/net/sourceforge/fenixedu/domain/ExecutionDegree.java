@@ -24,7 +24,6 @@
 
 package net.sourceforge.fenixedu.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -46,14 +45,12 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
-import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -926,77 +923,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         }
 
         return possibleTeachers;
-    }
-
-    @SuppressWarnings({ "serial", "deprecation" })
-    public static class ThesisCreationPeriodFactoryExecutor implements FactoryExecutor, HasExecutionYear, Serializable {
-
-        private ExecutionYear executionYear;
-
-        private ExecutionDegree executionDegree;
-
-        private YearMonthDay beginThesisCreationPeriod;
-
-        private YearMonthDay endThesisCreationPeriod;
-
-        @Override
-        public Object execute() {
-            final ExecutionDegree executionDegree = getExecutionDegree();
-            if (executionDegree == null) {
-                final ExecutionYear executionYear = getExecutionYear();
-                if (executionYear != null) {
-                    for (final ExecutionDegree otherExecutionDegree : executionYear.getExecutionDegreesSet()) {
-                        execute(otherExecutionDegree);
-                    }
-                }
-            } else {
-                execute(executionDegree);
-            }
-            return null;
-        }
-
-        private void execute(final ExecutionDegree executionDegree) {
-            executionDegree.setBeginThesisCreationPeriod(beginThesisCreationPeriod);
-            executionDegree.setEndThesisCreationPeriod(endThesisCreationPeriod);
-        }
-
-        @Override
-        public ExecutionYear getExecutionYear() {
-            return executionYear;
-        }
-
-        public void setExecutionYear(final ExecutionYear executionYear) {
-            this.executionYear = executionYear;
-        }
-
-        public ExecutionDegree getExecutionDegree() {
-            return executionDegree;
-        }
-
-        public void setExecutionDegree(final ExecutionDegree executionDegree) {
-            this.executionDegree = executionDegree;
-        }
-
-        public YearMonthDay getBeginThesisCreationPeriod() {
-            return beginThesisCreationPeriod;
-        }
-
-        public void setBeginThesisCreationPeriod(YearMonthDay beginThesisCreationPeriod) {
-            this.beginThesisCreationPeriod = beginThesisCreationPeriod;
-        }
-
-        public YearMonthDay getEndThesisCreationPeriod() {
-            return endThesisCreationPeriod;
-        }
-
-        public void setEndThesisCreationPeriod(YearMonthDay endThesisCreationPeriod) {
-            this.endThesisCreationPeriod = endThesisCreationPeriod;
-        }
-
-        public boolean hasExecutionYear() {
-            return getExecutionYear() != null;
-        }
-
     }
 
     public boolean isScientificCommissionMember() {

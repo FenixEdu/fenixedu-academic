@@ -18,6 +18,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.documentRequests.CreatePastDiplomaRequest;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -30,7 +31,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaS
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import pt.ist.fenixframework.Atomic;
 
 final public class DocumentRequestCreator extends DocumentRequestCreateBean implements FactoryExecutor {

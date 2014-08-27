@@ -18,9 +18,7 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
-import net.sourceforge.fenixedu.dataTransferObject.student.ManageEnrolmentModelBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -46,18 +44,6 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
         this();
         setExecutionYear(executionYear);
         setRegistration(registration);
-    }
-
-    public static class EnrolmentModelFactoryEditor extends ManageEnrolmentModelBean implements FactoryExecutor {
-        public EnrolmentModelFactoryEditor(final Registration registration) {
-            super(registration);
-        }
-
-        @Override
-        public Object execute() {
-            getRegistration().setEnrolmentModelForExecutionYear(getExecutionYear(), getEnrolmentModel());
-            return null;
-        }
     }
 
     public void delete() {

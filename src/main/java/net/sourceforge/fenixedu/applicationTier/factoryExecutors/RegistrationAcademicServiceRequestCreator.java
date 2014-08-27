@@ -18,6 +18,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -32,7 +33,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import pt.ist.fenixframework.Atomic;
 
 public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements

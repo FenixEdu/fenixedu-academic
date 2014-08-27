@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -88,11 +88,11 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 
         if (isSchoolPartConcludedDegreeType(reg)) {
             if (!reg.isSchoolPartConcluded() && !reg.isConcluded()) {
-                RegistrationStateCreator.createState(reg, responsible, creation, RegistrationStateType.SCHOOLPARTCONCLUDED);
+                RegistrationState.createRegistrationState(reg, responsible, creation, RegistrationStateType.SCHOOLPARTCONCLUDED);
             }
         } else {
             if (!reg.isConcluded()) {
-                RegistrationStateCreator.createState(reg, responsible, creation, RegistrationStateType.CONCLUDED);
+                RegistrationState.createRegistrationState(reg, responsible, creation, RegistrationStateType.CONCLUDED);
             }
         }
     }

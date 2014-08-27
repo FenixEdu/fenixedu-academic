@@ -32,9 +32,7 @@ import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.domain.util.search.StudentSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerBolonhaTransitionApp;
 
@@ -184,10 +182,9 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     }
 
     private Student getStudent(final HttpServletRequest request) {
-        StudentSearchBean studentSearchBean =
-                getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan");
+        StudentSearchBean studentSearchBean = getRenderedObject("StudentSearchBeanWithDegreeCurricularPlan");
         if (studentSearchBean == null) {
-            studentSearchBean = getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBean");
+            studentSearchBean = getRenderedObject("StudentSearchBean");
         }
         if (studentSearchBean == null) {
             studentSearchBean = new StudentSearchBean();
@@ -226,8 +223,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     }
 
     private DegreeCurricularPlan getSelectedDegreeCurricularPlan(final HttpServletRequest request) {
-        final StudentSearchBean studentSearchBean =
-                getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan");
+        final StudentSearchBean studentSearchBean = getRenderedObject("StudentSearchBeanWithDegreeCurricularPlan");
         return studentSearchBean != null ? studentSearchBean.getDegreeCurricularPlan() : getDegreeCurricularPlan(request,
                 "selectedDegreeCurricularPlanID");
     }

@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
-import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -128,7 +127,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
@@ -1536,47 +1534,6 @@ public class Person extends Person_Base {
         return attends;
     }
 
-    public static class FindPersonFactory implements Serializable, FactoryExecutor {
-        private Integer institutionalNumber;
-
-        public Integer getInstitutionalNumber() {
-            return institutionalNumber;
-        }
-
-        public void setInstitutionalNumber(final Integer institutionalNumber) {
-            this.institutionalNumber = institutionalNumber;
-        }
-
-        transient Set<Person> people = null;
-
-        @Override
-        public FindPersonFactory execute() {
-            people = Person.findPerson(this);
-            return this;
-        }
-
-        public Set<Person> getPeople() {
-            return people;
-        }
-    }
-
-    public static Set<Person> findPerson(final FindPersonFactory findPersonFactory) {
-        final Set<Person> people = new HashSet<Person>();
-        if (findPersonFactory.getInstitutionalNumber() != null) {
-
-            final Employee employee = Employee.readByNumber(findPersonFactory.getInstitutionalNumber());
-            if (employee != null) {
-                people.add(employee.getPerson());
-            }
-
-            for (final Registration registration : Registration.readByNumber(findPersonFactory.getInstitutionalNumber())) {
-                people.add(registration.getPerson());
-            }
-
-        }
-        return people;
-    }
-
     private Set<Event> getEventsFromType(final Class<? extends Event> clazz) {
         final Set<Event> events = new HashSet<Event>();
 
@@ -2003,38 +1960,6 @@ public class Person extends Person_Base {
             }
         }
         return careers;
-    }
-
-    public static class PersonBeanFactoryEditor extends PersonBean implements FactoryExecutor {
-        public PersonBeanFactoryEditor(final Person person) {
-            super(person);
-        }
-
-        @Override
-        public Object execute() {
-            getPerson().editPersonalInformation(this);
-            return null;
-        }
-    }
-
-    public static class ExternalPersonBeanFactoryCreator extends ExternalPersonBean implements FactoryExecutor {
-        public ExternalPersonBeanFactoryCreator() {
-            super();
-        }
-
-        @Override
-        public Object execute() {
-            final Person person = new Person(this);
-            Unit unit = getUnit();
-            if (unit == null) {
-                unit = Unit.findFirstUnitByName(getUnitName());
-                if (unit == null) {
-                    throw new DomainException("error.unit.does.not.exist");
-                }
-            }
-            new ExternalContract(person, unit, new YearMonthDay(), null);
-            return person;
-        }
     }
 
     public static class AnyPersonSearchBean implements Serializable {

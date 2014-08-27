@@ -36,43 +36,6 @@ import org.joda.time.DateTime;
 public class DFAGratuityByEnrolmentsPR extends DFAGratuityByEnrolmentsPR_Base {
     private static final int SCALE_FOR_INTERMEDIATE_CALCULATIONS = 8;
 
-    public static class DFAGratuityByEnrolmentsPREditor extends DFAGratuityPREditor {
-
-        private Money dfaAmountPerEnrolment;
-
-        private DFAGratuityByEnrolmentsPREditor() {
-            super();
-        }
-
-        @Override
-        public Object execute() {
-            return ((DFAGratuityByEnrolmentsPR) getDfaGratuityPR()).edit(getBeginDate(), getDfaTotalAmount(),
-                    getDfaAmountPerEnrolment(), getDfaPartialAcceptedPercentage());
-        }
-
-        public static DFAGratuityByEnrolmentsPREditor buildFrom(final DFAGratuityByEnrolmentsPR rule) {
-            final DFAGratuityByEnrolmentsPREditor result = new DFAGratuityByEnrolmentsPREditor();
-            init(rule, result);
-
-            return result;
-        }
-
-        static private void init(final DFAGratuityPR o1, final DFAGratuityPREditor o2) {
-            o2.setDfaGratuityPR(o1);
-            o2.setDfaPartialAcceptedPercentage(o1.getDfaPartialAcceptedPercentage());
-            o2.setDfaTotalAmount(o1.getDfaTotalAmount());
-        }
-
-        public Money getDfaAmountPerEnrolment() {
-            return dfaAmountPerEnrolment;
-        }
-
-        public void setDfaAmountPerEnrolment(Money dfaAmountPerEnrolment) {
-            this.dfaAmountPerEnrolment = dfaAmountPerEnrolment;
-        }
-
-    }
-
     protected DFAGratuityByEnrolmentsPR() {
         super();
     }

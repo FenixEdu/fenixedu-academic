@@ -28,7 +28,6 @@
 
 package net.sourceforge.fenixedu.domain;
 
-import java.io.Serializable;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,7 +48,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUni
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -324,38 +322,6 @@ public class Department extends Department_Base {
             }
         }
         return null;
-    }
-
-    public static class DepartmentDegreeBean implements FactoryExecutor, Serializable {
-
-        private Department department;
-        private Degree degree;
-
-        public Department getDepartment() {
-            return department;
-        }
-
-        public void setDepartment(final Department department) {
-            this.department = department;
-        }
-
-        public Degree getDegree() {
-            return degree;
-        }
-
-        public void setDegree(final Degree degree) {
-            this.degree = degree;
-        }
-
-        @Override
-        public Object execute() {
-            final Department department = getDepartment();
-            final Degree degree = getDegree();
-            if (department != null && degree != null) {
-                department.getDegreesSet().add(degree);
-            }
-            return null;
-        }
     }
 
     public void delete() {

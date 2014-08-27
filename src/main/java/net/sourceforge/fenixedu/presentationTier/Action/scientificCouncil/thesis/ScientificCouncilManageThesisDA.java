@@ -29,6 +29,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisDiscussion;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
@@ -44,7 +45,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionDegree.ThesisCreationPeriodFactoryExecutor;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -169,6 +169,77 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         public void setExecutionYear(ExecutionYear executionYear) {
             this.executionYear = executionYear;
         }
+    }
+
+    @SuppressWarnings({ "serial", "deprecation" })
+    public static class ThesisCreationPeriodFactoryExecutor implements FactoryExecutor, HasExecutionYear, Serializable {
+
+        private ExecutionYear executionYear;
+
+        private ExecutionDegree executionDegree;
+
+        private YearMonthDay beginThesisCreationPeriod;
+
+        private YearMonthDay endThesisCreationPeriod;
+
+        @Override
+        public Object execute() {
+            final ExecutionDegree executionDegree = getExecutionDegree();
+            if (executionDegree == null) {
+                final ExecutionYear executionYear = getExecutionYear();
+                if (executionYear != null) {
+                    for (final ExecutionDegree otherExecutionDegree : executionYear.getExecutionDegreesSet()) {
+                        execute(otherExecutionDegree);
+                    }
+                }
+            } else {
+                execute(executionDegree);
+            }
+            return null;
+        }
+
+        private void execute(final ExecutionDegree executionDegree) {
+            executionDegree.setBeginThesisCreationPeriod(beginThesisCreationPeriod);
+            executionDegree.setEndThesisCreationPeriod(endThesisCreationPeriod);
+        }
+
+        @Override
+        public ExecutionYear getExecutionYear() {
+            return executionYear;
+        }
+
+        public void setExecutionYear(final ExecutionYear executionYear) {
+            this.executionYear = executionYear;
+        }
+
+        public ExecutionDegree getExecutionDegree() {
+            return executionDegree;
+        }
+
+        public void setExecutionDegree(final ExecutionDegree executionDegree) {
+            this.executionDegree = executionDegree;
+        }
+
+        public YearMonthDay getBeginThesisCreationPeriod() {
+            return beginThesisCreationPeriod;
+        }
+
+        public void setBeginThesisCreationPeriod(YearMonthDay beginThesisCreationPeriod) {
+            this.beginThesisCreationPeriod = beginThesisCreationPeriod;
+        }
+
+        public YearMonthDay getEndThesisCreationPeriod() {
+            return endThesisCreationPeriod;
+        }
+
+        public void setEndThesisCreationPeriod(YearMonthDay endThesisCreationPeriod) {
+            this.endThesisCreationPeriod = endThesisCreationPeriod;
+        }
+
+        public boolean hasExecutionYear() {
+            return getExecutionYear() != null;
+        }
+
     }
 
     public ActionForward dissertations(ActionMapping mapping, ActionForm form, HttpServletRequest request,

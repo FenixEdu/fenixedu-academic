@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -195,7 +195,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
             setRegistration(registration);
 
             if (!registration.isActive()) {
-                RegistrationStateCreator.createState(registration, AccessControl.getPerson(), new DateTime(),
+                RegistrationState.createRegistrationState(registration, AccessControl.getPerson(), new DateTime(),
                         RegistrationStateType.REGISTERED);
             }
 
@@ -240,7 +240,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
                             previousRegistration.getDegreeCurricularPlanName(), executionYear.getQualifiedName());
                 }
 
-                RegistrationStateCreator.createState(previousRegistration, AccessControl.getPerson(), now,
+                RegistrationState.createRegistrationState(previousRegistration, AccessControl.getPerson(), now,
                         RegistrationStateType.INTERNAL_ABANDON);
             }
         }

@@ -44,7 +44,7 @@
 
 	<fr:edit id="StudentEquivalencyPlanEntryCreator.setNonListFields"
 			name="studentEquivalencyPlanEntryCreator"
-			type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator"
+			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator"
 			schema="StudentEquivalencyPlanEntryCreator.setNonListFields">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
@@ -62,7 +62,7 @@
 	<p class="mtop15 mbottom05"><bean:message key="message.origin.degree.module" bundle="APPLICATION_RESOURCES"/></p>
 	<fr:edit id="StudentEquivalencyPlanEntryCreator.addOrigin"
 			name="studentEquivalencyPlanEntryCreator"
-			type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator"
+			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator"
 			schema="StudentEquivalencyPlanEntryCreator.addOrigin">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
@@ -73,7 +73,7 @@
 	<p class="mtop15 mbottom05"><bean:message key="message.destination.degree.module" bundle="APPLICATION_RESOURCES"/></p>
 	<fr:edit id="StudentEquivalencyPlanEntryCreator.addDestination"
 			name="studentEquivalencyPlanEntryCreator"
-			type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator"
+			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator"
 			schema="StudentEquivalencyPlanEntryCreator.addDestination">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
@@ -132,7 +132,7 @@
 			+ "&amp;studentNumber=" + student.getNumber() %>">
 		<fr:edit id="StudentEquivalencyPlanEntryCreator.create"
 				name="studentEquivalencyPlanEntryCreator"
-				type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator"
+				type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanEntryCreator"
 				schema="StudentEquivalencyPlanEntryCreator.create">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="dnone"/>

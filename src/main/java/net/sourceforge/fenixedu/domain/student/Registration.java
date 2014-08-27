@@ -102,7 +102,6 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.RegistrationConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -182,7 +181,7 @@ public class Registration extends Registration_Base {
         setNumber(registrationNumber == null ? getStudent().getNumber() : registrationNumber);
         setStartDate(start.toYearMonthDay());
         setDegree(degree);
-        RegistrationStateCreator.createState(this, AccessControl.getPerson(), start, RegistrationStateType.REGISTERED);
+        RegistrationState.createRegistrationState(this, AccessControl.getPerson(), start, RegistrationStateType.REGISTERED);
     }
 
     public Registration(final Person person, final StudentCandidacy studentCandidacy) {
@@ -2736,11 +2735,9 @@ public class Registration extends Registration_Base {
 
         if (!isConcluded() && isRegistrationConclusionProcessed()) {
             if (isDEA() && getPhdIndividualProgramProcess() != null) {
-                RegistrationStateCreator.createState(this, AccessControl.getPerson(), new DateTime(),
-                        RegistrationStateType.SCHOOLPARTCONCLUDED);
+                RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.SCHOOLPARTCONCLUDED);
             } else {
-                RegistrationStateCreator.createState(this, AccessControl.getPerson(), new DateTime(),
-                        RegistrationStateType.CONCLUDED);
+                RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
             }
 
         }
@@ -3437,14 +3434,13 @@ public class Registration extends Registration_Base {
             throw new DomainException("error.student.Registration.cannot.transit.non.active.registrations");
         }
 
-        RegistrationStateCreator.createState(this, person, when, RegistrationStateType.TRANSITED);
+        RegistrationState.createRegistrationState(this, person, when, RegistrationStateType.TRANSITED);
 
         for (final Registration registration : getTargetTransitionRegistrations()) {
             if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-                RegistrationStateCreator.createState(registration, person, when,
-                        registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
+                RegistrationState.createRegistrationState(registration, person, when, registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
             } else {
-                RegistrationStateCreator.createState(registration, person, when, RegistrationStateType.REGISTERED);
+                RegistrationState.createRegistrationState(registration, person, when, RegistrationStateType.REGISTERED);
             }
 
             registration.setRegistrationProtocol(getRegistrationProtocol());

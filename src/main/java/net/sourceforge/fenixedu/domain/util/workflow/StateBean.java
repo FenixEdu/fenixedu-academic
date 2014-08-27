@@ -68,7 +68,7 @@ public class StateBean implements Serializable {
         return stateDateTime;
     }
 
-    protected void setStateDateTime(final DateTime dateTime) {
+    public void setStateDateTime(final DateTime dateTime) {
         this.stateDateTime = dateTime;
     }
 

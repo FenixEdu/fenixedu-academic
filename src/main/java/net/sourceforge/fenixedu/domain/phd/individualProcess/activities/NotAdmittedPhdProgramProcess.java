@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 import org.fenixedu.bennu.core.domain.User;
@@ -55,7 +55,7 @@ public class NotAdmittedPhdProgramProcess extends PhdIndividualProgramProcessAct
         process.cancelDebts(userView.getPerson());
 
         if (process.getRegistration() != null && process.getRegistration().isActive()) {
-            RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), stateDate,
+            RegistrationState.createRegistrationState(process.getRegistration(), userView.getPerson(), stateDate,
                     RegistrationStateType.CANCELED);
         }
 

@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan;
+package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
-import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntryCreator;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 
 public class StudentEquivalencyPlanEntryCreator extends EquivalencePlanEntryCreator {

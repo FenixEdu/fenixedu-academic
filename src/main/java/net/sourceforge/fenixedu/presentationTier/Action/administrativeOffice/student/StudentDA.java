@@ -23,10 +23,11 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -50,6 +51,18 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "viewPersonalData", path = "/academicAdminOffice/viewPersonalData.jsp"),
         @Forward(name = "viewStudentLogChanges", path = "/academicAdminOffice/viewStudentLogChanges.jsp") })
 public class StudentDA extends StudentRegistrationDA {
+
+    public static class PersonBeanFactoryEditor extends PersonBean implements FactoryExecutor {
+        public PersonBeanFactoryEditor(final Person person) {
+            super(person);
+        }
+
+        @Override
+        public Object execute() {
+            getPerson().editPersonalInformation(this);
+            return null;
+        }
+    }
 
     private Student getAndSetStudent(final HttpServletRequest request) {
         final String studentID = getFromRequest(request, "studentID").toString();

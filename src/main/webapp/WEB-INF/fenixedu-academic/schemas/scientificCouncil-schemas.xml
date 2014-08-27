@@ -206,7 +206,7 @@
     </slot>
 </schema>
 
-<schema name="scientificCouncil.thesis.creation.period.context.bean" type="net.sourceforge.fenixedu.domain.ExecutionDegree$ThesisCreationPeriodFactoryExecutor">
+<schema name="scientificCouncil.thesis.creation.period.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$ThesisCreationPeriodFactoryExecutor">
     <slot name="executionYear" key="label.execution.year" layout="menu-select-postback">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
         <property name="format" value="${year}" />
@@ -243,7 +243,7 @@
     </slot>
 </schema>
 
-<schema name="scientificCouncil.thesis.creation.period.definition" type="net.sourceforge.fenixedu.domain.ExecutionDegree$ThesisCreationPeriodFactoryExecutor">
+<schema name="scientificCouncil.thesis.creation.period.definition" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$ThesisCreationPeriodFactoryExecutor">
     <slot name="beginThesisCreationPeriod" key="label.begin">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
         <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">

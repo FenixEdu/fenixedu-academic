@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,7 +37,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.SpecializationDegreeGratuityEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.bennu.core.domain.User;
@@ -47,54 +45,6 @@ import org.joda.time.DateTime;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class SpecializationDegreeGratuityPR extends SpecializationDegreeGratuityPR_Base implements IGratuityPR {
-
-    abstract protected static class SpecializationDegreeGratuityPREditor implements FactoryExecutor, Serializable {
-
-        static private final long serialVersionUID = -5454487291500203873L;
-
-        private DateTime beginDate;
-
-        private Money specializationDegreeTotalAmount;
-
-        private BigDecimal specializationDegreePartialAcceptedPercentage;
-
-        private SpecializationDegreeGratuityPR specializationDegreeGratuityPR;
-
-        protected SpecializationDegreeGratuityPREditor() {
-        }
-
-        public DateTime getBeginDate() {
-            return beginDate;
-        }
-
-        public void setBeginDate(DateTime beginDate) {
-            this.beginDate = beginDate;
-        }
-
-        public Money getSpecializationDegreeTotalAmount() {
-            return specializationDegreeTotalAmount;
-        }
-
-        public void setSpecializationDegreeTotalAmount(Money specializationDegreeTotalAmount) {
-            this.specializationDegreeTotalAmount = specializationDegreeTotalAmount;
-        }
-
-        public BigDecimal getSpecializationDegreePartialAcceptedPercentage() {
-            return specializationDegreePartialAcceptedPercentage;
-        }
-
-        public void setSpecializationDegreePartialAcceptedPercentage(BigDecimal specializationDegreePartialAcceptedPercentage) {
-            this.specializationDegreePartialAcceptedPercentage = specializationDegreePartialAcceptedPercentage;
-        }
-
-        public SpecializationDegreeGratuityPR getSpecializationDegreeGratuityPR() {
-            return specializationDegreeGratuityPR;
-        }
-
-        public void setSpecializationDegreeGratuityPR(SpecializationDegreeGratuityPR specializationDegreeGratuityPR) {
-            this.specializationDegreeGratuityPR = specializationDegreeGratuityPR;
-        }
-    }
 
     protected SpecializationDegreeGratuityPR() {
         super();

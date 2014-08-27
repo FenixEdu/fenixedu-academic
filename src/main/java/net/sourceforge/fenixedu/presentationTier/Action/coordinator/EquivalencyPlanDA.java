@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteEquiva
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
-import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntryCreator;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;

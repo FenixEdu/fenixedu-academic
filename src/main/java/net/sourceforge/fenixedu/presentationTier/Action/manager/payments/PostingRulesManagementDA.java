@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.PostingRulesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.paymentPlan.GratuityPaymentPlanManager;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.PaymentPlanBean;
@@ -47,12 +49,9 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentService;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR.DFAGratuityByAmountPerEctsPREditor;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR.DFAGratuityByNumberOfEnrolmentsPREditor;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR.SpecializationDegreeGratuityByAmountPerEctsPREditor;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -61,9 +60,9 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionPR;
-import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPaymentsApp;
+import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -950,6 +949,208 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
         public void setEndDate(DateTime endDate) {
             this.endDate = endDate;
+        }
+    }
+
+    public static class DFAGratuityByAmountPerEctsPREditor extends DFAGratuityPREditor {
+
+        private Money dfaAmountPerEctsCredit;
+
+        private DFAGratuityByAmountPerEctsPREditor() {
+            super();
+        }
+
+        public Money getDfaAmountPerEctsCredit() {
+            return dfaAmountPerEctsCredit;
+        }
+
+        public void setDfaAmountPerEctsCredit(final Money dfaAmountPerEctsCredit) {
+            this.dfaAmountPerEctsCredit = dfaAmountPerEctsCredit;
+        }
+
+        @Override
+        public Object execute() {
+            return ((DFAGratuityByAmountPerEctsPR) getDfaGratuityPR()).edit(getBeginDate(), getDfaTotalAmount(),
+                    getDfaAmountPerEctsCredit(), getDfaPartialAcceptedPercentage());
+        }
+
+        public static DFAGratuityByAmountPerEctsPREditor buildFrom(final DFAGratuityByAmountPerEctsPR rule) {
+            final DFAGratuityByAmountPerEctsPREditor result = new DFAGratuityByAmountPerEctsPREditor();
+            init(rule, result);
+            result.setDfaAmountPerEctsCredit(rule.getDfaAmountPerEctsCredit());
+
+            return result;
+        }
+
+        static private void init(final DFAGratuityPR o1, final DFAGratuityPREditor o2) {
+            o2.setDfaGratuityPR(o1);
+            o2.setDfaPartialAcceptedPercentage(o1.getDfaPartialAcceptedPercentage());
+            o2.setDfaTotalAmount(o1.getDfaTotalAmount());
+        }
+
+    }
+
+    public static class DFAGratuityByNumberOfEnrolmentsPREditor extends DFAGratuityPREditor {
+
+        private DFAGratuityByNumberOfEnrolmentsPREditor() {
+            super();
+        }
+
+        @Override
+        public Object execute() {
+            return ((DFAGratuityByNumberOfEnrolmentsPR) getDfaGratuityPR()).edit(getBeginDate(), getDfaTotalAmount(),
+                    getDfaPartialAcceptedPercentage());
+        }
+
+        public static DFAGratuityByNumberOfEnrolmentsPREditor buildFrom(final DFAGratuityByNumberOfEnrolmentsPR rule) {
+            final DFAGratuityByNumberOfEnrolmentsPREditor result = new DFAGratuityByNumberOfEnrolmentsPREditor();
+            init(rule, result);
+
+            return result;
+        }
+
+        static private void init(final DFAGratuityPR o1, final DFAGratuityPREditor o2) {
+            o2.setDfaGratuityPR(o1);
+            o2.setDfaPartialAcceptedPercentage(o1.getDfaPartialAcceptedPercentage());
+            o2.setDfaTotalAmount(o1.getDfaTotalAmount());
+        }
+
+    }
+
+    abstract public static class DFAGratuityPREditor implements FactoryExecutor, Serializable {
+
+        static private final long serialVersionUID = -5454487291500203873L;
+
+        private DateTime beginDate;
+
+        private Money dfaTotalAmount;
+
+        private BigDecimal dfaPartialAcceptedPercentage;
+
+        private DFAGratuityPR dfaGratuityPR;
+
+        public DFAGratuityPREditor() {
+        }
+
+        public DateTime getBeginDate() {
+            return beginDate;
+        }
+
+        public void setBeginDate(DateTime beginDate) {
+            this.beginDate = beginDate;
+        }
+
+        public Money getDfaTotalAmount() {
+            return dfaTotalAmount;
+        }
+
+        public void setDfaTotalAmount(Money dfaTotalAmount) {
+            this.dfaTotalAmount = dfaTotalAmount;
+        }
+
+        public BigDecimal getDfaPartialAcceptedPercentage() {
+            return dfaPartialAcceptedPercentage;
+        }
+
+        public void setDfaPartialAcceptedPercentage(BigDecimal dfaPartialAcceptedPercentage) {
+            this.dfaPartialAcceptedPercentage = dfaPartialAcceptedPercentage;
+        }
+
+        public DFAGratuityPR getDfaGratuityPR() {
+            return this.dfaGratuityPR;
+        }
+
+        public void setDfaGratuityPR(final DFAGratuityPR dfaGratuityPR) {
+            this.dfaGratuityPR = dfaGratuityPR;
+        }
+
+    }
+
+    public static class SpecializationDegreeGratuityByAmountPerEctsPREditor extends SpecializationDegreeGratuityPREditor {
+
+        private Money specializationDegreeAmountPerEctsCredit;
+
+        private SpecializationDegreeGratuityByAmountPerEctsPREditor() {
+            super();
+        }
+
+        public Money getSpecializationDegreeAmountPerEctsCredit() {
+            return specializationDegreeAmountPerEctsCredit;
+        }
+
+        public void setSpecializationDegreeAmountPerEctsCredit(final Money specializationDegreeAmountPerEctsCredit) {
+            this.specializationDegreeAmountPerEctsCredit = specializationDegreeAmountPerEctsCredit;
+        }
+
+        @Override
+        public Object execute() {
+            return ((SpecializationDegreeGratuityByAmountPerEctsPR) getSpecializationDegreeGratuityPR()).edit(getBeginDate(),
+                    getSpecializationDegreeTotalAmount(), getSpecializationDegreeAmountPerEctsCredit(),
+                    getSpecializationDegreePartialAcceptedPercentage());
+        }
+
+        public static SpecializationDegreeGratuityByAmountPerEctsPREditor buildFrom(
+                final SpecializationDegreeGratuityByAmountPerEctsPR rule) {
+            final SpecializationDegreeGratuityByAmountPerEctsPREditor result =
+                    new SpecializationDegreeGratuityByAmountPerEctsPREditor();
+            init(rule, result);
+            result.setSpecializationDegreeAmountPerEctsCredit(rule.getSpecializationDegreeAmountPerEctsCredit());
+
+            return result;
+        }
+
+        static private void init(final SpecializationDegreeGratuityPR o1, final SpecializationDegreeGratuityPREditor o2) {
+            o2.setSpecializationDegreeGratuityPR(o1);
+            o2.setSpecializationDegreePartialAcceptedPercentage(o1.getSpecializationDegreePartialAcceptedPercentage());
+            o2.setSpecializationDegreeTotalAmount(o1.getSpecializationDegreeTotalAmount());
+        }
+    }
+
+    abstract protected static class SpecializationDegreeGratuityPREditor implements FactoryExecutor, Serializable {
+
+        static private final long serialVersionUID = -5454487291500203873L;
+
+        private DateTime beginDate;
+
+        private Money specializationDegreeTotalAmount;
+
+        private BigDecimal specializationDegreePartialAcceptedPercentage;
+
+        private SpecializationDegreeGratuityPR specializationDegreeGratuityPR;
+
+        protected SpecializationDegreeGratuityPREditor() {
+        }
+
+        public DateTime getBeginDate() {
+            return beginDate;
+        }
+
+        public void setBeginDate(DateTime beginDate) {
+            this.beginDate = beginDate;
+        }
+
+        public Money getSpecializationDegreeTotalAmount() {
+            return specializationDegreeTotalAmount;
+        }
+
+        public void setSpecializationDegreeTotalAmount(Money specializationDegreeTotalAmount) {
+            this.specializationDegreeTotalAmount = specializationDegreeTotalAmount;
+        }
+
+        public BigDecimal getSpecializationDegreePartialAcceptedPercentage() {
+            return specializationDegreePartialAcceptedPercentage;
+        }
+
+        public void setSpecializationDegreePartialAcceptedPercentage(BigDecimal specializationDegreePartialAcceptedPercentage) {
+            this.specializationDegreePartialAcceptedPercentage = specializationDegreePartialAcceptedPercentage;
+        }
+
+        public SpecializationDegreeGratuityPR getSpecializationDegreeGratuityPR() {
+            return specializationDegreeGratuityPR;
+        }
+
+        public void setSpecializationDegreeGratuityPR(SpecializationDegreeGratuityPR specializationDegreeGratuityPR) {
+            this.specializationDegreeGratuityPR = specializationDegreeGratuityPR;
         }
     }
 

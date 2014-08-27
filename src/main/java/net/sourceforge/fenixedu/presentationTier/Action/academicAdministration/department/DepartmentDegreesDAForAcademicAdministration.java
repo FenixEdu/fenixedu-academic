@@ -18,14 +18,16 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.department;
 
+import java.io.Serializable;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveDegreeFromDepartment;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Department.DepartmentDegreeBean;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminDCPApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -47,6 +49,38 @@ import pt.ist.fenixframework.FenixFramework;
         input = "/manageDepartmentDegrees.do?method=prepare")
 @Forwards(@Forward(name = "manageDepartmentDegrees", path = "/academicAdministration/department/manageDepartmentDegrees.jsp"))
 public class DepartmentDegreesDAForAcademicAdministration extends FenixDispatchAction {
+
+    public static class DepartmentDegreeBean implements FactoryExecutor, Serializable {
+
+        private Department department;
+        private Degree degree;
+
+        public Department getDepartment() {
+            return department;
+        }
+
+        public void setDepartment(final Department department) {
+            this.department = department;
+        }
+
+        public Degree getDegree() {
+            return degree;
+        }
+
+        public void setDegree(final Degree degree) {
+            this.degree = degree;
+        }
+
+        @Override
+        public Object execute() {
+            final Department department = getDepartment();
+            final Degree degree = getDegree();
+            if (department != null && degree != null) {
+                department.getDegreesSet().add(degree);
+            }
+            return null;
+        }
+    }
 
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
