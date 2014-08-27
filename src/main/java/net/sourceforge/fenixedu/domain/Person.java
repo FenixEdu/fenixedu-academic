@@ -324,7 +324,7 @@ public class Person extends Person_Base {
     @Override
     public void setFamilyNames(final String name) {
         ensureUserProfile();
-        getProfile().changeName(getProfile().getGivenNames(), null, getProfile().getDisplayName());
+        getProfile().changeName(getProfile().getGivenNames(), name, getProfile().getDisplayName());
     }
 
     @Deprecated
