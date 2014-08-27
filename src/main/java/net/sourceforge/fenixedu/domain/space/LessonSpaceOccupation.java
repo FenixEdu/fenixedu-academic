@@ -23,6 +23,7 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
@@ -204,12 +205,7 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
     @Override
     protected boolean overlaps(final Interval interval) {
-        for (final Interval lessonInterval : getLesson().getAllLessonIntervalsWithoutInstanceDates()) {
-            if (interval.overlaps(lessonInterval)) {
-                return true;
-            }
-        }
-        return false;
+        return getLesson().overlaps(interval);
     }
 
 }
