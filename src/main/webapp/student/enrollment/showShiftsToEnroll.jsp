@@ -168,6 +168,7 @@
 	</logic:notPresent>
 </logic:notPresent>
 
+<br/>
 <ul>
 	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registrationOID%>"><strong><bean:message bundle="STUDENT_RESOURCES"  key="button.finish" /></strong></html:link></li>
 </ul>
