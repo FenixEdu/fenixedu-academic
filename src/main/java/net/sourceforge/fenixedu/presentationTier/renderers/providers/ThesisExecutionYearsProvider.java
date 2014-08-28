@@ -22,7 +22,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -36,11 +35,7 @@ public class ThesisExecutionYearsProvider implements DataProvider {
     @Override
     public Object provide(Object source, Object currentValue) {
         SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(new ReverseComparator(ExecutionYear.COMPARATOR_BY_YEAR));
-
-        for (Thesis thesis : Bennu.getInstance().getThesesSet()) {
-            result.add(thesis.getEnrolment().getExecutionYear());
-        }
-
+        result.addAll(Bennu.getInstance().getExecutionYearsSet());
         return result;
     }
 
