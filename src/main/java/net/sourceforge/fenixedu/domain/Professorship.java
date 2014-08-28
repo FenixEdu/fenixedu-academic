@@ -34,13 +34,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
-import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -167,13 +164,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         }
         if (!getTeacherMasterDegreeServicesSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyTeacherMasterDegreeServices"));
-        }
-        if (getTeachingInquiry() != null) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasTeachingInquiry"));
-        }
-        if (!getStudentInquiriesTeachingResultsSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
-                    "error.remove.professorship.hasAnyStudentInquiriesTeachingResults"));
         }
         if (!getInquiryStudentTeacherAnswersSet().isEmpty()) {
             blockers.add(BundleUtil
@@ -303,29 +293,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
                 new TreeSet<SupportLesson>(SupportLesson.SUPPORT_LESSON_COMPARATOR_BY_HOURS_AND_WEEK_DAY);
         supportLessons.addAll(getSupportLessonsSet());
         return supportLessons;
-    }
-
-    public boolean isTeachingInquiriesToAnswer() {
-        final ExecutionCourse executionCourse = this.getExecutionCourse();
-        final InquiryResponsePeriod responsePeriod =
-                executionCourse.getExecutionPeriod().getInquiryResponsePeriod(InquiryResponsePeriodType.TEACHING);
-        if (responsePeriod == null || !responsePeriod.isOpen() || !executionCourse.isAvailableForInquiry()
-                || executionCourse.getStudentInquiriesCourseResultsSet().isEmpty()
-                || (!isResponsibleFor() && !hasAssociatedLessonsInTeachingServices())) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public StudentInquiriesTeachingResult getStudentInquiriesTeachingResult(final ExecutionDegree executionDegree,
-            final ShiftType shiftType) {
-        for (StudentInquiriesTeachingResult result : getStudentInquiriesTeachingResultsSet()) {
-            if (result.getExecutionDegree() == executionDegree && result.getShiftType() == shiftType) {
-                return result;
-            }
-        }
-        return null;
     }
 
     public boolean hasAssociatedLessonsInTeachingServices() {

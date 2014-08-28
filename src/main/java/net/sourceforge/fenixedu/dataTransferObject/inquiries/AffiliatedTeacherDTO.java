@@ -19,38 +19,34 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.oldInquiries;
+package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
-import java.io.Serializable;
+import net.sourceforge.fenixedu.domain.Person;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class QuestionChoice implements Serializable {
+public class AffiliatedTeacherDTO extends TeacherDTO {
 
-    private String value;
+    private final Person person;
 
-    private String label;
-
-    private boolean showLabel;
-
-    public QuestionChoice(String value, String label, boolean showLabel) {
-        this.value = value;
-        this.label = label;
-        this.showLabel = showLabel;
+    public AffiliatedTeacherDTO(Person person) {
+        this.person = person;
     }
 
-    public String getValue() {
-        return value;
+    @Override
+    public Person getTeacher() {
+        return person;
     }
 
-    public String getLabel() {
-        return label;
+    @Override
+    public String getName() {
+        return person.getName();
     }
 
-    public boolean isShowLabel() {
-        return showLabel;
+    @Override
+    public String getPersonID() {
+        return person.getExternalId();
     }
-
 }

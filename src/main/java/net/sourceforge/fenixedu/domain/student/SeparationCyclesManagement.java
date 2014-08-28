@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -52,7 +51,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -148,24 +146,10 @@ public class SeparationCyclesManagement {
         tryRemoveOldSecondCycle(oldSecondCycle);
         moveGratuityEventsInformation(oldStudentCurricularPlan, newStudentCurricularPlan);
         createAdministrativeOfficeFeeAndInsurance(newStudentCurricularPlan);
-        moveInquiriesRegistries(oldStudentCurricularPlan, newRegistration);
 
         markOldRegistrationWithConcludedState(oldStudentCurricularPlan);
 
         return newRegistration;
-    }
-
-    private void moveInquiriesRegistries(final StudentCurricularPlan oldStudentCurricularPlan, final Registration newRegistration) {
-        Set<ExecutionCourse> oldExecutionCourses = oldStudentCurricularPlan.getRegistration().getAttendingExecutionCoursesFor();
-        Set<ExecutionCourse> newExecutionCourses = newRegistration.getAttendingExecutionCoursesFor();
-        for (InquiriesRegistry inquiriesRegistry : oldStudentCurricularPlan.getRegistration()
-                .getAssociatedInquiriesRegistriesSet()) {
-            if (!oldExecutionCourses.contains(inquiriesRegistry.getExecutionCourse())
-                    && newExecutionCourses.contains(inquiriesRegistry.getExecutionCourse())
-                    && !newRegistration.hasInquiryResponseFor(inquiriesRegistry.getExecutionCourse())) {
-                inquiriesRegistry.setStudent(newRegistration);
-            }
-        }
     }
 
     private void moveExtraAttends(final StudentCurricularPlan oldStudentCurricularPlan,

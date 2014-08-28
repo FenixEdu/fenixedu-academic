@@ -46,9 +46,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary;
-import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -268,27 +265,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     @Override
     protected void disconnect() {
-        Iterator<OldInquiriesCoursesRes> oicrIterator = getAssociatedOldInquiriesCoursesResSet().iterator();
-        while (oicrIterator.hasNext()) {
-            OldInquiriesCoursesRes oicr = oicrIterator.next();
-            oicrIterator.remove();
-            oicr.delete();
-        }
-
-        Iterator<OldInquiriesTeachersRes> oitrIterator = getAssociatedOldInquiriesTeachersResSet().iterator();
-        while (oitrIterator.hasNext()) {
-            OldInquiriesTeachersRes oitr = oitrIterator.next();
-            oitrIterator.remove();
-            oitr.delete();
-        }
-
-        Iterator<OldInquiriesSummary> oisIterator = getAssociatedOldInquiriesSummariesSet().iterator();
-        while (oisIterator.hasNext()) {
-            OldInquiriesSummary ois = oisIterator.next();
-            oisIterator.remove();
-            ois.delete();
-        }
-
         // Iterator<Delegate> delegatesIterator = getDelegatesIterator();
         // while (delegatesIterator.hasNext()) {
         // Delegate delegate = delegatesIterator.next();
@@ -739,54 +715,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         }
 
         return res.toString();
-    }
-
-    public OldInquiriesCoursesRes getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(String code,
-            ExecutionSemester executionSemester) {
-        for (OldInquiriesCoursesRes oldInquiriesCoursesRes : this.getAssociatedOldInquiriesCoursesResSet()) {
-            if (oldInquiriesCoursesRes.getCourseCode().equalsIgnoreCase(code)
-                    && oldInquiriesCoursesRes.getExecutionPeriod().equals(executionSemester)) {
-                return oldInquiriesCoursesRes;
-            }
-        }
-        return null;
-    }
-
-    public List<OldInquiriesSummary> getOldInquiriesSummariesByExecutionPeriod(ExecutionSemester executionSemester) {
-        List<OldInquiriesSummary> result = new ArrayList<OldInquiriesSummary>();
-        for (OldInquiriesSummary oldInquiriesSummary : this.getAssociatedOldInquiriesSummariesSet()) {
-            if (oldInquiriesSummary.getExecutionPeriod().equals(executionSemester)) {
-                result.add(oldInquiriesSummary);
-            }
-        }
-        return result;
-    }
-
-    public List<OldInquiriesTeachersRes> getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCode(
-            ExecutionSemester executionSemester, Integer curricularYear, String courseCode) {
-        List<OldInquiriesTeachersRes> result = new ArrayList<OldInquiriesTeachersRes>();
-        for (OldInquiriesTeachersRes oldInquiriesTeachersRes : this.getAssociatedOldInquiriesTeachersResSet()) {
-            if (oldInquiriesTeachersRes.getExecutionPeriod().equals(executionSemester)
-                    && oldInquiriesTeachersRes.getCurricularYear().equals(curricularYear)
-                    && oldInquiriesTeachersRes.getCourseCode().equalsIgnoreCase(courseCode)) {
-                result.add(oldInquiriesTeachersRes);
-            }
-        }
-        return result;
-    }
-
-    public List<OldInquiriesTeachersRes> getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCodeAndTeacher(
-            ExecutionSemester executionSemester, Integer curricularYear, String courseCode, Teacher teacher) {
-        List<OldInquiriesTeachersRes> result = new ArrayList<OldInquiriesTeachersRes>();
-        for (OldInquiriesTeachersRes oldInquiriesTeachersRes : this.getAssociatedOldInquiriesTeachersResSet()) {
-            if (oldInquiriesTeachersRes.getExecutionPeriod().equals(executionSemester)
-                    && oldInquiriesTeachersRes.getCurricularYear().equals(curricularYear)
-                    && oldInquiriesTeachersRes.getCourseCode().equalsIgnoreCase(courseCode)
-                    && oldInquiriesTeachersRes.getTeacher().equals(teacher)) {
-                result.add(oldInquiriesTeachersRes);
-            }
-        }
-        return result;
     }
 
     public DegreeCurricularPlan getMostRecentDegreeCurricularPlan() {

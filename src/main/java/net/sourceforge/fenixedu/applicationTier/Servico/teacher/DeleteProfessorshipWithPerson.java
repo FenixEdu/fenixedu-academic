@@ -75,12 +75,8 @@ public class DeleteProfessorshipWithPerson extends AbstractModifyProfessorshipWi
             });
         }
 
-        if (!hasCredits && professorshipToDelete.getStudentInquiriesTeachingResultsSet().isEmpty()) {
-            professorshipToDelete.delete();
-        } else {
-            if (hasCredits) {
-                throw new DomainException("error.remove.professorship");
-            }
+        if (hasCredits) {
+            throw new DomainException("error.remove.professorship");
         }
         return Boolean.TRUE;
     }

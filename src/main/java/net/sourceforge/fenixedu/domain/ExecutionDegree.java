@@ -163,7 +163,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
         if (!(getSchoolClassesSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty()
-                && getAssociatedInquiriesCoursesByCourseSet().isEmpty() && getAssociatedInquiriesCoursesByStudentSet().isEmpty()
                 && getStudentCandidaciesSet().isEmpty() && getShiftDistributionEntriesSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "execution.degree.cannot.be.deleted"));
         }
@@ -1032,15 +1031,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public AcademicInterval getAcademicInterval() {
         return getExecutionYear().getAcademicInterval();
-    }
-
-    public CoordinatorExecutionDegreeCoursesReport getExecutionDegreeCoursesReports(final ExecutionInterval executionInterval) {
-        for (final CoordinatorExecutionDegreeCoursesReport coordinatorExecutionDegreeCoursesReport : getExecutionDegreeCoursesReportsSet()) {
-            if (coordinatorExecutionDegreeCoursesReport.getExecutionInterval() == executionInterval) {
-                return coordinatorExecutionDegreeCoursesReport;
-            }
-        }
-        return null;
     }
 
     public OccupationPeriod getPeriodLessons(final ExecutionSemester executionSemester) {

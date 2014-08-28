@@ -215,29 +215,6 @@ public class YearDelegate extends YearDelegate_Base {
         return result;
     }
 
-    public Collection<ExecutionCourse> getAnsweredInquiriesExecutionCourses(final ExecutionSemester executionSemester) {
-        final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-        for (YearDelegateCourseInquiry yearDelegateCourseInquiry : getYearDelegateCourseInquiriesSet()) {
-            final ExecutionCourse executionCourse = yearDelegateCourseInquiry.getExecutionCourse();
-            if (executionCourse.getExecutionPeriod() == executionSemester) {
-                result.add(executionCourse);
-            }
-        }
-        return result;
-    }
-
-    public Collection<ExecutionCourse> getNotAnsweredInquiriesExecutionCourses(final ExecutionSemester executionSemester) {
-        final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-        final Collection<ExecutionCourse> answeredInquiriesExecutionCourses =
-                getAnsweredInquiriesExecutionCourses(executionSemester);
-        for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
-            if (executionCourse.isAvailableForInquiry() && !answeredInquiriesExecutionCourses.contains(executionCourse)) {
-                result.add(executionCourse);
-            }
-        }
-        return result;
-    }
-
     public Person getPerson() {
         return getRegistration().getPerson();
     }

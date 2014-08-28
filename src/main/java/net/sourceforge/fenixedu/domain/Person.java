@@ -90,7 +90,6 @@ import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
@@ -98,7 +97,6 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -3219,33 +3217,6 @@ public class Person extends Person_Base {
             }
         }
         return false;
-    }
-
-    public boolean hasCoordinationExecutionDegreeReportsToAnswer() {
-        return !getCoordinationExecutionDegreeReportsToAnswer().isEmpty();
-    }
-
-    public Collection<ExecutionDegree> getCoordinationExecutionDegreeReportsToAnswer() {
-
-        final Collection<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-        final InquiryResponsePeriod responsePeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.COORDINATOR);
-        if (responsePeriod != null) {
-            for (final Coordinator coordinator : getCoordinatorsSet()) {
-                if (coordinator.isResponsible()
-                        && !coordinator.getExecutionDegree().getDegreeType().isThirdCycle()
-                        && coordinator.getExecutionDegree().getExecutionYear().getExecutionPeriodsSet()
-                                .contains(responsePeriod.getExecutionPeriod())) {
-                    final CoordinatorExecutionDegreeCoursesReport report =
-                            coordinator.getExecutionDegree()
-                                    .getExecutionDegreeCoursesReports(responsePeriod.getExecutionPeriod());
-                    if (report == null || report.isEmpty()) {
-                        result.add(coordinator.getExecutionDegree());
-                    }
-                }
-
-            }
-        }
-        return result;
     }
 
     public Professorship getProfessorshipByExecutionCourse(final ExecutionCourse executionCourse) {

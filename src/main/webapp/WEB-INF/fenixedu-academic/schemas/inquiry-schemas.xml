@@ -18,30 +18,6 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod.edit"
-		type="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod" bundle="INQUIRIES_RESOURCES">
-	<slot name="begin"/>
-	<slot name="end"/>
-	<slot name="introduction" layout="rich-text">
-   		<property name="safe" value="true" />
-   		<property name="columns" value="100"/>
-   		<property name="rows" value="30"/>
-   		<property name="config" value="advanced" />
-	</slot>
-</schema>
-<schema name="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod.create"
-		type="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod" bundle="INQUIRIES_RESOURCES">
-	<slot name="executionPeriod" hidden="true"/>
-	<slot name="type" hidden="true"/>
-	<slot name="begin"/>
-	<slot name="end"/>
-	<slot name="introduction" layout="rich-text">
-   		<property name="safe" value="true" />
-   		<property name="columns" value="100"/>
-   		<property name="rows" value="30"/>
-   		<property name="config" value="advanced" />
-	</slot>
-</schema>
 
 <schema name="net.sourceforge.fenixedu.domain.inquiry.SelectInquiryResponsePeriod.edit"
 		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryDefinitionPeriodBean" bundle="INQUIRIES_RESOURCES">
@@ -73,17 +49,6 @@
 <schema name="inquiryQuestionDTO.answer"
 		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryQuestionDTO" >	
 	<slot name="responseValue" />
-</schema>
-
-<schema name="inquiriesQuestion.answer"
-		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestion" >
-	<slot name="value" />
-</schema>
-
-<schema name="InquiriesBlock.answer"
-		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesBlock" >
-	<slot name="questions" layout="tabular-editable">
-	</slot>
 </schema>
 
 <schema name="questionResultsSummaryBean.input"
@@ -162,76 +127,4 @@
             <property name="upperBound" value="42"/>
         </validator>			
 	</slot>
-</schema>
-
-<schema name="teacherInquiry.selectShiftTypes"
-		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeacherInquiryDTO" bundle="INQUIRIES_RESOURCES">
-	<slot name="selectedShifts" layout="option-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ShiftTypesProvider" />
-	</slot>
-</schema>
-
-<schema name="studentInquiry.uploadTeachingResults"
-		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesTeachingResultsBean" bundle="INQUIRIES_RESOURCES">
-	<slot name="file" key="label.studentInquiry.uploadTeachingResults.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="resultsDate" key="label.studentInquiry.uploadTeachingResults.resultsDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker"/>
-	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionCourseHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="keyExecutionDegreeHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionDegreeHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="keyTeacherHeader" key="label.studentInquiry.uploadTeachingResults.keyTeacherHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="shiftTypeHeader" key="label.studentInquiry.uploadTeachingResults.shiftTypeHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />	
-	<slot name="unsatisfactoryResultsAssiduityHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsAssiduityHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="unsatisfactoryResultsPedagogicalCapacityHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsPedagogicalCapacityHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="unsatisfactoryResultsPresencialLearningHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsPresencialLearningHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="unsatisfactoryResultsStudentInteractionHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsStudentInteractionHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="internalDegreeDisclosureHeader" key="label.studentInquiry.uploadTeachingResults.internalDegreeDisclosureHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-</schema>
-
-<schema name="studentInquiry.deleteTeachingResults"
-		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesTeachingResultsBean" bundle="INQUIRIES_RESOURCES">	
-	<slot name="resultsDate" key="label.studentInquiry.uploadTeachingResults.resultsDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker"/>
-	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.deleteResults.keyExecutionCourse"/>	
-</schema>
-
-<schema name="studentInquiry.uploadCourseResults"
-		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesCourseResultsBean" bundle="INQUIRIES_RESOURCES">
-	<slot name="file" key="label.studentInquiry.uploadTeachingResults.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="resultsDate" key="label.studentInquiry.uploadTeachingResults.resultsDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker"/>
-	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionCourseHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="keyExecutionDegreeHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionDegreeHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="unsatisfactoryResultsCUEvaluationHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsCUEvaluationHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="unsatisfactoryResultsCUOrganizationHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsCUOrganizationHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-</schema>
-
-<schema name="studentInquiry.deleteCourseResults"
-		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesCourseResultsBean" bundle="INQUIRIES_RESOURCES">	
-	<slot name="resultsDate" key="label.studentInquiry.uploadTeachingResults.resultsDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker"/>
-	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.deleteResults.keyExecutionCourse"/>	
-</schema>
-
-<schema name="studentInquiriesCourseResult.courseResultsCoordinatorComment" 
-		type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult" bundle="INQUIRIES_RESOURCES">
-    <slot name="courseResultsCoordinatorComment" key="label.inquiries.courseResults.coordinatorComments" layout="longText">
-    	<property name="columns" value="50" />
-    	<property name="rows" value="10" />
-    </slot>		
-</schema>
-
-<schema name="executionDegree.coordinatorExecutionDegreeCoursesReport" 
-		type="net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport" bundle="INQUIRIES_RESOURCES">
-    <slot name="globalComment" layout="longText" key="label.coordinatorExecutionDegreeCoursesReport.globalComment">
-    	<property name="columns" value="50" />
-    	<property name="rows" value="10" />
-    </slot>
-    <slot name="stepsToImproveResults" layout="longText" key="label.coordinatorExecutionDegreeCoursesReport.stepsToImproveResults">
-    	<property name="columns" value="50" />
-    	<property name="rows" value="10" />
-    </slot>
-    <slot name="teachingBestPracticesDevelopedByTeachers" layout="longText" key="label.coordinatorExecutionDegreeCoursesReport.teachingBestPracticesDevelopedByTeachers">
-    	<property name="columns" value="50" />
-    	<property name="rows" value="10" />
-    </slot>
-    <slot name="bolonhaProcessImplementationReflection" layout="longText" key="label.coordinatorExecutionDegreeCoursesReport.bolonhaProcessImplementationReflection">
-    	<property name="columns" value="50" />
-    	<property name="rows" value="10" />
-    </slot>            
 </schema>

@@ -87,12 +87,6 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
     }
 
     public void delete() {
-
-        if (!getAssociatedInquiriesTeachersSet().isEmpty()) {
-            throw new DomainException("error.NonAffiliatedTeacher.hasAnyAssociatedInquiriesTeachers",
-                    Unit.getInstitutionAcronym());
-        }
-
         setRootDomainObject(null);
         setInstitutionUnit(null);
         getExecutionCoursesSet().clear();

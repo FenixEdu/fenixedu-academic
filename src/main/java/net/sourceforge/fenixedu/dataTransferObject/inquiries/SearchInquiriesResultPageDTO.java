@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.oldInquiries;
+package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;

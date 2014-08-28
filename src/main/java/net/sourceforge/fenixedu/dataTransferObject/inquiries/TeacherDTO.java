@@ -19,7 +19,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.dataTransferObject.oldInquiries;
+package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 

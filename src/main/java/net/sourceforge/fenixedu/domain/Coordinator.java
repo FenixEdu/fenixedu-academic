@@ -78,29 +78,11 @@ public class Coordinator extends Coordinator_Base {
     }
 
     public void delete() throws DomainException {
-
-        checkRulesToDelete();
         setExecutionDegree(null);
         setPerson(null);
-        getExecutionDegreeCoursesReportsSet().clear();
-        getStudentInquiriesCourseResultsSet().clear();
 
         setRootDomainObject(null);
         super.deleteDomainObject();
-    }
-
-    private void checkRulesToDelete() {
-        if (!getExecutionDegreeCoursesReportsSet().isEmpty()) {
-            for (CoordinatorExecutionDegreeCoursesReport report : getExecutionDegreeCoursesReportsSet()) {
-                if (!report.isEmpty()) {
-                    throw new DomainException("error.Coordinator.cannot.delete.because.already.has.written.comments");
-                }
-            }
-        }
-
-        if (!getStudentInquiriesCourseResultsSet().isEmpty()) {
-            throw new DomainException("error.Coordinator.cannot.delete.because.already.has.written.comments");
-        }
     }
 
     public boolean isResponsible() {
@@ -159,7 +141,6 @@ public class Coordinator extends Coordinator_Base {
             CoordinatorLog.createCoordinatorLog(new DateTime(), OperationType.CHANGERESPONSIBLE_TRUE, personMakingAction, this);
             this.setAsResponsible();
         } else if (operationType.compareTo(OperationType.REMOVE) == 0) {
-            checkRulesToDelete();
             CoordinatorLog.createCoordinatorLog(new DateTime(), OperationType.REMOVE, personMakingAction, this);
             this.removeCoordinator();
         }

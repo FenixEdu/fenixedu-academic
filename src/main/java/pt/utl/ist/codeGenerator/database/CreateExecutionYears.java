@@ -22,7 +22,6 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
@@ -91,12 +90,6 @@ public class CreateExecutionYears {
         } else {
             executionPeriod.setState(PeriodState.CURRENT);
         }
-
-        createInquiryResponsePeriods(executionPeriod);
-    }
-
-    private static void createInquiryResponsePeriods(final ExecutionSemester executionPeriod) {
-        new InquiryResponsePeriod(executionPeriod, executionPeriod.getBeginDate(), executionPeriod.getEndDate());
     }
 
     private static YearMonthDay getStartYearMonthDay(final ExecutionYear executionYear, final int semester) {

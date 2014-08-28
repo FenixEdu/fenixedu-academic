@@ -16,33 +16,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-/**
- * 
- */
-package net.sourceforge.fenixedu.dataTransferObject.oldInquiries;
+package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
-import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import pt.ist.fenixframework.FenixFramework;
 
-/**
- * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
- */
-public class NonAffiliatedTeacherDTO extends TeacherDTO {
+public class ViewInquiriesResultPageDTO extends SearchInquiriesResultPageDTO {
 
-    private NonAffiliatedTeacher nonAffiliatedTeacher;
+    private String degreeCurricularPlanID;
 
-    public NonAffiliatedTeacherDTO(NonAffiliatedTeacher nonAffiliatedTeacher) {
-        this.nonAffiliatedTeacher = nonAffiliatedTeacher;
+    public String getDegreeCurricularPlanID() {
+        return degreeCurricularPlanID;
     }
 
-    @Override
-    public NonAffiliatedTeacher getTeacher() {
-        return nonAffiliatedTeacher;
+    public void setDegreeCurricularPlanID(String degreeCurricularPlanID) {
+        this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
-    @Override
-    public String getName() {
-        return getTeacher().getName();
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        final String degreeCurricularPlanID = getDegreeCurricularPlanID();
+        return FenixFramework.getDomainObject(degreeCurricularPlanID);
     }
 
 }

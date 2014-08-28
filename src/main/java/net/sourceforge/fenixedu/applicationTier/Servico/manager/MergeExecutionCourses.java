@@ -54,8 +54,6 @@ import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
@@ -149,13 +147,6 @@ public class MergeExecutionCourses {
     }
 
     private void copyInquiries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
-        for (final InquiriesCourse inquiriesCourse : executionCourseFrom.getAssociatedInquiriesCoursesSet()) {
-            inquiriesCourse.setExecutionCourse(executionCourseTo);
-        }
-        for (final InquiriesRegistry inquiriesRegistry : executionCourseFrom.getAssociatedInquiriesRegistriesSet()) {
-            inquiriesRegistry.setExecutionCourse(executionCourseTo);
-        }
-        //new QUC model
         for (final StudentInquiryRegistry studentInquiryRegistry : executionCourseFrom.getStudentsInquiryRegistriesSet()) {
             studentInquiryRegistry.setExecutionCourse(executionCourseTo);
         }

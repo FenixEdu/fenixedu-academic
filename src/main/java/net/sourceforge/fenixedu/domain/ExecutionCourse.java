@@ -58,8 +58,6 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
-import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
-import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
@@ -508,18 +506,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-        if (!getAssociatedInquiriesCoursesSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
-        }
-        if (!getAssociatedInquiriesRegistriesSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
-        }
-        if (!getStudentInquiriesCourseResultsSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
-        }
-        if (!getYearDelegateCourseInquiriesSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
-        }
         if (!getAssociatedSummariesSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
         }
@@ -2282,34 +2268,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
                 executionDegree.getDegreeCurricularPlan(), curricularYear, name);
-    }
-
-    public StudentInquiriesCourseResult getStudentInquiriesCourseResult(ExecutionDegree executionDegree) {
-        for (StudentInquiriesCourseResult studentInquiriesCourseResult : getStudentInquiriesCourseResultsSet()) {
-            if (studentInquiriesCourseResult.getExecutionDegree() == executionDegree) {
-                return studentInquiriesCourseResult;
-            }
-        }
-        return null;
-    }
-
-    public int getAnsweredTeachingInquiriesCount() {
-        int answeredTeachingInquiries = 0;
-        for (Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.getTeachingInquiry() != null) {
-                answeredTeachingInquiries++;
-            }
-        }
-        return answeredTeachingInquiries;
-    }
-
-    public TeachingInquiry getResponsibleTeachingInquiry() {
-        for (Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.isResponsibleFor()) {
-                return professorship.getTeachingInquiry();
-            }
-        }
-        return null;
     }
 
     public boolean isSplittable() {

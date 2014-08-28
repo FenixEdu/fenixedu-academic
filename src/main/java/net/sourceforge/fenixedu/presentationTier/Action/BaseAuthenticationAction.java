@@ -82,8 +82,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
                 return handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, httpSession);
             } else if (isRegentAndHasInquiriesToRespond(userView)) {
                 return handleSessionCreationAndForwardToRegentInquiriesResponseQuestion(request, userView, httpSession);
-            } else if (isCoordinatorAndHasReportsToRespond(userView)) {
-                return handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(request, userView, httpSession);
             } else if (isStudentAndHasFirstTimeCycleInquiryToRespond(userView)) {
                 return handleSessionCreationAndForwardToFirstTimeCycleInquiry(request, userView, httpSession);
             } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
@@ -230,13 +228,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return false;
     }
 
-    private boolean isCoordinatorAndHasReportsToRespond(User userView) {
-        if (userView.getPerson().hasRole(RoleType.COORDINATOR)) {
-            return userView.getPerson().hasCoordinationExecutionDegreeReportsToAnswer();
-        }
-        return false;
-    }
-
     private boolean isStudentAndHasQucInquiriesToRespond(final User userView) {
         if (userView.getPerson().hasRole(RoleType.STUDENT)) {
             final Student student = userView.getPerson().getStudent();
@@ -326,10 +317,4 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             User userView, HttpSession session) {
         return new ActionForward("/respondToRegentInquiriesQuestion.do?method=showQuestion");
     }
-
-    private ActionForward handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(HttpServletRequest request,
-            User userView, HttpSession session) {
-        return new ActionForward("/respondToCoordinationExecutionDegreeReportsQuestion.do?method=showQuestion");
-    }
-
 }

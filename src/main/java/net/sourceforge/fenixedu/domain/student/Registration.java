@@ -86,7 +86,6 @@ import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
@@ -3378,15 +3377,6 @@ public class Registration extends Registration_Base {
         return degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
                 || degreeType == DegreeType.BOLONHA_MASTER_DEGREE
                 || ExecutionCourse.THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.contains(getDegree().getSigla().toLowerCase());
-    }
-
-    final public boolean hasInquiryResponseFor(final ExecutionCourse executionCourse) {
-        for (final InquiriesRegistry inquiriesRegistry : getAssociatedInquiriesRegistriesSet()) {
-            if (inquiriesRegistry.getExecutionCourse() == executionCourse) {
-                return true;
-            }
-        }
-        return false;
     }
 
     final public StudentCurricularPlan getLastStudentDegreeCurricularPlansByDegree(Degree degree) {

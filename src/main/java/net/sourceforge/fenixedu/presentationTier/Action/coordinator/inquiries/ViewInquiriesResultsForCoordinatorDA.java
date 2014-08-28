@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorInquiryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorResultsBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.ViewInquiriesResultPageDTO;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.ViewInquiriesResultPageDTO;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -47,7 +47,6 @@ import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
@@ -60,7 +59,6 @@ import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -70,13 +68,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewInquiriesResults", module = "coordinator", formBeanClass = ViewInquiriesResultPageDTO.class,
         functionality = DegreeCoordinatorIndex.class)
-@Forwards({ @Forward(name = "inquiryResults", path = "/coordinator/inquiries/viewInquiriesResults.jsp"),
-        @Forward(name = "curricularUnitSelection", path = "/coordinator/inquiries/curricularUnitSelection.jsp"),
-        @Forward(name = "showFilledTeachingInquiry", path = "/inquiries/showFilledTeachingInquiry.jsp"),
-        @Forward(name = "showFilledTeachingInquiry_v2", path = "/inquiries/showFilledTeachingInquiry_v2.jsp"),
-        @Forward(name = "showFilledDelegateInquiry", path = "/inquiries/showFilledDelegateInquiry.jsp"),
-        @Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp"),
-        @Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp"),
+@Forwards({ @Forward(name = "curricularUnitSelection", path = "/coordinator/inquiries/curricularUnitSelection.jsp"),
         @Forward(name = "coordinatorUCView", path = "/coordinator/inquiries/coordinatorUCView.jsp"),
         @Forward(name = "coordinatorInquiry", path = "/coordinator/inquiries/coordinatorInquiry.jsp") })
 public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA {
@@ -104,9 +96,8 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
     }
 
     private ExecutionSemester getMostRecentExecutionPeriodWithResults() {
-        ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
         ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionSemester();
-        while (oldQucExecutionSemester.isBefore(executionPeriod)) {
+        while (executionPeriod != null) {
             if (!executionPeriod.getInquiryResultsSet().isEmpty()) {
                 return executionPeriod;
             }
@@ -123,11 +114,6 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
         final ExecutionSemester executionSemester = resultPageDTO.getExecutionSemester();
         if (executionSemester == null) {
             return super.prepare(actionMapping, actionForm, request, response);
-        } else {
-            ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
-            if (!executionSemester.isAfter(oldQucExecutionSemester)) {
-                return super.selectexecutionSemester(actionMapping, actionForm, request, response);
-            }
         }
 
         Map<Integer, List<CurricularCourseResumeResult>> coursesResultResumeMap =
@@ -341,47 +327,4 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
         DegreeCoordinatorIndex.setCoordinatorContext(request);
         return selectexecutionSemester(actionMapping, actionForm, request, response);
     }
-
-    public ActionForward saveInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        final CoordinatorInquiryBean coordinatorInquiryBean = getRenderedObject("coordinatorInquiryBean");
-
-        String validationResult = coordinatorInquiryBean.validateInquiry();
-        if (!Boolean.valueOf(validationResult)) {
-            RenderUtils.invalidateViewState();
-            addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
-
-            request.setAttribute("coordinatorInquiryBean", coordinatorInquiryBean);
-            request.setAttribute("executionPeriod", coordinatorInquiryBean.getExecutionSemester());
-            request.setAttribute("executionCourse", coordinatorInquiryBean.getCoordinator().getExecutionDegree().getDegree()
-                    .getSigla());
-            return actionMapping.findForward("coordinatorInquiry");
-        }
-
-        RenderUtils.invalidateViewState("coordinatorInquiry");
-        coordinatorInquiryBean.saveInquiry();
-
-        ((ViewInquiriesResultPageDTO) actionForm).setExecutionSemester(coordinatorInquiryBean.getExecutionSemester());
-        ((ViewInquiriesResultPageDTO) actionForm).setDegreeCurricularPlanID(coordinatorInquiryBean.getCoordinator()
-                .getExecutionDegree().getDegreeCurricularPlan().getExternalId());
-        request.setAttribute("degreeCurricularPlanID", coordinatorInquiryBean.getCoordinator().getExecutionDegree()
-                .getDegreeCurricularPlan().getExternalId().toString());
-
-        DegreeCoordinatorIndex.setCoordinatorContext(request);
-        return selectexecutionSemester(actionMapping, actionForm, request, response);
-    }
-
-    @Override
-    protected boolean coordinatorCanComment(final ExecutionDegree executionDegree, final ExecutionSemester executionPeriod) {
-        if (executionDegree.getDegreeType().isThirdCycle()) {
-            return false;
-        }
-
-        final InquiryResponsePeriod coordinatorReportResponsePeriod = executionPeriod.getCoordinatorReportResponsePeriod();
-        final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
-        return coordinator != null && coordinator.isResponsible() && coordinatorReportResponsePeriod != null
-                && coordinatorReportResponsePeriod.isOpen();
-    }
-
 }

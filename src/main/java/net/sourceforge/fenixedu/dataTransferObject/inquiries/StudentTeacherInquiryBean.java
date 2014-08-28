@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeacherDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;

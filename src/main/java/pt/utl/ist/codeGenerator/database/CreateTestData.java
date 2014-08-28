@@ -105,7 +105,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -252,12 +251,6 @@ public class CreateTestData {
             } else {
                 executionPeriod.setState(PeriodState.CURRENT);
             }
-
-            createInquiryResponsePeriods(executionPeriod);
-        }
-
-        private void createInquiryResponsePeriods(final ExecutionSemester executionPeriod) {
-            new InquiryResponsePeriod(executionPeriod, executionPeriod.getBeginDate(), executionPeriod.getEndDate());
         }
 
         private YearMonthDay getStartYearMonthDay(final ExecutionYear executionYear, final int semester) {

@@ -132,14 +132,6 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
         return getDescription();
     }
 
-    public Date getInquiryResponseBegin() {
-        return getExecutionPeriod().getInquiryResponsePeriod().getBegin().toDate();
-    }
-
-    public Date getInquiryResponseEnd() {
-        return getExecutionPeriod().getInquiryResponsePeriod().getEnd().toDate();
-    }
-
     @Override
     public void copyFromDomain(DomainObject domainObject) {
         throw new Error("Method should not be called!");
