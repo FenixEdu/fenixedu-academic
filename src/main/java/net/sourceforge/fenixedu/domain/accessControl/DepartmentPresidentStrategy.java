@@ -18,31 +18,24 @@
  */
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Objects;
 import java.util.Set;
-
-import net.sourceforge.fenixedu.domain.Department;
+import java.util.stream.Collectors;
 
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-
-import com.google.common.base.Function;
-import com.google.common.base.Predicates;
-import com.google.common.collect.FluentIterable;
+import org.joda.time.DateTime;
 
 @GroupOperator("departmentPresident")
-public class DepartmentPresidentStrategy extends GroupStrategy {
+public class DepartmentPresidentStrategy extends FenixGroupStrategy {
 
     private static final long serialVersionUID = -3153992434314606564L;
 
     @Override
     public Set<User> getMembers() {
-        return FluentIterable.from(Bennu.getInstance().getDepartmentsSet()).transform(new Function<Department, User>() {
-            @Override
-            public User apply(Department input) {
-                return input.getCurrentDepartmentPresident().getUser();
-            }
-        }).filter(Predicates.notNull()).toSet();
+        return Bennu.getInstance().getDepartmentsSet().stream().map(d -> d.getCurrentDepartmentPresident().getUser())
+                .filter(Objects::nonNull).collect(Collectors.toSet());
     }
 
     @Override
@@ -55,4 +48,13 @@ public class DepartmentPresidentStrategy extends GroupStrategy {
                         .isCurrentDepartmentPresident(user.getPerson());
     }
 
+    @Override
+    public Set<User> getMembers(DateTime when) {
+        return getMembers();
+    }
+
+    @Override
+    public boolean isMember(User user, DateTime when) {
+        return isMember(user);
+    }
 }

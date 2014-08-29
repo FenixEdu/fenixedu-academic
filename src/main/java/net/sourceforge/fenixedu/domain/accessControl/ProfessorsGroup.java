@@ -25,13 +25,14 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.joda.time.DateTime;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
 
 @GroupOperator("professors")
-public final class ProfessorsGroup extends GroupStrategy {
+public final class ProfessorsGroup extends FenixGroupStrategy {
 
     private static final long serialVersionUID = -7099165263747393201L;
 
@@ -50,4 +51,13 @@ public final class ProfessorsGroup extends GroupStrategy {
         return user != null && user.getPerson() != null && !user.getPerson().getProfessorshipsSet().isEmpty();
     }
 
+    @Override
+    public Set<User> getMembers(DateTime when) {
+        return getMembers();
+    }
+
+    @Override
+    public boolean isMember(User user, DateTime when) {
+        return isMember(user);
+    }
 }

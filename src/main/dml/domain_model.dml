@@ -481,13 +481,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     internalizeWith importFromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupStrategy {
-    externalizeWith {
-        String externalize();
-    }
-    internalizeWith strategyForType();
-}
-
 /*
 *
 * Class definitions
@@ -6611,22 +6604,16 @@ class Installation {
 	String instituitionEmailDomain;
 }
 
-class accessControl.FenixPersistentGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+class accessControl.PersistentRoleGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentRoleGroup extends accessControl.FenixPersistentGroup;
-
-class accessControl.FenixPredicateGroup extends accessControl.FenixPersistentGroup;
-
-class accessControl.StrategyBasedGroup extends accessControl.FenixPredicateGroup {
-    protected GroupStrategy strategy;
-}
+class accessControl.FenixPredicateGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentStudentGroup extends accessControl.FenixPredicateGroup {
     public DegreeType degreeType;
     public CycleType cycle;
 }
 
-class accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentStudentSharingDegreeOfExecutionCourseGroup extends accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup;
 
@@ -6634,9 +6621,9 @@ class accessControl.PersistentStudentSharingDegreeOfCompetenceOfExecutionCourseG
 
 class accessControl.PersistentTeacherResponsibleOfExecutionCourseGroup extends accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup;
 
-class accessControl.PersistentTeacherGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentTeacherGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentScientificCommissionGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentScientificCommissionGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentCoordinatorGroup extends accessControl.FenixPredicateGroup {
     public DegreeType degreeType;
@@ -6658,45 +6645,45 @@ class accessControl.PersistentNotUpdatedAlumniInfoForSpecificDaysGroup extends a
     public Boolean checkPersonalDataNotUpdated;
 }
 
-class accessControl.PersistentStudentGroupGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentStudentGroupGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentProjectDepartmentGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentProjectDepartmentGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentGuidingsAndAssistantsOfPhdGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentGuidingsAndAssistantsOfPhdGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentCerimonyInquiryGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentCerimonyInquiryGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentStudentsConcludedInExecutionYearGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentStudentsConcludedInExecutionYearGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentGroupingGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentGroupingGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentDelegatesGroup extends accessControl.FenixPredicateGroup {
     public FunctionType function;
 }
 
-class accessControl.PersistentDelegateStudentsGroup extends accessControl.FenixPersistentGroup {
+class accessControl.PersistentDelegateStudentsGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
     public FunctionType type;
 }
 
-class accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentTeachersWithGradesToSubmitGroup extends accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup;
 
 class accessControl.PersistentTeachersWithMarkSheetsToConfirmGroup extends accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup;
 
-class accessControl.PersistentPersonsInFunctionGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentPersonsInFunctionGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentUnitGroup extends accessControl.FenixPersistentGroup {
+class accessControl.PersistentUnitGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
     public AccountabilityTypeEnum relationType;
     public FunctionType relationFunctionType;
     public Boolean includeSubUnits (REQUIRED);
 }
 
-class accessControl.PersistentVigilancyGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentVigilancyGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentThesisReadersGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentThesisReadersGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentCampusEmployeeGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentCampusEmployeeGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentAlumniGroup extends accessControl.FenixPredicateGroup;
 
@@ -6705,7 +6692,7 @@ class accessControl.PersistentProfessorshipsGroup extends accessControl.FenixPre
 	public AcademicPeriod onCurrentPeriod (REQUIRED);
 }
 
-class accessControl.PersistentMembersLinkGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentMembersLinkGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 
 

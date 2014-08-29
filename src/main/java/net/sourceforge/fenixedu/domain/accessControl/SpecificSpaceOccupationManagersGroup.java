@@ -11,9 +11,10 @@ import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.spaces.domain.Space;
+import org.joda.time.DateTime;
 
 @GroupOperator("specificSpaceOccupationManagersGroup")
-public class SpecificSpaceOccupationManagersGroup extends GroupStrategy {
+public class SpecificSpaceOccupationManagersGroup extends FenixGroupStrategy {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,5 +36,15 @@ public class SpecificSpaceOccupationManagersGroup extends GroupStrategy {
             }
         }
         return false;
+    }
+
+    @Override
+    public Set<User> getMembers(DateTime when) {
+        return getMembers();
+    }
+
+    @Override
+    public boolean isMember(User user, DateTime when) {
+        return isMember(user);
     }
 }
