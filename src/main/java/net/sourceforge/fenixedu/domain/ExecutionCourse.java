@@ -83,7 +83,7 @@ import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.I18N;
@@ -1248,7 +1248,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
         RoleType roleType = RoleType.MANAGER;
-        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), NobodyGroup.get(),
+        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), AnyoneGroup.get(),
                 RoleGroup.get(roleType), ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
                 ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC, ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
     }
@@ -2743,6 +2743,5 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 //      }
 //      return false;
 //  }
-
 
 }
