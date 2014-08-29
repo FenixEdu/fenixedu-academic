@@ -39,7 +39,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.UnitFile;
@@ -871,12 +870,6 @@ public class Unit extends Unit_Base {
             }
         }
         return examCoordinators;
-    }
-
-    @Deprecated
-    @Override
-    public PartyClassification getPartyClassification() {
-        return PartyClassification.UNIT;
     }
 
     public static Unit findFirstExternalUnitByName(final String unitName) {

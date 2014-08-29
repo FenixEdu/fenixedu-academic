@@ -118,7 +118,6 @@ import net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
@@ -126,7 +125,6 @@ import net.sourceforge.fenixedu.domain.research.Researcher;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
@@ -2290,39 +2288,6 @@ public class Person extends Person_Base {
         return getStudent() != null ? getStudent().getRegistrationsSet() : Collections.EMPTY_SET;
     }
 
-    @Deprecated
-    @Override
-    public PartyClassification getPartyClassification() {
-        final Teacher teacher = getTeacher();
-        if (teacher != null) {
-            final ExecutionSemester actualExecutionSemester = ExecutionSemester.readActualExecutionSemester();
-            if (!teacher.isInactive(actualExecutionSemester) && !teacher.isMonitor(actualExecutionSemester)) {
-                return PartyClassification.TEACHER;
-            }
-        }
-        if (getEmployee() != null && getEmployee().isActive()) {
-            return PartyClassification.EMPLOYEE;
-        }
-        if (getPersonRole(RoleType.GRANT_OWNER) != null && getEmployee() != null) {
-            final PersonContractSituation currentGrantOwnerContractSituation =
-                    getPersonProfessionalData() != null ? getPersonProfessionalData()
-                            .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
-            if (currentGrantOwnerContractSituation != null) {
-                return PartyClassification.GRANT_OWNER;
-            }
-        }
-        if (getResearcher() != null && getResearcher().isActiveContractedResearcher()) {
-            return PartyClassification.RESEARCHER;
-        }
-        if (getStudent() != null) {
-            final DegreeType degreeType = getStudent().getMostSignificantDegreeType();
-            if (degreeType != null) {
-                return PartyClassification.getClassificationByDegreeType(degreeType);
-            }
-        }
-        return PartyClassification.PERSON;
-    }
-
     public Set<Career> getCareersByType(final CareerType type) {
         return getCareersByTypeAndInterval(type, null);
     }
@@ -3033,27 +2998,6 @@ public class Person extends Person_Base {
 
     public boolean isPedagogicalCouncilMember() {
         return getPersonRole(RoleType.PEDAGOGICAL_COUNCIL) != null;
-    }
-
-    public Integer getMostSignificantNumber() {
-        if (getPartyClassification().equals(PartyClassification.TEACHER)) {
-            if (getEmployee() != null) {
-                return getEmployee().getEmployeeNumber();
-            }
-        }
-        if (getPartyClassification().equals(PartyClassification.EMPLOYEE)) {
-            return getEmployee().getEmployeeNumber();
-        }
-        if (getPartyClassification().equals(PartyClassification.RESEARCHER) && getEmployee() != null) {
-            return getEmployee().getEmployeeNumber();
-        }
-        if (getStudent() != null) {
-            return getStudent().getNumber();
-        }
-        if (getPartyClassification().equals(PartyClassification.GRANT_OWNER) && getEmployee() != null) {
-            return getEmployee().getEmployeeNumber();
-        }
-        return 0;
     }
 
     public Collection<Forum> getForuns(final ExecutionSemester executionSemester) {

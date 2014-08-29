@@ -40,7 +40,6 @@ enum net.sourceforge.fenixedu.domain.MarkSheetState                             
 enum net.sourceforge.fenixedu.domain.MarkSheetType                                                                        as MarkSheetType;
 enum net.sourceforge.fenixedu.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
 enum net.sourceforge.fenixedu.domain.Option                                                                               as Option;
-enum net.sourceforge.fenixedu.domain.PartyClassification                                                                  as PartyClassification;
 enum net.sourceforge.fenixedu.domain.PhotoState                                                                           as PhotoState;
 enum net.sourceforge.fenixedu.domain.PhotoType                                                                            as PhotoType;
 enum net.sourceforge.fenixedu.domain.photograph.AspectRatio																  as AspectRatio;

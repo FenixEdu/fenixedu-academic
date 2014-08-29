@@ -33,7 +33,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
@@ -540,9 +539,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public boolean hasDepartment() {
         return false;
     }
-
-    @Deprecated
-    public abstract PartyClassification getPartyClassification();
 
     public boolean verifyNameEquality(String[] nameWords) {
         if (nameWords == null) {
