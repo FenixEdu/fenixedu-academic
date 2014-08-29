@@ -171,7 +171,7 @@ public class UpdateFlunkedState extends CustomTask {
 
             LocalDate date = new LocalDate();
             if (!executionYear.containsDate(date)) {
-                date = executionYear.getBeginDateYearMonthDay().toLocalDate().plusDays(1);
+                date = executionYear.getBeginDateYearMonthDay().toLocalDate();
             }
             RegistrationStateCreator
                     .createState(registration, null, date.toDateTimeAtStartOfDay(), RegistrationStateType.FLUNKED);
