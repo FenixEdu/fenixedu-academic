@@ -38,7 +38,7 @@
 		<div id="container">
 			<% 
 				LocalDate now = new LocalDate();
-				LocalDate limitDate = new LocalDate(2013, 12, 1);
+				LocalDate limitDate = new LocalDate(2014, 12, 1);
 			%>
 			<div id="dotist_id">
 				<img alt="<%=org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getApplicationTitle().getContent() %>"

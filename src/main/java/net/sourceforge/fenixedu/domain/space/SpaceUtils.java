@@ -80,7 +80,7 @@ public class SpaceUtils {
             "absoluteCode");
 
     public static Space findAllocatableSpaceForEducationByName(String name) {
-        return allocatableSpacesForEducation().filter(space -> space.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+        return allocatableSpacesForEducation().filter(space -> space.getName().equalsIgnoreCase(name)).findAny().orElse(null);
     }
 
     public static Stream<Space> allocatableSpaces() {
@@ -208,7 +208,7 @@ public class SpaceUtils {
     }
 
     public static Space getSpaceByName(String name) {
-        return Space.getSpaces().filter(space -> name.equals(space.getName())).findFirst().get();
+        return Space.getSpaces().filter(space -> name.equals(space.getName())).findAny().get();
     }
 
     @Deprecated // TODO : remove this stuff in fenix v4 

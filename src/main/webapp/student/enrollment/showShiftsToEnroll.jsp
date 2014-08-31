@@ -57,7 +57,7 @@
 <logic:messagesPresent message="true">
 	<ul>
 		<html:messages id="messages" message="true">
-			<li><span class="error0"><bean:write name="messages" /></span></li>
+			<li><span class="error0"><bean:write name="messages" filter="false"/></span></li>
 		</html:messages>
 	</ul>
 </logic:messagesPresent>
@@ -168,6 +168,7 @@
 	</logic:notPresent>
 </logic:notPresent>
 
+<br/>
 <ul>
 	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registrationOID%>"><strong><bean:message bundle="STUDENT_RESOURCES"  key="button.finish" /></strong></html:link></li>
 </ul>

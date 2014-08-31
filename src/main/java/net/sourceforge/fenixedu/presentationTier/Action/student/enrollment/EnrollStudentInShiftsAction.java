@@ -70,6 +70,8 @@ public class EnrollStudentInShiftsAction extends FenixAction {
                 for (final Shift shift : (List<Shift>) errorReport.getUnAvailableShifts()) {
                     if (shift.getLotacao().intValue() == 0) {
                         addActionMessage(request, "error.shift.enrollment.capacityLocked", shift.getNome());
+                    } else if (shift.getLotacao().intValue() < 0) {
+                        addActionMessage(request, "message.warning.student.enrolmentClasses.first.year.first.semester");
                     } else {
                         addActionMessage(request, "error.shift.enrollment.capacityExceded", shift.getNome());
                     }
