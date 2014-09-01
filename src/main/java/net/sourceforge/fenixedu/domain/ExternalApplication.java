@@ -138,10 +138,6 @@ public class ExternalApplication extends ExternalApplication_Base {
         }
     }
 
-    public void setLogoStream(ByteArrayInputStream stream) {
-        setLogoStream((InputStream) stream);
-    }
-
     public AppUserAuthorization getAppUserAuthorization(User user) {
         for (AppUserAuthorization authorization : getAppUserAuthorizationSet()) {
             if (authorization.getUser().equals(user)) {
