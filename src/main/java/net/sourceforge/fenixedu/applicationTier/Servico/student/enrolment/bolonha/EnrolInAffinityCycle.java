@@ -108,7 +108,7 @@ public class EnrolInAffinityCycle {
         } else if (secondCycle.isExternal()) {
             return new AffinityCyclesManagement(studentCurricularPlan).enrol(cycleCourseGroupToEnrol);
         } else {
-            throw new FenixServiceException("error");
+            return studentCurricularPlan.getRegistration();
         }
     }
 

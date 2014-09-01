@@ -48,7 +48,7 @@ public class CreateNewInternalPerson {
         if (roleTypes.contains(RoleType.EMPLOYEE) || roleTypes.contains(RoleType.RESEARCHER)
                 || roleTypes.contains(RoleType.TEACHER) || roleTypes.contains(RoleType.GRANT_OWNER)) {
             createEmployee(person);
-            if (person.getUser() != null) {
+            if (person.getUser() == null) {
                 person.createUser();
             }
         }

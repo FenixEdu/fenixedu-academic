@@ -552,13 +552,15 @@ public class StudentGroupManagementDA extends ExecutionCourseBaseAction {
 
         if (differentiatedCapacity) {
             for (InfoShift info : infoShifts) {
-                if (!maximumCapacityString.equals("")
-                        && info.getGroupCapacity() * Integer.parseInt(maximumCapacityString) > info.getLotacao()) {
-                    ActionMessages actionErrors = new ActionMessages();
-                    ActionMessage error = new ActionMessage("error.groupProperties.capacityOverflow");
-                    actionErrors.add("error.groupProperties.capacityOverflow", error);
-                    saveErrors(request, actionErrors);
-                    return prepareCreateGroupProperties(mapping, form, request, response);
+                if (info.getLotacao() != 0) { //it means it was locked from students enrolment only
+                    if (!maximumCapacityString.equals("")
+                            && info.getGroupCapacity() * Integer.parseInt(maximumCapacityString) > info.getLotacao()) {
+                        ActionMessages actionErrors = new ActionMessages();
+                        ActionMessage error = new ActionMessage("error.groupProperties.capacityOverflow");
+                        actionErrors.add("error.groupProperties.capacityOverflow", error);
+                        saveErrors(request, actionErrors);
+                        return prepareCreateGroupProperties(mapping, form, request, response);
+                    }
                 }
             }
             infoGroupProperties.setInfoShifts(infoShifts);
@@ -775,7 +777,8 @@ public class StudentGroupManagementDA extends ExecutionCourseBaseAction {
         if (!grouping.getStudentGroupsSet().isEmpty() && !grouping.getDifferentiatedCapacity()) {
             request.setAttribute("differentiatedCapacityDisable", "true");
         }
-        if (!grouping.getStudentGroupsSet().isEmpty() && grouping.getAutomaticEnrolment() && !infoGroupProperties.getAutomaticEnrolment()) {
+        if (!grouping.getStudentGroupsSet().isEmpty() && grouping.getAutomaticEnrolment()
+                && !infoGroupProperties.getAutomaticEnrolment()) {
             request.setAttribute("notPosibleToRevertChoice", "true");
         }
         if (!grouping.getStudentGroupsSet().isEmpty() && grouping.getDifferentiatedCapacity()

@@ -112,13 +112,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.base.Strings;
+
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
 @StrutsFunctionality(app = TeacherFinalWorkApp.class, path = "proposals", titleKey = "link.manage.finalWork.proposals")
 @Mapping(path = "/finalWorkManagement", module = "teacher", formBean = "finalWorkInformationForm",
-        input = "/finalWorkManagement.do?method=prepareFinalWorkInformation")
+        input = "/finalWorkManagement.do?method=prepareFinalWorkInformation", validate = false)
 @Forwards({
         @Forward(name = "sucess", path = "/finalWorkManagement.do?method=chooseDegree", contextRelative = false),
         @Forward(name = "submitFinalWorkProposal", path = "/teacher/submitFinalWorkProposal_bd.jsp"),
@@ -218,6 +220,13 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         DegreeType tipoCurso = degreeType != null && degreeType.length() > 0 ? DegreeType.valueOf(degreeType) : null;
         infoFinalWorkProposal.setDegreeType(tipoCurso);
 
+        if (Strings.isNullOrEmpty(orientatorOID)) {
+            ActionMessages errors = new ActionErrors();
+            errors.add("finalWorkInformationForm.unexistingTeacher", new ActionMessage(
+                    "finalWorkInformationForm.unexistingTeacher"));
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        }
         infoFinalWorkProposal.setOrientator(new InfoPerson((Person) FenixFramework.getDomainObject(orientatorOID)));
         if (coorientatorOID != null && !coorientatorOID.equals("")) {
             infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) FenixFramework.getDomainObject(coorientatorOID)));
@@ -509,7 +518,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         }
 
         if (person == null
-                || !(person.hasRole(RoleType.TEACHER) || !person.getProfessorshipsSet().isEmpty() || person.hasRole(RoleType.RESEARCHER))) {
+                || !(person.hasRole(RoleType.TEACHER) || !person.getProfessorshipsSet().isEmpty() || person
+                        .hasRole(RoleType.RESEARCHER))) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
                     "finalWorkInformationForm.unexistingTeacher"));
