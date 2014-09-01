@@ -191,7 +191,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             }
         }
 
-        if (selecctedCurricularYear != null) {
+        if (selecctedCurricularYear != null && degreeCurricularPlan != null) {
             request.setAttribute("curricularYearWeeklyWorkLoadView", new CurricularYearWeeklyWorkLoadView(degreeCurricularPlan,
                     selectedExecutionPeriod, executionCourses));
         }
