@@ -19,10 +19,12 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors;
 
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.RestrictionNotEnroledDegreeModule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public class RestrictionNotEnroledDegreeModuleVerifier extends RestrictionEnroledDegreeModuleVerifier {
 
@@ -30,13 +32,22 @@ public class RestrictionNotEnroledDegreeModuleVerifier extends RestrictionEnrole
     protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
             DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
 
-        RuleResult oppositeResult =
-                super.verifyEnrolmentWithRules(curricularRule, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
-        if (oppositeResult.isTrue()) {
+        final RestrictionNotEnroledDegreeModule restrictionNotEnroledDegreeModule =
+                (RestrictionNotEnroledDegreeModule) curricularRule;
+
+        if (isApproved(enrolmentContext, restrictionNotEnroledDegreeModule.getPrecedenceDegreeModule(), parentCourseGroup)) {
             return RuleResult.createFalse(degreeModuleToVerify);
-        } else {
-            return RuleResult.createTrue(degreeModuleToVerify);
         }
+
+        for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
+                .getAllChildDegreeModulesToEvaluateFor(parentCourseGroup)) {
+
+            if (degreeModuleToEvaluate.isLeaf()
+                    && degreeModuleToEvaluate.isFor(restrictionNotEnroledDegreeModule.getPrecedenceDegreeModule())) {
+                return RuleResult.createFalse(degreeModuleToVerify);
+            }
+        }
+        return RuleResult.createTrue(degreeModuleToVerify);
     }
 
     @Override
