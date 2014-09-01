@@ -73,10 +73,12 @@
 <%--  ### End of Error Messages  ### --%>
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
+<logic:present name="process" property="person.user">
 <div style="float: right;">
 	<bean:define id="personID" name="process" property="person.username"/>
 	<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
+</logic:present>
  
 <p><strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong></p>
 
