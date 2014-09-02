@@ -1,5 +1,7 @@
 package pt.ist.fenix.external;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Objects;
@@ -30,12 +32,14 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.rest.BennuRestResource;
+import org.fenixedu.idcards.ui.candidacydocfiller.CGDPdfFiller;
 
 import pt.ist.fenixframework.FenixFramework;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.lowagie.text.DocumentException;
 
 @Path("/fenix-ist/ldapSync")
 public class LdapSyncServices extends BennuRestResource {
@@ -111,6 +115,27 @@ public class LdapSyncServices extends BennuRestResource {
 
         LogFirstTimeCandidacyTimestamp.logTimestamp(candidacy, FirstTimeCandidacyStage.RETRIEVED_SUMMARY_PDF);
         return Response.ok(file.getContent()).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Path("/cgd-form/{user}")
+    public Response getCGDPersonalFormFile(@PathParam("user") String username) {
+        checkAccessControl();
+        final User foundUser = User.findByUsername(username);
+        if (foundUser == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+        final Person person = foundUser.getPerson();
+        final CGDPdfFiller pdfFiller = new CGDPdfFiller();
+
+        ByteArrayOutputStream file;
+        try {
+            file = pdfFiller.getFilledPdf(person);
+            return Response.ok(file.toByteArray()).build();
+        } catch (IOException | DocumentException e) {
+            return Response.serverError().build();
+        }
     }
 
     private void checkAccessControl() {
