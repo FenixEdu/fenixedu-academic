@@ -73,10 +73,12 @@ public class DegreeChangeCandidacyProcessDA extends
                             .getExecutionYear();
             final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
 
-            for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-                if (coordinator.getPerson() == AccessControl.getPerson()) {
-                    returnExecutionIntervals.add(interval);
-                    break;
+            if (executionDegree != null) {
+                for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+                    if (coordinator.getPerson() == AccessControl.getPerson()) {
+                        returnExecutionIntervals.add(interval);
+                        break;
+                    }
                 }
             }
         }
