@@ -47,6 +47,11 @@ public class FenixConfigurationManager {
                 description = "Login URL to use when barra is set as authentication broker")
         public String barraLoginUrl();
 
+        @ConfigurationProperty(key = "dges.username.prefix",
+                description = "The prefix for the username of students created via the DGES Student Importation Process.",
+                defaultValue = "ist1")
+        public String dgesUsernamePrefix();
+
         @ConfigurationProperty(key = "ciistCostCenterCode", description = "Deprecated, to be removed", defaultValue = "8431")
         public Integer getCIISTCostCenterCode();
 

@@ -58,10 +58,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -185,9 +187,12 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
         }
     }
 
-    private void createDegreeCandidacies(final PrintWriter LOG_WRITER, final Employee employee, final List<DegreeCandidateDTO> degreeCandidateDTOs) {
+    private void createDegreeCandidacies(final PrintWriter LOG_WRITER, final Employee employee,
+            final List<DegreeCandidateDTO> degreeCandidateDTOs) {
         int processed = 0;
         int personsCreated = 0;
+
+        String prefix = FenixConfigurationManager.getConfiguration().dgesUsernamePrefix();
 
         for (final DegreeCandidateDTO degreeCandidateDTO : degreeCandidateDTOs) {
 
@@ -195,13 +200,19 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
                 logger.info("Processed :" + processed);
             }
 
+            int studentNumber = Student.generateStudentNumber();
+
             logCandidate(LOG_WRITER, degreeCandidateDTO);
 
             Person person = null;
             try {
                 person = degreeCandidateDTO.getMatchingPerson();
+                // Person may not yet have a user, so we will create it
+                if (person.getUser() == null) {
+                    person.setUser(new User(prefix + studentNumber));
+                }
             } catch (DegreeCandidateDTO.NotFoundPersonException e) {
-                person = degreeCandidateDTO.createPerson();
+                person = degreeCandidateDTO.createPerson(prefix + studentNumber);
                 logCreatedPerson(LOG_WRITER, person);
                 personsCreated++;
             } catch (DegreeCandidateDTO.TooManyMatchedPersonsException e) {
@@ -228,7 +239,8 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
             person.addPersonRoleByRoleType(RoleType.CANDIDATE);
 
             if (person.getStudent() == null) {
-                new Student(person);
+                // Ensure that the same student number is created
+                new Student(person, studentNumber);
                 logCreatedStudent(LOG_WRITER, person.getStudent());
             }
 
@@ -400,7 +412,8 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
                 degreeCandidateDTO.getDocumentIdNumber(), person.getIstUsername()));
     }
 
-    private void logCandidateIsStudentWithRegistrationAlreadyExists(final PrintWriter LOG_WRITER, DegreeCandidateDTO degreeCandidateDTO, Person person) {
+    private void logCandidateIsStudentWithRegistrationAlreadyExists(final PrintWriter LOG_WRITER,
+            DegreeCandidateDTO degreeCandidateDTO, Person person) {
         LOG_WRITER.println(String.format("CANDIDATE WITH ID %s IS THE STUDENT %s WITH REGISTRATIONS",
                 degreeCandidateDTO.getDocumentIdNumber(), person.getStudent().getStudentNumber()));
 
