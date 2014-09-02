@@ -41,11 +41,4 @@ public class DirectiveCouncilApplication extends ForwardAction {
     public static class DirectiveCouncilExternalSupervision {
 
     }
-
-    @StrutsApplication(bundle = "DirectiveCouncilResources", path = "career-workshops",
-            titleKey = "label.title.careerWorkshop.simple", hint = HINT, accessGroup = ACCESS_GROUP)
-    public static class DirectiveCouncilCareerWorkshops {
-
-    }
-
 }

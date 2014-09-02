@@ -175,8 +175,6 @@ enum net.sourceforge.fenixedu.domain.inquiries.InquiryConnectionType												
 enum net.sourceforge.fenixedu.domain.inquiries.ResultClassification														  as ResultClassification;
 enum net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory														  as ResultPersonCategory;
 enum net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobType                                         as GratuityReportQueueJobType;
-enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopSessions                                                as CareerWorkshopSessions;
-enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopThemes                                                  as CareerWorkshopThemes;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodType												  as PhdCandidacyPeriodType;
 enum net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
@@ -1094,13 +1092,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             String title;
         }
         
-        class careerWorkshop.CareerWorkshopSpreadsheet extends File {
-        }
-        
-        class careerWorkshop.CareerWorkshopConfirmationSpreadsheet extends File {
-        }
-
-
     class GratuitySituation  {
         String exemptionDescription;
         Integer exemptionPercentage;
@@ -5663,31 +5654,6 @@ class inquiries.ExecutionCourseAuditFile extends File {
 }
 
 /* End of Inquiries */
-
-class careerWorkshop.CareerWorkshopApplication  {
-	String sessions;
-	String themes;
-	DateTime sealStamp;
-}
-
-class careerWorkshop.CareerWorkshopApplicationEvent  {
-	DateTime beginDate;
-	DateTime endDate;
-	DateTime lastUpdate;
-	String relatedInformation;
-}
-
-class careerWorkshop.CareerWorkshopConfirmation  {
-	Boolean confirmation;
-	String confirmationCode;
-	DateTime sealStamp;
-}
-
-class careerWorkshop.CareerWorkshopConfirmationEvent  {
-	DateTime beginDate;
-	DateTime endDate;
-	DateTime lastUpdate;
-}
 
 class phd.debts.PhdGratuityEvent extends phd.debts.PhdEvent {
 	Integer year (REQUIRED);
@@ -15031,95 +14997,6 @@ relation SpacesHaveAttendanceHistory {
         multiplicity *;
     }
 }
-
-relation CareerWorkshopApplicationRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	careerWorkshop.CareerWorkshopApplication playsRole careerWorkshopApplications {
-		multiplicity *;
-	}
-}
-
-relation CareerWorkshopApplicationStudent {
-	careerWorkshop.CareerWorkshopApplication playsRole careerWorkshopApplications {
-		multiplicity *;
-	}
-	student.Student playsRole student {
-		multiplicity 0..1;
-	}
-}
-
-relation CareerWorkshopApplicationEventRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvents {
-		multiplicity *;
-	}
-}
-
-relation CareerWorkshopApplicationEventCareerWorkshopApplication {
-	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvent {
-		multiplicity 0..1;
-	}
-	careerWorkshop.CareerWorkshopApplication playsRole careerWorkshopApplications {
-		multiplicity *;
-	}
-}
-
-relation CareerWorkshopApplicationEventFile {
-	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvent;
-	careerWorkshop.CareerWorkshopSpreadsheet playsRole spreadsheet {
-		multiplicity 0..1;
-	}
-}
-
-relation CareerWorkshopConfirmationRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	careerWorkshop.CareerWorkshopConfirmation playsRole careerWorkshopConfirmations {
-		multiplicity *;
-	}
-}
-
-relation CareerWorkshopConfirmationStudent {
-	careerWorkshop.CareerWorkshopConfirmation playsRole careerWorkshopConfirmations {
-		multiplicity *;
-	}
-	student.Student playsRole student {
-		multiplicity 0..1;
-	}
-}
-
-relation CareerWorkshopApplicationCareerWorkshopConfirmation {
-	careerWorkshop.CareerWorkshopApplication playsRole careerWorkshopApplication;
-	careerWorkshop.CareerWorkshopConfirmation playsRole careerWorkshopConfirmation;
-}
-
-relation CareerWorkshopConfirmationEventRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvents {
-		multiplicity *;
-	}
-}
-
-relation CareerWorkshopConfirmationEventCareerWorkshopConfirmation {
-	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvent {
-		multiplicity 0..1;
-	}
-	careerWorkshop.CareerWorkshopConfirmation playsRole careerWorkshopConfirmations {
-		multiplicity *;
-	}
-}
-
-relation CareerWorkshopConfirmationEventFile {
-	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvent;
-	careerWorkshop.CareerWorkshopConfirmationSpreadsheet playsRole confirmations {
-		multiplicity 0..1;
-	}
-}
-
-relation CareerWorkshopApplicationEventCareerWorkshopConfirmationEvent {
-	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvent;
-	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvent;
-}
-
 
 relation RootDomainObjectNonRegularTeachingService {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
