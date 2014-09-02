@@ -40,7 +40,7 @@
         <dependency>
             <groupId>pt.ist</groupId>
             <artifactId>fenix</artifactId>
-            <version>3.11.0</version>
+            <version>3.11.1</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
