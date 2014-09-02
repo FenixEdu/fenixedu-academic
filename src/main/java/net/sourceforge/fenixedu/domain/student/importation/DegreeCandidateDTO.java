@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -383,8 +384,14 @@ public class DegreeCandidateDTO implements IFileLine {
         throw new NotFoundPersonException();
     }
 
-    public Person createPerson() {
-        final Person person = new Person(getName(), getGender(), getDocumentIdNumber(), IDDocumentType.IDENTITY_CARD);
+    public Person createPerson(String username) {
+        User user = new User(username);
+
+        final Person person = new Person(user);
+
+        person.setName(getName());
+        person.setGender(getGender());
+        person.setIdentification(getDocumentIdNumber(), IDDocumentType.IDENTITY_CARD);
 
         person.setMaritalStatus(MaritalStatus.SINGLE);
         person.setDateOfBirthYearMonthDay(getDateOfBirth());
