@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Locale;
 
@@ -26,8 +25,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -296,39 +293,4 @@ public class DegreeInfo extends DegreeInfo_Base {
     public AcademicInterval getAcademicInterval() {
         return getExecutionYear().getAcademicInterval();
     }
-
-    @SuppressWarnings("unchecked")
-    public static String readAllDegreeInfos() {
-        JSONArray infos = new JSONArray();
-        for (Degree degree : Bennu.getInstance().getDegreesSet()) {
-            Collection<DegreeInfo> degreeInfos = degree.getDegreeInfosSet();
-            if (!degreeInfos.isEmpty()) {
-                for (DegreeInfo degreeInfo : degreeInfos) {
-                    JSONObject obj = new JSONObject();
-                    String degreeType = JSONObject.escape(degreeInfo.getDegree().getDegreeType().toString());
-                    String degreeName = JSONObject.escape(degreeInfo.getName().getContent());
-                    String degreeOid = degreeInfo.getDegree().getExternalId();
-                    logger.info("with info : {} {} {}\n", degreeOid, degreeType, degreeName);
-                    obj.put("degreeOid", degreeOid);
-                    obj.put("degreeType", degreeType);
-                    obj.put("degreeName", degreeName);
-
-                    infos.add(obj);
-                }
-            } else {
-                JSONObject obj = new JSONObject();
-                String degreeOid = degree.getExternalId();
-                String degreeType = JSONObject.escape(degree.getDegreeType().toString());
-                String degreeName = JSONObject.escape(degree.getNome());
-                logger.info("no info : {} {} {}\n", degreeOid, degreeType, degreeName);
-                obj.put("degreeOid", degreeOid);
-                obj.put("degreeType", degreeType);
-                obj.put("degreeName", degreeName);
-                infos.add(obj);
-            }
-
-        }
-        return infos.toJSONString();
-    }
-
 }

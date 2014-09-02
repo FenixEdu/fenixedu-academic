@@ -43,11 +43,16 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -57,12 +62,18 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.photograph.PictureMode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -245,25 +256,148 @@ public class JerseyServices {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("readActiveStudentInfoForJobBank")
     public static String readActiveStudentInfoForJobBank(@QueryParam("username") final String username) {
-        final Person person = Person.readPersonByUsername(username);
-        final Student student = person.getStudent();
-        return student != null ? student.readActiveStudentInfoForJobBank() : StringUtils.EMPTY;
+        final Student student = Person.readPersonByUsername(username).getStudent();
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        Set<Registration> registrations = new HashSet<Registration>();
+        LocalDate today = new LocalDate();
+        for (Registration registration : student.getRegistrationsSet()) {
+            if (registration.isBolonha() && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
+                if (registration.hasAnyActiveState(currentExecutionYear)) {
+                    registrations.add(registration);
+                } else {
+                    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
+                    if (registrationConclusionBean.isConcluded()) {
+                        YearMonthDay conclusionDate = registrationConclusionBean.getConclusionDate();
+                        if (conclusionDate != null && !conclusionDate.plusYears(1).isBefore(today)) {
+                            registrations.add(registration);
+                        }
+                    }
+                }
+            }
+        }
+        String info = getRegistrationsAsJSON(registrations);
+        return student != null ? info : StringUtils.EMPTY;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("readStudentInfoForJobBank")
     public static String readStudentInfoForJobBank(@QueryParam("username") final String username) {
-        final Person person = Person.readPersonByUsername(username);
-        final Student student = person.getStudent();
-        return student != null ? student.readStudentInfoForJobBank() : StringUtils.EMPTY;
+        final Student student = Person.readPersonByUsername(username).getStudent();
+        Set<Registration> registrations = new HashSet<Registration>();
+        for (Registration registration : student.getRegistrationsSet()) {
+            if (registration.isBolonha() && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
+                RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
+                if (registration.isActive() || registrationConclusionBean.isConcluded()) {
+                    registrations.add(registration);
+                }
+            }
+        }
+        String info = getRegistrationsAsJSON(registrations);
+        return student != null ? info : StringUtils.EMPTY;
+    }
+
+    protected static String getRegistrationsAsJSON(Set<Registration> registrations) {
+        JSONArray infos = new JSONArray();
+        int i = 0;
+        for (Registration registration : registrations) {
+            JSONObject studentInfoForJobBank = new JSONObject();
+            studentInfoForJobBank.put("username", registration.getPerson().getUsername());
+            studentInfoForJobBank.put("hasPersonalDataAuthorization", registration.getStudent()
+                    .hasPersonalDataAuthorizationForProfessionalPurposesAt().toString());
+            Person person = registration.getStudent().getPerson();
+            studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
+                    .getDateOfBirthYearMonthDay().toString());
+            studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
+            PhysicalAddress defaultPhysicalAddress = person.getDefaultPhysicalAddress();
+            studentInfoForJobBank.put("address", defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getAddress());
+            studentInfoForJobBank.put("area", defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getArea());
+            studentInfoForJobBank.put("areaCode", defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getAreaCode());
+            studentInfoForJobBank.put("districtSubdivisionOfResidence",
+                    defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getDistrictSubdivisionOfResidence());
+            studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
+            studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
+            studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
+            studentInfoForJobBank.put("remoteRegistrationOID", registration.getExternalId());
+            studentInfoForJobBank.put("number", registration.getNumber().toString());
+            studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
+            studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
+            studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
+            for (CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
+                    .getCycleCurriculumGroups()) {
+                studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()
+                        .toString());
+
+            }
+            infos.add(studentInfoForJobBank);
+        }
+        return infos.toJSONString();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("readAllStudentsInfoForJobBank")
     public static String readAllStudentsInfoForJobBank() {
-        return Registration.readAllStudentsInfoForJobBank();
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        Set<Registration> registrations = new HashSet<Registration>();
+        LocalDate today = new LocalDate();
+        for (Registration registration : Bennu.getInstance().getRegistrationsSet()) {
+            if (registration.hasAnyActiveState(currentExecutionYear) && registration.isBolonha()
+                    && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
+                registrations.add(registration);
+            }
+        }
+        for (ConclusionProcess conclusionProcess : Bennu.getInstance().getConclusionProcessesSet()) {
+            if (conclusionProcess.getConclusionDate() != null
+                    && !conclusionProcess.getConclusionDate().plusYears(1).isBefore(today)) {
+                registrations.add(conclusionProcess.getRegistration());
+            }
+        }
+        JSONArray infos = new JSONArray();
+        for (Registration registration : registrations) {
+            infos.add(getStudentInfoForJobBank(registration));
+        }
+        return infos.toJSONString();
+    }
+
+    @SuppressWarnings("unchecked")
+    protected static JSONObject getStudentInfoForJobBank(Registration registration) {
+        try {
+            JSONObject studentInfoForJobBank = new JSONObject();
+            studentInfoForJobBank.put("username", registration.getPerson().getUsername());
+            studentInfoForJobBank.put("hasPersonalDataAuthorization", registration.getStudent()
+                    .hasPersonalDataAuthorizationForProfessionalPurposesAt().toString());
+            Person person = registration.getStudent().getPerson();
+            studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
+                    .getDateOfBirthYearMonthDay().toString());
+            studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
+            studentInfoForJobBank.put("address", person.getDefaultPhysicalAddress() == null ? null : person
+                    .getDefaultPhysicalAddress().getAddress());
+            studentInfoForJobBank.put("area", person.getDefaultPhysicalAddress() == null ? null : person
+                    .getDefaultPhysicalAddress().getArea());
+            studentInfoForJobBank.put("areaCode", person.getDefaultPhysicalAddress() == null ? null : person
+                    .getDefaultPhysicalAddress().getAreaCode());
+            studentInfoForJobBank.put("districtSubdivisionOfResidence",
+                    person.getDefaultPhysicalAddress() == null ? null : person.getDefaultPhysicalAddress()
+                            .getDistrictSubdivisionOfResidence());
+            studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
+            studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
+            studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
+            studentInfoForJobBank.put("remoteRegistrationOID", registration.getExternalId());
+            studentInfoForJobBank.put("number", registration.getNumber().toString());
+            studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
+            studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
+            studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
+            for (CycleType cycleType : registration.getDegreeType().getCycleTypes()) {
+                CycleCurriculumGroup cycle = registration.getLastStudentCurricularPlan().getCycle(cycleType);
+                if (cycle != null) {
+                    studentInfoForJobBank.put(cycle.getCycleType().name(), cycle.getAverage().toString());
+                }
+            }
+            return studentInfoForJobBank;
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     @GET

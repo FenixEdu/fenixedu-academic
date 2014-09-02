@@ -34,7 +34,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
-import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -55,7 +54,6 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsur
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
@@ -98,8 +96,6 @@ import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -1937,80 +1933,6 @@ public class Student extends Student_Base {
             }
         }
         return false;
-    }
-
-    public String readActiveStudentInfoForJobBank() {
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
-        Set<Registration> registrations = new HashSet<Registration>();
-        LocalDate today = new LocalDate();
-        for (Registration registration : getRegistrationsSet()) {
-            if (registration.isBolonha() && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
-                if (registration.hasAnyActiveState(currentExecutionYear)) {
-                    registrations.add(registration);
-                } else {
-                    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
-                    if (registrationConclusionBean.isConcluded()) {
-                        YearMonthDay conclusionDate = registrationConclusionBean.getConclusionDate();
-                        if (conclusionDate != null && !conclusionDate.plusYears(1).isBefore(today)) {
-                            registrations.add(registration);
-                        }
-                    }
-                }
-            }
-        }
-        return getRegistrationsAsJSON(registrations);
-    }
-
-    public String readStudentInfoForJobBank() {
-        Set<Registration> registrations = new HashSet<Registration>();
-        LocalDate today = new LocalDate();
-        for (Registration registration : getRegistrationsSet()) {
-            if (registration.isBolonha() && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
-                RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
-                if (registration.isActive() || registrationConclusionBean.isConcluded()) {
-                    registrations.add(registration);
-                }
-            }
-        }
-        return getRegistrationsAsJSON(registrations);
-    }
-
-    protected String getRegistrationsAsJSON(Set<Registration> registrations) {
-        JSONArray infos = new JSONArray();
-        int i = 0;
-        for (Registration registration : registrations) {
-            JSONObject studentInfoForJobBank = new JSONObject();
-            studentInfoForJobBank.put("username", registration.getPerson().getUsername());
-            studentInfoForJobBank.put("hasPersonalDataAuthorization", registration.getStudent()
-                    .hasPersonalDataAuthorizationForProfessionalPurposesAt().toString());
-            Person person = registration.getStudent().getPerson();
-            studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
-                    .getDateOfBirthYearMonthDay().toString());
-            studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
-            PhysicalAddress defaultPhysicalAddress = person.getDefaultPhysicalAddress();
-            studentInfoForJobBank.put("address", defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getAddress());
-            studentInfoForJobBank.put("area", defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getArea());
-            studentInfoForJobBank.put("areaCode", defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getAreaCode());
-            studentInfoForJobBank.put("districtSubdivisionOfResidence",
-                    defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getDistrictSubdivisionOfResidence());
-            studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
-            studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
-            studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
-            studentInfoForJobBank.put("remoteRegistrationOID", registration.getExternalId());
-            studentInfoForJobBank.put("number", registration.getNumber().toString());
-            studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
-            studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
-            studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
-            for (CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
-                    .getCycleCurriculumGroups()) {
-                studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()
-                        .toString());
-
-            }
-            infos.add(studentInfoForJobBank);
-        }
-        return infos.toJSONString();
     }
 
     public PersonalIngressionData getLatestPersonalIngressionData() {
