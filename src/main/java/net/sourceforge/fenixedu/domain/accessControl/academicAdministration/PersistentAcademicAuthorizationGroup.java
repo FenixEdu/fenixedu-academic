@@ -279,6 +279,9 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
     public static Set<PersistentAcademicAuthorizationGroup> getGroupsFor(Party party, AcademicOperationType operation,
             Set<AcademicProgram> programs, Set<AdministrativeOffice> offices) {
         Set<PersistentAcademicAuthorizationGroup> groups = new HashSet<PersistentAcademicAuthorizationGroup>();
+        if (party == null) {
+            return groups;
+        }
         for (PersistentAccessGroup group : party.getPersistentAccessGroupSet()) {
             if (group.isActive() && group instanceof PersistentAcademicAuthorizationGroup) {
                 PersistentAcademicAuthorizationGroup academicGroup = (PersistentAcademicAuthorizationGroup) group;
@@ -311,6 +314,9 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
 
     public static Set<PersistentAcademicAuthorizationGroup> getGroupsFor(Party party, Scope scope) {
         Set<PersistentAcademicAuthorizationGroup> groups = new HashSet<PersistentAcademicAuthorizationGroup>();
+        if (party == null) {
+            return groups;
+        }
         for (PersistentAccessGroup group : party.getPersistentAccessGroupSet()) {
             if (group.isActive() && group instanceof PersistentAcademicAuthorizationGroup) {
                 PersistentAcademicAuthorizationGroup academicGroup = (PersistentAcademicAuthorizationGroup) group;
