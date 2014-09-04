@@ -18,7 +18,7 @@
       {
          "name":"Sete-Rios",
          "address":"Avenida Columbano Bordalo Pinheiro 118",
-         "latlng":"38.740274,-9.16731"
+         "latlng":"38.740439,-9.167436"
       },
       {
          "name":"Taguspark",
@@ -28,123 +28,128 @@
    ],
    "date":[
       {
-         "start":"16/09/2013",
-         "end":"30/09/2013",
+         "start":"15/09/2014",
+         "end":"30/09/2014",
          "type":"weekday"
       },
       {
-         "start":"01/10/2013",
-         "end":"31/10/2013",
+         "start":"01/10/2014",
+         "end":"31/10/2014",
          "type":"weekday"
       },
       {
-         "start":"01/11/2013",
-         "end":"30/11/2013",
+         "start":"03/11/2014",
+         "end":"28/11/2014",
          "type":"weekday"
       },
       {
-         "start":"02/12/2013",
-         "end":"20/12/2013",
+         "start":"01/12/2014",
+         "end":"19/12/2014",
          "type":"weekday"
       },
       {
-         "start":"17/02/2014",
-         "end":"28/02/2014",
+         "start":"18/02/2015",
+         "end":"27/02/2015",
          "type":"weekday"
       },
       {
-         "start":"05/03/2014",
-         "end":"31/03/2014",
+         "start":"02/03/2015",
+         "end":"31/03/2015",
          "type":"weekday"
       },
       {
-         "start":"01/04/2014",
-         "end":"15/04/2014",
+         "start":"08/04/2015",
+         "end":"30/04/2015",
+         "type":"weekday"
+      },      
+      {
+         "start":"04/05/2015",
+         "end":"29/05/2015",
          "type":"weekday"
       },
       {
-         "start":"23/04/2014",
-         "end":"30/04/2014",
-         "type":"weekday"
-      },
-      {
-         "start":"02/05/2014",
-         "end":"30/05/2014",
-         "type":"weekday"
-      },
-      {
-         "start":"02/09/2013",
-         "end":"13/09/2013",
+         "start":"01/09/2014",
+         "end":"12/09/2014",
          "type":"holidays"
       },
       {
-         "start":"23/12/2013",
-         "end":"31/12/2013",
+         "start":"22/12/2014",
+         "end":"30/12/2014",
          "type":"holidays"
       },
       {
-         "start":"02/01/2014",
-         "end":"31/01/2014",
+         "start":"02/01/2015",
+         "end":"30/01/2015",
          "type":"holidays"
       },
       {
-         "start":"03/02/2014",
-         "end":"14/02/2014",
+         "start":"02/02/2015",
+         "end":"17/02/2015",
+         "type":"holidays"
+      },      
+      {
+         "start":"01/04/2015",
+         "end":"07/04/2015",
          "type":"holidays"
       },
       {
-         "start":"03/03/2014",
-         "end":"04/03/2014",
+         "start":"30/05/2015",
+         "end":"31/05/2015",
          "type":"holidays"
       },
       {
-         "start":"16/04/2014",
-         "end":"22/04/2014",
+         "start":"01/06/2015",
+         "end":"30/06/2015",
          "type":"holidays"
       },
       {
-         "start":"02/06/2014",
-         "end":"30/06/2014",
+         "start":"01/07/2015",
+         "end":"31/07/2015",
          "type":"holidays"
       },
       {
-         "start":"01/07/2014",
-         "end":"31/07/2014",
-         "type":"holidays"
-      },
-      {
-         "start":"25/04/2014",
-         "end":"25/04/2014",
+         "start":"08/12/2014",
+         "end":"08/12/2014",
          "type":"dayoff"
       },
       {
-         "start":"25/12/2013",
-         "end":"25/12/2013",
+         "start":"01/05/2015",
+         "end":"01/05/2015",
          "type":"dayoff"
       },
       {
-         "start":"24/12/2013",
-         "end":"24/12/2013",
+         "start":"25/04/2015",
+         "end":"25/04/2015",
          "type":"dayoff"
       },
       {
-         "start":"31/12/2013",
-         "end":"31/12/2013",
+         "start":"25/12/2014",
+         "end":"25/12/2014",
          "type":"dayoff"
       },
       {
-         "start":"01/01/2014",
-         "end":"01/01/2014",
+         "start":"24/12/2014",
+         "end":"24/12/2014",
          "type":"dayoff"
       },
       {
-         "start":"18/04/2014",
-         "end":"18/04/2014",
+         "start":"31/12/2014",
+         "end":"31/12/2014",
          "type":"dayoff"
       },
       {
-         "start":"10/06/2014",
-         "end":"10/06/2014",
+         "start":"01/01/2015",
+         "end":"01/01/2015",
+         "type":"dayoff"
+      },
+      {
+         "start":"03/04/2015",
+         "end":"03/04/2015",
+         "type":"dayoff"
+      },
+      {
+         "start":"10/06/2015",
+         "end":"10/06/2015",
          "type":"dayoff"
       }
    ],
@@ -155,6 +160,10 @@
             {
                "hour":"07.15",
                "station":"Alameda"
+            },
+	    {
+               "hour":"07.25",
+               "station":"Sete-Rios"
             },
             {
                "hour":"08.00",
@@ -188,10 +197,10 @@
          "stations":[
             {
                "hour":"07.20",
-               "station":"Alameda"
+               "station":"Sete-Rios"
             },
             {
-               "hour":"07.40",
+               "hour":"07.30",
                "station":"Oeiras"
             },
             {
@@ -255,19 +264,53 @@
          "type":"weekday",
          "stations":[
             {
+               "hour":"08.10",
+               "station":"Taguspark"
+            },
+            {
+               "hour":"08.25",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"08.35",
+               "station":"Alameda"
+            }
+         ]
+      },
+      {
+         "type":"weekday",
+         "stations":[
+            {
+               "hour":"09.10",
+               "station":"Taguspark"
+            },
+            {
+               "hour":"09.25",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"09.35",
+               "station":"Alameda"
+            }
+         ]
+      },
+      {
+         "type":"weekday",
+         "stations":[
+            {
                "hour":"10.10",
                "station":"Taguspark"
             },
             {
-               "hour":"10.30",
-               "station":"Oeiras"
+               "hour":"10.25",
+               "station":"Sete-Rios"
             },
             {
-               "hour":"10.50",
-               "station":"Taguspark"
+               "hour":"10.35",
+               "station":"Alameda"
             }
          ]
-      },
+      },     
       {
          "type":"weekday",
          "stations":[
@@ -289,6 +332,23 @@
          "type":"weekday",
          "stations":[
             {
+               "hour":"11.00",
+               "station":"Alameda"
+            },
+            {
+               "hour":"11.10",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"11.30",
+               "station":"Taguspark"
+            }
+         ]
+      },
+      {
+         "type":"weekday",
+         "stations":[
+            {
                "hour":"12.00",
                "station":"Alameda"
             },
@@ -296,25 +356,12 @@
                "hour":"12.10",
                "station":"Sete-Rios"
             },
-            {
-               "hour":"12.30",
-               "station":"Taguspark"
-            }
-         ]
-      },
-      {
-         "type":"weekday",
-         "stations":[
-            {
-               "hour":"12.30",
-               "station":"Taguspark"
-            },
-            {
-               "hour":"12.50",
+	    {
+               "hour":"12.20",
                "station":"Oeiras"
             },
             {
-               "hour":"13.10",
+               "hour":"12.40",
                "station":"Taguspark"
             }
          ]
@@ -323,15 +370,57 @@
          "type":"weekday",
          "stations":[
             {
+               "hour":"13.00",
+               "station":"Alameda"
+            },
+            {
+               "hour":"13.10",
+               "station":"Sete-Rios"
+            },
+	    {
+               "hour":"13.20",
+               "station":"Cacém"
+            },
+            {
+               "hour":"13.40",
+               "station":"Taguspark"
+            }
+         ]
+      },
+      {
+         "type":"weekday",
+         "stations":[
+            {
+               "hour":"12.10",
+               "station":"Taguspark"
+            },
+            {
+               "hour":"12.30",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"12.40",
+               "station":"Alameda"
+            }
+         ]
+      },     
+      {
+         "type":"weekday",
+         "stations":[
+            {
                "hour":"13.10",
                "station":"Taguspark"
             },
             {
-               "hour":"13.30",
+               "hour":"13.35",
+               "station":"Oeiras"
+            },
+            {
+               "hour":"13.45",
                "station":"Sete-Rios"
             },
             {
-               "hour":"13.40",
+               "hour":"14.00",
                "station":"Alameda"
             }
          ]
@@ -361,6 +450,40 @@
          "type":"weekday",
          "stations":[
             {
+               "hour":"14.00",
+               "station":"Alameda"
+            },
+            {
+               "hour":"14.10",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"14.30",
+               "station":"Taguspark"
+            }
+         ]
+      },
+{
+         "type":"weekday",
+         "stations":[
+            {
+               "hour":"15.00",
+               "station":"Alameda"
+            },
+            {
+               "hour":"15.10",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"15.30",
+               "station":"Taguspark"
+            }
+         ]
+      },
+      {
+         "type":"weekday",
+         "stations":[
+            {
                "hour":"16.00",
                "station":"Alameda"
             },
@@ -378,12 +501,97 @@
          "type":"weekday",
          "stations":[
             {
+               "hour":"17.00",
+               "station":"Alameda"
+            },
+            {
+               "hour":"17.10",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"17.30",
+               "station":"Taguspark"
+            }
+         ]
+      },
+      {
+         "type":"weekday",
+         "stations":[
+            {
+               "hour":"18.00",
+               "station":"Alameda"
+            },
+            {
+               "hour":"18.10",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"18.30",
+               "station":"Taguspark"
+            }
+         ]
+      },
+      {
+         "type":"weekday",
+         "stations":[
+            {
+               "hour":"19.00",
+               "station":"Alameda"
+            },
+            {
+               "hour":"19.10",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"19.30",
+               "station":"Taguspark"
+            }
+         ]
+      },
+      {
+         "type":"weekday",
+         "stations":[
+            {
+               "hour":"15.10",
+               "station":"Taguspark"
+            },
+            {
+               "hour":"15.30",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"15.40",
+               "station":"Alameda"
+            }
+         ]
+      },
+      {
+         "type":"weekday",
+         "stations":[
+            {
+               "hour":"16.10",
+               "station":"Taguspark"
+            },
+            {
+               "hour":"16.30",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"16.40",
+               "station":"Alameda"
+            }
+         ]
+      },
+      {
+         "type":"weekday",
+         "stations":[
+            {
                "hour":"17.10",
                "station":"Taguspark"
             },
             {
                "hour":"17.30",
-               "station":"Cacém"
+               "station":"Oeiras"
             },
             {
                "hour":"17.40",
@@ -394,58 +602,28 @@
                "station":"Alameda"
             }
          ]
-      },
+      },    
       {
          "type":"weekday",
          "stations":[
             {
-               "hour":"18.00",
+               "hour":"18.10",
                "station":"Taguspark"
             },
             {
-               "hour":"18.10",
-               "station":"Sete-Rios"
+               "hour":"18.30",
+               "station":"Cacém"
             },
             {
                "hour":"18.40",
-               "station":"Alameda"
-            }
-         ]
-      },
-      {
-         "type":"weekday",
-         "stations":[
-            {
-               "hour":"18.35",
-               "station":"Taguspark"
-            },
-            {
-               "hour":"19.00",
-               "station":"Oeiras"
-            },
-            {
-               "hour":"19.10",
                "station":"Sete-Rios"
             },
             {
-               "hour":"19.35",
-               "station":"Alameda"
-            }
-         ]
-      },
-      {
-         "type":"weekday",
-         "stations":[
-            {
                "hour":"19.00",
                "station":"Alameda"
-            },
-            {
-               "hour":"19.45",
-               "station":"Taguspark"
             }
          ]
-      },
+      },     
       {
          "type":"weekday",
          "stations":[
@@ -467,15 +645,32 @@
          "type":"holidays",
          "stations":[
             {
-               "hour":"08.15",
+               "hour":"08.00",
                "station":"Alameda"
             },
             {
-               "hour":"08.25",
+               "hour":"08.15",
                "station":"Sete-Rios"
             },
             {
-               "hour":"08.55",
+               "hour":"08.40",
+               "station":"Taguspark"
+            }
+         ]
+      },
+      {
+         "type":"holidays",
+         "stations":[
+            {
+               "hour":"10.00",
+               "station":"Alameda"
+            },
+            {
+               "hour":"10.15",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"10.40",
                "station":"Taguspark"
             }
          ]
@@ -501,6 +696,23 @@
          "type":"holidays",
          "stations":[
             {
+               "hour":"11.00",
+               "station":"Taguspark"
+            },
+            {
+               "hour":"11.10",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"11.30",
+               "station":"Alameda"
+            }
+         ]
+      },
+      {
+         "type":"holidays",
+         "stations":[
+            {
                "hour":"12.00",
                "station":"Alameda"
             },
@@ -518,16 +730,33 @@
          "type":"holidays",
          "stations":[
             {
-               "hour":"13.10",
+               "hour":"13.00",
                "station":"Taguspark"
             },
             {
-               "hour":"13.20",
+               "hour":"13.10",
                "station":"Sete-Rios"
             },
             {
-               "hour":"13.40",
+               "hour":"13.30",
                "station":"Alameda"
+            }
+         ]
+      },
+      {
+         "type":"holidays",
+         "stations":[
+            {
+               "hour":"14.00",
+               "station":"Alameda"
+            },
+            {
+               "hour":"14.10",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"14.30",
+               "station":"Taguspark"
             }
          ]
       },
@@ -552,15 +781,32 @@
          "type":"holidays",
          "stations":[
             {
-               "hour":"17.10",
-               "station":"Taguspark"
+               "hour":"18.00",
+               "station":"Alameda"
             },
             {
-               "hour":"17.20",
+               "hour":"18.10",
                "station":"Sete-Rios"
             },
             {
-               "hour":"17.40",
+               "hour":"18.30",
+               "station":"Taguspark"
+            }
+         ]
+      },
+      {
+         "type":"holidays",
+         "stations":[
+            {
+               "hour":"15.00",
+               "station":"Taguspark"
+            },
+            {
+               "hour":"15.10",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"15.30",
                "station":"Alameda"
             }
          ]
@@ -569,26 +815,36 @@
          "type":"holidays",
          "stations":[
             {
-               "hour":"20.10",
+               "hour":"17.00",
                "station":"Taguspark"
             },
             {
-               "hour":"20.25",
-               "station":"Cacém"
-            },
-            {
-               "hour":"21.00",
-               "station":"Oeiras"
-            },
-            {
-               "hour":"21.10",
+               "hour":"17.10",
                "station":"Sete-Rios"
             },
             {
-               "hour":"21.30",
+               "hour":"17.30",
                "station":"Alameda"
             }
          ]
-      }
+      },
+      {
+         "type":"holidays",
+         "stations":[
+            {
+               "hour":"20.00",
+               "station":"Taguspark"
+            },
+            {
+               "hour":"20.10",
+               "station":"Sete-Rios"
+            },
+            {
+               "hour":"20.30",
+               "station":"Alameda"
+            }
+         ]
+      },
+     
    ]
 }
