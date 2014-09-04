@@ -347,22 +347,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             evalsIter.remove();
             eval.delete();
         }
-
-        Iterator<CreditsInAnySecundaryArea> creditsInAnysecundaryAreaIterator = getCreditsInAnySecundaryAreasSet().iterator();
-
-        while (creditsInAnysecundaryAreaIterator.hasNext()) {
-            CreditsInAnySecundaryArea credits = creditsInAnysecundaryAreaIterator.next();
-            creditsInAnysecundaryAreaIterator.remove();
-            credits.delete();
-        }
-
-        Iterator<CreditsInScientificArea> creditsInScientificAreaIterator = getCreditsInScientificAreasSet().iterator();
-
-        while (creditsInScientificAreaIterator.hasNext()) {
-            CreditsInScientificArea credits = creditsInScientificAreaIterator.next();
-            creditsInScientificAreaIterator.remove();
-            credits.delete();
-        }
     }
 
     protected void checkRulesToDelete() {

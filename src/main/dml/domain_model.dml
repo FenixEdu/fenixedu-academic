@@ -614,16 +614,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         CreditsState creditState;
     }
     
-  
-    
-    class CreditsInAnySecundaryArea  {
-        Integer givenCredits;
-    }
-
-    class CreditsInScientificArea  {
-        Integer givenCredits;
-    }
-
     class CurricularCourseEquivalence  {
     }
 
@@ -1412,10 +1402,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class SchoolClass  {
         Integer anoCurricular;
         String nome;
-    }
-
-    class ScientificArea  {
-        String name;
     }
 
     class ScientificCommission  {
@@ -9205,13 +9191,6 @@ relation CurricularCourseNotNeedToEnrollInCurricularCourse {
     CurricularCourse playsRole curricularCourse;
 }
 
-relation CurricularCourseScientificArea {
-    CurricularCourse playsRole associatedCurricularCourses {
-        multiplicity *;
-    }
-    ScientificArea playsRole scientificArea;
-}
-
 relation CurricularCourseScopeCurricularSemester {
     CurricularCourseScope playsRole scopes {
         multiplicity *;
@@ -9591,20 +9570,6 @@ relation EmployeeHistoricWorkingPlaceCostCenter {
 relation EmployeePerson {
     Employee playsRole employee;
     Person playsRole person;
-}
-
-relation EnrolmentCreditsInAnySecundaryArea {
-    CreditsInAnySecundaryArea playsRole creditsInAnySecundaryAreas {
-        multiplicity *;
-    }
-    Enrolment playsRole enrolment;
-}
-
-relation EnrolmentCreditsInScientificArea {
-    CreditsInScientificArea playsRole creditsInScientificAreas {
-        multiplicity *;
-    }
-    Enrolment playsRole enrolment;
 }
 
 relation EnrolmentEnrolmentEvaluation {
@@ -11822,20 +11787,6 @@ relation RootDomainObjectCredits {
     }
 }
 
-relation RootDomainObjectCreditsInAnySecundaryArea {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    CreditsInAnySecundaryArea playsRole creditsInAnySecundaryAreas {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCreditsInScientificArea {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    CreditsInScientificArea playsRole creditsInScientificAreas {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectCurricularCourseEquivalence {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CurricularCourseEquivalence playsRole curricularCourseEquivalences {
@@ -12686,13 +12637,6 @@ relation RootDomainObjectSchoolClass {
     }
 }
 
-relation RootDomainObjectScientificArea {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    ScientificArea playsRole scientificAreas {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectSecretaryEnrolmentStudent {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     SecretaryEnrolmentStudent playsRole secretaryEnrolmentStudents {
@@ -13149,13 +13093,6 @@ relation SchoolClassExecutionDegree {
     ExecutionDegree playsRole executionDegree;
 }
 
-relation ScientificAreaCreditsInScientificArea {
-    CreditsInScientificArea playsRole creditsInScientificAreas {
-        multiplicity *;
-    }
-    ScientificArea playsRole scientificArea;
-}
-
 relation ScientificCommissionPerson {
     Person playsRole person;
     ScientificCommission playsRole scientificCommissions {
@@ -13320,20 +13257,6 @@ relation StudentCurricularPlanCredits {
     studentCurriculum.Credits playsRole credits {
         multiplicity *;
     }
-}
-
-relation StudentCurricularPlanCreditsInAnySecundaryArea {
-    CreditsInAnySecundaryArea playsRole creditsInAnySecundaryAreas {
-        multiplicity *;
-    }
-    StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
-relation StudentCurricularPlanCreditsInScientificArea {
-    CreditsInScientificArea playsRole creditsInScientificAreas {
-        multiplicity *;
-    }
-    StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation StudentCurricularPlanDegreeCurricularPlan {

@@ -323,17 +323,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             notNeedToEnrollInCurricularCourse.delete();
         }
 
-        for (; !getCreditsInAnySecundaryAreasSet().isEmpty(); getCreditsInAnySecundaryAreasSet().iterator().next().delete()) {
-            ;
-        }
-
-        for (Iterator<CreditsInScientificArea> iter = getCreditsInScientificAreasSet().iterator(); iter.hasNext();) {
-            CreditsInScientificArea creditsInScientificArea = iter.next();
-            iter.remove();
-            creditsInScientificArea.setStudentCurricularPlan(null);
-            creditsInScientificArea.delete();
-        }
-
         for (; !getCreditsSet().isEmpty(); getCreditsSet().iterator().next().delete()) {
             ;
         }
@@ -2767,16 +2756,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (!getNotNeedToEnrollCurricularCoursesSet().isEmpty()) {
             return false;
         }
-        if (!getCreditsInAnySecundaryAreasSet().isEmpty()) {
-            return false;
-        }
         if (!getGratuitySituationsSet().isEmpty()) {
             return false;
         }
         if (getMasterDegreeThesis() != null) {
-            return false;
-        }
-        if (!getCreditsInScientificAreasSet().isEmpty()) {
             return false;
         }
         if (!getCreditsSet().isEmpty()) {

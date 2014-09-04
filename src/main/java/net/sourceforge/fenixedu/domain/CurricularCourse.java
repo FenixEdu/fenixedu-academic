@@ -279,7 +279,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     public void delete() {
         super.delete();
         setUniversity(null);
-        setScientificArea(null);
         setDegreeCurricularPlan(null);
         setCompetenceCourse(null);
         setRootDomainObject(null);
