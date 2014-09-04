@@ -154,6 +154,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.BlueprintFile;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.services.SpaceBlueprintsDWGProcessor;
@@ -920,6 +921,7 @@ public class FenixAPIv1 {
 
     private FenixDegreeExtended getFenixDegree(ExecutionDegree executionDegree) {
         final Degree degree = executionDegree.getDegree();
+        String name = degree.getNameI18N().getContent(I18N.getLocale());
         List<FenixSpace> degreeCampus = new ArrayList<>();
         ExecutionYear executionYear = executionDegree.getExecutionYear();
 
@@ -966,7 +968,7 @@ public class FenixAPIv1 {
         }
 
         FenixDegreeExtended fenixDegree =
-                new FenixDegreeExtended(executionYear.getQualifiedName(), degree, type, typeName, degreeUrl, degreeCampus,
+                new FenixDegreeExtended(executionYear.getQualifiedName(), name, degree, type, typeName, degreeUrl, degreeCampus,
                         fenixDegreeInfo, teachers);
         return fenixDegree;
     }
