@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -179,6 +180,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
 @SuppressWarnings("unchecked")
@@ -883,6 +885,23 @@ public class FenixAPIv1 {
             day = dataFormatDay.format(new Date());
         }
         return FenixAPICanteen.get(day);
+    }
+
+    @GET
+    @Produces(JSON_UTF8)
+    @Path("contacts")
+    @FenixAPIPublic
+    public String contacts() {
+        Locale locale = I18N.getLocale();
+        String contactsFile = getFileInfo("/api/contacts.json");
+        JsonParser parser = new JsonParser();
+        JsonObject jObj = (JsonObject) parser.parse(contactsFile);
+
+        if (Locale.UK.equals(locale)) {
+            return jObj.get(locale.toLanguageTag()).toString();
+        } else {
+            return jObj.get("pt-PT").toString();
+        }
     }
 
     @GET
