@@ -693,7 +693,7 @@ public class FenixAPIv1 {
         List<FenixCourseEvaluation.WrittenEvaluation> evaluations = new ArrayList<>();
 
         evaluations.addAll(processEvaluation(manageEvaluationsForStudents.getEnroledEvaluations(), true, student));
-        evaluations.addAll(processEvaluation(manageEvaluationsForStudents.getNotEnroledEvaluations(), false, student));
+        evaluations.addAll(processEvaluation(manageEvaluationsForStudents.getAllNotEnroledEvaluations(), false, student));
 
         return evaluations;
     }
