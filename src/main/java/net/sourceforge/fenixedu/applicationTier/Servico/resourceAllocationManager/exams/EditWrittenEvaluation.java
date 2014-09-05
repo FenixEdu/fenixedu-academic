@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.EditWrittenEvaluationAuthorization;
@@ -34,23 +33,16 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
-import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Season;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.fenixedu.core.service.GOPSendMessageService;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.occupation.Occupation;
@@ -61,6 +53,24 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditWrittenEvaluation {
+    public static class EditWrittenEvaluationEvent extends DomainObjectEvent<WrittenEvaluation> {
+        private final Date dayDate;
+        private final Date beginDate;
+
+        public EditWrittenEvaluationEvent(WrittenEvaluation instance, Date dayDate, Date beginDate) {
+            super(instance);
+            this.dayDate = dayDate;
+            this.beginDate = beginDate;
+        }
+
+        public Date getDayDate() {
+            return dayDate;
+        }
+
+        public Date getBeginDate() {
+            return beginDate;
+        }
+    }
 
     protected void run(String executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
             Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
@@ -82,12 +92,8 @@ public class EditWrittenEvaluation {
             roomsToAssociate = readRooms(roomIDs);
         }
 
-        if (!writtenEvaluation.getVigilanciesSet().isEmpty()
-                && (writtenEvaluationDate != writtenEvaluation.getDayDate() || timeModificationIsBiggerThanFiveMinutes(
-                        writtenEvaluationStartTime, writtenEvaluation.getBeginningDate()))) {
-
-            notifyVigilants(writtenEvaluation, writtenEvaluationDate, writtenEvaluationStartTime);
-        }
+        Signal.emit("academic.writtenevaluation.edited", new EditWrittenEvaluationEvent(writtenEvaluation, writtenEvaluationDate,
+                writtenEvaluationStartTime));
 
         final List<Space> previousRooms = writtenEvaluation.getAssociatedRooms();
 
@@ -143,13 +149,6 @@ public class EditWrittenEvaluation {
         }
     }
 
-    private boolean timeModificationIsBiggerThanFiveMinutes(Date writtenEvaluationStartTime, Date beginningDate) {
-        int hourDiference = Math.abs(writtenEvaluationStartTime.getHours() - beginningDate.getHours());
-        int minuteDifference = Math.abs(writtenEvaluationStartTime.getMinutes() - beginningDate.getMinutes());
-
-        return hourDiference > 0 || minuteDifference > 5;
-    }
-
     private List<Space> readRooms(final List<String> roomIDs) throws FenixServiceException {
         final List<Space> result = new ArrayList<Space>();
         for (final String roomID : roomIDs) {
@@ -195,36 +194,6 @@ public class EditWrittenEvaluation {
             result.add(executionCourse);
         }
         return result;
-    }
-
-    private void notifyVigilants(WrittenEvaluation writtenEvaluation, Date dayDate, Date beginDate) {
-
-        final HashSet<Person> tos = new HashSet<Person>();
-
-        // VigilantGroup group =
-        // writtenEvaluation.getAssociatedVigilantGroups().iterator().next();
-        for (VigilantGroup group : writtenEvaluation.getAssociatedVigilantGroups()) {
-            tos.clear();
-            DateTime date = writtenEvaluation.getBeginningDateTime();
-            String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
-            String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
-
-            String subject =
-                    String.format("[ %s - %s - %s %s ]", new Object[] { writtenEvaluation.getName(), group.getName(),
-                            beginDateString, time });
-            String body =
-                    String.format(
-                            "Caro Vigilante,\n\nA prova de avalia��o: %1$s %2$s - %3$s foi alterada para  %4$td-%4$tm-%4$tY - %5$tH:%5$tM.",
-                            new Object[] { writtenEvaluation.getName(), beginDateString, time, dayDate, beginDate });
-
-            for (Vigilancy vigilancy : writtenEvaluation.getVigilanciesSet()) {
-                Person person = vigilancy.getVigilantWrapper().getPerson();
-                tos.add(person);
-            }
-            Sender sender = Bennu.getInstance().getSystemSender();
-            new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(), new Recipient(UserGroup.of(Person
-                    .convertToUsers(tos))).asCollection(), subject, body, "");
-        }
     }
 
     // Service Invokers migrated from Berserk

@@ -72,11 +72,6 @@ public class DepartmentAdmOfficeApp extends ForwardAction {
     public static class DepartmentAdmOfficeGroupsApp {
     }
 
-    @StrutsApplication(bundle = "VigilancyResources", path = "exam-coordination",
-            titleKey = "label.navheader.person.examCoordinator", hint = HINT, accessGroup = ACCESS_GROUP)
-    public static class DepartmentAdmOfficeExamsApp {
-    }
-
     @StrutsApplication(bundle = "ResearcherResources", path = "messaging", titleKey = "title.unit.communication.section",
             hint = HINT, accessGroup = ACCESS_GROUP)
     public static class DepartmentAdmOfficeMessagingApp {

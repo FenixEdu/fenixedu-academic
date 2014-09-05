@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -43,7 +42,7 @@ public class CreateUnavailablePeriod {
 
         CreateUnavailable(person, begin, end, justification);
         sendEmail(person, begin, end, justification,
-                person.getVigilantGroupsForExecutionYear(ExecutionYear.readCurrentExecutionYear()));
+                VigilantGroup.getVigilantGroupsForExecutionYear(person, ExecutionYear.readCurrentExecutionYear()));
     }
 
     private static void CreateUnavailable(Person person, DateTime begin, DateTime end, String justification) {
@@ -63,11 +62,11 @@ public class CreateUnavailablePeriod {
                             + String.format("%02d", end.getHourOfDay()) + ":" + String.format("%02d", end.getMinuteOfHour())
                             + "h";;
             String message =
-                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.unavailablePeriod", new String[] { person.getName(),
+                    BundleUtil.getString("resources.VigilancyResources", "email.convoke.unavailablePeriod", new String[] { person.getName(),
                             beginDate, endDate, justification });
 
             String subject =
-                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.unavailablePeriod.subject",
+                    BundleUtil.getString("resources.VigilancyResources", "email.convoke.unavailablePeriod.subject",
                             new String[] { group.getName() });
 
             Sender sender = Bennu.getInstance().getSystemSender();

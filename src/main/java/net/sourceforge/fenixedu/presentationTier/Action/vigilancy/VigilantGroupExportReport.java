@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyVie
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
-import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -103,27 +102,27 @@ public class VigilantGroupExportReport extends VigilantGroupManagement {
 
     private Spreadsheet getSpreadsheet(Boolean withNames) {
         final Spreadsheet spreadsheet = new Spreadsheet("Report");
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.vigilancy.writtenEvaluation.header"));
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.totalVigilancies"));
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.vigilanciesFromTeachers"));
+        spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.vigilancy.writtenEvaluation.header"));
+        spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.totalVigilancies"));
+        spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.vigilanciesFromTeachers"));
         if (withNames) {
-            spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.teachersVigilants"));
+            spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.teachersVigilants"));
         }
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.vigilanciesFromOthers"));
+        spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.vigilanciesFromOthers"));
         if (withNames) {
-            spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.otherVigilants"));
+            spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.otherVigilants"));
         }
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.numberOfCancelledConvokes"));
+        spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.numberOfCancelledConvokes"));
         if (withNames) {
-            spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.cancelledConvokes"));
+            spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.cancelledConvokes"));
         }
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.numberOfConfirmedConvokes"));
+        spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.numberOfConfirmedConvokes"));
         if (withNames) {
-            spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.confirmedConvokes"));
+            spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.confirmedConvokes"));
         }
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.numberOfAttendedConvokes"));
+        spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.numberOfAttendedConvokes"));
         if (withNames) {
-            spreadsheet.setHeader(BundleUtil.getString(Bundle.VIGILANCY, "label.attendedConvokes"));
+            spreadsheet.setHeader(BundleUtil.getString("resources.VigilancyResources", "label.attendedConvokes"));
         }
 
         return spreadsheet;

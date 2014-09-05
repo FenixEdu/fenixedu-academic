@@ -43,7 +43,7 @@ public class ExamCoordinatorsForGivenUnit implements DataProvider {
         Unit unit = bean.getSelectedUnit();
         List<ExamCoordinator> coordinators = new ArrayList<ExamCoordinator>();
         if (unit != null) {
-            coordinators.addAll(unit.getExamCoordinatorsForGivenYear(currentYear));
+            coordinators.addAll(ExamCoordinator.getExamCoordinatorsForGivenYear(unit, currentYear));
         }
         VigilantGroup group = bean.getSelectedVigilantGroup();
         if (group != null) {

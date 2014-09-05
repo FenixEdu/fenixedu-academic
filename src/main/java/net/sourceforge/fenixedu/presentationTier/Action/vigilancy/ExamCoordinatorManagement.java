@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeExamsApp;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeExamsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -141,7 +141,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         bean.setSelectedUnit(unit);
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         bean.setExecutionYear(executionYear);
-        bean.setExamCoordinators(unit.getExamCoordinatorsForGivenYear(executionYear));
+        bean.setExamCoordinators(ExamCoordinator.getExamCoordinatorsForGivenYear(unit, executionYear));
         request.setAttribute("bean", bean);
         return mapping.findForward("editExamCoordinator");
     }

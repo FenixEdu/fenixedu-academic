@@ -112,9 +112,9 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         @Override
         public int compare(VigilantWrapper v1, VigilantWrapper v2) {
             ComparatorChain comparator = new ComparatorChain();
-            comparator.addComparator(VigilantWrapper.ESTIMATED_POINTS_COMPARATOR);
-            comparator.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
-            comparator.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
+            comparator.addComparator(ESTIMATED_POINTS_COMPARATOR);
+            comparator.addComparator(CATEGORY_COMPARATOR);
+            comparator.addComparator(USERNAME_COMPARATOR);
 
             return comparator.compare(v1, v2);
         }
@@ -165,12 +165,27 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public double getPointsInExecutionYear(ExecutionYear executionYear) {
-        return this.getPerson().getVigilancyPointsForGivenYear(executionYear);
+        final List<VigilantWrapper> vigilants = getVigilantWrapperForExecutionYear(this.getPerson(), executionYear);
+        if (vigilants.isEmpty()) {
+            return 0;
+        } else {
+            double points = 0;
+            for (final VigilantWrapper vigilant : vigilants) {
+                points += vigilant.getPoints();
+            }
+            return points;
+        }
     }
 
     public double getTotalPoints() {
         Person person = this.getPerson();
-        return person.getTotalVigilancyPoints();
+        final Collection<VigilantWrapper> vigilants = person.getVigilantWrappersSet();
+
+        double points = 0;
+        for (final VigilantWrapper vigilant : vigilants) {
+            points += vigilant.getPoints();
+        }
+        return points;
     }
 
     public boolean hasVigilantGroup(VigilantGroup group) {
@@ -386,7 +401,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         String periods = "";
         int i = 0;
         List<UnavailablePeriod> unavailablePeriodsForGivenYear =
-                this.getPerson().getUnavailablePeriodsForGivenYear(getExecutionYear());
+                UnavailablePeriod.getUnavailablePeriodsForGivenYear(this.getPerson(), getExecutionYear());
         int size = unavailablePeriodsForGivenYear.size() - 1;
         for (UnavailablePeriod period : unavailablePeriodsForGivenYear) {
             periods += period.getUnavailableAsString();
@@ -397,8 +412,8 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public String getIncompatiblePersonName() {
-        return (this.getPerson().getIncompatibleVigilantPerson() != null) ? this.getPerson().getIncompatibleVigilantPerson()
-                .getName() : "";
+        return (Vigilancy.getIncompatibleVigilantPerson(this.getPerson()) != null) ? Vigilancy.getIncompatibleVigilantPerson(
+                this.getPerson()).getName() : "";
     }
 
     public UnavailableTypes getWhyIsUnavailabeFor(WrittenEvaluation writtenEvaluation) {
@@ -428,7 +443,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
             return UnavailableTypes.LESSON_AT_SAME_TIME;
         }
 
-        Person person = this.getPerson().getIncompatibleVigilantPerson();
+        Person person = Vigilancy.getIncompatibleVigilantPerson(this.getPerson());
         if (person != null) {
             Collection<Vigilancy> convokes = writtenEvaluation.getVigilanciesSet();
             for (Vigilancy convoke : convokes) {
@@ -476,7 +491,19 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public List<UnavailablePeriod> getUnavailablePeriods() {
-        return getPerson().getUnavailablePeriodsForGivenYear(getExecutionYear());
+        return UnavailablePeriod.getUnavailablePeriodsForGivenYear(getPerson(), getExecutionYear());
+    }
+
+    public static List<VigilantWrapper> getVigilantWrapperForExecutionYear(Person person, ExecutionYear executionYear) {
+        final List<VigilantWrapper> wrappers = new ArrayList<VigilantWrapper>();
+        for (final VigilantWrapper wrapper : person.getVigilantWrappersSet()) {
+
+            if (wrapper.getExecutionYear() == executionYear) {
+                wrappers.add(wrapper);
+            }
+        }
+
+        return wrappers;
     }
 
 }

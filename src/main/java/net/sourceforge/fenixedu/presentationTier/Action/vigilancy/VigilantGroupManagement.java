@@ -164,7 +164,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         VigilantGroupBean bean = new VigilantGroupBean();
-        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        ExamCoordinator coordinator = ExamCoordinator.getCurrentExamCoordinator(getLoggedPerson(request));
 
         String groupId = request.getParameter("gid");
         if (groupId != null) {
@@ -204,7 +204,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(gid);
 
         VigilantGroupBean bean = new VigilantGroupBean();
-        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        ExamCoordinator coordinator = ExamCoordinator.getCurrentExamCoordinator(getLoggedPerson(request));
 
         bean.setSelectedVigilantGroup(group);
         bean.setExamCoordinator(coordinator);
@@ -218,13 +218,13 @@ public class VigilantGroupManagement extends FenixDispatchAction {
     public List<VigilantWrapperBean> prepareVigilantWrapperBeans(HttpServletRequest request, ExecutionYear executionYear) {
         List<VigilantGroup> groups;
         Person loggedPerson = getLoggedPerson(request);
-        ExamCoordinator coordinator = loggedPerson.getExamCoordinatorForGivenExecutionYear(executionYear);
+        ExamCoordinator coordinator = ExamCoordinator.getExamCoordinatorForGivenExecutionYear(loggedPerson, executionYear);
 
         List<VigilantWrapperBean> vigilantWrapperBeans = new ArrayList<VigilantWrapperBean>();
 
         if (coordinator != null) {
             Unit unit = coordinator.getUnit();
-            groups = unit.getVigilantGroupsForGivenExecutionYear(executionYear);
+            groups = VigilantGroup.getVigilantGroupsForGivenExecutionYear(unit, executionYear);
 
             Set<Person> persons = new HashSet<Person>();
 
@@ -296,7 +296,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("options").getMetaObject().getObject();
 
         Person person = getLoggedPerson(request);
-        ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(bean.getExecutionYear());
+        ExamCoordinator coordinator = ExamCoordinator.getExamCoordinatorForGivenExecutionYear(person, bean.getExecutionYear());
         if (coordinator != null) {
             bean.setVigilantGroups(coordinator.getVigilantGroupsSet());
         } else {
@@ -386,7 +386,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         Unit unit = bean.getUnit();
         ExecutionYear executionYear = bean.getExecutionYear();
 
-        List<VigilantGroup> vigilantGroups = unit.getVigilantGroupsForGivenExecutionYear(executionYear);
+        List<VigilantGroup> vigilantGroups = VigilantGroup.getVigilantGroupsForGivenExecutionYear(unit, executionYear);
         bean.setVigilantGroups(vigilantGroups);
 
         VigilantGroup selectedGroup = bean.getSelectedVigilantGroup();
@@ -431,7 +431,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         VigilantGroupBean bean = new VigilantGroupBean();
         Person person = getLoggedPerson(request);
-        ExamCoordinator coordinator = person.getCurrentExamCoordinator();
+        ExamCoordinator coordinator = ExamCoordinator.getCurrentExamCoordinator(person);
         bean.setExamCoordinator(coordinator);
 
         String gid = request.getParameter("gid");
@@ -539,7 +539,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         VigilantGroupBean bean = new VigilantGroupBean();
-        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        ExamCoordinator coordinator = ExamCoordinator.getCurrentExamCoordinator(getLoggedPerson(request));
         bean.setExamCoordinator(coordinator);
         request.setAttribute("bean", bean);
 
@@ -598,7 +598,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         Person loggedPerson = getLoggedPerson(request);
-        ExamCoordinator coordinator = loggedPerson.getCurrentExamCoordinator();
+        ExamCoordinator coordinator = ExamCoordinator.getCurrentExamCoordinator(loggedPerson);
 
         if (coordinator == null) {
             addActionMessage(request, "error.no.coordinators.available", ExecutionYear.readCurrentExecutionYear().getName());
@@ -647,7 +647,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         }
 
         VigilantGroupBean bean = new VigilantGroupBean();
-        bean.setExamCoordinator(getLoggedPerson(request).getCurrentExamCoordinator());
+        bean.setExamCoordinator(ExamCoordinator.getCurrentExamCoordinator(getLoggedPerson(request)));
 
         request.setAttribute("bean", bean);
         request.setAttribute("externalBounds", externalBounds);
@@ -734,7 +734,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         VigilantGroupBean bean = new VigilantGroupBean();
 
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
+        ExamCoordinator coordinator = ExamCoordinator.getExamCoordinatorForGivenExecutionYear(person, executionYear);
         Unit unit = coordinator.getUnit();
 
         bean.setExecutionYear(executionYear);
@@ -783,10 +783,10 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
         bean.setExecutionYear(selectedYear);
         Person person = getLoggedPerson(request);
-        ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(currentYear);
+        ExamCoordinator coordinator = ExamCoordinator.getExamCoordinatorForGivenExecutionYear(person, currentYear);
         if (coordinator != null) {
             Unit unit = coordinator.getUnit();
-            List<VigilantGroup> groups = unit.getVigilantGroupsForGivenExecutionYear(selectedYear);
+            List<VigilantGroup> groups = VigilantGroup.getVigilantGroupsForGivenExecutionYear(unit, selectedYear);
             bean.setUnit(unit);
             bean.setSelectedUnit(unit);
             bean.setSelectedDepartment(getDepartment(unit));

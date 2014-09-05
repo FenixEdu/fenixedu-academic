@@ -634,7 +634,8 @@ public class VigilantTableRender extends OutputRenderer {
                         cell.setClasses(getWarningClass());
                     }
 
-                    if (!v.getWrittenEvaluation().getVigilantsReport() && v.getWrittenEvaluation().getEndDateTime().isBeforeNow()) {
+                    if (v.getWrittenEvaluation().getAttendedVigilanciesSet().isEmpty()
+                            && v.getWrittenEvaluation().getEndDateTime().isBeforeNow()) {
                         cell.setClasses(getWarningClass());
                     }
                 }

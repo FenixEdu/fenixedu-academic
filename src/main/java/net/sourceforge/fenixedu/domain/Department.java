@@ -47,7 +47,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -214,11 +213,6 @@ public class Department extends Department_Base {
         final int begin = this.getRealName().indexOf("(");
         final int end = this.getRealName().indexOf(")");
         return this.getRealName().substring(begin + 1, end);
-    }
-
-    public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
-        Unit departmentUnit = this.getDepartmentUnit();
-        return departmentUnit.getVigilantGroupsForGivenExecutionYear(executionYear);
     }
 
     public List<CompetenceCourse> getBolonhaCompetenceCourses() {

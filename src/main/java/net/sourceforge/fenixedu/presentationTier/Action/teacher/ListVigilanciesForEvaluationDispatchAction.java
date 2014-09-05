@@ -65,9 +65,9 @@ public class ListVigilanciesForEvaluationDispatchAction extends ExecutionCourseB
         comparator.addComparator(Vigilancy.COMPARATOR_BY_VIGILANT_CATEGORY);
         comparator.addComparator(Vigilancy.COMPARATOR_BY_VIGILANT_USERNAME);
 
-        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>(evaluation.getOthersVigilancies());
+        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>(Vigilancy.getOthersVigilancies(evaluation));
         Collections.sort(vigilancies, comparator);
-        List<Vigilancy> ownVigilancies = new ArrayList<Vigilancy>(evaluation.getTeachersVigilancies());
+        List<Vigilancy> ownVigilancies = new ArrayList<Vigilancy>(Vigilancy.getTeachersVigilancies(evaluation));
         Collections.sort(ownVigilancies, comparator);
 
         request.setAttribute("evaluation", evaluation);
@@ -129,7 +129,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends ExecutionCourseB
         IViewState viewState = RenderUtils.getViewState("variantBean");
         WrittenEvaluation evaluation = (WrittenEvaluation) FenixFramework.getDomainObject(request.getParameter("evaluationOID"));
         if (viewState != null) {
-            List<Vigilancy> vigilancies = evaluation.getActiveOtherVigilancies();
+            List<Vigilancy> vigilancies = Vigilancy.getActiveOtherVigilancies(evaluation);
             VariantBean bean = (VariantBean) viewState.getMetaObject().getObject();
             Integer numberOfVigilantsToUnconvoke = bean.getInteger();
             if (numberOfVigilantsToUnconvoke > vigilancies.size()) {

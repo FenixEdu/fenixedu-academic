@@ -24,11 +24,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.Strategy;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategyFactory;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategySugestion;
@@ -201,7 +205,7 @@ public class VigilantGroup extends VigilantGroup_Base {
     public List<VigilantWrapper> getVigilantWrappersWithIncompatiblePerson() {
         List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>();
         for (VigilantWrapper vigilantWrapper : this.getVigilantWrappersSet()) {
-            Person incompatiblePerson = vigilantWrapper.getPerson().getIncompatibleVigilantPerson();
+            Person incompatiblePerson = Vigilancy.getIncompatibleVigilantPerson(vigilantWrapper.getPerson());
             if (incompatiblePerson != null && !vigilantWrappers.contains(incompatiblePerson.getVigilantWrappersSet())) {
                 vigilantWrappers.add(vigilantWrapper);
             }
@@ -282,6 +286,61 @@ public class VigilantGroup extends VigilantGroup_Base {
             }
         }
         return null;
+    }
+
+    public static List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(Unit unit, ExecutionYear executionYear) {
+        List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
+        for (Unit subUnit : unit.getSubUnits()) {
+            groups.addAll(getVigilantGroupsForGivenExecutionYear(subUnit, executionYear));
+        }
+        for (VigilantGroup group : unit.getVigilantGroupsSet()) {
+            if (group.getExecutionYear().equals(executionYear)) {
+                groups.add(group);
+            }
+        }
+        return groups;
+    }
+
+    public static List<VigilantGroup> getVisibleVigilantGroups(Person person, ExecutionYear executionYear) {
+        final Set<VigilantGroup> groups = new HashSet<VigilantGroup>();
+
+        final Employee employee = person.getEmployee();
+        if (employee != null) {
+            final Department department =
+                    employee.getLastDepartmentWorkingPlace(executionYear.getBeginDateYearMonthDay(),
+                            executionYear.getEndDateYearMonthDay());
+            if (department != null) {
+                groups.addAll(getVigilantGroupsForGivenExecutionYear(department.getDepartmentUnit(), executionYear));
+            }
+        } else {
+            for (final VigilantWrapper vigilantWrapper : VigilantWrapper
+                    .getVigilantWrapperForExecutionYear(person, executionYear)) {
+                groups.add(vigilantWrapper.getVigilantGroup());
+            }
+        }
+
+        return new ArrayList<VigilantGroup>(groups);
+    }
+
+    public static List<VigilantGroup> getVigilantGroupsForExecutionYear(Person person, ExecutionYear executionYear) {
+        final List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
+        for (final VigilantWrapper wrapper : person.getVigilantWrappersSet()) {
+            final VigilantGroup group = wrapper.getVigilantGroup();
+            if (group.getExecutionYear().equals(executionYear)) {
+                groups.add(group);
+            }
+        }
+        return groups;
+    }
+
+    public static Set<VigilantGroup> getAssociatedVigilantGroups(WrittenEvaluation writtenEvaluation) {
+        Set<VigilantGroup> groups = new HashSet<VigilantGroup>();
+        for (ExecutionCourse course : writtenEvaluation.getAssociatedExecutionCoursesSet()) {
+            if (course.getVigilantGroup() != null) {
+                groups.add(course.getVigilantGroup());
+            }
+        }
+        return groups;
     }
 
 }

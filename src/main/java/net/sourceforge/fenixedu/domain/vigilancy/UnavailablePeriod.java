@@ -18,6 +18,8 @@
  */
 package net.sourceforge.fenixedu.domain.vigilancy;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -119,13 +121,13 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 
     private boolean canChangeUnavailablePeriodFor(Person person) {
         if (person != null) {
-            if (!person.isAllowedToSpecifyUnavailablePeriod()) {
+            if (!isAllowedToSpecifyUnavailablePeriod(person)) {
                 throw new DomainException("vigilancy.error.outOutPeriodToSpecifyUnavailablePeriods");
             }
             if (this.getEndDate() != null && this.getEndDate().isBeforeNow()) {
                 throw new DomainException("vigilancy.error.cannotEditClosedUnavailablePeriod");
             }
-            List<Vigilancy> convokes = person.getVigilanciesForYear(ExecutionYear.readCurrentExecutionYear());
+            List<Vigilancy> convokes = Vigilancy.getVigilanciesForYear(person, ExecutionYear.readCurrentExecutionYear());
             for (Vigilancy convoke : convokes) {
                 WrittenEvaluation writtenEvaluation = convoke.getWrittenEvaluation();
                 DateTime begin = writtenEvaluation.getBeginningDateTime();
@@ -146,11 +148,11 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
         if (userview != null) {
             Person loggedPerson = userview.getPerson();
             ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-
-            List<VigilantGroup> vigilantGroups = person.getVigilantGroupsForExecutionYear(executionYear);
+            List<VigilantGroup> vigilantGroups = VigilantGroup.getVigilantGroupsForExecutionYear(person, executionYear);
 
             if (loggedPerson != null) {
-                ExamCoordinator coordinator = loggedPerson.getExamCoordinatorForGivenExecutionYear(executionYear);
+                ExamCoordinator coordinator =
+                        ExamCoordinator.getExamCoordinatorForGivenExecutionYear(loggedPerson, executionYear);
                 if (coordinator == null) {
                     return false;
                 } else {
@@ -172,6 +174,30 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
         return String.format("%02d/%02d/%d (%02d:%02d) - %02d/%02d/%d (%02d:%02d): %s", begin.getDayOfMonth(),
                 begin.getMonthOfYear(), begin.getYear(), begin.getHourOfDay(), begin.getMinuteOfHour(), end.getDayOfMonth(),
                 end.getMonthOfYear(), end.getYear(), end.getHourOfDay(), end.getMinuteOfHour(), this.getJustification());
+    }
+
+    private static boolean isAllowedToSpecifyUnavailablePeriod(Person person) {
+        final DateTime currentDate = new DateTime();
+        final List<VigilantGroup> groupsForYear =
+                VigilantGroup.getVigilantGroupsForExecutionYear(person, ExecutionYear.readCurrentExecutionYear());
+        for (final VigilantGroup group : groupsForYear) {
+            if (group.canSpecifyUnavailablePeriodIn(currentDate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static List<UnavailablePeriod> getUnavailablePeriodsForGivenYear(Person person, ExecutionYear executionYear) {
+        final Collection<UnavailablePeriod> unavailablePeriods = person.getUnavailablePeriodsSet();
+        final List<UnavailablePeriod> unavailablePeriodsForGivenYear = new ArrayList<UnavailablePeriod>();
+        for (final UnavailablePeriod unavailablePeriod : unavailablePeriods) {
+            if (unavailablePeriod.getBeginDate().getYear() == executionYear.getBeginCivilYear()
+                    || unavailablePeriod.getBeginDate().getYear() == executionYear.getEndCivilYear()) {
+                unavailablePeriodsForGivenYear.add(unavailablePeriod);
+            }
+        }
+        return unavailablePeriodsForGivenYear;
     }
 
 }

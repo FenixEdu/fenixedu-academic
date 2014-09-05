@@ -229,6 +229,11 @@
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-signals</artifactId>
+            <version>1.0.0.RC1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
             <artifactId>bennu-io</artifactId>
             <version>${version.org.fenixedu.bennu}</version>
         </dependency>

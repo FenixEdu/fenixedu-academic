@@ -52,7 +52,7 @@ public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
         if (isDismissed()) {
             return getAssociatedVigilantGroup().getPointsForDismissed();
         }
-        if (!getWrittenEvaluation().getVigilantsReport()) {
+        if (getWrittenEvaluation().getAttendedVigilanciesSet().isEmpty()) {
             return POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN;
         }
         if (this.getAttendedToConvoke()) {

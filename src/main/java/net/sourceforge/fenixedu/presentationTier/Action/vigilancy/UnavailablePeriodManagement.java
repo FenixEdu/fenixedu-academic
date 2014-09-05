@@ -140,7 +140,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         String gid = request.getParameter("gid");
         VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(gid);
         VigilantGroupBean bean = new VigilantGroupBean();
-        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        ExamCoordinator coordinator = ExamCoordinator.getCurrentExamCoordinator(getLoggedPerson(request));
         bean.setExamCoordinator(coordinator);
         bean.setSelectedVigilantGroup(group);
         putUnavailablePeriodsOnRequest(request, group);
@@ -153,7 +153,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         VigilantGroupBean bean = new VigilantGroupBean();
-        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        ExamCoordinator coordinator = ExamCoordinator.getCurrentExamCoordinator(getLoggedPerson(request));
         bean.setExamCoordinator(coordinator);
         request.setAttribute("bean", bean);
         return mapping.findForward("manageUnavailablePeriodsOfVigilants");
@@ -186,7 +186,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
         deletePeriod(request);
         VigilantGroupBean bean = new VigilantGroupBean();
-        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        ExamCoordinator coordinator = ExamCoordinator.getCurrentExamCoordinator(getLoggedPerson(request));
         bean.setExamCoordinator(coordinator);
         String gid = request.getParameter("gid");
         VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(gid);
@@ -206,7 +206,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         UnavailablePeriodBean bean = new UnavailablePeriodBean();
         Person person = getLoggedPerson(request);
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
+        ExamCoordinator coordinator = ExamCoordinator.getExamCoordinatorForGivenExecutionYear(person, executionYear);
         bean.setCoordinator(coordinator);
         bean.setSelectedVigilantGroup(group);
 
@@ -238,7 +238,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         String gid = request.getParameter("gid");
 
         VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(gid);
-        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        ExamCoordinator coordinator = ExamCoordinator.getCurrentExamCoordinator(getLoggedPerson(request));
         beanToPutOnRequest.setExamCoordinator(coordinator);
         beanToPutOnRequest.setSelectedVigilantGroup(group);
         putUnavailablePeriodsOnRequest(request, group);

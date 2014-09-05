@@ -36,7 +36,6 @@
 	<!ENTITY serviceRequests SYSTEM "/fenixedu-academic/schemas/serviceRequests-schemas.xml">
     <!ENTITY degreeAdminOffice SYSTEM "/fenixedu-academic/schemas/degreeAdministrativeOffice-schemas.xml">    
     <!ENTITY executionCourse SYSTEM "/fenixedu-academic/schemas/executionCourse-schemas.xml"> 
-	<!ENTITY vigilancy SYSTEM "/fenixedu-academic/schemas/vigilancy-schemas.xml">
 	<!ENTITY academicAdminOffice SYSTEM "/fenixedu-academic/schemas/academicAdminOffice-schemas.xml">	
     <!ENTITY site SYSTEM "/fenixedu-academic/schemas/site-schemas.xml">
     <!ENTITY student SYSTEM "/fenixedu-academic/schemas/student-schemas.xml">
@@ -676,7 +675,6 @@
 	&serviceRequests;
     &degreeAdminOffice;
     &executionCourse;
-	&vigilancy;
 	&academicAdminOffice;
     &site;
     &student;

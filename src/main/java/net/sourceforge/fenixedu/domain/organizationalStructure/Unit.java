@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
@@ -49,8 +48,6 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
-import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
@@ -209,10 +206,6 @@ public class Unit extends Unit_Base {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
         if (!(getUnitServiceAgreementTemplate() == null && getOwnedReceiptsSet().isEmpty())) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
-        }
-
-        if (!(getVigilantGroupsSet().isEmpty() && getExamCoordinatorsSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
 
@@ -844,30 +837,6 @@ public class Unit extends Unit_Base {
                 AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
         noOfficialExternalInstitutionUnit.setCountry(country);
         return noOfficialExternalInstitutionUnit;
-    }
-
-    public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
-
-        List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
-        for (Unit unit : getSubUnits()) {
-            groups.addAll(unit.getVigilantGroupsForGivenExecutionYear(executionYear));
-        }
-        for (VigilantGroup group : getVigilantGroupsSet()) {
-            if (group.getExecutionYear().equals(executionYear)) {
-                groups.add(group);
-            }
-        }
-        return groups;
-    }
-
-    public List<ExamCoordinator> getExamCoordinatorsForGivenYear(ExecutionYear executionYear) {
-        List<ExamCoordinator> examCoordinators = new ArrayList<ExamCoordinator>();
-        for (ExamCoordinator coordinator : this.getExamCoordinatorsSet()) {
-            if (coordinator.getExecutionYear().equals(executionYear)) {
-                examCoordinators.add(coordinator);
-            }
-        }
-        return examCoordinators;
     }
 
     public static Unit findFirstExternalUnitByName(final String unitName) {

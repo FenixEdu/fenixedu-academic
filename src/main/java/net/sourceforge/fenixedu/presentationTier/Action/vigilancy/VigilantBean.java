@@ -207,7 +207,7 @@ public class VigilantBean implements Serializable {
 
     public List<VigilantGroup> getUserViewVigilantGroups() {
         Person person = Authenticate.getUser().getPerson();
-        return person.getVigilantGroupsForExecutionYear(executionYear);
+        return VigilantGroup.getVigilantGroupsForExecutionYear(person, executionYear);
     }
 
     public void setVigilantGroups(Collection<VigilantGroup> groups) {

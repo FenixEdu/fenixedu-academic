@@ -138,4 +138,28 @@ public class ExamCoordinator extends ExamCoordinator_Base {
         super.deleteDomainObject();
     }
 
+    public static List<ExamCoordinator> getExamCoordinatorsForGivenYear(Unit unit, ExecutionYear executionYear) {
+        List<ExamCoordinator> examCoordinators = new ArrayList<ExamCoordinator>();
+        for (ExamCoordinator coordinator : unit.getExamCoordinatorsSet()) {
+            if (coordinator.getExecutionYear().equals(executionYear)) {
+                examCoordinators.add(coordinator);
+            }
+        }
+        return examCoordinators;
+    }
+
+    public static ExamCoordinator getExamCoordinatorForGivenExecutionYear(Person person, ExecutionYear executionYear) {
+        final Collection<ExamCoordinator> examCoordinators = person.getExamCoordinatorsSet();
+        for (final ExamCoordinator examCoordinator : examCoordinators) {
+            if (examCoordinator.getExecutionYear().equals(executionYear)) {
+                return examCoordinator;
+            }
+        }
+        return null;
+    }
+
+    public static ExamCoordinator getCurrentExamCoordinator(Person person) {
+        return getExamCoordinatorForGivenExecutionYear(person, ExecutionYear.readCurrentExecutionYear());
+    }
+
 }

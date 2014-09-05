@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
-import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -72,7 +71,7 @@ public class CreateConvokes {
             String beginDateString = date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear();
 
             String subject =
-                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.subject", new String[] { group.getEmailSubjectPrefix(),
+                    BundleUtil.getString("resources.VigilancyResources", "email.convoke.subject", new String[] { group.getEmailSubjectPrefix(),
                             writtenEvaluation.getName(), group.getName(), beginDateString });
 
             new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(

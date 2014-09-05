@@ -97,7 +97,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("options").getMetaObject().getObject();
 
         Person person = getLoggedPerson(request);
-        ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(bean.getExecutionYear());
+        ExamCoordinator coordinator = ExamCoordinator.getExamCoordinatorForGivenExecutionYear(person, bean.getExecutionYear());
 
         bean.setExamCoordinator(coordinator);
         if (coordinator != null) {
@@ -320,7 +320,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 
         Person person = getLoggedPerson(request);
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
+        ExamCoordinator coordinator = ExamCoordinator.getExamCoordinatorForGivenExecutionYear(person, executionYear);
         Unit unit = coordinator.getUnit();
 
         ConvokeBean bean = new ConvokeBean();
@@ -377,9 +377,9 @@ public class ConvokeManagement extends FenixDispatchAction {
         vigilants.addAll(bean.getVigilants());
         List<Person> incompatiblePersons = new ArrayList<Person>();
         for (VigilantWrapper wrapper : vigilants) {
-            if (wrapper.getPerson().getIncompatibleVigilantPerson() != null) {
+            if (Vigilancy.getIncompatibleVigilantPerson(wrapper.getPerson()) != null) {
                 incompatiblePersons.add(wrapper.getPerson());
-                incompatiblePersons.add(wrapper.getPerson().getIncompatibleVigilantPerson());
+                incompatiblePersons.add(Vigilancy.getIncompatibleVigilantPerson(wrapper.getPerson()));
             }
         }
 
@@ -391,7 +391,7 @@ public class ConvokeManagement extends FenixDispatchAction {
     private ExamCoordinator getCoordinatorForCurrentYear(HttpServletRequest request) throws FenixServiceException {
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
         Person person = getLoggedPerson(request);
-        ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(currentYear);
+        ExamCoordinator coordinator = ExamCoordinator.getExamCoordinatorForGivenExecutionYear(person, currentYear);
         return coordinator;
     }
 
@@ -466,9 +466,9 @@ public class ConvokeManagement extends FenixDispatchAction {
     private List<VigilantGroup> getVigilantGroups(HttpServletRequest request, ExecutionYear executionYear) {
         Person person = getLoggedPerson(request);
         ExamCoordinator examcoordinatior =
-                person.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
+                ExamCoordinator.getExamCoordinatorForGivenExecutionYear(person, ExecutionYear.readCurrentExecutionYear());
         Unit unit = examcoordinatior.getUnit();
-        List<VigilantGroup> groups = unit.getVigilantGroupsForGivenExecutionYear(executionYear);
+        List<VigilantGroup> groups = VigilantGroup.getVigilantGroupsForGivenExecutionYear(unit, executionYear);
         return groups;
     }
 }

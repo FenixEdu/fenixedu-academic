@@ -126,7 +126,6 @@ enum net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType                
 enum net.sourceforge.fenixedu.domain.transactions.PaymentType                                                             as PaymentType;
 enum net.sourceforge.fenixedu.domain.transactions.TransactionType                                                         as TransactionType;
 enum net.sourceforge.fenixedu.domain.util.LogicOperator                                                                   as LogicOperator;
-enum net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus                                                            as AttendingStatus;
 enum net.sourceforge.fenixedu.util.ContentType                                                                            as ContentType;
 enum net.sourceforge.fenixedu.util.Month                                                                                  as Month;
 enum net.sourceforge.fenixedu.util.RegimeType                                                                             as RegimeType;
@@ -809,7 +808,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
             HourMinuteSecond enrollmentBeginTimeDateHourMinuteSecond;
             YearMonthDay enrollmentEndDayDateYearMonthDay;
             HourMinuteSecond enrollmentEndTimeDateHourMinuteSecond;
-            Boolean vigilantsReport;
         }
 
             class Exam extends WrittenEvaluation {
@@ -3549,54 +3547,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
 
     class util.email.SystemSender extends util.email.Sender {}
 
-    class vigilancy.ExamCoordinator  {
-        Boolean allowedToCreateGroups;
-    }
-
-    class vigilancy.UnavailablePeriod  {
-        DateTime beginDate;
-        DateTime endDate;
-        String justification;
-    }
-
-    class vigilancy.Vigilancy  {
-        Boolean active;
-        AttendingStatus status;
-    }
-
-        class vigilancy.OtherCourseVigilancy extends vigilancy.Vigilancy {
-            Boolean confirmed;
-        }
-
-        class vigilancy.OwnCourseVigilancy extends vigilancy.Vigilancy {
-        }
-
-    class vigilancy.VigilantGroup  {
-        DateTime beginOfFirstPeriodForUnavailablePeriods;
-        DateTime beginOfSecondPeriodForUnavailablePeriods;
-        String contactEmail;
-        String emailSubjectPrefix;  
-        String convokeStrategy;
-        DateTime endOfFirstPeriodForUnavailablePeriods;
-        DateTime endOfSecondPeriodForUnavailablePeriods;
-        String name;
-        Integer pointsForConvoked;
-        Integer pointsForDisconvoked;
-        Integer pointsForDismissed;
-        Integer pointsForDismissedTeacher;
-        Integer pointsForMissing;
-        Integer pointsForMissingTeacher;
-        Integer pointsForTeacher;
-        String rulesLink;
-    }
-
-    class vigilancy.VigilantWrapper  {
-        BigDecimal pointsWeight;
-        BigDecimal startPoints;
-        Boolean convokable;
-        String justification;
-    }
-
 class personnelSection.contracts.ContractSituation  {
     String giafId (REQUIRED);
     MultiLanguageString name (REQUIRED);
@@ -5028,8 +4978,6 @@ class accessControl.PersistentUnitGroup extends .org.fenixedu.bennu.core.domain.
     public FunctionType relationFunctionType;
     public Boolean includeSubUnits (REQUIRED);
 }
-
-class accessControl.PersistentVigilancyGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentThesisReadersGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
@@ -6877,53 +6825,6 @@ relation ConnectionRuleAccountabilityType {
     }
 }
 
-relation ConvokeForWrittenEvaluation {
-    vigilancy.Vigilancy playsRole vigilancies {
-        multiplicity *;
-    }
-    WrittenEvaluation playsRole writtenEvaluation;
-}
-
-relation ConvokingVigilantWrapper {
-    vigilancy.VigilantWrapper playsRole vigilantWrapper;
-    vigilancy.Vigilancy playsRole vigilancies {
-        multiplicity *;
-    }
-}
-
-relation VigilantGroupVigilantWrapper {
-    vigilancy.VigilantGroup playsRole vigilantGroup;
-    vigilancy.VigilantWrapper playsRole vigilantWrappers {
-        multiplicity *;
-    }
-}
-
-relation VigilantWrapperPerson {
-    vigilancy.VigilantWrapper playsRole vigilantWrappers {
-        multiplicity *;
-    }
-    Person playsRole person;
-}
-
-relation PersonIsUnavailable {
-    Person playsRole person;
-    vigilancy.UnavailablePeriod playsRole unavailablePeriods {
-        multiplicity *;
-    }
-}
-
-relation VigilantWrapperRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    vigilancy.VigilantWrapper playsRole vigilantWrappers {
-        multiplicity *;
-    }
-}
-
-relation PersonIncompatibleVigilant {
-    Person playsRole incompatiblePerson;
-    Person playsRole incompatibleVigilant;
-}
-
 relation CoordinatorTeacher {
     Coordinator playsRole coordinators {
         multiplicity *;
@@ -7436,36 +7337,6 @@ relation EvaluationExecutionCourse {
     }
 }
 
-relation ExamCoordinatorBelongToUnit {
-    vigilancy.ExamCoordinator playsRole examCoordinators {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole unit;
-}
-
-relation ExamCoordinatorInExecutionYear {
-    vigilancy.ExamCoordinator playsRole examCoordinators {
-        multiplicity *;
-    }
-    ExecutionYear playsRole executionYear;
-}
-
-relation ExamCoordinatorManagesVigilantGroup {
-    vigilancy.ExamCoordinator playsRole examCoordinators {
-        multiplicity *;
-    }
-    vigilancy.VigilantGroup playsRole vigilantGroups {
-        multiplicity *;
-    }
-}
-
-relation ExamCoordinatorPerson {
-    vigilancy.ExamCoordinator playsRole examCoordinators {
-        multiplicity *;
-    }
-    Person playsRole person;
-}
-
 relation ExclusivenessDegreeModule {
     curricularRules.Exclusiveness playsRole participatingExclusivenessCurricularRules {
         multiplicity *;
@@ -7476,13 +7347,6 @@ relation ExclusivenessDegreeModule {
 relation ExecutionCourseAttends {
     ExecutionCourse playsRole disciplinaExecucao;
     Attends playsRole attends {
-        multiplicity *;
-    }
-}
-
-relation ExecutionCourseBelongsToGroup {
-    vigilancy.VigilantGroup playsRole vigilantGroup;
-    ExecutionCourse playsRole executionCourses {
         multiplicity *;
     }
 }
@@ -8848,13 +8712,6 @@ relation RoomSummary {
     .org.fenixedu.spaces.domain.Space playsRole room;
 }
 
-relation RootDomainExamCoordinator {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    vigilancy.ExamCoordinator playsRole examCoordinators {
-        multiplicity *;
-    }
-}
-
 relation RootDomainMarkSheet {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     MarkSheet playsRole markSheets {
@@ -10031,27 +9888,6 @@ relation RootDomainObjectWrittenEvaluationEnrolment {
     }
 }
 
-relation RootDomainUnavailablePeriod {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    vigilancy.UnavailablePeriod playsRole unavailablePeriods {
-        multiplicity *;
-    }
-}
-
-relation RootDomainVigilancy {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    vigilancy.Vigilancy playsRole vigilancies {
-        multiplicity *;
-    }
-}
-
-relation RootDomainVigilantGroup {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    vigilancy.VigilantGroup playsRole vigilantGroups {
-        multiplicity *;
-    }
-}
-
 relation SchoolClassExecutionDegree {
     SchoolClass playsRole schoolClasses {
         multiplicity *;
@@ -10578,20 +10414,6 @@ relation UserPerson {
 relation UserPrivateKeyUser {
     UserPrivateKey playsRole privateKey;
     .org.fenixedu.bennu.core.domain.User playsRole;
-}
-
-relation VigilantGroupBelongsToUnit {
-    vigilancy.VigilantGroup playsRole vigilantGroups {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole unit;
-}
-
-relation VigilantGroupInExecutionYear {
-    vigilancy.VigilantGroup playsRole vigilantGroups {
-        multiplicity *;
-    }
-    ExecutionYear playsRole executionYear;
 }
 
 relation WrittenEvaluationContext {
@@ -12937,15 +12759,6 @@ relation PersistentCoordinatorGroupDegree {
     }
     public Degree playsRole degree {
         multiplicity 0..1;
-    }
-}
-
-relation PersistentVigilancyGroupVigilancy {
-    public accessControl.PersistentVigilancyGroup playsRole vigilancyGroup {
-        multiplicity 0..1;
-    }
-    public vigilancy.Vigilancy playsRole vigilancy {
-        multiplicity 1..1;
     }
 }
 

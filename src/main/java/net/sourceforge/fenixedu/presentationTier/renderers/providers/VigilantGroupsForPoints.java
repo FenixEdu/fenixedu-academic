@@ -46,7 +46,7 @@ public class VigilantGroupsForPoints implements DataProvider {
         if (coordinator != null) {
             Unit unit = coordinator.getUnit();
             previousVigilantGroups =
-                    unit.getVigilantGroupsForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear()
+                    VigilantGroup.getVigilantGroupsForGivenExecutionYear(unit, ExecutionYear.readCurrentExecutionYear()
                             .getPreviousExecutionYear());
             previousVigilantGroups.addAll(vigilantGroups);
         }

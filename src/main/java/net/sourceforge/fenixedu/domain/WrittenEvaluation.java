@@ -40,8 +40,6 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -88,7 +86,6 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected WrittenEvaluation() {
         super();
-        this.setVigilantsReport(false);
     }
 
     public String getName() {
@@ -470,17 +467,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
             throw new DomainException("error.notAuthorizedWrittenEvaluationDelete.withStudent");
         }
         logRemove();
-        deleteAllVigilanciesAssociated();
         deleteAllRoomOccupations();
         getAssociatedCurricularCourseScopeSet().clear();
         getAssociatedContextsSet().clear();
         super.delete();
-    }
-
-    private void deleteAllVigilanciesAssociated() {
-        for (; !this.getVigilanciesSet().isEmpty(); this.getVigilanciesSet().iterator().next().delete()) {
-            ;
-        }
     }
 
     public void editEnrolmentPeriod(Date enrolmentBeginDay, Date enrolmentEndDay, Date enrolmentBeginTime, Date enrolmentEndTime)
@@ -711,72 +701,12 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return degreesAsString;
     }
 
-    public List<Vigilancy> getTeachersVigilancies() {
-        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
-            if (vigilancy.isOwnCourseVigilancy()) {
-                vigilancies.add(vigilancy);
-            }
-        }
-        return vigilancies;
-    }
-
-    public List<Vigilancy> getOthersVigilancies() {
-        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
-            if (vigilancy.isOtherCourseVigilancy()) {
-                vigilancies.add(vigilancy);
-            }
-        }
-        return vigilancies;
-    }
-
-    public List<Vigilancy> getActiveOtherVigilancies() {
-        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
-            if (vigilancy.isOtherCourseVigilancy() && vigilancy.isActive()) {
-                vigilancies.add(vigilancy);
-            }
-        }
-        return vigilancies;
-    }
-
-    public List<Vigilancy> getAllActiveVigilancies() {
-        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
-            if (vigilancy.isActive()) {
-                vigilancies.add(vigilancy);
-            }
-        }
-        return vigilancies;
-    }
-
-    public Set<VigilantGroup> getAssociatedVigilantGroups() {
-        Set<VigilantGroup> groups = new HashSet<VigilantGroup>();
-        for (ExecutionCourse course : getAssociatedExecutionCoursesSet()) {
-            if (course.getVigilantGroup() != null) {
-                groups.add(course.getVigilantGroup());
-            }
-        }
-        return groups;
-    }
-
     public String getAssociatedRoomsAsString() {
         String rooms = "";
         for (Space room : getAssociatedRooms()) {
             rooms += room.getName() + "\n";
         }
         return rooms;
-    }
-
-    public List<Vigilancy> getActiveVigilancies() {
-        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (Vigilancy vigilancy : this.getVigilanciesSet()) {
-            if (vigilancy.isActive()) {
-                vigilancies.add(vigilancy);
-            }
-        }
-        return vigilancies;
     }
 
     public boolean hasScopeFor(final Integer year, final Integer semester, DegreeCurricularPlan degreeCurricularPlan) {
@@ -838,12 +768,6 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public abstract boolean canBeAssociatedToRoom(Space room);
-
-    public void fillVigilancyReport() {
-        if (!getVigilantsReport()) {
-            setVigilantsReport(Boolean.TRUE);
-        }
-    }
 
     // couldn't find a smarter way to conver ymdhms to DateTiem
     private DateTime convertTimes(YearMonthDay yearMonthDay, HourMinuteSecond hourMinuteSecond) {

@@ -22,12 +22,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -72,7 +74,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
     }
 
     public VigilantGroup getAssociatedVigilantGroup() {
-        Set<VigilantGroup> groups = this.getWrittenEvaluation().getAssociatedVigilantGroups();
+        Set<VigilantGroup> groups = VigilantGroup.getAssociatedVigilantGroups(this.getWrittenEvaluation());
         for (VigilantGroup group : groups) {
             if (this.getVigilantWrapper().hasVigilantGroup(group)) {
                 return group;
@@ -86,11 +88,11 @@ public abstract class Vigilancy extends Vigilancy_Base {
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         Person person = AccessControl.getPerson();
         if (this.getExecutionYear() != currentExecutionYear
-                && person.getExamCoordinatorForGivenExecutionYear(currentExecutionYear) == null) {
+                && ExamCoordinator.getExamCoordinatorForGivenExecutionYear(person, currentExecutionYear) == null) {
             throw new DomainException("vigilancy.error.notAuthorized");
         } else {
             if (AttendingStatus.ATTENDED.equals(status)) {
-                getWrittenEvaluation().fillVigilancyReport();
+                setAttendedWrittenEvaluation(getWrittenEvaluation());
             }
             super.setStatus(status);
         }
@@ -237,7 +239,8 @@ public abstract class Vigilancy extends Vigilancy_Base {
     }
 
     protected boolean isExamCoordinatorForGroup(Person person) {
-        ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
+        ExamCoordinator coordinator =
+                ExamCoordinator.getExamCoordinatorForGivenExecutionYear(person, ExecutionYear.readCurrentExecutionYear());
         return (coordinator != null && coordinator.managesGivenVigilantGroup(getAssociatedVigilantGroup()));
     }
 
@@ -269,4 +272,72 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     public abstract int getEstimatedPoints();
 
+    public static List<Vigilancy> getVigilanciesForYear(Person person, ExecutionYear executionYear) {
+        final List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+        for (final VigilantWrapper vigilantWrapper : person.getVigilantWrappersSet()) {
+            if (vigilantWrapper.getExecutionYear().equals(executionYear)) {
+                vigilancies.addAll(vigilantWrapper.getVigilanciesSet());
+            }
+        }
+        return vigilancies;
+    }
+
+    public static Person getIncompatibleVigilantPerson(Person person) {
+        return person.getIncompatiblePerson() != null ? person.getIncompatiblePerson() : person.getIncompatibleVigilant();
+    }
+
+    public static void setIncompatibleVigilantPerson(Person person, Person incompatible) {
+        person.setIncompatibleVigilant(incompatible);
+        person.setIncompatiblePerson(null);
+    }
+
+    public static List<Vigilancy> getActiveOtherVigilancies(WrittenEvaluation writtenEvaluation) {
+        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+        for (Vigilancy vigilancy : writtenEvaluation.getVigilanciesSet()) {
+            if (vigilancy.isOtherCourseVigilancy() && vigilancy.isActive()) {
+                vigilancies.add(vigilancy);
+            }
+        }
+        return vigilancies;
+    }
+
+    public static List<Vigilancy> getAllActiveVigilancies(WrittenEvaluation writtenEvaluation) {
+        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+        for (Vigilancy vigilancy : writtenEvaluation.getVigilanciesSet()) {
+            if (vigilancy.isActive()) {
+                vigilancies.add(vigilancy);
+            }
+        }
+        return vigilancies;
+    }
+
+    public static List<Vigilancy> getTeachersVigilancies(WrittenEvaluation writtenEvaluation) {
+        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+        for (Vigilancy vigilancy : writtenEvaluation.getVigilanciesSet()) {
+            if (vigilancy.isOwnCourseVigilancy()) {
+                vigilancies.add(vigilancy);
+            }
+        }
+        return vigilancies;
+    }
+
+    public static List<Vigilancy> getOthersVigilancies(WrittenEvaluation writtenEvaluation) {
+        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+        for (Vigilancy vigilancy : writtenEvaluation.getVigilanciesSet()) {
+            if (vigilancy.isOtherCourseVigilancy()) {
+                vigilancies.add(vigilancy);
+            }
+        }
+        return vigilancies;
+    }
+
+    public static List<Vigilancy> getActiveVigilancies(WrittenEvaluation writtenEvaluation) {
+        List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+        for (Vigilancy vigilancy : writtenEvaluation.getVigilanciesSet()) {
+            if (vigilancy.isActive()) {
+                vigilancies.add(vigilancy);
+            }
+        }
+        return vigilancies;
+    }
 }

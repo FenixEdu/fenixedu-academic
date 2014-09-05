@@ -122,7 +122,6 @@ public class MergeExecutionCourses {
         registerMergeHandler(MergeExecutionCourses::copyGroupPropertiesExecutionCourse);
         registerMergeHandler(MergeExecutionCourses::removeEvaluations);
         registerMergeHandler(MergeExecutionCourses::copyForuns);
-        registerMergeHandler(MergeExecutionCourses::copyVigilantGroups);
         registerMergeHandler(MergeExecutionCourses::copyExecutionCourseLogs);
         registerMergeHandler((from, to) -> to.getAssociatedCurricularCoursesSet()
                 .addAll(from.getAssociatedCurricularCoursesSet()));
@@ -160,12 +159,6 @@ public class MergeExecutionCourses {
         }
 
         executionCourseFrom.delete();
-    }
-
-    private static void copyVigilantGroups(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
-        if (executionCourseTo.getVigilantGroup() == null) {
-            executionCourseTo.setVigilantGroup(executionCourseFrom.getVigilantGroup());
-        }
     }
 
     private static boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom,

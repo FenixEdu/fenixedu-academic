@@ -18,9 +18,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.EditWrittenEvaluationAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -28,21 +25,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManager
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest;
-import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.UserGroup;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.joda.time.DateTime;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -63,9 +50,7 @@ public class DeleteWrittenEvaluation {
         if (writtenEvaluationToDelete instanceof Exam) {
             disconnectExamCertificateRequests(writtenEvaluationToDelete);
         }
-        if (!writtenEvaluationToDelete.getVigilanciesSet().isEmpty()) {
-            notifyVigilants(writtenEvaluationToDelete);
-        }
+        Signal.emit("academic.writtenevaluation.deleted", new DomainObjectEvent<>(writtenEvaluationToDelete));
         writtenEvaluationToDelete.delete();
     }
 
@@ -73,33 +58,6 @@ public class DeleteWrittenEvaluation {
         Exam examToDelete = (Exam) writtenEvaluationToDelete;
         for (ExamDateCertificateRequest examDateCertificateRequest : examToDelete.getExamDateCertificateRequestsSet()) {
             examDateCertificateRequest.removeExams(examToDelete);
-        }
-    }
-
-    private void notifyVigilants(WrittenEvaluation writtenEvaluation) {
-
-        final Set<Person> tos = new HashSet<Person>();
-
-        for (VigilantGroup group : writtenEvaluation.getAssociatedVigilantGroups()) {
-            tos.clear();
-            DateTime date = writtenEvaluation.getBeginningDateTime();
-            String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
-            String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
-
-            String subject =
-                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.subject", new String[] { writtenEvaluation.getName(),
-                            group.getName(), beginDateString, time });
-            String body =
-                    BundleUtil.getString(Bundle.VIGILANCY, "label.writtenEvaluationDeletedMessage", new String[] {
-                            writtenEvaluation.getName(), beginDateString, time });
-            for (Vigilancy vigilancy : writtenEvaluation.getVigilanciesSet()) {
-                Person person = vigilancy.getVigilantWrapper().getPerson();
-                tos.add(person);
-            }
-            Sender sender = Bennu.getInstance().getSystemSender();
-            new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(), new Recipient(UserGroup.of(Person
-                    .convertToUsers(tos))).asCollection(), subject, body, "");
-
         }
     }
 

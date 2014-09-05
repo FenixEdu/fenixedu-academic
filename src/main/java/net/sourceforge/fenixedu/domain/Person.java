@@ -115,11 +115,6 @@ import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
-import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
-import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
@@ -595,125 +590,6 @@ public class Person extends Person_Base {
             }
         }
         return null;
-    }
-
-    public Boolean getIsExamCoordinatorInCurrentYear() {
-        final ExamCoordinator examCoordinator =
-                this.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
-        return examCoordinator == null ? false : true;
-    }
-
-    public List<VigilantGroup> getVisibleVigilantGroups(final ExecutionYear executionYear) {
-
-        final Set<VigilantGroup> groups = new HashSet<VigilantGroup>();
-
-        final Employee employee = this.getEmployee();
-        if (employee != null) {
-            final Department department =
-                    employee.getLastDepartmentWorkingPlace(executionYear.getBeginDateYearMonthDay(),
-                            executionYear.getEndDateYearMonthDay());
-            if (department != null) {
-                groups.addAll(department.getVigilantGroupsForGivenExecutionYear(executionYear));
-            }
-        } else {
-            for (final VigilantWrapper vigilantWrapper : this.getVigilantWrapperForExecutionYear(executionYear)) {
-                groups.add(vigilantWrapper.getVigilantGroup());
-            }
-        }
-
-        return new ArrayList<VigilantGroup>(groups);
-    }
-
-    public List<VigilantWrapper> getVigilantWrapperForExecutionYear(final ExecutionYear executionYear) {
-        final List<VigilantWrapper> wrappers = new ArrayList<VigilantWrapper>();
-        for (final VigilantWrapper wrapper : getVigilantWrappersSet()) {
-
-            if (wrapper.getExecutionYear() == executionYear) {
-                wrappers.add(wrapper);
-            }
-        }
-
-        return wrappers;
-    }
-
-    public List<VigilantGroup> getVigilantGroupsForExecutionYear(final ExecutionYear executionYear) {
-        final List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
-        for (final VigilantWrapper wrapper : getVigilantWrappersSet()) {
-            final VigilantGroup group = wrapper.getVigilantGroup();
-            if (group.getExecutionYear().equals(executionYear)) {
-                groups.add(group);
-            }
-        }
-        return groups;
-    }
-
-    public boolean isAllowedToSpecifyUnavailablePeriod() {
-        final DateTime currentDate = new DateTime();
-        final List<VigilantGroup> groupsForYear = getVigilantGroupsForExecutionYear(ExecutionYear.readCurrentExecutionYear());
-        for (final VigilantGroup group : groupsForYear) {
-            if (group.canSpecifyUnavailablePeriodIn(currentDate)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public List<Vigilancy> getVigilanciesForYear(final ExecutionYear executionYear) {
-        final List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-        for (final VigilantWrapper vigilantWrapper : this.getVigilantWrappersSet()) {
-            if (vigilantWrapper.getExecutionYear().equals(executionYear)) {
-                vigilancies.addAll(vigilantWrapper.getVigilanciesSet());
-            }
-        }
-        return vigilancies;
-    }
-
-    @Atomic
-    public void addExamCoordinator(final ExecutionYear executionYear, final Unit unit) {
-        RoleType.grant(RoleType.EXAM_COORDINATOR, this.getUser());
-        new ExamCoordinator(this, executionYear, unit);
-    }
-
-    public ExamCoordinator getExamCoordinatorForGivenExecutionYear(final ExecutionYear executionYear) {
-        final Collection<ExamCoordinator> examCoordinators = this.getExamCoordinatorsSet();
-        for (final ExamCoordinator examCoordinator : examCoordinators) {
-            if (examCoordinator.getExecutionYear().equals(executionYear)) {
-                return examCoordinator;
-            }
-        }
-        return null;
-    }
-
-    public Boolean isExamCoordinatorForVigilantGroup(final VigilantGroup group) {
-        final ExamCoordinator coordinator = getExamCoordinatorForGivenExecutionYear(group.getExecutionYear());
-        return coordinator == null ? Boolean.FALSE : group.getExamCoordinatorsSet().contains(coordinator);
-    }
-
-    public ExamCoordinator getCurrentExamCoordinator() {
-        return getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
-    }
-
-    public double getVigilancyPointsForGivenYear(final ExecutionYear executionYear) {
-        final List<VigilantWrapper> vigilants = this.getVigilantWrapperForExecutionYear(executionYear);
-        if (vigilants.isEmpty()) {
-            return 0;
-        } else {
-            double points = 0;
-            for (final VigilantWrapper vigilant : vigilants) {
-                points += vigilant.getPoints();
-            }
-            return points;
-        }
-    }
-
-    public double getTotalVigilancyPoints() {
-        final Collection<VigilantWrapper> vigilants = this.getVigilantWrappersSet();
-
-        double points = 0;
-        for (final VigilantWrapper vigilant : vigilants) {
-            points += vigilant.getPoints();
-        }
-        return points;
     }
 
     /***************************************************************************
@@ -2623,32 +2499,6 @@ public class Person extends Person_Base {
 
     public boolean hasAnnualIRSDocumentFor(final Integer year) {
         return getAnnualIRSDocumentFor(year) != null;
-    }
-
-    public Person getIncompatibleVigilantPerson() {
-        return getIncompatiblePerson() != null ? getIncompatiblePerson() : getIncompatibleVigilant();
-    }
-
-    public void setIncompatibleVigilantPerson(final Person person) {
-        setIncompatibleVigilant(person);
-        setIncompatiblePerson(null);
-    }
-
-    public void removeIncompatibleVigilantPerson() {
-        setIncompatibleVigilant(null);
-        setIncompatiblePerson(null);
-    }
-
-    public List<UnavailablePeriod> getUnavailablePeriodsForGivenYear(final ExecutionYear executionYear) {
-        final Collection<UnavailablePeriod> unavailablePeriods = this.getUnavailablePeriodsSet();
-        final List<UnavailablePeriod> unavailablePeriodsForGivenYear = new ArrayList<UnavailablePeriod>();
-        for (final UnavailablePeriod unavailablePeriod : unavailablePeriods) {
-            if (unavailablePeriod.getBeginDate().getYear() == executionYear.getBeginCivilYear()
-                    || unavailablePeriod.getBeginDate().getYear() == executionYear.getEndCivilYear()) {
-                unavailablePeriodsForGivenYear.add(unavailablePeriod);
-            }
-        }
-        return unavailablePeriodsForGivenYear;
     }
 
     public boolean hasAnyAdministrativeOfficeFeeAndInsuranceEventInDebt() {

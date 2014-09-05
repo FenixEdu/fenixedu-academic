@@ -51,12 +51,12 @@ public class WrittenEvaluationVigilancyView {
     }
 
     public int getVigilanciesFromOthers() {
-        return getWrittenEvaluation().getOthersVigilancies().size();
+        return Vigilancy.getOthersVigilancies(getWrittenEvaluation()).size();
     }
 
     public List<VigilantWrapper> getTeachersVigilants() {
         List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
-        for (Vigilancy vigilancy : getWrittenEvaluation().getTeachersVigilancies()) {
+        for (Vigilancy vigilancy : Vigilancy.getTeachersVigilancies(getWrittenEvaluation())) {
             vigilants.add(vigilancy.getVigilantWrapper());
         }
         return vigilants;
@@ -64,7 +64,7 @@ public class WrittenEvaluationVigilancyView {
 
     public List<VigilantWrapper> getOtherVigilants() {
         List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
-        for (Vigilancy vigilancy : getWrittenEvaluation().getOthersVigilancies()) {
+        for (Vigilancy vigilancy : Vigilancy.getOthersVigilancies(getWrittenEvaluation())) {
             vigilants.add(vigilancy.getVigilantWrapper());
         }
         return vigilants;
@@ -86,7 +86,7 @@ public class WrittenEvaluationVigilancyView {
 
     public List<VigilantWrapper> getConfirmedConvokes() {
         List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
-        for (Vigilancy vigilancy : getWrittenEvaluation().getOthersVigilancies()) {
+        for (Vigilancy vigilancy : Vigilancy.getOthersVigilancies(getWrittenEvaluation())) {
             OtherCourseVigilancy otherCourseVigilancy = (OtherCourseVigilancy) vigilancy;
             if (otherCourseVigilancy.isConfirmed()) {
                 vigilants.add(otherCourseVigilancy.getVigilantWrapper());
