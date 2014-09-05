@@ -31,13 +31,17 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
+import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+
+import com.google.common.io.BaseEncoding;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -91,7 +95,7 @@ public class PersonInformationFromUniqueCardDTO {
 
     private String district;
 
-    private byte[] photo;
+    private String photo;
 
     public String getGivenNames() {
         return givenNames;
@@ -253,11 +257,11 @@ public class PersonInformationFromUniqueCardDTO {
         this.district = district;
     }
 
-    public byte[] getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -305,14 +309,15 @@ public class PersonInformationFromUniqueCardDTO {
         this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
     }
 
+    @Atomic
     public void edit(Person person) throws ParseException {
         final String dateFormat = "dd MM yyyy";
 
         if (!StringUtils.isEmpty(getGivenNames())) {
-            person.setGivenNames(getGivenNames());
+            person.setGivenNames(StringFormatter.prettyPrint(getGivenNames()));
         }
         if (!StringUtils.isEmpty(getFamilyNames())) {
-            person.setFamilyNames(getFamilyNames());
+            person.setFamilyNames(StringFormatter.prettyPrint(getFamilyNames()));
         }
         if (!StringUtils.isEmpty(getGender())) {
             person.setGender(getGender().equalsIgnoreCase("m") ? Gender.MALE : Gender.FEMALE);
@@ -346,24 +351,25 @@ public class PersonInformationFromUniqueCardDTO {
             person.setNationality(Country.readByThreeLetterCode(getNationality()));
         }
         if (!StringUtils.isEmpty(getMotherName())) {
-            person.setNameOfMother(getMotherName());
+            person.setNameOfMother(StringFormatter.prettyPrint(getMotherName()));
         }
         if (!StringUtils.isEmpty(getFatherName())) {
-            person.setNameOfFather(getFatherName());
+            person.setNameOfFather(StringFormatter.prettyPrint(getFatherName()));
         }
 
         if (getPhoto() != null) {
-            person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.JPG, new ByteArray(getPhoto())));
+            person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL, ContentType.JPG, new ByteArray(BaseEncoding.base64()
+                    .decode(getPhoto()))));
         }
 
         final PhysicalAddressData physicalAddress = new PhysicalAddressData();
-        physicalAddress.setAddress(getAddress());
+        physicalAddress.setAddress(StringFormatter.prettyPrint(getAddress()));
         physicalAddress.setAreaCode(getPostalCode());
-        physicalAddress.setAreaOfAreaCode(getPostalArea());
-        physicalAddress.setArea(getLocality());
-        physicalAddress.setParishOfResidence(getParish());
-        physicalAddress.setDistrictSubdivisionOfResidence(getMunicipality());
-        physicalAddress.setDistrictOfResidence(getDistrict());
+        physicalAddress.setAreaOfAreaCode(StringFormatter.prettyPrint(getPostalArea()));
+        physicalAddress.setArea(StringFormatter.prettyPrint(getLocality()));
+        physicalAddress.setParishOfResidence(StringFormatter.prettyPrint(getParish()));
+        physicalAddress.setDistrictSubdivisionOfResidence(StringFormatter.prettyPrint(getMunicipality()));
+        physicalAddress.setDistrictOfResidence(StringFormatter.prettyPrint(getDistrict()));
         physicalAddress.setCountryOfResidence(Country.readByTwoLetterCode(getCountry()));
 
         if (!physicalAddress.isEmpty()) {
