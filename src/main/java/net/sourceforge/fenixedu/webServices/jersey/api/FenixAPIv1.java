@@ -940,9 +940,9 @@ public class FenixAPIv1 {
 
     private FenixDegreeExtended getFenixDegree(ExecutionDegree executionDegree) {
         final Degree degree = executionDegree.getDegree();
-        String name = degree.getNameI18N().getContent(I18N.getLocale());
         List<FenixSpace> degreeCampus = new ArrayList<>();
         ExecutionYear executionYear = executionDegree.getExecutionYear();
+        String name = degree.getNameI18N(executionYear).getContent(I18N.getLocale());
 
         String type = degree.getDegreeTypeName();
         String typeName = degree.getDegreeType().getFilteredName();
