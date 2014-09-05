@@ -58,11 +58,13 @@
 		<tbody>
 			<tr>
 				<td>
+					<logic:present name="person" property="username">
                     <bean:define id="personIDForPhoto" name="person" property="username"/>
 					<html:img align="middle"
 					src="<%=request.getContextPath() + "/user/photo/" + personIDForPhoto.toString() %>"
 					altKey="personPhoto" bundle="IMAGE_RESOURCES"
-					style="border: 1px solid #aaa; padding: 3px;" /> 
+					style="border: 1px solid #aaa; padding: 3px;" />
+					</logic:present>
 				</td> 	
 				<td>
 				<div style="padding: 0 2em;">

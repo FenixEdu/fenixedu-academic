@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -154,6 +155,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.BlueprintFile;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.services.SpaceBlueprintsDWGProcessor;
@@ -178,6 +180,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
 @SuppressWarnings("unchecked")
@@ -693,7 +696,7 @@ public class FenixAPIv1 {
         List<FenixCourseEvaluation.WrittenEvaluation> evaluations = new ArrayList<>();
 
         evaluations.addAll(processEvaluation(manageEvaluationsForStudents.getEnroledEvaluations(), true, student));
-        evaluations.addAll(processEvaluation(manageEvaluationsForStudents.getNotEnroledEvaluations(), false, student));
+        evaluations.addAll(processEvaluation(manageEvaluationsForStudents.getAllNotEnroledEvaluations(), false, student));
 
         return evaluations;
     }
@@ -886,6 +889,23 @@ public class FenixAPIv1 {
 
     @GET
     @Produces(JSON_UTF8)
+    @Path("contacts")
+    @FenixAPIPublic
+    public String contacts() {
+        Locale locale = I18N.getLocale();
+        String contactsFile = getFileInfo("/api/contacts.json");
+        JsonParser parser = new JsonParser();
+        JsonObject jObj = (JsonObject) parser.parse(contactsFile);
+
+        if (Locale.UK.equals(locale)) {
+            return jObj.get(locale.toLanguageTag()).toString();
+        } else {
+            return jObj.get("pt-PT").toString();
+        }
+    }
+
+    @GET
+    @Produces(JSON_UTF8)
     @Path("shuttle")
     @FenixAPIPublic
     public String shuttle() {
@@ -922,6 +942,7 @@ public class FenixAPIv1 {
         final Degree degree = executionDegree.getDegree();
         List<FenixSpace> degreeCampus = new ArrayList<>();
         ExecutionYear executionYear = executionDegree.getExecutionYear();
+        String name = degree.getNameI18N(executionYear).getContent(I18N.getLocale());
 
         String type = degree.getDegreeTypeName();
         String typeName = degree.getDegreeType().getFilteredName();
@@ -966,7 +987,7 @@ public class FenixAPIv1 {
         }
 
         FenixDegreeExtended fenixDegree =
-                new FenixDegreeExtended(executionYear.getQualifiedName(), degree, type, typeName, degreeUrl, degreeCampus,
+                new FenixDegreeExtended(executionYear.getQualifiedName(), name, degree, type, typeName, degreeUrl, degreeCampus,
                         fenixDegreeInfo, teachers);
         return fenixDegree;
     }

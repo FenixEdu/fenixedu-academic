@@ -179,9 +179,9 @@ public class FenixDegreeExtended extends FenixDegree {
     private FenixDegreeInfo info;
     private List<FenixTeacher> teachers;
 
-    public FenixDegreeExtended(String academicTerm, Degree degree, String type, String typeName, String url,
+    public FenixDegreeExtended(String academicTerm, String name, Degree degree, String type, String typeName, String url,
             List<FenixSpace> campus, FenixDegreeInfo info, List<FenixTeacher> teachers) {
-        super(degree, true);
+        super(degree, name, true);
         this.type = type;
         this.typeName = typeName;
         this.url = url;
