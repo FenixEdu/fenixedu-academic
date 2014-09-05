@@ -68,6 +68,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     private List<SelectItem> executionPeriodsLabels;
     private List<SelectItem> evaluationTypes;
     private Registration student;
+    private List<Evaluation> allNotEnroledEvaluations;
     private List<Evaluation> notEnroledEvaluations;
     private List<Evaluation> enroledEvaluations;
     private List<Evaluation> evaluationsWithoutEnrolmentPeriod;
@@ -103,6 +104,15 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
             evaluationTypes.add(new SelectItem(WRITTENTESTS, writtenTests));
         }
         return this.evaluationTypes;
+    }
+
+    public List<Evaluation> getAllNotEnroledEvaluations() {
+        if (this.allNotEnroledEvaluations == null) {
+            this.allNotEnroledEvaluations = new ArrayList();
+
+            processAllEvaluations();
+        }
+        return this.allNotEnroledEvaluations;
     }
 
     public List<Evaluation> getNotEnroledEvaluations() {
@@ -172,6 +182,31 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
             }
         }
         Collections.sort(this.enroledEvaluations, comparatorChain);
+    }
+
+    private void processAllEvaluations() {
+        if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
+            for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+                for (final Exam exam : registration.getUnenroledExams(getExecutionPeriod())) {
+                    if (exam.isExamsMapPublished()) {
+                        this.allNotEnroledEvaluations.add(exam);
+                        getExecutionCourses().put(exam.getExternalId(), exam.getAttendingExecutionCoursesFor(registration));
+                    }
+                }
+            }
+        }
+        if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
+            for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+                for (final WrittenTest writtenTest : registration.getUnenroledWrittenTests(getExecutionPeriod())) {
+
+                    this.allNotEnroledEvaluations.add(writtenTest);
+                    getExecutionCourses().put(writtenTest.getExternalId(),
+                            writtenTest.getAttendingExecutionCoursesFor(registration));
+
+                }
+            }
+        }
+        Collections.sort(this.allNotEnroledEvaluations, comparatorChain);
     }
 
     private void processNotEnroledEvaluations() {

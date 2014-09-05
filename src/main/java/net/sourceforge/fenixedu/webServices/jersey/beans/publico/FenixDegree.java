@@ -67,6 +67,13 @@ public class FenixDegree {
         setAcademicTerms(withAcademicTerms ? getAcademicTerms(degree) : null);
     }
 
+    public FenixDegree(Degree degree, String name, Boolean withAcademicTerms) {
+        setId(degree.getExternalId());
+        setName(name);
+        setAcronym(degree.getSigla());
+        setAcademicTerms(withAcademicTerms ? getAcademicTerms(degree) : null);
+    }
+
     public String getId() {
         return id;
     }
