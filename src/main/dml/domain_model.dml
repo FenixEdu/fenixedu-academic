@@ -756,24 +756,10 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String name (REQUIRED);
     }
 
-    class DomainObjectActionLog  {
-        String action;
-        String domainObjectClassName;
-        DateTime instant;
-        Integer keyDomainObject;
-        String personUsername;
-        String domainObjectExternalId;
+    class DomainOperationLog  {
+        DateTime whenDateTime;
+        String description;
     }
-
-    class DomainObjectActionLogEntry  {
-        String name;
-        String value;
-    }
-	
-	class DomainOperationLog  {
-		DateTime whenDateTime;
-		String description;
-	}
 	
 	class EmergencyContact {
 		String contact;
@@ -9503,20 +9489,6 @@ relation DissertationEnrolmentConclusionProcess {
     }
 }
 
-relation DomainObjectActionLogDomainObjectActionLogEntry {
-    DomainObjectActionLog playsRole domainObjectActionLog;
-    DomainObjectActionLogEntry playsRole domainObjectActionLogEntries {
-        multiplicity *;
-    }
-}
-
-relation DomainObjectActionLogPerson {
-    Person playsRole person;
-    DomainObjectActionLog playsRole domainObjectActionLogs {
-        multiplicity *;
-    }
-}
-
 relation EmployeeCreditNote {
     Person playsRole responsible;
     accounting.CreditNote playsRole creditNotes {
@@ -11873,20 +11845,6 @@ relation RootDomainObjectDistrictSubdivision {
 relation DistrictDistrictSubdivision {
     District playsRole district;
     DistrictSubdivision playsRole districtSubdivisions {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectDomainObjectActionLog {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    DomainObjectActionLog playsRole domainObjectActionLogs {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectDomainObjectActionLogEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    DomainObjectActionLogEntry playsRole domainObjectActionLogEntries {
         multiplicity *;
     }
 }

@@ -1241,13 +1241,13 @@ public class Person extends Person_Base {
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
         if (!(getPartyContactsSet().isEmpty() && getChildsSet().isEmpty() && getParentsSet().isEmpty()
-                && getDomainObjectActionLogsSet().isEmpty() && getExportGroupingReceiversSet().isEmpty()
-                && getPersistentGroupsSet().isEmpty() && getAssociatedQualificationsSet().isEmpty()
-                && getAssociatedAlteredCurriculumsSet().isEmpty() && getEnrolmentEvaluationsSet().isEmpty()
-                && getExportGroupingSendersSet().isEmpty() && getResponsabilityTransactionsSet().isEmpty()
-                && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty() && getEmployee() == null
-                && getTeacher() == null && !hasAnyPersonFunctions() && getInternalParticipantsSet().isEmpty()
-                && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet().isEmpty())) {
+                && getExportGroupingReceiversSet().isEmpty() && getPersistentGroupsSet().isEmpty()
+                && getAssociatedQualificationsSet().isEmpty() && getAssociatedAlteredCurriculumsSet().isEmpty()
+                && getEnrolmentEvaluationsSet().isEmpty() && getExportGroupingSendersSet().isEmpty()
+                && getResponsabilityTransactionsSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty()
+                && getGuidesSet().isEmpty() && getEmployee() == null && getTeacher() == null && !hasAnyPersonFunctions()
+                && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet()
+                .isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.person.cannot.be.deleted"));
         }
     }
