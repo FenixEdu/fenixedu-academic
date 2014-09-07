@@ -236,6 +236,11 @@ public class FillPersonalDataOperation extends CandidacyOperation {
         precedentDegreeInformation.setInstitution(institution);
         precedentDegreeInformation.setConclusionYear(getOriginInformationForm().getConclusionYear());
         precedentDegreeInformation.setCountry(getOriginInformationForm().getCountryWhereFinishedPreviousCompleteDegree());
+        if ((getOriginInformationForm().getSchoolLevel() != null)
+                && getOriginInformationForm().getSchoolLevel().isHighSchoolOrEquivalent()) {
+            precedentDegreeInformation.setCountryHighSchool(getOriginInformationForm()
+                    .getCountryWhereFinishedPreviousCompleteDegree());
+        }
 
         personalData.setHighSchoolType(getOriginInformationForm().getHighSchoolType());
 

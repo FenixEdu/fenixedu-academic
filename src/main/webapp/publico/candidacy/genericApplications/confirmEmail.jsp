@@ -856,7 +856,7 @@
 					<% } %>
 				</td>
 				<td>
-					<% if (!recomentation.hasLetterOfRecomentation()) { %>
+					<% if (recomentation.getLetterOfRecomentation() == null) { %>
 						<a href="<%= request.getContextPath() +  deleteRequestUrl + "&recomentationId=" + recomentation.getExternalId() %>">
 							<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.request.delete"/>
 						</a>
