@@ -23,7 +23,6 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
-import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
@@ -196,6 +195,25 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
             }
         }
         return false;
+    }
+
+    @Override
+    public String getUrl() {
+        Lesson li = getLesson();
+        if (li == null) {
+            return "";
+        }
+
+        return li.getShift().getExecutionCourse().getSite().getFullPath();
+    }
+
+    @Override
+    public String getInfo() {
+        String asd = getLesson().getShift().getCourseLoadsSet().iterator().next().getType().getFullNameTipoAula();
+        for (YearMonthDay ymd : getLesson().getAllLessonDates()) {
+            asd += "\n" + ymd.toString();
+        }
+        return asd;
     }
 
     @Override
