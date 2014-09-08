@@ -85,7 +85,7 @@ public class RegistrationOperation extends CandidacyOperation {
 
     private Teacher getAvailableTutorTeacher() {
         for (TutorshipIntention tutorshipIntention : getExecutionDegree().getTutorshipIntentions()) {
-            if (tutorshipIntention.getMaxStudentsToTutor() > 0) {
+            if (tutorshipIntention.getMaxStudentsToTutor() != null && tutorshipIntention.getMaxStudentsToTutor() > 0) {
                 tutorshipIntention.setMaxStudentsToTutor(tutorshipIntention.getMaxStudentsToTutor() - 1);
                 return tutorshipIntention.getTeacher();
             }

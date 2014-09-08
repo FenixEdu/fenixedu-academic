@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitu
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
@@ -389,7 +390,7 @@ public class DegreeCandidateDTO implements IFileLine {
 
         final Person person = new Person(user);
 
-        person.setName(getName());
+        person.setName(StringFormatter.prettyPrint(getName()));
         person.setGender(getGender());
         person.setIdentification(getDocumentIdNumber(), IDDocumentType.IDENTITY_CARD);
 
