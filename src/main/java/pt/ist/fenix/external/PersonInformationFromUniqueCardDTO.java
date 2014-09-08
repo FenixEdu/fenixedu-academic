@@ -313,12 +313,10 @@ public class PersonInformationFromUniqueCardDTO {
     public void edit(Person person) throws ParseException {
         final String dateFormat = "dd MM yyyy";
 
-        if (!StringUtils.isEmpty(getGivenNames())) {
-            person.setGivenNames(StringFormatter.prettyPrint(getGivenNames()));
-        }
-        if (!StringUtils.isEmpty(getFamilyNames())) {
-            person.setFamilyNames(StringFormatter.prettyPrint(getFamilyNames()));
-        }
+        person.ensureUserProfile();
+        person.getProfile().changeName(StringFormatter.prettyPrint(getGivenNames()),
+                StringFormatter.prettyPrint(getFamilyNames()), null);
+
         if (!StringUtils.isEmpty(getGender())) {
             person.setGender(getGender().equalsIgnoreCase("m") ? Gender.MALE : Gender.FEMALE);
         }
