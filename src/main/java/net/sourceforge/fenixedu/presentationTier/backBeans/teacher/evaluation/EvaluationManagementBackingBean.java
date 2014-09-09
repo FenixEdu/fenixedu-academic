@@ -79,7 +79,6 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -528,14 +527,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         List<Exam> examsList = new ArrayList(executionCourse.getAssociatedExams());
         Collections.sort(examsList, new BeanComparator("dayDate"));
         return examsList;
-    }
-
-    public List<OnlineTest> getOnlineTestList() throws FenixServiceException {
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(getExecutionCourseID());
-
-        List<OnlineTest> onlineTestList = new ArrayList(executionCourse.getAssociatedOnlineTests());
-        Collections.sort(onlineTestList, new BeanComparator("distributedTest.beginDateDate"));
-        return onlineTestList;
     }
 
     public List<WrittenTest> getWrittenTestList() throws FenixServiceException {

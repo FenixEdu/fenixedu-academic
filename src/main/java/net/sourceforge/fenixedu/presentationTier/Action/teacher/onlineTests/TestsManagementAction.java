@@ -142,7 +142,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
     public ActionForward prepareCreateTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final ExecutionCourse executionCourse = getExecutionCourse(request);
-        final Integer availableMetadatas = executionCourse.findVisibleMetadata().size();
+        final Integer availableMetadatas = Metadata.findVisibleMetadata(executionCourse).size();
         request.setAttribute("availableMetadatas", availableMetadatas);
         return doForward(request, "createTest");
     }

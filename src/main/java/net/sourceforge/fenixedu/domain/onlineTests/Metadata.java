@@ -195,4 +195,14 @@ public class Metadata extends Metadata_Base {
         }
     }
 
+    public static Set<Metadata> findVisibleMetadata(ExecutionCourse executionCourse) {
+        final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
+        for (final Metadata metadata : executionCourse.getMetadatasSet()) {
+            if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue()) {
+                visibleMetadata.add(metadata);
+            }
+        }
+        return visibleMetadata;
+    }
+
 }

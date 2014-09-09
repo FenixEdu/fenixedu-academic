@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
-import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -58,13 +57,7 @@ public class Mark extends Mark_Base {
 
     private boolean validateMark(String mark) {
         GradeScale gradeScale;
-        if (getEvaluation() instanceof AdHocEvaluation) {
-            gradeScale = ((AdHocEvaluation) getEvaluation()).getGradeScale();
-        } else if (getEvaluation() instanceof WrittenEvaluation) {
-            gradeScale = ((WrittenEvaluation) getEvaluation()).getGradeScale();
-        } else if (getEvaluation() instanceof OnlineTest) {
-            gradeScale = ((OnlineTest) getEvaluation()).getGradeScale();
-        } else {
+        if (getEvaluation() instanceof Project || getEvaluation() instanceof FinalEvaluation) {
             if (getAttend().getEnrolment() == null) {
                 final Registration registration = getAttend().getRegistration();
                 final StudentCurricularPlan studentCurricularPlan =
@@ -79,6 +72,8 @@ public class Mark extends Mark_Base {
             } else {
                 gradeScale = getAttend().getEnrolment().getCurricularCourse().getGradeScaleChain();
             }
+        } else {
+            gradeScale = getEvaluation().getGradeScale();
         }
         return gradeScale.isValid(mark, getEvaluation().getEvaluationType());
     }

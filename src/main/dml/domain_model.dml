@@ -853,10 +853,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
                 DateTime requestRoomSentDate;
             }
 
-        class onlineTests.OnlineTest extends Evaluation {
-        }
-
-
     class ExecutionCourse  {
         Boolean availableGradeSubmission;
         String comment;     
@@ -2731,74 +2727,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
 		DateTime entryDate;
 	}
 	
-    class onlineTests.DistributedTest  {
-        YearMonthDay beginDateDateYearMonthDay;
-        HourMinuteSecond beginHourDateHourMinuteSecond;
-        CorrectionAvailability correctionAvailability;
-        YearMonthDay endDateDateYearMonthDay;
-        HourMinuteSecond endHourDateHourMinuteSecond;
-        Boolean imsFeedback;
-        Integer numberOfQuestions;
-        String testInformation;
-        TestType testType;
-        String title;
-        String evaluationTitle;
-    }
-
-    class onlineTests.Metadata  {
-        String author;
-        String description;
-        String difficulty;
-        HourMinuteSecond learningTimeDateHourMinuteSecond;
-        String level;
-        String mainSubject;
-        String metadataFile;
-        String secondarySubject;
-        Boolean visibility;
-    }
-
-    class onlineTests.Question  {
-        Boolean visibility;
-        String xmlFile;
-        String xmlFileName;
-    }
-
-    class onlineTests.StudentTestLog  {
-        DateTime dateDateTime;
-        String event;
-        String checksum;
-    }
-
-    class onlineTests.StudentTestQuestion  {
-        CorrectionFormula correctionFormula;
-        String itemId;
-        String optionShuffle;
-        Response response;
-        Double testQuestionMark;
-        Integer testQuestionOrder;
-        Double testQuestionValue;
-    }
-
-    class onlineTests.Test  {
-        DateTime creationDateDateTime;
-        String information;
-        DateTime lastModifiedDateDateTime;
-        String title;
-    }
-    
-    class onlineTests.TestChecksum  {
-        String checksumCode;
-    }
-
-    class onlineTests.TestQuestion  {
-        CorrectionFormula correctionFormula;
-        Integer testQuestionOrder;
-        Double testQuestionValue;
-    }
-
-    class onlineTests.TestScope  {
-    }
-    
     class organizationalStructure.AccountabilityType  {     
         MultiLanguageString typeName;
         AccountabilityTypeEnum type;
@@ -7828,20 +7756,6 @@ relation SpecializationDegreeRegistrationEventRegistration {
 	accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent playsRole specializationDegreeRegistrationEvent;
 }
 
-relation DistributedTestQuestions {
-    onlineTests.DistributedTest playsRole distributedTest;
-    onlineTests.StudentTestQuestion playsRole distributedTestQuestions {
-        multiplicity *;
-    }
-}
-
-relation DistributedTestScope {
-    onlineTests.DistributedTest playsRole distributedTests {
-        multiplicity *;
-    }
-    onlineTests.TestScope playsRole testScope;
-}
-
 relation DissertationEnrolmentConclusionProcess {
     Enrolment playsRole dissertationEnrolment;
     student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
@@ -8700,13 +8614,6 @@ relation MarkSheetTeacher {
     Teacher playsRole responsibleTeacher;
 }
 
-relation MetadataFromExecutionCourse {
-    onlineTests.Metadata playsRole metadatas {
-        multiplicity *;
-    }
-    ExecutionCourse playsRole executionCourse;
-}
-
 relation NonAffiliatedTeacherExecutionCourse {
     NonAffiliatedTeacher playsRole nonAffiliatedTeachers {
         multiplicity *;
@@ -8723,11 +8630,6 @@ relation OldCurricularCourseCurricularCourseEquivalence {
     CurricularCourse playsRole oldCurricularCourses {
         multiplicity *;
     }
-}
-
-relation OnlineDistributedTest {
-    onlineTests.OnlineTest playsRole onlineTest;
-    onlineTests.DistributedTest playsRole distributedTest;
 }
 
 relation OptionalCurricularCourseOptionalEnrolment {
@@ -9224,27 +9126,6 @@ relation QualificationModifiedByPerson {
         multiplicity *;
     }
     Person playsRole modifiedBy;
-}
-
-relation QuestionFromTestQuestion {
-    onlineTests.Question playsRole question;
-    onlineTests.TestQuestion playsRole testQuestions {
-        multiplicity *;
-    }
-}
-
-relation QuestionsFromMetadata {
-    onlineTests.Question playsRole questions {
-        multiplicity *;
-    }
-    onlineTests.Metadata playsRole metadata;
-}
-
-relation QuestionsFromTest {
-    onlineTests.TestQuestion playsRole testQuestions {
-        multiplicity *;
-    }
-    onlineTests.Test playsRole test;
 }
 
 relation ReceiptCreditNote {
@@ -9839,13 +9720,6 @@ relation RootDomainObjectDepartment {
     }
 }
 
-relation RootDomainObjectDistributedTest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    onlineTests.DistributedTest playsRole distributedTests {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectDistrict {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     District playsRole districts {
@@ -10190,13 +10064,6 @@ relation RootDomainObjectMark {
     }
 }
 
-relation RootDomainObjectMetadata {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    onlineTests.Metadata playsRole metadatas {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectNonAffiliatedTeacher {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     NonAffiliatedTeacher playsRole nonAffiliatedTeachers {
@@ -10368,13 +10235,6 @@ relation RootDomainObjectPublicationsNumber {
 relation RootDomainObjectQualification {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Qualification playsRole qualifications {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectQuestion {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    onlineTests.Question playsRole questions {
         multiplicity *;
     }
 }
@@ -10590,20 +10450,6 @@ relation RootDomainObjectStudentStatute {
     }
 }
 
-relation RootDomainObjectStudentTestLog {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    onlineTests.StudentTestLog playsRole studentTestLogs {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectStudentTestQuestion {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    onlineTests.StudentTestQuestion playsRole studentTestQuestions {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectSummary {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Summary playsRole summarys {
@@ -10684,34 +10530,6 @@ relation TeacherServiceLogUser {
 relation RootDomainObjectTeacherServiceItem {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.TeacherServiceItem playsRole teacherServiceItems {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    onlineTests.Test playsRole tests {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTestChecksum {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    onlineTests.TestChecksum playsRole testChecksums {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTestQuestion {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    onlineTests.TestQuestion playsRole testQuestions {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTestScope {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    onlineTests.TestScope playsRole testScopes {
         multiplicity *;
     }
 }
@@ -11163,13 +10981,6 @@ relation StudentDataShareAuthorizations {
     }
 }
 
-relation StudentDistributedTestLogs {
-    onlineTests.StudentTestLog playsRole studentsLogs {
-        multiplicity *;
-    }
-    onlineTests.DistributedTest playsRole distributedTest;
-}
-
 relation StudentEnrolmentLog {
     log.CurriculumLineLog playsRole curriculumLineLogs {
         multiplicity *;
@@ -11268,28 +11079,6 @@ relation SeniorStatuteRegistration {
 	}
 }
 	
-
-relation StudentTestQuestions {
-    onlineTests.Question playsRole question;
-    onlineTests.StudentTestQuestion playsRole studentTestsQuestions {
-        multiplicity *;
-    }
-}
-
-relation StudentTestsLogs {
-    onlineTests.StudentTestLog playsRole studentTestsLogs {
-        multiplicity *;
-    }
-    student.Registration playsRole student;
-}
-
-relation StudentTestsQuestions {
-    onlineTests.StudentTestQuestion playsRole studentTestsQuestions {
-        multiplicity *;
-    }
-    student.Registration playsRole student;
-}
-
 relation TeacherDegreeFinalProjectStudentExecutionPeriod {
     degree.finalProject.TeacherDegreeFinalProjectStudent playsRole associatedTeacherDegreeFinalProjectStudents {
         multiplicity *;
@@ -11414,18 +11203,6 @@ relation TeacherSummary {
         multiplicity *;
     }
     Teacher playsRole teacher;
-}
-
-relation TestScope {
-    onlineTests.Test playsRole tests {
-        multiplicity *;
-    }
-    onlineTests.TestScope playsRole testScope;
-}
-
-relation TestScopeExecutionCourse {
-    onlineTests.TestScope playsRole testScope;
-    ExecutionCourse playsRole executionCourse;
 }
 
 relation ThesisDegree {

@@ -29,17 +29,9 @@ import org.fenixedu.spaces.domain.Space;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({ @JsonSubTypes.Type(value = FenixCourseEvaluation.Test.class, name = "TEST"),
-        @JsonSubTypes.Type(value = FenixCourseEvaluation.Exam.class, name = "EXAM"),
-        @JsonSubTypes.Type(value = FenixCourseEvaluation.OnlineTest.class, name = "ONLINE_TEST"),
-        @JsonSubTypes.Type(value = FenixCourseEvaluation.Project.class, name = "PROJECT"),
-        @JsonSubTypes.Type(value = FenixCourseEvaluation.AdHocEvaluation.class, name = "AD_HOC"), })
 public abstract class FenixCourseEvaluation {
 
     public abstract static class WrittenEvaluation extends FenixCourseEvaluation {
@@ -55,13 +47,13 @@ public abstract class FenixCourseEvaluation {
         String id;
 
         protected WrittenEvaluation() {
-            super(null, null);
+            super(null, null, null);
         }
 
-        public WrittenEvaluation(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
+        public WrittenEvaluation(String id, String name, String type, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
                 String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Space> rooms, Boolean isEnrolled,
                 Set<ExecutionCourse> courses) {
-            super(name, evaluationPeriod);
+            super(name, type, evaluationPeriod);
             init(id, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled, courses);
         }
 
@@ -82,10 +74,10 @@ public abstract class FenixCourseEvaluation {
             setId(id);
         }
 
-        public WrittenEvaluation(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
+        public WrittenEvaluation(String id, String name, String type, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
                 String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Space> rooms, Boolean isEnrolled,
                 Set<ExecutionCourse> courses, Space assignedRoom) {
-            super(name, evaluationPeriod);
+            super(name, type, evaluationPeriod);
             init(id, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled, courses);
             setAssignedRoom(assignedRoom);
         }
@@ -168,15 +160,15 @@ public abstract class FenixCourseEvaluation {
         public Test(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
                 String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Space> rooms, Boolean isEnrolled,
                 Set<ExecutionCourse> courses) {
-            super(id, name, evaluationPeriod, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled,
-                    courses);
+            super(id, name, "TEST", evaluationPeriod, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms,
+                    isEnrolled, courses);
         }
 
         public Test(String externalId, String name, FenixPeriod evaluationPeriod, Boolean isEnrolmentPeriod,
                 String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Space> rooms, Boolean isEnroled,
                 Set<ExecutionCourse> courses, Space assignedRoom) {
-            super(externalId, name, evaluationPeriod, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms,
-                    isEnroled, courses, assignedRoom);
+            super(externalId, name, "TEST", evaluationPeriod, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd,
+                    rooms, isEnroled, courses, assignedRoom);
         }
 
     }
@@ -190,35 +182,34 @@ public abstract class FenixCourseEvaluation {
         public Exam(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
                 String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Space> rooms, Boolean isEnrolled,
                 Set<ExecutionCourse> courses) {
-            super(id, name, evaluationPeriod, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled,
-                    courses);
+            super(id, name, "EXAM", evaluationPeriod, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms,
+                    isEnrolled, courses);
         }
 
         public Exam(String externalId, String name, FenixPeriod evaluationPeriod, Boolean isEnrolmentPeriod,
                 String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Space> rooms, Boolean isEnroled,
                 Set<ExecutionCourse> courses, Space assignedRoom) {
-            super(externalId, name, evaluationPeriod, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms,
-                    isEnroled, courses, assignedRoom);
+            super(externalId, name, "EXAM", evaluationPeriod, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd,
+                    rooms, isEnroled, courses, assignedRoom);
         }
 
     }
 
     public static class Project extends FenixCourseEvaluation {
-
         public Project(String name, FenixPeriod evaluationPeriod) {
-            super(name, evaluationPeriod);
+            super(name, "PROJECT", evaluationPeriod);
         }
 
     }
 
-    public static class OnlineTest extends FenixCourseEvaluation {
+    public static class GenericTest extends FenixCourseEvaluation {
 
-        public OnlineTest(String name) {
-            this(name, new FenixPeriod());
+        public GenericTest(String name, String type) {
+            this(name, type, new FenixPeriod());
         }
 
-        public OnlineTest(String name, FenixPeriod evaluationPeriod) {
-            super(name, evaluationPeriod);
+        public GenericTest(String name, String type, FenixPeriod evaluationPeriod) {
+            super(name, type, evaluationPeriod);
         }
 
     }
@@ -231,7 +222,7 @@ public abstract class FenixCourseEvaluation {
         }
 
         public AdHocEvaluation(String name, String description, FenixPeriod evaluationPeriod) {
-            super(name, evaluationPeriod);
+            super(name, "AD_HOC", evaluationPeriod);
             this.description = description;
         }
 
@@ -246,10 +237,12 @@ public abstract class FenixCourseEvaluation {
     }
 
     String name;
+    String type;
     FenixPeriod evaluationPeriod;
 
-    public FenixCourseEvaluation(String name, FenixPeriod evaluationPeriod) {
+    public FenixCourseEvaluation(String name, String type, FenixPeriod evaluationPeriod) {
         setName(name);
+        setType(type);
         setEvaluationPeriod(evaluationPeriod);
     }
 
@@ -259,6 +252,14 @@ public abstract class FenixCourseEvaluation {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public FenixPeriod getEvaluationPeriod() {

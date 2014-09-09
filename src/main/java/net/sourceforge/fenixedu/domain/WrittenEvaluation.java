@@ -1045,4 +1045,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return new Interval(getBeginningDateTime(), getEndDateTime());
     }
 
+    @Override
+    public Date getEvaluationDate() {
+        return getDayDate();
+    }
 }

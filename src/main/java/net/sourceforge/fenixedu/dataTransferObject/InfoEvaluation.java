@@ -21,12 +21,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoOnlineTest;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -151,19 +147,9 @@ public class InfoEvaluation extends InfoShowOccupation {
      * @return
      */
     public static InfoEvaluation newInfoFromDomain(Evaluation evaluation) {
-        InfoEvaluation infoEvaluation = null;
         if (evaluation != null) {
-            if (evaluation instanceof WrittenEvaluation) {
-                infoEvaluation = InfoWrittenEvaluation.newInfoFromDomain((WrittenEvaluation) evaluation);
-            } else if (evaluation instanceof FinalEvaluation) {
-                infoEvaluation = InfoFinalEvaluation.newInfoFromDomain((FinalEvaluation) evaluation);
-            } else if (evaluation instanceof OnlineTest) {
-                infoEvaluation = InfoOnlineTest.newInfoFromDomain((OnlineTest) evaluation);
-            } else {
-                infoEvaluation = new InfoEvaluation();
-                infoEvaluation.copyFromDomain(evaluation);
-            }
+            return evaluation.newInfoFromDomain();
         }
-        return infoEvaluation;
+        return null;
     }
 }

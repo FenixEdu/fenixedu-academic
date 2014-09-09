@@ -95,17 +95,4 @@ public class InfoOnlineTest extends InfoEvaluation {
         }
     }
 
-    /**
-     * @param onlineTest
-     * @return
-     */
-    public static InfoOnlineTest newInfoFromDomain(OnlineTest onlineTest) {
-        InfoOnlineTest infoOnlineTest = null;
-        if (onlineTest != null) {
-            infoOnlineTest = new InfoOnlineTest();
-            infoOnlineTest.copyFromDomain(onlineTest);
-        }
-        return infoOnlineTest;
-    }
-
 }

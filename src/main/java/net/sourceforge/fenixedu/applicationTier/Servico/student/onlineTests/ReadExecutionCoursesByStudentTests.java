@@ -30,6 +30,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
@@ -49,7 +50,7 @@ public class ReadExecutionCoursesByStudentTests {
                 for (Attends attend : registration.getAssociatedAttendsSet()) {
                     final ExecutionCourse executionCourse = attend.getExecutionCourse();
                     if (executionCourse.getExecutionYear().equals(executionYear)
-                            && student.countDistributedTestsByExecutionCourse(executionCourse) != 0) {
+                            && DistributedTest.getDistributedTestsByExecutionCourse(student, executionCourse).size() != 0) {
                         executionCourses.add(executionCourse);
                     }
                 }

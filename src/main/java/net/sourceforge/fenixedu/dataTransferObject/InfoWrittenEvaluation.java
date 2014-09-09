@@ -27,10 +27,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 
 /**
@@ -185,21 +183,6 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
             setEnrollmentEndDay(writtenEvaluation.getEnrollmentEndDay());
             setEnrollmentEndTime(writtenEvaluation.getEnrollmentEndTime());
         }
-    }
-
-    public static InfoWrittenEvaluation newInfoFromDomain(WrittenEvaluation writtenEvaluation) {
-        InfoWrittenEvaluation infoWrittenEvaluation = null;
-        if (writtenEvaluation != null) {
-            if (writtenEvaluation instanceof Exam) {
-                infoWrittenEvaluation = InfoExam.newInfoFromDomain((Exam) writtenEvaluation);
-            } else if (writtenEvaluation instanceof WrittenTest) {
-                infoWrittenEvaluation = InfoWrittenTest.newInfoFromDomain((WrittenTest) writtenEvaluation);
-            } else {
-                infoWrittenEvaluation = new InfoWrittenEvaluation();
-                infoWrittenEvaluation.copyFromDomain(writtenEvaluation);
-            }
-        }
-        return infoWrittenEvaluation;
     }
 
     public WrittenEvaluation getWrittenEvaluation() {

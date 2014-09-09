@@ -26,8 +26,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -35,6 +37,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.TestType;
@@ -506,6 +509,24 @@ public class DistributedTest extends DistributedTest_Base {
         } else {
             setEndHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
         }
+    }
+
+    public static Map<Registration, Set<DistributedTest>> getDistributedTestsByExecutionCourse(Student student,
+            ExecutionCourse executionCourse) {
+        Map<Registration, Set<DistributedTest>> result = new HashMap<Registration, Set<DistributedTest>>();
+        for (final Registration registration : student.getRegistrationsSet()) {
+            for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestionsSet()) {
+                if (studentTestQuestion.getDistributedTest().getTestScope().getExecutionCourse().equals(executionCourse)) {
+                    Set<DistributedTest> tests = result.get(registration);
+                    if (tests == null) {
+                        tests = new HashSet<DistributedTest>();
+                    }
+                    tests.add(studentTestQuestion.getDistributedTest());
+                    result.put(registration, tests);
+                }
+            }
+        }
+        return result;
     }
 
 }

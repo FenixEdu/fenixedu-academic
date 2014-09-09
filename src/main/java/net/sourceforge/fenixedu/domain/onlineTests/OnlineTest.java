@@ -19,8 +19,11 @@
 package net.sourceforge.fenixedu.domain.onlineTests;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoOnlineTest;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -63,6 +66,18 @@ public class OnlineTest extends OnlineTest_Base {
     @Override
     public String getPresentationName() {
         return BundleUtil.getString(Bundle.APPLICATION, "label.online.test") + " " + getDistributedTest().getEvaluationTitle();
+    }
+
+    @Override
+    public Date getEvaluationDate() {
+        return getDistributedTest().getBeginDateDate();
+    }
+
+    @Override
+    public InfoEvaluation newInfoFromDomain() {
+        InfoOnlineTest infoOnlineTest = new InfoOnlineTest();
+        infoOnlineTest.copyFromDomain(this);
+        return infoOnlineTest;
     }
 
 }

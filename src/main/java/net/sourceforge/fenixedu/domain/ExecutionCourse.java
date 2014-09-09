@@ -28,7 +28,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -51,8 +50,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformati
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
-import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -397,18 +394,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return associatedWrittenTests;
     }
 
-    public List<OnlineTest> getAssociatedOnlineTests() {
-        List<OnlineTest> associatedOnlineTests = new ArrayList<OnlineTest>();
-
-        for (Evaluation evaluation : this.getAssociatedEvaluationsSet()) {
-            if (evaluation instanceof OnlineTest) {
-                associatedOnlineTests.add((OnlineTest) evaluation);
-            }
-        }
-
-        return associatedOnlineTests;
-    }
-
     // Delete Method
     public void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
@@ -417,9 +402,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             setSender(null);
         }
 
-        for (; !getMetadatasSet().isEmpty(); getMetadatasSet().iterator().next().delete()) {
-            ;
-        }
         for (; !getExportGroupingsSet().isEmpty(); getExportGroupingsSet().iterator().next().delete()) {
             ;
         }
@@ -699,34 +681,21 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         private String evaluationComparisonString(final Evaluation evaluation) {
-            final Date evaluationComparisonDate;
             final String evaluationTypeDistinguisher;
 
             if (evaluation instanceof AdHocEvaluation) {
                 evaluationTypeDistinguisher = "0";
-                final AdHocEvaluation adHocEvaluation = (AdHocEvaluation) evaluation;
-                evaluationComparisonDate = adHocEvaluation.getCreationDateTime().toDate();
-            } else if (evaluation instanceof OnlineTest) {
-                evaluationTypeDistinguisher = "1";
-                final OnlineTest onlineTest = (OnlineTest) evaluation;
-                evaluationComparisonDate = onlineTest.getDistributedTest().getBeginDateDate();
             } else if (evaluation instanceof Project) {
-                evaluationTypeDistinguisher = "2";
-                final Project project = (Project) evaluation;
-                evaluationComparisonDate = project.getBegin();
+                evaluationTypeDistinguisher = "1";
             } else if (evaluation instanceof WrittenEvaluation) {
-                evaluationTypeDistinguisher = "3";
-                final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-                evaluationComparisonDate = writtenEvaluation.getDayDate();
+                evaluationTypeDistinguisher = "2";
             } else if (evaluation instanceof FinalEvaluation) {
-                evaluationTypeDistinguisher = "4";
-                final ExecutionCourse executionCourse = evaluation.getAssociatedExecutionCoursesSet().iterator().next();
-                evaluationComparisonDate = executionCourse.getExecutionPeriod().getEndDate();
+                evaluationTypeDistinguisher = "Z";
             } else {
-                throw new DomainException("unknown.evaluation.type", evaluation.getClass().getName());
+                evaluationTypeDistinguisher = "3";
             }
 
-            return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd", evaluationComparisonDate)
+            return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd", evaluation.getEvaluationDate())
                     + evaluation.getExternalId();
         }
     };
@@ -1093,16 +1062,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return false;
-    }
-
-    public Set<Metadata> findVisibleMetadata() {
-        final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
-        for (final Metadata metadata : getMetadatasSet()) {
-            if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue()) {
-                visibleMetadata.add(metadata);
-            }
-        }
-        return visibleMetadata;
     }
 
     public void createForum(MultiLanguageString name, MultiLanguageString description) {

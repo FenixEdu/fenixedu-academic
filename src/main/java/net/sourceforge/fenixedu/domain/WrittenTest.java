@@ -31,6 +31,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
@@ -298,4 +300,8 @@ public class WrittenTest extends WrittenTest_Base {
         return BundleUtil.getString(Bundle.APPLICATION, "label.written.test") + " " + getDescription();
     }
 
+    @Override
+    public InfoEvaluation newInfoFromDomain() {
+        return InfoWrittenTest.newInfoFromDomain(this);
+    }
 }

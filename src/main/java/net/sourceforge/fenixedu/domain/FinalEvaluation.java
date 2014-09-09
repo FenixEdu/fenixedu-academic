@@ -19,8 +19,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoFinalEvaluation;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -121,5 +124,17 @@ public class FinalEvaluation extends FinalEvaluation_Base {
     @Override
     public String getPresentationName() {
         return BundleUtil.getString(Bundle.APPLICATION, "label.final.evaluation");
+    }
+
+    @Override
+    public Date getEvaluationDate() {
+        return getAssociatedExecutionCoursesSet().iterator().next().getExecutionPeriod().getEndDate();
+    }
+
+    @Override
+    public InfoEvaluation newInfoFromDomain() {
+        InfoFinalEvaluation infoFinalEvaluation = new InfoFinalEvaluation();
+        infoFinalEvaluation.copyFromDomain(this);
+        return infoFinalEvaluation;
     }
 }

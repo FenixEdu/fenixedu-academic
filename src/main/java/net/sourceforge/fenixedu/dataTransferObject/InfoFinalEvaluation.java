@@ -34,17 +34,4 @@ public class InfoFinalEvaluation extends InfoEvaluation {
         }
     }
 
-    /**
-     * @param finalEvaluation
-     * @return
-     */
-    public static InfoFinalEvaluation newInfoFromDomain(FinalEvaluation finalEvaluation) {
-        InfoFinalEvaluation infoFinalEvaluation = null;
-        if (finalEvaluation != null) {
-            infoFinalEvaluation = new InfoFinalEvaluation();
-            infoFinalEvaluation.copyFromDomain(finalEvaluation);
-        }
-        return infoFinalEvaluation;
-    }
-
 }

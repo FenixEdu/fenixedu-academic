@@ -603,7 +603,7 @@ public class ExercisesManagementAction extends ExecutionCourseBaseAction {
             HttpServletResponse response) throws FenixActionException {
 
         final ExecutionCourse executionCourse = getExecutionCourse(request);
-        Set<Metadata> metadataList = executionCourse.findVisibleMetadata();
+        Set<Metadata> metadataList = Metadata.findVisibleMetadata(executionCourse);
 
         final String order = request.getParameter("order");
         final String asc = request.getParameter("asc");

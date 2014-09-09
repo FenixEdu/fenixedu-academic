@@ -19,8 +19,10 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -103,4 +105,11 @@ public abstract class Evaluation extends Evaluation_Base {
         }
     }
 
+    public abstract Date getEvaluationDate();
+
+    public InfoEvaluation newInfoFromDomain() {
+        InfoEvaluation infoEvaluation = new InfoEvaluation();
+        infoEvaluation.copyFromDomain(this);
+        return infoEvaluation;
+    }
 }

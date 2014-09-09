@@ -132,7 +132,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         final Student student = userView.getPerson().getStudent();
         Map<Registration, Set<DistributedTest>> distributedTestList =
-                student.getDistributedTestsByExecutionCourse(executionCourse);
+                DistributedTest.getDistributedTestsByExecutionCourse(student, executionCourse);
 
         List<RegistrationDistributedTests> tests = new ArrayList<RegistrationDistributedTests>();
         for (Registration registration : distributedTestList.keySet()) {

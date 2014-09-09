@@ -53,9 +53,6 @@ import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -123,7 +120,6 @@ public class MergeExecutionCourses {
         registerMergeHandler(MergeExecutionCourses::copyGroupPropertiesExecutionCourse);
         registerMergeHandler(MergeExecutionCourses::removeEvaluations);
         registerMergeHandler(MergeExecutionCourses::copyForuns);
-        registerMergeHandler(MergeExecutionCourses::copyDistributedTestStuff);
         registerMergeHandler(MergeExecutionCourses::copyVigilantGroups);
         registerMergeHandler(MergeExecutionCourses::copyExecutionCourseLogs);
         registerMergeHandler((from, to) -> to.getAssociatedCurricularCoursesSet()
@@ -167,18 +163,6 @@ public class MergeExecutionCourses {
     private static void copyVigilantGroups(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
         if (executionCourseTo.getVigilantGroup() == null) {
             executionCourseTo.setVigilantGroup(executionCourseFrom.getVigilantGroup());
-        }
-    }
-
-    private static void copyDistributedTestStuff(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) {
-        for (final Metadata metadata : executionCourseFrom.getMetadatasSet()) {
-            metadata.setExecutionCourse(executionCourseTo);
-        }
-        List<DistributedTest> distributedTests = TestScope.readDistributedTestsByTestScope(executionCourseFrom);
-        for (final DistributedTest distributedTest : distributedTests) {
-            final TestScope testScope = distributedTest.getTestScope();
-            testScope.setExecutionCourse(executionCourseTo);
         }
     }
 

@@ -99,7 +99,6 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
-import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -170,6 +169,7 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+import com.google.common.base.CaseFormat;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
@@ -1224,10 +1224,10 @@ public class FenixAPIv1 {
                 evals.add(getWrittenEvaluationJSON((WrittenEvaluation) evaluation));
             } else if (evaluation instanceof Project) {
                 evals.add(getProjectEvaluationJSON((Project) evaluation));
-            } else if (evaluation instanceof OnlineTest) {
-                evals.add(getOnlineTestJSON((OnlineTest) evaluation));
             } else if (evaluation instanceof AdHocEvaluation) {
                 evals.add(getAdhocEvaluationJSON((AdHocEvaluation) evaluation));
+            } else {
+                evals.add(getGenericTestJSON(evaluation));
             }
         }
         return evals;
@@ -1238,8 +1238,9 @@ public class FenixAPIv1 {
         return new FenixCourseEvaluation.AdHocEvaluation(adHocEvaluation.getPresentationName(), adHocEvaluation.getDescription());
     }
 
-    private FenixCourseEvaluation.OnlineTest getOnlineTestJSON(OnlineTest onlineTest) {
-        return new FenixCourseEvaluation.OnlineTest(onlineTest.getPresentationName());
+    private FenixCourseEvaluation.GenericTest getGenericTestJSON(Evaluation evaluation) {
+        String type = CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, evaluation.getClass().getSimpleName());
+        return new FenixCourseEvaluation.GenericTest(evaluation.getPresentationName(), type);
     }
 
     private FenixCourseEvaluation.Project getProjectEvaluationJSON(Project projectEvaluation) {

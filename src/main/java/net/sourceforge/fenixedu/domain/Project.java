@@ -392,4 +392,9 @@ public class Project extends Project_Base {
         return BundleUtil.getString(Bundle.APPLICATION, "label.project") + " " + getName();
     }
 
+    @Override
+    public Date getEvaluationDate() {
+        return getBegin();
+    }
+
 }

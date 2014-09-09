@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -104,4 +105,8 @@ public class AdHocEvaluation extends AdHocEvaluation_Base {
         }
     }
 
+    @Override
+    public Date getEvaluationDate() {
+        return getCreationDateTime().toDate();
+    }
 }

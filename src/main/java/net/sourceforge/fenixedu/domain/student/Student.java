@@ -57,8 +57,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -761,27 +759,6 @@ public class Student extends Student_Base {
             result.addAll(registration.getStudentCurricularPlansSet());
         }
         return result;
-    }
-
-    public Map<Registration, Set<DistributedTest>> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse) {
-        Map<Registration, Set<DistributedTest>> result = new HashMap<Registration, Set<DistributedTest>>();
-        for (final Registration registration : getRegistrationsSet()) {
-            for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestionsSet()) {
-                if (studentTestQuestion.getDistributedTest().getTestScope().getExecutionCourse().equals(executionCourse)) {
-                    Set<DistributedTest> tests = result.get(registration);
-                    if (tests == null) {
-                        tests = new HashSet<DistributedTest>();
-                    }
-                    tests.add(studentTestQuestion.getDistributedTest());
-                    result.put(registration, tests);
-                }
-            }
-        }
-        return result;
-    }
-
-    public int countDistributedTestsByExecutionCourse(final ExecutionCourse executionCourse) {
-        return getDistributedTestsByExecutionCourse(executionCourse).size();
     }
 
     public Attends readAttendByExecutionCourse(final ExecutionCourse executionCourse) {

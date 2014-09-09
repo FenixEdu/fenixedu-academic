@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
@@ -212,4 +214,8 @@ public class Exam extends Exam_Base {
                 + BundleUtil.getString(Bundle.APPLICATION, getSeason().getKey());
     }
 
+    @Override
+    public InfoEvaluation newInfoFromDomain() {
+        return InfoExam.newInfoFromDomain(this);
+    }
 }
