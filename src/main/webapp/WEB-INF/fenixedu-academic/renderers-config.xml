@@ -385,8 +385,6 @@ Documentation:
 		<property name="showOnlyPeopleWithFunctions" value="false"/>
 	</renderer>
 
-
-	
 	<renderer type="java.util.Collection" layout="student-performance-table" class="net.sourceforge.fenixedu.presentationTier.renderers.PerformanceGridRenderer">
     	<property name="emptySpace" value="emptySpace"/> <!-- span without border and #FFFFFF color  -->
     	<property name="approvedMonitoringYear" value="approvedMonitoringYear"/> <!-- span without border and with #003333 color  -->
@@ -396,12 +394,6 @@ Documentation:
     	<property name="notApprovedAnotherYear" value="notApprovedAnotherYear"/> <!-- span with #CCCC66 border and #FFFFFF color  -->
     	<property name="performanceGridBundle" value="APPLICATION_RESOURCES"/>
     </renderer>
-
-	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="delegate-election-period-link" class="net.sourceforge.fenixedu.presentationTier.renderers.DelegateElectionPeriodLinkRenderer"/>
-	
-<!--	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="candidacy-period-link" class="net.sourceforge.fenixedu.presentationTier.renderers.CandidacyPeriodLinkRenderer"/>-->
-	
-	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="delegate-election-period" class="net.sourceforge.fenixedu.presentationTier.renderers.DelegateElectionPeriodRenderer" />
 
     <renderer type="java.util.Collection" layout="contact-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ContactListRenderer">
         <property name="bundle" value="APPLICATION_RESOURCES"/>

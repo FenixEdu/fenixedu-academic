@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
@@ -91,7 +92,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
                 return groups;
             }
             final Degree degree = lastRegistration.getDegree();
-            delegateFunction = degree.getMostSignificantDelegateFunctionForStudent(delegate, null);
+            delegateFunction = Delegate.getMostSignificantDelegateFunctionForStudent(degree, delegate, null);
 
             /* All other delegates from delegate degree */
             groups.add(DelegatesGroup.get(degree));
@@ -99,7 +100,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
             /* All delegates with same delegate function from other degrees */
             if (delegateFunction != null
                     && !delegateFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_YEAR)) {
-                for (PersonFunction function : delegate.getAllActiveDelegateFunctions()) {
+                for (PersonFunction function : Delegate.getAllActiveDelegateFunctions(delegate)) {
                     groups.add(DelegatesGroup.get(function.getFunction().getFunctionType()));
                 }
             }

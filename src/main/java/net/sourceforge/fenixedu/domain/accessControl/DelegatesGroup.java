@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Bundle;
 
@@ -97,7 +98,7 @@ public class DelegatesGroup extends FenixGroup {
                 }
             }
         } else {
-            for (Student student : degree.getAllActiveDelegates()) {
+            for (Student student : Delegate.getAllActiveDelegates(degree)) {
                 User user = student.getPerson().getUser();
                 if (user != null) {
                     users.add(user);
@@ -119,9 +120,9 @@ public class DelegatesGroup extends FenixGroup {
         }
         if (degree != null) {
             return user.getPerson().getStudent().getLastActiveRegistration().getDegree().equals(degree)
-                    && degree.hasAnyActiveDelegateFunctionForStudent(user.getPerson().getStudent());
+                    && Delegate.getAllActiveDelegates(degree).contains(user.getPerson().getStudent());
         }
-        return user.getPerson().getStudent().hasActiveDelegateFunction(function);
+        return !Delegate.getAllActiveDelegateFunctions(user.getPerson().getStudent(), function).isEmpty();
     }
 
     @Override

@@ -65,14 +65,13 @@ public class DelegateInquiryTemplate extends DelegateInquiryTemplate_Base {
         }
         final ExecutionSemester executionSemester = currentTemplate.getExecutionPeriod();
 
-        for (Delegate delegate : student.getDelegates()) {
+        for (Delegate delegate : Delegate.getDelegates(student)) {
             if (delegate instanceof YearDelegate) {
                 if (delegate.isActiveForFirstExecutionYear(executionSemester.getExecutionYear())) {
                     PersonFunction lastYearDelegatePersonFunction =
-                            delegate.getDegree()
-                                    .getUnit()
-                                    .getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(
-                                            executionSemester.getExecutionYear(), ((YearDelegate) delegate).getCurricularYear());
+                            YearDelegate.getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(delegate.getDegree()
+                                    .getUnit(), executionSemester.getExecutionYear(), ((YearDelegate) delegate)
+                                    .getCurricularYear());
                     if (lastYearDelegatePersonFunction.getDelegate() == delegate) {
                         if (hasInquiriesToAnswer(((YearDelegate) delegate), executionSemester)) {
                             return true;
@@ -152,8 +151,8 @@ public class DelegateInquiryTemplate extends DelegateInquiryTemplate_Base {
         final FunctionType functionType = getFunctionType(degree);
         final Student student = yearDelegate.getRegistration().getStudent();
         final PersonFunction degreeDelegateFunction =
-                degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionSemester.getExecutionYear(),
-                        functionType);
+                Delegate.getActiveDelegatePersonFunctionByStudentAndFunctionType(degree, student,
+                        executionSemester.getExecutionYear(), functionType);
 
         if (degreeDelegateFunction != null) {
             addExecutionCoursesForOtherYears(yearDelegate, executionSemester, executionDegree, degree, student, result);
@@ -163,10 +162,10 @@ public class DelegateInquiryTemplate extends DelegateInquiryTemplate_Base {
     private static void addExecutionCoursesForOtherYears(YearDelegate yearDelegate, ExecutionSemester executionPeriod,
             ExecutionDegree executionDegree, Degree degree, Student student, Set<ExecutionCourse> executionCoursesToInquiries) {
         List<YearDelegate> otherYearDelegates = new ArrayList<YearDelegate>();
-        for (Student forStudent : degree.getAllActiveYearDelegates()) {
+        for (Student forStudent : Delegate.getAllActiveDelegatesByFunctionType(degree, FunctionType.DELEGATE_OF_YEAR, null)) {
             if (forStudent != student) {
                 YearDelegate otherYearDelegate = null;
-                for (Delegate delegate : forStudent.getDelegates()) {
+                for (Delegate delegate : Delegate.getDelegates(forStudent)) {
                     if (delegate instanceof YearDelegate) {
                         if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
                             if (otherYearDelegate == null

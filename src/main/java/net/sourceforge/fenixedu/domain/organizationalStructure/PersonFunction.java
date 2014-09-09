@@ -22,14 +22,12 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.util.email.PersonFunctionSender;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -209,40 +207,12 @@ public class PersonFunction extends PersonFunction_Base {
         return getCredits() > 0d;
     }
 
-    public static PersonFunction createYearDelegatePersonFunction(DegreeUnit unit, Person person, YearMonthDay startDate,
-            YearMonthDay endDate, Function function, CurricularYear curricularYear) {
-        if (function == null) {
-            throw new DomainException("error.delegates.noDelegateFunction");
-        }
-        PersonFunction personFunction = new PersonFunction(unit, person, function, startDate, endDate);
-        personFunction.setCurricularYear(curricularYear);
-        new PersonFunctionSender(personFunction);
-        return personFunction;
-    }
-
-    public static void createDelegatePersonFunction(Unit unit, Person person, YearMonthDay startDate, YearMonthDay endDate,
-            Function function) {
-        if (function == null) {
-            throw new DomainException("error.delegates.noDelegateFunction");
-        }
-        PersonFunction personFunction = new PersonFunction(unit, person, function, startDate, endDate);
-        new PersonFunctionSender(personFunction);
-    }
-
     @Override
     @Atomic
     public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         if (getCurricularYear() != null) {
             setCurricularYear(null);
-        }
-        if (getDelegate() != null) {
-            setDelegate(null);
-        }
-        if (getSender() != null) {
-            setSender(null);
-        }
-        if (!getDelegateStudentsGroupSet().isEmpty()) {
-            throw new DomainException("error.personFunction.cannotDeletePersonFunctionUsedInAccessControl");
         }
         setExecutionInterval(null);
         super.delete();

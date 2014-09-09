@@ -82,7 +82,7 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
         }
         YearDelegate yearDelegate = null;
         ExecutionSemester executionPeriod = delegateInquiryTemplate.getExecutionPeriod();
-        for (Delegate delegate : AccessControl.getPerson().getStudent().getDelegates()) {
+        for (Delegate delegate : Delegate.getDelegates(AccessControl.getPerson().getStudent())) {
             if (delegate instanceof YearDelegate) {
                 if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
                     if (yearDelegate == null || ((YearDelegate) delegate).isAfter(yearDelegate)) {
@@ -94,11 +94,8 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 
         if (yearDelegate != null) {
             PersonFunction lastYearDelegatePersonFunction =
-                    yearDelegate
-                            .getDegree()
-                            .getUnit()
-                            .getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(
-                                    executionPeriod.getExecutionYear(), yearDelegate.getCurricularYear());
+                    YearDelegate.getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(yearDelegate.getDegree()
+                            .getUnit(), executionPeriod.getExecutionYear(), yearDelegate.getCurricularYear());
             if (lastYearDelegatePersonFunction.getDelegate() != yearDelegate) {
                 return actionMapping.findForward("inquiriesClosed");
             }

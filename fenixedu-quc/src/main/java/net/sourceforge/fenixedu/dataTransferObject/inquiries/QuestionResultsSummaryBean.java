@@ -180,7 +180,7 @@ public class QuestionResultsSummaryBean implements Serializable {
             executionPeriod =
                     inquiryResultComment.getInquiryResult().getProfessorship().getExecutionCourse().getExecutionPeriod();
         }
-        for (Delegate delegate : inquiryResultComment.getPerson().getStudent().getDelegates()) {
+        for (Delegate delegate : Delegate.getDelegates(inquiryResultComment.getPerson().getStudent())) {
             if (delegate instanceof YearDelegate) {
                 if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
                     if (yearDelegate == null

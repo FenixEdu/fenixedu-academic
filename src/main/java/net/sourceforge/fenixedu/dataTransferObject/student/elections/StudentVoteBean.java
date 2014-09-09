@@ -102,8 +102,8 @@ public class StudentVoteBean implements Serializable {
         if (registration != null) {
             final int curricularYear = registration.getCurricularYear(currentExecutionYear);
             yearDelegateElection =
-                    registration.getDegree().getYearDelegateElectionWithLastCandidacyPeriod(currentExecutionYear,
-                            CurricularYear.readByYear(curricularYear));
+                    YearDelegateElection.getYearDelegateElectionWithLastCandidacyPeriod(registration.getDegree(),
+                            currentExecutionYear, CurricularYear.readByYear(curricularYear));
             return yearDelegateElection;
         }
         return null;

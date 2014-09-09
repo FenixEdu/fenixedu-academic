@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
+import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
@@ -49,7 +50,8 @@ public class EditDelegateCandidacyPeriod {
         final Degree degree = FenixFramework.getDomainObject(degreeOID);
 
         DelegateElection electionToEdit =
-                degree.getYearDelegateElectionWithLastCandidacyPeriod(executionYear, bean.getCurricularYear());
+                YearDelegateElection.getYearDelegateElectionWithLastCandidacyPeriod(degree, executionYear,
+                        bean.getCurricularYear());
 
         if (electionToEdit != null) {
             bean.setElection(electionToEdit);

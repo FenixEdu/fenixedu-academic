@@ -19,6 +19,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.delegates;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -30,6 +33,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
@@ -59,7 +63,7 @@ public class RemoveDelegate {
             } catch (DomainException e) {
                 throw new FenixServiceException(e.getMessage());
             }
-            if (student.getAllActiveDelegateFunctions().isEmpty()) {
+            if (Delegate.getAllActiveDelegateFunctions(student).isEmpty()) {
                 RoleType.revoke(RoleType.DELEGATE, student.getPerson().getUser());
             }
         }
@@ -75,7 +79,7 @@ public class RemoveDelegate {
             throw new FenixServiceException("error.personFunction.endDateBeforeBeginDate");
         } else {
             personFunction.setOccupationInterval(personFunction.getBeginDate(), yesterday);
-            if (student.getAllActiveDelegateFunctions().isEmpty()) {
+            if (Delegate.getAllActiveDelegateFunctions(student).isEmpty()) {
                 RoleType.revoke(RoleType.DELEGATE, student.getPerson().getUser());
             }
         }
@@ -89,7 +93,9 @@ public class RemoveDelegate {
 
         if (delegateFunctionType.equals(FunctionType.DELEGATE_OF_YEAR)) {
 
-            degreeUnit.removeAllActiveDelegatePersonFunctionsFromStudent(student);
+            for (FunctionType functionType : FunctionType.getAllDelegateFunctionTypes()) {
+                removeActiveDelegatePersonFunctionFromStudentByFunctionType(degreeUnit, student, functionType);
+            }
 
             /* Remove delegate role from this student */
             RoleType.revoke(RoleType.DELEGATE, student.getPerson().getUser());
@@ -98,12 +104,12 @@ public class RemoveDelegate {
              * Remove this student from the election in wich he was elected (if
              * he has it)
              */
-            DelegateElection election = student.getLastElectedDelegateElection();
+            DelegateElection election = DelegateElection.getLastElectedDelegateElection(student);
             if (election != null && election.getExecutionYear().equals(ExecutionYear.readCurrentExecutionYear())) {
                 election.setElectedStudent(null);
             }
         } else {
-            degreeUnit.removeActiveDelegatePersonFunctionFromStudentByFunctionType(student, delegateFunctionType);
+            removeActiveDelegatePersonFunctionFromStudentByFunctionType(degreeUnit, student, delegateFunctionType);
         }
     }
 
@@ -112,6 +118,21 @@ public class RemoveDelegate {
         check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
         PedagogicalCouncilUnit unit = (PedagogicalCouncilUnit) delegateFunction.getUnit();
 
-        unit.removeActiveDelegatePersonFunctionFromPersonByFunction(person, delegateFunction);
+        Delegate.removeActiveDelegatePersonFunctionFromPersonByFunction(person, delegateFunction);
+    }
+
+    private static void removeActiveDelegatePersonFunctionFromStudentByFunctionType(DegreeUnit degreeUnit, Student student,
+            FunctionType functionType) {
+        YearMonthDay today = new YearMonthDay();
+        List<PersonFunction> delegatesFunctions =
+                Delegate.getAllActiveDelegatePersonFunctionsByFunctionType(degreeUnit, functionType, null);
+        if (!delegatesFunctions.isEmpty()) {
+            for (PersonFunction function : delegatesFunctions) {
+                Student delegateStudent = function.getPerson().getStudent();
+                if (delegateStudent.equals(student)) {
+                    function.setOccupationInterval(function.getBeginDate(), today.minusDays(1));
+                }
+            }
+        }
     }
 }

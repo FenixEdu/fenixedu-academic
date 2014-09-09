@@ -27,10 +27,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -340,76 +337,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     @Override
     public boolean isAnyThesisAvailable() {
         return false;
-    }
-
-    @Override
-    public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYear(ExecutionYear executionYear) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYearAndCurricularYear(ExecutionYear executionYear,
-            CurricularYear curricularYear) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public YearDelegateElection getYearDelegateElectionWithLastCandidacyPeriod(ExecutionYear executionYear,
-            CurricularYear curricularYear) {
-        return null;
-    }
-
-    @Override
-    public YearDelegateElection getYearDelegateElectionWithLastVotingPeriod(ExecutionYear executionYear,
-            CurricularYear curricularYear) {
-        return null;
-    }
-
-    @Override
-    public List<Student> getAllActiveDelegates() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<Student> getAllActiveYearDelegates() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public Student getActiveYearDelegateByCurricularYear(CurricularYear curricularYear) {
-        return null;
-    }
-
-    @Override
-    public List<Student> getAllActiveDelegatesByFunctionType(FunctionType functionType, ExecutionYear executionYear) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean hasActiveDelegateFunctionForStudent(Student student, ExecutionYear executionYear,
-            FunctionType delegateFunctionType) {
-        return false;
-    }
-
-    @Override
-    public boolean hasAnyActiveDelegateFunctionForStudent(Student student) {
-        return false;
-    }
-
-    @Override
-    public PersonFunction getActiveDelegatePersonFunctionByStudentAndFunctionType(Student student, ExecutionYear executionYear,
-            FunctionType functionType) {
-        return null;
-    }
-
-    @Override
-    public Student getYearDelegateByExecutionYearAndCurricularYear(ExecutionYear executionYear, CurricularYear curricularYear) {
-        return null;
-    }
-
-    @Override
-    public List<Student> getAllDelegatesByExecutionYearAndFunctionType(ExecutionYear executionYear, FunctionType functionType) {
-        return Collections.emptyList();
     }
 
     @Override

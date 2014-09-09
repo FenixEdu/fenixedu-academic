@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.fenixedu.bennu.core.annotation.GroupArgument;
@@ -78,7 +79,8 @@ public class DelegateStudentsGroup extends FenixGroup {
 
         Person delegate = delegateFunction.getPerson();
         if (delegate.getStudent() != null) {
-            for (Student student : delegate.getStudent().getStudentsResponsibleForGivenFunctionType(type, getExecutionYear())) {
+            for (Student student : Delegate.getStudentsResponsibleForGivenFunctionType(delegate.getStudent(), type,
+                    getExecutionYear())) {
                 User user = student.getPerson().getUser();
                 if (user != null) {
                     users.add(user);

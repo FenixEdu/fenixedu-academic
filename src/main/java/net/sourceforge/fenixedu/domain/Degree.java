@@ -37,17 +37,12 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.elections.DelegateElection;
-import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -63,7 +58,6 @@ import net.sourceforge.fenixedu.util.MarkType;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
@@ -254,10 +248,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
         }
 
-        if (!getDelegatesGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
-        }
-
         if (getAlumniGroup() != null) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
         }
@@ -265,13 +255,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     @Override
     protected void disconnect() {
-        // Iterator<Delegate> delegatesIterator = getDelegatesIterator();
-        // while (delegatesIterator.hasNext()) {
-        // Delegate delegate = delegatesIterator.next();
-        // delegatesIterator.remove();
-        // delegate.delete();
-        // }
-
         Iterator<DegreeInfo> degreeInfosIterator = getDegreeInfosSet().iterator();
         while (degreeInfosIterator.hasNext()) {
             DegreeInfo degreeInfo = degreeInfosIterator.next();
@@ -281,10 +264,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         for (; !getParticipatingAnyCurricularCourseCurricularRulesSet().isEmpty(); getParticipatingAnyCurricularCourseCurricularRulesSet()
                 .iterator().next().delete()) {
-            ;
-        }
-
-        for (; !getDelegateElectionsSet().isEmpty(); getDelegateElectionsSet().iterator().next().delete()) {
             ;
         }
 
@@ -1283,155 +1262,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     /*
-     * DELEGATE ELECTIONS
-     */
-    public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYear(ExecutionYear executionYear) {
-        List<YearDelegateElection> elections = new ArrayList<YearDelegateElection>();
-        for (DelegateElection election : this.getDelegateElectionsSet()) {
-            if (election instanceof YearDelegateElection && election.getExecutionYear().equals(executionYear)) {
-                elections.add((YearDelegateElection) election);
-            }
-        }
-        return elections;
-    }
-
-    public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYearAndCurricularYear(ExecutionYear executionYear,
-            CurricularYear curricularYear) {
-        List<YearDelegateElection> elections = new ArrayList<YearDelegateElection>();
-        for (DelegateElection election : this.getDelegateElectionsSet()) {
-            YearDelegateElection yearDelegateElection = (YearDelegateElection) election;
-            if (yearDelegateElection.getExecutionYear().equals(executionYear)
-                    && yearDelegateElection.getCurricularYear().equals(curricularYear)) {
-                elections.add(yearDelegateElection);
-            }
-        }
-        return elections;
-    }
-
-    public YearDelegateElection getYearDelegateElectionWithLastCandidacyPeriod(ExecutionYear executionYear,
-            CurricularYear curricularYear) {
-        List<YearDelegateElection> elections =
-                getYearDelegateElectionsGivenExecutionYearAndCurricularYear(executionYear, curricularYear);
-
-        YearDelegateElection lastYearDelegateElection = null;
-        if (!elections.isEmpty()) {
-            lastYearDelegateElection = Collections.max(elections, DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE);
-        }
-        return lastYearDelegateElection;
-    }
-
-    public YearDelegateElection getYearDelegateElectionWithLastVotingPeriod(ExecutionYear executionYear,
-            CurricularYear curricularYear) {
-        List<YearDelegateElection> elections =
-                getYearDelegateElectionsGivenExecutionYearAndCurricularYear(executionYear, curricularYear);
-
-        YearDelegateElection lastYearDelegateElection = null;
-        if (!elections.isEmpty()) {
-            lastYearDelegateElection =
-                    Collections
-                            .max(elections, DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE_AND_CANDIDACY_START_DATE);
-        }
-        return lastYearDelegateElection;
-    }
-
-    /*
-     * ACTIVE DELEGATES
-     */
-    public List<Student> getAllActiveDelegates() {
-        List<Student> result = new ArrayList<Student>();
-        for (FunctionType functionType : FunctionType.getAllDelegateFunctionTypes()) {
-            result.addAll(getAllActiveDelegatesByFunctionType(functionType, null));
-        }
-        return result;
-    }
-
-    public List<Student> getAllActiveYearDelegates() {
-        return getAllActiveDelegatesByFunctionType(FunctionType.DELEGATE_OF_YEAR, null);
-    }
-
-    public Student getActiveYearDelegateByCurricularYear(CurricularYear curricularYear) {
-        if (getUnit() == null) {
-            return null;
-        }
-        final PersonFunction delegateFunction = getUnit().getActiveYearDelegatePersonFunctionByCurricularYear(curricularYear);
-        return delegateFunction != null ? delegateFunction.getPerson().getStudent() : null;
-    }
-
-    public List<Student> getAllActiveDelegatesByFunctionType(FunctionType functionType, ExecutionYear executionYear) {
-        List<Student> result = new ArrayList<Student>();
-        if (getUnit() != null) {
-            final List<PersonFunction> delegateFunctions =
-                    getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType, executionYear);
-            for (PersonFunction delegateFunction : delegateFunctions) {
-                result.add(delegateFunction.getPerson().getStudent());
-            }
-        }
-        return result;
-    }
-
-    public boolean hasActiveDelegateFunctionForStudent(Student student, ExecutionYear executionYear,
-            FunctionType delegateFunctionType) {
-        List<Student> delegates = getAllActiveDelegatesByFunctionType(delegateFunctionType, executionYear);
-        for (Student delegate : delegates) {
-            if (delegate.equals(student)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasAnyActiveDelegateFunctionForStudent(Student student) {
-        List<Student> delegates = getAllActiveDelegates();
-        for (Student delegate : delegates) {
-            if (delegate.equals(student)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public PersonFunction getActiveDelegatePersonFunctionByStudentAndFunctionType(Student student, ExecutionYear executionYear,
-            FunctionType functionType) {
-        if (getUnit() != null) {
-            for (PersonFunction personFunction : getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType,
-                    executionYear)) {
-                if (personFunction.getPerson().getStudent().equals(student)) {
-                    return personFunction;
-                }
-            }
-        }
-        return null;
-    }
-
-    /*
-     * DELEGATES FROM GIVEN EXECUTION YEAR (PAST DELEGATES)
-     */
-    public Student getYearDelegateByExecutionYearAndCurricularYear(ExecutionYear executionYear, CurricularYear curricularYear) {
-        if (getUnit() == null) {
-            return null;
-        }
-
-        final PersonFunction delegateFunction =
-                getUnit().getYearDelegatePersonFunctionByExecutionYearAndCurricularYear(executionYear, curricularYear);
-        return delegateFunction != null ? delegateFunction.getPerson().getStudent() : null;
-    }
-
-    public List<Student> getAllDelegatesByExecutionYearAndFunctionType(ExecutionYear executionYear, FunctionType functionType) {
-        List<Student> result = new ArrayList<Student>();
-        if (getUnit() != null) {
-            final List<PersonFunction> delegateFunctions =
-                    getUnit().getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(executionYear, functionType);
-            for (PersonFunction delegateFunction : delegateFunctions) {
-                if (delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
-                        executionYear.getEndDateYearMonthDay())) {
-                    result.add(delegateFunction.getPerson().getStudent());
-                }
-            }
-        }
-        return result;
-    }
-
-    /*
      * STUDENTS FROM DEGREE
      */
     public List<Student> getAllStudents() {
@@ -1535,17 +1365,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return result;
     }
 
-    public static List<Group> getDegreesDelegatesGroupByDegreeType(DegreeType degreeType) {
-        List<Group> result = new ArrayList<Group>();
-
-        List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
-        for (Degree degree : degrees) {
-            result.add(DelegatesGroup.get(degree));
-        }
-
-        return result;
-    }
-
     /**
      * @return <code>true</code> if any of the thesis associated with this
      *         degree is not final
@@ -1604,64 +1423,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             }
         }
         return false;
-    }
-
-    public PersonFunction getMostSignificantDelegateFunctionForStudent(Student student, ExecutionYear executionYear) {
-        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE)) {
-            final PersonFunction pf =
-                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                            FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
-            if (pf != null) {
-                return pf;
-            }
-        }
-        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_MASTER_DEGREE)) {
-            final PersonFunction pf =
-                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                            FunctionType.DELEGATE_OF_MASTER_DEGREE);
-            if (pf != null) {
-                return pf;
-            }
-        }
-        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_DEGREE)) {
-            final PersonFunction pf =
-                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                            FunctionType.DELEGATE_OF_DEGREE);
-            if (pf != null) {
-                return pf;
-            }
-        }
-        return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear, FunctionType.DELEGATE_OF_YEAR);
-    }
-
-    public PersonFunction getMostSignificantActiveDelegateFunctionForStudent(Student student, ExecutionYear executionYear) {
-        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE)) {
-            final PersonFunction pf =
-                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                            FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
-            if (pf != null && pf.isActive()) {
-                return pf;
-            }
-        }
-        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_MASTER_DEGREE)) {
-            final PersonFunction pf =
-                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                            FunctionType.DELEGATE_OF_MASTER_DEGREE);
-            if (pf != null && pf.isActive()) {
-                return pf;
-            }
-        }
-        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_DEGREE)) {
-            final PersonFunction pf =
-                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                            FunctionType.DELEGATE_OF_DEGREE);
-            if (pf != null && pf.isActive()) {
-                return pf;
-            }
-        }
-        final PersonFunction pf =
-                getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear, FunctionType.DELEGATE_OF_YEAR);
-        return pf != null && pf.isActive() ? pf : null;
     }
 
     public boolean canCreateGratuityEvent() {

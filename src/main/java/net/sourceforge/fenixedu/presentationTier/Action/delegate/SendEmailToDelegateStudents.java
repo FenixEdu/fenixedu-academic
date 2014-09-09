@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.accessControl.DelegateStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -161,7 +162,8 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
             Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
             for (Registration registration : activeRegistrations) {
                 delegateFunction =
-                        registration.getDegree().getMostSignificantActiveDelegateFunctionForStudent(student, executionYear);
+                        Delegate.getMostSignificantActiveDelegateFunctionForStudent(registration.getDegree(), student,
+                                executionYear);
                 if (delegateFunction != null && delegateFunction.isActive()) {
                     return delegateFunction;
                 }
@@ -224,8 +226,8 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
         if (delegateFunction != null) {
             if (delegateFunction.getPerson().getStudent() != null) {
                 Set<CurricularCourse> curricularCourses =
-                        delegateFunction.getPerson().getStudent()
-                                .getCurricularCoursesResponsibleForByFunctionType(delegateFunction, executionYear);
+                        Delegate.getCurricularCoursesResponsibleForByFunctionType(delegateFunction.getPerson().getStudent(),
+                                delegateFunction, executionYear);
                 return getCurricularCoursesBeans(delegateFunction, curricularCourses, executionYear);
             } else if (!delegateFunction.getPerson().getCoordinatorsSet().isEmpty()) {
                 Set<CurricularCourse> curricularCourses =

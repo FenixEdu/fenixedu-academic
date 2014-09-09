@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
+import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
@@ -57,7 +58,8 @@ public class CreateDelegateVotingPeriod {
         final Degree degree = FenixFramework.getDomainObject(degreeOID);
 
         DelegateElection election =
-                degree.getYearDelegateElectionWithLastCandidacyPeriod(executionYear, bean.getCurricularYear());
+                YearDelegateElection.getYearDelegateElectionWithLastCandidacyPeriod(degree, executionYear,
+                        bean.getCurricularYear());
         bean.setElection(election);
 
         run(bean);

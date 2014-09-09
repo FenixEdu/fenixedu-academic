@@ -220,11 +220,15 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         for (Registration registration : registrations) {
             if (registration != null) {
-                YearDelegateElection yearDelegateElectionsGivenExecutionYear =
-                        registration.getYearDelegateElectionsGivenExecutionYear(currentExecutionYear);
-                if (yearDelegateElectionsGivenExecutionYear != null) {
-                    return yearDelegateElectionsGivenExecutionYear;
+                for (DelegateElection delegateElection : student.getDelegateElectionsSet()) {
+                    if (delegateElection instanceof YearDelegateElection) {
+                        if (delegateElection.getExecutionYear().equals(currentExecutionYear)
+                                && delegateElection.getDegree().equals(registration.getDegree())) {
+                            return (YearDelegateElection) delegateElection;
+                        }
+                    }
                 }
+                return null;
             }
         }
         return null;

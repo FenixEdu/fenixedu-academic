@@ -46,7 +46,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Bundle;
 
@@ -412,7 +414,8 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 
         DelegateBean bean = getInitializedBean(degree);
 
-        DelegateElection election = degree.getYearDelegateElectionWithLastCandidacyPeriod(currentExecutionYear, curricularYear);
+        DelegateElection election =
+                YearDelegateElection.getYearDelegateElectionWithLastCandidacyPeriod(degree, currentExecutionYear, curricularYear);
         if (election == null) {
             addActionMessage(request, "error.delegates.noElection");
             request.setAttribute("delegateBean", bean);
@@ -427,7 +430,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
             HttpServletResponse response) throws Exception {
         final Student delegate = FenixFramework.getDomainObject(request.getParameter("selectedDelegate"));
 
-        DelegateElection election = delegate.getLastElectedDelegateElection();
+        DelegateElection election = DelegateElection.getLastElectedDelegateElection(delegate);
 
         request.setAttribute("selectedVotingPeriod", election.getExternalId().toString());
         return mapping.findForward("showPossibleDelegates");
@@ -530,7 +533,8 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
         DelegateBean delegateBean = getInitializedBean(degree);
         delegateBean.setDelegateType(functionType);
         final List<PersonFunction> delegates =
-                degree.getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType, delegateBean.getExecutionYear());
+                Delegate.getAllActiveDelegatePersonFunctionsByFunctionType(degree.getUnit(), functionType,
+                        delegateBean.getExecutionYear());
         if (!delegates.isEmpty()) {
             PersonFunction delegateFunction = delegates.iterator().next();
             delegateBean.setPersonFunction(delegateFunction);
@@ -544,10 +548,10 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
         for (int i = 1; i <= degree.getDegreeType().getYears(); i++) {
             final CurricularYear curricularYear = CurricularYear.readByYear(i);
             PersonFunction delegateFunction =
-                    degree.getUnit().getActiveYearDelegatePersonFunctionByCurricularYear(curricularYear);
+                    YearDelegate.getActiveYearDelegatePersonFunctionByCurricularYear(degree.getUnit(), curricularYear);
             final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
             final DelegateElection election =
-                    degree.getYearDelegateElectionWithLastCandidacyPeriod(executionYear, curricularYear);
+                    YearDelegateElection.getYearDelegateElectionWithLastCandidacyPeriod(degree, executionYear, curricularYear);
 
             DelegateBean delegateBean = getInitializedBean(degree);
             delegateBean.setDelegate(delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);

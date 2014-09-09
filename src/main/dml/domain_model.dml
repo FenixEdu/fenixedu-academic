@@ -3940,8 +3940,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
 
     class util.email.CoordinatorSender extends util.email.Sender {}
     
-    class util.email.PersonFunctionSender extends util.email.Sender {}
-    
     class util.email.PersonSender extends util.email.Sender {}
 
     class util.email.SystemSender extends util.email.Sender {}
@@ -4178,29 +4176,6 @@ class personnelSection.contracts.Absence  {
     Boolean hasMandatoryCredits (REQUIRED);
     Boolean giveCredits (REQUIRED);
     Boolean isSabaticalOrEquivalent (REQUIRED);
-}
-
-class elections.DelegateElection  {
-    Boolean sentResultsToCandidates;
-}
-
-class elections.YearDelegateElection extends elections.DelegateElection {
-}
-
-class elections.DelegateElectionVote  {
-}
-class elections.DelegateElectionBlankVote extends elections.DelegateElectionVote {
-}
-
-class elections.DelegateElectionPeriod  {
-    YearMonthDay startDate;
-    YearMonthDay endDate;
-}
-
-class elections.DelegateElectionCandidacyPeriod extends elections.DelegateElectionPeriod {
-}
-
-class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionPeriod {
 }
 
     class messaging.ConversationMessage {
@@ -4741,14 +4716,6 @@ class student.scholarship.report.UTLScholarshipReport extends QueueJobWithFile {
 
 	class student.scholarship.report.UTLScholarshipSource extends File {
 	} 
-
-class student.Delegate  {
-    
-}
-
-class student.YearDelegate extends student.Delegate {
-    
-}
 
 public class accessControl.rules.AccessRuleSystem;
 
@@ -5485,14 +5452,6 @@ class accessControl.PersistentCerimonyInquiryGroup extends .org.fenixedu.bennu.c
 class accessControl.PersistentStudentsConcludedInExecutionYearGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentGroupingGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
-
-class accessControl.PersistentDelegatesGroup extends accessControl.FenixPredicateGroup {
-    public FunctionType function;
-}
-
-class accessControl.PersistentDelegateStudentsGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
-    public FunctionType type;
-}
 
 class accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
@@ -8130,11 +8089,6 @@ relation ExecutionCourseSender {
 relation CoordinatorSender {
     Degree playsRole degree;
     util.email.CoordinatorSender playsRole sender;
-}
-
-relation PersonFunctionSender {
-    organizationalStructure.PersonFunction playsRole personFunction;
-    util.email.PersonFunctionSender playsRole sender;
 }
 
 relation PersonSender {
@@ -12025,96 +11979,6 @@ relation PersonGrantOwnerEquivalentCountry {
     Country playsRole country; 
 }
 
-
-relation DelegateElectionDegree {
-    elections.DelegateElection playsRole delegateElections {
-        multiplicity *;
-    }
-    Degree playsRole degree;
-}
-
-relation DelegateElectionCandidatesStudent {
-    elections.DelegateElection playsRole electionsWithStudentCandidacies {
-        multiplicity *;
-    }
-    student.Student playsRole candidates {
-        multiplicity *;
-    }
-}
-
-relation DelegateElectionStudent {
-    elections.DelegateElection playsRole delegateElections {
-        multiplicity *;
-    }
-    student.Student playsRole students {
-        multiplicity *;
-    }
-}
-
-relation DelegateElectionVotingPeriodVotingStudent {
-    elections.DelegateElectionVotingPeriod playsRole electionsWithVotingStudents {
-        multiplicity *;
-    }
-    student.Student playsRole votingStudents {
-        multiplicity *;
-    }
-}
-
-relation DelegateElectionVotingPeriodStudentForNewRoundElections {
-    elections.DelegateElectionVotingPeriod playsRole votingPeriodForNewRoundElections {
-        multiplicity *;
-    }
-    student.Student playsRole candidatesForNewRoundElections {
-        multiplicity *;
-    }
-}
-
-relation DelegateElectionExecutionYear {
-    elections.DelegateElection playsRole delegateElections {
-        multiplicity *;
-    }
-    ExecutionYear playsRole executionYear;
-}
-
-relation YearDelegateElectionCurricularYear {
-    elections.YearDelegateElection playsRole yearDelegateElections {
-        multiplicity *;
-    }
-    CurricularYear playsRole curricularYear;
-}
-
-relation StudentDelegateElectionVote {
-    student.Student playsRole student;
-    elections.DelegateElectionVote playsRole votes {
-        multiplicity *;
-    }
-}
-
-relation DelegateElectionDelegateElectionCandidacyPeriod {
-    elections.DelegateElection playsRole delegateElection;
-    elections.DelegateElectionCandidacyPeriod playsRole candidacyPeriod;
-}
-
-relation DelegateElectionDelegateElectionVotingPeriod {
-    elections.DelegateElection playsRole delegateElection;
-    elections.DelegateElectionVotingPeriod playsRole votingPeriod
-    {
-        multiplicity *;
-    }
-}
-relation DelegateElectionVotingPeriodDelegateElectionVote {
-    elections.DelegateElectionVotingPeriod playsRole delegateElection;
-    elections.DelegateElectionVote playsRole votes {
-        multiplicity *;    }
-}
-
-relation StudentDelegateElection {
-    student.Student playsRole electedStudent;
-    elections.DelegateElection playsRole electedElections {
-        multiplicity *;
-    }
-}
-
 relation PersonFunctionCurricularYear {
     CurricularYear playsRole curricularYear;
     organizationalStructure.PersonFunction playsRole personFunctions {
@@ -12125,27 +11989,6 @@ relation PersonFunctionCurricularYear {
 relation PersonFunctionSharedExecutionInterval {
     ExecutionInterval playsRole executionInterval;
     organizationalStructure.PersonFunction playsRole personFunction {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectDelegateElection {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    elections.DelegateElection playsRole delegateElections {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectDelegateElectionVote {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    elections.DelegateElectionVote playsRole votes {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectDelegateElectionPeriod {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    elections.DelegateElectionPeriod playsRole delegateElectionsPeriods {
         multiplicity *;
     }
 }
@@ -12819,25 +12662,6 @@ relation ExecutionYearPublicRelationsStudentListQueueJob{
     }
 }
     
-relation DelegatePersonFunction {
-    student.Delegate playsRole delegate;
-    organizationalStructure.PersonFunction playsRole delegateFunction;
-}
-
-relation DelegateRegistration {
-    student.Registration playsRole registration;
-    student.Delegate playsRole delegates {
-        multiplicity *;
-    }
-}
-
-relation DelegateRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    student.Delegate playsRole delegates {
-        multiplicity *;
-    }
-}
-
 relation QueueJobWithFileResult{
     QueueJobWithFile playsRole job;
     QueueJobResultFile playsRole file;
@@ -14455,24 +14279,6 @@ relation PersistentTeachersWithIncompleteEvaluationWorkGroupDegreeCurricularPlan
         multiplicity *;
     }
     public DegreeCurricularPlan playsRole degreeCurricularPlan {
-        multiplicity 1..1;
-    }
-}
-
-relation PersistentDelegatesGroupDegree {
-    public accessControl.PersistentDelegatesGroup playsRole delegatesGroup {
-        multiplicity *;
-    }
-    public Degree playsRole degree {
-        multiplicity 0..1;
-    }
-}
-
-relation PersistentDelegateStudentsGroupPersonFunction {
-    public accessControl.PersistentDelegateStudentsGroup playsRole delegateStudentsGroup {
-        multiplicity *;
-    }
-    public organizationalStructure.PersonFunction playsRole delegateFunction {
         multiplicity 1..1;
     }
 }

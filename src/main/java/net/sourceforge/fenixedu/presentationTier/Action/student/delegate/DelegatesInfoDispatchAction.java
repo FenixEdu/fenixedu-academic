@@ -36,7 +36,9 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
@@ -162,10 +164,11 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
     private DelegateSearchBean getDelegateSearchBean(DelegateSearchBean bean, FunctionType functionType) {
         List<Student> delegates = new ArrayList<Student>();
         if (bean.getExecutionYear().equals(ExecutionYear.readCurrentExecutionYear())) {
-            delegates.addAll(bean.getDegree().getAllActiveDelegatesByFunctionType(functionType, bean.getExecutionYear()));
+            delegates
+                    .addAll(Delegate.getAllActiveDelegatesByFunctionType(bean.getDegree(), functionType, bean.getExecutionYear()));
         } else {
-            delegates.addAll(bean.getDegree()
-                    .getAllDelegatesByExecutionYearAndFunctionType(bean.getExecutionYear(), functionType));
+            delegates.addAll(Delegate.getAllDelegatesByExecutionYearAndFunctionType(bean.getDegree(), bean.getExecutionYear(),
+                    functionType));
         }
         return (delegates.isEmpty() ? null : new DelegateSearchBean(delegates.iterator().next().getPerson(), functionType,
                 bean.getExecutionYear()));
@@ -181,7 +184,7 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
             final CurricularYear curricularYear = CurricularYear.readByYear(i);
             Student student = null;
 
-            student = degree.getYearDelegateByExecutionYearAndCurricularYear(executionYear, curricularYear);
+            student = YearDelegate.getYearDelegateByExecutionYearAndCurricularYear(degree, executionYear, curricularYear);
 
             if (student != null) {
                 DelegateSearchBean delegateBean =

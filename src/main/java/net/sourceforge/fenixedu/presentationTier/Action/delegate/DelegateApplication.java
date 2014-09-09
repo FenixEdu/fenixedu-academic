@@ -21,7 +21,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.delegate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -64,7 +66,7 @@ public class DelegateApplication {
                 HttpServletResponse response) throws Exception {
             Student student = AccessControl.getPerson().getStudent();
             if (student != null) {
-                PersonFunction function = student.getDelegateFunction();
+                PersonFunction function = Delegate.getDelegateFunction(student, ExecutionYear.readCurrentExecutionYear());
                 if (function != null) {
                     return new ActionForward("/evaluationsForDelegates.faces?degreeID="
                             + function.getUnit().getDegree().getExternalId());

@@ -18,9 +18,14 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 
 public class YearDelegate extends YearDelegate_Base {
@@ -47,9 +52,65 @@ public class YearDelegate extends YearDelegate_Base {
         return getDelegateFunction().getEndDate().isAfter(yearDelegate.getDelegateFunction().getEndDate());
     }
 
-    @Override
-    public Degree getDegree() {
-        return super.getDegree();
+    public static PersonFunction getActiveYearDelegatePersonFunctionByCurricularYear(DegreeUnit degreeUnit,
+            CurricularYear curricularYear) {
+        final List<PersonFunction> delegateFunctions =
+                Delegate.getAllActiveDelegatePersonFunctionsByFunctionType(degreeUnit, FunctionType.DELEGATE_OF_YEAR, null);
+        for (PersonFunction delegateFunction : delegateFunctions) {
+            if (delegateFunction.getCurricularYear() != null && delegateFunction.getCurricularYear().equals(curricularYear)) {
+                return delegateFunction;
+            }
+        }
+        return null;
+    }
+
+    public static PersonFunction getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(DegreeUnit degreeUnit,
+            ExecutionYear executionYear, CurricularYear curricularYear) {
+        final List<PersonFunction> delegateFunctions =
+                Delegate.getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(degreeUnit, executionYear,
+                        FunctionType.DELEGATE_OF_YEAR);
+
+        PersonFunction lastDelegateFunction = null;
+        for (PersonFunction delegateFunction : delegateFunctions) {
+            if (delegateFunction.getCurricularYear().equals(curricularYear)
+                    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
+                            executionYear.getEndDateYearMonthDay())) {
+                if (lastDelegateFunction == null || lastDelegateFunction.getEndDate().isBefore(delegateFunction.getEndDate())) {
+                    lastDelegateFunction = delegateFunction;
+                }
+            }
+        }
+        return lastDelegateFunction;
+    }
+
+    public static Student getActiveYearDelegateByCurricularYear(Degree degree, CurricularYear curricularYear) {
+        if (degree.isEmpty() || degree.getUnit() == null) {
+            return null;
+        }
+        final PersonFunction delegateFunction =
+                getActiveYearDelegatePersonFunctionByCurricularYear(degree.getUnit(), curricularYear);
+        return delegateFunction != null ? delegateFunction.getPerson().getStudent() : null;
+    }
+
+    /*
+     * DELEGATES FROM GIVEN EXECUTION YEAR (PAST DELEGATES)
+     */
+    public static Student getYearDelegateByExecutionYearAndCurricularYear(Degree degree, ExecutionYear executionYear,
+            CurricularYear curricularYear) {
+        if (degree.isEmpty() || degree.getUnit() == null) {
+            return null;
+        }
+        final List<PersonFunction> delegateFunctions =
+                Delegate.getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(degree.getUnit(), executionYear,
+                        FunctionType.DELEGATE_OF_YEAR);
+        for (PersonFunction delegateFunction : delegateFunctions) {
+            if (delegateFunction.getCurricularYear().equals(curricularYear)
+                    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
+                            executionYear.getEndDateYearMonthDay())) {
+                return delegateFunction.getPerson().getStudent();
+            }
+        }
+        return null;
     }
 
 }

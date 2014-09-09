@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -88,8 +89,8 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
             Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
             for (Registration registration : activeRegistrations) {
                 yearDelegateFunction =
-                        registration.getDegree().getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                                FunctionType.DELEGATE_OF_YEAR);
+                        Delegate.getActiveDelegatePersonFunctionByStudentAndFunctionType(registration.getDegree(), student,
+                                executionYear, FunctionType.DELEGATE_OF_YEAR);
                 if (yearDelegateFunction != null) {
                     break;
                 }
@@ -99,8 +100,8 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
                 final ExecutionYear delegateExecutionYear =
                         executionYear == null ? ExecutionYear.getExecutionYearByDate(yearDelegateFunction.getBeginDate()) : executionYear;
 
-                students.addAll(person.getStudent().getStudentsResponsibleForGivenFunctionType(FunctionType.DELEGATE_OF_YEAR,
-                        delegateExecutionYear));
+                students.addAll(Delegate.getStudentsResponsibleForGivenFunctionType(person.getStudent(),
+                        FunctionType.DELEGATE_OF_YEAR, delegateExecutionYear));
 
                 Collections.sort(students, Student.NUMBER_COMPARATOR);
             }
@@ -180,7 +181,8 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
             List<Registration> activeRegistrations = new ArrayList<Registration>(student.getActiveRegistrations());
             Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
             for (Registration registration : activeRegistrations) {
-                delegateFunction = registration.getDegree().getMostSignificantDelegateFunctionForStudent(student, executionYear);
+                delegateFunction =
+                        Delegate.getMostSignificantDelegateFunctionForStudent(registration.getDegree(), student, executionYear);
                 if (delegateFunction != null) {
                     break;
                 }
@@ -212,9 +214,10 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
         final PersonFunction delegateFunction = getPersonFunction(person, executionYear);
         if (delegateFunction != null) {
             if (person.getStudent() != null) {
+                Student student = person.getStudent();
                 Set<CurricularCourse> curricularCourses =
-                        person.getStudent().getCurricularCoursesResponsibleForByFunctionType(
-                                delegateFunction.getFunction().getFunctionType(), executionYear);
+                        Delegate.getCurricularCoursesResponsibleForByFunctionType(student,
+                                Delegate.getDelegateFunction(student, executionYear), executionYear);
                 return getCurricularCoursesBeans(delegateFunction, curricularCourses);
             } else if (!person.getCoordinatorsSet().isEmpty()) {
                 Set<CurricularCourse> curricularCourses =

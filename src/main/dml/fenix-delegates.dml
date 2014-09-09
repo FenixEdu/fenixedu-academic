@@ -1,0 +1,194 @@
+package net.sourceforge.fenixedu.domain;
+
+class student.Delegate  {
+    
+}
+
+class student.YearDelegate extends student.Delegate {
+    
+}
+
+class elections.DelegateElection  {
+    Boolean sentResultsToCandidates;
+}
+
+class elections.YearDelegateElection extends elections.DelegateElection {
+}
+
+class elections.DelegateElectionVote  {
+}
+class elections.DelegateElectionBlankVote extends elections.DelegateElectionVote {
+}
+
+class elections.DelegateElectionPeriod  {
+    YearMonthDay startDate;
+    YearMonthDay endDate;
+}
+
+class elections.DelegateElectionCandidacyPeriod extends elections.DelegateElectionPeriod {
+}
+
+class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionPeriod {
+}
+
+class accessControl.PersistentDelegatesGroup extends accessControl.FenixPredicateGroup {
+    public FunctionType function;
+}
+
+class accessControl.PersistentDelegateStudentsGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
+    public FunctionType type;
+}
+
+class util.email.PersonFunctionSender extends util.email.Sender {}
+
+relation DelegateElectionDegree {
+    elections.DelegateElection playsRole delegateElections {
+        multiplicity *;
+    }
+    Degree playsRole degree;
+}
+
+relation DelegateElectionCandidatesStudent {
+    elections.DelegateElection playsRole electionsWithStudentCandidacies {
+        multiplicity *;
+    }
+    student.Student playsRole candidates {
+        multiplicity *;
+    }
+}
+
+relation DelegateElectionStudent {
+    elections.DelegateElection playsRole delegateElections {
+        multiplicity *;
+    }
+    student.Student playsRole students {
+        multiplicity *;
+    }
+}
+
+relation DelegateElectionVotingPeriodVotingStudent {
+    elections.DelegateElectionVotingPeriod playsRole electionsWithVotingStudents {
+        multiplicity *;
+    }
+    student.Student playsRole votingStudents {
+        multiplicity *;
+    }
+}
+
+relation DelegateElectionVotingPeriodStudentForNewRoundElections {
+    elections.DelegateElectionVotingPeriod playsRole votingPeriodForNewRoundElections {
+        multiplicity *;
+    }
+    student.Student playsRole candidatesForNewRoundElections {
+        multiplicity *;
+    }
+}
+
+relation DelegateElectionExecutionYear {
+    elections.DelegateElection playsRole delegateElections {
+        multiplicity *;
+    }
+    ExecutionYear playsRole executionYear;
+}
+
+relation YearDelegateElectionCurricularYear {
+    elections.YearDelegateElection playsRole yearDelegateElections {
+        multiplicity *;
+    }
+    CurricularYear playsRole curricularYear;
+}
+
+relation StudentDelegateElectionVote {
+    student.Student playsRole student;
+    elections.DelegateElectionVote playsRole votes {
+        multiplicity *;
+    }
+}
+
+relation DelegateElectionDelegateElectionCandidacyPeriod {
+    elections.DelegateElection playsRole delegateElection;
+    elections.DelegateElectionCandidacyPeriod playsRole candidacyPeriod;
+}
+
+relation DelegateElectionDelegateElectionVotingPeriod {
+    elections.DelegateElection playsRole delegateElection;
+    elections.DelegateElectionVotingPeriod playsRole votingPeriod
+    {
+        multiplicity *;
+    }
+}
+relation DelegateElectionVotingPeriodDelegateElectionVote {
+    elections.DelegateElectionVotingPeriod playsRole delegateElection;
+    elections.DelegateElectionVote playsRole votes {
+        multiplicity *;    }
+}
+
+relation StudentDelegateElection {
+    student.Student playsRole electedStudent;
+    elections.DelegateElection playsRole electedElections {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectDelegateElection {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    elections.DelegateElection playsRole delegateElections {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectDelegateElectionVote {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    elections.DelegateElectionVote playsRole votes {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectDelegateElectionPeriod {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    elections.DelegateElectionPeriod playsRole delegateElectionsPeriods {
+        multiplicity *;
+    }
+}
+
+relation DelegatePersonFunction {
+    student.Delegate playsRole delegate;
+    organizationalStructure.PersonFunction playsRole delegateFunction;
+}
+
+relation DelegateRegistration {
+    student.Registration playsRole registration;
+    student.Delegate playsRole delegates {
+        multiplicity *;
+    }
+}
+
+relation DelegateRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    student.Delegate playsRole delegates {
+        multiplicity *;
+    }
+}
+
+relation PersistentDelegatesGroupDegree {
+    public accessControl.PersistentDelegatesGroup playsRole delegatesGroup {
+        multiplicity *;
+    }
+    public Degree playsRole degree {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentDelegateStudentsGroupPersonFunction {
+    public accessControl.PersistentDelegateStudentsGroup playsRole delegateStudentsGroup {
+        multiplicity *;
+    }
+    public organizationalStructure.PersonFunction playsRole delegateFunction {
+        multiplicity 1..1;
+    }
+}
+
+relation PersonFunctionSender {
+    organizationalStructure.PersonFunction playsRole personFunction;
+    util.email.PersonFunctionSender playsRole sender;
+}

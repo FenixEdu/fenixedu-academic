@@ -39,7 +39,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -182,9 +184,9 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
 
         List<PersonFunction> delegateFunctions = null;
         if (bean.getOnlyActiveDelegates()) {
-            delegateFunctions = student.getAllActiveDelegateFunctions();
+            delegateFunctions = Delegate.getAllActiveDelegateFunctions(student);
         } else {
-            delegateFunctions = student.getAllDelegateFunctions();
+            delegateFunctions = Delegate.getAllDelegateFunctions(student);
         }
         for (PersonFunction function : delegateFunctions) {
             DelegateSearchBean delegateBean = new DelegateSearchBean(student.getPerson(), function);
@@ -232,7 +234,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
 
     private List<PersonFunction> getActivePersonFunctionsFor(Person person) {
         if (person.getStudent() != null) {
-            return person.getStudent().getAllActiveDelegateFunctions();
+            return Delegate.getAllActiveDelegateFunctions(person.getStudent());
         } else {
             List<PersonFunction> result = new ArrayList<PersonFunction>();
             result.add(person.getActiveGGAEDelegatePersonFunction());
@@ -242,7 +244,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
 
     private List<PersonFunction> getAllPersonFunctionsFor(Person person) {
         if (person.getStudent() != null) {
-            return person.getStudent().getAllDelegateFunctions();
+            return Delegate.getAllDelegateFunctions(person.getStudent());
         } else {
             return person.getAllGGAEDelegatePersonFunctions();
         }
@@ -306,10 +308,10 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
     private DelegateSearchBean getDelegateSearchBean(DelegateSearchBean bean, FunctionType functionType) {
         List<Student> delegates = new ArrayList<Student>();
         if (bean.getExecutionYear().equals(ExecutionYear.readCurrentExecutionYear())) {
-            delegates.addAll(bean.getDegree().getAllActiveDelegatesByFunctionType(functionType, null));
+            delegates.addAll(Delegate.getAllActiveDelegatesByFunctionType(bean.getDegree(), functionType, null));
         } else {
-            delegates.addAll(bean.getDegree()
-                    .getAllDelegatesByExecutionYearAndFunctionType(bean.getExecutionYear(), functionType));
+            delegates.addAll(Delegate.getAllDelegatesByExecutionYearAndFunctionType(bean.getDegree(), bean.getExecutionYear(),
+                    functionType));
         }
         return (delegates.isEmpty() ? null : new DelegateSearchBean(delegates.iterator().next().getPerson(), functionType,
                 bean.getExecutionYear()));
@@ -322,10 +324,11 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
             final CurricularYear curricularYear = CurricularYear.readByYear(i);
             Student student = null;
             if (bean.getExecutionYear().equals(ExecutionYear.readCurrentExecutionYear())) {
-                student = bean.getDegree().getActiveYearDelegateByCurricularYear(curricularYear);
+                student = YearDelegate.getActiveYearDelegateByCurricularYear(bean.getDegree(), curricularYear);
             } else {
                 student =
-                        bean.getDegree().getYearDelegateByExecutionYearAndCurricularYear(bean.getExecutionYear(), curricularYear);
+                        YearDelegate.getYearDelegateByExecutionYearAndCurricularYear(bean.getDegree(), bean.getExecutionYear(),
+                                curricularYear);
             }
             if (student != null) {
                 DelegateSearchBean delegateBean =

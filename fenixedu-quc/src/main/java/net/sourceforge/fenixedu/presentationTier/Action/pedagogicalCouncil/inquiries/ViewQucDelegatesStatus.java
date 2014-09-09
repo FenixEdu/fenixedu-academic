@@ -90,8 +90,8 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
 
         for (Degree degree : degreeList) {
             Map<Integer, YearDelegate> yearDelegateByYear = new HashMap<Integer, YearDelegate>();
-            for (Student student : degree.getAllDelegatesByExecutionYearAndFunctionType(executionPeriod.getExecutionYear(),
-                    FunctionType.DELEGATE_OF_YEAR)) {
+            for (Student student : Delegate.getAllDelegatesByExecutionYearAndFunctionType(degree,
+                    executionPeriod.getExecutionYear(), FunctionType.DELEGATE_OF_YEAR)) {
                 YearDelegate yearDelegate = getYearDelegate(student, executionPeriod);
                 YearDelegate yearDelegateMap = yearDelegateByYear.get(yearDelegate.getCurricularYear().getYear());
                 if (yearDelegateMap == null) {
@@ -177,7 +177,7 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
 
     private YearDelegate getYearDelegate(Student student, ExecutionSemester executionPeriod) {
         YearDelegate yearDelegate = null;
-        for (Delegate delegate : student.getDelegates()) {
+        for (Delegate delegate : Delegate.getDelegates(student)) {
             if (delegate instanceof YearDelegate) {
                 if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
                     if (yearDelegate == null

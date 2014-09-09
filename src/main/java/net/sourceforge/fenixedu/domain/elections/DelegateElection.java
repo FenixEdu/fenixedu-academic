@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.domain.elections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -253,6 +254,24 @@ public abstract class DelegateElection extends DelegateElection_Base {
         List<Student> result = new ArrayList<Student>(super.getStudentsSet());
         result.removeAll(getCandidatesSet());
         return result;
+    }
+
+    public static DelegateElection getLastElectedDelegateElection(Student student) {
+        List<DelegateElection> elections = new ArrayList<DelegateElection>(student.getElectedElectionsSet());
+        return (elections.isEmpty() ? null : Collections
+                .max(elections, DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE));
+    }
+
+    public static int getNrVotesLastElection(Student student) {
+        DelegateElection delegateElection =
+                DelegateElection.readCurrentDelegateElectionByDegree(student.getLastActiveRegistration().getDegree());
+        return delegateElection.getLastVotingPeriod().getNrVotesByStudent(student);
+    }
+
+    public static int getTotalPercentageLastElection(Student student) {
+        DelegateElection delegateElection =
+                DelegateElection.readCurrentDelegateElectionByDegree(student.getLastActiveRegistration().getDegree());
+        return delegateElection.getLastVotingPeriod().getTotalPercentageElection(student);
     }
 
     /*

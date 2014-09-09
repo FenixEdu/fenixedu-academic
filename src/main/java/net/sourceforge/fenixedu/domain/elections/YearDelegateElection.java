@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain.elections;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -129,7 +130,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
     private static void checkNewElectionCandidacyPeriod(Degree degree, ExecutionYear executionYear,
             CurricularYear curricularYear, DelegateElectionCandidacyPeriod candidacyPeriod) throws DomainException {
 
-        for (DelegateElection election : degree.getYearDelegateElectionsGivenExecutionYearAndCurricularYear(executionYear,
+        for (DelegateElection election : getYearDelegateElectionsGivenExecutionYearAndCurricularYear(degree, executionYear,
                 curricularYear)) {
             if (!election.getCandidacyPeriod().endsBefore(candidacyPeriod)) {
                 throw new DomainException("error.elections.newElection.invalidPeriod", new String[] { degree.getSigla(),
@@ -147,7 +148,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
             ExecutionYear executionYear) throws DomainException {
 
         final DelegateElection previousElection =
-                degree.getYearDelegateElectionWithLastCandidacyPeriod(executionYear, curricularYear);
+                YearDelegateElection.getYearDelegateElectionWithLastCandidacyPeriod(degree, executionYear, curricularYear);
         if (previousElection != null && previousElection.hasLastVotingPeriod()
                 && previousElection.getLastVotingPeriod().isCurrentPeriod()) {
             throw new DomainException("error.elections.newElection.currentVotingPeriodExists", new String[] { degree.getSigla(),
@@ -298,7 +299,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 
         for (Degree degree : degrees) {
             spreadsheet.getSheet(degree.getSigla());
-            List<YearDelegateElection> elections = sortByYear(degree.getYearDelegateElectionsGivenExecutionYear(executionYear));
+            List<YearDelegateElection> elections = sortByYear(getYearDelegateElectionsGivenExecutionYear(degree, executionYear));
             for (YearDelegateElection election : elections) {
                 if (election.hasLastVotingPeriod()) {
                     DelegateElectionVotingPeriod votingPeriod = election.getLastVotingPeriod();
@@ -380,4 +381,58 @@ public class YearDelegateElection extends YearDelegateElection_Base {
         return elections;
     }
 
+    public static List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYear(Degree degree, ExecutionYear executionYear) {
+        if (degree.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<YearDelegateElection> elections = new ArrayList<YearDelegateElection>();
+        for (DelegateElection election : degree.getDelegateElectionsSet()) {
+            if (election instanceof YearDelegateElection && election.getExecutionYear().equals(executionYear)) {
+                elections.add((YearDelegateElection) election);
+            }
+        }
+        return elections;
+    }
+
+    public static List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYearAndCurricularYear(Degree degree,
+            ExecutionYear executionYear, CurricularYear curricularYear) {
+        if (degree.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<YearDelegateElection> elections = new ArrayList<YearDelegateElection>();
+        for (DelegateElection election : degree.getDelegateElectionsSet()) {
+            YearDelegateElection yearDelegateElection = (YearDelegateElection) election;
+            if (yearDelegateElection.getExecutionYear().equals(executionYear)
+                    && yearDelegateElection.getCurricularYear().equals(curricularYear)) {
+                elections.add(yearDelegateElection);
+            }
+        }
+        return elections;
+    }
+
+    public static YearDelegateElection getYearDelegateElectionWithLastCandidacyPeriod(Degree degree, ExecutionYear executionYear,
+            CurricularYear curricularYear) {
+        List<YearDelegateElection> elections =
+                getYearDelegateElectionsGivenExecutionYearAndCurricularYear(degree, executionYear, curricularYear);
+
+        YearDelegateElection lastYearDelegateElection = null;
+        if (!elections.isEmpty()) {
+            lastYearDelegateElection = Collections.max(elections, DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE);
+        }
+        return lastYearDelegateElection;
+    }
+
+    public static YearDelegateElection getYearDelegateElectionWithLastVotingPeriod(Degree degree, ExecutionYear executionYear,
+            CurricularYear curricularYear) {
+        List<YearDelegateElection> elections =
+                getYearDelegateElectionsGivenExecutionYearAndCurricularYear(degree, executionYear, curricularYear);
+
+        YearDelegateElection lastYearDelegateElection = null;
+        if (!elections.isEmpty()) {
+            lastYearDelegateElection =
+                    Collections
+                            .max(elections, DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE_AND_CANDIDACY_START_DATE);
+        }
+        return lastYearDelegateElection;
+    }
 }

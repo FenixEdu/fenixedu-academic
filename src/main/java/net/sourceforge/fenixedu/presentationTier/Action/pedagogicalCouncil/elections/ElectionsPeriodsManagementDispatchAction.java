@@ -138,7 +138,8 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
         List<YearDelegateElectionsPeriodsByDegreeBean> electionsByDegree =
                 new ArrayList<YearDelegateElectionsPeriodsByDegreeBean>();
         for (Degree degree : Degree.readAllByDegreeType(bean.getDegreeType())) {
-            List<YearDelegateElection> elections = degree.getYearDelegateElectionsGivenExecutionYear(bean.getExecutionYear());
+            List<YearDelegateElection> elections =
+                    YearDelegateElection.getYearDelegateElectionsGivenExecutionYear(degree, bean.getExecutionYear());
             YearDelegateElectionsPeriodsByDegreeBean electionBean =
                     new YearDelegateElectionsPeriodsByDegreeBean(degree, bean.getExecutionYear(), elections);
             electionsByDegree.add(electionBean);
