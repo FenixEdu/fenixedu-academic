@@ -322,9 +322,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         for (; !getCreditsSet().isEmpty(); getCreditsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getTutorshipsSet().isEmpty(); getTutorshipsSet().iterator().next().delete()) {
-            ;
-        }
 
         setStudent(null);
         setRootDomainObject(null);
@@ -2436,36 +2433,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result;
     }
 
-    public Tutorship getLastTutorship() {
-        if (!getTutorshipsSet().isEmpty()) {
-            return Collections.max(getTutorshipsSet(), Tutorship.TUTORSHIP_START_DATE_COMPARATOR);
-        }
-        return null;
-    }
-
-    public Tutorship getActiveTutorship() {
-        Collection<Tutorship> tutorships = getTutorshipsSet();
-        if (!tutorships.isEmpty() && getLastTutorship().isActive()) {
-            return getLastTutorship();
-        }
-        return null;
-    }
-
-    @Override
-    public void addTutorships(Tutorship tutorships) throws DomainException {
-        for (Tutorship tutorship : getTutorshipsSet()) {
-            if (tutorship.getTeacher().equals(tutorships.getTeacher()) && tutorship.getEndDate().equals(tutorships.getEndDate())) {
-                throw new DomainException("error.tutorships.duplicatedTutorship");
-            }
-
-            if (tutorship.isActive()) {
-                throw new DomainException("error.tutorships.onlyOneActiveTutorship");
-            }
-        }
-
-        super.addTutorships(tutorships);
-    }
-
     public boolean getHasAnyEquivalences() {
         return !this.getNotNeedToEnrollCurricularCoursesSet().isEmpty();
     }
@@ -2662,9 +2629,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean isEmpty() {
         if (hasAnyEnrolments()) {
-            return false;
-        }
-        if (!getTutorshipsSet().isEmpty()) {
             return false;
         }
         if (getRoot() != null && !getRoot().getAllCurriculumLines().isEmpty()) {

@@ -1756,23 +1756,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return studentsGivenEntryYear;
     }
 
-    /*
-     * Returns a list of students without tutor for the given entry year. This
-     * students never had a tutor. Students that have expired tutorships do not
-     * appear in this list.
-     */
-    public List<StudentCurricularPlan> getStudentsWithoutTutorGivenEntryYear(ExecutionYear entryYear) {
-        List<StudentCurricularPlan> studentsWithoutTutor = new ArrayList<StudentCurricularPlan>();
-        for (StudentCurricularPlan scp : getStudentsCurricularPlanGivenEntryYear(entryYear)) {
-            if (scp.getActiveTutorship() == null && scp.getTutorshipsSet().isEmpty()) {
-                studentsWithoutTutor.add(scp);
-            }
-        }
-        Collections.sort(studentsWithoutTutor, StudentCurricularPlan.COMPARATOR_BY_STUDENT_NUMBER);
-        Collections.reverse(studentsWithoutTutor);
-        return studentsWithoutTutor;
-    }
-
     public Set<CurricularCourse> getCurricularCoursesByExecutionYearAndCurricularYear(ExecutionYear executionYear,
             Integer curricularYear) {
         Set<CurricularCourse> result = new HashSet<CurricularCourse>();

@@ -77,7 +77,7 @@ public class StudentHighPerformanceQueueJob extends StudentHighPerformanceQueueJ
                 CycleType cycleType = item.getCycleType(semester.getExecutionYear());
                 addCell("Ciclo", cycleType != null ? cycleType.getDescription() : null);
                 addCell("Email", item.getPerson().getEmailForSendingEmails());
-                Tutorship activeTutorship = item.getActiveTutorship();
+                Tutorship activeTutorship = Tutorship.getActiveTutorship(item.getLastStudentCurricularPlan());
                 addCell("Tutor", activeTutorship != null ? activeTutorship.getPerson().getName() : null);
                 addCell("Email Tutor", activeTutorship != null ? activeTutorship.getPerson().getEmailForSendingEmails() : null);
             }

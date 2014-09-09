@@ -80,7 +80,7 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
 
         final Teacher teacher = getTeacher(request);
 
-        if (!teacher.getActiveTutorships().isEmpty()) {
+        if (!Tutorship.getActiveTutorships(teacher).isEmpty()) {
             request.setAttribute("receiversBean", getOrCreateBean(teacher));
         }
 
@@ -108,7 +108,7 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
 
             if (request.getParameter("selectAll") != null) {
                 RenderUtils.invalidateViewState();
-                receivers.setStudentsList(teacher.getActiveTutorships());
+                receivers.setStudentsList(Tutorship.getActiveTutorships(teacher));
                 request.setAttribute("receiversBean", receivers);
             } else if (request.getParameter("reset") != null) {
                 RenderUtils.invalidateViewState();

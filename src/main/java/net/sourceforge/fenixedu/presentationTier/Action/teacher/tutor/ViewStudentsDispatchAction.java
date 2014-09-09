@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean.StudentsPerformanceInfoNullEntryYearBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.TutorshipLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -75,7 +76,7 @@ public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchActio
         Student student = FenixFramework.getDomainObject(request.getParameter("studentID"));
 
         Registration registration = FenixFramework.getDomainObject(request.getParameter("registrationID"));
-        TutorshipLog tutorshipLog = registration.getActiveTutorship().getTutorshipLog();
+        TutorshipLog tutorshipLog = Tutorship.getActiveTutorship(registration.getLastStudentCurricularPlan()).getTutorshipLog();
 
         request.setAttribute("tutor", getLoggedPerson(request));
         request.setAttribute("student", student);

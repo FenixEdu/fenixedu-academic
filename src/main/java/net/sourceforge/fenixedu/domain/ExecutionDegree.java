@@ -864,21 +864,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return false;
     }
 
-    /*
-     * Returns a list of teachers from the coordinator department that can be
-     * tutors of a student from the given execution degree
-     */
-    public List<Teacher> getPossibleTutorsFromExecutionDegreeDepartments() {
-        Collection<Department> departments = this.getDegree().getDepartmentsSet();
-
-        ArrayList<Teacher> possibleTeachers = new ArrayList<Teacher>();
-        for (Department department : departments) {
-            possibleTeachers.addAll(department.getPossibleTutors());
-        }
-
-        return possibleTeachers;
-    }
-
     public boolean isScientificCommissionMember() {
         final Person person = AccessControl.getPerson();
         return isScientificCommissionMember(person);
@@ -1104,17 +1089,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public boolean isPublishedExam(ExecutionSemester executionSemester) {
         return this.getPublishedExamMapsSet().contains(executionSemester);
-    }
-
-    public List<TutorshipIntention> getTutorshipIntentions() {
-        List<TutorshipIntention> result = new ArrayList<TutorshipIntention>();
-        for (TutorshipIntention tutorshipIntention : getDegreeCurricularPlan().getTutorshipIntentionSet()) {
-            if (tutorshipIntention.getAcademicInterval().equals(getAcademicInterval())) {
-                result.add(tutorshipIntention);
-            }
-        }
-        Collections.sort(result, TutorshipIntention.COMPARATOR_FOR_ATTRIBUTING_TUTOR_STUDENTS);
-        return result;
     }
 
     public java.util.SortedSet<net.sourceforge.fenixedu.domain.SchoolClass> getSortedSchoolClasses() {

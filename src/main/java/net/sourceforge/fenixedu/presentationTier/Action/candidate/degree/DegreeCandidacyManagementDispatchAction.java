@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCa
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
@@ -232,11 +231,12 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration(), null);
             request.setAttribute("infoLessons", infoLessons);
 
-            List<Tutorship> activeTutorships = candidacy.getRegistration().getStudent().getActiveTutorships();
-            if (!activeTutorships.isEmpty()) {
-                Tutorship tutorship = activeTutorships.iterator().next();
-                request.setAttribute("tutor", tutorship.getTeacher().getPerson());
-            }
+//            FIXME: Cannot continue to be supported this way, tutorship is an optional dependency 
+//            List<Tutorship> activeTutorships = Tutorship.getActiveTutorships(candidacy.getRegistration().getStudent());
+//            if (!activeTutorships.isEmpty()) {
+//                Tutorship tutorship = activeTutorships.iterator().next();
+//                request.setAttribute("tutor", tutorship.getTeacher().getPerson());
+//            }
 
             return mapping.findForward("printAllDocuments");
 

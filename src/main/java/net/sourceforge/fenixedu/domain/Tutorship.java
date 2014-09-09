@@ -19,9 +19,12 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -75,6 +78,15 @@ public class Tutorship extends Tutorship_Base {
     private Tutorship(Teacher teacher, Partial tutorshipStartDate, Partial tutorshipEndDate, StudentCurricularPlan scp) {
         super();
         setRootDomainObject(Bennu.getInstance());
+        for (Tutorship tutorship : scp.getTutorshipsSet()) {
+            if (tutorship.getTeacher().equals(teacher) && tutorship.getEndDate().equals(tutorshipEndDate)) {
+                throw new DomainException("error.tutorships.duplicatedTutorship");
+            }
+
+            if (tutorship.isActive()) {
+                throw new DomainException("error.tutorships.onlyOneActiveTutorship");
+            }
+        }
         setTeacher(teacher);
         setStudentCurricularPlan(scp);
         setStartDate(tutorshipStartDate);
@@ -194,23 +206,13 @@ public class Tutorship extends Tutorship_Base {
             return false;
         }
 
-        Tutorship lastTutorship = registration.getActiveStudentCurricularPlan().getLastTutorship();
+        Tutorship lastTutorship = getLastTutorship(registration.getActiveStudentCurricularPlan());
 
         if (lastTutorship != null && !lastTutorship.equals(this)) {
             return true;
         }
 
         return false;
-    }
-
-    public static List<Tutorship> getStudentActiveTutorships(Integer studentNumber) {
-        List<Tutorship> tutorships = new ArrayList<Tutorship>();
-        for (Tutorship t : Bennu.getInstance().getTutorshipsSet()) {
-            if (t.getStudent().getNumber().equals(studentNumber) && t.isActive()) {
-                tutorships.add(t);
-            }
-        }
-        return tutorships;
     }
 
     public List<ExecutionYear> getCoveredExecutionYears() {
@@ -236,6 +238,87 @@ public class Tutorship extends Tutorship_Base {
     public boolean getTutorshipLogEditable() {
         DegreeCurricularPlan degreeCurricularPlan = getStudent().getLastDegreeCurricularPlan();
         return !(degreeCurricularPlan == null || getTutorshipLog() == null);
+    }
+
+    public static Tutorship getActiveTutorship(StudentCurricularPlan studentCurricularPlan) {
+        Collection<Tutorship> tutorships = studentCurricularPlan.getTutorshipsSet();
+        Tutorship lastTutorship = getLastTutorship(studentCurricularPlan);
+        if (!tutorships.isEmpty() && lastTutorship.isActive()) {
+            return lastTutorship;
+        }
+        return null;
+    }
+
+    private static Tutorship getLastTutorship(StudentCurricularPlan studentCurricularPlan) {
+        if (!studentCurricularPlan.getTutorshipsSet().isEmpty()) {
+            return Collections.max(studentCurricularPlan.getTutorshipsSet(), Tutorship.TUTORSHIP_START_DATE_COMPARATOR);
+        }
+        return null;
+    }
+
+    public static List<Tutorship> getTutorships(Student student) {
+        List<Tutorship> tutorships = new ArrayList<Tutorship>();
+        for (Registration registration : student.getActiveRegistrations()) {
+            for (StudentCurricularPlan curricularPlan : registration.getStudentCurricularPlansSet()) {
+                tutorships.addAll(curricularPlan.getTutorshipsSet());
+            }
+        }
+        return tutorships;
+    }
+
+    public static List<Tutorship> getActiveTutorships(Student student) {
+        List<Tutorship> tutorships = new ArrayList<Tutorship>();
+        for (Tutorship tutorship : Tutorship.getTutorships(student)) {
+            if (tutorship.isActive()) {
+                tutorships.add(tutorship);
+            }
+        }
+        return tutorships;
+    }
+
+    public static List<Tutorship> getActiveTutorships(Teacher teacher, AcademicInterval semester) {
+        List<Tutorship> tutorships = new ArrayList<Tutorship>();
+        for (Tutorship tutorship : teacher.getTutorshipsSet()) {
+            if (tutorship.isActive(semester)) {
+                tutorships.add(tutorship);
+            }
+        }
+        return tutorships;
+    }
+
+    public static List<Tutorship> getActiveTutorships(Teacher teacher) {
+        List<Tutorship> tutorships = new ArrayList<Tutorship>();
+        for (Tutorship tutorship : teacher.getTutorshipsSet()) {
+            if (tutorship.isActive()) {
+                tutorships.add(tutorship);
+            }
+        }
+        return tutorships;
+    }
+
+    public static List<Tutorship> getPastTutorships(Teacher teacher) {
+        List<Tutorship> tutorships = new ArrayList<Tutorship>();
+        for (Tutorship tutorship : teacher.getTutorshipsSet()) {
+            if (!tutorship.isActive()) {
+                tutorships.add(tutorship);
+            }
+        }
+        return tutorships;
+    }
+
+    public static List<Teacher> getPossibleTutorsFromExecutionDegreeDepartments(ExecutionDegree executionDegree) {
+        Collection<Department> departments = executionDegree.getDegree().getDepartmentsSet();
+
+        ArrayList<Teacher> possibleTeachers = new ArrayList<Teacher>();
+        for (Department department : departments) {
+            for (Teacher teacher : department.getAllTeachers()) {
+                if (teacher.getDepartment() != null && teacher.getDepartment().equals(department)) {
+                    possibleTeachers.add(teacher);
+                }
+            }
+        }
+
+        return possibleTeachers;
     }
 
 }

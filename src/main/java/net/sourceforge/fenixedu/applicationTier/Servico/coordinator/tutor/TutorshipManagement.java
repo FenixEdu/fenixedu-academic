@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Bundle;
 
@@ -47,7 +48,8 @@ public abstract class TutorshipManagement {
     }
 
     protected void validateTeacher(Teacher teacher, ExecutionDegree executionDegree) throws FenixServiceException {
-        List<Teacher> possibleTutorsForExecutionDegree = executionDegree.getPossibleTutorsFromExecutionDegreeDepartments();
+        List<Teacher> possibleTutorsForExecutionDegree =
+                Tutorship.getPossibleTutorsFromExecutionDegreeDepartments(executionDegree);
 
         if (!possibleTutorsForExecutionDegree.contains(teacher)) {
             throw new FenixServiceException("error.tutor.cannotBeTutorOfExecutionDegree");
@@ -67,7 +69,7 @@ public abstract class TutorshipManagement {
     }
 
     protected void validateTutorship(Registration registration) throws FenixServiceException {
-        if (registration.getActiveTutorship() != null) {
+        if (Tutorship.getActiveTutorship(registration.getLastStudentCurricularPlan()) != null) {
             // student already with tutor
             throw new FenixServiceException("error.tutor.studentAlreadyHasTutor", new String[] { registration.getNumber()
                     .toString() });

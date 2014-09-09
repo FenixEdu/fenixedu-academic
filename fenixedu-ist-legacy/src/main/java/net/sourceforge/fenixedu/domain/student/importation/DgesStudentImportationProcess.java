@@ -171,11 +171,11 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
             for (ExecutionDegree executionDegree : studentsPerExecution.keySet()) {
                 int numberOfStudents = studentsPerExecution.get(executionDegree);
-                int numberOfTutors = executionDegree.getTutorshipIntentions().size();
+                int numberOfTutors = TutorshipIntention.getTutorshipIntentions(executionDegree).size();
                 if (numberOfTutors > 0) {
                     int exceedingStudents = numberOfStudents % numberOfTutors;
                     int studentPerTutor = numberOfStudents / numberOfTutors;
-                    for (TutorshipIntention tutorshipIntention : executionDegree.getTutorshipIntentions()) {
+                    for (TutorshipIntention tutorshipIntention : TutorshipIntention.getTutorshipIntentions(executionDegree)) {
                         tutorshipIntention.setMaxStudentsToTutor(studentPerTutor);
                         if (exceedingStudents > 0) {
                             tutorshipIntention.setMaxStudentsToTutor(tutorshipIntention.getMaxStudentsToTutor() + 1);

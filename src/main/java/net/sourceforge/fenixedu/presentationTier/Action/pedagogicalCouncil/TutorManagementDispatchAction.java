@@ -110,7 +110,8 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
             return mapping.findForward("chooseTutor");
         }
 
-        List<Teacher> possibleTutorsForExecutionDegree = executiondegree.getPossibleTutorsFromExecutionDegreeDepartments();
+        List<Teacher> possibleTutorsForExecutionDegree =
+                Tutorship.getPossibleTutorsFromExecutionDegreeDepartments(executiondegree);
 
         if (!possibleTutorsForExecutionDegree.contains(teacher)) {
             addActionMessage(request, "error.tutor.cannotBeTutorOfExecutionDegree");
@@ -119,9 +120,9 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 
         bean.setTeacher(teacher);
 
-        if (!teacher.getActiveTutorships().isEmpty()) {
+        if (!Tutorship.getActiveTutorships(teacher).isEmpty()) {
             List<TutorshipManagementByEntryYearBean> beans =
-                    getTutorshipManagementBeansByEntryYear(teacher, teacher.getActiveTutorships());
+                    getTutorshipManagementBeansByEntryYear(teacher, Tutorship.getActiveTutorships(teacher));
             request.setAttribute("tutorshipManagementBeansByEntryYear", beans);
         }
 
@@ -152,13 +153,13 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 
         final Teacher teacher = User.findByUsername(bean.getTeacherId()).getPerson().getTeacher();
         bean.setTeacher(teacher);
-        bean.setNumberOfCurrentTutorships(teacher.getNumberOfActiveTutorships());
-        bean.setNumberOfPastTutorships(teacher.getNumberOfPastTutorships());
+        bean.setNumberOfCurrentTutorships(Tutorship.getActiveTutorships(teacher).size());
+        bean.setNumberOfPastTutorships(Tutorship.getPastTutorships(teacher).size());
 
-        List<Tutorship> activeTutorships = teacher.getActiveTutorships();
+        List<Tutorship> activeTutorships = Tutorship.getActiveTutorships(teacher);
         Collections.sort(activeTutorships, Tutorship.TUTORSHIP_END_DATE_COMPARATOR);
 
-        List<Tutorship> pastTutorships = teacher.getPastTutorships();
+        List<Tutorship> pastTutorships = Tutorship.getPastTutorships(teacher);
         Collections.sort(pastTutorships, Tutorship.TUTORSHIP_START_DATE_COMPARATOR);
 
         request.setAttribute("forwardTo", forwardTo);
@@ -217,7 +218,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 
     private List<TutorBean> getAllPossibleTutors(TutorshipManagementBean bean, ExecutionDegree executionDegree) {
         List<TutorBean> tutorHistoryBeans = new ArrayList<TutorBean>();
-        for (Teacher teacher : executionDegree.getPossibleTutorsFromExecutionDegreeDepartments()) {
+        for (Teacher teacher : Tutorship.getPossibleTutorsFromExecutionDegreeDepartments(executionDegree)) {
             TutorBean historyBean = new TutorBean(bean.getExecutionDegreeID(), bean.getDegreeCurricularPlanID(), teacher);
             tutorHistoryBeans.add(historyBean);
         }
@@ -227,8 +228,8 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 
     private List<TutorBean> getTutorsWithTutorshipHistory(TutorshipManagementBean bean, ExecutionDegree executionDegree) {
         List<TutorBean> tutorHistoryBeans = new ArrayList<TutorBean>();
-        for (Teacher teacher : executionDegree.getPossibleTutorsFromExecutionDegreeDepartments()) {
-            if (teacher.getNumberOfTutorships() != 0) {
+        for (Teacher teacher : Tutorship.getPossibleTutorsFromExecutionDegreeDepartments(executionDegree)) {
+            if (teacher.getTutorshipsSet().size() != 0) {
                 TutorBean historyBean = new TutorBean(bean.getExecutionDegreeID(), bean.getDegreeCurricularPlanID(), teacher);
                 tutorHistoryBeans.add(historyBean);
             }

@@ -54,9 +54,6 @@ enum net.sourceforge.fenixedu.domain.RoleOperationType																	  as Role
 enum net.sourceforge.fenixedu.domain.SalaryType                                                                           as SalaryType;
 enum net.sourceforge.fenixedu.domain.SchoolLevelType                                                                      as SchoolLevelType;
 enum net.sourceforge.fenixedu.domain.ShiftType                                                                            as ShiftType;
-enum net.sourceforge.fenixedu.domain.TutorshipParticipationType	  														  as TutorshipParticipationType;
-enum net.sourceforge.fenixedu.domain.TutorshipSummarySatisfaction	  													  as TutorshipSummarySatisfaction;
-enum net.sourceforge.fenixedu.domain.TutorshipSummaryProgramAssessment	  												  as TutorshipSummaryProgramAssessment;
 enum net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType                                                          as UnitBoardPermittedGroupType;
 enum net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType                                             as PersistentGroupMembersType;
 enum net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType				  			  as AcademicOperationType;
@@ -119,7 +116,6 @@ enum net.sourceforge.fenixedu.domain.student.StudentStatuteType                 
 enum net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                                                 as Specialization;
 enum net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState                                     as StudentCurricularPlanState;
 enum net.sourceforge.fenixedu.domain.teacher.CategoryType                                                                 as CategoryType;
-enum net.sourceforge.fenixedu.domain.teacher.WishesTutor                                                                  as WishesTutor;
 enum net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType                                                       as ThesisParticipationType;
 enum net.sourceforge.fenixedu.domain.thesis.ThesisState                                                                   as ThesisState;
 enum net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType                                                          as ThesisVisibilityType;
@@ -852,8 +848,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
     
     	class CoordinationTeamLog extends DegreeLog { }
     	
-    	class ProgramTutoredParticipationLog extends DegreeLog { }
-    	
     	class CandidaciesLog extends DegreeLog { }
     	
     	class ScientificCommissionLog extends DegreeLog {}    
@@ -1258,80 +1252,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
 	    LocalizedString name (REQUIRED);
 	    Integer weight (REQUIRED);
 	}
-
-	class TutorshipIntention  {
-		AcademicInterval academicInterval (REQUIRED);
-		Integer maxStudentsToTutor;
-	}
-
-    class Tutorship  {
-        Partial startDate;
-        Partial endDate;
-    }
-    
-    class TutorshipSummary  {
-    	Integer howManyReunionsGroup;
-    	Integer howManyReunionsIndividual;
-    	Integer howManyContactsPhone;
-    	Integer howManyContactsEmail;
-
-		TutorshipSummarySatisfaction tutorshipSummarySatisfaction;
-    	TutorshipSummaryProgramAssessment tutorshipSummaryProgramAssessment;
-    	String difficulties;
-    	String gains;
-    	String suggestions;
-    	
-    	Boolean problemsR1;
-    	Boolean problemsR2;
-    	Boolean problemsR3;
-    	Boolean problemsR4;
-    	Boolean problemsR5;
-    	Boolean problemsR6;
-    	Boolean problemsR7;
-    	Boolean problemsR8;
-    	Boolean problemsR9;
-    	Boolean problemsR10;
-    	String  problemsOther;
-    	
-		Boolean gainsR1;
-		Boolean gainsR2;
-		Boolean gainsR3;
-		Boolean gainsR4;
-		Boolean gainsR5;
-		Boolean gainsR6;
-		Boolean gainsR7;
-		Boolean gainsR8;
-		Boolean gainsR9;
-		Boolean gainsR10;
-		String gainsOther;
-    }
-    
-    class TutorshipSummaryPeriod  {
-		LocalDate beginDate;
-		LocalDate endDate;
-    }
-    
-    class TutorshipSummaryRelation  {
-    	TutorshipParticipationType participationType;
-    	Boolean participationRegularly;
-    	Boolean participationNone;
-    	Boolean outOfTouch;
-    	Boolean highPerformance;
-    	Boolean lowPerformance;
-    	Boolean withoutEnrolments;
-	}
-    
-    class TutorshipLog  {
-        Level motivation;
-        WishesTutor wishesTutor;
-        Boolean relativesSupport;
-        Boolean countsWithSupport;
-        Boolean difficultiesOrSpecialLimitations;
-        Option optionNumberDegree;
-        Integer howManyReunions;
-        String annotations;
-        String spaceToValidateStudentsRegistration;
-    }
 
     class UnitFileTag  {
         String name;
@@ -2703,9 +2623,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
             class organizationalStructure.ResidenceManagementUnit extends organizationalStructure.Unit {
             }
             
-            class organizationalStructure.TutorUnit extends organizationalStructure.Unit {
-            }
-
             class organizationalStructure.AdministrativeOfficeUnit extends organizationalStructure.Unit {
             }
 
@@ -4224,7 +4141,6 @@ class reports.CourseLoadReportFile extends reports.GepReportFile {}
 class reports.DissertationsProposalsReportFile extends reports.GepReportFile {}
 class reports.DissertationsWithExternalAffiliationsReportFile extends reports.GepReportFile {}
 class reports.GraduationReportFile extends reports.GepReportFile {}
-class reports.TutorshipProgramReportFile extends reports.GepReportFile {}
 class reports.RaidesGraduationReportFile extends reports.GepReportFile {}
 class reports.RaidesDfaReportFile extends reports.GepReportFile {}
 class reports.RaidesPhdReportFile extends reports.GepReportFile {}
@@ -4236,14 +4152,6 @@ class PublicRelationsStudentListQueueJob extends QueueJobWithFile{
     Boolean active;
     Boolean concluded;
     DegreeType degreeType;
-}
-
-class TutorshipStudentLowPerformanceQueueJob extends QueueJobWithFile {
-	PrescriptionEnum prescriptionEnum;
-}
-
-class StudentHighPerformanceQueueJob extends QueueJobWithFile {
-	AcademicInterval executionInterval (REQUIRED);
 }
 
 class candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport extends QueueJobWithFile {
@@ -9759,111 +9667,6 @@ relation RootDomainObjectTransaction {
     }
 }
 
-relation DegreeCurricularPlanTutorshipIntentions {
-	DegreeCurricularPlan playsRole degreeCurricularPlan {
-		multiplicity 1..1;
-	}
-	TutorshipIntention playsRole tutorshipIntention {
-		multiplicity *;
-	}
-}
-
-relation TeachersTutorshipIntentions {
-	Teacher playsRole teacher {
-		multiplicity 1..1;
-	}
-	TutorshipIntention playsRole tutorshipIntention {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectTutorship {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Tutorship playsRole tutorships {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTutorshipSummary {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    TutorshipSummary playsRole tutorshipSummaries {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTutorshipSummaryPeriod {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    TutorshipSummaryPeriod playsRole tutorshipSummaryPeriods {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTutorshipSummaryRelation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    TutorshipSummaryRelation playsRole tutorshipSummaryRelations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTutorshipLog {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    TutorshipLog playsRole tutorshipLogs {
-        multiplicity *;
-    }
-}
-
-relation TutorshipSummaryTutorships {
-    Tutorship playsRole tutorship;
-    TutorshipSummaryRelation playsRole tutorshipSummaryRelations {
-    	multiplicity *;
-    }
-}
-
-relation TutorshipTutorshipSummaries {
-    TutorshipSummary playsRole tutorshipSummary;
-    TutorshipSummaryRelation playsRole tutorshipSummaryRelations {
-    	multiplicity *;
-    }
-}
-
-relation TutorshipStudentLowPerformanceExecutionYear {
-	ExecutionYear playsRole executionYear;
-	TutorshipStudentLowPerformanceQueueJob playsRole tutorshipStudentLowPerformanceQueueJob {
-    	multiplicity *;
-    }
-}
-
-relation TutorshipSummaryPeriodExecutionSemester {
-	TutorshipSummaryPeriod playsRole tutorshipSummaryPeriod;
-	ExecutionSemester playsRole executionSemester;
-}
-
-relation TutorshipSummarySemester {
-	TutorshipSummary playsRole tutorshipSummaries {
-		multiplicity *;
-	}
-	ExecutionSemester playsRole semester;
-}
-
-relation TutorshipSummaryDegree {
-	TutorshipSummary playsRole tutorshipSummaries {
-		multiplicity *;
-	}
-	Degree playsRole degree;
-}
-
-relation TutorshipSummaryTeacher {
-	TutorshipSummary playsRole tutorshipSummaries {
-		multiplicity *;
-	}
-	Teacher playsRole teacher;
-}
-
-relation TutorshipTutorshipLogs {
-    Tutorship playsRole tutorship;
-    TutorshipLog playsRole tutorshipLog;
-}
-
 relation RootDomainObjectUnitName {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.UnitName playsRole unitName {
@@ -10317,20 +10120,6 @@ relation TransactionPersonAccount {
         multiplicity *;
     }
     PersonAccount playsRole personAccount;
-}
-
-relation TutorshipStudentCurricularPlan {
-    Tutorship playsRole tutorships {
-        multiplicity *;
-    }
-    StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
-relation TutorshipTeacher {
-    Tutorship playsRole tutorships {
-        multiplicity *;
-    }
-    Teacher playsRole teacher;
 }
 
 relation InstitutionUnitDegreeDesignation {

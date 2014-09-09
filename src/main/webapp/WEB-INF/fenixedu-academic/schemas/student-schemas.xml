@@ -378,32 +378,6 @@
 	<slot name="number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="student.tutorship.tutorInfo" type="net.sourceforge.fenixedu.domain.Tutorship" bundle="APPLICATION_RESOURCES">
-	<slot name="teacher.person" key="label.name" layout="conditional-link">
-		<property name="visibleIf" value="homePageAvailable"/>
-		<property name="contextRelative" value="true"/>
-		<property name="linkFormat" value="/homepage/${username}"/>	
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="student.tutorship.tutorInfo.showName"/>
-		<property name="blankTarget" value="true"/>
-		<property name="hasContext" value="true"/>
-	</slot>
-	<slot name="teacher.teacherId" key="label.teacherId"/>
-	<slot name="teacher.person.personWorkPhone.number" key="label.person.workPhone.short"/>
-	<slot name="teacher.category.name" key="label.teacher.category"/>
-	<slot name="teacher.department.name" key="label.teacher.department"/>
-	<slot name="teacher.person.email" key="label.email" layout="link">
-		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="mailto:${teacher.person.email}"/>
-	</slot>
-	<slot name="startDate" key="label.tutorship.startDate"/>
-	<slot name="endDate" key="label.tutorship.endDate"/>
-</schema>
-
-<schema name="student.tutorship.tutorInfo.showName"  bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
-	<slot name="name" key="label.homepage"/>
-</schema>
-
 <schema name="person.email" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="email" />
 </schema>

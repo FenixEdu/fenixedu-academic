@@ -101,7 +101,7 @@ public class TutorshipEntryExecutionYearProvider implements DataProvider {
 
         public static List<ExecutionYear> getExecutionYears(StudentsByTutorBean bean) {
             Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
-            for (Tutorship tutor : bean.getTeacher().getActiveTutorships()) {
+            for (Tutorship tutor : Tutorship.getActiveTutorships(bean.getTeacher())) {
                 executionYears.add(ExecutionYear.getExecutionYearByDate(tutor.getStudentCurricularPlan().getRegistration()
                         .getStartDate()));
             }

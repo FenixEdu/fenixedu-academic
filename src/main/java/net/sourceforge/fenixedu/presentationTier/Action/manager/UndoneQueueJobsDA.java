@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.TutorshipStudentLowPerformanceQueueJob;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerSystemManagementApp;
 
@@ -53,9 +52,6 @@ public class UndoneQueueJobsDA extends FenixDispatchAction {
 
         for (QueueJob job : allJobs) {
             if (job.getIsNotDoneAndCancelled() || job.getIsNotDoneAndNotCancelled()) {
-                if (job instanceof TutorshipStudentLowPerformanceQueueJob) {
-
-                }
                 queueJobs.add(job);
             }
         }

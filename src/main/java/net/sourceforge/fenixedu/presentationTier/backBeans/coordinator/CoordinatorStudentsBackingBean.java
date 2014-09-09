@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.accessControl.SearchDegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -406,9 +405,6 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
             row.setCell(studentCurricularPlan.getRegistration().getEctsCredits());
             row.setCell(getAverageInformation(studentCurricularPlan));
             row.setCell(studentCurricularPlan.getRegistration().getCurricularYear());
-
-            final Tutorship tutorship = studentCurricularPlan.getActiveTutorship();
-            row.setCell((tutorship != null) ? tutorship.getPerson().getName() : "");
         }
 
         return spreadsheet;

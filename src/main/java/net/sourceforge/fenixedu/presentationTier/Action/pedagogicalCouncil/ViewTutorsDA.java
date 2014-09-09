@@ -150,7 +150,7 @@ public class ViewTutorsDA extends FenixDispatchAction {
 
         public List<TutorshipIntention> getTutors() {
             if (getExecutionDegree() != null) {
-                return getExecutionDegree().getTutorshipIntentions();
+                return TutorshipIntention.getTutorshipIntentions(getExecutionDegree());
             }
             return null;
         }

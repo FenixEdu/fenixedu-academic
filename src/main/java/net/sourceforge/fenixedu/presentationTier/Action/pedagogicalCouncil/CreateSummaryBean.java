@@ -108,7 +108,7 @@ public class CreateSummaryBean implements Serializable {
     private void createTutorshipRelations() {
         List<TutorshipSummaryRelationBean> tutorshipRelations = new ArrayList<TutorshipSummaryRelationBean>();
 
-        for (Tutorship t : getTeacher().getActiveTutorships(executionSemester.getAcademicInterval())) {
+        for (Tutorship t : Tutorship.getActiveTutorships(getTeacher(), executionSemester.getAcademicInterval())) {
             if (getDegree().equals(t.getStudent().getDegree())) {
                 tutorshipRelations.add(new TutorshipSummaryRelationBean(t, executionSemester));
             }

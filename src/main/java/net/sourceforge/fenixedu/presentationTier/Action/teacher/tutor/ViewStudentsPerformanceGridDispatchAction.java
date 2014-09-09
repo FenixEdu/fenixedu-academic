@@ -21,6 +21,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -110,12 +112,12 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
             if (bean.getActiveTutorships()) {
 
                 tutorships =
-                        person.getTeacher().getActiveTutorshipsByStudentsEntryYearAndDegree(bean.getStudentsEntryYear(),
-                                bean.getDegree());
+                        getTutorshipsByStudentsEntryYearAndDegree(Tutorship.getActiveTutorships(person.getTeacher()).stream(),
+                                bean.getStudentsEntryYear(), bean.getDegree());
             } else {
                 tutorships =
-                        person.getTeacher().getPastTutorshipsByStudentsEntryYearAndDegree(bean.getStudentsEntryYear(),
-                                bean.getDegree());
+                        getTutorshipsByStudentsEntryYearAndDegree(Tutorship.getPastTutorships(person.getTeacher()).stream(),
+                                bean.getStudentsEntryYear(), bean.getDegree());
             }
 
             if (tutorships != null && !tutorships.isEmpty()) {
@@ -159,4 +161,13 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
         }
         return prepareStudentsPerformanceGrid(mapping, actionForm, request, response, getLoggedPerson(request));
     }
+
+    private static List<Tutorship> getTutorshipsByStudentsEntryYearAndDegree(Stream<Tutorship> tutorshipsList,
+            ExecutionYear entryYear, Degree degree) {
+        return tutorshipsList
+                .filter(t -> ExecutionYear.getExecutionYearByDate(t.getStudentCurricularPlan().getRegistration().getStartDate())
+                        .equals(entryYear)).filter(t -> t.getStudentCurricularPlan().getDegree().equals(degree))
+                .filter(t -> !t.getStudentCurricularPlan().getRegistration().isCanceled()).collect(Collectors.toList());
+    }
+
 }

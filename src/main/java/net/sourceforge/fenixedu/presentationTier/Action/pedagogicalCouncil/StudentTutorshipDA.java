@@ -82,7 +82,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
             request.setAttribute("numberBean", numberBean);
         }
         if (student != null) {
-            List<Tutorship> tutorships = student.getActiveTutorships();
+            List<Tutorship> tutorships = Tutorship.getActiveTutorships(student);
             performanceBean = getOrCreateStudentsPerformanceBean(request, student);
             if (tutorships.size() > 0) {
 
@@ -110,7 +110,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
             request.setAttribute("student", student.getPerson());
 
             List<TutorshipSummary> pastSummaries = new ArrayList<TutorshipSummary>();
-            for (Tutorship t : student.getTutorships()) {
+            for (Tutorship t : Tutorship.getTutorships(student)) {
                 for (TutorshipSummaryRelation tsr : t.getTutorshipSummaryRelationsSet()) {
                     if (!tsr.getTutorshipSummary().isActive()) {
                         pastSummaries.add(tsr.getTutorshipSummary());

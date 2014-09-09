@@ -18,8 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.candidacy.workflow;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -31,12 +29,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.TutorshipIntention;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
-import net.sourceforge.fenixedu.domain.candidacy.MeasurementTest;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -44,18 +38,25 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.fenixedu.bennu.core.security.Authenticate;
-import org.joda.time.LocalDate;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 import org.joda.time.YearMonthDay;
 
 public class RegistrationOperation extends CandidacyOperation {
+    public static class RegistrationCreatedByCandidacy extends DomainObjectEvent<Registration> {
+        private StudentCandidacy candidacy;
+
+        public RegistrationCreatedByCandidacy(Registration instance, StudentCandidacy candidacy) {
+            super(instance);
+            this.candidacy = candidacy;
+        }
+
+        public StudentCandidacy getCandidacy() {
+            return candidacy;
+        }
+    }
 
     static private final long serialVersionUID = 1L;
-    static private final List<String> DEGREES_WITHOUT_AUTOMATIC_TUTOR_DISTRIBUTION = new ArrayList<String>();
-
-    static {
-        DEGREES_WITHOUT_AUTOMATIC_TUTOR_DISTRIBUTION.add("MEMec");
-        DEGREES_WITHOUT_AUTOMATIC_TUTOR_DISTRIBUTION.add("MEC");
-    }
 
     public RegistrationOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
         super(roleTypes, candidacy);
@@ -68,57 +69,8 @@ public class RegistrationOperation extends CandidacyOperation {
         enrolStudentInCurricularCourses(executionDegree, registration);
         associateShiftsFor(registration);
         //assignMeasurementTestShift(registration);
-        associateTutor(registration);
-    }
-
-    private void associateTutor(Registration registration) {
-        if (!DEGREES_WITHOUT_AUTOMATIC_TUTOR_DISTRIBUTION.contains(registration.getDegree().getSigla())) {
-            Teacher teacher = getAvailableTutorTeacher();
-            if (teacher != null) {
-                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
-                Tutorship.createTutorship(teacher, scp, new LocalDate().getMonthOfYear(),
-                        Tutorship.getLastPossibleTutorshipYear());
-            }
-        }
-    }
-
-    private Teacher getAvailableTutorTeacher() {
-        for (TutorshipIntention tutorshipIntention : getExecutionDegree().getTutorshipIntentions()) {
-            if (tutorshipIntention.getMaxStudentsToTutor() != null && tutorshipIntention.getMaxStudentsToTutor() > 0) {
-                tutorshipIntention.setMaxStudentsToTutor(tutorshipIntention.getMaxStudentsToTutor() - 1);
-                return tutorshipIntention.getTeacher();
-            }
-        }
-        // when all tutors are full start distributing equally among them
-        TutorshipIntention tutorshipIntention = getLeastOverloadedTutor();
-        if (tutorshipIntention != null) {
-            tutorshipIntention.setMaxStudentsToTutor(tutorshipIntention.getMaxStudentsToTutor() - 1);
-            return tutorshipIntention.getTeacher();
-        }
-        return null;
-    }
-
-    private TutorshipIntention getLeastOverloadedTutor() {
-        TutorshipIntention chosenTutor = null;
-        for (TutorshipIntention tutorshipIntention : getExecutionDegree().getTutorshipIntentions()) {
-            if (tutorshipIntention.getMaxStudentsToTutor() != null) {
-                if (chosenTutor == null) {
-                    chosenTutor = tutorshipIntention;
-                } else if (Math.abs(tutorshipIntention.getMaxStudentsToTutor()) < Math.abs(chosenTutor.getMaxStudentsToTutor())) {
-                    chosenTutor = tutorshipIntention;
-                }
-            }
-        }
-        return chosenTutor;
-    }
-
-    private void assignMeasurementTestShift(Registration registration) {
-        final MeasurementTest test =
-                MeasurementTest.readBy(getStudentCandidacy().getEntryPhase(), getExecutionYear(), registration.getCampus());
-
-        if (test != null) {
-            test.assignToRoom(registration);
-        }
+        Signal.emit("academic.candidacy.registration.created", new RegistrationCreatedByCandidacy(registration,
+                getStudentCandidacy()));
     }
 
     protected void associateShiftsFor(final Registration registration) {

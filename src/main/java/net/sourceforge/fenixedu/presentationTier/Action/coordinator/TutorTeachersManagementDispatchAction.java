@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ProgramTutoredParticipationLog;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.TutorshipIntention;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
@@ -79,7 +80,8 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
                 intending = true;
                 deletable = intention.isDeletable();
             }
-            previousParticipations = teacher.getActiveTutorships(academicInterval.getPreviousAcademicInterval()).size();
+            previousParticipations =
+                    Tutorship.getActiveTutorships(teacher, academicInterval.getPreviousAcademicInterval()).size();
         }
 
         public Teacher getTeacher() {

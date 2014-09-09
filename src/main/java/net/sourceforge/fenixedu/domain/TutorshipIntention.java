@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -90,6 +91,17 @@ public class TutorshipIntention extends TutorshipIntention_Base {
             }
         }
         return null;
+    }
+
+    public static List<TutorshipIntention> getTutorshipIntentions(ExecutionDegree executionDegree) {
+        List<TutorshipIntention> result = new ArrayList<TutorshipIntention>();
+        for (TutorshipIntention tutorshipIntention : executionDegree.getDegreeCurricularPlan().getTutorshipIntentionSet()) {
+            if (tutorshipIntention.getAcademicInterval().equals(executionDegree.getAcademicInterval())) {
+                result.add(tutorshipIntention);
+            }
+        }
+        Collections.sort(result, TutorshipIntention.COMPARATOR_FOR_ATTRIBUTING_TUTOR_STUDENTS);
+        return result;
     }
 
 }

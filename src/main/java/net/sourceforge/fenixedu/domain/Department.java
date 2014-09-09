@@ -215,20 +215,6 @@ public class Department extends Department_Base {
         }
     }
 
-    public List<Teacher> getPossibleTutors() {
-        List<Teacher> teachers = new ArrayList<Teacher>();
-
-        for (Teacher teacher : this.getAllTeachers()) {
-            if (teacher.canBeTutorOfDepartment(this)) {
-                teachers.add(teacher);
-            }
-        }
-
-        Collections.sort(teachers, Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-        return teachers;
-
-    }
-
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------

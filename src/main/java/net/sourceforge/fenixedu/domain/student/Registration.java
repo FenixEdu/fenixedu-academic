@@ -63,7 +63,6 @@ import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
@@ -1735,10 +1734,6 @@ public class Registration extends Registration_Base {
         if (!getShiftsFor(executionCourse).isEmpty()) {
             throw new DomainException("errors.student.already.enroled.in.shift");
         }
-    }
-
-    public Tutorship getActiveTutorship() {
-        return getLastStudentCurricularPlan().getActiveTutorship();
     }
 
     @Override

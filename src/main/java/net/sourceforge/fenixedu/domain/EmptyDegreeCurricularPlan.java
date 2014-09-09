@@ -476,11 +476,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public List<StudentCurricularPlan> getStudentsWithoutTutorGivenEntryYear(ExecutionYear entryYear) {
-        return Collections.emptyList();
-    }
-
-    @Override
     public Set<CurricularCourse> getCurricularCoursesByExecutionYearAndCurricularYear(ExecutionYear eY, Integer cY) {
         return Collections.emptySet();
     }

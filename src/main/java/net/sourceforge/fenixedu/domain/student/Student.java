@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
@@ -1158,34 +1157,6 @@ public class Student extends Student_Base {
             }
         }
         return false;
-    }
-
-    public List<Tutorship> getTutorships() {
-        List<Tutorship> tutorships = new ArrayList<Tutorship>();
-        for (Registration registration : getActiveRegistrations()) {
-            for (StudentCurricularPlan curricularPlan : registration.getStudentCurricularPlansSet()) {
-                tutorships.addAll(curricularPlan.getTutorshipsSet());
-            }
-        }
-        return tutorships;
-    }
-
-    public List<ExecutionYear> getTutorshipsExecutionYears() {
-        HashSet<ExecutionYear> coveredYears = new HashSet<ExecutionYear>();
-        for (Tutorship tutorship : getTutorships()) {
-            coveredYears.addAll(tutorship.getCoveredExecutionYears());
-        }
-        return new ArrayList<ExecutionYear>(coveredYears);
-    }
-
-    public List<Tutorship> getActiveTutorships() {
-        List<Tutorship> tutorships = new ArrayList<Tutorship>();
-        for (Tutorship tutorship : getTutorships()) {
-            if (tutorship.isActive()) {
-                tutorships.add(tutorship);
-            }
-        }
-        return tutorships;
     }
 
     public ExecutionYear getFirstRegistrationExecutionYear() {

@@ -64,7 +64,7 @@ public class StudentsByTutorBean implements Serializable {
 
     public List<Tutorship> getActiveTutorshipsMatchingEntryYear() {
         List<Tutorship> matchingTutorships = new ArrayList<Tutorship>();
-        for (Tutorship tutorship : getTeacher().getActiveTutorships()) {
+        for (Tutorship tutorship : Tutorship.getActiveTutorships(getTeacher())) {
             if (getStudentsEntryYear() == null
                     || (tutorship.getStudentCurricularPlan().getRegistration().getIngressionYear() == getStudentsEntryYear())) {
                 matchingTutorships.add(tutorship);

@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
@@ -106,7 +107,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
         Student student = registration.getStudent();
 
         if (student.hasActiveRegistrationFor(executionDegree.getDegree())) {
-            if (registration.getActiveTutorship() == null) {
+            if (Tutorship.getActiveTutorship(registration.getLastStudentCurricularPlan()) == null) {
                 for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                     if (studentCurricularPlan.getTutorshipsSet().size() == 0) {
                         return true;

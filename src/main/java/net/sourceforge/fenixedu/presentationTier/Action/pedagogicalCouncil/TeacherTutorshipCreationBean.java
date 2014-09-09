@@ -25,6 +25,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.TutorshipIntention;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -63,13 +65,23 @@ public class TeacherTutorshipCreationBean implements Serializable {
             List<Person> teachers = new ArrayList<Person>();
             if (bean.getExecutionDegree() != null) {
                 ExecutionDegree executionDegree = bean.getExecutionDegree();
-                for (final Teacher teacher : executionDegree.getPossibleTutorsFromExecutionDegreeDepartments()) {
-                    if (teacher.hasTutorshipIntentionFor(bean.getExecutionDegree())) {
+                for (final Teacher teacher : Tutorship.getPossibleTutorsFromExecutionDegreeDepartments(executionDegree)) {
+                    if (hasTutorshipIntentionFor(teacher, bean.getExecutionDegree())) {
                         teachers.add(teacher.getPerson());
                     }
                 }
             }
             return teachers;
+        }
+
+        private static boolean hasTutorshipIntentionFor(Teacher teacher, ExecutionDegree executionDegree) {
+            for (TutorshipIntention intention : teacher.getTutorshipIntentionSet()) {
+                if (intention.getAcademicInterval().equals(executionDegree.getAcademicInterval())
+                        && intention.getDegreeCurricularPlan().equals(executionDegree.getDegreeCurricularPlan())) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

@@ -84,7 +84,7 @@ public class StudentsPerformanceInfoBean implements Serializable {
     public static StudentsPerformanceInfoBean create(Teacher teacher) {
         StudentsPerformanceInfoBean bean = new StudentsPerformanceInfoBean();
         bean.setTeacher(teacher);
-        bean.initActiveTutorships();
+        bean.setActiveTutorships(!Tutorship.getActiveTutorships(bean.getTeacher()).isEmpty());
         return bean;
     }
 
@@ -235,22 +235,14 @@ public class StudentsPerformanceInfoBean implements Serializable {
 
     public List<Tutorship> getTutorships() {
         List<Tutorship> result = new ArrayList<Tutorship>();
-        result.addAll(getTeacher().getActiveTutorships());
-        result.addAll(getTeacher().getPastTutorships());
+        result.addAll(Tutorship.getActiveTutorships(getTeacher()));
+        result.addAll(Tutorship.getPastTutorships(getTeacher()));
         return result;
     }
 
     public List<Tutorship> getTutorshipsFromStudent() {
         List<Tutorship> result = new ArrayList<Tutorship>();
-        result.addAll(getStudent().getActiveTutorships());
+        result.addAll(Tutorship.getActiveTutorships(getStudent()));
         return result;
-    }
-
-    private void initActiveTutorships() {
-        if (getTeacher().getNumberOfActiveTutorships() != 0) {
-            setActiveTutorships(true);
-        } else {
-            setActiveTutorships(false);
-        }
     }
 }

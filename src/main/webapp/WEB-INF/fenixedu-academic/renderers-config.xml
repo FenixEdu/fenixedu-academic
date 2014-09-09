@@ -374,16 +374,6 @@ Documentation:
 		<property name="showOnlyPeopleWithFunctions" value="false"/>
 	</renderer>
 
-	<renderer type="java.util.Collection" layout="student-performance-table" class="net.sourceforge.fenixedu.presentationTier.renderers.PerformanceGridRenderer">
-    	<property name="emptySpace" value="emptySpace"/> <!-- span without border and #FFFFFF color  -->
-    	<property name="approvedMonitoringYear" value="approvedMonitoringYear"/> <!-- span without border and with #003333 color  -->
-    	<property name="approvedAnotherYear" value="approvedAnotherYear"/> <!-- span without border and with #CCCC66 color  -->
-    	<property name="enroled" value="enroled"/> <!-- span with #003333 border and with #FFFFFF color  -->
-    	<property name="notApprovedMonitoringYear" value="notApprovedMonitoringYear"/> <!-- span with #003333 border and with #FFFFFF color  -->
-    	<property name="notApprovedAnotherYear" value="notApprovedAnotherYear"/> <!-- span with #CCCC66 border and #FFFFFF color  -->
-    	<property name="performanceGridBundle" value="APPLICATION_RESOURCES"/>
-    </renderer>
-
     <renderer type="java.util.Collection" layout="contact-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ContactListRenderer">
         <property name="bundle" value="APPLICATION_RESOURCES"/>
         <property name="defaultLabel" value="label.partyContacts.defaultContact"/>

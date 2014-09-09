@@ -117,7 +117,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         String studentId = request.getParameter("studentId");
         Person studentPerson = FenixFramework.getDomainObject(studentId);
         Student student = studentPerson.getStudent();
-        return student.getActiveTutorships().iterator().next();
+        return Tutorship.getActiveTutorships(student).iterator().next();
     }
 
     public ActionForward deleteTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -419,7 +419,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         }
         // Since there is only one
         if (creationCorrect) {
-            List<Tutorship> tutorships = student.getActiveTutorships();
+            List<Tutorship> tutorships = Tutorship.getActiveTutorships(student);
             Tutorship tutorship = tutorships.iterator().next();
             request.setAttribute("tutorshipId", tutorship.getExternalId());
             request.setAttribute("success", "success");

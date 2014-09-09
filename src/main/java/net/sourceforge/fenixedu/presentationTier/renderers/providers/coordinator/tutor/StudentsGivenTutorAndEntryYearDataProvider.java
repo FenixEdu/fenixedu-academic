@@ -18,8 +18,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementByEntryYearBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -32,7 +38,18 @@ public class StudentsGivenTutorAndEntryYearDataProvider implements DataProvider 
 
         Teacher teacher = bean.getTeacher();
 
-        return teacher.getActiveTutorshipsByStudentsEntryYear(bean.getExecutionYear());
+        List<Tutorship> tutorships = new ArrayList<Tutorship>();
+
+        for (Tutorship tutorship : teacher.getTutorshipsSet()) {
+            StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
+            ExecutionYear studentEntryYear =
+                    ExecutionYear.getExecutionYearByDate(studentCurricularPlan.getRegistration().getStartDate());
+            if (studentEntryYear.equals(bean.getExecutionYear()) && tutorship.isActive()) {
+                tutorships.add(tutorship);
+            }
+        }
+
+        return tutorships;
     }
 
     @Override
