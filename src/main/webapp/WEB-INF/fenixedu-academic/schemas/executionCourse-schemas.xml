@@ -18,7 +18,7 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="CreateLessonPlanning" type="net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean" bundle="DEFAULT">	
+<schema name="CreateLessonPlanning" type="net.sourceforge.fenixedu.dataTransferObject.teacher.CreateLessonPlanningBean" bundle="DEFAULT">	
 	<slot name="lessonType" key="label.lessonPlanning.lessonType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesToCreateLessonPlanningProvider"/>		
 		<property name="eachLayout" value=""/>

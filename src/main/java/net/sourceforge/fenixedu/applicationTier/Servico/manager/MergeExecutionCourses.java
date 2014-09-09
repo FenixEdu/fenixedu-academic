@@ -116,10 +116,6 @@ public class MergeExecutionCourses {
             executionCourseFrom.getEvaluationMethod().delete();
         }
 
-        if (executionCourseFrom.getCourseReport() != null) {
-            executionCourseFrom.getCourseReport().delete();
-        }
-
         copySummaries(executionCourseFrom, executionCourseTo);
         copyGroupPropertiesExecutionCourse(executionCourseFrom, executionCourseTo);
         removeEvaluations(executionCourseFrom, executionCourseTo);

@@ -138,11 +138,4 @@ public class AcademicAdministrationApplication extends ForwardAction {
     @Mapping(path = "/bolonha/curricularPlans/curricularPlansManagement", module = "academicAdministration")
     public static class CurricularPlansManagement extends FacesEntryPoint {
     }
-
-    @StrutsFunctionality(app = AcademicAdminExecutionsApp.class, path = "create-course-reports",
-            titleKey = "link.manager.createCourseReports", accessGroup = "academic(MANAGE_EXECUTION_COURSES)")
-    @Mapping(path = "/executionCourseManagement/createCourseReportsForExecutionPeriod", module = "academicAdministration")
-    public static class CreateCourseReports extends FacesEntryPoint {
-    }
-
 }

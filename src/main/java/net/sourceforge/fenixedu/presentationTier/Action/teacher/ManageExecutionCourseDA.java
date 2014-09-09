@@ -36,8 +36,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportBibliograp
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportEvaluationMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportLessonPlannings;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.MoveLessonPlanning;
-import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean.ImportType;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;

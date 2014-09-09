@@ -101,12 +101,6 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 
-	<managed-bean>
-		<managed-bean-name>createCourseReports</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.executionCourse.CreateCourseReportsForExecutionPeriod</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
 	<!-- Backbeans from department member subapplication -->
 	<managed-bean>
 		<managed-bean-name>viewDepartmentTeachers</managed-bean-name>

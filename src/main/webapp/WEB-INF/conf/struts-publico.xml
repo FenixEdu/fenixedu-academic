@@ -201,9 +201,6 @@
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewShiftTimeTableAction" path="/viewShiftTimeTable" input="/viewShifts.jsp">
                   <forward path="/viewShiftTimeTable.jsp" name="Sucess"></forward>
             </action>
-            <!-- Start of Gesdis-->
-            <!-- Site viewer -->
-            <!-- End of Gesdis-->
             <!-- EXAMS -->
             <action validate="true" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExamDayAndShiftDispatchAction" name="chooseDayAndShiftForm" input="/chooseDayAndShift.jsp" path="/chooseDayAndShiftForm">
                   <forward path="/chooseDayAndShift.jsp" name="Show Choose Form"></forward>

@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
-import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -138,10 +136,6 @@ public class InfoExecutionCourse extends InfoObject {
         return getExecutionCourse().getAttendsSet().size();
     }
 
-    public String getCourseReportFilled() {
-        return (getExecutionCourse().getCourseReport() == null || getExecutionCourse().getCourseReport().getReport() == null) ? "false" : "true";
-    }
-
     public String getEqualLoad() {
         return getExecutionCourse().getEqualLoad();
     }
@@ -161,10 +155,6 @@ public class InfoExecutionCourse extends InfoObject {
 
     public AcademicInterval getAcademicInterval() {
         return getExecutionCourse().getAcademicInterval();
-    }
-
-    public InfoCourseReport getInfoCourseReport() {
-        return InfoCourseReport.newInfoFromDomain(getExecutionCourse().getCourseReport());
     }
 
     public List<InfoShift> getAssociatedInfoShifts() {
@@ -291,17 +281,6 @@ public class InfoExecutionCourse extends InfoObject {
 
     public void setCurricularYear(Integer integer) {
         curricularYear = integer;
-    }
-
-    // useful for coordinator portal
-    protected InfoSiteEvaluationStatistics infoSiteEvaluationStatistics;
-
-    public InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics() {
-        return infoSiteEvaluationStatistics;
-    }
-
-    public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
-        this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
     }
 
     private Double occupancy;

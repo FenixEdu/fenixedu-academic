@@ -142,53 +142,6 @@ public abstract class PresentationConstants {
 
     // --------------------------------------------------------------------------
     // -----
-    // GesDis Constants - For GesDis
-    // --------------------------------------------------------------------------
-    // -----
-    public static final String INDEX = "index";
-
-    public static final String EXECUTION_COURSE_CURRICULUM = "execution_course_curriculum";
-
-    public static final String INFO_SITE_ANNOUNCEMENT = "info_site_announcement";
-
-    public static final String INFO_SECTION = "info_section";
-
-    public static final String INFO_ITEM = "info_item";
-
-    public static final String INFO_SITES_LIST = "info_sites_list";
-
-    public static final String INFO_TEACHER = "info_teacher";
-
-    public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";
-
-    public static final String INFO_BIBLIOGRAPHIC_REFERENCE = "BibliographicReference";
-
-    public static final String TEACHERS_LIST = "teachers_list";
-
-    public static final String RESPONSIBLE_TEACHERS_LIST = "responsible_teachers_list";
-
-    public static final String IS_RESPONSIBLE = "is_responsible";
-
-    public static final String ALTERNATIVE_SITE = "alternative";
-
-    public static final String MAIL = "mail";
-
-    public static final String SECTIONS = "sections";
-
-    public static final String CHILDREN_SECTIONS = "children_sections";
-
-    public static final String INFO_SECTION_ITEMS_LIST = "info_section_items_list";
-
-    public static final String LAST_ANNOUNCEMENT = "last_announcement";
-
-    public static final String INFO_SITE_ANNOUNCEMENT_LIST = "info_site_announcement_list";
-
-    public static final String POSSIBLE_PARENT_SECTIONS = "possible_parent_sections";
-
-    public static final String INFO_EVALUATION = "info_evaluation";
-
-    // --------------------------------------------------------------------------
-    // -----
     // Master Degree Constants - For Master Degree
     // --------------------------------------------------------------------------
     // -----

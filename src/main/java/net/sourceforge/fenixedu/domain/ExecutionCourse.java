@@ -50,7 +50,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
-import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
@@ -380,19 +379,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return true;
     }
 
-    public CourseReport createCourseReport(String report) {
-        if (report == null) {
-            throw new NullPointerException();
-        }
-
-        final CourseReport courseReport = new CourseReport();
-        courseReport.setReport(report);
-        courseReport.setLastModificationDateDateTime(new DateTime());
-        courseReport.setExecutionCourse(this);
-
-        return courseReport;
-    }
-
     public List<Professorship> responsibleFors() {
         final List<Professorship> res = new ArrayList<Professorship>();
         for (final Professorship professorship : this.getProfessorshipsSet()) {
@@ -550,9 +536,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
         }
         if (!getAssociatedShifts().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
-        }
-        if (getCourseReport() != null) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
         }
         if (!getAttendsSet().isEmpty()) {

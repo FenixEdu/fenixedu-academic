@@ -38,10 +38,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -108,36 +105,7 @@ public class SearchExecutionCourses {
             public Object transform(Object arg0) {
                 InfoExecutionCourse infoExecutionCourse = null;
                 infoExecutionCourse = getOccupancyLevels(arg0);
-                getTeacherReportInformation(infoExecutionCourse, arg0);
                 return infoExecutionCourse;
-            }
-
-            private void getTeacherReportInformation(InfoExecutionCourse infoExecutionCourse, Object arg0) {
-
-                ExecutionCourse executionCourse = (ExecutionCourse) arg0;
-
-                if (executionCourse.getAssociatedCurricularCoursesSet() != null) {
-
-                    InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-                    int enrolledInCurricularCourse = 0;
-                    int evaluated = 0;
-                    int approved = 0;
-                    Iterator<CurricularCourse> iter = executionCourse.getAssociatedCurricularCoursesSet().iterator();
-
-                    while (iter.hasNext()) {
-                        CurricularCourse curricularCourse = iter.next();
-
-                        final List<Enrolment> enroled = curricularCourse.getEnrolmentsByAcademicInterval(academicInterval);
-                        enrolledInCurricularCourse += enroled.size();
-                        evaluated = Enrolment.countEvaluated(enroled);
-                        approved = Enrolment.countApproved(enroled);
-                    }
-                    infoSiteEvaluationStatistics.setEnrolled(Integer.valueOf(enrolledInCurricularCourse));
-                    infoSiteEvaluationStatistics.setEvaluated(Integer.valueOf(evaluated));
-                    infoSiteEvaluationStatistics.setApproved(Integer.valueOf(approved));
-
-                    infoExecutionCourse.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
-                }
             }
 
             private InfoExecutionCourse getOccupancyLevels(Object arg0) {

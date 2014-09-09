@@ -20,7 +20,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import java.util.HashSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import pt.ist.fenixWebFramework.renderers.DataProvider;

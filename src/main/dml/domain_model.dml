@@ -2769,26 +2769,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 		LocalizedString graduateTitleSuffix;
 	}
 	
-    class gesdis.CourseHistoric  {
-        Integer approved;
-        String curricularYear;
-        Integer enrolled;
-        Integer evaluated;
-        Integer semester;
-    }
-
-    class gesdis.CourseReport  {
-        DateTime lastModificationDateDateTime;
-        String report;
-    }
-
-    class gesdis.StudentCourseReport  {
-        DateTime lastModificationDateDateTime;
-        String strongPoints;
-        String studentReport;
-        String weakPoints;
-    }
-
     class gratuity.masterDegree.SibsPaymentFile  {
         String filename;
     }
@@ -9218,13 +9198,6 @@ relation CurricularCourseExecutionCourse {
     }
 }
 
-relation CurricularCourseHistoric {
-    gesdis.CourseHistoric playsRole associatedCourseHistorics {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
-}
-
 relation CurricularCourseNotNeedToEnrollInCurricularCourse {
     degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollInCurricularCourses {
         multiplicity *;
@@ -9244,11 +9217,6 @@ relation CurricularCourseScopeCurricularSemester {
         multiplicity *;
     }
     CurricularSemester playsRole curricularSemester;
-}
-
-relation CurricularCourseStudentReport {
-    gesdis.StudentCourseReport playsRole studentCourseReport;
-    CurricularCourse playsRole curricularCourse;
 }
 
 relation CurricularCourseUniversity {
@@ -9850,11 +9818,6 @@ relation ExecutionCourseProfessorship {
     Professorship playsRole professorships {
         multiplicity *;
     }
-}
-
-relation ExecutionCourseReport {
-    gesdis.CourseReport playsRole courseReport;
-    ExecutionCourse playsRole executionCourse;
 }
 
 relation ExecutionCourseSummary {
@@ -11831,20 +11794,6 @@ relation RootDomainObjectCountry {
     }
 }
 
-relation RootDomainObjectCourseHistoric {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    gesdis.CourseHistoric playsRole courseHistorics {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCourseReport {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    gesdis.CourseReport playsRole courseReports {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectCreditLine {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     credits.CreditLine playsRole creditLines {
@@ -12853,13 +12802,6 @@ relation RootDomainObjectStudent {
 relation RootDomainObjectStudentNumber {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.StudentNumber playsRole studentNumbers {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectStudentCourseReport {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    gesdis.StudentCourseReport playsRole studentCourseReports {
         multiplicity *;
     }
 }
