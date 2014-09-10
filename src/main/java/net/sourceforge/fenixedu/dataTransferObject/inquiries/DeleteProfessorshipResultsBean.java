@@ -25,6 +25,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.core.exception.MissingObjectException;
 
@@ -37,6 +39,7 @@ public class DeleteProfessorshipResultsBean implements Serializable {
     private Long inquiryQuestionOID;
     private Long executionCourseOID;
 
+    @Atomic
     public boolean deleteResults() {
         Professorship professorship = null;
         try {
@@ -47,6 +50,7 @@ public class DeleteProfessorshipResultsBean implements Serializable {
             throw new DomainException("error.professorship.dontExist", moe.getCause());
         }
         setExecutionCourseOID(null);
+        boolean deletedResults = false;
         if (getShiftType() != null) {
             InquiryQuestion inquiryQuestion = null;
             if (getInquiryQuestionOID() != null) {
@@ -58,13 +62,23 @@ public class DeleteProfessorshipResultsBean implements Serializable {
                     throw new DomainException("error.inquiryQuestion.dontExist", moe.getCause());
                 }
             }
-            return professorship.deleteInquiryResults(getShiftType(), inquiryQuestion);
+            for (InquiryResult inquiryResult : InquiryResult.getInquiryResults(professorship, getShiftType())) {
+                if (inquiryQuestion == null || inquiryResult.getInquiryQuestion() == inquiryQuestion) {
+                    inquiryResult.delete();
+                    deletedResults = true;
+                }
+            }
         } else {
             setInquiryQuestionOID(null);
-            return professorship.deleteInquiryResults();
+            for (InquiryResult inquiryResult : professorship.getInquiryResultsSet()) {
+                inquiryResult.delete();
+                deletedResults = true;
+            }
         }
+        return deletedResults;
     }
 
+    @Atomic
     public boolean deleteAllTeachersResults() {
         ExecutionCourse executionCourse = null;
         try {
@@ -77,7 +91,14 @@ public class DeleteProfessorshipResultsBean implements Serializable {
         setProfessorshipOID(null);
         setShiftType(null);
         setInquiryQuestionOID(null);
-        return executionCourse.deleteAllTeachersResults();
+        boolean deletedResults = false;
+        for (InquiryResult inquiryResult : executionCourse.getInquiryResultsSet()) {
+            if (inquiryResult.getProfessorship() != null) {
+                inquiryResult.delete();
+                deletedResults = true;
+            }
+        }
+        return deletedResults;
     }
 
     public Long getProfessorshipOID() {

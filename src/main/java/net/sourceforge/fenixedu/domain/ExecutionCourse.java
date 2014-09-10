@@ -50,13 +50,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
-import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
@@ -142,7 +135,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             };
 
     public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;
-    public static final List<String> THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES = new ArrayList<String>();
 
     static {
         getRelationCurricularCourseExecutionCourse().addListener(new CurricularCourseExecutionCourseListener());
@@ -171,13 +163,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
 
         });
-
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deargf");
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dec");
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deft");
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deic");
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dmat");
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("cesidb");
     }
 
     public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester, EntryPhase entryPhase) {
@@ -186,7 +171,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         setRootDomainObject(Bennu.getInstance());
         addAssociatedEvaluations(new FinalEvaluation());
         setAvailableGradeSubmission(Boolean.TRUE);
-        setAvailableForInquiries(Boolean.TRUE);
 
         setNome(nome);
         setExecutionPeriod(executionSemester);
@@ -273,35 +257,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return true;
-    }
-
-    public boolean isMasterDegreeDFAOnly() {
-        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
-            if (!degreeType.equals(DegreeType.MASTER_DEGREE)
-                    && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
-                    && !degreeType.equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)
-                    && !THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.contains(curricularCourse.getDegreeCurricularPlan().getDegree()
-                            .getSigla().toLowerCase())) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean isBolonhaDegreeOrMasterDegreeOrIntegratedMasterDegree() {
-        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
-            if (degreeType.equals(DegreeType.BOLONHA_DEGREE) || degreeType.equals(DegreeType.BOLONHA_MASTER_DEGREE)
-                    || degreeType.equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
-                return true;
-            }
-            if (THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.contains(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla()
-                    .toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void createEvaluationMethod(final MultiLanguageString evaluationElements) {
@@ -1819,16 +1774,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     @Override
-    public Boolean getAvailableForInquiries() {
-        if (isBolonhaDegreeOrMasterDegreeOrIntegratedMasterDegree()) {
-            if (super.getAvailableForInquiries() != null) {
-                return super.getAvailableForInquiries();
-            }
-        }
-        return Boolean.FALSE;
-    }
-
-    @Override
     public Boolean getAvailableGradeSubmission() {
         if (super.getAvailableGradeSubmission() != null) {
             return super.getAvailableGradeSubmission();
@@ -2346,46 +2291,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return this.getProfessorship(AccessControl.getPerson());
     }
 
-    public List<InquiryResult> getInquiryResultsByExecutionDegreeAndForTeachers(ExecutionDegree executionDegree) {
-        List<InquiryResult> results = new ArrayList<InquiryResult>();
-        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-            if (executionDegree == inquiryResult.getExecutionDegree()
-                    || (inquiryResult.getExecutionDegree() == null && inquiryResult.getProfessorship() == null)) {
-                results.add(inquiryResult);
-            }
-        }
-        return results;
-    }
-
-    public Boolean canBeSubjectToQucAudit() {
-        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-            if (inquiryResult.getExecutionDegree() != null && InquiryResultType.AUDIT.equals(inquiryResult.getResultType())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public List<InquiryResult> getInquiryResultsByExecutionDegree(ExecutionDegree executionDegree) {
-        List<InquiryResult> results = new ArrayList<InquiryResult>();
-        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-            if (executionDegree == inquiryResult.getExecutionDegree()) {
-                results.add(inquiryResult);
-            }
-        }
-        return results;
-    }
-
-    public boolean hasNotRelevantDataFor(ExecutionDegree executionDegree) {
-        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-            if (executionDegree == inquiryResult.getExecutionDegree() && inquiryResult.getInquiryQuestion() == null
-                    && !inquiryResult.getResultClassification().isRelevantResult()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean hasAnyEnrolment(ExecutionDegree executionDegree) {
         for (Attends attend : getAttendsSet()) {
             if (attend.getEnrolment() != null) {
@@ -2403,42 +2308,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
 
-    public ResultClassification getForAudit(ExecutionDegree executionDegree) {
-        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-            if (inquiryResult.getExecutionDegree() == executionDegree
-                    && InquiryResultType.AUDIT.equals(inquiryResult.getResultType())) {
-                return inquiryResult.getResultClassification();
-            }
-        }
-        return null;
-    }
-
-    public InquiryGlobalComment getInquiryGlobalComment(ExecutionDegree executionDegree) {
-        for (InquiryGlobalComment globalComment : getInquiryGlobalCommentsSet()) {
-            if (globalComment.getExecutionDegree() == executionDegree) {
-                return globalComment;
-            }
-        }
-        return null;
-    }
-
-    public boolean hasQucGlobalCommentsMadeBy(Person person, ExecutionDegree executionDegree, ResultPersonCategory personCategory) {
-        InquiryGlobalComment inquiryGlobalComment = getInquiryGlobalComment(executionDegree);
-        if (inquiryGlobalComment != null) {
-            for (InquiryResultComment resultComment : inquiryGlobalComment.getInquiryResultCommentsSet()) {
-                if (resultComment.getPerson() == person && personCategory.equals(resultComment.getPersonCategory())
-                        && !StringUtils.isEmpty(resultComment.getComment())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean isAvailableForInquiry() {
-        return getAvailableForInquiries() && hasEnrolmentsInAnyCurricularCourse() && !isMasterDegreeDFAOnly();
-    }
-
     public boolean hasEnrolmentsInAnyCurricularCourse() {
         for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
             if (curricularCourse.hasEnrolmentForPeriod(getExecutionPeriod())) {
@@ -2452,47 +2321,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return false;
-    }
-
-    public boolean getHasExecutionCourseAudit() {
-        return getExecutionCourseAudit() != null;
-    }
-
-    @Atomic
-    public Boolean deleteInquiryResults() {
-        boolean deletedResults = false;
-        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-            if (inquiryResult.getProfessorship() == null) { // delete only the direct EC results
-                inquiryResult.delete();
-                deletedResults = true;
-            }
-        }
-        return deletedResults;
-    }
-
-    @Atomic
-    public Boolean deleteInquiryResults(ExecutionDegree executionDegree, InquiryQuestion inquiryQuestion) {
-        boolean deletedResults = false;
-        for (InquiryResult inquiryResult : getInquiryResultsByExecutionDegree(executionDegree)) {
-            if ((inquiryQuestion == null || inquiryResult.getInquiryQuestion() == inquiryQuestion)
-                    && inquiryResult.getProfessorship() == null) { // delete only the direct EC results
-                inquiryResult.delete();
-                deletedResults = true;
-            }
-        }
-        return deletedResults;
-    }
-
-    @Atomic
-    public Boolean deleteAllTeachersResults() {
-        boolean deletedResults = false;
-        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-            if (inquiryResult.getProfessorship() != null) {
-                inquiryResult.delete();
-                deletedResults = true;
-            }
-        }
-        return deletedResults;
     }
 
     public int getEnrolmentCount() {

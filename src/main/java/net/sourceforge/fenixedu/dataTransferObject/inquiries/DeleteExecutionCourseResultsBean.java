@@ -24,6 +24,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.core.exception.MissingObjectException;
 
@@ -35,6 +37,7 @@ public class DeleteExecutionCourseResultsBean implements Serializable {
     private Long executionDegreeOID;
     private Long inquiryQuestionOID;
 
+    @Atomic
     public boolean deleteResults() {
         ExecutionCourse executionCourse = null;
         try {
@@ -44,6 +47,7 @@ public class DeleteExecutionCourseResultsBean implements Serializable {
         } catch (MissingObjectException moe) {
             throw new DomainException("error.executionCourse.dontExist", moe.getCause());
         }
+        boolean deletedResults = false;
         if (getExecutionDegreeOID() != null) {
             ExecutionDegree executionDegree = null;
             try {
@@ -63,11 +67,25 @@ public class DeleteExecutionCourseResultsBean implements Serializable {
                     throw new DomainException("error.inquiryQuestion.dontExist", moe.getCause());
                 }
             }
-            return executionCourse.deleteInquiryResults(executionDegree, inquiryQuestion);
+            for (InquiryResult inquiryResult : executionCourse.getInquiryResultsSet()) {
+                if (executionDegree == inquiryResult.getExecutionDegree()) {
+                    if ((inquiryQuestion == null || inquiryResult.getInquiryQuestion() == inquiryQuestion)
+                            && inquiryResult.getProfessorship() == null) { // delete only the direct EC results
+                        inquiryResult.delete();
+                        deletedResults = true;
+                    }
+                }
+            }
         } else {
             setInquiryQuestionOID(null);
-            return executionCourse.deleteInquiryResults();
+            for (InquiryResult inquiryResult : executionCourse.getInquiryResultsSet()) {
+                if (inquiryResult.getProfessorship() == null) { // delete only the direct EC results
+                    inquiryResult.delete();
+                    deletedResults = true;
+                }
+            }
         }
+        return deletedResults;
     }
 
     public void setExecutionCourseOID(Long executionCourseOID) {

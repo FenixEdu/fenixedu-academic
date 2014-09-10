@@ -1240,7 +1240,6 @@ public class CreateTestData {
         final ExecutionCourse executionCourse =
                 new ExecutionCourse(curricularCourse.getName(), curricularCourse.getAcronym(), executionPeriod, null);
         executionCourse.addAssociatedCurricularCourses(curricularCourse);
-        executionCourse.setAvailableForInquiries(Boolean.TRUE);
 
         createProfessorship(executionCourse, Boolean.TRUE);
         createProfessorship(executionCourse, Boolean.FALSE);

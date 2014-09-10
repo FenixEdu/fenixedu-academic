@@ -107,8 +107,9 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
                     ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate.getRegistration()
                             .getStudentCurricularPlan(executionPeriod).getDegreeCurricularPlan(),
                             executionPeriod.getExecutionYear());
+            final ExecutionSemester executionSemester = executionPeriod;
             Set<ExecutionCourse> executionCoursesToInquiries =
-                    yearDelegate.getExecutionCoursesToInquiries(executionPeriod, executionDegree);
+                    DelegateInquiryTemplate.getExecutionCoursesToInquiries(yearDelegate, executionSemester, executionDegree);
 
             List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
             for (ExecutionCourse executionCourse : executionCoursesToInquiries) {
@@ -133,7 +134,7 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
         ExecutionDegree executionDegree =
                 FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
 
-        List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
+        List<InquiryResult> results = InquiryResult.getInquiryResultsByExecutionDegreeAndForTeachers(executionCourse, executionDegree);
         DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
         InquiryDelegateAnswer inquiryDelegateAnswer = null;
         for (InquiryDelegateAnswer delegateAnswer : yearDelegate.getInquiryDelegateAnswersSet()) {
@@ -146,7 +147,7 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
                 new DelegateInquiryBean(executionCourse, executionDegree, delegateInquiryTemplate, results, yearDelegate,
                         inquiryDelegateAnswer);
 
-        request.setAttribute("hasNotRelevantData", executionCourse.hasNotRelevantDataFor(executionDegree));
+        request.setAttribute("hasNotRelevantData", InquiryResult.hasNotRelevantDataFor(executionCourse, executionDegree));
         request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
         request.setAttribute("delegateInquiryBean", delegateInquiryBean);
 

@@ -26,9 +26,18 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlMenu;
@@ -67,7 +76,8 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 
         container.addChild(menu);
         ResultClassification forAudit =
-                courseResumeResult.getExecutionCourse().getForAudit(courseResumeResult.getExecutionDegree());
+                ResultClassification
+                        .getForAudit(courseResumeResult.getExecutionCourse(), courseResumeResult.getExecutionDegree());
         createCommentLink(courseResumeResult, container, forAudit);
 
         linksCell.setBody(container);
@@ -81,7 +91,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
         String commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.comment");
         if (courseResumeResult.isShowAllComments() || !courseResumeResult.isAllowComment()) {
             commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewResults");
-        } else if (courseResumeResult.getExecutionCourse().hasQucGlobalCommentsMadeBy(courseResumeResult.getPerson(),
+        } else if (hasQucGlobalCommentsMadeBy(courseResumeResult.getExecutionCourse(), courseResumeResult.getPerson(),
                 courseResumeResult.getExecutionDegree(), courseResumeResult.getPersonCategory())) {
             commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
         }
@@ -111,6 +121,21 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
                 }
             }
         }
+    }
+
+    private boolean hasQucGlobalCommentsMadeBy(ExecutionCourse executionCourse, Person person, ExecutionDegree executionDegree,
+            ResultPersonCategory personCategory) {
+        InquiryGlobalComment inquiryGlobalComment =
+                InquiryGlobalComment.getInquiryGlobalComment(executionCourse, executionDegree);
+        if (inquiryGlobalComment != null) {
+            for (InquiryResultComment resultComment : inquiryGlobalComment.getInquiryResultCommentsSet()) {
+                if (resultComment.getPerson() == person && personCategory.equals(resultComment.getPersonCategory())
+                        && !StringUtils.isEmpty(resultComment.getComment())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void createResultsGroup(CurricularCourseResumeResult courseResumeResult, HtmlMenu menu) {

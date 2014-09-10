@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -1275,15 +1274,4 @@ public class Teacher extends Teacher_Base {
         }
         return false;
     }
-
-    public List<ExecutionCourseAudit> getExecutionCourseAudits(ExecutionSemester executionSemester) {
-        List<ExecutionCourseAudit> result = new ArrayList<ExecutionCourseAudit>();
-        for (ExecutionCourseAudit executionCourseAudit : getExecutionCourseAuditsSet()) {
-            if (executionCourseAudit.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-                result.add(executionCourseAudit);
-            }
-        }
-        return result;
-    }
-
 }

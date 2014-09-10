@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.ResultsFileBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepInquiriesApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

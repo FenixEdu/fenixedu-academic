@@ -44,7 +44,6 @@ import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
@@ -916,15 +915,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public OccupationPeriod getPeriodLessons(final ExecutionSemester executionSemester) {
         return getOnePeriod(OccupationPeriodType.LESSONS, executionSemester.getSemester());
-    }
-
-    public InquiryCoordinatorAnswer getInquiryCoordinationAnswers(ExecutionSemester executionSemester) {
-        for (InquiryCoordinatorAnswer inquiryCoordinatorAnswer : getInquiryCoordinationAnswersSet()) {
-            if (inquiryCoordinatorAnswer.getExecutionSemester() == executionSemester) {
-                return inquiryCoordinatorAnswer;
-            }
-        }
-        return null;
     }
 
     /*

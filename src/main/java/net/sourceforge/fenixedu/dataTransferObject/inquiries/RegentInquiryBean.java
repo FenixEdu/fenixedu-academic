@@ -79,7 +79,7 @@ public class RegentInquiryBean implements Serializable {
                 CurricularCourseInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
         for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
             ArrayList<BlockResultsSummaryBean> blockResults = new ArrayList<BlockResultsSummaryBean>();
-            List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
+            List<InquiryResult> results = InquiryResult.getInquiryResultsByExecutionDegreeAndForTeachers(executionCourse, executionDegree);
             if (results != null && results.size() > 5) {
                 for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocksSet()) {
                     blockResults.add(new BlockResultsSummaryBean(inquiryBlock, results, person, ResultPersonCategory.REGENT));
@@ -97,7 +97,7 @@ public class RegentInquiryBean implements Serializable {
             Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResultsSet();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-                    List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
+                    List<InquiryResult> teacherShiftResults = InquiryResult.getInquiryResults(teacherProfessorship, shiftType);
                     if (!teacherShiftResults.isEmpty()) {
                         teachersResults.add(new TeacherShiftTypeResultsBean(teacherProfessorship, shiftType, teacherProfessorship
                                 .getExecutionCourse().getExecutionPeriod(), teacherShiftResults, person,

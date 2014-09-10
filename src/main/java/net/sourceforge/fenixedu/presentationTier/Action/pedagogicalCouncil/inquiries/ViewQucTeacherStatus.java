@@ -35,6 +35,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
@@ -86,9 +88,9 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
         for (Professorship professorship : Bennu.getInstance().getProfessorshipsSet()) {
             if (professorship.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
                 Person person = professorship.getPerson();
-                boolean isToAnswer = person.hasToAnswerTeacherInquiry(professorship);
+                boolean isToAnswer = TeacherInquiryTemplate.hasToAnswerTeacherInquiry(person, professorship);
                 if (isToAnswer) {
-                    boolean hasMandatoryCommentsToMake = professorship.hasMandatoryCommentsToMake();
+                    boolean hasMandatoryCommentsToMake = InquiryResultComment.hasMandatoryCommentsToMake(professorship);
                     boolean inquiryToAnswer =
                             professorship.getInquiryTeacherAnswer() == null
                                     || professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(
@@ -156,7 +158,7 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
             StringBuilder sb = new StringBuilder();
             StringBuilder sbAudit = new StringBuilder();
             for (ExecutionCourse executionCourse : teacherBean.getOrderedCoursesToComment()) {
-                if (executionCourse.canBeSubjectToQucAudit()) {
+                if (InquiryResult.canBeSubjectToQucAudit(executionCourse)) {
                     sbAudit.append(executionCourse.getName()).append(", ");
                 } else {
                     sb.append(executionCourse.getName()).append(", ");

@@ -49,9 +49,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
@@ -126,7 +123,6 @@ public class MergeExecutionCourses {
         registerMergeHandler(MergeExecutionCourses::copyGroupPropertiesExecutionCourse);
         registerMergeHandler(MergeExecutionCourses::removeEvaluations);
         registerMergeHandler(MergeExecutionCourses::copyForuns);
-        registerMergeHandler(MergeExecutionCourses::copyInquiries);
         registerMergeHandler(MergeExecutionCourses::copyDistributedTestStuff);
         registerMergeHandler(MergeExecutionCourses::copyVigilantGroups);
         registerMergeHandler(MergeExecutionCourses::copyExecutionCourseLogs);
@@ -183,18 +179,6 @@ public class MergeExecutionCourses {
         for (final DistributedTest distributedTest : distributedTests) {
             final TestScope testScope = distributedTest.getTestScope();
             testScope.setExecutionCourse(executionCourseTo);
-        }
-    }
-
-    private static void copyInquiries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
-        for (final StudentInquiryRegistry studentInquiryRegistry : executionCourseFrom.getStudentsInquiryRegistriesSet()) {
-            studentInquiryRegistry.setExecutionCourse(executionCourseTo);
-        }
-        for (final InquiryResult inquiryResult : executionCourseFrom.getInquiryResultsSet()) {
-            inquiryResult.setExecutionCourse(executionCourseTo);
-        }
-        for (final InquiryCourseAnswer inquiryCourseAnswer : executionCourseFrom.getInquiryCourseAnswersSet()) {
-            inquiryCourseAnswer.setExecutionCourse(executionCourseTo);
         }
     }
 

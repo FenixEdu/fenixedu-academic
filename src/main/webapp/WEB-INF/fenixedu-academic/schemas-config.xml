@@ -50,7 +50,6 @@
     <!ENTITY operator SYSTEM "/fenixedu-academic/schemas/operator-schemas.xml">
     <!ENTITY scientificCouncil SYSTEM "/fenixedu-academic/schemas/scientificCouncil-schemas.xml">
     <!ENTITY partyContacts SYSTEM "/fenixedu-academic/schemas/partyContacts-schemas.xml">
-    <!ENTITY inquirySchemas SYSTEM "/fenixedu-academic/schemas/inquiry-schemas.xml">
     <!ENTITY librarySchemas SYSTEM "/fenixedu-academic/schemas/library-schemas.xml">
     <!ENTITY bolonhaManagerSchemas SYSTEM "/fenixedu-academic/schemas/bolonhaManager-schemas.xml">
     <!ENTITY pedagogicalCouncilSchemas SYSTEM "/fenixedu-academic/schemas/pedagogicalCouncil-schemas.xml">
@@ -694,7 +693,6 @@
     &operator;
     &scientificCouncil;
     &partyContacts;
-    &inquirySchemas;
     &librarySchemas;
     &bolonhaManagerSchemas;
     &pedagogicalCouncilSchemas;

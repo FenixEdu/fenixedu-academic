@@ -36,7 +36,6 @@ public class Bundle {
     public static final String GLOBAL = "resources.GlobalResources";
     public static final String GROUP = "resources.GroupNameResources";
     public static final String HTML = "resources.HtmlaltResources";
-    public static final String INQUIRIES = "resources.InquiriesResources";
     public static final String MANAGER = "resources.ManagerResources";
     public static final String MESSAGING = "resources.MessagingResources";
     public static final String PEDAGOGICAL = "resources.PedagogicalCouncilResources";

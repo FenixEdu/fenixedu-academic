@@ -22,6 +22,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -498,6 +499,49 @@ public class InquiryResult extends InquiryResult_Base {
             this.shiftType = shiftType;
         }
 
+    }
+
+    public static List<InquiryResult> getInquiryResultsByExecutionDegreeAndForTeachers(ExecutionCourse executionCourse,
+            ExecutionDegree executionDegree) {
+        return executionCourse
+                .getInquiryResultsSet()
+                .stream()
+                .filter(r -> r.getExecutionDegree() == executionDegree
+                        || (r.getExecutionDegree() == null && r.getProfessorship() == null)).collect(Collectors.toList());
+    }
+
+    public static Boolean canBeSubjectToQucAudit(ExecutionCourse executionCourse) {
+        return executionCourse.getInquiryResultsSet().stream()
+                .anyMatch(r -> r.getExecutionDegree() != null && InquiryResultType.AUDIT.equals(r.getResultType()));
+    }
+
+    public static boolean hasNotRelevantDataFor(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
+        for (InquiryResult inquiryResult : executionCourse.getInquiryResultsSet()) {
+            if (executionDegree == inquiryResult.getExecutionDegree() && inquiryResult.getInquiryQuestion() == null
+                    && !inquiryResult.getResultClassification().isRelevantResult()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasResultsToImprove(Professorship professorship) {
+        return professorship
+                .getInquiryResultsSet()
+                .stream()
+                .anyMatch(
+                        r -> InquiryResultType.TEACHER_SHIFT_TYPE.equals(r.getResultType())
+                                && r.getResultClassification().isMandatoryComment());
+    }
+
+    public static List<InquiryResult> getInquiryResults(Professorship professorship, ShiftType shiftType) {
+        List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
+        for (InquiryResult inquiryResult : professorship.getInquiryResultsSet()) {
+            if (inquiryResult.getShiftType().equals(shiftType)) {
+                inquiryResults.add(inquiryResult);
+            }
+        }
+        return inquiryResults;
     }
 
 }

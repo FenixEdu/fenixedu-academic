@@ -38,11 +38,13 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentEnrollApp;
+import net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler;
 import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 
@@ -77,9 +79,7 @@ import pt.ist.fenixframework.FenixFramework;
                 type = ClassEnrollmentAuthorizationFilter.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan.class,
                 key = "error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan",
                 handler = FenixErrorExceptionHandler.class, scope = "request"),
-        @ExceptionHandling(type = ClassEnrollmentAuthorizationFilter.InquiriesNotAnswered.class,
-                key = "message.student.cannotEnroll.inquiriesNotAnswered", handler = FenixErrorExceptionHandler.class,
-                scope = "request"),
+        @ExceptionHandling(type = DomainException.class, handler = FenixDomainExceptionHandler.class, scope = "request"),
         @ExceptionHandling(
                 type = ClassEnrollmentAuthorizationFilter.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan.class,
                 key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
@@ -90,11 +90,6 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         final Student student = getUserView(request).getPerson().getStudent();
-
-        if (student.hasInquiriesToRespond()) {
-            addActionMessage(request, "message.student.cannotEnroll.shifts.inquiriesNotAnswered");
-            return mapping.findForward("shiftEnrollmentCannotProceed");
-        }
 
         final List<Registration> toEnrol = student.getRegistrationsToEnrolInShiftByStudent();
         if (toEnrol.size() == 1) {

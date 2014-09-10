@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryNotAnsweredJustification;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
@@ -96,7 +97,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
         final Student student = AccessControl.getPerson().getStudent();
         final Collection<StudentInquiryRegistry> coursesToAnswer =
-                student.retrieveAndCreateMissingInquiryRegistriesForPeriod(executionSemester);
+                StudentInquiryRegistry.retrieveAndCreateMissingInquiryRegistriesForPeriod(student, executionSemester);
 
         boolean isAnyInquiryToAnswer = false;
         final List<CurricularCourseInquiriesRegistryDTO> courses = new ArrayList<CurricularCourseInquiriesRegistryDTO>();
@@ -107,7 +108,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
             }
         }
 
-        if (courses.isEmpty() || (!isAnyInquiryToAnswer && student.isWeeklySpentHoursSubmittedForOpenInquiry())) {
+        if (courses.isEmpty() || (!isAnyInquiryToAnswer && StudentInquiryExecutionPeriod.isWeeklySpentHoursSubmittedForOpenInquiry(student))) {
             return actionMapping.findForward("inquiriesClosed");
         }
 
@@ -131,7 +132,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
         Student student = AccessControl.getPerson().getStudent();
         try {
-            student.setSpentTimeInPeriodForInquiry(courses, weeklySpentHours.getInteger(), executionSemester);
+            StudentInquiryRegistry.setSpentTimeInPeriodForInquiry(student, courses, weeklySpentHours.getInteger(), executionSemester);
         } catch (DomainException e) {
             addActionMessage(request, e.getKey());
         }

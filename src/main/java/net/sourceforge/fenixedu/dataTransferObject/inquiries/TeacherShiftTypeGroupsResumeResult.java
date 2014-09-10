@@ -58,7 +58,7 @@ public class TeacherShiftTypeGroupsResumeResult extends BlockResumeResult implem
     @Override
     protected void initResultBlocks() {
         setResultBlocks(new TreeSet<InquiryResult>(new BeanComparator("inquiryQuestion.questionOrder")));
-        for (InquiryResult inquiryResult : getProfessorship().getInquiryResults(getShiftType())) {
+        for (InquiryResult inquiryResult : InquiryResult.getInquiryResults(getProfessorship(), getShiftType())) {
             if (InquiryConnectionType.GROUP.equals(inquiryResult.getConnectionType())
                     && !inquiryResult.getInquiryQuestion().getAssociatedBlocksSet().isEmpty()) { //change to TEACHER_SHIFT_EVALUATION
                 getResultBlocks().add(inquiryResult);
@@ -83,7 +83,7 @@ public class TeacherShiftTypeGroupsResumeResult extends BlockResumeResult implem
     @Override
     protected List<InquiryResult> getInquiryResultsByQuestion(InquiryQuestion inquiryQuestion) {
         List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
-        for (InquiryResult inquiryResult : getProfessorship().getInquiryResults(getShiftType())) {
+        for (InquiryResult inquiryResult : InquiryResult.getInquiryResults(getProfessorship(), getShiftType())) {
             if (inquiryResult.getInquiryQuestion() == inquiryQuestion && inquiryResult.getResultClassification() != null) {
                 inquiryResults.add(inquiryResult);
             }

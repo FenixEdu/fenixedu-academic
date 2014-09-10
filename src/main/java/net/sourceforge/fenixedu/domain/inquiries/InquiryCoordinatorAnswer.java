@@ -18,6 +18,7 @@
  */
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
@@ -27,6 +28,26 @@ public class InquiryCoordinatorAnswer extends InquiryCoordinatorAnswer_Base {
         super();
         setExecutionDegree(executionDegree);
         setExecutionSemester(executionSemester);
+    }
+
+    public static InquiryCoordinatorAnswer getInquiryCoordinationAnswers(ExecutionDegree executionDegree,
+            ExecutionSemester executionSemester) {
+        for (InquiryCoordinatorAnswer inquiryCoordinatorAnswer : executionDegree.getInquiryCoordinationAnswersSet()) {
+            if (inquiryCoordinatorAnswer.getExecutionSemester() == executionSemester) {
+                return inquiryCoordinatorAnswer;
+            }
+        }
+        return null;
+    }
+
+    public static InquiryCoordinatorAnswer getInquiryCoordinatorAnswer(Coordinator coordinator,
+            ExecutionSemester executionSemester) {
+        for (InquiryCoordinatorAnswer inquiryCoordinatorAnswer : coordinator.getInquiryCoordinatorAnswersSet()) {
+            if (inquiryCoordinatorAnswer.getExecutionSemester() == executionSemester) {
+                return inquiryCoordinatorAnswer;
+            }
+        }
+        return null;
     }
 
 }

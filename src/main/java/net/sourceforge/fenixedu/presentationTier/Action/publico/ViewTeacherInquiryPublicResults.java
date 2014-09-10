@@ -61,7 +61,7 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
         Professorship professorship = FenixFramework.getDomainObject(request.getParameter("professorshipOID"));
         ShiftType shiftType = ShiftType.valueOf(request.getParameter("shiftType"));
 
-        List<InquiryResult> inquiryResults = professorship.getInquiryResults(shiftType);
+        List<InquiryResult> inquiryResults = InquiryResult.getInquiryResults(professorship, shiftType);
 
         ExecutionSemester executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
         ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);

@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
@@ -81,8 +82,7 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
         } else if (!inquiryTemplate.isOpen()) {
             request.setAttribute("readMode", "readMode");
         }
-
-        if (!professorship.getPerson().hasToAnswerRegentInquiry(professorship)) {
+        if (!RegentInquiryTemplate.hasToAnswerRegentInquiry(professorship)) {
             return forward(request, "/teacher/inquiries/regentInquiryUnavailable.jsp");
         }
 
@@ -106,7 +106,7 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
             Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResultsSet();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-                    List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
+                    List<InquiryResult> teacherShiftResults = InquiryResult.getInquiryResults(teacherProfessorship, shiftType);
                     if (!teacherShiftResults.isEmpty()) {
                         TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult =
                                 new TeacherShiftTypeGroupsResumeResult(teacherProfessorship, shiftType,
@@ -129,7 +129,7 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
 
         InquiryResponseState finalState = getFilledState(executionCourse, professorship, inquiryTemplate);
         InquiryResponseState teacherFilledState = null;
-        if (professorship.getPerson().hasToAnswerTeacherInquiry(professorship)) {
+        if (TeacherInquiryTemplate.hasToAnswerTeacherInquiry(professorship.getPerson(), professorship)) {
             teacherFilledState =
                     TeachingInquiryDA.getFilledState(professorship,
                             TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod()),
@@ -163,10 +163,13 @@ public class RegentInquiryDA extends ExecutionCourseBaseAction {
         InquiryResponseState finalState = InquiryResponseState.COMPLETE;
         if (professorship.getInquiryRegentAnswer() == null) {
             finalState = InquiryResponseState.EMPTY;
-        } else if (professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)
-                || professorship.getPerson().hasMandatoryCommentsToMakeAsRegentInUC(executionCourse)
-                || professorship.hasMandatoryCommentsToMakeAsResponsible()) {
-            finalState = InquiryResponseState.INCOMPLETE;
+        } else {
+            final ExecutionCourse executionCourse1 = executionCourse;
+            if (professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)
+                    || InquiryResultComment.hasMandatoryCommentsToMakeAsRegentInUC(professorship.getPerson(), executionCourse1)
+                    || InquiryResultComment.hasMandatoryCommentsToMakeAsResponsible(professorship)) {
+                finalState = InquiryResponseState.INCOMPLETE;
+            }
         }
         return finalState;
     }

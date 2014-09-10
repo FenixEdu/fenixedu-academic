@@ -18,10 +18,18 @@
  */
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
@@ -50,5 +58,35 @@ public class RegentInquiryTemplate extends RegentInquiryTemplate_Base {
             }
         }
         return null;
+    }
+
+    public static Collection<ExecutionCourse> getExecutionCoursesWithRegentInquiriesToAnswer(Person person) {
+        final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
+        final List<ExecutionCourse> allExecutionCourses = new ArrayList<ExecutionCourse>();
+        final RegentInquiryTemplate currentTemplate = getCurrentTemplate();
+        if (currentTemplate != null) {
+            for (final Professorship professorship : person.getProfessorships(currentTemplate.getExecutionPeriod())) {
+                final boolean isToAnswer = hasToAnswerRegentInquiry(professorship);
+                if (isToAnswer) {
+                    allExecutionCourses.add(professorship.getExecutionCourse());
+                    if (professorship.getInquiryRegentAnswer() == null
+                            || professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(currentTemplate)
+                            || InquiryResultComment.hasMandatoryCommentsToMakeAsResponsible(professorship)) {
+                        result.add(professorship.getExecutionCourse());
+                    }
+                }
+            }
+            final Collection<ExecutionCourse> disjunctionEC = CollectionUtils.disjunction(result, allExecutionCourses);
+            for (final ExecutionCourse executionCourse : disjunctionEC) {
+                if (InquiryResultComment.hasMandatoryCommentsToMakeAsRegentInUC(person, executionCourse)) {
+                    result.add(executionCourse);
+                }
+            }
+        }
+        return result;
+    }
+
+    public static boolean hasToAnswerRegentInquiry(Professorship professorship) {
+        return professorship.getResponsibleFor() && InquiriesRoot.isAvailableForInquiry(professorship.getExecutionCourse());
     }
 }

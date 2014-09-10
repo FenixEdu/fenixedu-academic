@@ -33,11 +33,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -164,19 +159,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         }
         if (!getTeacherMasterDegreeServicesSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyTeacherMasterDegreeServices"));
-        }
-        if (!getInquiryStudentTeacherAnswersSet().isEmpty()) {
-            blockers.add(BundleUtil
-                    .getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyInquiryStudentTeacherAnswers"));
-        }
-        if (!getInquiryResultsSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyInquiryResults"));
-        }
-        if (getInquiryTeacherAnswer() != null) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasInquiryTeacherAnswer"));
-        }
-        if (getInquiryRegentAnswer() != null) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasInquiryRegentAnswer"));
         }
         if (!getDegreeProjectTutorialServicesSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION,
@@ -335,103 +317,4 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         }
         return StringUtils.join(degreeSiglas, ", ");
     }
-
-    public List<InquiryResult> getInquiryResults(ShiftType shiftType) {
-        List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
-        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-            if (inquiryResult.getShiftType().equals(shiftType)) {
-                inquiryResults.add(inquiryResult);
-            }
-        }
-        return inquiryResults;
-    }
-
-    public boolean hasMandatoryCommentsToMake() {
-        Collection<InquiryResult> inquiryResults = getInquiryResultsSet();
-        for (InquiryResult inquiryResult : inquiryResults) {
-            if (inquiryResult.getResultClassification() != null) {
-                if (inquiryResult.getResultClassification().isMandatoryComment()
-                        && !inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())) {
-                    InquiryResultComment inquiryResultComment =
-                            inquiryResult.getInquiryResultComment(getPerson(), ResultPersonCategory.TEACHER);
-                    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean hasMandatoryCommentsToMakeAsResponsible() {
-        for (Professorship professorship : getExecutionCourse().getProfessorshipsSet()) {
-            Collection<InquiryResult> inquiryResults = professorship.getInquiryResultsSet();
-            for (InquiryResult inquiryResult : inquiryResults) {
-                if (inquiryResult.getResultClassification() != null) {
-                    if (inquiryResult.getResultClassification().isMandatoryComment()
-                            && !inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())) {
-                        InquiryResultComment inquiryResultComment =
-                                inquiryResult.getInquiryResultComment(getPerson(), ResultPersonCategory.REGENT);
-                        if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
-                            inquiryResultComment =
-                                    inquiryResult.getInquiryResultComment(getPerson(), ResultPersonCategory.TEACHER);
-                            if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean hasResultsToImprove() {
-        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-            if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())
-                    && inquiryResult.getResultClassification().isMandatoryComment()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Atomic
-    public Boolean deleteInquiryResults() {
-        boolean deletedResults = false;
-        for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-            inquiryResult.delete();
-            deletedResults = true;
-        }
-        return deletedResults;
-    }
-
-    @Atomic
-    public Boolean deleteInquiryResults(ShiftType shiftType, InquiryQuestion inquiryQuestion) {
-        boolean deletedResults = false;
-        for (InquiryResult inquiryResult : getInquiryResults(shiftType)) {
-            if (inquiryQuestion == null || inquiryResult.getInquiryQuestion() == inquiryQuestion) {
-                inquiryResult.delete();
-                deletedResults = true;
-            }
-        }
-        return deletedResults;
-    }
-
-    public int getDegreeTeachingServiceLessonRows() {
-        int lessonNumber = 0;
-        for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-            int associatedLessonsCount = degreeTeachingService.getShift().getAssociatedLessonsSet().size();
-            if (associatedLessonsCount == 0) {
-                lessonNumber += 1;
-            }
-            lessonNumber += associatedLessonsCount;
-        }
-        if (lessonNumber == 0) {
-            lessonNumber += 1;
-        }
-        lessonNumber += getSupportLessonsSet().size();
-        return lessonNumber;
-    }
-
 }

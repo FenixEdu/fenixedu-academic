@@ -91,4 +91,23 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
         }
     }
 
+    public static InquiryTemplate getInquiryTemplate(ExecutionSemester executionSemester) {
+        return InquiryTemplate.getInquiryTemplateByTypeAndExecutionSemester(executionSemester, InquiryResponsePeriodType.STUDENT);
+    }
+
+    public static InquiryTemplate getTeachingInquiryTemplate(ExecutionSemester executionSemester) {
+        return InquiryTemplate
+                .getInquiryTemplateByTypeAndExecutionSemester(executionSemester, InquiryResponsePeriodType.TEACHING);
+    }
+
+    public static InquiryTemplate getDelegateInquiryTemplate(ExecutionSemester executionSemester) {
+        return InquiryTemplate
+                .getInquiryTemplateByTypeAndExecutionSemester(executionSemester, InquiryResponsePeriodType.DELEGATE);
+    }
+
+    public static InquiryTemplate getCoordinatorInquiryTemplate(ExecutionSemester executionSemester) {
+        return InquiryTemplate.getInquiryTemplateByTypeAndExecutionSemester(executionSemester,
+                InquiryResponsePeriodType.COORDINATOR);
+    }
+
 }

@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -202,7 +201,7 @@ public abstract class BlockResumeResult implements Serializable {
     }
 
     public String getFirstHeaderName() {
-        return BundleUtil.getString(Bundle.INQUIRIES, getFirstHeaderKey());
+        return BundleUtil.getString("resources.InquiriesResources", getFirstHeaderKey());
     }
 
     public void setRegentViewHimself(boolean regentViewHimself) {

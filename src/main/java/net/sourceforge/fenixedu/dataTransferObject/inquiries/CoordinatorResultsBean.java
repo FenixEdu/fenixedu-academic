@@ -53,7 +53,7 @@ public class CoordinatorResultsBean extends GlobalCommentsResultsBean {
         CurricularCourseInquiryTemplate courseInquiryTemplate =
                 CurricularCourseInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
         setCurricularBlockResults(new ArrayList<BlockResultsSummaryBean>());
-        List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
+        List<InquiryResult> results = InquiryResult.getInquiryResultsByExecutionDegreeAndForTeachers(executionCourse, executionDegree);
         if (results != null && results.size() > 5) {
             for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocksSet()) {
                 getCurricularBlockResults().add(new BlockResultsSummaryBean(inquiryBlock, results, person, getPersonCategory()));
@@ -74,7 +74,7 @@ public class CoordinatorResultsBean extends GlobalCommentsResultsBean {
 
     @Override
     public InquiryGlobalComment getInquiryGlobalComment() {
-        return getExecutionCourse().getInquiryGlobalComment(getExecutionDegree());
+        return InquiryGlobalComment.getInquiryGlobalComment(getExecutionCourse(), getExecutionDegree());
     }
 
     public List<BlockResultsSummaryBean> getCurricularBlockResults() {

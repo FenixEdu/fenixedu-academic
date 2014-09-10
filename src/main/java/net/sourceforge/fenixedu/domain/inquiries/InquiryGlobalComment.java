@@ -55,4 +55,22 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
         super.deleteDomainObject();
     }
 
+    public static InquiryGlobalComment getInquiryGlobalComment(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
+        for (InquiryGlobalComment globalComment : executionCourse.getInquiryGlobalCommentsSet()) {
+            if (globalComment.getExecutionDegree() == executionDegree) {
+                return globalComment;
+            }
+        }
+        return null;
+    }
+
+    public static InquiryGlobalComment getInquiryGlobalComment(Person person, ExecutionSemester executionSemester) {
+        for (final InquiryGlobalComment globalComment : person.getInquiryGlobalCommentsSet()) {
+            if (globalComment.getExecutionSemester() == executionSemester) {
+                return globalComment;
+            }
+        }
+        return null;
+    }
+
 }

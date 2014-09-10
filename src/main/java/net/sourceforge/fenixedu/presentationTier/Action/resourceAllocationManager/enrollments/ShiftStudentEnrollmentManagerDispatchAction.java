@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.InquiriesNotAnswered;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadShiftsToEnroll;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.UnEnrollStudentFromShift;
@@ -40,11 +39,13 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ExecutionPeriodDA;
+import net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler;
 import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 
@@ -76,8 +77,7 @@ import pt.ist.fenixframework.FenixFramework;
         @ExceptionHandling(type = CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan.class,
                 key = "error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan",
                 handler = FenixErrorExceptionHandler.class, scope = "request"),
-        @ExceptionHandling(type = InquiriesNotAnswered.class, key = "message.student.cannotEnroll.inquiriesNotAnswered",
-                handler = FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(type = DomainException.class, handler = FenixDomainExceptionHandler.class, scope = "request"),
         @ExceptionHandling(type = OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan.class,
                 key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
                 handler = FenixErrorExceptionHandler.class, scope = "request") })
@@ -88,11 +88,6 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
 
         final Registration registration = getDomainObject(request, "registrationOID");
         final Student student = registration.getPerson().getStudent();
-
-        if (student.hasInquiriesToRespond()) {
-            addActionMessage(request, "message.student.cannotEnroll.shifts.inquiriesNotAnswered");
-            return mapping.findForward("shiftEnrollmentCannotProceed");
-        }
 
         final List<Registration> toEnrol = student.getRegistrationsToEnrolInShiftByStudent();
         if (toEnrol.size() == 1) {

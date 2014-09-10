@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -68,8 +67,6 @@ public class EtiReportFile extends EtiReportFile_Base {
         spreadsheet.setHeader("tipo Aluno");
         spreadsheet.setHeader("número inscricoes anteriores");
         spreadsheet.setHeader("executionCourseId");
-        spreadsheet.setHeader("disponível para inquérito");
-        spreadsheet.setHeader("OID execucao disciplina");
 
         for (final Degree degree : Degree.readNotEmptyDegrees()) {
             if (checkDegreeType(getDegreeType(), degree)) {
@@ -144,18 +141,6 @@ public class EtiReportFile extends EtiReportFile_Base {
                     attends = a;
                 }
             }
-        }
-        if (attends == null) {
-            row.setCell("");
-        } else {
-            final ExecutionCourse executionCourse = attends.getExecutionCourse();
-            row.setCell(executionCourse.getExternalId());
-            if (executionCourse.getAvailableForInquiries() != null && executionCourse.getAvailableForInquiries().booleanValue()) {
-                row.setCell("sim");
-            } else {
-                row.setCell("não");
-            }
-            row.setCell(String.valueOf(executionCourse.getOid()));
         }
     }
 

@@ -18,6 +18,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -43,7 +44,13 @@ public class QUCTeacherAuditorDA extends QUCAuditorDA {
     @Override
     protected List<ExecutionCourseAudit> getExecutionCoursesAudit(ExecutionSemester executionSemester) {
         Teacher teacher = AccessControl.getPerson().getTeacher();
-        return teacher.getExecutionCourseAudits(executionSemester);
+        List<ExecutionCourseAudit> result = new ArrayList<ExecutionCourseAudit>();
+        for (ExecutionCourseAudit executionCourseAudit : teacher.getExecutionCourseAuditsSet()) {
+            if (executionCourseAudit.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+                result.add(executionCourseAudit);
+            }
+        }
+        return result;
     }
 
     @Override

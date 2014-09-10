@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.GroupResultType;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoot;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
@@ -81,8 +82,9 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 
         DegreeCurricularPlan dcp = FenixFramework.getDomainObject(request.getParameter("degreeCurricularPlanOID"));
         ExecutionDegree executionDegree = dcp.getExecutionDegreeByAcademicInterval(executionPeriod.getAcademicInterval());
-        List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
-        boolean hasNotRelevantData = executionCourse.hasNotRelevantDataFor(executionDegree);
+        List<InquiryResult> results =
+                InquiryResult.getInquiryResultsByExecutionDegreeAndForTeachers(executionCourse, executionDegree);
+        boolean hasNotRelevantData = InquiryResult.hasNotRelevantDataFor(executionCourse, executionDegree);
 
         ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
         Collection<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocksSet();
@@ -93,7 +95,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
                 getGeneralResults(results, resultBlocks, GroupResultType.COURSE_ANSWERS);
         GroupResultsSummaryBean nonAnswersResultsSummaryBean =
                 getGeneralResults(results, resultBlocks, GroupResultType.COURSE_NON_ANSWERS);
-        if (executionCourse.getAvailableForInquiries()) {
+        if (InquiriesRoot.getAvailableForInquiries(executionCourse)) {
             Collections.sort(nonAnswersResultsSummaryBean.getQuestionsResults(), new BeanComparator("questionResult.value"));
             Collections.reverse(nonAnswersResultsSummaryBean.getQuestionsResults());
         }

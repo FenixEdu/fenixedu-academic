@@ -723,15 +723,6 @@
     </slot>
 </schema>
 
-<schema name="quc.results.log"
-		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorResultsBean" bundle="INQUIRIES_RESOURCES">
-	<slot name="comment" layout="longText" key="label.inquiry.comment">
-		<property name="columns" value="70"/>
-		<property name="rows" value="6"/>
-	</slot>
-	<setter signature="qucResultsLog()"/>
-</schema>
-
 <!--
 <schema name="coordinator.xviews.inar" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.Inar" bundle="COORDINATOR_RESOURCES">
 	<slot name="enrolled" key="label.enrolled">

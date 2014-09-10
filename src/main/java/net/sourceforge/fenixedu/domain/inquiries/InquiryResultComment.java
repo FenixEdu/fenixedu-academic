@@ -18,8 +18,13 @@
  */
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import net.sourceforge.fenixedu.domain.Person;
+import java.util.Collection;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
+
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class InquiryResultComment extends InquiryResultComment_Base {
@@ -52,6 +57,66 @@ public class InquiryResultComment extends InquiryResultComment_Base {
         setPerson(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    public static boolean hasMandatoryCommentsToMakeAsResponsible(Professorship professorship) {
+        for (Professorship sibling : professorship.getExecutionCourse().getProfessorshipsSet()) {
+            Collection<InquiryResult> inquiryResults = sibling.getInquiryResultsSet();
+            for (InquiryResult inquiryResult : inquiryResults) {
+                if (inquiryResult.getResultClassification() != null) {
+                    if (inquiryResult.getResultClassification().isMandatoryComment()
+                            && !inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())) {
+                        InquiryResultComment inquiryResultComment =
+                                inquiryResult.getInquiryResultComment(sibling.getPerson(), ResultPersonCategory.REGENT);
+                        if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+                            inquiryResultComment =
+                                    inquiryResult.getInquiryResultComment(sibling.getPerson(), ResultPersonCategory.TEACHER);
+                            if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasMandatoryCommentsToMake(Professorship professorship) {
+        Collection<InquiryResult> inquiryResults = professorship.getInquiryResultsSet();
+        for (InquiryResult inquiryResult : inquiryResults) {
+            if (inquiryResult.getResultClassification() != null) {
+                if (inquiryResult.getResultClassification().isMandatoryComment()
+                        && !inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())) {
+                    InquiryResultComment inquiryResultComment =
+                            inquiryResult.getInquiryResultComment(professorship.getPerson(), ResultPersonCategory.TEACHER);
+                    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasMandatoryCommentsToMakeAsRegentInUC(Person person, ExecutionCourse executionCourse) {
+        final Collection<InquiryResult> inquiryResults = executionCourse.getInquiryResultsSet();
+        for (final InquiryResult inquiryResult : inquiryResults) {
+            if (inquiryResult.getResultClassification() != null && inquiryResult.getProfessorship() == null) {
+                if (inquiryResult.getResultClassification().isMandatoryComment()
+                        && !inquiryResult.getInquiryQuestion().isResultQuestion(executionCourse.getExecutionPeriod())) {
+                    InquiryResultComment inquiryResultComment =
+                            inquiryResult.getInquiryResultComment(person, ResultPersonCategory.REGENT);
+                    if (inquiryResultComment == null) {
+                        inquiryResultComment = inquiryResult.getInquiryResultComment(person, ResultPersonCategory.TEACHER);
+                        if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }

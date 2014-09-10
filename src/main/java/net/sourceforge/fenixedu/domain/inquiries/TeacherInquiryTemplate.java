@@ -18,9 +18,19 @@
  */
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.NonRegularTeachingService;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -50,5 +60,74 @@ public class TeacherInquiryTemplate extends TeacherInquiryTemplate_Base {
             }
         }
         return null;
+    }
+
+    public static boolean hasToAnswerTeacherInquiry(Person person, Professorship professorship) {
+        if (!InquiriesRoot.isAvailableForInquiry(professorship.getExecutionCourse())) {
+            return false;
+        }
+        final Teacher teacher = person.getTeacher();
+        boolean mandatoryTeachingService = false;
+        if (teacher != null && teacher.isTeacherProfessorCategory(professorship.getExecutionCourse().getExecutionPeriod())) {
+            mandatoryTeachingService = true;
+        }
+
+        boolean isToAnswer = true;
+        if (mandatoryTeachingService) {
+            if (!professorship.getInquiryResultsSet().isEmpty()) {
+                return isToAnswer;
+            }
+
+            isToAnswer = false;
+            final Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
+            for (final DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServicesSet()) {
+                for (final ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
+                    Double percentage = shiftTypesPercentageMap.get(shiftType);
+                    if (percentage == null) {
+                        percentage = degreeTeachingService.getPercentage();
+                    } else {
+                        percentage += degreeTeachingService.getPercentage();
+                    }
+                    shiftTypesPercentageMap.put(shiftType, percentage);
+                }
+            }
+            for (final NonRegularTeachingService nonRegularTeachingService : professorship.getNonRegularTeachingServicesSet()) {
+                for (final ShiftType shiftType : nonRegularTeachingService.getShift().getTypes()) {
+                    Double percentage = shiftTypesPercentageMap.get(shiftType);
+                    if (percentage == null) {
+                        percentage = nonRegularTeachingService.getPercentage();
+                    } else {
+                        percentage += nonRegularTeachingService.getPercentage();
+                    }
+                    shiftTypesPercentageMap.put(shiftType, percentage);
+                }
+            }
+            for (final ShiftType shiftType : shiftTypesPercentageMap.keySet()) {
+                final Double percentage = shiftTypesPercentageMap.get(shiftType);
+                if (percentage >= 20) {
+                    isToAnswer = true;
+                    break;
+                }
+            }
+        }
+
+        return isToAnswer;
+    }
+
+    public static Collection<ExecutionCourse> getExecutionCoursesWithTeachingInquiriesToAnswer(Person person) {
+        final Collection<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        final TeacherInquiryTemplate currentTemplate = getCurrentTemplate();
+        if (currentTemplate != null) {
+            for (final Professorship professorship : person.getProfessorships(currentTemplate.getExecutionPeriod())) {
+                final boolean isToAnswer = hasToAnswerTeacherInquiry(person, professorship);
+                if (isToAnswer
+                        && (professorship.getInquiryTeacherAnswer() == null
+                                || professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(currentTemplate) || InquiryResultComment
+                                    .hasMandatoryCommentsToMake(professorship))) {
+                    result.add(professorship.getExecutionCourse());
+                }
+            }
+        }
+        return result;
     }
 }

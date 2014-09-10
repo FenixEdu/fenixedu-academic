@@ -36,4 +36,36 @@ public class StudentInquiryExecutionPeriod extends StudentInquiryExecutionPeriod
         setExecutionPeriod(executionSemester);
     }
 
+    public static StudentInquiryExecutionPeriod getStudentInquiryExecutionPeriod(Student student,
+            ExecutionSemester executionSemester) {
+        for (final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod : student
+                .getStudentsInquiriesExecutionPeriodsSet()) {
+            if (studentInquiryExecutionPeriod.getExecutionPeriod() == executionSemester) {
+                return studentInquiryExecutionPeriod;
+            }
+        }
+        return null;
+    }
+
+    public static boolean isWeeklySpentHoursSubmittedForOpenInquiry(Student student, ExecutionSemester executionSemester) {
+        for (final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod : student
+                .getStudentsInquiriesExecutionPeriodsSet()) {
+            if (studentInquiryExecutionPeriod.getExecutionPeriod() == executionSemester) {
+                return studentInquiryExecutionPeriod.getWeeklyHoursSpentInClassesSeason() != null;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isWeeklySpentHoursSubmittedForOpenInquiry(Student student) {
+        StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
+        return inquiryTemplate == null ? false : isWeeklySpentHoursSubmittedForOpenInquiry(student,
+                inquiryTemplate.getExecutionPeriod());
+    }
+
+    public static StudentInquiryExecutionPeriod getOpenStudentInquiryExecutionPeriod(Student student) {
+        StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
+        return inquiryTemplate == null ? null : getStudentInquiryExecutionPeriod(student, inquiryTemplate.getExecutionPeriod());
+    }
+
 }

@@ -36,11 +36,6 @@ public class GepApplication extends ForwardAction {
     public static class GepPortalApp {
     }
 
-    @StrutsApplication(bundle = "InquiriesResources", path = "inquiries", titleKey = "label.inquiries", hint = HINT,
-            accessGroup = ACCESS_GROUP)
-    public static class GepInquiriesApp {
-    }
-
     @StrutsApplication(bundle = BUNDLE, path = "alumni", titleKey = "label.alumni", hint = HINT, accessGroup = ACCESS_GROUP)
     public static class GepAlumniApp {
     }

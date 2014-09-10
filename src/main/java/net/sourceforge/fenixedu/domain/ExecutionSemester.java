@@ -37,10 +37,6 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Acad
 import net.sourceforge.fenixedu.domain.credits.CreditsPersonFunctionsSharedQueueJob;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
@@ -752,36 +748,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             }
         }
         return null;
-    }
-
-    public InquiryTemplate getInquiryTemplate(final InquiryResponsePeriodType type) {
-        return InquiryTemplate.getInquiryTemplateByTypeAndExecutionSemester(this, type);
-    }
-
-    public InquiryTemplate getInquiryTemplate() {
-        return getInquiryTemplate(InquiryResponsePeriodType.STUDENT);
-    }
-
-    public InquiryTemplate getTeachingInquiryTemplate() {
-        return getInquiryTemplate(InquiryResponsePeriodType.TEACHING);
-    }
-
-    public InquiryTemplate getDelegateInquiryTemplate() {
-        return getInquiryTemplate(InquiryResponsePeriodType.DELEGATE);
-    }
-
-    public InquiryTemplate getCoordinatorInquiryTemplate() {
-        return getInquiryTemplate(InquiryResponsePeriodType.COORDINATOR);
-    }
-
-    public List<InquiryResultComment> getAuditCommentsMadeOnTeacher(Person teacher) {
-        List<InquiryResultComment> resultComments = new ArrayList<InquiryResultComment>();
-        for (InquiryGlobalComment globalComment : getInquiryGlobalCommentsSet()) {
-            if (teacher == globalComment.getTeacher()) {
-                resultComments.addAll(globalComment.getInquiryResultCommentsSet());
-            }
-        }
-        return resultComments;
     }
 
 }

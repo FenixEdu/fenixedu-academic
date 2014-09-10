@@ -304,8 +304,7 @@ public class StudentInquiryBean implements Serializable {
             inquiryCourseAnswer.addEnrolledShifts(enrolledShift);
         }
         final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod =
-                getInquiryRegistry().getRegistration().getStudent()
-                        .getStudentInquiryExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
+                StudentInquiryExecutionPeriod.getStudentInquiryExecutionPeriod(getInquiryRegistry().getRegistration().getStudent(), getInquiryRegistry().getExecutionPeriod());
         inquiryCourseAnswer.setWeeklyHoursSpentInAutonomousWork(studentInquiryExecutionPeriod
                 .getWeeklyHoursSpentInClassesSeason());
         inquiryCourseAnswer.setWeeklyHoursSpentPercentage(getInquiryRegistry().getWeeklyHoursSpentPercentage());

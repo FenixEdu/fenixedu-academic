@@ -37,7 +37,7 @@ public class RespondToTeachingInquiriesQuestion extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         final TeacherInquiryTemplate currentTemplate = TeacherInquiryTemplate.getCurrentTemplate();
         request.setAttribute("inquiryTemplate", currentTemplate);
-        request.setAttribute("executionCourses", AccessControl.getPerson().getExecutionCoursesWithTeachingInquiriesToAnswer());
+        request.setAttribute("executionCourses", TeacherInquiryTemplate.getExecutionCoursesWithTeachingInquiriesToAnswer(AccessControl.getPerson()));
         return new ActionForward("/respondToTeachingInquiriesQuestion.jsp");
     }
 

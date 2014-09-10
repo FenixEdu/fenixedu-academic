@@ -34,8 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.CoordinatorApplication.CoordinatorManagementApp;
@@ -63,13 +61,6 @@ public class DegreeCoordinatorIndex extends FenixAction {
     public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) throws FenixActionException {
         setCoordinatorContext(request);
-        CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate.getCurrentTemplate();
-        if (coordinatorInquiryTemplate != null) {
-            final ExecutionDegree executionDegree = (ExecutionDegree) request.getAttribute(PresentationConstants.MASTER_DEGREE);
-            if (executionDegree != null && executionDegree.getCoordinatorByTeacher(AccessControl.getPerson()) != null) {
-                return new ActionForward("/viewInquiriesResults.do?method=prepare");
-            }
-        }
         return mapping.findForward("Success");
     }
 

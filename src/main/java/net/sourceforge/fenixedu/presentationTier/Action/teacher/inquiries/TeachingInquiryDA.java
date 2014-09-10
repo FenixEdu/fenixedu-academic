@@ -79,7 +79,7 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
             request.setAttribute("readMode", "readMode");
         }
 
-        if (!professorship.getPerson().hasToAnswerTeacherInquiry(professorship)) {
+        if (!TeacherInquiryTemplate.hasToAnswerTeacherInquiry(professorship.getPerson(), professorship)) {
             return forward(request, "/teacher/inquiries/inquiryUnavailable.jsp");
         }
 
@@ -129,7 +129,7 @@ public class TeachingInquiryDA extends ExecutionCourseBaseAction {
         }
         if (!professorshipResults.isEmpty()) {
             for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-                List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
+                List<InquiryResult> teacherShiftResults = InquiryResult.getInquiryResults(professorship, shiftType);
                 if (!teacherShiftResults.isEmpty()) {
                     TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult =
                             new TeacherShiftTypeGroupsResumeResult(professorship, shiftType, ResultPersonCategory.TEACHER,

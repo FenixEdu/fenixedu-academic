@@ -65,9 +65,9 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
         Coordinator coordinator = FenixFramework.getDomainObject(getFromRequest(request, "coordinatorOID").toString());
         InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
         if (coordinatorInquiryTemplate.getShared()) {
-            inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);
+            inquiryCoordinatorAnswer = InquiryCoordinatorAnswer.getInquiryCoordinationAnswers(executionDegree, executionSemester);
         } else {
-            inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+            inquiryCoordinatorAnswer = InquiryCoordinatorAnswer.getInquiryCoordinatorAnswer(coordinator, executionSemester);
             request.setAttribute("person", coordinator.getPerson());
         }
 

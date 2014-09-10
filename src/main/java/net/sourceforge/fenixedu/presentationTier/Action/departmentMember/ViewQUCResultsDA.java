@@ -45,7 +45,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoot;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
@@ -85,7 +87,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
                     CompetenceCourseResultsResume competenceCourseResultsResume = null;
                     for (ExecutionCourse executionCourse : competenceCourse
                             .getExecutionCoursesByExecutionPeriod(executionSemester)) {
-                        if (executionCourse.isAvailableForInquiry()) {
+                        if (InquiriesRoot.isAvailableForInquiry(executionCourse)) {
                             for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
                                 CurricularCourseResumeResult courseResumeResult =
                                         new CurricularCourseResumeResult(executionCourse, executionDegree,
@@ -93,7 +95,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
                                                 AccessControl.getPerson(), ResultPersonCategory.DEPARTMENT_PRESIDENT, false,
                                                 true, true, getShowAllComments(), true);
                                 if (courseResumeResult.getResultBlocks().size() > 1) {
-                                    if (executionCourse.getForAudit(executionDegree) != null) {
+                                    if (ResultClassification.getForAudit(executionCourse, executionDegree) != null) {
                                         if (competenceCourseResultsResume == null) {
                                             competenceCourseResultsResume = new CompetenceCourseResultsResume(competenceCourse);
                                             competenceCoursesToAudit.add(competenceCourseResultsResume);
@@ -137,7 +139,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
                     CompetenceCourseResultsResume competenceCourseResultsResume = null;
                     for (ExecutionCourse executionCourse : competenceCourse
                             .getExecutionCoursesByExecutionPeriod(executionSemester)) {
-                        if (executionCourse.isAvailableForInquiry()) {
+                        if (InquiriesRoot.isAvailableForInquiry(executionCourse)) {
                             for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
                                 CurricularCourseResumeResult courseResumeResult =
                                         new CurricularCourseResumeResult(executionCourse, executionDegree,
@@ -234,11 +236,11 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
             DepartmentTeacherResultsResume departmentTeacherResultsResume = null;
             for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
                 if (!professorship.getInquiryResultsSet().isEmpty()) {
-                    if (allTeachers || professorship.hasResultsToImprove()) {
+                    if (allTeachers || InquiryResult.hasResultsToImprove(professorship)) {
                         Collection<InquiryResult> professorshipResults = professorship.getInquiryResultsSet();
                         if (!professorshipResults.isEmpty()) {
                             for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-                                List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
+                                List<InquiryResult> teacherShiftResults = InquiryResult.getInquiryResults(professorship, shiftType);
                                 if (!teacherShiftResults.isEmpty()) {
                                     TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult =
                                             new TeacherShiftTypeGroupsResumeResult(professorship, shiftType,

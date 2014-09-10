@@ -101,7 +101,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
             Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResultsSet();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-                    List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
+                    List<InquiryResult> teacherShiftResults = InquiryResult.getInquiryResults(teacherProfessorship, shiftType);
                     if (!teacherShiftResults.isEmpty()) {
                         teachersResults.add(new TeacherShiftTypeResultsBean(teacherProfessorship, shiftType, teacherProfessorship
                                 .getExecutionCourse().getExecutionPeriod(), teacherShiftResults, person, getPersonCategory()));

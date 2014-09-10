@@ -75,7 +75,7 @@ public class TeacherInquiryBean implements Serializable {
         Collection<InquiryResult> professorshipResults = professorship.getInquiryResultsSet();
         if (!professorshipResults.isEmpty()) {
             for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-                List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
+                List<InquiryResult> teacherShiftResults = InquiryResult.getInquiryResults(professorship, shiftType);
                 if (!teacherShiftResults.isEmpty()) {
                     getTeachersResults().add(
                             new TeacherShiftTypeResultsBean(professorship, shiftType, professorship.getExecutionCourse()

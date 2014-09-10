@@ -19,8 +19,10 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
 import jvstm.cps.ConsistencyPredicate;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 public class InquiryStudentCycleAnswer extends InquiryStudentCycleAnswer_Base {
 
@@ -37,6 +39,38 @@ public class InquiryStudentCycleAnswer extends InquiryStudentCycleAnswer_Base {
     @ConsistencyPredicate
     public boolean checkHasRegistrationOrHasPhd() {
         return getRegistration() != null || getPhdProcess() != null;
+    }
+
+    public static boolean hasFirstTimeCycleInquiryToRespond(Student student) {
+        for (Registration registration : student.getActiveRegistrations()) {
+            if (!registration.getDegreeType().isEmpty() && registration.getInquiryStudentCycleAnswer() == null
+                    && registration.isFirstTime()) {
+                if (registration.getPhdIndividualProgramProcess() != null
+                        && registration.getPhdIndividualProgramProcess().getInquiryStudentCycleAnswer() != null) {
+                    return false;
+                }
+                return true;
+            }
+        }
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcessesSet()) {
+            if (phdProcess.getInquiryStudentCycleAnswer() == null && student.isValidAndActivePhdProcess(phdProcess)) {
+                if (phdProcess.getRegistration() != null) {
+                    if (phdProcess.getRegistration().getInquiryStudentCycleAnswer() != null) {
+                        return false;
+                    } else {
+                        if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
+                            return true;
+                        }
+                    }
+                } else {
+                    if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }

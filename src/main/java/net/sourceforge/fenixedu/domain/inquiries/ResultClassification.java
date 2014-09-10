@@ -18,6 +18,9 @@
  */
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+
 public enum ResultClassification {
 
     RED(true, true), YELLOW(true, true), GREEN(true, false), CYAN(true, false), BLUE(true, false), PURPLE(true, true), GREY(
@@ -45,5 +48,15 @@ public enum ResultClassification {
 
     public boolean isMandatoryComment() {
         return mandatoryComment;
+    }
+
+    public static ResultClassification getForAudit(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
+        for (InquiryResult inquiryResult : executionCourse.getInquiryResultsSet()) {
+            if (inquiryResult.getExecutionDegree() == executionDegree
+                    && InquiryResultType.AUDIT.equals(inquiryResult.getResultType())) {
+                return inquiryResult.getResultClassification();
+            }
+        }
+        return null;
     }
 }

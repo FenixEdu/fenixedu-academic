@@ -27,7 +27,10 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
+import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryStudentCycleAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -106,7 +109,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     private boolean isStudentAndHasFirstTimeCycleInquiryToRespond(User userView) {
         if (userView.getPerson().hasRole(RoleType.STUDENT)) {
             final Student student = userView.getPerson().getStudent();
-            return student != null && student.hasFirstTimeCycleInquiryToRespond();
+            return student != null && InquiryStudentCycleAnswer.hasFirstTimeCycleInquiryToRespond(student);
         }
         return false;
     }
@@ -213,7 +216,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         if (userView.getPerson().hasRole(RoleType.TEACHER)
                 || (TeacherInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson()
                         .getProfessorships(TeacherInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
-            return userView.getPerson().hasTeachingInquiriesToAnswer();
+            return !TeacherInquiryTemplate.getExecutionCoursesWithTeachingInquiriesToAnswer(userView.getPerson()).isEmpty();
         }
         return false;
     }
@@ -222,7 +225,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         if (userView.getPerson().hasRole(RoleType.TEACHER)
                 || (RegentInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson()
                         .getProfessorships(RegentInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
-            return userView.getPerson().hasRegentInquiriesToAnswer();
+            return !RegentInquiryTemplate.getExecutionCoursesWithRegentInquiriesToAnswer(userView.getPerson()).isEmpty();
         }
         return false;
     }
@@ -230,7 +233,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     private boolean isStudentAndHasQucInquiriesToRespond(final User userView) {
         if (userView.getPerson().hasRole(RoleType.STUDENT)) {
             final Student student = userView.getPerson().getStudent();
-            return student != null && student.hasInquiriesToRespond();
+            return student != null && StudentInquiryRegistry.hasInquiriesToRespond(student);
         }
         return false;
     }
@@ -238,7 +241,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     private boolean isDelegateAndHasInquiriesToRespond(final User userView) {
         if (userView.getPerson().hasRole(RoleType.DELEGATE)) {
             final Student student = userView.getPerson().getStudent();
-            return student != null && student.hasYearDelegateInquiriesToAnswer();
+            return student != null && DelegateInquiryTemplate.hasYearDelegateInquiriesToAnswer(student);
         }
         return false;
     }

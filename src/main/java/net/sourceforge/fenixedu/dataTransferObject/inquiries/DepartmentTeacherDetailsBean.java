@@ -59,7 +59,7 @@ public class DepartmentTeacherDetailsBean extends GlobalCommentsResultsBean {
             Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResultsSet();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-                    List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
+                    List<InquiryResult> teacherShiftResults = InquiryResult.getInquiryResults(teacherProfessorship, shiftType);
                     if (!teacherShiftResults.isEmpty()) {
                         teachersResults.add(new TeacherShiftTypeResultsBean(teacherProfessorship, shiftType, teacherProfessorship
                                 .getExecutionCourse().getExecutionPeriod(), teacherShiftResults, teacher, getPersonCategory()));
@@ -67,7 +67,7 @@ public class DepartmentTeacherDetailsBean extends GlobalCommentsResultsBean {
                 }
                 Collections.sort(teachersResults, new BeanComparator("professorship.person.name"));
                 Collections.sort(teachersResults, new BeanComparator("shiftType"));
-                if (teacherProfessorship.hasResultsToImprove()) {
+                if (InquiryResult.hasResultsToImprove(teacherProfessorship)) {
                     getTeachersResultsToImproveMap().put(teacherProfessorship, teachersResults);
                 } else {
                     getTeachersResultsMap().put(teacherProfessorship, teachersResults);
@@ -77,9 +77,14 @@ public class DepartmentTeacherDetailsBean extends GlobalCommentsResultsBean {
     }
 
     public List<InquiryResultComment> getAllTeacherComments() {
-        List<InquiryResultComment> commentsMade = getExecutionSemester().getAuditCommentsMadeOnTeacher(getTeacher());
-        Collections.sort(commentsMade, new BeanComparator("person.name"));
-        return commentsMade;
+        List<InquiryResultComment> resultComments = new ArrayList<InquiryResultComment>();
+        for (InquiryGlobalComment globalComment : getExecutionSemester().getInquiryGlobalCommentsSet()) {
+            if (getTeacher() == globalComment.getTeacher()) {
+                resultComments.addAll(globalComment.getInquiryResultCommentsSet());
+            }
+        }
+        Collections.sort(resultComments, new BeanComparator("person.name"));
+        return resultComments;
     }
 
     @Override
@@ -102,7 +107,7 @@ public class DepartmentTeacherDetailsBean extends GlobalCommentsResultsBean {
 
     @Override
     public InquiryGlobalComment getInquiryGlobalComment() {
-        return getTeacher().getInquiryGlobalComment(getExecutionSemester());
+        return InquiryGlobalComment.getInquiryGlobalComment(getTeacher(), getExecutionSemester());
     }
 
     public void setTeacher(Person teacher) {

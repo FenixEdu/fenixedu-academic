@@ -26,13 +26,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
@@ -86,12 +84,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
-import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
@@ -121,7 +113,6 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -2829,133 +2820,6 @@ public class Person extends Person_Base {
         return null;
     }
 
-    public boolean hasTeachingInquiriesToAnswer() {
-        return !getExecutionCoursesWithTeachingInquiriesToAnswer().isEmpty();
-    }
-
-    public Collection<ExecutionCourse> getExecutionCoursesWithTeachingInquiriesToAnswer() {
-        final Collection<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        final TeacherInquiryTemplate currentTemplate = TeacherInquiryTemplate.getCurrentTemplate();
-        if (currentTemplate != null) {
-            for (final Professorship professorship : getProfessorships(currentTemplate.getExecutionPeriod())) {
-                final boolean isToAnswer = hasToAnswerTeacherInquiry(professorship);
-                if (isToAnswer
-                        && (professorship.getInquiryTeacherAnswer() == null
-                                || professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(currentTemplate) || professorship
-                                    .hasMandatoryCommentsToMake())) {
-                    result.add(professorship.getExecutionCourse());
-                }
-            }
-        }
-        return result;
-    }
-
-    public boolean hasToAnswerTeacherInquiry(final Professorship professorship) {
-        if (!professorship.getExecutionCourse().isAvailableForInquiry()) {
-            return false;
-        }
-        final Teacher teacher = getTeacher();
-        boolean mandatoryTeachingService = false;
-        if (teacher != null && teacher.isTeacherProfessorCategory(professorship.getExecutionCourse().getExecutionPeriod())) {
-            mandatoryTeachingService = true;
-        }
-
-        boolean isToAnswer = true;
-        if (mandatoryTeachingService) {
-            if (!professorship.getInquiryResultsSet().isEmpty()) {
-                return isToAnswer;
-            }
-
-            isToAnswer = false;
-            final Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
-            for (final DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServicesSet()) {
-                for (final ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
-                    Double percentage = shiftTypesPercentageMap.get(shiftType);
-                    if (percentage == null) {
-                        percentage = degreeTeachingService.getPercentage();
-                    } else {
-                        percentage += degreeTeachingService.getPercentage();
-                    }
-                    shiftTypesPercentageMap.put(shiftType, percentage);
-                }
-            }
-            for (final NonRegularTeachingService nonRegularTeachingService : professorship.getNonRegularTeachingServicesSet()) {
-                for (final ShiftType shiftType : nonRegularTeachingService.getShift().getTypes()) {
-                    Double percentage = shiftTypesPercentageMap.get(shiftType);
-                    if (percentage == null) {
-                        percentage = nonRegularTeachingService.getPercentage();
-                    } else {
-                        percentage += nonRegularTeachingService.getPercentage();
-                    }
-                    shiftTypesPercentageMap.put(shiftType, percentage);
-                }
-            }
-            for (final ShiftType shiftType : shiftTypesPercentageMap.keySet()) {
-                final Double percentage = shiftTypesPercentageMap.get(shiftType);
-                if (percentage >= 20) {
-                    isToAnswer = true;
-                    break;
-                }
-            }
-        }
-
-        return isToAnswer;
-    }
-
-    public boolean hasRegentInquiriesToAnswer() {
-        return !getExecutionCoursesWithRegentInquiriesToAnswer().isEmpty();
-    }
-
-    public Collection<ExecutionCourse> getExecutionCoursesWithRegentInquiriesToAnswer() {
-        final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
-        final List<ExecutionCourse> allExecutionCourses = new ArrayList<ExecutionCourse>();
-        final RegentInquiryTemplate currentTemplate = RegentInquiryTemplate.getCurrentTemplate();
-        if (currentTemplate != null) {
-            for (final Professorship professorship : getProfessorships(currentTemplate.getExecutionPeriod())) {
-                final boolean isToAnswer = hasToAnswerRegentInquiry(professorship);
-                if (isToAnswer) {
-                    allExecutionCourses.add(professorship.getExecutionCourse());
-                    if (professorship.getInquiryRegentAnswer() == null
-                            || professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(currentTemplate)
-                            || professorship.hasMandatoryCommentsToMakeAsResponsible()) {
-                        result.add(professorship.getExecutionCourse());
-                    }
-                }
-            }
-            final Collection<ExecutionCourse> disjunctionEC = CollectionUtils.disjunction(result, allExecutionCourses);
-            for (final ExecutionCourse executionCourse : disjunctionEC) {
-                if (hasMandatoryCommentsToMakeAsRegentInUC(executionCourse)) {
-                    result.add(executionCourse);
-                }
-            }
-        }
-        return result;
-    }
-
-    public boolean hasMandatoryCommentsToMakeAsRegentInUC(final ExecutionCourse executionCourse) {
-        final Collection<InquiryResult> inquiryResults = executionCourse.getInquiryResultsSet();
-        for (final InquiryResult inquiryResult : inquiryResults) {
-            if (inquiryResult.getResultClassification() != null && inquiryResult.getProfessorship() == null) {
-                if (inquiryResult.getResultClassification().isMandatoryComment()
-                        && !inquiryResult.getInquiryQuestion().isResultQuestion(executionCourse.getExecutionPeriod())) {
-                    InquiryResultComment inquiryResultComment =
-                            inquiryResult.getInquiryResultComment(this, ResultPersonCategory.REGENT);
-                    if (inquiryResultComment == null) {
-                        inquiryResultComment = inquiryResult.getInquiryResultComment(this, ResultPersonCategory.TEACHER);
-                        if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean hasToAnswerRegentInquiry(final Professorship professorship) {
-        return professorship.getResponsibleFor() && professorship.getExecutionCourse().isAvailableForInquiry();
-    }
-
     public List<Professorship> getProfessorships(final ExecutionSemester executionSemester) {
         final List<Professorship> professorships = new ArrayList<Professorship>();
         for (final Professorship professorship : getProfessorshipsSet()) {
@@ -3146,29 +3010,6 @@ public class Person extends Person_Base {
                 familyName == null || familyName.isEmpty() ? getGivenNames() : getGivenNames() + " " + familyName;
 
         return fullName.equals(composedName);
-    }
-
-    public boolean hasQucGlobalCommentsMadeBy(final Person person, final ExecutionSemester executionSemester,
-            final ResultPersonCategory personCategory) {
-        final InquiryGlobalComment globalComment = getInquiryGlobalComment(executionSemester);
-        if (globalComment != null) {
-            for (final InquiryResultComment resultComment : globalComment.getInquiryResultCommentsSet()) {
-                if (resultComment.getPerson() == person && personCategory.equals(resultComment.getPersonCategory())
-                        && !StringUtils.isEmpty(resultComment.getComment())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public InquiryGlobalComment getInquiryGlobalComment(final ExecutionSemester executionSemester) {
-        for (final InquiryGlobalComment globalComment : getInquiryGlobalCommentsSet()) {
-            if (globalComment.getExecutionSemester() == executionSemester) {
-                return globalComment;
-            }
-        }
-        return null;
     }
 
     public static Person findByUsername(final String username) {

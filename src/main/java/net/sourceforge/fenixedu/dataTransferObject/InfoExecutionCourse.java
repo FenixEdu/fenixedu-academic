@@ -140,10 +140,6 @@ public class InfoExecutionCourse extends InfoObject {
         return getExecutionCourse().getEqualLoad();
     }
 
-    public Boolean getAvailableForInquiries() {
-        return getExecutionCourse().getAvailableForInquiries();
-    }
-
     public Boolean getAvailableGradeSubmission() {
         return getExecutionCourse().getAvailableGradeSubmission();
     }

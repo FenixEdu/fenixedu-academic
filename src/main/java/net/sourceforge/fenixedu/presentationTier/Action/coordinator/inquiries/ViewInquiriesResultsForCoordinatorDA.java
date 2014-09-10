@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
+import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
@@ -199,13 +200,13 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 
             InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
             if (coordinatorInquiryTemplate.getShared()) {
-                inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);
+                inquiryCoordinatorAnswer = InquiryCoordinatorAnswer.getInquiryCoordinationAnswers(executionDegree, executionSemester);
             } else {
                 // TODO since in the 1rst semester more than one could fill in
                 // the inquiry, it should show multiples links for each one, it
                 // is only showing one link
                 if (coordinator != null) {
-                    inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+                    inquiryCoordinatorAnswer = InquiryCoordinatorAnswer.getInquiryCoordinatorAnswer(coordinator, executionSemester);
                 }
             }
             if (inquiryCoordinatorAnswer == null
@@ -229,7 +230,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
                                 false, true, false, false, responsibleCoordinator);
                 if (courseResumeResult.getResultBlocks().size() > 1) {
 
-                    if (executionCourse.getForAudit(executionDegree) != null) {
+                    if (ResultClassification.getForAudit(executionCourse, executionDegree) != null) {
                         coursesToAudit = true;
                     }
                     CurricularCourse curricularCourse =
@@ -295,9 +296,9 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
         Coordinator coordinator = FenixFramework.getDomainObject(getFromRequest(request, "coordinatorOID").toString());
         InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
         if (coordinatorInquiryTemplate.getShared()) {
-            inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);
+            inquiryCoordinatorAnswer = InquiryCoordinatorAnswer.getInquiryCoordinationAnswers(executionDegree, executionSemester);
         } else {
-            inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+            inquiryCoordinatorAnswer = InquiryCoordinatorAnswer.getInquiryCoordinatorAnswer(coordinator, executionSemester);
         }
 
         CoordinatorInquiryBean coordinatorInquiryBean =

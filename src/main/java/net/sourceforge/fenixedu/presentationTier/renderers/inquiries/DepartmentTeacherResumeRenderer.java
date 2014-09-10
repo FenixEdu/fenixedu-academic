@@ -25,6 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherResultsResume;
@@ -33,7 +35,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
@@ -92,7 +97,7 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
         if (!departmentTeacherResultsResume.isShowAllComments()) {
             for (TeacherShiftTypeGroupsResumeResult groupsResumeResult : departmentTeacherResultsResume
                     .getTeacherShiftTypeGroupsResumeResults()) {
-                if (groupsResumeResult.getProfessorship().hasResultsToImprove()) {
+                if (InquiryResult.hasResultsToImprove(groupsResumeResult.getProfessorship())) {
                     showCommentLink = true;
                     break;
                 }
@@ -109,8 +114,7 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
         String fillInParameters =
                 buildFillInParameters(teacher, executionSemester, departmentTeacherResultsResume.isBackToResume());
         if (showCommentLink) {
-            if (teacher.hasQucGlobalCommentsMadeBy(departmentTeacherResultsResume.getPresident(), executionSemester,
-                    departmentTeacherResultsResume.getPersonCategory())) {
+            if (DepartmentTeacherResumeRenderer.hasQucGlobalCommentsMadeBy(teacher, departmentTeacherResultsResume.getPresident(), executionSemester, departmentTeacherResultsResume.getPersonCategory())) {
                 commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
             }
             HtmlLink commentLink = new HtmlLink();
@@ -233,5 +237,19 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
 
     @Override
     protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
+    }
+
+    public static boolean hasQucGlobalCommentsMadeBy(Person person, Person commenter, ExecutionSemester executionSemester,
+            ResultPersonCategory personCategory) {
+        final InquiryGlobalComment globalComment = InquiryGlobalComment.getInquiryGlobalComment(person, executionSemester);
+        if (globalComment != null) {
+            for (final InquiryResultComment resultComment : globalComment.getInquiryResultCommentsSet()) {
+                if (resultComment.getPerson() == commenter && personCategory.equals(resultComment.getPersonCategory())
+                        && !StringUtils.isEmpty(resultComment.getComment())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

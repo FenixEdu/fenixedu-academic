@@ -25,6 +25,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.enrollment;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.SortedSet;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -34,6 +35,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -53,6 +55,17 @@ public class ClassEnrollmentAuthorizationFilter {
 
     private static String comparableDateFormatString = "yyyyMMddHHmm";
 
+    private static ConcurrentLinkedQueue<ClassEnrollmentCondition> conditions = new ConcurrentLinkedQueue<>();
+
+    @FunctionalInterface
+    public static interface ClassEnrollmentCondition {
+        public void verify(Registration registration) throws DomainException;
+    }
+
+    public static void registerCondition(ClassEnrollmentCondition condition) {
+        conditions.add(condition);
+    }
+
     public void execute(Registration registration) throws FenixServiceException {
         Person person = Authenticate.getUser().getPerson();
 
@@ -65,8 +78,8 @@ public class ClassEnrollmentAuthorizationFilter {
             person = registration.getPerson();
         }
 
-        if (person.getStudent().hasInquiriesToRespond()) {
-            throw new InquiriesNotAnswered();
+        for (ClassEnrollmentCondition condition : conditions) {
+            condition.verify(registration);
         }
 
         final SortedSet<StudentCurricularPlan> activeStudentCurricularPlans =
@@ -137,9 +150,6 @@ public class ClassEnrollmentAuthorizationFilter {
         public CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan() {
             super("error.enrolmentPeriodNotDefined");
         }
-    }
-
-    public class InquiriesNotAnswered extends FenixServiceException {
     }
 
     public class OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan extends FenixServiceException {

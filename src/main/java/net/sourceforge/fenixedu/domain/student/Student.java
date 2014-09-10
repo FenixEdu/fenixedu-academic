@@ -33,7 +33,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -60,11 +59,6 @@ import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
-import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
-import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -81,7 +75,6 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.predicates.StudentPredicates;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.InvocationResult;
@@ -906,246 +899,6 @@ public class Student extends Student_Base {
         return enrolments.isEmpty() ? null : enrolments.last();
     }
 
-    @Atomic
-    public void setSpentTimeInPeriodForInquiry(List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
-            ExecutionSemester executionSemester) {
-        check(this, RolePredicates.STUDENT_PREDICATE);
-
-        if (!StudentInquiryRegistry.checkTotalPercentageDistribution(courses)) {
-            throw new DomainException("error.weeklyHoursSpentPercentage.is.not.100.percent");
-        }
-        if (!StudentInquiryRegistry.checkTotalStudyDaysSpentInExamsSeason(courses)) {
-            throw new DomainException("error.studyDaysSpentInExamsSeason.exceedsMaxDaysLimit");
-        }
-
-        StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = getStudentInquiryExecutionPeriod(executionSemester);
-        if (studentInquiryExecutionPeriod != null && studentInquiryExecutionPeriod.getWeeklyHoursSpentInClassesSeason() != 0) {
-            return;
-        }
-
-        if (studentInquiryExecutionPeriod == null) {
-            studentInquiryExecutionPeriod = new StudentInquiryExecutionPeriod(this, executionSemester);
-        }
-        studentInquiryExecutionPeriod.setWeeklyHoursSpentInClassesSeason(weeklySpentHours);
-
-        for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
-            StudentInquiryRegistry inquiryRegistry = curricularCourseInquiriesRegistryDTO.getInquiryRegistry();
-            inquiryRegistry.setStudyDaysSpentInExamsSeason(curricularCourseInquiriesRegistryDTO.getStudyDaysSpentInExamsSeason());
-            inquiryRegistry.setWeeklyHoursSpentPercentage(curricularCourseInquiriesRegistryDTO.getWeeklyHoursSpentPercentage());
-            inquiryRegistry.setAttendenceClassesPercentage(curricularCourseInquiriesRegistryDTO.getAttendenceClassesPercentage());
-            inquiryRegistry.setEstimatedECTS(curricularCourseInquiriesRegistryDTO.getCalculatedECTSCredits());
-        }
-    }
-
-    public StudentInquiryExecutionPeriod getStudentInquiryExecutionPeriod(ExecutionSemester executionSemester) {
-        for (final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod : getStudentsInquiriesExecutionPeriodsSet()) {
-            if (studentInquiryExecutionPeriod.getExecutionPeriod() == executionSemester) {
-                return studentInquiryExecutionPeriod;
-            }
-        }
-        return null;
-    }
-
-    public boolean isWeeklySpentHoursSubmittedForOpenInquiry() {
-        StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
-        return inquiryTemplate == null ? false : isWeeklySpentHoursSubmittedForOpenInquiry(inquiryTemplate.getExecutionPeriod());
-    }
-
-    public boolean isWeeklySpentHoursSubmittedForOpenInquiry(ExecutionSemester executionSemester) {
-        for (final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod : getStudentsInquiriesExecutionPeriodsSet()) {
-            if (studentInquiryExecutionPeriod.getExecutionPeriod() == executionSemester) {
-                return studentInquiryExecutionPeriod.getWeeklyHoursSpentInClassesSeason() != null;
-            }
-        }
-        return false;
-    }
-
-    public StudentInquiryExecutionPeriod getOpenStudentInquiryExecutionPeriod() {
-        StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
-        return inquiryTemplate == null ? null : getStudentInquiryExecutionPeriod(inquiryTemplate.getExecutionPeriod());
-    }
-
-    @Atomic
-    public Collection<StudentInquiryRegistry> retrieveAndCreateMissingInquiryRegistriesForPeriod(
-            ExecutionSemester executionSemester) {
-        check(this, RolePredicates.STUDENT_PREDICATE);
-        final Map<ExecutionCourse, StudentInquiryRegistry> coursesToAnswer =
-                getExistingStudentInquiryRegistryMap(executionSemester);
-
-        for (Registration registration : getRegistrationsSet()) {
-            if (!registration.isAvailableDegreeTypeForInquiries()) {
-                continue;
-            }
-            for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
-                createMissingInquiryRegistry(executionSemester, coursesToAnswer, registration, enrolment, false);
-            }
-
-            for (final Enrolment enrolment : getPreviousAnnualEnrolmentsForInquiries(executionSemester, registration)) {
-                createMissingInquiryRegistry(executionSemester, coursesToAnswer, registration, enrolment, true);
-            }
-        }
-        return coursesToAnswer.values();
-    }
-
-    private void createMissingInquiryRegistry(final ExecutionSemester executionSemester,
-            final Map<ExecutionCourse, StudentInquiryRegistry> coursesToAnswer, Registration registration,
-            final Enrolment enrolment, boolean isAnnual) {
-        ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-        if (isAnnual) {
-            executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
-        }
-        if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
-            coursesToAnswer
-                    .put(executionCourse,
-                            new StudentInquiryRegistry(executionCourse, executionSemester, enrolment.getCurricularCourse(),
-                                    registration));
-        }
-    }
-
-    private Map<ExecutionCourse, StudentInquiryRegistry> getExistingStudentInquiryRegistryMap(ExecutionSemester executionSemester) {
-        final Map<ExecutionCourse, StudentInquiryRegistry> coursesToAnswer =
-                new HashMap<ExecutionCourse, StudentInquiryRegistry>();
-        for (Registration registration : getRegistrationsSet()) {
-            if (!registration.isAvailableDegreeTypeForInquiries()) {
-                continue;
-            }
-            for (final StudentInquiryRegistry studentInquiryRegistry : registration.getStudentsInquiryRegistriesSet()) {
-                if (studentInquiryRegistry.getExecutionPeriod() == executionSemester) {
-                    coursesToAnswer.put(studentInquiryRegistry.getExecutionCourse(), studentInquiryRegistry);
-                }
-            }
-        }
-        return coursesToAnswer;
-    }
-
-    private List<Enrolment> getPreviousAnnualEnrolmentsForInquiries(ExecutionSemester executionSemester, Registration registration) {
-        List<Enrolment> result = new ArrayList<Enrolment>();
-        if (executionSemester.getPreviousExecutionPeriod().getExecutionYear() == executionSemester.getExecutionYear()) {
-            for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
-                if (enrolment.getCurricularCourse().isAnual()) {
-                    result.add(enrolment);
-                }
-            }
-        }
-        return result;
-    }
-
-    public Collection<String> getInquiriesCoursesNamesToRespond(ExecutionSemester executionSemester) {
-        final Map<ExecutionCourse, String> coursesToAnswer = new HashMap<ExecutionCourse, String>();
-        final Set<ExecutionCourse> coursesAnswered = new HashSet<ExecutionCourse>();
-
-        for (Registration registration : getRegistrationsSet()) {
-
-            if (!registration.isAvailableDegreeTypeForInquiries()) {
-                continue;
-            }
-            for (final StudentInquiryRegistry inquiryRegistry : registration.getStudentsInquiryRegistriesSet()) {
-                if (inquiryRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-                    if (inquiryRegistry.isOpenToAnswer() || inquiryRegistry.isToAnswerLater()) {
-                        coursesToAnswer
-                                .put(inquiryRegistry.getExecutionCourse(), inquiryRegistry.getCurricularCourse().getName());
-                    } else {
-                        coursesAnswered.add(inquiryRegistry.getExecutionCourse());
-                    }
-                }
-            }
-            for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
-                final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-                if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
-                    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
-                }
-            }
-            for (final Enrolment enrolment : getPreviousAnnualEnrolmentsForInquiries(executionSemester, registration)) {
-                ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
-                if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
-                    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
-                }
-            }
-        }
-        return coursesToAnswer.values();
-    }
-
-    public boolean hasInquiriesToRespond() {
-        StudentInquiryTemplate currentTemplate = StudentInquiryTemplate.getCurrentTemplate();
-        if (currentTemplate == null) {
-            return false;
-        }
-
-        final ExecutionSemester executionSemester = currentTemplate.getExecutionPeriod();
-
-        final Set<CurricularCourse> inquiryCurricularCourses = new HashSet<CurricularCourse>();
-        // first collect all studentInquiryRegistries from all registrations
-        for (Registration registration : getRegistrationsSet()) {
-            if (!registration.isAvailableDegreeTypeForInquiries()) {
-                continue;
-            }
-            for (final StudentInquiryRegistry inquiriesRegistry : registration.getStudentsInquiryRegistriesSet()) {
-                if (inquiriesRegistry.getExecutionPeriod() == executionSemester) {
-                    if (inquiriesRegistry.isOpenToAnswer()) {
-                        return true;
-                    } else {
-                        inquiryCurricularCourses.add(inquiriesRegistry.getCurricularCourse());
-                    }
-                }
-            }
-        }
-
-        for (Registration registration : getRegistrationsSet()) {
-            if (!registration.isAvailableDegreeTypeForInquiries()) {
-                continue;
-            }
-            for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
-                final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-                if (executionCourse != null && !inquiryCurricularCourses.contains(enrolment.getCurricularCourse())) {
-                    return true;
-                }
-            }
-
-            for (final Enrolment enrolment : getPreviousAnnualEnrolmentsForInquiries(executionSemester, registration)) {
-                ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
-                if (executionCourse != null && !inquiryCurricularCourses.contains(enrolment.getCurricularCourse())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private ExecutionCourse getQUCExecutionCourseForAnnualCC(final ExecutionSemester executionSemester, final Enrolment enrolment) {
-        ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-        if (executionCourse == null) { // some annual courses only have one
-            // execution in the 1st semester
-            executionCourse = enrolment.getExecutionCourseFor(executionSemester.getPreviousExecutionPeriod());
-        }
-        return executionCourse;
-    }
-
-    public boolean hasYearDelegateInquiriesToAnswer() {
-        DelegateInquiryTemplate currentTemplate = DelegateInquiryTemplate.getCurrentTemplate();
-        if (currentTemplate == null) {
-            return false;
-        }
-        final ExecutionSemester executionSemester = currentTemplate.getExecutionPeriod();
-
-        for (Delegate delegate : getDelegates()) {
-            if (delegate instanceof YearDelegate) {
-                if (delegate.isActiveForFirstExecutionYear(executionSemester.getExecutionYear())) {
-                    PersonFunction lastYearDelegatePersonFunction =
-                            delegate.getDegree()
-                                    .getUnit()
-                                    .getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(
-                                            executionSemester.getExecutionYear(), ((YearDelegate) delegate).getCurricularYear());
-                    if (lastYearDelegatePersonFunction.getDelegate() == delegate) {
-                        if (((YearDelegate) delegate).hasInquiriesToAnswer(executionSemester)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     public Collection<Registration> getAllRegistrations() {
         return Collections.unmodifiableCollection(super.getRegistrationsSet());
     }
@@ -1892,16 +1645,6 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public List<ExecutionCourseAudit> getExecutionCourseAudits(ExecutionSemester executionSemester) {
-        List<ExecutionCourseAudit> result = new ArrayList<ExecutionCourseAudit>();
-        for (ExecutionCourseAudit executionCourseAudit : getExecutionCourseAuditsSet()) {
-            if (executionCourseAudit.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-                result.add(executionCourseAudit);
-            }
-        }
-        return result;
-    }
-
     public void updateStudentRole() {
         final Person person = getPerson();
         final RoleType roleType = RoleType.STUDENT;
@@ -1959,38 +1702,6 @@ public class Student extends Student_Base {
         }
 
         return null;
-    }
-
-    public boolean hasFirstTimeCycleInquiryToRespond() {
-        for (Registration registration : getActiveRegistrations()) {
-            if (!registration.getDegreeType().isEmpty() && registration.getInquiryStudentCycleAnswer() == null
-                    && registration.isFirstTime()) {
-                if (registration.getPhdIndividualProgramProcess() != null
-                        && registration.getPhdIndividualProgramProcess().getInquiryStudentCycleAnswer() != null) {
-                    return false;
-                }
-                return true;
-            }
-        }
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcessesSet()) {
-            if (phdProcess.getInquiryStudentCycleAnswer() == null && isValidAndActivePhdProcess(phdProcess)) {
-                if (phdProcess.getRegistration() != null) {
-                    if (phdProcess.getRegistration().getInquiryStudentCycleAnswer() != null) {
-                        return false;
-                    } else {
-                        if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
-                            return true;
-                        }
-                    }
-                } else {
-                    if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
 }

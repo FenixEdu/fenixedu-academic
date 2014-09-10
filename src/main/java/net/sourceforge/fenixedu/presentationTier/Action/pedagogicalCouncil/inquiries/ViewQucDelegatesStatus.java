@@ -164,8 +164,8 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
                 ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate.getRegistration()
                         .getStudentCurricularPlan(executionSemester).getDegreeCurricularPlan(),
                         executionSemester.getExecutionYear());
-        for (ExecutionCourse executionCourse : yearDelegate.getExecutionCoursesToInquiries(executionSemester, executionDegree)) {
-            if (yearDelegate.hasMandatoryCommentsToMake(executionCourse, executionDegree)) {
+        for (ExecutionCourse executionCourse : DelegateInquiryTemplate.getExecutionCoursesToInquiries(yearDelegate, executionSemester, executionDegree)) {
+            if (DelegateInquiryTemplate.hasMandatoryCommentsToMake(yearDelegate, executionCourse, executionDegree)) {
                 coursesToComment.add(executionCourse);
             }
         }

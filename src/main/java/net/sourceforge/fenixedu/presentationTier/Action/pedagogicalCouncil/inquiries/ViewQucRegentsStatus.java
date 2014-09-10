@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
@@ -86,9 +87,9 @@ public class ViewQucRegentsStatus extends FenixDispatchAction {
         for (Professorship professorship : Bennu.getInstance().getProfessorshipsSet()) {
             if (professorship.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
                 Person person = professorship.getPerson();
-                boolean isToAnswer = person.hasToAnswerRegentInquiry(professorship);
+                boolean isToAnswer = RegentInquiryTemplate.hasToAnswerRegentInquiry(professorship);
                 if (isToAnswer) {
-                    boolean hasMandatoryCommentsToMake = professorship.hasMandatoryCommentsToMakeAsResponsible();
+                    boolean hasMandatoryCommentsToMake = InquiryResultComment.hasMandatoryCommentsToMakeAsResponsible(professorship);
                     boolean inquiryToAnswer =
                             professorship.getInquiryRegentAnswer() == null
                                     || professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(regentInquiryTemplate);
