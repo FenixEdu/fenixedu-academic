@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -56,19 +57,19 @@ public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
     }
 
     public static PersistentTeacherGroup getInstance(Degree degree) {
-        return getInstance(degree.getTeacherGroupSet().stream(), degree, null, null, null, null);
+        return getInstance(() -> degree.getTeacherGroupSet().stream(), degree, null, null, null, null);
     }
 
     public static PersistentTeacherGroup getInstance(Space campus) {
-        return getInstance(campus.getTeacherGroupSet().stream(), null, null, campus, null, null);
+        return getInstance(() -> campus.getTeacherGroupSet().stream(), null, null, campus, null, null);
     }
 
     public static PersistentTeacherGroup getInstance(Department department, ExecutionYear executionYear) {
-        return getInstance(department.getTeacherGroupSet().stream(), null, null, null, department, executionYear);
+        return getInstance(() -> department.getTeacherGroupSet().stream(), null, null, null, department, executionYear);
     }
 
     public static PersistentTeacherGroup getInstance(ExecutionCourse executionCourse) {
-        return getInstance(executionCourse.getTeacherGroupSet().stream(), null, executionCourse, null, null, null);
+        return getInstance(() -> executionCourse.getTeacherGroupSet().stream(), null, executionCourse, null, null, null);
     }
 
     public static PersistentTeacherGroup getInstance(Degree degree, ExecutionCourse executionCourse, Space campus,
@@ -88,11 +89,12 @@ public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
         return null;
     }
 
-    private static PersistentTeacherGroup getInstance(Stream<PersistentTeacherGroup> options, Degree degree,
+    private static PersistentTeacherGroup getInstance(Supplier<Stream<PersistentTeacherGroup>> options, Degree degree,
             ExecutionCourse executionCourse, Space campus, Department department, ExecutionYear executionYear) {
         return singleton(
-                () -> options.filter(
-                        group -> Objects.equals(group.getDegree(), degree)
+                () -> options
+                        .get()
+                        .filter(group -> Objects.equals(group.getDegree(), degree)
                                 && Objects.equals(group.getExecutionCourse(), executionCourse)
                                 && Objects.equals(group.getCampus(), campus) && Objects.equals(group.getDepartment(), department)
                                 && Objects.equals(group.getExecutionYear(), executionYear)).findAny(),
