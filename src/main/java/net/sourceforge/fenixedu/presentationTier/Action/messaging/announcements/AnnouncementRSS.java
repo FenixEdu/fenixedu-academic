@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.publico.rss.RSSAction;
 
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -79,7 +80,7 @@ public class AnnouncementRSS extends RSSAction {
 
         final AnnouncementBoard board = this.getSelectedBoard(request);
         if (board != null) {
-            if (board.getReaders() != null) {
+            if (board.getReaders() != null && !board.getReaders().isMember(Authenticate.getUser())) {
                 throw new FenixActionException("board.does.not.have.rss");
             }
 
@@ -165,7 +166,7 @@ public class AnnouncementRSS extends RSSAction {
 
     @Override
     protected String getFeedDescription(HttpServletRequest request) throws Exception {
-        return "";
+        return getFeedTitle(request);
     }
 
     @Override
