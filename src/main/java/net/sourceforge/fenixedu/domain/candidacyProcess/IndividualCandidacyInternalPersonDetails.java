@@ -296,4 +296,24 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
     public String getEidentifier() {
         return this.getPerson().getEidentifier();
     }
+
+    @Override
+    public String getGivenNames() {
+        return getPerson().getGivenNames();
+    }
+
+    @Override
+    public void setGivenNames(String givenNames) {
+        getPerson().setGivenNames(givenNames);
+    }
+
+    @Override
+    public String getFamilyNames() {
+        return getPerson().getFamilyNames();
+    }
+
+    @Override
+    public void setFamilyNames(String familyNames) {
+        getPerson().setFamilyNames(familyNames);
+    }
 }

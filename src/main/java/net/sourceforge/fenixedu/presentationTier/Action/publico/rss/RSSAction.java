@@ -73,6 +73,7 @@ public abstract class RSSAction extends InformaRSSAction {
         final ChannelIF channel = builder.createChannel(feedTitle);
         channel.setDescription(getFeedDescription(request));
         channel.setLocation(new URL(getFeedLink(request)));
+        channel.setSite(new URL(getFeedLink(request)));
         String siteLocation = getSiteLocation(request);
         if (siteLocation != null) {
             channel.setSite(new URL(siteLocation));

@@ -90,7 +90,27 @@ public class RegistrationOperation extends CandidacyOperation {
                 return tutorshipIntention.getTeacher();
             }
         }
+        // when all tutors are full start distributing equally among them
+        TutorshipIntention tutorshipIntention = getLeastOverloadedTutor();
+        if (tutorshipIntention != null) {
+            tutorshipIntention.setMaxStudentsToTutor(tutorshipIntention.getMaxStudentsToTutor() - 1);
+            return tutorshipIntention.getTeacher();
+        }
         return null;
+    }
+
+    private TutorshipIntention getLeastOverloadedTutor() {
+        TutorshipIntention chosenTutor = null;
+        for (TutorshipIntention tutorshipIntention : getExecutionDegree().getTutorshipIntentions()) {
+            if (tutorshipIntention.getMaxStudentsToTutor() != null) {
+                if (chosenTutor == null) {
+                    chosenTutor = tutorshipIntention;
+                } else if (Math.abs(tutorshipIntention.getMaxStudentsToTutor()) < Math.abs(chosenTutor.getMaxStudentsToTutor())) {
+                    chosenTutor = tutorshipIntention;
+                }
+            }
+        }
+        return chosenTutor;
     }
 
     private void assignMeasurementTestShift(Registration registration) {
