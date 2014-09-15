@@ -57,6 +57,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
@@ -586,6 +587,10 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
             executeActivity(getProcess(request), "BindPersonToCandidacy", getIndividualCandidacyProcessBean());
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
+            request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+            return mapping.findForward("edit-personal-information-for-bind");
+        } catch (BennuCoreDomainException be) {
+            addActionMessage(request, be.getLocalizedMessage(), false);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("edit-personal-information-for-bind");
         }

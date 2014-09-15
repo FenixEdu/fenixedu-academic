@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -198,6 +199,10 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
             executeActivity(getProcess(request), "EditCandidacyPersonalInformation", getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
+            request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+            return mapping.findForward("edit-candidacy-personal-information");
+        } catch (final BennuCoreDomainException be) {
+            addActionMessage(request, be.getLocalizedMessage(), false);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("edit-candidacy-personal-information");
         }

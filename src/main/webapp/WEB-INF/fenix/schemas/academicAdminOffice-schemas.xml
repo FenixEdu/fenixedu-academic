@@ -123,13 +123,10 @@
 
 <schema name="student.personalData-edit" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean"
 	bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="givenNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50" />
 	</slot>
-	<slot name="givenNames">
-		<property name="size" value="50" />
-	</slot>
-	<slot name="familyNames">
+	<slot name="familyNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50" />
 	</slot>
 	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />

@@ -116,16 +116,14 @@
 </schema>
 
 <schema name="CandidacyProcess.personalDataBean" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES">
-	<slot name="name" key="label.name" >
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
-			<property name="type" value="character"/>
-			<property name="length" value="100"/>
-		</validator>
+	<slot name="givenNames" key="label.givenNames" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
 		<property name="size" value="50"/>
-		<property name="maxlength" value="100"/>		
 	</slot>
-
+	<slot name="familyNames" key="label.familyNames" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="size" value="50"/>
+	</slot>
 	<slot name="gender" key="label.gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 
 	<slot name="dateOfBirth" key="label.dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

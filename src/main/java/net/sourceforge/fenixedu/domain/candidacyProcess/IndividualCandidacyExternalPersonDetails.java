@@ -48,6 +48,8 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
         setGender(personBean.getGender());
         setIdDocumentType(personBean.getIdDocumentType());
         setName(personBean.getName());
+        setGivenNames(personBean.getGivenNames());
+        setFamilyNames(personBean.getFamilyNames());
 
         /*
          * 08/05/2009 - After social security number is the correct property for

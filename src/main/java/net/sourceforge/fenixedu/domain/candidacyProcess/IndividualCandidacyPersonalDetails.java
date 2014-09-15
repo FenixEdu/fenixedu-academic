@@ -91,6 +91,14 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
 
     public abstract void setName(String name);
 
+    public abstract String getGivenNames();
+
+    public abstract void setGivenNames(String givenNames);
+
+    public abstract String getFamilyNames();
+
+    public abstract void setFamilyNames(String familyNames);
+
     public abstract Gender getGender();
 
     public abstract void setGender(Gender gender);
