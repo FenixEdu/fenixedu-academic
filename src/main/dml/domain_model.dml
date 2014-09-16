@@ -785,14 +785,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         Integer workingHours;
     }
 
-    class EmployeeHistoric  {
-        YearMonthDay beginDateYearMonthDay;
-        String calendar;
-        YearMonthDay endDateYearMonthDay;
-        DateTime whenDateTime;
-        Integer who;
-    }
-
     class EnrolmentEvaluation  {
         String checkSum;
         EnrolmentEvaluationState enrolmentEvaluationState;
@@ -9532,41 +9524,6 @@ relation EmployeeCreditNote {
     }
 }
 
-relation EmployeeHistoricEmployee {
-    EmployeeHistoric playsRole historicList {
-        multiplicity *;
-    }
-    Employee playsRole employee;
-}
-
-relation EmployeeHistoricMailingCostCenter {
-    EmployeeHistoric playsRole mailingCostCenterAssociatedEmployeeHistorics {
-        multiplicity *;
-    }
-    CostCenter playsRole mailingCostCenter;
-}
-
-relation EmployeeHistoricResponsibleEmployee {
-    EmployeeHistoric playsRole responsibleEmployeeAssociatedEmployeeHistorics {
-        multiplicity *;
-    }
-    Employee playsRole responsableEmployee;
-}
-
-relation EmployeeHistoricSalaryCostCenter {
-    EmployeeHistoric playsRole salaryCostCenterAssociatedEmployeeHistorics {
-        multiplicity *;
-    }
-    CostCenter playsRole salaryCostCenter;
-}
-
-relation EmployeeHistoricWorkingPlaceCostCenter {
-    EmployeeHistoric playsRole workingPlaceCostCenterAssociatedEmployeeHistorics {
-        multiplicity *;
-    }
-    CostCenter playsRole workingPlaceCostCenter;
-}
-
 relation EmployeePerson {
     Employee playsRole employee;
     Person playsRole person;
@@ -11949,13 +11906,6 @@ relation RootDomainObjectEmail {
 relation RootDomainObjectEmployee {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Employee playsRole employees {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectEmployeeHistoric {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    EmployeeHistoric playsRole employeeHistorics {
         multiplicity *;
     }
 }
