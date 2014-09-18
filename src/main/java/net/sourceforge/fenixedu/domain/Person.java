@@ -927,15 +927,14 @@ public class Person extends Person_Base {
         final String givenNames = personBean.getGivenNames();
         final String composedName = familyName == null || familyName.isEmpty() ? givenNames : givenNames + " " + familyName;
 
-        if ((givenNames != null || familyName != null) && !fullName.equals(composedName)) {
-            throw new DomainException("error.person.splittedNamesDoNotMatch");
-        }
-
         // personal info
         if (givenNames != null || familyName != null) {
             setGivenNames(givenNames);
             setFamilyNames(familyName);
         } else {
+            if ((givenNames != null || familyName != null) && !fullName.equals(composedName)) {
+                throw new DomainException("error.person.splittedNamesDoNotMatch");
+            }
             setNames(fullName, givenNames, familyName);
         }
 
