@@ -5,6 +5,7 @@ FenixEdu is a modular software platform for academic and administrative manageme
 
 **Table of Contents**
 
+- [Issue Tracking](#issue-tracking)
 - [Setup environment](#setup-environment)
 - [Compiling](#compiling)
 - [Bootstrapping](#bootstrapping)
@@ -12,6 +13,10 @@ FenixEdu is a modular software platform for academic and administrative manageme
 - [Troubleshooting](#troubleshooting)
 	- [Error compiling JasperReports](#error-compiling-jasperreports)
 
+
+##Issue Tracking
+
+Issue Tracking for the FenixEdu Academic project is done in the [FenixEdu JIRA](https://jira.fenixedu.org/browse/ACADEMIC).
 
 ##Setup environment
 1. `export JAVA_OPTS="-server -Xms256m -Xmx1024m -XX:PermSize=384m"`
