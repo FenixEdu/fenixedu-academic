@@ -81,9 +81,6 @@ public class StudentGroup extends StudentGroup_Base {
     }
 
     public void delete() {
-        if (getStudentGroupGroup() != null) {
-            throw new DomainException("error.studentGroup.cannotDeleteStudentGroupUsedInAccessControl");
-        }
         List<ExecutionCourse> ecs = getGrouping().getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
             GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING,
@@ -95,10 +92,14 @@ public class StudentGroup extends StudentGroup_Base {
         if (!getProjectSubmissionsSet().isEmpty() && this.getGrouping().isPersonTeacher(AccessControl.getPerson())) {
             this.setValid(false);
         } else if (getProjectSubmissionsSet().isEmpty() && getAttendsSet().isEmpty()) {
-            setShift(null);
-            setGrouping(null);
-            setRootDomainObject(null);
-            deleteDomainObject();
+            if (getStudentGroupGroup() != null) {
+                this.setValid(false);
+            } else {
+                setShift(null);
+                setGrouping(null);
+                setRootDomainObject(null);
+                deleteDomainObject();
+            }
         } else {
             throw new DomainException("student.group.cannot.be.deleted");
         }
