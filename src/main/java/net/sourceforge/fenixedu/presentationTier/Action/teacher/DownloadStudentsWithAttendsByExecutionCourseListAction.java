@@ -68,6 +68,8 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String STUDENT_USERNAME = "Username";
 
+    private static final String STUDENT_NUMBER = "Num";
+
     private static final String NUMBER_OF_ENROLLMENTS = "Número total de Inscrições";
 
     private static final String ATTENDACY_TYPE = "Tipo de Inscrição";
@@ -102,6 +104,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
         // building the table header
         fileContents += STUDENT_USERNAME + SEPARATOR;
+        fileContents += STUDENT_NUMBER + SEPARATOR;
         fileContents += NUMBER_OF_ENROLLMENTS + SEPARATOR;
         fileContents += ATTENDACY_TYPE + SEPARATOR;
         fileContents += COURSE + SEPARATOR;
@@ -133,6 +136,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
         // building each line
         for (final Attends attends : attendsResult) {
             fileContents += attends.getRegistration().getStudent().getPerson().getUsername() + SEPARATOR;
+            fileContents += attends.getRegistration().getStudent().getNumber() + SEPARATOR;
             if (attends.getEnrolment() == null) {
                 fileContents += NULL + SEPARATOR;
             } else {

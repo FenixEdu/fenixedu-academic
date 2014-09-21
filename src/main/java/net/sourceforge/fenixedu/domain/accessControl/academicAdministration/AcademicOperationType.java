@@ -111,9 +111,9 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     /* Candidacies Management */
 
-    MANAGE_INDIVIDUAL_CANDIDACIES(true, true, Scope.OFFICE),
+    MANAGE_INDIVIDUAL_CANDIDACIES(true, true, Scope.ADMINISTRATION),
 
-    MANAGE_CANDIDACY_PROCESSES(true, true, Scope.OFFICE),
+    MANAGE_CANDIDACY_PROCESSES(true, true, Scope.ADMINISTRATION),
 
     /* End of Candidacies Management */
 
@@ -137,7 +137,9 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     MANAGE_PHD_PROCESS_STATE(true, true, Scope.OFFICE),
 
-    MANAGE_MOBILITY_OUTBOUND(false, false, Scope.OFFICE),
+    MANAGE_MOBILITY_OUTBOUND(false, false, Scope.ADMINISTRATION),
+
+    VALIDATE_MOBILITY_OUTBOUND_CANDIDACIES(false, false, Scope.ADMINISTRATION),
 
     VIEW_SCHEDULING_OVERSIGHT(false, false, Scope.ADMINISTRATION);
 

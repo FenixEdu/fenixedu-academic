@@ -89,6 +89,7 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
 
     public abstract String getName();
 
+    //TODO remove this method and slot in next major version
     public abstract void setName(String name);
 
     public abstract String getGivenNames();
