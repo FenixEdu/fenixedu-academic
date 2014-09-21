@@ -20,6 +20,9 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
 
+import org.fenixedu.bennu.core.domain.groups.PersistentAnyoneGroup;
+import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.bennu.core.domain.groups.PersistentLoggedGroup;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -65,6 +68,27 @@ public class FileContent extends FileContent_Base {
 
     public Site getSite() {
         return getCmsContent() == null ? null : getCmsContent().getOwnerSite();
+    }
+
+    @Override
+    protected void setAccessGroup(final PersistentGroup accessGroup) {
+        if (getResourceType() != null && getResourceType() == EducationalResourceType.MARKSHEET
+                && accessGroup instanceof PersistentAnyoneGroup) {
+            super.setAccessGroup(PersistentLoggedGroup.getInstance());
+        } else {
+            super.setAccessGroup(accessGroup);
+        }
+    }
+
+    @Override
+    public void setResourceType(final EducationalResourceType resourceType) {
+        super.setResourceType(resourceType);
+        if (resourceType == EducationalResourceType.MARKSHEET) {
+            final PersistentGroup accessGroup = getAccessGroup();
+            if (accessGroup != null && accessGroup instanceof PersistentAnyoneGroup) {
+                super.setAccessGroup(PersistentLoggedGroup.getInstance());
+            }
+        }
     }
 
     @Override
