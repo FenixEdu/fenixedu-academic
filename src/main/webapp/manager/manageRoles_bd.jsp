@@ -98,7 +98,7 @@
 				</td>
 				<td class="listClasses">
 					<bean:define id="roleName" name="role" property="roleType"/>
-					<bean:message bundle="MANAGER_RESOURCES" key="<%= pageContext.findAttribute("roleName").toString() %>"/>
+					<bean:message bundle="MANAGER_RESOURCES" key='<%= pageContext.findAttribute("roleName").toString() %>'/>
 				</td>
 			</tr>
 		</logic:iterate>
