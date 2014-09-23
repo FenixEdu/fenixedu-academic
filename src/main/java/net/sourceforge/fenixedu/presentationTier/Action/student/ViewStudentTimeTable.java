@@ -39,7 +39,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -98,8 +97,8 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
         return mapping.findForward("showTimeTable");
     }
 
+    @Deprecated
     protected void skipLayoutInjection(HttpServletRequest request) {
-        PortalLayoutInjector.skipLayoutOn(request);
     }
 
     private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {

@@ -29,45 +29,53 @@ response.setStatus(404);
 	<title>
 		<bean:message key="public.general.notFount" bundle="TITLES_RESOURCES"/>
 	</title>
+	<link href="${pageContext.request.contextPath}/themes/<%= org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getTheme() %>/css/style.css" rel="stylesheet" type="text/css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 		body {
 			font: 16px 'Roboto', sans-serif;
-			background-color: #F1F1F1;
 			font-weight:100;
 			color: #617383;
 		}
 		.container {
-			margin: 120px auto 0 auto;
-			width: 700px;
+			margin: 60px auto 0 auto;
+			max-width: 700px;
 			background-color: white;
 			padding: 30px;
 			border-radius: 7px;
 		}
 		.content { margin-top: 25px; }
-		.right { float: right; }
+		@media (max-width: 767px) {
+			.title > * {
+				text-align: center !important;
+			}
+			img {
+				padding-bottom: 5px;
+			}
+		}
 		.title {
 			border-bottom: 1px solid #eee;
-			padding-bottom: 15px;
 			font-size: 22px;
-			min-height: 35px;
+			padding-bottom: 15px;
 		}
-		p { margin-bottom: 0; }
-		a { color: #617383; }
 	</style>
 </head>
 
 <body>
 	<div class="container">
-		<div class="title">
-			<bean:message key="error.message.resource.not.found" bundle="GLOBAL_RESOURCES" />
-			<span class="right">
+		<div class="title row">
+			<div class="col-sm-6 text-right col-sm-push-6">
 				<img src="${pageContext.request.contextPath}/api/bennu-portal/configuration/logo"/>
-			</span>
+			</div>
+			<div class="col-sm-6 col-sm-pull-6">
+				<bean:message key="error.message.resource.not.found" bundle="GLOBAL_RESOURCES" />
+			</div>
 		</div>
 		<div class="content">
-			<bean:message key="error.message.resource.not.found.message" bundle="GLOBAL_RESOURCES" />
+			<p><bean:message key="error.message.resource.not.found.message" bundle="GLOBAL_RESOURCES" /></p>
 			<c:if test="${empty LOGGED_USER_ATTRIBUTE}">
+				<br />
 				<p><a href="${pageContext.request.contextPath}/login">Login</a></p>
 			</c:if>
 		</div>

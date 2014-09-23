@@ -929,8 +929,8 @@ public class Person extends Person_Base {
 
         // personal info
         if (givenNames != null || familyName != null) {
-            setGivenNames(givenNames);
-            setFamilyNames(familyName);
+            ensureUserProfile();
+            getProfile().changeName(givenNames, familyName, null);
         } else {
             if ((givenNames != null || familyName != null) && !fullName.equals(composedName)) {
                 throw new DomainException("error.person.splittedNamesDoNotMatch");

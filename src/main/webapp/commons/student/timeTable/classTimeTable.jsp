@@ -31,24 +31,22 @@
 <html:html xhtml="true">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link href="<%= request.getContextPath() %>/CSS/dotist.css" rel="stylesheet" media="screen" type="text/css" />
 		<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 		<link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
 		<title><bean:message key="private.student.view.timetable" bundle="TITLES_RESOURCES"/></title>
 	</head>
 	<body>
 		<logic:present name="LOGGED_USER_ATTRIBUTE">
-			<div class="mbottom2" style="font-size: 0.85em; margin-left: 3em;">
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: ${person.name}</p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: ${person.student.number} </p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername"  bundle="APPLICATION_RESOURCES"/> </strong>: ${person.username} </p>
-			</div>
-
+			<p>
+				<p><strong><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: ${person.name}</p>
+				<p><strong><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: ${person.student.number} </p>
+				<p><strong><bean:message  key="label.istUsername"  bundle="APPLICATION_RESOURCES"/> </strong>: ${person.username} </p>
+			</p>
 		</logic:present>
 		
 		<div align="center">
 			<app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE %>" application="${pageContext.request.contextPath}"/>
-		</div> 
+		</div>
 		<logic:present name="tutor">
 			<div style="text-align: left">
 				<strong><bean:message key="label.tutor" bundle="APPLICATION_RESOURCES"/></strong><br/>

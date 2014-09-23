@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
@@ -195,4 +194,24 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         return false;
     }
 
+    @Override
+    public String getUrl() {
+        LessonInstance lis = getLessonInstancesSet().iterator().next();
+        if (lis == null) {
+            return "";
+        }
+        Lesson li = lis.getLesson();
+
+        return li.getShift().getExecutionCourse().getSite().getFullPath();
+    }
+
+    @Override
+    public String getInfo() {
+        Lesson theLesson = getLessonInstancesSet().iterator().next().getLesson();
+        String asd = theLesson.getShift().getCourseLoadsSet().iterator().next().getType().getFullNameTipoAula();
+        for (YearMonthDay ymd : theLesson.getAllLessonDates()) {
+            asd += "\n" + ymd.toString();
+        }
+        return asd;
+    }
 }
