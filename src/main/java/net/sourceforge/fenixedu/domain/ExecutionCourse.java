@@ -2583,6 +2583,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             if (curricularCourse.hasEnrolmentForPeriod(getExecutionPeriod())) {
                 return true;
             }
+            if (curricularCourse.isAnual()
+                    && getExecutionPeriod().getPreviousExecutionPeriod().getExecutionYear() == getExecutionYear()) {
+                if (curricularCourse.hasEnrolmentForPeriod(getExecutionPeriod().getPreviousExecutionPeriod())) {
+                    return true;
+                }
+            }
         }
         return false;
     }
