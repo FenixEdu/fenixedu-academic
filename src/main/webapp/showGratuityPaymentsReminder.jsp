@@ -27,64 +27,67 @@
 <html:html xhtml="true">
 	<head>
 		<title>
-			<bean:message key="dot.title" bundle="GLOBAL_RESOURCES" /> - <bean:message key="message.gratuity.payments.reminder.title" bundle="APPLICATION_RESOURCES"/>
+			<bean:message key="message.gratuity.payments.reminder.title" bundle="APPLICATION_RESOURCES"/>
 		</title>
 
-		<link href="<%= request.getContextPath() %>/CSS/logdotist.css" rel="stylesheet" type="text/css" />
+		<link href="${pageContext.request.contextPath}/themes/<%= org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getTheme() %>/css/style.css" rel="stylesheet" type="text/css" />
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		
-		<style type="text/css">
-			.warning1 {
-				background-color: #fbf2cc;
-				color: #804500;
-				border-top: 2px solid #e6d099;
-				border-bottom: 2px solid #e6d099;
-				padding: 4px 5px 5px 5px;
-			}			
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			.container {
+				background-color: #fefefe;
+				padding: 30px;
+				border-radius: 10px;
+			}
+			.title {
+				border-bottom: 1px solid #eee;
+				padding-bottom: 5px;
+				font-size: 25px;
+				min-height: 35px;
+			}
+			@media (max-width: 768px) {
+				.title > * {
+					text-align: center !important;
+				}
+				ul {
+					padding-left: 20px;
+				}
+			}
 		</style>
 	</head>
 	<body>
 	
-		<div id="container">
-			<div id="dotist_id">
-				<img alt="<%=org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getApplicationTitle().getContent() %>"
-						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
+		<div class="container">
+			<div class="title row">
+				<div class="col-sm-6 text-right col-sm-push-6">
+					<img src="${pageContext.request.contextPath}/api/bennu-portal/configuration/logo"/>
+				</div>
+				<div class="col-sm-6 col-sm-pull-6">
+					<bean:message key="message.gratuity.payments.reminder.title" bundle="APPLICATION_RESOURCES"/>
+				</div>
 			</div>
 
 			<div id="txt">
-				<h1><bean:message key="message.gratuity.payments.reminder.title" bundle="APPLICATION_RESOURCES"/></h1>
+
 				<logic:equal name="remnantGratuity" value="true">
 					<bean:define id="remainingPaymentEndDate" name="remainingPaymentEndDate" type="java.lang.String" />
 					<bean:define id="remainingPaymentDebt" name="remainingPaymentDebt" type="java.lang.String" />
 					<bean:define id="remainingPaymentCode" name="remainingPaymentCode" type="java.lang.String" />
-					
-					<div class="warning1" style="margin: 20px; padding: 20px">
+
+					<br />
+					<div class="alert alert-warning">
 						<bean:message key="message.delayed.debt" bundle="APPLICATION_RESOURCES" 
 							arg0="<%= remainingPaymentEndDate %>" arg1="<%= remainingPaymentDebt %>" arg3="<%= remainingPaymentCode %>" />
 					</div>
 				</logic:equal>
-				
+
 				<bean:message key="message.gratuity.payments.reminder.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="APPLICATION_RESOURCES" />
 			</div>
-			<br />
-			
 
 			<div align="center">
-				<table>
-					<tr>
-						<td>
-							<fr:form action="/student/payments.do?method=showEvents">
-								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.view.payments"/></html:submit>
-							</fr:form>
-						</td>
-						<td>
-							<fr:form action="/home.do">
-								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.proceed"/></html:submit>
-							</fr:form>
-						</td>
-					</tr>
-				</table>
+				<a href="${pageContext.request.contextPath}/student/payments.do?method=showEvents" class="btn btn-default" tabindex="2"><bean:message bundle="APPLICATION_RESOURCES" key="label.view.payments"/></a>
+				<a href="${pageContext.request.contextPath}/home.do" class="btn btn-default" tabindex="1"><bean:message bundle="APPLICATION_RESOURCES" key="label.proceed"/></a>
 			</div>
 		</div>
 		
