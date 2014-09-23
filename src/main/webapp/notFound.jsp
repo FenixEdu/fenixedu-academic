@@ -29,7 +29,7 @@ response.setStatus(404);
 	<title>
 		<bean:message key="public.general.notFount" bundle="TITLES_RESOURCES"/>
 	</title>
-	<link href="${pageContext.request.contextPath}/themes/<%= org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getTheme() %>/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="${pageContext.request.contextPath}/bennu-core/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
@@ -37,6 +37,7 @@ response.setStatus(404);
 			font: 16px 'Roboto', sans-serif;
 			font-weight:100;
 			color: #617383;
+			background-color: #F1F1F1;
 		}
 		.container {
 			margin: 60px auto 0 auto;
