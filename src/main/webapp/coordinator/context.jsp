@@ -88,87 +88,14 @@
                       <bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
                     </a>
                   </li>
-                </c:if>
                 <li>
                   <a href="${base}/sendEmail.do?method=sendEmail&degreeCurricularPlanID=${dcp}">
                     <bean:message key="link.coordinator.sendMail"/>
                   </a>
                 </li>
-                <c:if test="${!degree.bolonhaDegree}">
-                  <li>
-                    <a href="${base}/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&degreeCurricularPlanID=${dcp}">
-                      <bean:message key="link.coordinator.degreeCurricularPlan.management"/>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="${base}/executionCoursesInformation.do?method=prepareChoiceForCoordinator&degreeCurricularPlanID=${dcp}">
-                      <bean:message key="link.coordinator.executionCoursesInformation"/>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="${base}/teachersInformation.do?executionDegreeId=${master_degree.externalId}&degreeCurricularPlanID=${dcp}">
-                      <bean:message key="link.coordinator.teachersInformation"/>
-                    </a>
-                  </li>
-                </c:if>
-              </ul>
-            </li>
-            <c:if test="${!degree.bolonhaDegree}">
-              <li>
-                  <a href="${base}/evaluation/evaluationsCalendar.faces?degreeCurricularPlanID=${dcp}">
-                    <bean:message key="label.coordinator.manageEvaluations"/>
-                  </a>
-              </li>
-            </c:if>
-          </c:if>
-          <c:if test="${degree.degreeType.name() == 'MASTER_DEGREE'}">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="link.coordinator.candidate"/> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="${base}/candidateOperation.do?method=getCandidates&action=visualize&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.coordinator.visualizeCandidate"/>
-                  </a>
-                </li>
-                <li>
-                  <a href="${base}/prepareCandidateApproval.do?method=chooseExecutionDegree&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.coordinator.approveCandidates"/>
-                  </a>
-                </li>
-                <li>
-                  <a href="${base}/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan"/>
-                  </a>
-                </li>
-                <li>
-                  <a href="${base}/printAllCandidatesList.do?method=prepare&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.masterDegree.candidateListFilter.printListAllCandidatesFilterMenu"/>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="link.masterDegree.administrativeOffice.lists"/> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="${base}/listStudentsForCoordinator.do?method=getStudentsFromDCP&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.coordinator.studentListByDegree"/>
-                  </a>
-                </li>
-                <li>
-                  <a href="${base}/listStudentsForCoordinator.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.coordinator.studentListByCourse"/>
-                  </a>
-                </li>
-                <li>
-                  <a href="${base}/student/displayStudentThesisList.faces?degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.coordinator.studentByThesis"/>
-                  </a>
-                </li>
               </ul>
             </li>
           </c:if>
-          <c:if test="${degree.degreeType.name() != 'MASTER_DEGREE'}">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="label.coordinator.degreeSite.tutorship"/> <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -241,7 +168,6 @@
                 </ul>
               </li>
             </c:if>
-          </c:if>
           <c:if test="${isScientificCommissionMember}">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="label.coordinator.thesis"/> <b class="caret"></b></a>
