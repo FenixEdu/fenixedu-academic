@@ -597,6 +597,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return result;
     }
 
+    //TODO remove on next major release
+    @Deprecated
     public List<ExecutionCourse> getExecutionCourses(final CurricularYear curricularYear,
             final ExecutionSemester executionSemester) {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
@@ -1202,7 +1204,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
             final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
             if (executionDegree != null) {
-                result.addAll(responsible ? executionDegree.getResponsibleCoordinators() : executionDegree.getCoordinatorsListSet());
+                result.addAll(responsible ? executionDegree.getResponsibleCoordinators() : executionDegree
+                        .getCoordinatorsListSet());
             }
         }
 
@@ -1417,7 +1420,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         if (!elections.isEmpty()) {
             lastYearDelegateElection =
                     Collections
-                    .max(elections, DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE_AND_CANDIDACY_START_DATE);
+                            .max(elections, DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE_AND_CANDIDACY_START_DATE);
         }
         return lastYearDelegateElection;
     }

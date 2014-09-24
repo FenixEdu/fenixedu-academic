@@ -11,7 +11,7 @@
     <groupId>pt.ist</groupId>
     <artifactId>fenix</artifactId>
     <packaging>jar</packaging>
-    <version>3.12.2</version>
+    <version>3.12.3</version>
 
     <name>FenixEdu Core</name>
     <url>http://fenixedu.org</url>

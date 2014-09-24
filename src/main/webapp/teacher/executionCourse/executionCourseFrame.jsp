@@ -24,7 +24,15 @@
 <c:set var="base" value="${pageContext.request.contextPath}/teacher" />
 
 <div class="row">
-	<nav class="col-sm-2" id="context">
+	<main class="col-sm-10 col-sm-push-2">
+		<ol class="breadcrumb">
+			<em>${executionCourse.name} - ${executionCourse.executionPeriod.qualifiedName}
+				(<c:forEach var="degree" items="${executionCourse.degreesSortedByDegreeName}"> ${degree.sigla} </c:forEach>)
+			</em>
+		</ol>
+		<jsp:include page="${teacher$actual$page}" />
+	</main>
+	<nav class="col-sm-2 col-sm-pull-10" id="context">
 		<ul class="nav nav-pills nav-stacked">
 			<li class="navheader">
 				<strong>${executionCourse.prettyAcronym}</strong>
@@ -186,12 +194,4 @@
 			</c:if>
 		</ul>
 	</nav>
-	<main class="col-sm-10">
-		<ol class="breadcrumb">
-			<em>${executionCourse.name} - ${executionCourse.executionPeriod.qualifiedName}
-				(<c:forEach var="degree" items="${executionCourse.degreesSortedByDegreeName}"> ${degree.sigla} </c:forEach>)
-			</em>
-		</ol>
-		<jsp:include page="${teacher$actual$page}" />
-	</main>
 </div>
