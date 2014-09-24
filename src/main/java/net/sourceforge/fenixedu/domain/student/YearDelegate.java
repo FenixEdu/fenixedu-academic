@@ -24,8 +24,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -55,7 +58,31 @@ public class YearDelegate extends YearDelegate_Base {
     }
 
     public Collection<ExecutionCourse> getDelegatedExecutionCourses(final ExecutionSemester executionSemester) {
-        return getDegree().getExecutionCourses(getCurricularYear(), executionSemester);
+        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        for (final DegreeCurricularPlan degreeCurricularPlan : getDegree().getDegreeCurricularPlansSet()) {
+            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
+                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
+                    if (executionSemester == executionCourse.getExecutionPeriod()) {
+                        for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
+                            if (scope.isActiveForExecutionPeriod(executionSemester)
+                                    && scope.getCurricularYear() == getCurricularYear().getYear()) {
+                                if (scope.getCurricularSemester() == executionSemester.getSemester()) {
+                                    result.add(executionCourse);
+                                    break;
+                                } else
+                                //even if it hasn't an active scope in one of the curricular semesters, 
+                                //it must appear to the delegate since it's an annual course 
+                                if (course.isAnual(executionSemester.getExecutionYear())) {
+                                    result.add(executionCourse);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     public boolean hasInquiriesToAnswer(final ExecutionSemester executionSemester) {
