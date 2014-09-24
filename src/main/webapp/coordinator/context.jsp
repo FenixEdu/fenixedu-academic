@@ -67,16 +67,6 @@
                     <bean:message key="link.coordinator.degreeCurricularPlan.scientificCommissionTeam"/>
                   </a>
                 </li>
-                <li>
-                  <a href="${base}/degreeSiteManagement.do?method=subMenu&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.coordinator.degreeSite.management"/>
-                  </a>
-                </li>
-                <li>
-                  <a href="${base}/announcementsManagement.do?method=viewBoards&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="label.coordinator.degreeSite.announcements"/>
-                  </a>
-                </li>
                 <c:if test="${degree.bolonhaDegree}">
                   <li>
                     <a href="${base}/degreeCurricularPlan/showDegreeCurricularPlanBolonha.faces?degreeCurricularPlanID=${dcp}&organizeBy=groups&showRules=false&hideCourses=false">
