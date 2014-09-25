@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication.PersonalAreaApp;
+import net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA.EmergencyContactBean;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,7 +37,7 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @StrutsFunctionality(app = PersonalAreaApp.class, descriptionKey = "label.person.visualizeInformation", path = "information",
-        titleKey = "label.person.visualizeInformation")
+titleKey = "label.person.visualizeInformation")
 @Mapping(path = "/visualizePersonalInfo", module = "person", parameter = "/person/visualizePersonalInfo.jsp")
 public class VisualizePersonalInfo extends ForwardAction {
 
@@ -44,7 +45,9 @@ public class VisualizePersonalInfo extends ForwardAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         PersonBean person = new PersonBean(getLoggedUser());
+        EmergencyContactBean emergencyContactBean = new EmergencyContactBean(getLoggedUser());
         request.setAttribute("personBean", person);
+        request.setAttribute("emergencyContactBean", emergencyContactBean);
         return super.execute(mapping, form, request, response);
     }
 

@@ -4384,7 +4384,8 @@ public class Person extends Person_Base {
     public boolean hasPersonRoles(Role role) {
         return getPersonRolesSet().contains(role);
     }
-
+    
+    @Atomic
     public void ensureUserProfile() {
         if (getProfile() == null) {
             String givenNames = super.getGivenNames();
