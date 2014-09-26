@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.FirstTimeInstitutionStudentsPaymentPlanRule;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.HasEnrolmentsForExecutionSemesterPaymentPlanRule;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.IsAlienRule;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
@@ -51,7 +52,8 @@ public class FullGratuityPaymentPlanForAliens extends FullGratuityPaymentPlanFor
     protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
         return Arrays.asList(
                 PaymentPlanRuleFactory.create(IsAlienRule.class),
-                PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class)
+                PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class),
+                PaymentPlanRuleFactory.create(FirstTimeInstitutionStudentsPaymentPlanRule.class)
         );
     }
 
