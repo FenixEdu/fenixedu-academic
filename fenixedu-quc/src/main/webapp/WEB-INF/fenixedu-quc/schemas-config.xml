@@ -19,6 +19,9 @@
 
 -->
 
+<!DOCTYPE schemas SYSTEM "../fenix-renderers-schemas.dtd">
+
+<schemas>
 <schema name="net.sourceforge.fenixedu.domain.inquiry.SelectInquiryResponsePeriod.edit"
 		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryDefinitionPeriodBean" bundle="INQUIRIES_RESOURCES">
 	<slot name="responsePeriodType" layout="menu-select-postback">
@@ -128,3 +131,4 @@
         </validator>			
 	</slot>
 </schema>
+</schemas>
