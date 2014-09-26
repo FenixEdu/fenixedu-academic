@@ -120,10 +120,6 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
         ExecutionCourse sourceExecutionCourse = degreeBean.getSourceExecutionCourse();
         ExecutionCourse destinationExecutionCourse = degreeBean.getDestinationExecutionCourse();
 
-        String sourceExecutionCourseId = sourceExecutionCourse.getExternalId();
-
-        String destinationExecutionCourseId = destinationExecutionCourse.getExternalId();
-
         Boolean error = false;
 
         String sourceName = sourceExecutionCourse.getName() + " [" + sourceExecutionCourse.getDegreePresentationString() + "]";
@@ -134,7 +130,7 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
                         + destinationExecutionCourse.getExecutionPeriod().getYear();
 
         try {
-            MergeExecutionCourses.runMergeExecutionCourses(destinationExecutionCourseId, sourceExecutionCourseId);
+            MergeExecutionCourses.merge(destinationExecutionCourse, sourceExecutionCourse);
         } catch (DomainException ex) {
             error = true;
             addActionMessage("error", request, ex.getMessage());
