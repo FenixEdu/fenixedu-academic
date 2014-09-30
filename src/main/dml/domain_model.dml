@@ -120,7 +120,6 @@ enum net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSitua
 enum net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType                                 as DocumentPurposeType;
 enum net.sourceforge.fenixedu.domain.student.EnrolmentModel                                                               as EnrolmentModel;
 enum net.sourceforge.fenixedu.domain.student.MobilityProgram                                                              as MobilityProgram;
-enum net.sourceforge.fenixedu.domain.student.RegistrationAgreement                                                        as RegistrationAgreement;
 enum net.sourceforge.fenixedu.domain.student.RegistrationRegimeType                                                       as RegistrationRegimeType;
 enum net.sourceforge.fenixedu.domain.student.StudentStatuteType                                                           as StudentStatuteType;
 enum net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                                                 as Specialization;
@@ -4178,9 +4177,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     }
     
     class student.RegistrationProtocol  {
-        // TODO : delete this slot on next major version
-        RegistrationAgreement registrationAgreement;
-
         String code;
         Boolean enrolmentByStudentAllowed;
         Boolean payGratuity;
@@ -5204,11 +5200,6 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     	String receptionEmailBody;
     }
     
-    // TODO : delete this class on next major version 
-    class institutionalRelations.academic.Program  {
-    	RegistrationAgreement registrationAgreement;
-    }
-    
     class candidacyProcess.mobility.MobilityQuota  {
     	Integer numberOfOpenings;
     }
@@ -5220,7 +5211,7 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     class candidacyProcess.mobility.MobilityAgreement  {
     }
     
-    class candidacyProcess.mobility.MobilityProgram extends institutionalRelations.academic.Program {
+    class candidacyProcess.mobility.MobilityProgram {
     }
     
     class candidacyProcess.mobility.MobilityEmailTemplate  {
@@ -6377,8 +6368,6 @@ class inquiries.InquiryAnswer  {
         Integer numberOfEnrolments;
         Boolean committedFraud;
         InquiryGradesInterval grade;
-        // TODO : delete this slot on next major version
-        RegistrationAgreement studentType;
         InquiryGradesInterval entryGrade;
         Long answerDuration;
         
@@ -15765,11 +15754,10 @@ relation MobilityEmailTemplateRootDomainObject {
 
 relation ProgramRootDomainObject {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	institutionalRelations.academic.Program playsRole programs {
+	candidacyProcess.mobility.MobilityProgram playsRole programs {
 		multiplicity *;
 	}
 }
-	
 
 relation RootDomainObjectCerimonyInquiry {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;

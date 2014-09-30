@@ -205,25 +205,10 @@ public class Registration extends Registration_Base {
         this(person, degreeCurricularPlan, RegistrationProtocol.getDefault(), cycleType, null);
     }
 
-    @Deprecated
-    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear) {
-        this(person, degreeCurricularPlan, RegistrationProtocol.serveRegistrationProtocol(agreement), cycleType, executionYear);
-    }
-
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
             final RegistrationProtocol protocol, final CycleType cycleType, final ExecutionYear executionYear) {
         this(person, null, protocol, executionYear, degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null);
         createStudentCurricularPlan(person, degreeCurricularPlan, cycleType, executionYear);
-    }
-
-    @Deprecated
-    public static Registration createRegistrationWithCustomStudentNumber(final Person person,
-            final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy studentCandidacy,
-            final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear,
-            Integer studentNumber) {
-        return createRegistrationWithCustomStudentNumber(person, degreeCurricularPlan, studentCandidacy,
-                RegistrationProtocol.serveRegistrationProtocol(agreement), cycleType, executionYear, studentNumber);
     }
 
     public static Registration createRegistrationWithCustomStudentNumber(final Person person,
@@ -242,23 +227,9 @@ public class Registration extends Registration_Base {
         return registration;
     }
 
-    @Deprecated
-    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy candidacy,
-            final RegistrationAgreement agreement, final CycleType cycleType) {
-        this(person, degreeCurricularPlan, candidacy, RegistrationProtocol.serveRegistrationProtocol(agreement), cycleType);
-    }
-
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy candidacy,
             final RegistrationProtocol protocol, final CycleType cycleType) {
         this(person, degreeCurricularPlan, candidacy, protocol, cycleType, null);
-    }
-
-    @Deprecated
-    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final StudentCandidacy studentCandidacy, final RegistrationAgreement agreement, final CycleType cycleType,
-            final ExecutionYear executionYear) {
-        this(person, degreeCurricularPlan, studentCandidacy, RegistrationProtocol.serveRegistrationProtocol(agreement),
-                cycleType, executionYear);
     }
 
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
@@ -3308,11 +3279,6 @@ public class Registration extends Registration_Base {
 
     }
 
-    @Deprecated
-    final public void setRegistrationAgreement(RegistrationAgreement agreement) {
-        setRegistrationProtocol(agreement == null ? null : RegistrationProtocol.serveRegistrationProtocol(agreement));
-    }
-
     final public boolean hasGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
             if (studentCurricularPlan.hasGratuityEvent(executionYear, type)) {
@@ -3449,11 +3415,6 @@ public class Registration extends Registration_Base {
         final SortedSet<ExternalEnrolment> result = new TreeSet<ExternalEnrolment>(ExternalEnrolment.COMPARATOR_BY_NAME);
         result.addAll(getExternalEnrolmentsSet());
         return result;
-    }
-
-    @Deprecated
-    public RegistrationAgreement getRegistrationAgreement() {
-        return super.getRegistrationProtocol().getRegistrationAgreement();
     }
 
     public Registration getSourceRegistrationForTransition() {

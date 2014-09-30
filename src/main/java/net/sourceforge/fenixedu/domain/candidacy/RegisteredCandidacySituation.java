@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
@@ -40,13 +39,6 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 
     public RegisteredCandidacySituation(Candidacy candidacy, Person person) {
         this(candidacy, person, null, null);
-    }
-
-    @Deprecated
-    public RegisteredCandidacySituation(Candidacy candidacy, RegistrationAgreement registrationAgreement, CycleType cycleType,
-            Ingression ingression, EntryPhase entryPhase, Integer studentNumber) {
-        this(candidacy, RegistrationProtocol.serveRegistrationProtocol(registrationAgreement), cycleType, ingression, entryPhase,
-                studentNumber);
     }
 
     public RegisteredCandidacySituation(Candidacy candidacy, RegistrationProtocol registrationProtocol, CycleType cycleType,

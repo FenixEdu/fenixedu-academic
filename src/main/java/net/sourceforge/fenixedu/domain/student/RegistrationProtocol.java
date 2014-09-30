@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import java.util.Comparator;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
@@ -90,28 +89,6 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
         setAttemptAlmaMatterFromPrecedent(attemptAlmaMatterFromPrecedent);
     }
 
-    @Deprecated
-    public RegistrationProtocol(RegistrationAgreement ra) {
-        this(ra.getName(), ra.getDescriptionLocalized(), ra.isEnrolmentByStudentAllowed(), ra.isToPayGratuity(), ra
-                .allowsIDCard(), ra.isOnlyAllowedDegreeEnrolment(), ra.isAlien(), RegistrationAgreement.EXEMPTED_AGREEMENTS
-                .contains(ra), RegistrationAgreement.MOBILITY_AGREEMENTS.contains(ra), ra.isMilitaryAgreement(), ra
-                .allowDissertationCandidacyWithoutChecks(), ra.isForOfficialMobilityReporting(), ra
-                .attemptAlmaMatterFromPrecedent());
-        setRegistrationAgreement(ra);
-    }
-
-    @Deprecated
-    @Atomic
-    public static RegistrationProtocol serveRegistrationProtocol(RegistrationAgreement registrationAgreement) {
-        Set<RegistrationProtocol> dataset = Bennu.getInstance().getRegistrationProtocolsSet();
-        for (RegistrationProtocol iter : dataset) {
-            if (iter.getRegistrationAgreement().name().equals(registrationAgreement.name())) {
-                return iter;
-            }
-        }
-        return new RegistrationProtocol(registrationAgreement);
-    }
-
     @Atomic
     public void addSupervisor(Person supervisor) {
         this.addSupervisors(supervisor);
@@ -120,54 +97,6 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
     @Atomic
     public void removeSupervisor(Person supervisor) {
         this.removeSupervisors(supervisor);
-    }
-
-    // WTF_1 ?
-    public boolean equals(RegistrationProtocol myOtherSelf) {
-        return (this == myOtherSelf);
-    }
-
-    // WTF_2 ?
-    public boolean equals(RegistrationAgreement myOtherSoul) {
-        return this.getRegistrationAgreement().name().equals(myOtherSoul.name());
-    }
-
-    @Deprecated
-    @Override
-    public RegistrationAgreement getRegistrationAgreement() {
-        return super.getRegistrationAgreement();
-    }
-
-    @Deprecated
-    @Override
-    public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-        super.setRegistrationAgreement(registrationAgreement);
-    }
-
-    @Deprecated
-    @Atomic
-    public static boolean importAndSyncFromRegistrationAgreements() {
-        boolean needsMigration = false;
-        for (final RegistrationAgreement agreement : RegistrationAgreement.values()) {
-            final RegistrationProtocol protocol = serveRegistrationProtocol(agreement);
-            if (protocol.getDescription() == null) {
-                needsMigration = true;
-                protocol.setDescription(agreement.getDescriptionLocalized());
-                protocol.setCode(agreement.getName());
-                protocol.setEnrolmentByStudentAllowed(agreement.isEnrolmentByStudentAllowed());
-                protocol.setPayGratuity(agreement.isToPayGratuity());
-                protocol.setAllowsIDCard(agreement.allowsIDCard());
-                protocol.setOnlyAllowedDegreeEnrolment(agreement.isOnlyAllowedDegreeEnrolment());
-                protocol.setAlien(agreement.isAlien());
-                protocol.setAllowDissertationCandidacyWithoutChecks(agreement.allowDissertationCandidacyWithoutChecks());
-                protocol.setMobility(RegistrationAgreement.MOBILITY_AGREEMENTS.contains(agreement));
-                protocol.setExempted(RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(agreement));
-                protocol.setMilitary(agreement.isMilitaryAgreement());
-                protocol.setForOfficialMobilityReporting(agreement.isForOfficialMobilityReporting());
-                protocol.setAttemptAlmaMatterFromPrecedent(agreement.attemptAlmaMatterFromPrecedent());
-            }
-        }
-        return needsMigration;
     }
 
     public static RegistrationProtocol getDefault() {

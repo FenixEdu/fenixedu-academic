@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.Money;
@@ -156,17 +155,6 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public void setRegistrationProtocol(final RegistrationProtocol registrationProtocol) {
         this.registrationProtocol = registrationProtocol;
-    }
-
-    @Deprecated
-    public RegistrationAgreement getRegistrationAgreement() {
-        return registrationProtocol == null ? null : registrationProtocol.getRegistrationAgreement();
-    }
-
-    @Deprecated
-    public void setRegistrationAgreement(final RegistrationAgreement registrationAgreement) {
-        registrationProtocol =
-                registrationAgreement == null ? null : RegistrationProtocol.serveRegistrationProtocol(registrationAgreement);
     }
 
     public DocumentRequestType getChosenDocumentRequestType() {

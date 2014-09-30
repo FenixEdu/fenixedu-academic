@@ -19,16 +19,11 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -77,23 +72,9 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
         return courseAnswer;
     }
 
-    @Deprecated
-    @Override
-    public RegistrationAgreement getStudentType() {
-        return super.getStudentType();
-    }
-
-    @Deprecated
-    @Override
-    public void setStudentType(RegistrationAgreement studentType) {
-        super.setStudentType(studentType);
-        super.setRegistrationProtocol(studentType == null ? null : RegistrationProtocol.serveRegistrationProtocol(studentType));
-    }
-
     @Override
     public void setRegistrationProtocol(final RegistrationProtocol registrationProtocol) {
         super.setRegistrationProtocol(registrationProtocol);
-        super.setStudentType(registrationProtocol == null ? null : registrationProtocol.getRegistrationAgreement());
     }
 
     public static int getNumberOfEnrolments(final StudentInquiryRegistry inquiryRegistry) {
@@ -103,35 +84,4 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
         final int numberOfEnrolments = studentCurricularPlan.getEnrolments(inquiryRegistry.getCurricularCourse()).size();
         return numberOfEnrolments;
     }
-
-    @Deprecated
-    @Atomic
-    public static void connectToRegistrationProtocols() {
-        for (final ExecutionYear year : Bennu.getInstance().getExecutionYearsSet()) {
-            for (final ExecutionSemester semester : year.getExecutionPeriodsSet()) {
-                final Thread t = new Thread() {
-                    @Override
-                    @Atomic
-                    public void run() {
-                        for (final ExecutionCourse course : semester.getAssociatedExecutionCoursesSet()) {
-                            for (final InquiryCourseAnswer inquiryCourseAnswer : course.getInquiryCourseAnswersSet()) {
-                                final RegistrationAgreement studentType = inquiryCourseAnswer.getStudentType();
-                                if (studentType != null && inquiryCourseAnswer.getRegistrationProtocol() == null) {
-                                    inquiryCourseAnswer.setRegistrationProtocol(RegistrationProtocol
-                                            .serveRegistrationProtocol(studentType));
-                                }
-                            }
-                        }
-                    }
-                };
-                t.start();
-                try {
-                    t.join();
-                } catch (final InterruptedException e) {
-                    throw new Error(e);
-                }
-            }
-        }
-    }
-
 }

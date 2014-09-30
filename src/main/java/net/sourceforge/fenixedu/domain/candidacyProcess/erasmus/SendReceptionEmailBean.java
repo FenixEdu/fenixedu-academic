@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplica
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
-import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -57,16 +56,13 @@ public class SendReceptionEmailBean implements java.io.Serializable {
 
     // Look for erasmus program
     private MobilityProgram findSomeDefaultMobilityProgram() {
-        for (final Program program : Bennu.getInstance().getProgramsSet()) {
-            if (program instanceof MobilityProgram) {
-                final MobilityProgram mobilityProgram = (MobilityProgram) program;
-                final RegistrationProtocol protocol = mobilityProgram.getRegistrationProtocol();
-                if (!protocol.isEnrolmentByStudentAllowed() && !protocol.isToPayGratuity() && protocol.allowsIDCard()
-                        && !protocol.isOnlyAllowedDegreeEnrolment() && !protocol.isAlien()
-                        && protocol.allowDissertationCandidacyWithoutChecks() && !protocol.isForOfficialMobilityReporting()
-                        && !protocol.attemptAlmaMatterFromPrecedent()) {
-                    return mobilityProgram;
-                }
+        for (final MobilityProgram mobilityProgram : Bennu.getInstance().getProgramsSet()) {
+            final RegistrationProtocol protocol = mobilityProgram.getRegistrationProtocol();
+            if (!protocol.isEnrolmentByStudentAllowed() && !protocol.isToPayGratuity() && protocol.allowsIDCard()
+                    && !protocol.isOnlyAllowedDegreeEnrolment() && !protocol.isAlien()
+                    && protocol.allowDissertationCandidacyWithoutChecks() && !protocol.isForOfficialMobilityReporting()
+                    && !protocol.attemptAlmaMatterFromPrecedent()) {
+                return mobilityProgram;
             }
         }
         return null;

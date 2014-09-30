@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
-import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -37,14 +36,11 @@ public class MobilityProgramProvider implements AutoCompleteProvider<MobilityPro
     public Collection<MobilityProgram> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         final String nvalue = StringNormalizer.normalize(value);
         final List<MobilityProgram> result = new ArrayList<MobilityProgram>();
-        for (final Program program : Bennu.getInstance().getProgramsSet()) {
-            if (program.isMobility()) {
-                final MobilityProgram mobilityProgram = (MobilityProgram) program;
-                final RegistrationProtocol protocol = mobilityProgram.getRegistrationProtocol();
-                final String name = StringNormalizer.normalize(protocol.getCode());
-                if (name.indexOf(nvalue) >= 0) {
-                    result.add(mobilityProgram);
-                }
+        for (final MobilityProgram mobilityProgram : Bennu.getInstance().getProgramsSet()) {
+            final RegistrationProtocol protocol = mobilityProgram.getRegistrationProtocol();
+            final String name = StringNormalizer.normalize(protocol.getCode());
+            if (name.indexOf(nvalue) >= 0) {
+                result.add(mobilityProgram);
             }
         }
         return result;

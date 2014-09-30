@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 
 public class ManageExternalSupervisionBean implements Serializable {
@@ -46,16 +45,6 @@ public class ManageExternalSupervisionBean implements Serializable {
 
     public void setRegistrationProtocol(RegistrationProtocol registrationProtocol) {
         this.registrationProtocol = registrationProtocol;
-    }
-
-    @Deprecated
-    public RegistrationAgreement getRegistrationAgreement() {
-        return registrationProtocol == null ? null : registrationProtocol.getRegistrationAgreement();
-    }
-
-    @Deprecated
-    public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-        throw new Error("This is not the method you are looking for. Go back to the dark side from whence you came.");
     }
 
     public Person getNewSupervisor() {

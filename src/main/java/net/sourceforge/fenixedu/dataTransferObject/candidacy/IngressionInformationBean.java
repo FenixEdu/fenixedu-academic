@@ -22,7 +22,6 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 
 import org.joda.time.YearMonthDay;
@@ -53,28 +52,13 @@ public class IngressionInformationBean implements Serializable {
         requestAgreementInformation = false;
     }
 
-    @Deprecated
-    public RegistrationAgreement getRegistrationAgreement() {
-        return registrationProtocol == null ? null : registrationProtocol.getRegistrationAgreement();
-    }
-
     public RegistrationProtocol getRegistrationProtocol() {
         return registrationProtocol;
-    }
-
-    @Deprecated
-    public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-        setRegistrationProtocol(RegistrationProtocol.serveRegistrationProtocol(registrationAgreement));
     }
 
     public void setRegistrationProtocol(RegistrationProtocol registrationProtocol) {
         this.registrationProtocol = registrationProtocol;
         this.requestAgreementInformation = registrationProtocol != null && registrationProtocol.isMilitaryAgreement();
-    }
-
-    @Deprecated
-    public boolean hasRegistrationAgreement() {
-        return getRegistrationAgreement() != null;
     }
 
     public boolean hasRegistrationProtocol() {

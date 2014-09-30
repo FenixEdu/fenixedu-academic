@@ -260,7 +260,7 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
         } else {
             if ((getSelectedCurricularCourses() == null || getSelectedCurricularCourses().isEmpty())
                     || (!getSelectedCurricularCourses().isEmpty() && getDegree() == getMostDominantDegreeFromCourses())
-                    || getMobilityStudentDataBean().getSelectedMobilityProgram().getRegistrationAgreement()
+                    || getMobilityStudentDataBean().getSelectedMobilityProgram().getRegistrationProtocol()
                             .isOnlyAllowedDegreeEnrolment()) {
                 selectedDegree = getDegree();
             } else {

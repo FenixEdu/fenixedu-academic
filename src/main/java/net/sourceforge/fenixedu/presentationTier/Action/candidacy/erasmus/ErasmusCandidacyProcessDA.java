@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplica
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
@@ -393,11 +392,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
         public Object provide(Object arg0, Object arg1) {
             final Set<MobilityProgram> mobilityPrograms =
                     new TreeSet<MobilityProgram>(MobilityProgram.COMPARATOR_BY_REGISTRATION_AGREEMENT);
-            for (Program program : Bennu.getInstance().getProgramsSet()) {
-                if (program instanceof MobilityProgram) {
-                    mobilityPrograms.add((MobilityProgram) program);
-                }
-            }
+            mobilityPrograms.addAll(Bennu.getInstance().getProgramsSet());
             return mobilityPrograms;
         }
 

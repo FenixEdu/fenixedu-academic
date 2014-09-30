@@ -21,13 +21,11 @@ package net.sourceforge.fenixedu.dataTransferObject.academicAdministration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegimeType;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
@@ -79,19 +77,6 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     public void setRegistrationProtocols(List<RegistrationProtocol> registrationProtocols) {
         this.registrationProtocols = registrationProtocols;
-    }
-
-    @Deprecated
-    public List<RegistrationAgreement> getRegistrationAgreements() {
-        return registrationProtocols == null ? null : registrationProtocols.stream().map(rp -> rp.getRegistrationAgreement())
-                .collect(Collectors.toList());
-    }
-
-    @Deprecated
-    public void setRegistrationAgreements(List<RegistrationAgreement> registrationAgreements) {
-        this.registrationProtocols =
-                registrationAgreements == null ? null : registrationAgreements.stream()
-                        .map(ra -> RegistrationProtocol.serveRegistrationProtocol(ra)).collect(Collectors.toList());
     }
 
     public List<RegistrationStateType> getRegistrationStateTypes() {
