@@ -91,8 +91,8 @@
 	<slot name="studentsRatio" key="label.studentsPercentage" />
 </schema>
 
-<schema name="teacher.viewStudentsByTutor" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Tutorship">
-	<slot name="studentCurricularPlan.registration" key="label.studentNumber" layout="link">
+<schema name="teacher.viewStudentsByTutor" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorshipBean">
+	<slot name="tutorship.studentCurricularPlan.registration" key="label.studentNumber" layout="link">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="blankTarget" value="true"/>
@@ -100,17 +100,17 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="registration.number"/>
 	</slot>
-	<slot name="studentCurricularPlan.person.name" key="label.name" />
-	<slot name="studentCurricularPlan.registration.startExecutionYear.year" key="label.entryYear" />
-	<slot name="studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla" />
-	<slot name="studentCurricularPlan.person.phone" key="label.phone" />
-	<slot name="studentCurricularPlan.registration.studentCandidacy.dislocatedFromPermanentResidence" key="label.dislocatedFromPermanentResidence" />
-	<slot name="studentCurricularPlan.person" key="label.email" layout="link">
+	<slot name="tutorship.studentCurricularPlan.person.name" key="label.name" />
+	<slot name="tutorship.studentCurricularPlan.registration.startExecutionYear.year" key="label.entryYear" />
+	<slot name="tutorship.studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla" />
+	<slot name="tutorship.studentCurricularPlan.person.phone" key="label.phone" />
+	<slot name="isDislocatedFromPermanentResidence" key="label.dislocatedFromPermanentResidence" />
+	<slot name="tutorship.studentCurricularPlan.person" key="label.email" layout="link">
 		<property name="linkFormat" value="mailto:${institutionalOrDefaultEmailAddressValue}"/>
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="teacher.person.email" />
 	</slot>
-	<slot name="endDate" key="label.tutorship.endDate"/>
+	<slot name="tutorship.endDate" key="label.tutorship.endDate"/>
 </schema>
 
 <schema name="teacher.person.email" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">

@@ -21,6 +21,7 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.tutor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -29,7 +30,7 @@ import net.sourceforge.fenixedu.domain.Tutorship;
 public class StudentsByTutorBean implements Serializable {
     private Teacher teacher;
     private ExecutionYear studentsEntryYear = null;
-    private List<Tutorship> studentsList = new ArrayList<Tutorship>();
+    private List<TutorshipBean> studentsList = new ArrayList<TutorshipBean>();
 
     public StudentsByTutorBean(Teacher teacher) {
         setTeacher(teacher);
@@ -57,7 +58,7 @@ public class StudentsByTutorBean implements Serializable {
         this.studentsEntryYear = studentsEntryYear;
     }
 
-    public List<Tutorship> getStudentsList() {
+    public List<TutorshipBean> getStudentsList() {
         return studentsList;
     }
 
@@ -74,7 +75,6 @@ public class StudentsByTutorBean implements Serializable {
     }
 
     public void setStudentsList(List<Tutorship> students) {
-        studentsList = new ArrayList<Tutorship>();
-        studentsList.addAll(students);
+        studentsList = (students.stream().map(x -> new TutorshipBean(x)).collect(Collectors.toList()));
     }
 }

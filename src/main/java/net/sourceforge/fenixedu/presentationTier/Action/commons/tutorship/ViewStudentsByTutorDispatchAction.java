@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorTutorshipsHistoryBean;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorshipBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
@@ -52,7 +53,7 @@ public abstract class ViewStudentsByTutorDispatchAction extends FenixDispatchAct
         }
     }
 
-    protected List<StudentsByTutorBean> getTutorshipsByEntryYear(List<Tutorship> tutorships) {
+    private List<StudentsByTutorBean> getTutorshipsByEntryYear(List<Tutorship> tutorships) {
         Map<ExecutionYear, StudentsByTutorBean> tutorshipsMapByEntryYear = new HashMap<ExecutionYear, StudentsByTutorBean>();
 
         for (final Tutorship tutorship : tutorships) {
@@ -61,8 +62,8 @@ public abstract class ViewStudentsByTutorDispatchAction extends FenixDispatchAct
             if (!tutorship.getStudentCurricularPlan().getRegistration().isCanceled()) {
                 if (tutorshipsMapByEntryYear.containsKey(entryYear)) {
                     StudentsByTutorBean studentsByTutorBean = tutorshipsMapByEntryYear.get(entryYear);
-                    studentsByTutorBean.getStudentsList().add(tutorship);
-                    Collections.sort(studentsByTutorBean.getStudentsList(), Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
+                    studentsByTutorBean.getStudentsList().add(new TutorshipBean(tutorship));
+                    Collections.sort(studentsByTutorBean.getStudentsList(), TutorshipBean.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
                 } else {
                     List<Tutorship> studentsByEntryYearList = new ArrayList<Tutorship>();
                     studentsByEntryYearList.add(tutorship);
