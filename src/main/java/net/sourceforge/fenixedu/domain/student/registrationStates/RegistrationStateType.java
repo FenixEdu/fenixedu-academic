@@ -43,7 +43,7 @@ public enum RegistrationStateType {
 
     INTERRUPTED(false, false),
 
-    SCHOOLPARTCONCLUDED(true, true),
+    SCHOOLPARTCONCLUDED(false, true),
 
     INTERNAL_ABANDON(false, false),
 

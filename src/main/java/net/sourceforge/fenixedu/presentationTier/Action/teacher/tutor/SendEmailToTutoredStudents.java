@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorshipBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
@@ -64,8 +65,8 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
         List<Recipient> recipients = new ArrayList<Recipient>();
 
         if (receivers != null) {
-            for (Tutorship tutorship : receivers.getStudentsList()) {
-                Person person = tutorship.getStudent().getPerson();
+            for (TutorshipBean tutorshipBean : receivers.getStudentsList()) {
+                Person person = tutorshipBean.getTutorship().getStudent().getPerson();
                 recipients.add(Recipient.newInstance(person.getName(), UserGroup.of(person.getUser())));
             }
         }

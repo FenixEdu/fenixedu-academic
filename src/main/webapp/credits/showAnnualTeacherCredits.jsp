@@ -541,7 +541,7 @@ $(document).ready(function() {
 				</fr:schema>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
-				    <fr:property name="link(edit)" value="/creditsReductions.do?method=editCreditsReduction" />
+				    <fr:property name="link(edit)" value="/membersCreditsReductions.do?method=editCreditsReduction" />
 					<fr:property name="key(edit)" value="label.edit" />
 					<fr:property name="param(edit)" value="executionPeriod.externalId/executionPeriodOID,teacher.externalId/teacherOID" />
 					<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />

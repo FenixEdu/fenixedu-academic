@@ -294,7 +294,7 @@
 	<slot name="type">
 		<property name="readOnly" value="true" />
 	</slot>
-	<slot name="value">
+	<slot name="value" key="label.partyContacts.EmailAddress">
 		<property name="readOnly" value="true" />
 	</slot>
 </schema>

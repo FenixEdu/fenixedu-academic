@@ -42,8 +42,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.Interval;
 
 public class AnnualTeachingCreditsByPeriodBean implements Serializable {
-    private ExecutionSemester executionPeriod;
-    private Teacher teacher;
+    private final ExecutionSemester executionPeriod;
+    private final Teacher teacher;
     private Boolean showTeacherCreditsLockedMessage = false;
     private Boolean showTeacherCreditsUnlockedMessage = false;
     private Boolean canLockTeacherCredits = false;
@@ -73,7 +73,7 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
             setShowTeacherCreditsLockedMessage(isLocked);
             setShowTeacherCreditsUnlockedMessage(!isLocked);
             ReductionService creditsReductionService = getCreditsReductionService();
-            setCanEditTeacherCreditsReductions(roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) ? false : getCanEditTeacherCredits()
+            setCanEditTeacherCreditsReductions(roleType.equals(RoleType.DEPARTMENT_MEMBER) && getCanEditTeacherCredits()
                     && (creditsReductionService == null || creditsReductionService.getAttributionDate() == null));
             setCanEditTeacherManagementFunctions(roleType.equals(RoleType.DEPARTMENT_MEMBER) ? false : getCanEditTeacherCredits());
         }

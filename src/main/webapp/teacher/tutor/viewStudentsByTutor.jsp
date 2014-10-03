@@ -80,11 +80,11 @@
 					<fr:layout>
 						<fr:property name="classes" value="tstyle1 thlight mtop0 mbottom15 tdcenter"/>
 						<fr:property name="columnClasses" value=",aleft,,,"/>
-						<fr:property name="linkFormat(edit)" value="/viewStudentsByTutor.do?method=editStudent&studentID=${student.student.externalId}&registrationID=${student.externalId}" />
+						<fr:property name="linkFormat(edit)" value="/viewStudentsByTutor.do?method=editStudent&studentID=${tutorship.student.student.externalId}&registrationID=${tutorship.student.externalId}" />
 						<fr:property name="key(edit)" value="link.edit"/>
 						<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES"/>
 						<fr:property name="contextRelative(edit)" value="true"/>
-						<fr:property name="visibleIf(edit)" value="tutorshipLogEditable"/>
+						<fr:property name="visibleIf(edit)" value="tutorship.tutorshipLogEditable"/>
 					</fr:layout>
 				</fr:view>
 			</logic:notPresent>
@@ -102,11 +102,11 @@
 					<fr:layout>
 						<fr:property name="classes" value="tstyle1 thlight mtop0 mbottom15 tdcenter"/>
 						<fr:property name="columnClasses" value=",aleft,,,"/>
-						<fr:property name="linkFormat(edit)" value="/viewStudentsByTutor.do?method=editStudent&studentID=${student.student.externalId}&registrationID=${student.externalId}" />
+						<fr:property name="linkFormat(edit)" value="/viewStudentsByTutor.do?method=editStudent&studentID=${tutorship.student.student.externalId}&registrationID=${tutorship.student.externalId}" />
 						<fr:property name="key(edit)" value="link.edit"/>
 						<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES"/>
 						<fr:property name="contextRelative(edit)" value="true"/>
-						<fr:property name="visibleIf(edit)" value="tutorshipLogEditable"/>
+						<fr:property name="visibleIf(edit)" value="tutorship.tutorshipLogEditable"/>
 					</fr:layout>
 				</fr:view>
 			</logic:equal>

@@ -553,7 +553,7 @@
 					<div id="invalidaddress" class="error" style="display: none;"><bean:message bundle="CANDIDATE_RESOURCES" key="label.invalid.address"/></div>
 				</logic:present>
 				<logic:notPresent name="uploadBean">
-					<%= genericApplication.getAddress().replace("\n", "<br>") %>
+					<%= genericApplication.getAddress() != null ? genericApplication.getAddress().replace("\n", "<br>") : "<br/>"%>
 				</logic:notPresent>				
 			</td>
 		</tr>
