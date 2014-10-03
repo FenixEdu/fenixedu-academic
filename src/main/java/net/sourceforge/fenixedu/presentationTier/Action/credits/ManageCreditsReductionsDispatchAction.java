@@ -26,13 +26,20 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.credits.departmentMember.DepartmentMemberViewTeacherCreditsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@Mapping(module = "departmentMember", path = "/membersCreditsReductions",
+        functionality = DepartmentMemberViewTeacherCreditsDA.class)
+@Forwards(@Forward(name = "editReductionService", path = "/credits/degreeTeachingService/editCreditsReduction.jsp"))
 public class ManageCreditsReductionsDispatchAction extends FenixDispatchAction {
 
     public ActionForward editCreditsReduction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
