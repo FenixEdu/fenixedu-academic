@@ -32,12 +32,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.core.domain.UserProfile;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.Atomic;
 
 @Mapping(module = "person", path = "/updateEmergencyContact", functionality = VisualizePersonalInfo.class)
 @Forwards({ @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp") })
@@ -59,7 +57,6 @@ public class UpdateEmergencyContactDA extends FenixDispatchAction {
         }
 
         public EmergencyContactBean(Person loggedUser) {
-            loggedUser.ensureUserProfile();
             EmergencyContact emergencyContact = loggedUser.getProfile().getEmergencyContact();
             if (emergencyContact != null) {
                 setContact(emergencyContact.getContact());
@@ -81,9 +78,7 @@ public class UpdateEmergencyContactDA extends FenixDispatchAction {
         Person person = getLoggedPerson(request);
 
         try {
-            person.ensureUserProfile();
-            UserProfile profile = person.getProfile();
-            updateEmergencyContact(profile, emergencyContactBean);
+            EmergencyContact.updateEmergencyContact(person, emergencyContactBean);
         } catch (DomainException e) {
             addActionMessage(request, e.getKey());
             request.setAttribute("personBean", new PersonBean(person));
@@ -93,11 +88,5 @@ public class UpdateEmergencyContactDA extends FenixDispatchAction {
         request.setAttribute("personBean", person);
         request.setAttribute("emergencyContactBean", emergencyContactBean);
         return mapping.findForward("visualizePersonalInformation");
-    }
-
-    @Atomic
-    private void updateEmergencyContact(UserProfile profile, EmergencyContactBean bean) {
-        EmergencyContact emergencyContact = new EmergencyContact(bean.getContact());
-        profile.setEmergencyContact(emergencyContact);
     }
 }
