@@ -543,7 +543,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public LocalizedString getLocalizedEvaluationMethod(final ExecutionSemester period) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
-        return new LocalizedString(Locale.getDefault(), information.getEvaluationMethod()).with(Locale.ENGLISH, information.getEvaluationMethodEn());
+        return information == null ? null : new LocalizedString(Locale.getDefault(), information.getEvaluationMethod()).with(
+                Locale.ENGLISH, information.getEvaluationMethodEn());
     }
 
     public String getEvaluationMethod(final ExecutionSemester period) {
