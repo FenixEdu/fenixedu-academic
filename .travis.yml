@@ -2,7 +2,6 @@ language: java
 jdk:
 - oraclejdk8
 notifications:
-  irc: chat.freenode.net#fenixedu
   hipchat:
     rooms:
       secure: I/Dw+Kc3nAYMpSmyTk+nh6BpRZIrH8qaG2LxMSP06/9UPQHhEtwzbYvkqaNnjX/+2IgUhIeun8A0Uv6gHZh1yGbiWn2Fq6UqCXjbrfbLbZvB8jYwZyqwzUwtUOD5z6CUsWRncSwLbHsagrCZhJ03Etrjvlf/BDR9YS8t3POaSmw=
