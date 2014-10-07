@@ -52,7 +52,7 @@ public class DeleteEnrollment {
 
                 enrollment.delete();
 
-                if (parentCurriculumGroup != null && parentCurriculumGroup.canBeDeleted()) {
+                if (parentCurriculumGroup != null && parentCurriculumGroup.isDeletable()) {
                     parentCurriculumGroup.delete();
                 }
 

@@ -136,17 +136,21 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     @Override
-    @Atomic
-    public void delete() {
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!getIndividualProgramProcessesSet().isEmpty()) {
-            throw new DomainException("error.PhdProgram.cannot.delete.has.individual.php.program.processes");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.PhdProgram.cannot.delete.has.individual.php.program.processes"));
         }
+    }
 
+    @Override
+    protected void disconnect() {
         getPhdProgramUnit().delete();
         setDegree(null);
         setServiceAgreementTemplate(null);
         setRootDomainObject(null);
-        super.delete();
+        super.disconnect();
     }
 
     public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {

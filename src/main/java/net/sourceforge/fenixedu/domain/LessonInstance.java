@@ -22,16 +22,19 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collection;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -142,10 +145,7 @@ public class LessonInstance extends LessonInstance_Base {
 
     public void delete() {
         check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances);
-
-        if (!canBeDeleted()) {
-            throw new DomainException("error.LessonInstance.cannot.be.deleted");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         LessonInstanceSpaceOccupation occupation = getLessonInstanceSpaceOccupation();
         if (occupation != null) {
@@ -178,8 +178,12 @@ public class LessonInstance extends LessonInstance_Base {
                 RoundingMode.HALF_UP);
     }
 
-    private boolean canBeDeleted() {
-        return getSummary() == null;
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (getSummary() != null) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.LessonInstance.cannot.be.deleted"));
+        }
     }
 
     @jvstm.cps.ConsistencyPredicate

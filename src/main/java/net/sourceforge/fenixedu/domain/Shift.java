@@ -146,34 +146,28 @@ public class Shift extends Shift_Base {
 
     public void delete() {
         check(this, ResourceAllocationRolePredicates.checkPermissionsToManageShifts);
-        if (canBeDeleted()) {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        final ExecutionCourse executionCourse = getExecutionCourse();
 
-            final ExecutionCourse executionCourse = getExecutionCourse();
-
-            for (; !getAssociatedLessonsSet().isEmpty(); getAssociatedLessonsSet().iterator().next().delete()) {
-                ;
-            }
-            for (; !getAssociatedShiftProfessorshipSet().isEmpty(); getAssociatedShiftProfessorshipSet().iterator().next()
-                    .delete()) {
-                ;
-            }
-            for (; !getShiftDistributionEntriesSet().isEmpty(); getShiftDistributionEntriesSet().iterator().next().delete()) {
-                ;
-            }
-
-            getAssociatedClassesSet().clear();
-            getCourseLoadsSet().clear();
-            if (getShiftGroupingProperties() != null) {
-                getShiftGroupingProperties().delete();
-            }
-            setRootDomainObject(null);
-            super.deleteDomainObject();
-
-            executionCourse.setShiftNames();
-
-        } else {
-            throw new DomainException("shift.cannot.be.deleted");
+        for (; !getAssociatedLessonsSet().isEmpty(); getAssociatedLessonsSet().iterator().next().delete()) {
+            ;
         }
+        for (; !getAssociatedShiftProfessorshipSet().isEmpty(); getAssociatedShiftProfessorshipSet().iterator().next().delete()) {
+            ;
+        }
+        for (; !getShiftDistributionEntriesSet().isEmpty(); getShiftDistributionEntriesSet().iterator().next().delete()) {
+            ;
+        }
+
+        getAssociatedClassesSet().clear();
+        getCourseLoadsSet().clear();
+        if (getShiftGroupingProperties() != null) {
+            getShiftGroupingProperties().delete();
+        }
+        setRootDomainObject(null);
+        super.deleteDomainObject();
+
+        executionCourse.setShiftNames();
     }
 
     @jvstm.cps.ConsistencyPredicate
@@ -238,20 +232,22 @@ public class Shift extends Shift_Base {
         return false;
     }
 
-    public boolean canBeDeleted() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!getAssociatedStudentGroupsSet().isEmpty()) {
-            throw new DomainException("error.deleteShift.with.studentGroups", getNome());
+            blockers.add(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "error.deleteShift.with.studentGroups", getNome()));
         }
         if (!getStudentsSet().isEmpty()) {
-            throw new DomainException("error.deleteShift.with.students", getNome());
+            blockers.add(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "error.deleteShift.with.students", getNome()));
         }
         if (!getAssociatedSummariesSet().isEmpty()) {
-            throw new DomainException("error.deleteShift.with.summaries", getNome());
+            blockers.add(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "error.deleteShift.with.summaries", getNome()));
         }
         if (!getDegreeTeachingServicesSet().isEmpty()) {
-            throw new DomainException("error.deleteShift.with.degreeTeachingServices", getNome());
+            blockers.add(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "error.deleteShift.with.degreeTeachingServices",
+                    getNome()));
         }
-        return true;
     }
 
     public BigDecimal getTotalHours() {

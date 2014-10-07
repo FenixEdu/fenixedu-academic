@@ -228,60 +228,51 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public Boolean getCanBeDeleted() {
-        if (!getDegreeCurricularPlansSet().isEmpty()) {
-            return false;
-        }
-
-        if (getSite() != null && getSite().isDeletable()) {
-            return false;
-        }
-
-        return true;
+        return getDeletionBlockers().isEmpty();
     }
 
-    private void checkDeletion() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!getDegreeCurricularPlansSet().isEmpty()) {
-            throw new DomainException("error.degree.has.degree.curricular.plans");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.has.degree.curricular.plans"));
         }
 
         if (getSite() != null && !getSite().isDeletable()) {
-            throw new DomainException("error.degree.has.site.undeletable");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.has.site.undeletable"));
         }
 
         if (!getStudentGroupSet().isEmpty()) {
-            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
         }
 
         if (!getTeacherGroupSet().isEmpty()) {
-            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
         }
 
         if (getScientificCommissionGroup() != null) {
-            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
         }
 
         if (!getCoordinatorGroupSet().isEmpty()) {
-            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
         }
 
         if (!getStudentsConcludedInExecutionYearGroupSet().isEmpty()) {
-            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
         }
 
         if (!getDelegatesGroupSet().isEmpty()) {
-            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
         }
 
         if (getAlumniGroup() != null) {
-            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
         }
     }
 
     @Override
-    public void delete() {
-
-        checkDeletion();
-
+    protected void disconnect() {
         Iterator<OldInquiriesCoursesRes> oicrIterator = getAssociatedOldInquiriesCoursesResSet().iterator();
         while (oicrIterator.hasNext()) {
             OldInquiriesCoursesRes oicr = oicrIterator.next();
@@ -338,7 +329,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         setUnit(null);
         setPhdProgram(null);
         setRootDomainObject(null);
-        super.delete();
+        super.disconnect();
     }
 
     public GradeScale getGradeScaleChain() {

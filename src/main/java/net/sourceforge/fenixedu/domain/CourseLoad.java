@@ -19,11 +19,14 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class CourseLoad extends CourseLoad_Base {
 
@@ -52,9 +55,7 @@ public class CourseLoad extends CourseLoad_Base {
     }
 
     public void delete() {
-        if (!canBeDeleted()) {
-            throw new DomainException("error.CourseLoad.cannot.be.deleted");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         super.setExecutionCourse(null);
         setRootDomainObject(null);
         deleteDomainObject();
@@ -80,8 +81,12 @@ public class CourseLoad extends CourseLoad_Base {
         return getTotalQuantity().signum() == 0;
     }
 
-    private boolean canBeDeleted() {
-        return getLessonInstancesSet().isEmpty() && getShiftsSet().isEmpty();
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getLessonInstancesSet().isEmpty() || !getShiftsSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "error.CourseLoad.cannot.be.deleted"));
+        }
     }
 
     public BigDecimal getWeeklyHours() {

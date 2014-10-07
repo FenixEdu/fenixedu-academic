@@ -495,109 +495,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     // Delete Method
     public void delete() {
-        if (canBeDeleted()) {
-            disconnect();
-            setRootDomainObject(null);
-            super.deleteDomainObject();
-        } else {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-    }
-
-    public void remove() {
-        try {
-            hasPersistentGroups();
-        } catch (Exception e) {
-            try {
-                hasRemovableRelations();
-            } catch (Exception e2) {
-                throw e2;
-            }
-            disconnect();
-            return;
-        }
-        delete();
-    }
-
-    public boolean canBeDeleted() {
-
-        hasRemovableRelations();
-
-        hasPersistentGroups();
-
-        return true;
-    }
-
-    private void hasRemovableRelations() {
-        if (!getAssociatedInquiriesCoursesSet().isEmpty()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (!getAssociatedInquiriesRegistriesSet().isEmpty()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (!getStudentInquiriesCourseResultsSet().isEmpty()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (!getYearDelegateCourseInquiriesSet().isEmpty()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (!getAssociatedSummariesSet().isEmpty()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (!getGroupings().isEmpty()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (!getAssociatedBibliographicReferencesSet().isEmpty()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (!hasOnlyFinalEvaluations()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (getEvaluationMethod() != null) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (!getAssociatedShifts().isEmpty()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (getCourseReport() != null) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (!getAttendsSet().isEmpty()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (getSite() != null && !getSite().isDeletable()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-        if (getBoard() != null && !getBoard().isDeletable()) {
-            throw new DomainException("error.execution.course.cant.delete");
-        }
-
-        for (final Professorship professorship : getProfessorshipsSet()) {
-            if (!professorship.canBeDeleted()) {
-                throw new DomainException("error.execution.course.cant.delete");
-            }
-        }
-
-        for (ExecutionCourseForum forum : getForuns()) {
-            if (forum.getConversationThreadSet().size() != 0) {
-                throw new DomainException("error.execution.course.cant.delete");
-            }
-        }
-    }
-
-    private void hasPersistentGroups() {
-        if (!getStudentGroupSet().isEmpty()) {
-            throw new DomainException("error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl");
-        }
-        if (!getSpecialCriteriaOverExecutionCourseGroupSet().isEmpty()) {
-            throw new DomainException("error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl");
-        }
-        if (!getTeacherGroupSet().isEmpty()) {
-            throw new DomainException("error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl");
-        }
-    }
-
-    private void disconnect() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         if (getSender() != null) {
             getSender().getRecipientsSet().clear();
             setSender(null);
@@ -647,6 +545,80 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         getNonAffiliatedTeachersSet().clear();
         setVigilantGroup(null);
         setExecutionPeriod(null);
+        setRootDomainObject(null);
+        super.deleteDomainObject();
+    }
+
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getAssociatedInquiriesCoursesSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (!getAssociatedInquiriesRegistriesSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (!getStudentInquiriesCourseResultsSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (!getYearDelegateCourseInquiriesSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (!getAssociatedSummariesSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (!getGroupings().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (!getAssociatedBibliographicReferencesSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (!hasOnlyFinalEvaluations()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (getEvaluationMethod() != null) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (!getAssociatedShifts().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (getCourseReport() != null) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (!getAttendsSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (getSite() != null && !getSite().isDeletable()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+        if (getBoard() != null && !getBoard().isDeletable()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+        }
+
+        for (final Professorship professorship : getProfessorshipsSet()) {
+            if (!professorship.isDeletable()) {
+                blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+            }
+        }
+
+        for (ExecutionCourseForum forum : getForuns()) {
+            if (forum.getConversationThreadSet().size() != 0) {
+                blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
+            }
+        }
+
+        if (!getStudentGroupSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl"));
+        }
+        if (!getSpecialCriteriaOverExecutionCourseGroupSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl"));
+        }
+        if (!getTeacherGroupSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl"));
+        }
     }
 
     private void removeFinalEvaluations() {
@@ -2408,14 +2380,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean isDeletable() {
-        try {
-            return this.canBeDeleted();
-        } catch (DomainException e) {
-            return false;
-        }
-        /**
-         * TODO: Refazer a implementacao de canBeDeleted()
-         */
+        return getDeletionBlockers().isEmpty();
     }
 
     public Professorship getProfessorship(final Person person) {

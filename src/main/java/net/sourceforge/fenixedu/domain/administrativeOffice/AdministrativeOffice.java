@@ -18,6 +18,7 @@
  */
 package net.sourceforge.fenixedu.domain.administrativeOffice;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -30,8 +31,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class AdministrativeOffice extends AdministrativeOffice_Base {
@@ -113,7 +116,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public void delete() {
-        checkRulesToDelete();
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         setUnit(null);
         setServiceAgreementTemplate(null);
@@ -121,24 +124,27 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
         deleteDomainObject();
     }
 
-    private void checkRulesToDelete() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!getAcademicServiceRequestsSet().isEmpty()) {
-            throw new DomainException("error.AdministrativeOffice.cannot.delete");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.AdministrativeOffice.cannot.delete"));
         }
         if (!getManagedAcademicProgramSet().isEmpty()) {
-            throw new DomainException("error.AdministrativeOffice.cannot.delete");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.AdministrativeOffice.cannot.delete"));
         }
         if (!getRectorateSubmissionBatchSet().isEmpty()) {
-            throw new DomainException("error.AdministrativeOffice.cannot.delete");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.AdministrativeOffice.cannot.delete"));
         }
         if (!getEventsSet().isEmpty()) {
-            throw new DomainException("error.AdministrativeOffice.cannot.delete");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.AdministrativeOffice.cannot.delete"));
         }
         if (!getEventReportQueueJobSet().isEmpty()) {
-            throw new DomainException("error.AdministrativeOffice.cannot.delete");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.AdministrativeOffice.cannot.delete"));
         }
         if (!getAcademicAuthorizationGroupSet().isEmpty()) {
-            throw new DomainException("error.administrativeOffice.cannotDeleteAdministrativeOfficeUsedInAccessControl");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.administrativeOffice.cannotDeleteAdministrativeOfficeUsedInAccessControl"));
         }
     }
 

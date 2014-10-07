@@ -47,7 +47,7 @@ public class DeleteExecutionCourses {
         for (final String executionCourseID : executionCourseIDs) {
             final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
-            if (!executionCourse.canBeDeleted()) {
+            if (!executionCourse.isDeletable()) {
                 undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
             } else {
                 executionCourse.delete();

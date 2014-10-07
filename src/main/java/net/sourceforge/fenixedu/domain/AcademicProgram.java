@@ -23,6 +23,11 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
+import pt.ist.fenixframework.Atomic;
 
 public abstract class AcademicProgram extends AcademicProgram_Base {
     public AcademicProgram() {
@@ -33,12 +38,23 @@ public abstract class AcademicProgram extends AcademicProgram_Base {
 
     public abstract Collection<CycleType> getCycleTypes();
 
-    public void delete() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!getAcademicAuthorizationGroupSet().isEmpty()) {
-            throw new DomainException("error.academicProgram.cannotDeleteAcademicProgramUsedInAccessControl");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.academicProgram.cannotDeleteAcademicProgramUsedInAccessControl"));
         }
-        setAdministrativeOffice(null);
+    }
+
+    @Atomic
+    public final void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         deleteDomainObject();
     }
 
+    protected void disconnect() {
+        setAdministrativeOffice(null);
+        super.deleteDomainObject();
+    }
 }

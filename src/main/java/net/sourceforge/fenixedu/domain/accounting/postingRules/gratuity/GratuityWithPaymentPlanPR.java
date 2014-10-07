@@ -44,9 +44,11 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventW
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base implements IGratuityPR {
@@ -227,14 +229,11 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
     }
 
     @Override
-    public void delete() {
-        checkIfCanBeDeleted();
-        super.delete();
-    }
-
-    private void checkIfCanBeDeleted() {
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (getServiceAgreementTemplate().hasActivePostingRuleFor(EventType.STANDALONE_ENROLMENT_GRATUITY)) {
-            throw new DomainException("error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.standalone.cannot.delete");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.standalone.cannot.delete"));
         }
     }
 

@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.text.Collator;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -29,10 +30,12 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEn
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
@@ -110,8 +113,16 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         return this.isActive();
     }
 
-    public Boolean canBeDeleted() {
-        return getAssociatedWrittenEvaluationsSet().isEmpty();
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getAssociatedWrittenEvaluationsSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.curricular.course.scope.has.written.evaluations"));
+        }
+    }
+
+    public Boolean isDeletable() {
+        return getDeletionBlockers().isEmpty();
     }
 
     public void edit(Branch branch, CurricularSemester curricularSemester, Calendar beginDate, Calendar endDate, String Annotation) {
@@ -128,16 +139,13 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     }
 
     public void delete() throws DomainException {
-        if (canBeDeleted()) {
-            setCurricularSemester(null);
-            setCurricularCourse(null);
-            setBranch(null);
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        setCurricularSemester(null);
+        setCurricularCourse(null);
+        setBranch(null);
 
-            setRootDomainObject(null);
-            super.deleteDomainObject();
-        } else {
-            throw new DomainException("error.curricular.course.scope.has.written.evaluations");
-        }
+        setRootDomainObject(null);
+        super.deleteDomainObject();
     }
 
     public Boolean isActive(Date date) {

@@ -18,14 +18,17 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * @author dcs-rjao
@@ -71,7 +74,7 @@ public class Branch extends Branch_Base {
             if (hasCurricularCourseCommonBranchInAnyCurricularCourseScope(curricularCourse, commonBranch)) {
                 // we want to delete this CurricularCourseScope
 
-                if (!scope.canBeDeleted()) {
+                if (!scope.isDeletable()) {
                     return false;
                 }
             }
@@ -79,31 +82,24 @@ public class Branch extends Branch_Base {
         return true;
     }
 
-    public Boolean canBeDeleted() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!this.getAssociatedFinalDegreeWorkProposalsSet().isEmpty()) {
-            throw new DomainException("error.branch.cant.delete");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.branch.cant.delete"));
         }
 
         if (this.representsCommonBranch() && !this.getScopesSet().isEmpty()) {
-            throw new DomainException("error.branch.cant.delete");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.branch.cant.delete"));
         }
 
-        Branch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
-        // if (commonBranch == null)
-        // throw new DomainException("error.branch.cant.delete");
-
-        if (!canDeleteAllEligibleCurricularCourseScopes(commonBranch)) {
-            throw new DomainException("error.branch.cant.delete");
+        if (!canDeleteAllEligibleCurricularCourseScopes(findCommonBranchForSameDegreeCurricularPlan())) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.branch.cant.delete"));
         }
-
-        return true;
     }
 
     public void delete() throws DomainException {
-
-        if (!this.canBeDeleted()) {
-            throw new DomainException("error.branch.cant.delete");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         final Branch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
 

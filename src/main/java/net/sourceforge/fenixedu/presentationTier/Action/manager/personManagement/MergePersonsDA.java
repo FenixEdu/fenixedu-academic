@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOI
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
 import net.sourceforge.fenixedu.dataTransferObject.MergeSlotDTO;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -53,6 +54,8 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.dml.DomainClass;
@@ -383,11 +386,20 @@ public class MergePersonsDA extends FenixDispatchAction {
         Person domainObject1 = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
         Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
-        domainObject2.mergeAndDelete(domainObject1);
+        for (PersonInformationLog personInformationLog : domainObject2.getPersonInformationLogsSet()) {
+            personInformationLog.setPersonViewed(domainObject1);
+        }
+        deletePerson(domainObject2);
 
         request.setAttribute("studentRemoved", true);
 
         return mapping.findForward("person-removed");
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    private void deletePerson(Person domainObject2) {
+        //TODO: close the login period
+        domainObject2.delete();
     }
 
     public ActionForward transferRegistrations(ActionMapping mapping, ActionForm form, HttpServletRequest request,

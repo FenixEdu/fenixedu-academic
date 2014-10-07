@@ -29,11 +29,13 @@ import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -107,17 +109,19 @@ public class Function extends Function_Base {
     }
 
     public void delete() {
-        if (!canBeDeleted()) {
-            throw new DomainException("error.delete.function");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setParentInherentFunction(null);
         super.setUnit(null);
         setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    private boolean canBeDeleted() {
-        return getAccountabilitiesSet().isEmpty() && getInherentFunctionsSet().isEmpty() && getPersonsInFunctionGroup() == null;
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getAccountabilitiesSet().isEmpty() || !getInherentFunctionsSet().isEmpty() || getPersonsInFunctionGroup() == null) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.delete.function"));
+        }
     }
 
     public List<PersonFunction> getPersonFunctions() {

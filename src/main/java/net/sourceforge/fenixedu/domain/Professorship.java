@@ -48,6 +48,7 @@ import net.sourceforge.fenixedu.util.Bundle;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -133,7 +134,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public void delete() {
-        if (canBeDeleted()) {
+        if (isDeletable()) {
             ProfessorshipManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
                     "log.executionCourse.professorship.removed", getPerson().getPresentationName(), getExecutionCourse()
                             .getNome(), getExecutionCourse().getDegreePresentationString());
@@ -148,44 +149,53 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         }
     }
 
-    public boolean canBeDeleted() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!getAssociatedSummariesSet().isEmpty()) {
-            throw new DomainException("error.remove.professorship.hasAnyAssociatedSummaries");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyAssociatedSummaries"));
         }
         if (!getAssociatedShiftProfessorshipSet().isEmpty()) {
-            throw new DomainException("error.remove.professorship.hasAnyAssociatedShiftProfessorship");
+            blockers.add(BundleUtil
+                    .getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyAssociatedShiftProfessorship"));
         }
         if (!getSupportLessonsSet().isEmpty()) {
-            throw new DomainException("error.remove.professorship.hasAnySupportLessons");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnySupportLessons"));
         }
         if (!getDegreeTeachingServicesSet().isEmpty()) {
-            throw new DomainException("error.remove.professorship.hasAnyDegreeTeachingServices");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyDegreeTeachingServices"));
         }
         if (!getTeacherMasterDegreeServicesSet().isEmpty()) {
-            throw new DomainException("error.remove.professorship.hasAnyTeacherMasterDegreeServices");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyTeacherMasterDegreeServices"));
         }
         if (getTeachingInquiry() != null) {
-            throw new DomainException("error.remove.professorship.hasTeachingInquiry");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasTeachingInquiry"));
         }
         if (!getStudentInquiriesTeachingResultsSet().isEmpty()) {
-            throw new DomainException("error.remove.professorship.hasAnyStudentInquiriesTeachingResults");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.remove.professorship.hasAnyStudentInquiriesTeachingResults"));
         }
         if (!getInquiryStudentTeacherAnswersSet().isEmpty()) {
-            throw new DomainException("error.remove.professorship.hasAnyInquiryStudentTeacherAnswers");
+            blockers.add(BundleUtil
+                    .getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyInquiryStudentTeacherAnswers"));
         }
         if (!getInquiryResultsSet().isEmpty()) {
-            throw new DomainException("error.remove.professorship.hasAnyInquiryResults");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyInquiryResults"));
         }
         if (getInquiryTeacherAnswer() != null) {
-            throw new DomainException("error.remove.professorship.hasInquiryTeacherAnswer");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasInquiryTeacherAnswer"));
         }
         if (getInquiryRegentAnswer() != null) {
-            throw new DomainException("error.remove.professorship.hasInquiryRegentAnswer");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasInquiryRegentAnswer"));
         }
         if (!getDegreeProjectTutorialServicesSet().isEmpty()) {
-            throw new DomainException("error.remove.professorship.hasAnyDegreeProjectTutorialServices");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.remove.professorship.hasAnyDegreeProjectTutorialServices"));
         }
-        return true;
+    }
+
+    public boolean isDeletable() {
+        return getDeletionBlockers().isEmpty();
     }
 
     public boolean isResponsibleFor() {

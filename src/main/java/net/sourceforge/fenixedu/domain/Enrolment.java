@@ -307,7 +307,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         final Iterator<Thesis> theses = getThesesSet().iterator();
         while (theses.hasNext()) {
             final Thesis thesis = theses.next();
-            if (!thesis.canBeDeleted()) {
+            if (!thesis.isDeletable()) {
                 throw new DomainException("error.Enrolment.cannot.delete.thesis");
             }
             thesis.delete();

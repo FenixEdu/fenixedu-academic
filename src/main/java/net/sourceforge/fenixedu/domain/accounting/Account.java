@@ -18,6 +18,7 @@
  */
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -25,8 +26,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class Account extends Account_Base {
@@ -88,16 +91,18 @@ public class Account extends Account_Base {
     }
 
     public void delete() {
-        if (!canBeDeleted()) {
-            throw new DomainException("error.accounting.account.cannot.be.deleted");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         super.setParty(null);
         setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    private boolean canBeDeleted() {
-        return getEntriesSet().size() == 0;
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getEntriesSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.accounting.account.cannot.be.deleted"));
+        }
     }
 
     public void transferEntry(Entry entry) {

@@ -18,8 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 
@@ -53,16 +51,9 @@ public class UnitAcronym extends UnitAcronym_Base {
         super.setAcronym(acronym == null ? null : acronym.toLowerCase());
     }
 
-    public void delete() {
-        if (!canBeDeleted()) {
-            throw new DomainException("error.unitAcronym.cannot.be.deleted");
-        }
+    protected void delete() {
         setRootDomainObject(null);
         deleteDomainObject();
-    }
-
-    private boolean canBeDeleted() {
-        return getUnitsSet().isEmpty();
     }
 
     public static UnitAcronym readUnitAcronymByAcronym(final String acronym) {

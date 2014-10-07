@@ -151,7 +151,7 @@ public class InternalSubstitution extends InternalSubstitution_Base {
                 getStudentCurricularPlan().getNoCourseGroupCurriculumGroup(
                         NoCourseGroupCurriculumGroupType.INTERNAL_CREDITS_SOURCE_GROUP);
 
-        if (group != null && group.canBeDeleted()) {
+        if (group != null && group.isDeletable()) {
             group.delete();
         }
     }

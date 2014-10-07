@@ -242,6 +242,7 @@ public abstract class PostingRule extends PostingRule_Base {
 
     public void delete() {
         check(this, AcademicPredicates.MANAGE_PAYMENTS);
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         super.setServiceAgreementTemplate(null);
 
         setRootDomainObject(null);

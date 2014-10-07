@@ -21,6 +21,7 @@ package net.sourceforge.fenixedu.domain;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -29,10 +30,12 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -54,16 +57,17 @@ public class Guide extends Guide_Base {
     }
 
     public void delete() {
-        if (canBeDeleted()) {
-            setRootDomainObject(null);
-            deleteDomainObject();
-        } else {
-            throw new DomainException("guide.cannot.be.deleted");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        setRootDomainObject(null);
+        deleteDomainObject();
     }
 
-    public boolean canBeDeleted() {
-        return !(!getGuideEntriesSet().isEmpty() || !getGuideSituationsSet().isEmpty() || (getVersion() == 1));
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getGuideEntriesSet().isEmpty() || !getGuideSituationsSet().isEmpty() || (getVersion() == 1)) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "guide.cannot.be.deleted"));
+        }
     }
 
     public final static Comparator<Guide> yearAndNumberComparator = new Comparator<Guide>() {

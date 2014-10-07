@@ -383,10 +383,7 @@ public class Thesis extends Thesis_Base {
 
     public void delete() {
         check(this, ThesisPredicates.isScientificCommission);
-
-        if (!canBeDeleted()) {
-            throw new DomainException("thesis.delete.notDraft");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         setRootDomainObject(null);
 
@@ -404,8 +401,19 @@ public class Thesis extends Thesis_Base {
         deleteDomainObject();
     }
 
-    public boolean canBeDeleted() {
-        return getState() == ThesisState.DRAFT && getReaders() == null;
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (getState() != ThesisState.DRAFT) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "thesis.delete.notDraft"));
+        }
+        if (getReaders() != null) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "thesis.delete.notDraft"));
+        }
+    }
+
+    public boolean isDeletable() {
+        return getDeletionBlockers().isEmpty();
     }
 
     protected static Collection<Thesis> getThesisInState(Degree degree, ExecutionYear year, ThesisState state) {

@@ -56,11 +56,13 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -158,42 +160,44 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     }
 
-    public boolean canBeDeleted() {
-        return getSchoolClassesSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty()
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!(getSchoolClassesSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty()
                 && getScheduling() == null && getAssociatedFinalDegreeWorkGroupsSet().isEmpty()
                 && getAssociatedInquiriesCoursesByCourseSet().isEmpty() && getAssociatedInquiriesCoursesByStudentSet().isEmpty()
-                && getStudentCandidaciesSet().isEmpty() && getShiftDistributionEntriesSet().isEmpty();
+                && getStudentCandidaciesSet().isEmpty() && getShiftDistributionEntriesSet().isEmpty())) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "execution.degree.cannot.be.deleted"));
+        }
+    }
+
+    public boolean isDeletable() {
+        return getDeletionBlockers().isEmpty();
     }
 
     public void delete() {
-
-        if (canBeDeleted()) {
-
-            for (; !getCoordinatorsListSet().isEmpty(); getCoordinatorsListSet().iterator().next().delete()) {
-                ;
-            }
-            for (; !getScientificCommissionMembersSet().isEmpty(); getScientificCommissionMembersSet().iterator().next().delete()) {
-                ;
-            }
-
-            if (getGratuityValues() != null) {
-                getGratuityValues().delete();
-            }
-
-            setExecutionYear(null);
-            setDegreeCurricularPlan(null);
-            setCampus(null);
-
-            for (OccupationPeriodReference reference : getOccupationPeriodReferencesSet()) {
-                reference.delete();
-            }
-
-            setRootDomainObject(null);
-            deleteDomainObject();
-
-        } else {
-            throw new DomainException("execution.degree.cannot.be.deleted");
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        for (; !getCoordinatorsListSet().isEmpty(); getCoordinatorsListSet().iterator().next().delete()) {
+            ;
         }
+        for (; !getScientificCommissionMembersSet().isEmpty(); getScientificCommissionMembersSet().iterator().next().delete()) {
+            ;
+        }
+
+        if (getGratuityValues() != null) {
+            getGratuityValues().delete();
+        }
+
+        setExecutionYear(null);
+        setDegreeCurricularPlan(null);
+        setCampus(null);
+
+        for (OccupationPeriodReference reference : getOccupationPeriodReferencesSet()) {
+            reference.delete();
+        }
+
+        setRootDomainObject(null);
+        deleteDomainObject();
     }
 
     public void edit(ExecutionYear executionYear, Space campus, Boolean publishedExamMap,

@@ -38,11 +38,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -378,9 +380,7 @@ public class Receipt extends Receipt_Base {
     public void delete() {
         check(this, RolePredicates.MANAGER_PREDICATE);
 
-        if (!canBeDeleted()) {
-            throw new DomainException("error.accounting.Receipt.cannot.be.deleted");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         deleteReceiptPrintVersions();
 
@@ -394,8 +394,12 @@ public class Receipt extends Receipt_Base {
         super.deleteDomainObject();
     }
 
-    private boolean canBeDeleted() {
-        return getCreditNotesSet().isEmpty();
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getCreditNotesSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.accounting.Receipt.cannot.be.deleted"));
+        }
     }
 
     public boolean isNumberSeriesDefined() {

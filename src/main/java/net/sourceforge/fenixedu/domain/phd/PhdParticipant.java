@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain.phd;
 
 import java.security.SecureRandom;
+import java.util.Collection;
 import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -29,10 +30,12 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidac
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 abstract public class PhdParticipant extends PhdParticipant_Base {
@@ -125,14 +128,18 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     public void tryDelete() {
-        if (canBeDeleted()) {
+        if (getDeletionBlockers().isEmpty()) {
             delete();
         }
     }
 
-    protected boolean canBeDeleted() {
-        return !(!getThesisJuryElementsSet().isEmpty() || getProcessForGuiding() != null
-                || getProcessForAssistantGuiding() != null || !getCandidacyFeedbackRequestElementsSet().isEmpty() || isParticipantCoordinator());
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getThesisJuryElementsSet().isEmpty() || getProcessForGuiding() != null || getProcessForAssistantGuiding() != null
+                || !getCandidacyFeedbackRequestElementsSet().isEmpty() || isParticipantCoordinator()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.cannotdeletePhdParticipant"));
+        }
     }
 
     private boolean isParticipantCoordinator() {

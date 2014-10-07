@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
@@ -29,9 +30,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -211,10 +214,7 @@ public class Entry extends Entry_Base {
 
     void delete() {
         check(this, RolePredicates.MANAGER_PREDICATE);
-        if (!canBeDeleted()) {
-            throw new DomainException("error.accounting.Entry.belongs.to.receipt");
-        }
-
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         super.setAccount(null);
         super.setAccountingTransaction(null);
         setRootDomainObject(null);
@@ -222,8 +222,12 @@ public class Entry extends Entry_Base {
         super.deleteDomainObject();
     }
 
-    private boolean canBeDeleted() {
-        return getReceiptsSet().isEmpty();
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getReceiptsSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.accounting.Entry.belongs.to.receipt"));
+        }
     }
 
     public PaymentMode getPaymentMode() {

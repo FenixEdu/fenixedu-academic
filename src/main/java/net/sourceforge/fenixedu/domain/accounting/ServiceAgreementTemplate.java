@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -155,13 +156,21 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
         return null;
     }
 
-    public final void delete() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!getServiceAgreementsSet().isEmpty()) {
-            throw new DomainException("error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted"));
         }
         if (!getPostingRulesSet().isEmpty()) {
-            throw new DomainException("error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted"));
         }
+    }
+
+    public final void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setRootDomainObject(null);
         deleteDomainObject();
     }

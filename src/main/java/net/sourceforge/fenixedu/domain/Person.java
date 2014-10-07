@@ -1192,33 +1192,12 @@ public class Person extends Person_Base {
      * 
      * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
      * 
-     */
-    @Atomic
-    public void mergeAndDelete(Person personToMergeLogs) {
-        removeRelations();
-        for (PersonInformationLog personInformationLog : getPersonInformationLogsSet()) {
-            personInformationLog.setPersonViewed(personToMergeLogs);
-        }
-        super.delete();
-    }
-
-    /**
-     * 
-     * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
-     * 
      * 
      * @return true if the person have been deleted, false otherwise
      */
     @Override
     public void delete() {
-        removeRelations();
-        super.delete();
-    }
-
-    protected void removeRelations() {
-        if (!canBeDeleted()) {
-            throw new DomainException("error.person.cannot.be.deleted");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         if (getPersonalPhotoEvenIfRejected() != null) {
             getPersonalPhotoEvenIfRejected().delete();
         }
@@ -1265,10 +1244,13 @@ public class Person extends Person_Base {
         if (getResearcher() != null) {
             getResearcher().delete();
         }
+        super.delete();
     }
 
-    private boolean canBeDeleted() {
-        return getPartyContactsSet().isEmpty() && getChildsSet().isEmpty() && getParentsSet().isEmpty()
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!(getPartyContactsSet().isEmpty() && getChildsSet().isEmpty() && getParentsSet().isEmpty()
                 && getDomainObjectActionLogsSet().isEmpty() && getExportGroupingReceiversSet().isEmpty()
                 && getPersistentGroupsSet().isEmpty() && getAssociatedQualificationsSet().isEmpty()
                 && getAssociatedAlteredCurriculumsSet().isEmpty() && getEnrolmentEvaluationsSet().isEmpty()
@@ -1276,8 +1258,10 @@ public class Person extends Person_Base {
                 && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty() && getEmployee() == null
                 && getTeacher() == null && getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty()
                 && !hasAnyPersonFunctions() && (getHomepage() == null || getHomepage().isDeletable())
-                && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty()
-                && getCreateJobsSet().isEmpty();
+                && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet()
+                .isEmpty())) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.person.cannot.be.deleted"));
+        }
     }
 
     public ExternalContract getExternalContract() {

@@ -20,6 +20,9 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import static org.apache.commons.lang.StringUtils.EMPTY;
 import static org.apache.commons.lang.StringUtils.isEmpty;
+
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -157,8 +160,11 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
     }
 
     @Override
-    protected boolean canBeDeleted() {
-        return super.canBeDeleted() && !getIndividualProcess().isCoordinatorForPhdProgram(getPerson());
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (getIndividualProcess().isCoordinatorForPhdProgram(getPerson())) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.cannotdeletePhdParticipant"));
+        }
     }
 
     @Override

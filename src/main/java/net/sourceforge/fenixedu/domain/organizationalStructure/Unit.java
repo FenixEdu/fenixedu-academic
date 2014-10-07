@@ -186,9 +186,7 @@ public class Unit extends Unit_Base {
     @Override
     public void delete() {
 
-        if (!canBeDeleted()) {
-            throw new DomainException("error.unit.cannot.be.deleted");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         if (hasAnyParentUnits()) {
             getParentsSet().iterator().next().delete();
@@ -215,17 +213,30 @@ public class Unit extends Unit_Base {
         super.delete();
     }
 
-    private boolean canBeDeleted() {
-        return (getParentsSet().isEmpty() || (getParentsSet().size() == 1 && getParentUnits().size() == 1))
-                && getChildsSet().isEmpty() && getFunctionsSet().isEmpty() && getVigilantGroupsSet().isEmpty()
-                && getAssociatedNonAffiliatedTeachersSet().isEmpty() && getPayedGuidesSet().isEmpty()
-                && getPayedReceiptsSet().isEmpty() && getExternalCurricularCoursesSet().isEmpty()
-                && getUnitServiceAgreementTemplate() == null && getBoardsSet().isEmpty()
-                && (getSite() == null || getSite().isDeletable()) && getOwnedReceiptsSet().isEmpty()
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!(getParentsSet().isEmpty() || (getParentsSet().size() == 1 && getParentUnits().size() == 1))
+                && getChildsSet().isEmpty() && getFunctionsSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
+        }
+        if (!(getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty() && getUnitServiceAgreementTemplate() == null && getOwnedReceiptsSet()
+                .isEmpty())) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
+        }
+
+        if (!(getVigilantGroupsSet().isEmpty() && getExamCoordinatorsSet().isEmpty())) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
+        }
+
+        if (!(getAssociatedNonAffiliatedTeachersSet().isEmpty() && getExternalCurricularCoursesSet().isEmpty()
+                && getBoardsSet().isEmpty() && (getSite() == null || getSite().isDeletable())
                 && getPrecedentDegreeInformationsSet().isEmpty() && getCandidacyPrecedentDegreeInformationsSet().isEmpty()
-                && getExamCoordinatorsSet().isEmpty() && getExternalRegistrationDatasSet().isEmpty() && getFilesSet().isEmpty()
-                && getPersistentGroupsSet().isEmpty() && getExternalCourseLoadRequestsSet().isEmpty()
-                && getExternalProgramCertificateRequestsSet().isEmpty() && getUnitGroupSet().isEmpty();
+                && getExternalRegistrationDatasSet().isEmpty() && getFilesSet().isEmpty() && getPersistentGroupsSet().isEmpty()
+                && getExternalCourseLoadRequestsSet().isEmpty() && getExternalProgramCertificateRequestsSet().isEmpty() && getUnitGroupSet()
+                .isEmpty())) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
+        }
     }
 
     @Override

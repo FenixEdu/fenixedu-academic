@@ -18,12 +18,16 @@
  */
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.CustomGratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -83,7 +87,7 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
     }
 
     public void delete() {
-        checkRulesToDelete();
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         super.setPerson(null);
         super.setServiceAgreementTemplate(null);
@@ -91,9 +95,11 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
         deleteDomainObject();
     }
 
-    private void checkRulesToDelete() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!getPaymentPlansSet().isEmpty()) {
-            throw new DomainException("error.ServiceAgreement.cannot.delete");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.ServiceAgreement.cannot.delete"));
         }
     }
 

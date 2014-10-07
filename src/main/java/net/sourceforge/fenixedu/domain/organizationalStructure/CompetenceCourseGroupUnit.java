@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -33,7 +34,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -187,11 +190,11 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
     }
 
     @Override
-    public void delete() {
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!getCompetenceCourseInformationsSet().isEmpty()) {
-            throw new DomainException("error.unit.cannot.be.deleted");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
-        super.delete();
     }
 
     private static void checkIfAlreadyExistsOneCompetenceCourseGroupUnitWithSameAcronymAndName(

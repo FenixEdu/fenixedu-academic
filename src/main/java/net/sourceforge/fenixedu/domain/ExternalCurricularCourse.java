@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,9 +30,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -90,17 +93,18 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
     }
 
     public void delete() {
-        if (canBeDeleted()) {
-            setRootDomainObject(null);
-            setUnit(null);
-            super.deleteDomainObject();
-        } else {
-            throw new DomainException("error.external.enrolment.cannot.be.deleted");
-        }
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        setRootDomainObject(null);
+        setUnit(null);
+        super.deleteDomainObject();
     }
 
-    private boolean canBeDeleted() {
-        return getExternalEnrolmentsSet().isEmpty();
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getExternalEnrolmentsSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.ACADEMIC, "error.external.enrolment.cannot.be.deleted"));
+        }
     }
 
     public String getFullPathName() {

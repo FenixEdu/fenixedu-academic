@@ -19,11 +19,14 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -49,25 +52,26 @@ public class GuideEntry extends GuideEntry_Base {
     }
 
     public void delete() {
-        if (canBeDeleted()) {
-            if (getPaymentTransaction() != null) {
-                getPaymentTransaction().delete();
-            }
-
-            Guide guide = getGuide();
-            setGuide(null);
-            guide.updateTotalValue();
-
-            setRootDomainObject(null);
-
-            deleteDomainObject();
-        } else {
-            throw new DomainException("guide.entry.cannot.be.deleted");
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        if (getPaymentTransaction() != null) {
+            getPaymentTransaction().delete();
         }
+
+        Guide guide = getGuide();
+        setGuide(null);
+        guide.updateTotalValue();
+
+        setRootDomainObject(null);
+
+        deleteDomainObject();
     }
 
-    public boolean canBeDeleted() {
-        return getReimbursementGuideEntriesSet().isEmpty();
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getReimbursementGuideEntriesSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "guide.entry.cannot.be.deleted"));
+        }
     }
 
     @Deprecated

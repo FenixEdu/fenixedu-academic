@@ -22,8 +22,10 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base {
@@ -56,7 +58,7 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
     }
 
     public void delete() {
-        canBeDeleted();
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
             removeInquiryBlocks(inquiryBlock);
         }
@@ -65,20 +67,21 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
         deleteDomainObject();
     }
 
-    private void canBeDeleted() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
             for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
                 for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestionsSet()) {
                     for (QuestionAnswer questionAnswer : inquiryQuestion.getQuestionAnswersSet()) {
                         InquiryCoordinatorAnswer coordinatorAnswer = (InquiryCoordinatorAnswer) questionAnswer.getInquiryAnswer();
                         if (coordinatorAnswer.getExecutionSemester() == getExecutionPeriod()) {
-                            throw new DomainException("error.CoordinatorInquiryTemplate.hasGivenAnswers");
+                            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                                    "error.CoordinatorInquiryTemplate.hasGivenAnswers"));
                         }
                     }
                 }
             }
         }
-
     }
-
 }

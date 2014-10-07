@@ -32,10 +32,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -98,13 +100,9 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public Boolean getCanBeDeleted() {
-        return false;
-    }
-
-    @Override
-    public void delete() {
-        throw new DomainException("EmptyDegree.not.available");
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        blockers.add(BundleUtil.getString(Bundle.APPLICATION, "EmptyDegree.not.available"));
     }
 
     @Override

@@ -30,10 +30,12 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -84,13 +86,17 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Override
     public void delete() {
         check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupations);
-        if (canBeDeleted()) {
+        if (getDeletionBlockers().isEmpty()) {
             super.delete();
         }
     }
 
-    private boolean canBeDeleted() {
-        return getLessonInstancesSet().isEmpty();
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getLessonInstancesSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.cannotDeleteLessonInstanceSpaceOccupation"));
+        }
     }
 
     @Override

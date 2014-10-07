@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -458,11 +459,16 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         this.getEnrolment().setEnrollmentState(newEnrolmentState);
     }
 
-    public void canBeDeleted() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (!isTemporary() || hasConfirmedMarkSheet()) {
-            throw new DomainException("error.enrolmentEvaluation.isTemporary.or.hasConfirmedMarksheet");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.enrolmentEvaluation.isTemporary.or.hasConfirmedMarksheet"));
         }
-        checkApprovedEnrolmentPayment();
+        if (getImprovementOfApprovedEnrolmentEvent() != null && getImprovementOfApprovedEnrolmentEvent().isPayed()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.enrolmentEvaluation.has.been.payed"));
+        }
     }
 
     public boolean hasConfirmedMarkSheet() {
@@ -491,12 +497,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public void delete() {
-        canBeDeleted();
-        deleteObject();
-    }
-
-    private void deleteObject() {
-        checkApprovedEnrolmentPayment();
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         setPersonResponsibleForGrade(null);
         setPerson(null);
@@ -512,12 +513,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setRootDomainObject(null);
 
         super.deleteDomainObject();
-    }
-
-    private void checkApprovedEnrolmentPayment() {
-        if (getImprovementOfApprovedEnrolmentEvent() != null && getImprovementOfApprovedEnrolmentEvent().isPayed()) {
-            throw new DomainException("error.enrolmentEvaluation.has.been.payed");
-        }
     }
 
     public void removeFromMarkSheet() {
@@ -707,7 +702,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         Enrolment enrolment = getEnrolment();
 
         EnrolmentEvaluationLog.logEnrolmentEvaluationDeletion(this);
-        deleteObject();
+        delete();
 
         enrolment.changeStateIfAprovedAndEvaluationsIsEmpty();
     }

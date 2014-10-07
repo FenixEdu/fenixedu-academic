@@ -43,8 +43,10 @@ import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
+import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -156,21 +158,19 @@ public class Attends extends Attends_Base {
     }
 
     public void delete() throws DomainException {
-        if (canDelete()) {
-
-            for (; !getWeeklyWorkLoadsSet().isEmpty(); getWeeklyWorkLoadsSet().iterator().next().delete()) {
-                ;
-            }
-
-            getProjectSubmissionLogsSet().clear();
-            getGroupingsSet().clear();
-            setAluno(null);
-            setDisciplinaExecucao(null);
-            setEnrolment(null);
-
-            setRootDomainObject(null);
-            deleteDomainObject();
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        for (; !getWeeklyWorkLoadsSet().isEmpty(); getWeeklyWorkLoadsSet().iterator().next().delete()) {
+            ;
         }
+
+        getProjectSubmissionLogsSet().clear();
+        getGroupingsSet().clear();
+        setAluno(null);
+        setDisciplinaExecucao(null);
+        setEnrolment(null);
+
+        setRootDomainObject(null);
+        deleteDomainObject();
     }
 
     public Collection<StudentGroup> getAllStudentGroups() {
@@ -188,36 +188,36 @@ public class Attends extends Attends_Base {
         return Collections.unmodifiableSet(result);
     }
 
-    private boolean canDelete() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
         if (hasAnyShiftEnrolments()) {
-            throw new DomainException("error.attends.cant.delete");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.attends.cant.delete"));
         }
         if (!getStudentGroupsSet().isEmpty()) {
-            throw new DomainException("error.attends.cant.delete.has.student.groups");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.attends.cant.delete.has.student.groups"));
         }
         if (!getAssociatedMarksSet().isEmpty()) {
-            throw new DomainException("error.attends.cant.delete.has.associated.marks");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.attends.cant.delete.has.associated.marks"));
         }
         if (!getProjectSubmissionsSet().isEmpty()) {
-            throw new DomainException("error.attends.cant.delete.has.project.submissions");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.attends.cant.delete.has.project.submissions"));
         }
         if (!getDegreeProjectTutorialServicesSet().isEmpty()) {
-            throw new DomainException("error.attends.cant.delete.has.degree.project.tutorial.services");
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.attends.cant.delete.has.degree.project.tutorial.services"));
         }
-
-        return true;
     }
 
     public boolean isAbleToBeRemoved() {
         try {
-            canDelete();
             getRegistration().checkIfHasEnrolmentFor(this);
             getRegistration().checkIfHasShiftsFor(this.getExecutionCourse());
         } catch (DomainException e) {
             return false;
         }
 
-        return true;
+        return getDeletionBlockers().isEmpty();
     }
 
     public boolean hasAnyShiftEnrolments() {

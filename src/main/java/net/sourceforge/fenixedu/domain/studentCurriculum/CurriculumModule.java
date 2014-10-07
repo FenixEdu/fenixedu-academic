@@ -95,6 +95,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setDegreeModule(null);
         setCurriculumGroup(null);
         setRootDomainObject(null);

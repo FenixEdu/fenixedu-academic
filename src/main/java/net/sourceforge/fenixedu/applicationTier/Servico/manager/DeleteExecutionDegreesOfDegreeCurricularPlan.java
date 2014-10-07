@@ -40,7 +40,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan {
             final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
             if (executionDegree != null) {
-                if (executionDegree.canBeDeleted()) {
+                if (executionDegree.isDeletable()) {
                     executionDegree.delete();
                 } else {
                     undeletedExecutionDegreesYears.add(executionDegree.getExecutionYear().getYear());

@@ -48,7 +48,9 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -136,18 +138,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return false;
     }
 
-    final public boolean canBeDeleted() {
-        return getCurriculumModulesSet().isEmpty();
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getCurriculumModulesSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.studentCurriculum.CurriculumGroup.notEmptyCurriculumGroupModules", getName().getContent()));
+        }
     }
 
-    @Override
-    public void delete() {
-        if (canBeDeleted()) {
-            super.delete();
-        } else {
-            throw new DomainException("error.studentCurriculum.CurriculumGroup.notEmptyCurriculumGroupModules", getName()
-                    .getContent());
-        }
+    public boolean isDeletable() {
+        return getDeletionBlockers().isEmpty();
     }
 
     @Override

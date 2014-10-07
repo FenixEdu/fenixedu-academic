@@ -29,11 +29,13 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
+import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -77,13 +79,17 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     @Override
     public void delete() {
         check(this, SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations);
-        if (canBeDeleted()) {
+        if (getDeletionBlockers().isEmpty()) {
             super.delete();
         }
     }
 
-    private boolean canBeDeleted() {
-        return getWrittenEvaluationsSet().isEmpty();
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getWrittenEvaluationsSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.cannotDeleteWrittenEvaluationSpaceOccupation"));
+        }
     }
 
     @Override
