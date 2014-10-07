@@ -57,7 +57,8 @@ public class UpdateEmergencyContactDA extends FenixDispatchAction {
         }
 
         public EmergencyContactBean(Person loggedUser) {
-            EmergencyContact emergencyContact = loggedUser.getProfile().getEmergencyContact();
+            EmergencyContact emergencyContact =
+                    (loggedUser.getProfile() == null) ? null : loggedUser.getProfile().getEmergencyContact();
             if (emergencyContact != null) {
                 setContact(emergencyContact.getContact());
             }
