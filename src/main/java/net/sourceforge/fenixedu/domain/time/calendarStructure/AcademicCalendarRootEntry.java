@@ -188,10 +188,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 
     @Override
     protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {
-        if (entryToAdd.isAcademicYear()) {
-            return true;
-        }
-        return false;
+        return entryToAdd.isAcademicYear();
     }
 
     @Override

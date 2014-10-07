@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,10 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.NonRegularTeachingService;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -39,6 +42,7 @@ import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -49,7 +53,7 @@ public class TeacherService extends TeacherService_Base {
         if (teacher == null || executionSemester == null) {
             throw new DomainException("arguments can't be null");
         }
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        TeacherService teacherService = getTeacherServiceByExecutionPeriod(teacher, executionSemester);
         if (teacherService != null) {
             throw new DomainException("error.teacherService.already.exists.one.teacherService.in.executionPeriod");
         }
@@ -71,7 +75,7 @@ public class TeacherService extends TeacherService_Base {
 
     @Atomic
     public static TeacherService getTeacherService(Teacher teacher, ExecutionSemester executionPeriod) {
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = getTeacherServiceByExecutionPeriod(teacher, executionPeriod);
         if (teacherService == null) {
             teacherService = new TeacherService(teacher, executionPeriod);
         }
@@ -331,6 +335,74 @@ public class TeacherService extends TeacherService_Base {
         setTeacherServiceLock(null);
         new TeacherServiceLog(this, BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.teacher.unlockTeacherCredits",
                 getExecutionPeriod().getQualifiedName()));
+    }
+
+    public static Double getHoursLecturedOnExecutionCourse(Teacher teacher, ExecutionCourse executionCourse) {
+        double returnValue = 0;
+        Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
+        TeacherService teacherService = getTeacherServiceByExecutionPeriod(teacher, executionCourse.getExecutionPeriod());
+        if (teacherService != null) {
+            List<DegreeTeachingService> teachingServices = teacherService.getDegreeTeachingServiceByProfessorship(professorship);
+            for (DegreeTeachingService teachingService : teachingServices) {
+                returnValue +=
+                        ((teachingService.getPercentage() / 100) * teachingService.getShift().getUnitHours().doubleValue());
+            }
+        }
+        return returnValue;
+    }
+
+    public static Duration getLecturedDurationOnExecutionCourse(Teacher teacher, ExecutionCourse executionCourse) {
+        Duration duration = Duration.ZERO;
+        Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
+        TeacherService teacherService = getTeacherServiceByExecutionPeriod(teacher, executionCourse.getExecutionPeriod());
+        if (teacherService != null) {
+            List<DegreeTeachingService> teachingServices = teacherService.getDegreeTeachingServiceByProfessorship(professorship);
+            for (DegreeTeachingService teachingService : teachingServices) {
+                duration =
+                        duration.plus(new Duration(new Double((teachingService.getPercentage() / 100)
+                                * teachingService.getShift().getCourseLoadWeeklyAverage().doubleValue() * 3600 * 1000)
+                                .longValue()));
+            }
+        }
+        return duration;
+    }
+
+    public static TeacherService getTeacherServiceByExecutionPeriod(Teacher teacher, ExecutionSemester executionSemester) {
+        return teacher.getTeacherServicesSet().stream().filter(s -> s.getExecutionPeriod() == executionSemester).findAny()
+                .orElse(null);
+    }
+
+    public static SortedSet<DegreeTeachingService> getDegreeTeachingServicesOrderedByShift(Professorship professorship) {
+        final SortedSet<DegreeTeachingService> degreeTeachingServices =
+                new TreeSet<DegreeTeachingService>(DegreeTeachingService.DEGREE_TEACHING_SERVICE_COMPARATOR_BY_SHIFT);
+        degreeTeachingServices.addAll(professorship.getDegreeTeachingServicesSet());
+        return degreeTeachingServices;
+    }
+
+    public static DegreeTeachingService getDegreeTeachingServiceByShift(Professorship professorship, Shift shift) {
+        for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServicesSet()) {
+            if (degreeTeachingService.getShift() == shift) {
+                return degreeTeachingService;
+            }
+        }
+        return null;
+    }
+
+    public static Double getAvailableShiftPercentage(Shift shift, Professorship professorship) {
+        Double availablePercentage = 100.0;
+        for (DegreeTeachingService degreeTeachingService : shift.getDegreeTeachingServicesSet()) {
+            if (degreeTeachingService.getProfessorship() != professorship) {
+                availablePercentage -= degreeTeachingService.getPercentage();
+            }
+        }
+        for (NonRegularTeachingService nonRegularTeachingService : shift.getNonRegularTeachingServicesSet()) {
+            if (nonRegularTeachingService.getProfessorship() != professorship
+                    && (shift.getCourseLoadsSet().size() != 1 || !shift.containsType(ShiftType.LABORATORIAL))) {
+                availablePercentage -= nonRegularTeachingService.getPercentage();
+            }
+        }
+
+        return new BigDecimal(availablePercentage).divide(new BigDecimal(1), 2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
 }

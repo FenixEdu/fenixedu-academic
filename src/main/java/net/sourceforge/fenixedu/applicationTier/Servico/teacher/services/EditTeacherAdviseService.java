@@ -22,7 +22,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
@@ -70,17 +69,13 @@ public class EditTeacherAdviseService {
             throw new FenixServiceException("errors.invalid.student-number");
         }
 
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
         if (teacherService == null) {
             teacherService = new TeacherService(teacher, executionSemester);
         }
-        List<Advise> advises = registration.getAdvisesByTeacher(teacher);
-        Advise advise = null;
-        if (advises == null || advises.isEmpty()) {
-            advise = new Advise(teacher, registration, adviseType, executionSemester, executionSemester);
-        } else {
-            advise = advises.iterator().next();
-        }
+        Advise advise =
+                registration.getAdvisesSet().stream().filter(a -> a.getTeacher() == teacher).findAny()
+                        .orElseGet(() -> new Advise(teacher, registration, adviseType, executionSemester, executionSemester));
 
         TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionSemester);
         if (teacherAdviseService == null) {

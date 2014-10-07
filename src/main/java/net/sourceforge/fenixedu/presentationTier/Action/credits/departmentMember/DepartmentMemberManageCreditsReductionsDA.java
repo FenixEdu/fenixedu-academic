@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageCreditsReductionsDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberPresidentApp;
 
@@ -70,9 +71,10 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
         Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
         List<ReductionService> creditsReductions = new ArrayList<ReductionService>();
         if (department != null && department.isCurrentUserCurrentDepartmentPresident()) {
-            boolean inValidTeacherCreditsPeriod = executionSemester.isInValidCreditsPeriod(RoleType.DEPARTMENT_MEMBER);
+            boolean inValidTeacherCreditsPeriod =
+                    TeacherCreditsFillingCE.isInValidCreditsPeriod(executionSemester, RoleType.DEPARTMENT_MEMBER);
             for (Teacher teacher : department.getAllCurrentTeachers()) {
-                TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+                TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
                 if (teacherService != null
                         && teacherService.getReductionService() != null
                         && ((teacherService.getReductionService().getRequestCreditsReduction() != null && teacherService
@@ -106,7 +108,7 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
                 }
                 if (reductionServiceBean.getReductionService() == null) {
                     TeacherService teacherService =
-                            reductionServiceBean.getTeacher().getTeacherServiceByExecutionPeriod(
+                            TeacherService.getTeacherServiceByExecutionPeriod(reductionServiceBean.getTeacher(),
                                     ExecutionSemester.readActualExecutionSemester());
                     if (teacherService != null) {
                         reductionServiceBean.setReductionService(teacherService.getReductionService());

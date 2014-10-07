@@ -25,15 +25,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
-import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
 
@@ -47,7 +43,7 @@ import pt.ist.fenixframework.Atomic;
 /**
  * @author João Mota
  */
-public class Professorship extends Professorship_Base implements ICreditsEventOriginator {
+public class Professorship extends Professorship_Base {
 
     public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name",
             Collator.getInstance());
@@ -58,7 +54,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         new ProfessorshipPermissions(this);
     }
 
-    @Override
     public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
         return this.getExecutionCourse().getExecutionPeriod().equals(executionSemester);
     }
@@ -151,19 +146,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
             blockers.add(BundleUtil
                     .getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyAssociatedShiftProfessorship"));
         }
-        if (!getSupportLessonsSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnySupportLessons"));
-        }
-        if (!getDegreeTeachingServicesSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyDegreeTeachingServices"));
-        }
-        if (!getTeacherMasterDegreeServicesSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyTeacherMasterDegreeServices"));
-        }
-        if (!getDegreeProjectTutorialServicesSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
-                    "error.remove.professorship.hasAnyDegreeProjectTutorialServices"));
-        }
     }
 
     public boolean isDeletable() {
@@ -252,38 +234,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
             }
         }
         return new ArrayList<Professorship>(professorships);
-    }
-
-    public SortedSet<DegreeTeachingService> getDegreeTeachingServicesOrderedByShift() {
-        final SortedSet<DegreeTeachingService> degreeTeachingServices =
-                new TreeSet<DegreeTeachingService>(DegreeTeachingService.DEGREE_TEACHING_SERVICE_COMPARATOR_BY_SHIFT);
-        degreeTeachingServices.addAll(getDegreeTeachingServicesSet());
-        return degreeTeachingServices;
-    }
-
-    public DegreeTeachingService getDegreeTeachingServiceByShift(Shift shift) {
-        for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-            if (degreeTeachingService.getShift() == shift) {
-                return degreeTeachingService;
-            }
-        }
-        return null;
-    }
-
-    public SortedSet<SupportLesson> getSupportLessonsOrderedByStartTimeAndWeekDay() {
-        final SortedSet<SupportLesson> supportLessons =
-                new TreeSet<SupportLesson>(SupportLesson.SUPPORT_LESSON_COMPARATOR_BY_HOURS_AND_WEEK_DAY);
-        supportLessons.addAll(getSupportLessonsSet());
-        return supportLessons;
-    }
-
-    public boolean hasAssociatedLessonsInTeachingServices() {
-        for (final DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-            if (!degreeTeachingService.getShift().getAssociatedLessonsSet().isEmpty()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public Teacher getTeacher() {

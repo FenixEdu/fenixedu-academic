@@ -99,7 +99,7 @@ public class ExpectationsEvaluationDA extends FenixDispatchAction {
         if (expectation != null) {
             Teacher teacher = getLoggedTeacher(request);
             ExecutionYear executionYear = expectation.getExecutionYear();
-            if (teacher.hasExpectationEvaluatedTeacher(expectation.getTeacher(), executionYear)) {
+            if (ExpectationEvaluationGroup.hasExpectationEvaluatedTeacher(teacher, expectation.getTeacher(), executionYear)) {
                 request.setAttribute("teacherPersonalExpectation", expectation);
             }
         }
@@ -112,8 +112,8 @@ public class ExpectationsEvaluationDA extends FenixDispatchAction {
         TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
         Teacher loggedTeacher = getLoggedTeacher(request);
         if (teacherPersonalExpectation != null
-                && loggedTeacher.hasExpectationEvaluatedTeacher(teacherPersonalExpectation.getTeacher(),
-                        teacherPersonalExpectation.getExecutionYear())) {
+                && ExpectationEvaluationGroup.hasExpectationEvaluatedTeacher(loggedTeacher,
+                        teacherPersonalExpectation.getTeacher(), teacherPersonalExpectation.getExecutionYear())) {
             request.setAttribute("noEdit", true);
             request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
         }
@@ -134,10 +134,11 @@ public class ExpectationsEvaluationDA extends FenixDispatchAction {
             ExecutionYear executionYear) {
         Map<Teacher, TeacherPersonalExpectation> result =
                 new TreeMap<Teacher, TeacherPersonalExpectation>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-        List<ExpectationEvaluationGroup> groups = teacher.getEvaluatedExpectationEvaluationGroups(executionYear);
+        List<ExpectationEvaluationGroup> groups =
+                ExpectationEvaluationGroup.getEvaluatedExpectationEvaluationGroups(teacher, executionYear);
         for (ExpectationEvaluationGroup group : groups) {
             TeacherPersonalExpectation evaluatedTeacherExpectation =
-                    group.getEvaluated().getTeacherPersonalExpectationByExecutionYear(executionYear);
+                    TeacherPersonalExpectation.getTeacherPersonalExpectationByExecutionYear(group.getEvaluated(), executionYear);
             result.put(group.getEvaluated(), evaluatedTeacherExpectation);
         }
         request.setAttribute("evaluatedTeachers", result);

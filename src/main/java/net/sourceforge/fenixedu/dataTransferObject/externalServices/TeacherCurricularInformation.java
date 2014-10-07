@@ -347,7 +347,7 @@ public class TeacherCurricularInformation implements Serializable {
 
     protected void getLecturedCurricularUnitForProfessorship(Professorship professorship, ExecutionSemester executionSemester) {
         Map<String, Float> hoursByTypeMap = new HashMap<String, Float>();
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
         final StringBuilder shiftTypeDescription = new StringBuilder();
         if (teacherService != null) {
             List<DegreeTeachingService> degreeTeachingServices =

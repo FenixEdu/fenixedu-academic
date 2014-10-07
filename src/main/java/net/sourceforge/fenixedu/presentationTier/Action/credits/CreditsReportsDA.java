@@ -257,7 +257,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
     protected BigDecimal getCorrectedCL(DepartmentCreditsBean departmentCreditsBean, Teacher teacher) {
         BigDecimal correcredCL = BigDecimal.ZERO;
         for (ExecutionSemester executionSemester : departmentCreditsBean.getExecutionYear().getExecutionPeriodsSet()) {
-            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+            TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
             if (teacherService != null) {
                 for (OtherService otherService : teacherService.getOtherServices()) {
                     if (otherService instanceof DegreeTeachingServiceCorrection) {

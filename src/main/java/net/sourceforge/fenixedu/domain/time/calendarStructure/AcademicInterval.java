@@ -188,14 +188,6 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     // Operations for get periods.
 
-    public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacher() {
-        return getAcademicCalendarEntry().getTeacherCreditsFillingForTeacher(getAcademicChronology());
-    }
-
-    public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOffice() {
-        return getAcademicCalendarEntry().getTeacherCreditsFillingForDepartmentAdmOffice(getAcademicChronology());
-    }
-
     public int getAcademicSemesterOfAcademicYear() {
         return getAcademicCalendarEntry().getAcademicSemesterOfAcademicYear(getAcademicChronology());
     }

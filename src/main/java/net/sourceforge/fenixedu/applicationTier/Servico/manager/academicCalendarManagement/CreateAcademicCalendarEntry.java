@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodInSpeci
 import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInNormalSeasonCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInSpecialSeasonCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateAcademicCalendarEntry {
@@ -80,9 +79,6 @@ public class CreateAcademicCalendarEntry {
             } else if (type.equals(EnrolmentsPeriodCE.class)) {
                 return new EnrolmentsPeriodCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(),
                         bean.getEnd(), bean.getRootEntry());
-
-            } else if (type.equals(TeacherCreditsFillingCE.class)) {
-                // Do Nothing: this was created in scientific council interface.
             }
 
         } else {

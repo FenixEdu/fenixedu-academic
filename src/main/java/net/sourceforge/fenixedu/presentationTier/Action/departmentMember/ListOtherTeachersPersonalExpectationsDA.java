@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.commons.ExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod;
 import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.ListTeachersPersonalExpectationsDA;
@@ -89,7 +90,8 @@ public class ListOtherTeachersPersonalExpectationsDA extends ListTeachersPersona
                 teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
 
         TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod =
-                loggedTeacherDepartment.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
+                TeacherPersonalExpectationPeriod.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(
+                        loggedTeacherDepartment, executionYear);
 
         if (visualizationPeriod != null && visualizationPeriod.isPeriodOpen() && teacherWorkingDepartment != null
                 && teacherWorkingDepartment.equals(loggedTeacherDepartment)) {
@@ -110,7 +112,9 @@ public class ListOtherTeachersPersonalExpectationsDA extends ListTeachersPersona
         Department department = getDepartment(request);
         TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = null;
         if (department != null) {
-            visualizationPeriod = department.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
+            visualizationPeriod =
+                    TeacherPersonalExpectationPeriod.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(department,
+                            executionYear);
         }
 
         if (visualizationPeriod == null || !visualizationPeriod.isPeriodOpen()) {

@@ -30,6 +30,7 @@ import java.util.TreeMap;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
@@ -74,7 +75,7 @@ public class ReadDepartmentTotalCreditsByPeriod {
             Map<ExecutionYear, PeriodCreditsReportDTO> departmentCredits, ExecutionSemester untilExecutionPeriod)
             throws ParseException {
 
-        double teacherPeriodTotalCredits = teacher.getBalanceOfCreditsUntil(executionSemester);
+        double teacherPeriodTotalCredits = TeacherCredits.calculateBalanceOfCreditsUntil(teacher, executionSemester);
 
         if (!departmentCredits.containsKey(executionSemester.getExecutionYear())) {
             departmentCredits.put(executionSemester.getExecutionYear(), new PeriodCreditsReportDTO());

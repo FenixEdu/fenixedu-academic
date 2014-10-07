@@ -102,7 +102,8 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 
         if (teacherWorkingDepartment != null && employeeDepartment != null && teacherWorkingDepartment.equals(employeeDepartment)) {
             request.setAttribute("expectationEvaluationGroupBean", new ExpectationEvaluationGroupBean(teacher, executionYear));
-            request.setAttribute("evaluatedTeacherGroups", teacher.getEvaluatedExpectationEvaluationGroups(executionYear));
+            request.setAttribute("evaluatedTeacherGroups",
+                    ExpectationEvaluationGroup.getEvaluatedExpectationEvaluationGroups(teacher, executionYear));
         }
 
         return mapping.findForward("manageGroups");
@@ -123,7 +124,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState("expectationEvaluationGroupBeanWithEvaluatedTeacher");
         bean.setEvaluated(null);
         request.setAttribute("evaluatedTeacherGroups",
-                bean.getAppraiser().getEvaluatedExpectationEvaluationGroups(bean.getExecutionYear()));
+                ExpectationEvaluationGroup.getEvaluatedExpectationEvaluationGroups(bean.getAppraiser(), bean.getExecutionYear()));
         request.setAttribute("expectationEvaluationGroupBean", bean);
 
         return mapping.findForward("manageGroups");
@@ -144,7 +145,8 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
         if (appraiserDepartment != null && employeeDepartment != null && appraiserDepartment.equals(employeeDepartment)) {
             try {
                 DeleteExpectationEvaluationGroup.run(group);
-                request.setAttribute("evaluatedTeacherGroups", appraiser.getEvaluatedExpectationEvaluationGroups(executionYear));
+                request.setAttribute("evaluatedTeacherGroups",
+                        ExpectationEvaluationGroup.getEvaluatedExpectationEvaluationGroups(appraiser, executionYear));
                 request.setAttribute("expectationEvaluationGroupBean", new ExpectationEvaluationGroupBean(appraiser,
                         executionYear));
 
@@ -165,7 +167,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
             List<Teacher> currentTeachers =
                     department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
             for (Teacher teacher : currentTeachers) {
-                result.put(teacher, teacher.getEvaluatedExpectationEvaluationGroups(executionYear));
+                result.put(teacher, ExpectationEvaluationGroup.getEvaluatedExpectationEvaluationGroups(teacher, executionYear));
             }
         }
         request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));

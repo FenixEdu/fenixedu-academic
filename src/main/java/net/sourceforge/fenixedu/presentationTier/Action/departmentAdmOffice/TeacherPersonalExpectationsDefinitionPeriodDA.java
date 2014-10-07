@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.commons.ExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
+import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DefineExpectationPeriods;
 
@@ -100,7 +101,8 @@ public class TeacherPersonalExpectationsDefinitionPeriodDA extends FenixDispatch
     protected void readAndSetPeriod(HttpServletRequest request, ExecutionYear executionYear) {
         if (executionYear != null) {
             TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod =
-                    getDepartment(request).getTeacherExpectationDefinitionPeriodForExecutionYear(executionYear);
+                    TeacherPersonalExpectationPeriod.getTeacherExpectationDefinitionPeriodForExecutionYear(
+                            getDepartment(request), executionYear);
             request.setAttribute("period", teacherExpectationDefinitionPeriod);
         }
     }

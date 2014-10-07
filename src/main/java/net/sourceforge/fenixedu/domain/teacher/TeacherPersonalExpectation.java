@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
+import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod;
 import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -42,7 +43,7 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
         Teacher teacher = infoTeacherPersonalExpectation.getTeacher();
 
         if (executionYear != null && teacher != null) {
-            if (teacher.getTeacherPersonalExpectationByExecutionYear(executionYear) != null) {
+            if (getTeacherPersonalExpectationByExecutionYear(teacher, executionYear) != null) {
                 throw new DomainException("error.exception.personalExpectation.already.exists");
             }
         }
@@ -111,7 +112,8 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
         Department department = getTeacher().getCurrentWorkingDepartment();
         if (department != null) {
             TeacherExpectationDefinitionPeriod period =
-                    department.getTeacherExpectationDefinitionPeriodForExecutionYear(getExecutionYear());
+                    TeacherPersonalExpectationPeriod.getTeacherExpectationDefinitionPeriodForExecutionYear(department,
+                            getExecutionYear());
             return (period == null) ? false : period.isPeriodOpen();
         }
         return false;
@@ -121,7 +123,8 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
         Department department = getTeacher().getCurrentWorkingDepartment();
         if (department != null) {
             TeacherAutoEvaluationDefinitionPeriod period =
-                    department.getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(getExecutionYear());
+                    TeacherPersonalExpectationPeriod.getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(department,
+                            getExecutionYear());
             return (period == null) ? false : period.isPeriodOpen();
         }
         return false;
@@ -131,7 +134,8 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
         Department department = getTeacher().getCurrentWorkingDepartment();
         if (department != null) {
             TeacherPersonalExpectationsEvaluationPeriod period =
-                    department.getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(getExecutionYear());
+                    TeacherPersonalExpectationPeriod.getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(department,
+                            getExecutionYear());
             return (period == null) ? false : period.isPeriodOpen();
         }
         return false;
@@ -170,6 +174,12 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
         setConsulting(infoTeacherPersonalExpectation.getConsulting());
         setCompanySocialOrgans(infoTeacherPersonalExpectation.getCompanySocialOrgans());
         setCompanyPositions(infoTeacherPersonalExpectation.getCompanyPositions());
+    }
+
+    public static TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(Teacher teacher,
+            ExecutionYear executionYear) {
+        return teacher.getTeacherPersonalExpectationsSet().stream().filter(e -> e.getExecutionYear().equals(executionYear))
+                .findAny().orElse(null);
     }
 
 }

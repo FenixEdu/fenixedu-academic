@@ -1263,7 +1263,7 @@ public class CreateTestData {
                     shiftProfessorship.setProfessorship(professorship);
                     shiftProfessorship.setPercentage(Double.valueOf(100));
 
-                    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+                    TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionPeriod);
                     if (teacherService == null) {
                         teacherService = new TeacherService(teacher, executionPeriod);
                     }

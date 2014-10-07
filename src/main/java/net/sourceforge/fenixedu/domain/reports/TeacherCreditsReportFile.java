@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -144,14 +145,14 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                     Department creditsDepartment = getCreditsDepartment(teacher, executionSemester);
                     row.setCell(creditsDepartment == null ? null : creditsDepartment.getName());
 
-                    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+                    TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
                     row.setCell(teacherService == null ? 0 : teacherService.getTeachingDegreeHours());// CLE
 
                     row.setCell(teacherService == null ? 0 : teacherService.getTeachingDegreeCorrections());// CLE corrections
 
                     row.setCell(teacherService == null ? 0 : teacherService.getTeachingDegreeCredits());// CL
 
-                    row.setCell(teacher.getManagementFunctionsCredits(executionSemester)); // CG
+                    row.setCell(TeacherCredits.calculateManagementFunctionsCredits(teacher, executionSemester)); // CG
                     //CG (desc)
                     row.setCell(teacherService == null ? 0 : teacherService.getOtherServiceCredits());// O
                     Double creditsReductionRequired =
@@ -166,9 +167,9 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                     row.setCell(creditsReductionRequired);// AD65 requerido
                     row.setCell(creditsReductionAttributed);// AD65 atribuído
 
-                    row.setCell(teacher.getServiceExemptionCredits(executionSemester)); //SNE
+                    row.setCell(TeacherCredits.calculateServiceExemptionCredits(teacher, executionSemester)); //SNE
 
-                    row.setCell(teacher.getMandatoryLessonHours(executionSemester)); //CLN
+                    row.setCell(TeacherCredits.calculateMandatoryLessonHours(teacher, executionSemester)); //CLN
 
                     AnnualTeachingCreditsBean annualTeachingCreditsBean =
                             new AnnualTeachingCreditsBean(executionYear, teacher, RoleType.SCIENTIFIC_COUNCIL);

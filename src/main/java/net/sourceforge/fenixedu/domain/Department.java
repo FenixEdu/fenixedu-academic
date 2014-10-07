@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -211,20 +210,6 @@ public class Department extends Department_Base {
         return executionCourses;
     }
 
-    public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(ExecutionYear executionYear) {
-        List<Teacher> teachersFromDepartment =
-                getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
-        List<TeacherPersonalExpectation> personalExpectations = new ArrayList<TeacherPersonalExpectation>();
-        for (Teacher teacher : teachersFromDepartment) {
-            TeacherPersonalExpectation teacherPersonalExpectation =
-                    teacher.getTeacherPersonalExpectationByExecutionYear(executionYear);
-            if (teacherPersonalExpectation != null) {
-                personalExpectations.add(teacherPersonalExpectation);
-            }
-        }
-        return personalExpectations;
-    }
-
     public String getAcronym() {
         final int begin = this.getRealName().indexOf("(");
         final int end = this.getRealName().indexOf(")");
@@ -254,48 +239,6 @@ public class Department extends Department_Base {
                 competenceCourses.add(course);
             }
         }
-    }
-
-    public TeacherPersonalExpectationPeriod getTeacherPersonalExpectationPeriodForExecutionYear(ExecutionYear executionYear,
-            Class<? extends TeacherPersonalExpectationPeriod> clazz) {
-
-        if (executionYear != null) {
-            for (TeacherPersonalExpectationPeriod period : getTeacherPersonalExpectationPeriodsSet()) {
-                if (period.getExecutionYear().equals(executionYear) && period.getClass().equals(clazz)) {
-                    return period;
-                }
-            }
-        }
-        return null;
-    }
-
-    public TeacherAutoEvaluationDefinitionPeriod getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(
-            ExecutionYear executionYear) {
-        TeacherPersonalExpectationPeriod period =
-                getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherAutoEvaluationDefinitionPeriod.class);
-        return period != null ? (TeacherAutoEvaluationDefinitionPeriod) period : null;
-    }
-
-    public TeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
-        TeacherPersonalExpectationPeriod period =
-                getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherExpectationDefinitionPeriod.class);
-        return period != null ? (TeacherExpectationDefinitionPeriod) period : null;
-    }
-
-    public TeacherPersonalExpectationsVisualizationPeriod getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(
-            ExecutionYear executionYear) {
-        TeacherPersonalExpectationPeriod period =
-                getTeacherPersonalExpectationPeriodForExecutionYear(executionYear,
-                        TeacherPersonalExpectationsVisualizationPeriod.class);
-        return period != null ? (TeacherPersonalExpectationsVisualizationPeriod) period : null;
-    }
-
-    public TeacherPersonalExpectationsEvaluationPeriod getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(
-            ExecutionYear executionYear) {
-        TeacherPersonalExpectationPeriod period =
-                getTeacherPersonalExpectationPeriodForExecutionYear(executionYear,
-                        TeacherPersonalExpectationsEvaluationPeriod.class);
-        return period != null ? (TeacherPersonalExpectationsEvaluationPeriod) period : null;
     }
 
     public List<Teacher> getPossibleTutors() {

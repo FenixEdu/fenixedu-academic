@@ -160,11 +160,12 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
                 htmlText.append("<p style=\"font-size: 65%;\">Aulas:</p>");
 
-                if (professorship.getDegreeTeachingServicesOrderedByShift().isEmpty()) {
+                if (TeacherService.getDegreeTeachingServicesOrderedByShift(professorship).isEmpty()) {
                     htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos de aulas.</p>");
                 } else {
                     htmlText.append("<table class=\"tb01\"><tr><th>Turno</th><th>Tipo</th><th>Horas</th><th>% que lecciona</th></tr>");
-                    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServicesOrderedByShift()) {
+                    for (DegreeTeachingService degreeTeachingService : TeacherService
+                            .getDegreeTeachingServicesOrderedByShift(professorship)) {
                         htmlText.append("<tr><td>").append(degreeTeachingService.getShift().getNome()).append("</td>");
                         htmlText.append("<td>").append(degreeTeachingService.getShift().getShiftTypesPrettyPrint())
                                 .append("</td>");
@@ -176,12 +177,13 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
                 htmlText.append("<p style=\"font-size: 65%;\">Aulas de dúvidas:</p>");
 
-                if (professorship.getSupportLessonsOrderedByStartTimeAndWeekDay().isEmpty()) {
+                if (TeacherCredits.getSupportLessonsOrderedByStartTimeAndWeekDay(professorship).isEmpty()) {
                     htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos de aulas de dúvidas.</p>");
                 } else {
 
                     htmlText.append("<table class=\"tb01\"><tr><th>Dia da semana</th><th>Início</th><th>Fim</th><th>Local</th></tr>");
-                    for (SupportLesson supportLesson : professorship.getSupportLessonsOrderedByStartTimeAndWeekDay()) {
+                    for (SupportLesson supportLesson : TeacherCredits
+                            .getSupportLessonsOrderedByStartTimeAndWeekDay(professorship)) {
                         htmlText.append("<tr><td>").append(supportLesson.getWeekDay()).append("</td>");
                         htmlText.append("<td>").append(supportLesson.getStartTimeHourMinuteSecond().toString()).append("</td>");
                         htmlText.append("<td>").append(supportLesson.getEndTimeHourMinuteSecond().toString()).append("</td>");

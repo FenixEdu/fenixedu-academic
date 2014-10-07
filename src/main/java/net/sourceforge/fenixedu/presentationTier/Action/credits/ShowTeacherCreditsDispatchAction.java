@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -47,6 +48,7 @@ import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -118,7 +120,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
     protected void showLinks(HttpServletRequest request, ExecutionSemester executionSemester, RoleType roleType) {
         boolean showLinks = true;
         try {
-            executionSemester.checkValidCreditsPeriod(roleType);
+            TeacherCreditsFillingCE.checkValidCreditsPeriod(executionSemester, roleType);
         } catch (DomainException e) {
             showLinks = false;
         }
@@ -137,7 +139,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
         setTeachingServicesAndSupportLessons(request, teacher, executionSemester);
 
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
         if (teacherService != null) {
             setMasterDegreeServices(request, teacherService);
             setAdviseServices(request, teacherService);
@@ -179,11 +181,11 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
     protected CreditLineDTO simulateCalcCreditLine(Teacher teacher, ExecutionSemester executionSemester) throws ParseException {
 
-        double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
-        double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionSemester);
-        double thesesCredits = teacher.getThesesCredits(executionSemester);
-        double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        double managementCredits = TeacherCredits.calculateManagementFunctionsCredits(teacher, executionSemester);
+        double serviceExemptionCredits = TeacherCredits.calculateServiceExemptionCredits(teacher, executionSemester);
+        double thesesCredits = TeacherCredits.calculateThesesCredits(teacher, executionSemester);
+        double mandatoryLessonHours = TeacherCredits.calculateMandatoryLessonHours(teacher, executionSemester);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
         return new CreditLineDTO(executionSemester, teacherService, managementCredits, serviceExemptionCredits,
                 mandatoryLessonHours, teacher, thesesCredits);
 

@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowTeacherCreditsDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCouncil.ScientificCouncilViewTeacherCreditsDA;
 
@@ -59,8 +60,8 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
             request.setAttribute("teacherNotFound", "teacherNotFound");
             return mapping.findForward("teacher-not-found");
         }
-        if (teacher.hasTeacherCredits(executionSemester)
-                && teacher.getTeacherCredits(executionSemester).getTeacherCreditsState().isCloseState()) {
+        if (TeacherCredits.readTeacherCredits(executionSemester, teacher) != null
+                && TeacherCredits.readTeacherCredits(executionSemester, teacher).getTeacherCreditsState().isCloseState()) {
             request.setAttribute("simulateCalc", "true");
         }
         getAllTeacherCredits(request, executionSemester, teacher);
@@ -84,7 +85,7 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
         InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
         Teacher teacher = infoTeacherCredits.getTeacher();
         ExecutionSemester executionSemester = infoTeacherCredits.getExecutionSemester();
-        teacher.getTeacherCredits(executionSemester).editTeacherCredits(executionSemester);
+        TeacherCredits.readTeacherCredits(executionSemester, teacher).editTeacherCredits(executionSemester);
         getAllTeacherCredits(request, executionSemester, teacher);
         request.setAttribute("simulateCalc", "true");
         return mapping.findForward("show-teacher-credits");

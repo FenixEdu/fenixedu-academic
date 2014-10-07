@@ -112,9 +112,6 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
-import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
-import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
@@ -148,7 +145,6 @@ import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
@@ -1924,23 +1920,6 @@ public class Person extends Person_Base {
     @Deprecated
     public Set<Registration> getStudentsSet() {
         return getStudent() != null ? getStudent().getRegistrationsSet() : Collections.EMPTY_SET;
-    }
-
-    public Set<Career> getCareersByType(final CareerType type) {
-        return getCareersByTypeAndInterval(type, null);
-    }
-
-    public Set<Career> getCareersByTypeAndInterval(final CareerType type, final Interval intersecting) {
-        final Set<Career> careers = new HashSet<Career>();
-        for (final Career career : getAssociatedCareersSet()) {
-            if (type == null || type.equals(CareerType.PROFESSIONAL) && career instanceof ProfessionalCareer
-                    || type.equals(CareerType.TEACHING) && career instanceof TeachingCareer) {
-                if (intersecting == null || career.getInterval().overlaps(intersecting)) {
-                    careers.add(career);
-                }
-            }
-        }
-        return careers;
     }
 
     public static class AnyPersonSearchBean implements Serializable {

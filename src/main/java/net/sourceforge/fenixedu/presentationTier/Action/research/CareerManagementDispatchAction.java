@@ -48,7 +48,7 @@ public class CareerManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
         Person person = getLoggedPerson(request);
         SortedSet<Career> sortedCareer = new TreeSet<Career>(Career.CAREER_DATE_COMPARATOR);
-        sortedCareer.addAll(person.getCareersByType(CareerType.PROFESSIONAL));
+        sortedCareer.addAll(Career.getCareersByType(person, CareerType.PROFESSIONAL));
         request.setAttribute("career", sortedCareer);
         return mapping.findForward("showCareer");
     }

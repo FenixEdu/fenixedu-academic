@@ -86,7 +86,8 @@ public class CreditLineDTO {
             setPastServiceCredits(teacherService.getPastServiceCredits());
         }
         setThesesCredits(thesesCredits);
-        setBalanceOfCredits(teacher.getBalanceOfCreditsUntil(executionSemester.getPreviousExecutionPeriod()));
+        setBalanceOfCredits(TeacherCredits
+                .calculateBalanceOfCreditsUntil(teacher, executionSemester.getPreviousExecutionPeriod()));
         setMandatoryLessonHours(lessonHours);
         setManagementCredits(managementCredits);
         setServiceExemptionCredits(exemptionCredits);

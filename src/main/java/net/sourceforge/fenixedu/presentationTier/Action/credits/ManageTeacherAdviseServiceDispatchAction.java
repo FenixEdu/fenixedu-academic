@@ -63,7 +63,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
         dynaForm.set("executionPeriodId", executionSemester.getExternalId());
         dynaForm.set("teacherId", teacher.getExternalId());
 
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
         if (teacherService != null && !teacherService.getTeacherAdviseServices().isEmpty()) {
             BeanComparator comparator = new BeanComparator("advise.student.number");
             Iterator orderedAdviseServicesIter =

@@ -26,7 +26,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -75,10 +74,6 @@ public class InfoTeacher extends InfoObject {
 
     public InfoPerson getInfoPerson() {
         return InfoPerson.newInfoFromDomain(getPerson());
-    }
-
-    public InfoCategory getInfoCategory() {
-        return InfoCategory.newInfoFromDomain(getTeacher().getCategory());
     }
 
     @Override

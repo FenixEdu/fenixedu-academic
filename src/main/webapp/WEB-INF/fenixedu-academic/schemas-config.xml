@@ -38,14 +38,12 @@
     <!ENTITY executionCourse SYSTEM "/fenixedu-academic/schemas/executionCourse-schemas.xml"> 
 	<!ENTITY vigilancy SYSTEM "/fenixedu-academic/schemas/vigilancy-schemas.xml">
 	<!ENTITY academicAdminOffice SYSTEM "/fenixedu-academic/schemas/academicAdminOffice-schemas.xml">	
-	<!ENTITY tsdProcess SYSTEM "/fenixedu-academic/schemas/teacherServiceDistribution-schemas.xml">
     <!ENTITY site SYSTEM "/fenixedu-academic/schemas/site-schemas.xml">
     <!ENTITY student SYSTEM "/fenixedu-academic/schemas/student-schemas.xml">
     <!ENTITY departmentMember SYSTEM "/fenixedu-academic/schemas/departmentMember-schemas.xml">
     <!ENTITY manager SYSTEM "/fenixedu-academic/schemas/manager-schemas.xml">
     <!ENTITY resourceAllocationManager SYSTEM "/fenixedu-academic/schemas/resourceAllocationManager-schemas.xml">
     <!ENTITY teacher SYSTEM "/fenixedu-academic/schemas/teacher-schemas.xml">
-    <!ENTITY departmentAdmOffice SYSTEM "/fenixedu-academic/schemas/departmentAdmOffice-schemas.xml">
     <!ENTITY coordinator SYSTEM "/fenixedu-academic/schemas/coordinator-schemas.xml">
     <!ENTITY operator SYSTEM "/fenixedu-academic/schemas/operator-schemas.xml">
     <!ENTITY scientificCouncil SYSTEM "/fenixedu-academic/schemas/scientificCouncil-schemas.xml">
@@ -680,14 +678,12 @@
     &executionCourse;
 	&vigilancy;
 	&academicAdminOffice;
-	&tsdProcess;
     &site;
     &student;
     &departmentMember;
     &manager;
     &resourceAllocationManager;
     &teacher;
-    &departmentAdmOffice;
     &coordinator;
     &operator;
     &scientificCouncil;

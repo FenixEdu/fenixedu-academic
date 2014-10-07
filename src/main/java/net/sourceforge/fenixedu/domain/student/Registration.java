@@ -63,7 +63,6 @@ import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
@@ -109,8 +108,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
-import net.sourceforge.fenixedu.domain.teacher.Advise;
-import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -1191,27 +1188,6 @@ public class Registration extends Registration_Base {
         result.addAll(getEnrolmentsExecutionPeriods());
 
         return result;
-    }
-
-    final public List<Advise> getAdvisesByTeacher(final Teacher teacher) {
-        return (List<Advise>) CollectionUtils.select(getAdvisesSet(), new Predicate() {
-
-            @Override
-            final public boolean evaluate(Object arg0) {
-                Advise advise = (Advise) arg0;
-                return advise.getTeacher() == teacher;
-            }
-        });
-    }
-
-    final public List<Advise> getAdvisesByType(final AdviseType adviseType) {
-        return (List<Advise>) CollectionUtils.select(getAdvisesSet(), new Predicate() {
-            @Override
-            final public boolean evaluate(Object arg0) {
-                Advise advise = (Advise) arg0;
-                return advise.getAdviseType().equals(adviseType);
-            }
-        });
     }
 
     final public Set<Attends> getOrderedAttends() {

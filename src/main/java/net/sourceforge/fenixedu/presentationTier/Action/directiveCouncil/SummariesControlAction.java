@@ -56,6 +56,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Bundle;
 
@@ -223,7 +224,8 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
             if (professorship.belongsToExecutionPeriod(executionSemester)
                     && !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
                 for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
-                    DegreeTeachingService degreeTeachingService = professorship.getDegreeTeachingServiceByShift(shift);
+                    DegreeTeachingService degreeTeachingService =
+                            TeacherService.getDegreeTeachingServiceByShift(professorship, shift);
                     if (degreeTeachingService != null) {
                         // Get the number of declared lessons
                         lessonsDeclared =

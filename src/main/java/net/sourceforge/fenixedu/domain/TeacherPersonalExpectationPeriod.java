@@ -32,7 +32,7 @@ public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectation
 
     public void init(Department department, ExecutionYear executionYear, YearMonthDay startDate, YearMonthDay endDate) {
         if (department != null && executionYear != null
-                && department.getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, getClass()) != null) {
+                && getTeacherPersonalExpectationPeriodForExecutionYear(department, executionYear, getClass()) != null) {
             throw new DomainException("error.TeacherPersonalExpectationPeriod.already.exists");
         }
         setDepartment(department);
@@ -123,6 +123,51 @@ public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectation
         } else {
             setStartDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    public static TeacherPersonalExpectationPeriod getTeacherPersonalExpectationPeriodForExecutionYear(Department department,
+            ExecutionYear executionYear, Class<? extends TeacherPersonalExpectationPeriod> clazz) {
+
+        if (executionYear != null) {
+            for (TeacherPersonalExpectationPeriod period : department.getTeacherPersonalExpectationPeriodsSet()) {
+                if (period.getExecutionYear().equals(executionYear) && period.getClass().equals(clazz)) {
+                    return period;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static TeacherAutoEvaluationDefinitionPeriod getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(
+            Department department, ExecutionYear executionYear) {
+        TeacherPersonalExpectationPeriod period =
+                getTeacherPersonalExpectationPeriodForExecutionYear(department, executionYear,
+                        TeacherAutoEvaluationDefinitionPeriod.class);
+        return period != null ? (TeacherAutoEvaluationDefinitionPeriod) period : null;
+    }
+
+    public static TeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriodForExecutionYear(Department department,
+            ExecutionYear executionYear) {
+        TeacherPersonalExpectationPeriod period =
+                getTeacherPersonalExpectationPeriodForExecutionYear(department, executionYear,
+                        TeacherExpectationDefinitionPeriod.class);
+        return period != null ? (TeacherExpectationDefinitionPeriod) period : null;
+    }
+
+    public static TeacherPersonalExpectationsVisualizationPeriod getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(
+            Department department, ExecutionYear executionYear) {
+        TeacherPersonalExpectationPeriod period =
+                getTeacherPersonalExpectationPeriodForExecutionYear(department, executionYear,
+                        TeacherPersonalExpectationsVisualizationPeriod.class);
+        return period != null ? (TeacherPersonalExpectationsVisualizationPeriod) period : null;
+    }
+
+    public static TeacherPersonalExpectationsEvaluationPeriod getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(
+            Department department, ExecutionYear executionYear) {
+        TeacherPersonalExpectationPeriod period =
+                getTeacherPersonalExpectationPeriodForExecutionYear(department, executionYear,
+                        TeacherPersonalExpectationsEvaluationPeriod.class);
+        return period != null ? (TeacherPersonalExpectationsEvaluationPeriod) period : null;
     }
 
 }

@@ -18,11 +18,9 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
-
 import org.fenixedu.bennu.core.domain.Bennu;
 
-public class ShiftProfessorship extends ShiftProfessorship_Base implements ICreditsEventOriginator {
+public class ShiftProfessorship extends ShiftProfessorship_Base {
 
     public ShiftProfessorship() {
         super();
@@ -36,7 +34,6 @@ public class ShiftProfessorship extends ShiftProfessorship_Base implements ICred
         super.deleteDomainObject();
     }
 
-    @Override
     public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
         return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionSemester);
     }

@@ -74,7 +74,7 @@ public class AutoEvaluationTeacherExpectationAction extends FenixDispatchAction 
 
     private TeacherPersonalExpectation getTeacherExpectationForGivenYearInRequest(HttpServletRequest request, ExecutionYear year) {
         Person person = getLoggedPerson(request);
-        return person.getTeacher().getTeacherPersonalExpectationByExecutionYear(year);
+        return TeacherPersonalExpectation.getTeacherPersonalExpectationByExecutionYear(person.getTeacher(), year);
     }
 
     private ExecutionYear getYear(HttpServletRequest request) {

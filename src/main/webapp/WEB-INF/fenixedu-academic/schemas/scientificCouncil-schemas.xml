@@ -172,40 +172,6 @@
     <slot name="secondEctsCredits" key="ectsCredits" />
 </schema>
 
-<schema name="teacher.credits.list.execution.periods" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
-    <slot name="executionPeriod" key="label.teacher.credits.execution.period" layout="menu-select-postback">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
-        <property name="format" value="${year} - ${semester}º Sem." />
-        <property name="destination" value="postBack" />
-    </slot>
-</schema>
-
-<schema name="teacher.credits.period.view" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
-    <slot name="beginForTeacher" key="label.credits.periods.begin">
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
-            <property name="required" value="true" />
-        </validator>
-    </slot>
-    <slot name="endForTeacher" key="label.credits.periods.end">
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
-            <property name="required" value="true" />
-        </validator>
-    </slot>
-</schema>
-
-<schema name="departmentAdmOffice.credits.period.view" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
-    <slot name="beginForDepartmentAdmOffice" key="label.credits.periods.begin">
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
-            <property name="required" value="true" />
-        </validator>
-    </slot>
-    <slot name="endForDepartmentAdmOffice" key="label.credits.periods.end">
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
-            <property name="required" value="true" />
-        </validator>
-    </slot>
-</schema>
-
 <schema name="scientificCouncil.thesis.creation.period.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$ThesisCreationPeriodFactoryExecutor">
     <slot name="executionYear" key="label.execution.year" layout="menu-select-postback">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
@@ -220,27 +186,6 @@
     <slot name="degreeCurricularPlan.degree.presentationName" key="label.degree" />
     <slot name="beginThesisCreationPeriod" key="label.begin" />
     <slot name="endThesisCreationPeriod" key="label.end" />
-</schema>
-
-
-<schema name="scientificCouncil.credits.departmentCreditsBean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.DepartmentCreditsBean">
-    <slot name="department" key="label.department" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DepartmentProvider" />
-        <property name="format" value="${name}" />
-        <property name="sortBy" value="name" />
-        <property name="destination" value="postback" />
-    </slot>
-    <slot name="employeeNumber" key="label.department.credits.employeeNumber">
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
-    </slot>
-</schema>
-
-<schema name="scientificCouncil.credits.employee" type="net.sourceforge.fenixedu.domain.Employee">
-    <slot name="employeeNumber" key="label.department.credits.employeeNumber">
-    </slot>
-    <slot name="person.name" key="label.department.credits.employeeName">
-    </slot>
 </schema>
 
 <schema name="scientificCouncil.thesis.creation.period.definition" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$ThesisCreationPeriodFactoryExecutor">

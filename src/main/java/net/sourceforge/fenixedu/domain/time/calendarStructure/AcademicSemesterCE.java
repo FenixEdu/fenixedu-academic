@@ -83,17 +83,11 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
         if (childEntry.isAcademicTrimester()) {
             return getChildEntriesWithTemplateEntries(childEntry.getClass()).size() >= 2;
         }
-        if (childEntry.isTeacherCreditsFilling()) {
-            return getChildEntriesWithTemplateEntries(childEntry.getClass()).size() >= 1;
-        }
         return false;
     }
 
     @Override
     protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {
-        if (entryToAdd.isTeacherCreditsFilling()) {
-            return true;
-        }
         return false;
     }
 
@@ -118,23 +112,6 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
         List<AcademicCalendarEntry> list =
                 academicYearCE.getChildEntriesWithTemplateEntries(academicYearCE.getBegin(), getBegin().minusDays(1), getClass());
         return list.size() + 1;
-    }
-
-    @Override
-    public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacher(AcademicChronology academicChronology) {
-        final AcademicSemesterCE academicSemesterCE = (AcademicSemesterCE) academicChronology.findSameEntry(this);
-        List<AcademicCalendarEntry> childEntries =
-                academicSemesterCE.getChildEntriesWithTemplateEntries(TeacherCreditsFillingForTeacherCE.class);
-        return (TeacherCreditsFillingForTeacherCE) (!childEntries.isEmpty() ? childEntries.iterator().next() : null);
-    }
-
-    @Override
-    public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOffice(
-            AcademicChronology academicChronology) {
-        final AcademicSemesterCE academicSemesterCE = (AcademicSemesterCE) academicChronology.findSameEntry(this);
-        List<AcademicCalendarEntry> childEntries =
-                academicSemesterCE.getChildEntriesWithTemplateEntries(TeacherCreditsFillingForDepartmentAdmOfficeCE.class);
-        return (TeacherCreditsFillingForDepartmentAdmOfficeCE) (!childEntries.isEmpty() ? childEntries.iterator().next() : null);
     }
 
     @Override

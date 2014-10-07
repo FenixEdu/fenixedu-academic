@@ -77,7 +77,7 @@ public class DeleteSupportLesson {
         final ExecutionCourse executionCourse = professorship.getExecutionCourse();
         final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
         final Teacher teacher = professorship.getTeacher();
-        return teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        return TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
     }
 
     // Service Invokers migrated from Berserk

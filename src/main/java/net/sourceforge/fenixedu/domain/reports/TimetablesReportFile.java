@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -97,7 +98,7 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
                     if (!isSameDegreeType) {
                         continue;
                     }
-                    for (DegreeTeachingService service : professorship.getDegreeTeachingServicesOrderedByShift()) {
+                    for (DegreeTeachingService service : TeacherService.getDegreeTeachingServicesOrderedByShift(professorship)) {
                         for (Lesson lesson : service.getShift().getAssociatedLessonsSet()) {
                             for (ShiftType shiftType : service.getShift().getTypes()) {
                                 final Row row = spreadsheet.addRow();

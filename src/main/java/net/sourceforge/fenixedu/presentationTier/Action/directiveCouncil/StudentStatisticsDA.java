@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.interfaces.HasDegreeType;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -82,7 +81,20 @@ public class StudentStatisticsDA extends FenixDispatchAction {
 
         public ExecutionYear getExecutionYearFourYearsBack() {
             final ExecutionYear executionYear = getExecutionYear();
-            return executionYear == null ? null : ReportsByDegreeTypeDA.getExecutionYearFourYearsBack(executionYear);
+            return executionYear == null ? null : getExecutionYearFourYearsBack(executionYear);
+        }
+
+        public static ExecutionYear getExecutionYearFourYearsBack(final ExecutionYear executionYear) {
+            ExecutionYear executionYearFourYearsBack = executionYear;
+            if (executionYear != null) {
+                for (int i = 5; i > 1; i--) {
+                    final ExecutionYear previousExecutionYear = executionYearFourYearsBack.getPreviousExecutionYear();
+                    if (previousExecutionYear != null) {
+                        executionYearFourYearsBack = previousExecutionYear;
+                    }
+                }
+            }
+            return executionYearFourYearsBack;
         }
     }
 

@@ -23,6 +23,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.advise;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -50,9 +51,9 @@ public class ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID {
         if (executionYearID != null) {
             ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
-            result = teacher.getAdvisesByAdviseTypeAndExecutionYear(adviseType, executionYear);
+            result = Advise.getAdvisesByAdviseTypeAndExecutionYear(teacher, adviseType, executionYear);
         } else {
-            result = teacher.getAdvisesByAdviseType(adviseType);
+            result = teacher.getAdvisesSet().stream().filter(a -> a.getAdviseType() == adviseType).collect(Collectors.toList());
         }
 
         return result;

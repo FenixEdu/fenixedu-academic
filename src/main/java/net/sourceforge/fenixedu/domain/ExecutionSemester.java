@@ -34,25 +34,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPer
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.credits.CreditsPersonFunctionsSharedQueueJob;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -60,8 +51,6 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * Created on 11/Fev/2003
@@ -173,48 +162,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public boolean hasNextExecutionPeriod() {
         return getNextExecutionPeriod() != null;
-    }
-
-    public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacherPeriod() {
-        return getAcademicInterval().getTeacherCreditsFillingForTeacher();
-    }
-
-    public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOfficePeriod() {
-        return getAcademicInterval().getTeacherCreditsFillingForDepartmentAdmOffice();
-    }
-
-    public void editDepartmentOfficeCreditsPeriod(DateTime begin, DateTime end) {
-
-        TeacherCreditsFillingForDepartmentAdmOfficeCE creditsFillingCE = getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
-
-        if (creditsFillingCE == null) {
-
-            AcademicCalendarEntry parentEntry = getAcademicInterval().getAcademicCalendarEntry();
-            AcademicCalendarRootEntry rootEntry = getAcademicInterval().getAcademicCalendar();
-
-            new TeacherCreditsFillingForDepartmentAdmOfficeCE(parentEntry, new MultiLanguageString(BundleUtil.getString(
-                    Bundle.APPLICATION, "label.TeacherCreditsFillingCE.entry.title")), null, begin, end, rootEntry);
-
-        } else {
-            creditsFillingCE.edit(begin, end);
-        }
-    }
-
-    public void editTeacherCreditsPeriod(DateTime begin, DateTime end) {
-
-        TeacherCreditsFillingForTeacherCE creditsFillingCE = getTeacherCreditsFillingForTeacherPeriod();
-
-        if (creditsFillingCE == null) {
-
-            AcademicCalendarEntry parentEntry = getAcademicInterval().getAcademicCalendarEntry();
-            AcademicCalendarRootEntry rootEntry = getAcademicInterval().getAcademicCalendar();
-
-            new TeacherCreditsFillingForTeacherCE(parentEntry, new MultiLanguageString(BundleUtil.getString(Bundle.APPLICATION,
-                    "label.TeacherCreditsFillingCE.entry.title")), null, begin, end, rootEntry);
-            new CreditsPersonFunctionsSharedQueueJob(this);
-        } else {
-            creditsFillingCE.edit(begin, end);
-        }
     }
 
     @Override
@@ -435,40 +382,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             }
         }
         return enrolmentsList;
-    }
-
-    public void checkValidCreditsPeriod(RoleType roleType) {
-        if (roleType != RoleType.SCIENTIFIC_COUNCIL) {
-            TeacherCreditsFillingCE validCreditsPerid = getValidCreditsPeriod(roleType);
-            if (validCreditsPerid == null) {
-                throw new DomainException("message.invalid.credits.period2");
-            } else if (!validCreditsPerid.containsNow()) {
-                throw new DomainException("message.invalid.credits.period", validCreditsPerid.getBegin().toString(
-                        "dd-MM-yyy HH:mm"), validCreditsPerid.getEnd().toString("dd-MM-yyy HH:mm"));
-            }
-        }
-    }
-
-    public boolean isInValidCreditsPeriod(RoleType roleType) {
-        if (roleType == null) {
-            return false;
-        }
-        if (roleType == RoleType.SCIENTIFIC_COUNCIL) {
-            return true;
-        }
-        TeacherCreditsFillingCE validCreditsPerid = getValidCreditsPeriod(roleType);
-        return validCreditsPerid != null && validCreditsPerid.containsNow();
-    }
-
-    public TeacherCreditsFillingCE getValidCreditsPeriod(RoleType roleType) {
-        switch (roleType) {
-        case DEPARTMENT_MEMBER:
-            return getTeacherCreditsFillingForTeacherPeriod();
-        case DEPARTMENT_ADMINISTRATIVE_OFFICE:
-            return getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
-        default:
-            throw new DomainException("invalid.role.type");
-        }
     }
 
     public OccupationPeriod getLessonsPeriod() {

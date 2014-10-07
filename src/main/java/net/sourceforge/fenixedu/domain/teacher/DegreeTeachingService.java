@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -58,11 +59,11 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
             throw new DomainException("message.invalid.professorship.percentage");
         }
         setTeacherService(teacherService);
-        getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        TeacherCreditsFillingCE.checkValidCreditsPeriod(getTeacherService().getExecutionPeriod(), roleType);
         setProfessorship(professorship);
         setShift(shift);
 
-        Double availablePercentage = getShift().getAvailableShiftPercentage(getProfessorship());
+        Double availablePercentage = TeacherService.getAvailableShiftPercentage(getShift(), getProfessorship());
 
         if (percentage > availablePercentage) {
             throw new DomainException("message.exceeded.professorship.percentage");
@@ -83,19 +84,19 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
     }
 
     public void delete(RoleType roleType) {
-        getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        TeacherCreditsFillingCE.checkValidCreditsPeriod(getTeacherService().getExecutionPeriod(), roleType);
         delete();
     }
 
     public void updatePercentage(Double percentage, RoleType roleType) {
-        getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        TeacherCreditsFillingCE.checkValidCreditsPeriod(getTeacherService().getExecutionPeriod(), roleType);
         if (percentage == null || percentage > 100 || percentage < 0) {
             throw new DomainException("message.invalid.professorship.percentage");
         }
         if (percentage == 0) {
             delete(roleType);
         } else {
-            Double availablePercentage = getShift().getAvailableShiftPercentage(getProfessorship());
+            Double availablePercentage = TeacherService.getAvailableShiftPercentage(getShift(), getProfessorship());
             if (percentage > availablePercentage) {
                 throw new DomainException("message.exceeded.professorship.percentage");
             }

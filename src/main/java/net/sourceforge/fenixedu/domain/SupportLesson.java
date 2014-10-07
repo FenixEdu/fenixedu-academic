@@ -22,10 +22,10 @@ import java.util.Comparator;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
-import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
@@ -38,7 +38,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
  * @author jpvl
  * @author Ricardo Rodrigues
  */
-public class SupportLesson extends SupportLesson_Base implements ICreditsEventOriginator {
+public class SupportLesson extends SupportLesson_Base {
 
     public static final Comparator<SupportLesson> SUPPORT_LESSON_COMPARATOR_BY_HOURS_AND_WEEK_DAY =
             new Comparator<SupportLesson>() {
@@ -59,14 +59,14 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
     }
 
     public void delete(RoleType roleType) {
-        getProfessorship().getExecutionCourse().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        TeacherCreditsFillingCE.checkValidCreditsPeriod(getProfessorship().getExecutionCourse().getExecutionPeriod(), roleType);
         setProfessorship(null);
         setRootDomainObject(null);
         deleteDomainObject();
     }
 
     public void update(SupportLessonDTO supportLessonDTO, RoleType roleType) {
-        getProfessorship().getExecutionCourse().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        TeacherCreditsFillingCE.checkValidCreditsPeriod(getProfessorship().getExecutionCourse().getExecutionPeriod(), roleType);
         setEndTime(supportLessonDTO.getEndTime());
         setStartTime(supportLessonDTO.getStartTime());
         setPlace(supportLessonDTO.getPlace());
@@ -79,7 +79,6 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
         return timePeriod.hours().doubleValue();
     }
 
-    @Override
     public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
         return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionSemester);
     }
@@ -87,7 +86,8 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
     public void verifyOverlappings() {
         Teacher teacher = getProfessorship().getTeacher();
         TeacherService teacherService =
-                teacher.getTeacherServiceByExecutionPeriod(getProfessorship().getExecutionCourse().getExecutionPeriod());
+                TeacherService.getTeacherServiceByExecutionPeriod(teacher, getProfessorship().getExecutionCourse()
+                        .getExecutionPeriod());
         verifyOverlappingWithOtherSupportLessons(teacherService);
     }
 
@@ -122,7 +122,8 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
     public static SupportLesson create(SupportLessonDTO supportLessonDTO, Professorship professorship, RoleType roleType) {
         final SupportLesson supportLesson = new SupportLesson();
         supportLesson.setProfessorship(professorship);
-        supportLesson.getProfessorship().getExecutionCourse().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        TeacherCreditsFillingCE.checkValidCreditsPeriod(supportLesson.getProfessorship().getExecutionCourse()
+                .getExecutionPeriod(), roleType);
         supportLesson.setEndTime(supportLessonDTO.getEndTime());
         supportLesson.setStartTime(supportLessonDTO.getStartTime());
         supportLesson.setPlace(supportLessonDTO.getPlace());

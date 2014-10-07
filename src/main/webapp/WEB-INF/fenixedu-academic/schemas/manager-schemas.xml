@@ -28,15 +28,6 @@
 	<setter signature="editPersonalData(documentIdNumber, idDocumentType, name, socialSecurityNumber)"/>
 </schema>	
 
-<schema name="EditTeacherPastServiceDomainObject" type="net.sourceforge.fenixedu.domain.teacher.TeacherPastService" bundle="MANAGER_RESOURCES">
-	<slot name="credits" />	
-</schema>	
-
-<schema name="EditTeacherMasterDegreeServiceDomainObject" type="net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService" bundle="MANAGER_RESOURCES">
-	<slot name="credits" />
-	<slot name="hours" />
-</schema>	
-
 <schema name="EditStudentDomainObject" type="net.sourceforge.fenixedu.domain.student.Student" bundle="MANAGER_RESOURCES">
 	<slot name="number" />
 </schema>	
@@ -465,12 +456,6 @@
 <schema name="GradeSubmissionInSpecialSeasonCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">	
 </schema>
 
-<schema name="TeacherCreditsFillingForTeacherCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">	
-</schema>
-
-<schema name="TeacherCreditsFillingForDepartmentAdmOfficeCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">	
-</schema>
-
 <schema name="ChooseAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
 	<slot name="type" layout="menu-select-postback" key="label.type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.manager.AcademicCalendarEntryTypes"/>
@@ -571,13 +556,6 @@
 
 <schema name="EditGradeSubmissionInSpecialSeasonCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">	
 </schema>
-
-<schema name="EditTeacherCreditsFillingForTeacherCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">	
-</schema>
-
-<schema name="EditTeacherCreditsFillingForDepartmentAdmOfficeCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">	
-</schema>
-
 
 <schema name="ChooseDatesToViewAcademicCalendarSchema" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
 	<slot name="beginDateToDisplay" layout="year-month" key="label.begin.date.to.displar.academic.calendar" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

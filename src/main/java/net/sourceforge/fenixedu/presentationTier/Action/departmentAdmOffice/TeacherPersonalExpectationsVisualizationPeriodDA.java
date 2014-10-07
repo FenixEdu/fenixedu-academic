@@ -21,6 +21,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod;
 import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DefineExpectationPeriods;
 
@@ -43,7 +44,8 @@ public class TeacherPersonalExpectationsVisualizationPeriodDA extends TeacherPer
     protected void readAndSetPeriod(HttpServletRequest request, ExecutionYear year) {
         if (year != null) {
             TeacherPersonalExpectationsVisualizationPeriod teacherExpectationDefinitionPeriod =
-                    getDepartment(request).getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(year);
+                    TeacherPersonalExpectationPeriod.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(
+                            getDepartment(request), year);
             request.setAttribute("period", teacherExpectationDefinitionPeriod);
         }
     }

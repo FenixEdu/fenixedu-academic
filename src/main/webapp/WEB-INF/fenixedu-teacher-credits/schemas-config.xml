@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright © 2002 Instituto Superior Técnico
+
+    This file is part of FenixEdu Core.
+
+    FenixEdu Core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FenixEdu Core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<!-- TODO: make this a public id or at least obsolute 
+     Currently there is a semi-hack built in the RendererPlugin to accept this format.
+-->
+<!DOCTYPE schemas SYSTEM "../fenix-renderers-schemas.dtd" []>
+
+<schemas>
+
+<!-- Teacher Service Distribution -->
+<schema name="show.degreeProjectTutorialService" type="net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+	<slot name="attend.registration.number" key="label.teacher-thesis-student.student-number"/>
+	<slot name="attend.registration.student.person.name" key="label.teacher-thesis-student.student-name"/>
+	<slot name="attend.enrolment" key="label.date" layout="values" schema="show.enrolment.approvementDate"/>
+	<slot name="percentageValue" key="label.teacher-thesis-student.percentage" layout="null-as-label"/>
+</schema>
+
+<schema name="show.degreeProjectTutorialService.attend" bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Attends">
+	<slot name="registration.number" key="label.teacher-thesis-student.student-number"/>
+	<slot name="registration.student.person.name" key="label.teacher-thesis-student.student-name"/>
+	<slot name="enrolment" key="label.date" layout="values" schema="show.enrolment.approvementDate"/>
+</schema>
+
+<schema name="show.enrolment.approvementDate" type="net.sourceforge.fenixedu.domain.Enrolment">
+	<slot name="approvementDate" key="label.date" layout="null-as-label"/>
+</schema>
+
+<schema name="create.reductionService" type="net.sourceforge.fenixedu.domain.teacher.ReductionService" constructor="teacherService,requestCreditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+	<slot name="teacherService" hidden="true"/>
+	<slot name="requestCreditsReduction" key="label.requestCreditsReduction"  layout="radio" required="true">
+		<property name="classes" value="nobullet"/>
+	</slot>
+</schema>
+
+<schema name="create.reductionServiceAttributed" type="net.sourceforge.fenixedu.domain.teacher.ReductionService" constructor="creditsReductionAttributed,teacherService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+	<slot name="teacherService" hidden="true"/>
+	<slot name="creditsReductionAttributed" key="label.attributedReductionCredits" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" required="true"/>
+</schema>
+
+<schema name="create.otherService" type="net.sourceforge.fenixedu.domain.teacher.OtherService" constructor="teacherService,credits,reason,correctedExecutionSemester" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+	<slot name="teacherService" hidden="true"/>
+	<slot name="credits" key="label.credits"/>
+	<slot name="reason" key="label.otherTypeCreditLine.reason" layout="longText">
+		<property name="columns" value="60" />
+		<property name="rows" value="5" />
+	</slot>
+	<slot name="correctedExecutionSemester" key="label.execution-period" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
+		<property name="format" value="${executionYear.year} - ${semester}º semestre" />
+	</slot>
+</schema>
+
+<schema name="edit.otherService" type="net.sourceforge.fenixedu.domain.teacher.OtherService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+	<slot name="teacherService" hidden="true"/>
+	<slot name="credits" key="label.credits"/>
+	<slot name="reason" key="label.otherTypeCreditLine.reason" layout="longText">
+		<property name="columns" value="60" />
+		<property name="rows" value="5" />
+	</slot>
+	<slot name="correctedExecutionSemester" key="label.execution-period" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
+		<property name="format" value="${executionYear.year} - ${semester}º semestre" />
+	</slot>
+	<setter signature="setValues(teacherService,credits,reason,correctedExecutionSemester)"/>
+</schema>
+
+<schema name="create.teacherServiceComment" type="net.sourceforge.fenixedu.domain.teacher.TeacherServiceComment" constructor="teacherService,content" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+	<slot name="teacherService" hidden="true"/>
+	<slot name="content" key="label.comment" layout="longText">
+		<property name="columns" value="60" />
+		<property name="rows" value="5" />
+	</slot>
+</schema>
+
+<schema name="edit.institutionWorkTime" type="net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+	<slot name="weekDay">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	<slot name="startTime" key="label.teacher-institution-working-time.start-time">
+		<property name="format" value="HH:mm" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	<slot name="endTime" key="label.teacher-institution-working-time.end-time">
+		<property name="format" value="HH:mm" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	<setter signature="update(weekDay,startTime,endTime)"/>
+</schema>
+
+<schema name="create.institutionWorkTime" type="net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime" constructor="teacherService,startTime,endTime,weekDay" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+	<slot name="teacherService" hidden="true"/>
+	<slot name="weekDay">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	<slot name="startTime" key="label.teacher-institution-working-time.start-time">
+		<property name="format" value="HH:mm" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	<slot name="endTime" key="label.teacher-institution-working-time.end-time">
+		<property name="format" value="HH:mm" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+</schema>
+
+<schema name="ViewGraduationExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations"/>
+    <slot name="graduationsDescription" key="label.personalExpectationsManagement.description" layout="html"/>  
+</schema>   
+
+<schema name="ViewCientificPosGraduationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations"/>
+    <slot name="cientificPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="html"/>  
+</schema>
+
+<schema name="ViewProfessionalPosGraduationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations"/>
+    <slot name="professionalPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="html"/>   
+</schema>   
+
+<schema name="ViewSeminariesExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries"/>
+    <slot name="seminariesDescription" key="label.personalExpectationsManagement.description" layout="html"/>   
+</schema>   
+
+<schema name="ViewEducationMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="educationMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="html"/>    
+</schema>
+
+<schema name="ViewPublicationsAndProjectsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects"/> 
+    <slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications"/>   
+    <slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications"/>
+    <slot name="conferencePublications" key="label.personalExpectationsManagement.conferencePublications"/> 
+    <slot name="technicalReportPublications" key="label.personalExpectationsManagement.technicalReportPublications"/>
+    <slot name="patentPublications" key="label.personalExpectationsManagement.patentPublications"/>
+    <slot name="otherPublications" key="label.personalExpectationsManagement.otherPublications"/>
+    <slot name="otherPublicationsDescription" key="label.personalExpectationsManagement.otherPublicationsDescription" layout="html"/>               
+</schema>
+
+<schema name="ViewPublicationsAndProjectsMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="researchAndDevMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="html"/>   
+</schema>
+
+<schema name="ViewOrientationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="phdOrientations" key="label.personalExpectationsManagement.phdOrientations"/>
+    <slot name="masterDegreeOrientations" key="label.personalExpectationsManagement.masterDegreeOrientations"/>
+    <slot name="finalDegreeWorkOrientations" key="label.personalExpectationsManagement.finalDegreeWorkOrientations"/>       
+</schema>
+
+<schema name="ViewOrientationMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="orientationsMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="html"/> 
+</schema>
+
+<schema name="ViewUniversityServiceExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="departmentOrgans" key="label.personalExpectationsManagement.departmentOrgans" layout="html"/>
+    <slot name="istOrgans" key="label.personalExpectationsManagement.istOrgans" layout="html"/>
+    <slot name="utlOrgans" key="label.personalExpectationsManagement.utlOrgans" layout="html"/>     
+</schema>
+
+<schema name="ViewUniversityServiceMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="universityServiceMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="html"/>    
+</schema>
+
+<schema name="ViewProfessionalActivitiesExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="cientificComunityService" key="label.personalExpectationsManagement.cientificComunityService" layout="html"/>
+    <slot name="societyService" key="label.personalExpectationsManagement.societyService" layout="html"/>
+    <slot name="consulting" key="label.personalExpectationsManagement.consulting" layout="html"/>       
+    <slot name="companySocialOrgans" key="label.personalExpectationsManagement.companySocialOrgans" layout="html"/>         
+    <slot name="companyPositions" key="label.personalExpectationsManagement.companyPositions" layout="html"/>               
+</schema>
+
+<schema name="ViewProfessionalActivitiesMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="professionalActivityMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="html"/> 
+</schema>
+
+<schema name="FillGraduationExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="graduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot> 
+</schema>   
+
+<schema name="FillCientificPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="cientificPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="FillProfessionalPosGraduationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="professionalPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>   
+
+<schema name="FillSeminariesExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="seminariesDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>   
+
+<schema name="FillEducationMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="educationMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="FillPublicationsAndProjectsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>    
+    <slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>  
+    <slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="conferencePublications" key="label.personalExpectationsManagement.conferencePublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>    
+    <slot name="technicalReportPublications" key="label.personalExpectationsManagement.technicalReportPublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="patentPublications" key="label.personalExpectationsManagement.patentPublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="otherPublications" key="label.personalExpectationsManagement.otherPublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="otherPublicationsDescription" key="label.personalExpectationsManagement.otherPublicationsDescription" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>                     
+</schema>
+
+<schema name="FillPublicationsAndProjectsMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="researchAndDevMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="FillOrientationsExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="phdOrientations" key="label.personalExpectationsManagement.phdOrientations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="masterDegreeOrientations" key="label.personalExpectationsManagement.masterDegreeOrientations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="finalDegreeWorkOrientations" key="label.personalExpectationsManagement.finalDegreeWorkOrientations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>      
+</schema>
+
+<schema name="FillOrientationMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="orientationsMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="FillUniversityServiceExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="departmentOrgans" key="label.personalExpectationsManagement.departmentOrgans" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="institutionOrgans" key="label.personalExpectationsManagement.istOrgans" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="universityOrgans" key="label.personalExpectationsManagement.utlOrgans" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="FillUniversityServiceMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="universityServiceMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="FillProfessionalActivitiesExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="cientificComunityService" key="label.personalExpectationsManagement.cientificComunityService" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="societyService" key="label.personalExpectationsManagement.societyService" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="consulting" key="label.personalExpectationsManagement.consulting" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="companySocialOrgans" key="label.personalExpectationsManagement.companySocialOrgans" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="companyPositions" key="label.personalExpectationsManagement.companyPositions" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="FillProfessionalActivitiesMainFocusExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="professionalActivityMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="EditGraduationExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="graduations" key="label.personalExpectationsManagement.numberOfGraduations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="graduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot> 
+</schema>   
+
+<schema name="EditCientificPosGraduationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="cientificPosGraduations" key="label.personalExpectationsManagement.numberOfCientificPosGraduations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="cientificPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="EditProfessionalPosGraduationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="professionalPosGraduations" key="label.personalExpectationsManagement.numberOfProfessionalPosGraduations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="professionalPosGraduationsDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>   
+
+<schema name="EditSeminariesExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="seminaries" key="label.personalExpectationsManagement.numberOfSeminaries.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="seminariesDescription" key="label.personalExpectationsManagement.description" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>   
+
+<schema name="EditEducationMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="educationMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="EditPublicationsAndProjectsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="researchAndDevProjects" key="label.personalExpectationsManagement.numberOfresearchAndDevProjects.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>    
+    <slot name="jornalArticlePublications" key="label.personalExpectationsManagement.jornalArticlePublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>  
+    <slot name="bookPublications" key="label.personalExpectationsManagement.bookPublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="conferencePublications" key="label.personalExpectationsManagement.conferencePublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>    
+    <slot name="technicalReportPublications" key="label.personalExpectationsManagement.technicalReportPublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="patentPublications" key="label.personalExpectationsManagement.patentPublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="otherPublications" key="label.personalExpectationsManagement.otherPublications.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="otherPublicationsDescription" key="label.personalExpectationsManagement.otherPublicationsDescription" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>                     
+</schema>
+
+<schema name="EditPublicationsAndProjectsMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="researchAndDevMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="EditOrientationsExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="phdOrientations" key="label.personalExpectationsManagement.phdOrientations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="masterDegreeOrientations" key="label.personalExpectationsManagement.masterDegreeOrientations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="finalDegreeWorkOrientations" key="label.personalExpectationsManagement.finalDegreeWorkOrientations.required" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>      
+</schema>
+
+<schema name="EditOrientationMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="orientationsMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="EditUniversityServiceExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="departmentOrgans" key="label.personalExpectationsManagement.departmentOrgans" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="institutionOrgans" key="label.personalExpectationsManagement.istOrgans" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="universityOrgans" key="label.personalExpectationsManagement.utlOrgans" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="EditUniversityServiceMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="universityServiceMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="EditProfessionalActivitiesExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="cientificComunityService" key="label.personalExpectationsManagement.cientificComunityService" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="societyService" key="label.personalExpectationsManagement.societyService" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="consulting" key="label.personalExpectationsManagement.consulting" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="companySocialOrgans" key="label.personalExpectationsManagement.companySocialOrgans" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+    <slot name="companyPositions" key="label.personalExpectationsManagement.companyPositions" layout="rich-text">
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="EditProfessionalActivitiesMainFocusExpectations" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="professionalActivityMainFocus" key="label.personalExpectationsManagement.mainFocus" layout="rich-text">     
+        <property name="safe" value="true" />
+        <property name="columns" value="50"/>
+        <property name="rows" value="10"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>     
+</schema>
+
+<schema name="editExpectationEvaluation" type="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation" bundle="DEPARTMENT_MEMBER_RESOURCES">
+    <slot name="tutorComment" layout="rich-text" key="label.expectation.evaluation " validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="safe" value="true" />
+        <property name="columns" value="65"/>
+        <property name="rows" value="14"/>
+        <property name="config" value="intermediateWithBreakLineInsteadOfParagraph" />
+    </slot>
+</schema>
+
+<schema name="ChooseExecutionYearToViewTeacherPersonalExpectations" type="net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean" bundle="DEPARTMENT_MEMBER_RESOURCES">  
+    <slot name="executionYear" key="label.common.executionYear" layout="menu-select-postback">  
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>      
+        <property name="format" value="${year}" />  
+        <property name="destination" value="postBack"/> 
+    </slot> 
+</schema>
+
+<schema name="EditTeacherPastServiceDomainObject" type="net.sourceforge.fenixedu.domain.teacher.TeacherPastService" bundle="MANAGER_RESOURCES">
+    <slot name="credits" /> 
+</schema>   
+
+<schema name="EditTeacherMasterDegreeServiceDomainObject" type="net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService" bundle="MANAGER_RESOURCES">
+    <slot name="credits" />
+    <slot name="hours" />
+</schema>   
+
+<schema name="teacher.credits.list.execution.periods" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
+    <slot name="executionPeriod" key="label.teacher.credits.execution.period" layout="menu-select-postback">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
+        <property name="format" value="${year} - ${semester}º Sem." />
+        <property name="destination" value="postBack" />
+    </slot>
+</schema>
+
+<schema name="teacher.credits.period.view" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
+    <slot name="beginForTeacher" key="label.credits.periods.begin">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+            <property name="required" value="true" />
+        </validator>
+    </slot>
+    <slot name="endForTeacher" key="label.credits.periods.end">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+            <property name="required" value="true" />
+        </validator>
+    </slot>
+</schema>
+
+<schema name="departmentAdmOffice.credits.period.view" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
+    <slot name="beginForDepartmentAdmOffice" key="label.credits.periods.begin">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+            <property name="required" value="true" />
+        </validator>
+    </slot>
+    <slot name="endForDepartmentAdmOffice" key="label.credits.periods.end">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+            <property name="required" value="true" />
+        </validator>
+    </slot>
+</schema>
+
+<schema name="createTeacherPersonalExpectationsAutoAvaliationPeriod" type="net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod"
+    constructor="department, executionYear, startDateYearMonthDay, endDateYearMonthDay" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">   
+    <slot name="department" hidden="true"/>
+    <slot name="executionYear" hidden="true"/>
+    <slot name="startDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="endDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="editTeacherPersonalExpectationsAutoAvaliationPeriod" type="net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">
+    <slot name="startDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="endDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <setter signature="edit(startDateYearMonthDay, endDateYearMonthDay)"/>
+</schema>
+
+<schema name="createTeacherPersonalExpectationsDefinitionPeriod" type="net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod"
+    constructor="department, executionYear, startDateYearMonthDay, endDateYearMonthDay" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">   
+    <slot name="department" hidden="true" />
+    <slot name="executionYear" hidden="true" />
+    <slot name="startDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="endDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="editTeacherPersonalExpectationsDefinitionPeriod" type="net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">
+    <slot name="startDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="endDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <setter signature="edit(startDateYearMonthDay, endDateYearMonthDay)"/>
+</schema>
+
+<schema name="createTeacherPersonalExpectationsVisualizationPeriod" type="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod"
+    constructor="department, executionYear, startDateYearMonthDay, endDateYearMonthDay" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">   
+    <slot name="department" hidden="true"/>
+    <slot name="executionYear" hidden="true"/>
+    <slot name="startDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="endDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="editTeacherPersonalExpectationsVisualizationPeriod" type="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">
+    <slot name="startDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="endDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <setter signature="edit(startDateYearMonthDay, endDateYearMonthDay)"/>
+</schema>
+
+<schema name="createTeacherPersonalExpectationsEvaluationPeriod" type="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod"
+    constructor="department, executionYear, startDateYearMonthDay, endDateYearMonthDay" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">   
+    <slot name="department" hidden="true"/>
+    <slot name="executionYear" hidden="true"/>
+    <slot name="startDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="endDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="editTeacherPersonalExpectationsEvaluationPeriod" type="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">
+    <slot name="startDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="endDateYearMonthDay" key="label.teacherExpectationDefinitionPeriodManagement.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <setter signature="edit(startDateYearMonthDay, endDateYearMonthDay)"/>
+</schema>
+
+<schema name="seeTeacherInformationForTeacherPersonalExpectation" type="net.sourceforge.fenixedu.domain.Teacher" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">
+    <slot name="person.name" key="label.teacher.name" />
+    <slot name="teacherId" key="label.teacher.number"/>
+</schema>
+
+<schema name="createExpectationEvaluationGroup" type="net.sourceforge.fenixedu.dataTransferObject.department.ExpectationEvaluationGroupBean" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">
+    <slot name="evaluated" layout="teacherId-as-teacher" key="label.teacher.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="scientificCouncil.credits.employee" type="net.sourceforge.fenixedu.domain.Employee">
+    <slot name="employeeNumber" key="label.department.credits.employeeNumber">
+    </slot>
+    <slot name="person.name" key="label.department.credits.employeeName">
+    </slot>
+</schema>
+
+<schema name="scientificCouncil.credits.departmentCreditsBean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.DepartmentCreditsBean">
+    <slot name="department" key="label.department" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DepartmentProvider" />
+        <property name="format" value="${name}" />
+        <property name="sortBy" value="name" />
+        <property name="destination" value="postback" />
+    </slot>
+    <slot name="employeeNumber" key="label.department.credits.employeeNumber">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
+    </slot>
+</schema>
+
+</schemas>

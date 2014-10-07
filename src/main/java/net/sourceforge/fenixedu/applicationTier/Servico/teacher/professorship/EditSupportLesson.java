@@ -45,7 +45,7 @@ public class EditSupportLesson {
         Professorship professorship = FenixFramework.getDomainObject(supportLessonDTO.getProfessorshipID());
         ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         Teacher teacher = professorship.getTeacher();
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
 
         if (teacherService == null) {
             teacherService = new TeacherService(teacher, executionSemester);

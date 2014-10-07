@@ -49,12 +49,6 @@ import pt.ist.fenixframework.Atomic;
 public class ReportFileFactory {
 
     @Atomic
-    public static PublicRelationsStudentListQueueJob createPublicRelationsStudentListQueueJob(ExecutionYear executionYear,
-            DegreeType degreeType, Boolean concluded, Boolean active) {
-        return new PublicRelationsStudentListQueueJob(executionYear, degreeType, concluded, active);
-    }
-
-    @Atomic
     static public GepReportFile createStatusAndApprovalReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final StatusAndApprovalReportFile statusAndApprovalReportFile = new StatusAndApprovalReportFile();
         statusAndApprovalReportFile.setType(type);

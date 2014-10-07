@@ -41,7 +41,7 @@ public class EditTeacherServiceNotes {
             throws FenixServiceException {
 
         ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
 
         if (teacherService == null) {
             teacherService = new TeacherService(teacher, executionSemester);

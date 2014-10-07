@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.credits.AnnualCreditsState;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
 
@@ -104,11 +105,13 @@ public class TeacherCreditsPeriodBean implements Serializable {
         ExecutionSemester executionSemester = getExecutionPeriod();
 
         TeacherCreditsFillingForDepartmentAdmOfficeCE departmentAdmOffice =
-                executionSemester.getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
+                TeacherCreditsFillingCE
+                        .getTeacherCreditsFillingForDepartmentAdmOfficePeriod(executionSemester);
         setBeginForDepartmentAdmOffice(departmentAdmOffice != null ? departmentAdmOffice.getBegin() : null);
         setEndForDepartmentAdmOffice(departmentAdmOffice != null ? departmentAdmOffice.getEnd() : null);
 
-        TeacherCreditsFillingForTeacherCE teacherCE = executionSemester.getTeacherCreditsFillingForTeacherPeriod();
+        TeacherCreditsFillingForTeacherCE teacherCE =
+                TeacherCreditsFillingForTeacherCE.getTeacherCreditsFillingForTeacher(executionSemester.getAcademicInterval());
         setBeginForTeacher(teacherCE != null ? teacherCE.getBegin() : null);
         setEndForTeacher(teacherCE != null ? teacherCE.getEnd() : null);
         setAnnualCreditsState();

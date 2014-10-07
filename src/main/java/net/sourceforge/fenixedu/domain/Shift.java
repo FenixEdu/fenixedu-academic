@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain;
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,7 +37,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -244,10 +242,6 @@ public class Shift extends Shift_Base {
         if (!getAssociatedSummariesSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "error.deleteShift.with.summaries", getNome()));
         }
-        if (!getDegreeTeachingServicesSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "error.deleteShift.with.degreeTeachingServices",
-                    getNome()));
-        }
     }
 
     public BigDecimal getTotalHours() {
@@ -336,23 +330,6 @@ public class Shift extends Shift_Base {
         if (!schoolClass.getAssociatedShiftsSet().contains(this)) {
             schoolClass.getAssociatedShiftsSet().add(this);
         }
-    }
-
-    public Double getAvailableShiftPercentage(Professorship professorship) {
-        Double availablePercentage = 100.0;
-        for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-            if (degreeTeachingService.getProfessorship() != professorship) {
-                availablePercentage -= degreeTeachingService.getPercentage();
-            }
-        }
-        for (NonRegularTeachingService nonRegularTeachingService : getNonRegularTeachingServicesSet()) {
-            if (nonRegularTeachingService.getProfessorship() != professorship
-                    && (getCourseLoadsSet().size() != 1 || !containsType(ShiftType.LABORATORIAL))) {
-                availablePercentage -= nonRegularTeachingService.getPercentage();
-            }
-        }
-
-        return new BigDecimal(availablePercentage).divide(new BigDecimal(1), 2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
     public SortedSet<Lesson> getLessonsOrderedByWeekDayAndStartTime() {

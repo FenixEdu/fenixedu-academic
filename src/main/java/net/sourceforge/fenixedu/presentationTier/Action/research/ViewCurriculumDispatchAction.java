@@ -123,7 +123,8 @@ public class ViewCurriculumDispatchAction extends FenixAction {
         while (iteratorYear != stoppageYear) {
 
             if (teacher != null) {
-                final_works.addAll(teacher.getAdvisesByAdviseTypeAndExecutionYear(AdviseType.FINAL_WORK_DEGREE, iteratorYear));
+                final_works.addAll(Advise.getAdvisesByAdviseTypeAndExecutionYear(teacher, AdviseType.FINAL_WORK_DEGREE,
+                        iteratorYear));
 
                 lectures.addAll(teacher.getLecturedExecutionCoursesByExecutionYear(iteratorYear));
             }
@@ -135,7 +136,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
             iteratorYear = iteratorYear.getNextExecutionYear();
         }
 
-        career.addAll(person.getCareersByTypeAndInterval(CareerType.PROFESSIONAL, new Interval(firstExecutionYear
+        career.addAll(Career.getCareersByTypeAndInterval(person, CareerType.PROFESSIONAL, new Interval(firstExecutionYear
                 .getBeginDateYearMonthDay().toDateTimeAtMidnight(), finaltExecutionYear.getEndDateYearMonthDay()
                 .toDateTimeAtMidnight())));
 

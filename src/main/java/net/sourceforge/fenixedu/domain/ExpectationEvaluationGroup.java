@@ -18,6 +18,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -80,7 +81,8 @@ public class ExpectationEvaluationGroup extends ExpectationEvaluationGroup_Base 
     }
 
     private void checkIfEvaluatedTeacherAlreadyExists(Teacher appraiser, Teacher evaluated, ExecutionYear executionYear) {
-        List<ExpectationEvaluationGroup> groups = appraiser.getEvaluatedExpectationEvaluationGroups(executionYear);
+        List<ExpectationEvaluationGroup> groups =
+                ExpectationEvaluationGroup.getEvaluatedExpectationEvaluationGroups(appraiser, executionYear);
         for (ExpectationEvaluationGroup group : groups) {
             if (group.getEvaluated().equals(evaluated)) {
                 throw new DomainException("error.ExpectationEvaluationGroup.evaluatedTeacher.alreadyExists");
@@ -98,6 +100,26 @@ public class ExpectationEvaluationGroup extends ExpectationEvaluationGroup_Base 
         if (appraiserDepartment == null || evaluatedDepartment == null || !appraiserDepartment.equals(evaluatedDepartment)) {
             throw new DomainException("error.ExpectationEvaluationGroup.invalid.departments");
         }
+    }
+
+    public static List<ExpectationEvaluationGroup> getEvaluatedExpectationEvaluationGroups(Teacher teacher,
+            ExecutionYear executionYear) {
+        List<ExpectationEvaluationGroup> result = new ArrayList<ExpectationEvaluationGroup>();
+        for (ExpectationEvaluationGroup expectationEvaluationGroup : teacher.getEvaluatedExpectationEvaluationGroupsSet()) {
+            if (expectationEvaluationGroup.getExecutionYear().equals(executionYear)) {
+                result.add(expectationEvaluationGroup);
+            }
+        }
+        return result;
+    }
+
+    public static boolean hasExpectationEvaluatedTeacher(Teacher teacher, Teacher target, ExecutionYear executionYear) {
+        for (ExpectationEvaluationGroup group : teacher.getEvaluatedExpectationEvaluationGroupsSet()) {
+            if (group.getExecutionYear().equals(executionYear) && group.getEvaluated().equals(target)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

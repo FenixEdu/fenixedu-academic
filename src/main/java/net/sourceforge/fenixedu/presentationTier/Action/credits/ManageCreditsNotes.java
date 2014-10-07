@@ -44,7 +44,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
 
     protected void getNote(ActionForm actionForm, Teacher teacher, ExecutionSemester executionSemester, String noteType) {
 
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         if (teacherService != null && teacherService.getTeacherServiceNotes() != null) {
             dynaActionForm.set("managementFunctionNote", teacherService.getTeacherServiceNotes().getManagementFunctionNotes());

@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -41,7 +42,7 @@ public class NonRegularTeachingService extends NonRegularTeachingService_Base {
             if (percentage > 100 || percentage < 0) {
                 throw new DomainException("message.invalid.professorship.percentage");
             }
-            Double availablePercentage = shift.getAvailableShiftPercentage(professorship);
+            Double availablePercentage = TeacherService.getAvailableShiftPercentage(shift, professorship);
             if (percentage > availablePercentage) {
                 throw new DomainException("message.exceeded.professorship.percentage");
             }

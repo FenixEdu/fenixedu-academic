@@ -18,9 +18,13 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -178,6 +182,30 @@ public class Advise extends Advise_Base {
                 }
             }
         }
+    }
+
+    public static List<Advise> getAdvisesByAdviseTypeAndExecutionYear(Teacher teacher, AdviseType adviseType,
+            ExecutionYear executionYear) {
+
+        List<Advise> result = new ArrayList<Advise>();
+        Date executionYearStartDate = executionYear.getBeginDate();
+        Date executionYearEndDate = executionYear.getEndDate();
+
+        for (Advise advise : teacher.getAdvisesSet()) {
+            if ((advise.getAdviseType() == adviseType)) {
+                Date adviseStartDate = advise.getStartExecutionPeriod().getBeginDate();
+                Date adviseEndDate = advise.getEndExecutionPeriod().getEndDate();
+
+                if (((executionYearStartDate.compareTo(adviseStartDate) < 0) && (executionYearEndDate.compareTo(adviseStartDate) < 0))
+                        || ((executionYearStartDate.compareTo(adviseEndDate) > 0) && (executionYearEndDate
+                                .compareTo(adviseEndDate) > 0))) {
+                    continue;
+                }
+                result.add(advise);
+            }
+        }
+
+        return result;
     }
 
 }

@@ -32,7 +32,6 @@ public abstract class DatePeriodBaseCreditLine extends DatePeriodBaseCreditLine_
         super();
     }
 
-    @Override
     public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
         return (getEnd().isAfter(executionSemester.getBeginDateYearMonthDay()) && getStart().isBefore(
                 executionSemester.getEndDateYearMonthDay()));

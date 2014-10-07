@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 import org.joda.time.Duration;
 
@@ -215,9 +216,10 @@ public class ReadTeacherServiceDistributionByCourse {
             DecimalFormatSymbols decimalFormatSymbols = df.getDecimalFormatSymbols();
             decimalFormatSymbols.setDecimalSeparator('.');
             df.setDecimalFormatSymbols(decimalFormatSymbols);
-            Double teacherRequiredHours = new Double(df.format(teacher.getHoursLecturedOnExecutionCourse(executionCourse)));
+            Double teacherRequiredHours =
+                    new Double(df.format(TeacherService.getHoursLecturedOnExecutionCourse(teacher, executionCourse)));
 
-            Duration teacherLecturedTime = teacher.getLecturedDurationOnExecutionCourse(executionCourse);
+            Duration teacherLecturedTime = TeacherService.getLecturedDurationOnExecutionCourse(teacher, executionCourse);
 
             boolean teacherBelongsToDepartment = false;
 

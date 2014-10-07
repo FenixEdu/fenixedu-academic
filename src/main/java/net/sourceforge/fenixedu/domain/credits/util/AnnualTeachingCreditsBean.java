@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
@@ -219,7 +220,7 @@ public class AnnualTeachingCreditsBean implements Serializable {
     public List<TeacherServiceComment> getTeacherServiceComments() {
         List<TeacherServiceComment> teacherServiceComments = new ArrayList<TeacherServiceComment>();
         for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+            TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
             if (teacherService != null) {
                 teacherServiceComments.addAll(teacherService.getTeacherServiceComments());
             }
@@ -361,9 +362,9 @@ public class AnnualTeachingCreditsBean implements Serializable {
     }
 
     public void calculateCredits() {
-        masterDegreeThesesCredits = teacher.getMasterDegreeThesesCredits(executionYear);
-        phdDegreeThesesCredits = teacher.getPhdDegreeThesesCredits(executionYear);
-        projectsTutorialsCredits = teacher.getProjectsTutorialsCredits(executionYear);
+        masterDegreeThesesCredits = AnnualTeachingCredits.calculateMasterDegreeThesesCredits(teacher, executionYear);
+        phdDegreeThesesCredits = AnnualTeachingCredits.calculatePhdDegreeThesesCredits(teacher, executionYear);
+        projectsTutorialsCredits = AnnualTeachingCredits.calculateProjectsTutorialsCredits(teacher, executionYear);
 
         BigDecimal yearCreditsForFinalCredits = BigDecimal.ZERO;
         BigDecimal annualTeachingLoadFinalCredits = BigDecimal.ZERO;
@@ -374,13 +375,13 @@ public class AnnualTeachingCreditsBean implements Serializable {
         for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (getTeacher().isActiveForSemester(executionSemester) || getTeacher().hasTeacherAuthorization(executionSemester)) {
                 BigDecimal thisSemesterManagementFunctionCredits =
-                        new BigDecimal(getTeacher().getManagementFunctionsCredits(executionSemester));
+                        new BigDecimal(TeacherCredits.calculateManagementFunctionsCredits(getTeacher(), executionSemester));
                 managementFunctionCredits = managementFunctionCredits.add(thisSemesterManagementFunctionCredits);
                 serviceExemptionCredits =
-                        serviceExemptionCredits.add(new BigDecimal(getTeacher().getServiceExemptionCredits(executionSemester)));
-                BigDecimal thisSemesterTeachingLoad = new BigDecimal(getTeacher().getMandatoryLessonHours(executionSemester));
+                        serviceExemptionCredits.add(new BigDecimal(TeacherCredits.calculateServiceExemptionCredits(getTeacher(), executionSemester)));
+                BigDecimal thisSemesterTeachingLoad = new BigDecimal(TeacherCredits.calculateMandatoryLessonHours(getTeacher(), executionSemester));
                 annualTeachingLoad = annualTeachingLoad.add(thisSemesterTeachingLoad).setScale(2, BigDecimal.ROUND_HALF_UP);
-                TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(executionSemester);
+                TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(getTeacher(), executionSemester);
                 BigDecimal thisSemesterCreditsReduction = BigDecimal.ZERO;
                 if (teacherService != null) {
                     teachingCredits = teachingCredits.add(new BigDecimal(teacherService.getTeachingDegreeCredits()));

@@ -35,6 +35,8 @@ import java.util.stream.Collectors;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -316,34 +318,23 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+    private static void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
+            throws MaxResponsibleForExceed, InvalidCategory {
         for (; !executionCourseFrom.getProfessorshipsSet().isEmpty();) {
             final Professorship professorship = executionCourseFrom.getProfessorshipsSet().iterator().next();
-            final Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getPerson());
+            Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getPerson());
             if (otherProfessorship == null) {
-                professorship.setExecutionCourse(executionCourseTo);
-            } else {
-                for (; !professorship.getAssociatedSummariesSet().isEmpty(); otherProfessorship
-                        .addAssociatedSummaries(professorship.getAssociatedSummariesSet().iterator().next())) {
-                    ;
-                }
-                for (; !professorship.getAssociatedShiftProfessorshipSet().isEmpty(); otherProfessorship
-                        .addAssociatedShiftProfessorship(professorship.getAssociatedShiftProfessorshipSet().iterator().next())) {
-                    ;
-                }
-                for (; !professorship.getSupportLessonsSet().isEmpty(); otherProfessorship.addSupportLessons(professorship
-                        .getSupportLessonsSet().iterator().next())) {
-                    ;
-                }
-                for (; !professorship.getDegreeTeachingServicesSet().isEmpty(); otherProfessorship
-                        .addDegreeTeachingServices(professorship.getDegreeTeachingServicesSet().iterator().next())) {
-                    ;
-                }
-                for (; !professorship.getTeacherMasterDegreeServicesSet().isEmpty(); otherProfessorship
-                        .addTeacherMasterDegreeServices(professorship.getTeacherMasterDegreeServicesSet().iterator().next())) {
-                    ;
-                }
-                professorship.delete();
+                otherProfessorship =
+                        Professorship.create(professorship.getResponsibleFor(), executionCourseTo, professorship.getPerson(),
+                                professorship.getHours());
+            }
+            for (; !professorship.getAssociatedSummariesSet().isEmpty(); otherProfessorship.addAssociatedSummaries(professorship
+                    .getAssociatedSummariesSet().iterator().next())) {
+                ;
+            }
+            for (; !professorship.getAssociatedShiftProfessorshipSet().isEmpty(); otherProfessorship
+                    .addAssociatedShiftProfessorship(professorship.getAssociatedShiftProfessorshipSet().iterator().next())) {
+                ;
             }
         }
     }

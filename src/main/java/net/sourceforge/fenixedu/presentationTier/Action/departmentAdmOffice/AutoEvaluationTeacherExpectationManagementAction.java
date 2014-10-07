@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod;
+import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DefineExpectationPeriods;
 
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -43,7 +44,8 @@ public class AutoEvaluationTeacherExpectationManagementAction extends TeacherPer
     protected void readAndSetPeriod(HttpServletRequest request, ExecutionYear year) {
         if (year != null) {
             TeacherAutoEvaluationDefinitionPeriod teacherExpectationDefinitionPeriod =
-                    getDepartment(request).getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(year);
+                    TeacherPersonalExpectationPeriod.getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(
+                            getDepartment(request), year);
             request.setAttribute("period", teacherExpectationDefinitionPeriod);
         }
     }

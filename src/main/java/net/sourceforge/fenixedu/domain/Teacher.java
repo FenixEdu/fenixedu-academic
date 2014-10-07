@@ -18,13 +18,10 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -35,29 +32,15 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
-import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
-import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
-import net.sourceforge.fenixedu.domain.teacher.Advise;
-import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
-import net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -68,7 +51,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
-import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
@@ -346,18 +328,6 @@ public class Teacher extends Teacher_Base {
         return false;
     }
 
-    public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(ExecutionYear executionYear) {
-        TeacherPersonalExpectation result = null;
-        Collection<TeacherPersonalExpectation> teacherPersonalExpectations = this.getTeacherPersonalExpectationsSet();
-        for (TeacherPersonalExpectation teacherPersonalExpectation : teacherPersonalExpectations) {
-            if (teacherPersonalExpectation.getExecutionYear().equals(executionYear)) {
-                result = teacherPersonalExpectation;
-                break;
-            }
-        }
-        return result;
-    }
-
     public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionYear(ExecutionYear executionYear) {
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
@@ -384,46 +354,6 @@ public class Teacher extends Teacher_Base {
             executionCourses.add(professorship.getExecutionCourse());
         }
         return executionCourses;
-    }
-
-    public Double getHoursLecturedOnExecutionCourse(ExecutionCourse executionCourse) {
-        double returnValue = 0;
-        Professorship professorship = getProfessorshipByExecutionCourse(executionCourse);
-        TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
-        if (teacherService != null) {
-            List<DegreeTeachingService> teachingServices = teacherService.getDegreeTeachingServiceByProfessorship(professorship);
-            for (DegreeTeachingService teachingService : teachingServices) {
-                returnValue +=
-                        ((teachingService.getPercentage() / 100) * teachingService.getShift().getUnitHours().doubleValue());
-            }
-        }
-        return returnValue;
-    }
-
-    public Duration getLecturedDurationOnExecutionCourse(ExecutionCourse executionCourse) {
-        Duration duration = Duration.ZERO;
-        Professorship professorship = getProfessorshipByExecutionCourse(executionCourse);
-        TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
-        if (teacherService != null) {
-            List<DegreeTeachingService> teachingServices = teacherService.getDegreeTeachingServiceByProfessorship(professorship);
-            for (DegreeTeachingService teachingService : teachingServices) {
-                duration =
-                        duration.plus(new Duration(new Double((teachingService.getPercentage() / 100)
-                                * teachingService.getShift().getCourseLoadWeeklyAverage().doubleValue() * 3600 * 1000)
-                                .longValue()));
-            }
-        }
-        return duration;
-    }
-
-    public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionSemester executionSemester) {
-        return (TeacherService) CollectionUtils.find(getTeacherServicesSet(), new Predicate() {
-            @Override
-            public boolean evaluate(Object arg0) {
-                TeacherService teacherService = (TeacherService) arg0;
-                return teacherService.getExecutionPeriod() == executionSemester;
-            }
-        });
     }
 
     public Professorship getProfessorshipByExecutionCourse(final ExecutionCourse executionCourse) {
@@ -457,82 +387,6 @@ public class Teacher extends Teacher_Base {
 
     public List<PersonFunction> getPersonFuntions(YearMonthDay beginDate, YearMonthDay endDate) {
         return getPerson().getPersonFuntions(beginDate, endDate);
-    }
-
-    public double getThesesCredits(ExecutionSemester executionSemester) {
-        double totalCredits = 0.0;
-
-        for (ThesisEvaluationParticipant participant : this.getPerson().getThesisEvaluationParticipants(executionSemester)) {
-            totalCredits += participant.getParticipationCredits();
-        }
-
-        return round(totalCredits);
-    }
-
-    public BigDecimal getMasterDegreeThesesCredits(ExecutionYear executionYear) {
-        double totalThesisValue = 0.0;
-        if (!executionYear.getYear().equals("2011/2012")) {
-            for (ThesisEvaluationParticipant participant : getPerson().getThesisEvaluationParticipantsSet()) {
-                Thesis thesis = participant.getThesis();
-                if (thesis.isEvaluated()
-                        && thesis.hasFinalEnrolmentEvaluation()
-                        && thesis.getEvaluation().getYear() == executionYear.getBeginCivilYear()
-                        && (participant.getType() == ThesisParticipationType.ORIENTATOR || participant.getType() == ThesisParticipationType.COORIENTATOR)) {
-                    totalThesisValue = totalThesisValue + participant.getParticipationCredits();
-                }
-            }
-        }
-        return (BigDecimal.valueOf(5).min(new BigDecimal(totalThesisValue * 0.5))).setScale(2, BigDecimal.ROUND_HALF_UP);
-    }
-
-    public BigDecimal getPhdDegreeThesesCredits(ExecutionYear executionYear) {
-        ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
-        int guidedThesesNumber = 0;
-        double assistantGuidedTheses = 0.0;
-
-        if (!executionYear.getYear().equals("2011/2012")) {
-            for (InternalPhdParticipant internalPhdParticipant : getPerson().getInternalParticipantsSet()) {
-                ExecutionYear conclusionYear = internalPhdParticipant.getIndividualProcess().getConclusionYear();
-                if (conclusionYear != null && conclusionYear.equals(previousExecutionYear)) {
-                    if (internalPhdParticipant.getProcessForGuiding() != null) {
-                        guidedThesesNumber++;
-                    } else if (internalPhdParticipant.getProcessForAssistantGuiding() != null) {
-                        assistantGuidedTheses =
-                                assistantGuidedTheses
-                                        + (0.5 / internalPhdParticipant.getProcessForAssistantGuiding().getAssistantGuidingsSet()
-                                                .size());
-                    }
-
-                }
-            }
-        }
-        return BigDecimal.valueOf(2 * (guidedThesesNumber + assistantGuidedTheses)).setScale(2, BigDecimal.ROUND_HALF_UP);
-    }
-
-    public BigDecimal getProjectsTutorialsCredits(ExecutionYear executionYear) {
-        BigDecimal result = BigDecimal.ZERO;
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionSemester);
-            if (teacherService != null) {
-                for (DegreeProjectTutorialService degreeProjectTutorialService : teacherService
-                        .getDegreeProjectTutorialServices()) {
-                    result = result.add(degreeProjectTutorialService.getDegreeProjectTutorialServiceCredits());
-                }
-            }
-        }
-        return result.setScale(2, BigDecimal.ROUND_HALF_UP);
-    }
-
-    public double getManagementFunctionsCredits(ExecutionSemester executionSemester) {
-        double totalCredits = 0.0;
-        for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
-            if (personFunction.belongsToPeriod(executionSemester.getBeginDateYearMonthDay(),
-                    executionSemester.getEndDateYearMonthDay())
-                    && !personFunction.getFunction().isVirtual()) {
-                totalCredits = (personFunction.getCredits() != null) ? totalCredits + personFunction.getCredits() : totalCredits;
-            }
-        }
-        return round(totalCredits);
     }
 
     public Set<PersonContractSituation> getValidTeacherServiceExemptions(Interval interval) {
@@ -570,131 +424,6 @@ public class Teacher extends Teacher_Base {
                     semesterInterval);
         }
         return new HashSet<PersonContractSituation>();
-    }
-
-    public double getServiceExemptionCredits(ExecutionSemester executionSemester) {
-        Set<PersonContractSituation> personProfessionalExemptions = getValidTeacherServiceExemptions(executionSemester);
-        Interval semesterInterval =
-                new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
-                        executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
-        int lessonsDays = semesterInterval.toPeriod(PeriodType.days()).getDays();
-
-        List<Interval> notYetOverlapedIntervals = new ArrayList<Interval>();
-        List<Interval> newIntervals = new ArrayList<Interval>();
-        notYetOverlapedIntervals.add(semesterInterval);
-
-        Double mandatoryLessonHours = getMandatoryLessonHours(executionSemester);
-        Double maxSneHours = mandatoryLessonHours;
-        TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionSemester);
-        if (teacherService != null && teacherService.getReductionService() != null) {
-            maxSneHours = Math.max(0, (mandatoryLessonHours - teacherService.getReductionServiceCredits().doubleValue()));
-        }
-
-        for (PersonContractSituation personContractSituation : personProfessionalExemptions) {
-            LocalDate exemptionEnd =
-                    personContractSituation.getServiceExemptionEndDate() == null ? semesterInterval.getEnd().toLocalDate() : personContractSituation
-                            .getServiceExemptionEndDate();
-
-            Interval exemptionInterval =
-                    new Interval(personContractSituation.getBeginDate().toDateTimeAtStartOfDay(),
-                            exemptionEnd.toDateTimeAtStartOfDay());
-
-            PersonProfessionalExemption personProfessionalExemption = personContractSituation.getPersonProfessionalExemption();
-            if (personContractSituation.countForCredits(semesterInterval)) {
-                if (personProfessionalExemption != null) {
-                    exemptionEnd =
-                            personProfessionalExemption.getEndDate() == null ? semesterInterval.getEnd().toLocalDate() : personProfessionalExemption
-                                    .getEndDate();
-                    exemptionInterval =
-                            new Interval(personProfessionalExemption.getBeginDate().toDateTimeAtStartOfDay(),
-                                    exemptionEnd.toDateTimeAtStartOfDay());
-                    if (personProfessionalExemption.getIsSabaticalOrEquivalent()) {
-                        if (isSabbaticalForSemester(exemptionInterval, semesterInterval)) {
-                            return maxSneHours;
-                        } else {
-                            continue;
-                        }
-                    }
-                }
-                for (Interval notYetOverlapedInterval : notYetOverlapedIntervals) {
-                    Interval overlapInterval = exemptionInterval.overlap(notYetOverlapedInterval);
-                    if (overlapInterval != null) {
-                        newIntervals.addAll(getNotOverlapedIntervals(overlapInterval, notYetOverlapedInterval));
-                    } else {
-                        newIntervals.add(notYetOverlapedInterval);
-                    }
-                }
-                notYetOverlapedIntervals.clear();
-                notYetOverlapedIntervals.addAll(newIntervals);
-                newIntervals.clear();
-            }
-        }
-
-        int notOverlapedDays = 0;
-        for (Interval interval : notYetOverlapedIntervals) {
-            notOverlapedDays += interval.toPeriod(PeriodType.days()).getDays();
-        }
-        int overlapedDays = lessonsDays - notOverlapedDays;
-        Double overlapedPercentage = round(Double.valueOf(overlapedDays) / Double.valueOf(lessonsDays));
-        return round(overlapedPercentage * maxSneHours);
-
-    }
-
-    private List<Interval> getNotOverlapedIntervals(Interval overlapInterval, Interval notYetOverlapedInterval) {
-        List<Interval> intervals = new ArrayList<Interval>();
-        LocalDate overlapIntervalStart = overlapInterval.getStart().toLocalDate();
-        LocalDate overlapIntervalEnd = overlapInterval.getEnd().toLocalDate();
-        LocalDate notYetOverlapedIntervalStart = notYetOverlapedInterval.getStart().toLocalDate();
-        LocalDate notYetOverlapedIntervalEnd = notYetOverlapedInterval.getEnd().toLocalDate();
-
-        if (overlapIntervalStart.equals(notYetOverlapedIntervalStart) && !overlapIntervalEnd.equals(notYetOverlapedIntervalEnd)) {
-            intervals.add(new Interval(overlapInterval.getEnd().plusDays(1), notYetOverlapedInterval.getEnd()));
-
-        } else if (!overlapIntervalStart.equals(notYetOverlapedIntervalStart)
-                && overlapIntervalEnd.equals(notYetOverlapedIntervalEnd)) {
-            intervals.add(new Interval(notYetOverlapedInterval.getStart(), overlapInterval.getStart().minusDays(1)));
-
-        } else if (!overlapIntervalStart.equals(notYetOverlapedIntervalStart)
-                && !overlapIntervalEnd.equals(notYetOverlapedIntervalEnd)) {
-            intervals.add(new Interval(notYetOverlapedInterval.getStart(), overlapInterval.getStart().minusDays(1)));
-            intervals.add(new Interval(overlapInterval.getEnd().plusDays(1), notYetOverlapedInterval.getEnd()));
-        }
-
-        return intervals;
-    }
-
-    private boolean isSabbaticalForSemester(Interval exemptionInterval, Interval semesterPeriod) {
-        double overlapPercentageThisSemester =
-                calculateLessonsIntervalAndExemptionOverlapPercentage(semesterPeriod, exemptionInterval);
-        if (overlapPercentageThisSemester == 1) {
-            return true;
-        }
-        if (semesterPeriod.contains(exemptionInterval.getStart())) {
-            return overlapPercentageThisSemester >= 0.5;
-        }
-        ExecutionSemester firstExecutionPeriod = ExecutionSemester.readByDateTime(exemptionInterval.getStart());
-        Interval firstExecutionPeriodInterval =
-                new Interval(firstExecutionPeriod.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
-                        firstExecutionPeriod.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
-        double overlapPercentageFirstSemester =
-                calculateLessonsIntervalAndExemptionOverlapPercentage(firstExecutionPeriodInterval, exemptionInterval);
-        return overlapPercentageFirstSemester < 0.5;
-    }
-
-    private double calculateLessonsIntervalAndExemptionOverlapPercentage(Interval lessonsInterval, Interval exemptionInterval) {
-        if (lessonsInterval != null) {
-            Interval overlapInterval = lessonsInterval.overlap(exemptionInterval);
-            if (overlapInterval != null) {
-                int intersectedDays = overlapInterval.toPeriod(PeriodType.days()).getDays();
-                return round(Double.valueOf(intersectedDays)
-                        / Double.valueOf(lessonsInterval.toPeriod(PeriodType.days()).getDays()));
-            }
-        }
-        return 0.0;
-    }
-
-    private Double round(double n) {
-        return Math.round((n * 100.0)) / 100.0;
     }
 
     public boolean isActive() {
@@ -776,100 +505,6 @@ public class Teacher extends Teacher_Base {
         return false;
     }
 
-    public List<Advise> getAdvisesByAdviseTypeAndExecutionYear(AdviseType adviseType, ExecutionYear executionYear) {
-
-        List<Advise> result = new ArrayList<Advise>();
-        Date executionYearStartDate = executionYear.getBeginDate();
-        Date executionYearEndDate = executionYear.getEndDate();
-
-        for (Advise advise : this.getAdvisesSet()) {
-            if ((advise.getAdviseType() == adviseType)) {
-                Date adviseStartDate = advise.getStartExecutionPeriod().getBeginDate();
-                Date adviseEndDate = advise.getEndExecutionPeriod().getEndDate();
-
-                if (((executionYearStartDate.compareTo(adviseStartDate) < 0) && (executionYearEndDate.compareTo(adviseStartDate) < 0))
-                        || ((executionYearStartDate.compareTo(adviseEndDate) > 0) && (executionYearEndDate
-                                .compareTo(adviseEndDate) > 0))) {
-                    continue;
-                }
-                result.add(advise);
-            }
-        }
-
-        return result;
-    }
-
-    public List<Advise> getAdvisesByAdviseType(AdviseType adviseType) {
-
-        List<Advise> result = new ArrayList<Advise>();
-        for (Advise advise : this.getAdvisesSet()) {
-            if (advise.getAdviseType() == adviseType) {
-                result.add(advise);
-            }
-        }
-
-        return result;
-    }
-
-    public double getBalanceOfCreditsUntil(ExecutionSemester executionSemester) throws ParseException {
-
-        double balanceCredits = 0.0;
-        ExecutionSemester firstExecutionPeriod = ExecutionSemester.readStartExecutionSemesterForCredits();
-
-        TeacherService firstTeacherService = getTeacherServiceByExecutionPeriod(firstExecutionPeriod);
-        if (firstTeacherService != null) {
-            balanceCredits = firstTeacherService.getPastServiceCredits();
-        }
-
-        if (executionSemester != null && executionSemester.isAfter(firstExecutionPeriod)) {
-            balanceCredits =
-                    sumCreditsBetweenPeriods(firstExecutionPeriod.getNextExecutionPeriod(), executionSemester, balanceCredits);
-        }
-        return balanceCredits;
-    }
-
-    private double sumCreditsBetweenPeriods(ExecutionSemester startPeriod, ExecutionSemester endExecutionPeriod,
-            double totalCredits) throws ParseException {
-        ExecutionSemester lastExecutionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
-
-        ExecutionSemester executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
-        while (startPeriod != executionPeriodAfterEnd && endExecutionPeriod.isBeforeOrEquals(lastExecutionSemester)) {
-            TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(startPeriod, this);
-            if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
-                totalCredits += teacherCredits.getTotalCredits().subtract(teacherCredits.getMandatoryLessonHours()).doubleValue();
-            } else if (!isMonitor(startPeriod)) {
-                TeacherService teacherService = getTeacherServiceByExecutionPeriod(startPeriod);
-                if (teacherService != null) {
-                    totalCredits += teacherService.getCredits();
-                }
-                totalCredits += getThesesCredits(startPeriod);
-                totalCredits += getManagementFunctionsCredits(startPeriod);
-                totalCredits += getServiceExemptionCredits(startPeriod);
-                totalCredits -= getMandatoryLessonHours(startPeriod);
-            }
-            startPeriod = startPeriod.getNextExecutionPeriod();
-        }
-        return totalCredits;
-    }
-
-    public Double getMandatoryLessonHours(ExecutionSemester executionSemester) {
-        PersonContractSituation teacherContractSituation = null;
-        Interval semesterInterval =
-                new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
-                        executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
-        if (isActiveForSemester(executionSemester)) {
-            teacherContractSituation = getDominantTeacherContractSituation(semesterInterval);
-            PersonContractSituation personContractSituation = getDominantTeacherServiceExemption(executionSemester);
-            if (personContractSituation != null && !personContractSituation.countForCredits(semesterInterval)) {
-                teacherContractSituation = personContractSituation;
-            }
-        } else if (getTeacherAuthorization(executionSemester) != null) {
-            TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionSemester);
-            return teacherService == null ? 0 : teacherService.getTeachingDegreeHours();
-        }
-        return teacherContractSituation == null ? 0 : teacherContractSituation.getWeeklyLessonHours(semesterInterval);
-    }
-
     public List<PersonFunction> getManagementFunctions(ExecutionSemester executionSemester) {
         List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
         for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
@@ -908,29 +543,6 @@ public class Teacher extends Teacher_Base {
         return getPerson().getProfessorships(executionYear);
     }
 
-    public Set<TeacherDegreeFinalProjectStudent> findTeacherDegreeFinalProjectStudentsByExecutionPeriod(
-            final ExecutionSemester executionSemester) {
-        final Set<TeacherDegreeFinalProjectStudent> teacherDegreeFinalProjectStudents =
-                new HashSet<TeacherDegreeFinalProjectStudent>();
-        for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : getDegreeFinalProjectStudentsSet()) {
-            if (executionSemester == teacherDegreeFinalProjectStudent.getExecutionPeriod()) {
-                teacherDegreeFinalProjectStudents.add(teacherDegreeFinalProjectStudent);
-            }
-        }
-        return teacherDegreeFinalProjectStudents;
-    }
-
-    public List<ManagementPositionCreditLine> getManagementPositionsFor(ExecutionSemester executionSemester) {
-        final List<ManagementPositionCreditLine> result = new ArrayList<ManagementPositionCreditLine>();
-        for (final ManagementPositionCreditLine managementPositionCreditLine : this.getManagementPositionsSet()) {
-            if (managementPositionCreditLine.getStart().isBefore(executionSemester.getEndDateYearMonthDay())
-                    && managementPositionCreditLine.getEnd().isAfter(executionSemester.getBeginDateYearMonthDay())) {
-                result.add(managementPositionCreditLine);
-            }
-        }
-        return result;
-    }
-
     public SortedSet<ExecutionCourse> getCurrentExecutionCourses() {
         final SortedSet<ExecutionCourse> executionCourses =
                 new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
@@ -955,22 +567,6 @@ public class Teacher extends Teacher_Base {
             }
         }
         return false;
-    }
-
-    public Double getHoursLecturedOnExecutionCourseByShiftType(ExecutionCourse executionCourse, ShiftType shiftType) {
-        double returnValue = 0;
-        Professorship professorship = getProfessorshipByExecutionCourse(executionCourse);
-        TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
-        if (teacherService != null) {
-            List<DegreeTeachingService> teachingServices = teacherService.getDegreeTeachingServiceByProfessorship(professorship);
-            for (DegreeTeachingService teachingService : teachingServices) {
-                if (teachingService.getShift().containsType(shiftType)) {
-                    returnValue +=
-                            ((teachingService.getPercentage() / 100) * teachingService.getShift().getUnitHours().doubleValue());
-                }
-            }
-        }
-        return returnValue;
     }
 
     public boolean teachesAny(final Collection<ExecutionCourse> executionCourses, ExecutionYear executionYear) {
@@ -1007,35 +603,6 @@ public class Teacher extends Teacher_Base {
                         return true;
                     }
                 }
-            }
-        }
-        return false;
-    }
-
-    public List<ExpectationEvaluationGroup> getEvaluatedExpectationEvaluationGroups(ExecutionYear executionYear) {
-        List<ExpectationEvaluationGroup> result = new ArrayList<ExpectationEvaluationGroup>();
-        for (ExpectationEvaluationGroup expectationEvaluationGroup : getEvaluatedExpectationEvaluationGroupsSet()) {
-            if (expectationEvaluationGroup.getExecutionYear().equals(executionYear)) {
-                result.add(expectationEvaluationGroup);
-            }
-        }
-        return result;
-    }
-
-    public List<ExpectationEvaluationGroup> getAppraiserExpectationEvaluationGroups(ExecutionYear executionYear) {
-        List<ExpectationEvaluationGroup> result = new ArrayList<ExpectationEvaluationGroup>();
-        for (ExpectationEvaluationGroup expectationEvaluationGroup : getAppraiserExpectationEvaluationGroupsSet()) {
-            if (expectationEvaluationGroup.getExecutionYear().equals(executionYear)) {
-                result.add(expectationEvaluationGroup);
-            }
-        }
-        return result;
-    }
-
-    public boolean hasExpectationEvaluatedTeacher(Teacher teacher, ExecutionYear executionYear) {
-        for (ExpectationEvaluationGroup group : getEvaluatedExpectationEvaluationGroupsSet()) {
-            if (group.getExecutionYear().equals(executionYear) && group.getEvaluated().equals(teacher)) {
-                return true;
             }
         }
         return false;
@@ -1173,10 +740,6 @@ public class Teacher extends Teacher_Base {
         return res;
     }
 
-    private RoleType getRoleType() {
-        return RoleType.TEACHER;
-    }
-
     public boolean teachesAt(final Space campus) {
         for (final Professorship professorship : getProfessorshipsSet()) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
@@ -1205,24 +768,6 @@ public class Teacher extends Teacher_Base {
 
     public Iterator<Professorship> getProfessorshipsIterator() {
         return getPerson().getProfessorshipsSet().iterator();
-    }
-
-    public TeacherCredits getTeacherCredits(ExecutionSemester executionSemester) {
-        for (TeacherCredits teacherCredits : getTeacherCreditsSet()) {
-            if (teacherCredits.getTeacherCreditsState().getExecutionSemester().equals(executionSemester)) {
-                return teacherCredits;
-            }
-        }
-        return null;
-    }
-
-    public boolean hasTeacherCredits(ExecutionSemester executionSemester) {
-        for (TeacherCredits teacherCredits : getTeacherCreditsSet()) {
-            if (teacherCredits.getTeacherCreditsState().getExecutionSemester().equals(executionSemester)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean hasTeacherAuthorization(ExecutionSemester executionSemester) {

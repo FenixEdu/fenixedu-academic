@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.Generate
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PublicRelationsStudentListQueueJob;
 import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.ReportFileFactory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -156,7 +155,7 @@ public class StudentReportsDA extends FenixDispatchAction {
         StudentReportPredicate studentReportPredicate = setBean(request);
 
         PublicRelationsStudentListQueueJob job =
-                ReportFileFactory.createPublicRelationsStudentListQueueJob(studentReportPredicate.getExecutionYear(),
+                new PublicRelationsStudentListQueueJob(studentReportPredicate.getExecutionYear(),
                         studentReportPredicate.getDegreeType(), studentReportPredicate.getConcluded(),
                         studentReportPredicate.getActive());
 

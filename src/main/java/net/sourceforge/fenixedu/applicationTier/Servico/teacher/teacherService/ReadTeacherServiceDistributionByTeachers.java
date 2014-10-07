@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 import org.joda.time.Duration;
 
@@ -85,13 +86,14 @@ public class ReadTeacherServiceDistributionByTeachers {
 
                 TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionPeriodEntry, teacher);
                 Double mandatoryLessonHours =
-                        teacherCredits != null ? teacherCredits.getMandatoryLessonHours().doubleValue() : teacher
-                                .getMandatoryLessonHours(executionPeriodEntry);
+                        teacherCredits != null ? teacherCredits.getMandatoryLessonHours().doubleValue() : TeacherCredits
+                                .calculateMandatoryLessonHours(teacher, executionPeriodEntry);
 
                 if (returnDTO.isTeacherPresent(teacher.getExternalId())) {
                     returnDTO.addHoursToTeacher(teacher.getExternalId(), mandatoryLessonHours);
                 } else {
-                    Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getBalanceOfCreditsUntil(endPeriod));
+                    Double accumulatedCredits =
+                            (startPeriod == null ? 0.0 : TeacherCredits.calculateBalanceOfCreditsUntil(teacher, endPeriod));
                     String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
                     returnDTO.addTeacher(teacher.getExternalId(), teacher.getPerson().getUsername(), category, teacher
                             .getPerson().getName(), mandatoryLessonHours, accumulatedCredits);
@@ -126,9 +128,10 @@ public class ReadTeacherServiceDistributionByTeachers {
                         degreeCurricularYearsMap.get(degreeExternalId).addAll(curricularYears);
                     }
 
-                    Double hoursSpentByTeacher = StrictMath.ceil(teacher.getHoursLecturedOnExecutionCourse(executionCourse));
+                    Double hoursSpentByTeacher =
+                            StrictMath.ceil(TeacherService.getHoursLecturedOnExecutionCourse(teacher, executionCourse));
 
-                    Duration timeSpentByTeacher = teacher.getLecturedDurationOnExecutionCourse(executionCourse);
+                    Duration timeSpentByTeacher = TeacherService.getLecturedDurationOnExecutionCourse(teacher, executionCourse);
 
                     returnDTO.addExecutionCourseToTeacher(teacher.getExternalId(), executionCourse.getExternalId(),
                             executionCourse.getNome(), hoursSpentByTeacher.intValue(), timeSpentByTeacher, degreeNameMap,
@@ -142,8 +145,8 @@ public class ReadTeacherServiceDistributionByTeachers {
                 }
 
                 Double exemptionCredits =
-                        teacherCredits != null ? teacherCredits.getServiceExemptionCredits().doubleValue() : teacher
-                                .getServiceExemptionCredits(executionPeriodEntry);
+                        teacherCredits != null ? teacherCredits.getServiceExemptionCredits().doubleValue() : TeacherCredits
+                                .calculateServiceExemptionCredits(teacher, executionPeriodEntry);
 
                 if (exemptionCredits > 0.0) {
                     Set<PersonContractSituation> serviceExemptions =

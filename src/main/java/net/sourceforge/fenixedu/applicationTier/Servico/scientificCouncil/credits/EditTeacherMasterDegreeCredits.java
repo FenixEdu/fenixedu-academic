@@ -51,7 +51,7 @@ public class EditTeacherMasterDegreeCredits {
             Teacher teacher = professorship.getTeacher();
             ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
 
-            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+            TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
             if (teacherService == null) {
                 teacherService = new TeacherService(teacher, executionSemester);
             }

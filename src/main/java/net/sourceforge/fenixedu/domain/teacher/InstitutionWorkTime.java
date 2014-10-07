@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionW
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
@@ -42,7 +43,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
             throw new DomainException("arguments can't be null");
         }
         setTeacherService(teacherService);
-        getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(getUserRoleType());
+        TeacherCreditsFillingCE.checkValidCreditsPeriod(getTeacherService().getExecutionPeriod(), getUserRoleType());
         setStartTime(startTime);
         setEndTime(endTime);
         setWeekDay(weekDay);
@@ -79,7 +80,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
 
     @Atomic
     public void delete(RoleType roleType) {
-        getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        TeacherCreditsFillingCE.checkValidCreditsPeriod(getTeacherService().getExecutionPeriod(), roleType);
         log("label.teacher.schedule.institutionWorkTime.delete");
         setTeacherService(null);
         super.delete();
@@ -91,7 +92,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
     }
 
     public void update(InstitutionWorkTimeDTO institutionWorkTimeDTO, RoleType roleType) {
-        getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        TeacherCreditsFillingCE.checkValidCreditsPeriod(getTeacherService().getExecutionPeriod(), roleType);
         setWeekDay(institutionWorkTimeDTO.getWeekDay());
         setStartTime(institutionWorkTimeDTO.getStartTime());
         setEndTime(institutionWorkTimeDTO.getEndTime());

@@ -23,7 +23,13 @@ import java.math.BigDecimal;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
+import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
+import net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -65,9 +71,9 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 
     @Atomic
     public void calculateCredits() {
-        setMasterDegreeThesesCredits(getTeacher().getMasterDegreeThesesCredits(getAnnualCreditsState().getExecutionYear()));
-        setPhdDegreeThesesCredits(getTeacher().getPhdDegreeThesesCredits(getAnnualCreditsState().getExecutionYear()));
-        setProjectsTutorialsCredits(getTeacher().getProjectsTutorialsCredits(getAnnualCreditsState().getExecutionYear()));
+        setMasterDegreeThesesCredits(calculateMasterDegreeThesesCredits(getTeacher(), getAnnualCreditsState().getExecutionYear()));
+        setPhdDegreeThesesCredits(calculatePhdDegreeThesesCredits(getTeacher(), getAnnualCreditsState().getExecutionYear()));
+        setProjectsTutorialsCredits(calculateProjectsTutorialsCredits(getTeacher(), getAnnualCreditsState().getExecutionYear()));
 
         BigDecimal teachingCredits = BigDecimal.ZERO;
         BigDecimal managementFunctionsCredits = BigDecimal.ZERO;
@@ -85,13 +91,16 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         for (ExecutionSemester executionSemester : getAnnualCreditsState().getExecutionYear().getExecutionPeriodsSet()) {
             if (getTeacher().isActiveForSemester(executionSemester) || getTeacher().hasTeacherAuthorization(executionSemester)) {
                 BigDecimal thisSemesterManagementFunctionCredits =
-                        new BigDecimal(getTeacher().getManagementFunctionsCredits(executionSemester));
+                        new BigDecimal(TeacherCredits.calculateManagementFunctionsCredits(getTeacher(), executionSemester));
                 managementFunctionsCredits = managementFunctionsCredits.add(thisSemesterManagementFunctionCredits);
                 serviceExemptionCredits =
-                        serviceExemptionCredits.add(new BigDecimal(getTeacher().getServiceExemptionCredits(executionSemester)));
-                BigDecimal thisSemesterTeachingLoad = new BigDecimal(getTeacher().getMandatoryLessonHours(executionSemester));
+                        serviceExemptionCredits.add(new BigDecimal(TeacherCredits.calculateServiceExemptionCredits(getTeacher(),
+                                executionSemester)));
+                BigDecimal thisSemesterTeachingLoad =
+                        new BigDecimal(TeacherCredits.calculateMandatoryLessonHours(getTeacher(), executionSemester));
                 annualTeachingLoad = annualTeachingLoad.add(thisSemesterTeachingLoad).setScale(2, BigDecimal.ROUND_HALF_UP);
-                TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(executionSemester);
+                TeacherService teacherService =
+                        TeacherService.getTeacherServiceByExecutionPeriod(getTeacher(), executionSemester);
                 BigDecimal thisSemesterCreditsReduction = BigDecimal.ZERO;
                 if (teacherService != null) {
                     teachingCredits = teachingCredits.add(new BigDecimal(teacherService.getTeachingDegreeCredits()));
@@ -158,8 +167,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 
     private BigDecimal getPreviousAccumulatedCredits() {
         AnnualTeachingCredits previousAnnualTeachingCredits =
-                AnnualTeachingCredits.readByYearAndTeacher(getAnnualCreditsState().getExecutionYear().getPreviousExecutionYear(),
-                        getTeacher());
+                readByYearAndTeacher(getAnnualCreditsState().getExecutionYear().getPreviousExecutionYear(), getTeacher());
         return previousAnnualTeachingCredits != null ? previousAnnualTeachingCredits.getAccumulatedCredits() : BigDecimal.ZERO;
     }
 
@@ -173,6 +181,61 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
             }
         }
         return lastAnnualTeachingCreditsDocument;
+    }
+
+    public static BigDecimal calculateProjectsTutorialsCredits(Teacher teacher, ExecutionYear executionYear) {
+        BigDecimal result = BigDecimal.ZERO;
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+            final ExecutionSemester executionSemester1 = executionSemester;
+            TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester1);
+            if (teacherService != null) {
+                for (DegreeProjectTutorialService degreeProjectTutorialService : teacherService
+                        .getDegreeProjectTutorialServices()) {
+                    result = result.add(degreeProjectTutorialService.getDegreeProjectTutorialServiceCredits());
+                }
+            }
+        }
+        return result.setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public static BigDecimal calculatePhdDegreeThesesCredits(Teacher teacher, ExecutionYear executionYear) {
+        ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
+        int guidedThesesNumber = 0;
+        double assistantGuidedTheses = 0.0;
+
+        if (!executionYear.getYear().equals("2011/2012")) {
+            for (InternalPhdParticipant internalPhdParticipant : teacher.getPerson().getInternalParticipantsSet()) {
+                ExecutionYear conclusionYear = internalPhdParticipant.getIndividualProcess().getConclusionYear();
+                if (conclusionYear != null && conclusionYear.equals(previousExecutionYear)) {
+                    if (internalPhdParticipant.getProcessForGuiding() != null) {
+                        guidedThesesNumber++;
+                    } else if (internalPhdParticipant.getProcessForAssistantGuiding() != null) {
+                        assistantGuidedTheses =
+                                assistantGuidedTheses
+                                        + (0.5 / internalPhdParticipant.getProcessForAssistantGuiding().getAssistantGuidingsSet()
+                                                .size());
+                    }
+
+                }
+            }
+        }
+        return BigDecimal.valueOf(2 * (guidedThesesNumber + assistantGuidedTheses)).setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public static BigDecimal calculateMasterDegreeThesesCredits(Teacher teacher, ExecutionYear executionYear) {
+        double totalThesisValue = 0.0;
+        if (!executionYear.getYear().equals("2011/2012")) {
+            for (ThesisEvaluationParticipant participant : teacher.getPerson().getThesisEvaluationParticipantsSet()) {
+                Thesis thesis = participant.getThesis();
+                if (thesis.isEvaluated()
+                        && thesis.hasFinalEnrolmentEvaluation()
+                        && thesis.getEvaluation().getYear() == executionYear.getBeginCivilYear()
+                        && (participant.getType() == ThesisParticipationType.ORIENTATOR || participant.getType() == ThesisParticipationType.COORIENTATOR)) {
+                    totalThesisValue = totalThesisValue + participant.getParticipationCredits();
+                }
+            }
+        }
+        return (BigDecimal.valueOf(5).min(new BigDecimal(totalThesisValue * 0.5))).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
 }

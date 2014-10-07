@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 
 public class TeacherServiceNotes extends TeacherServiceNotes_Base {
 
@@ -37,7 +38,7 @@ public class TeacherServiceNotes extends TeacherServiceNotes_Base {
     public void editNotes(String managementFunctionNote, String serviceExemptionNote, String otherNote,
             String masterDegreeTeachingNote, String functionsAccumulation, String thesisNote, RoleType roleType) {
 
-        getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        TeacherCreditsFillingCE.checkValidCreditsPeriod(getTeacherService().getExecutionPeriod(), roleType);
 
         if (managementFunctionNote != null) {
             setManagementFunctionNotes(managementFunctionNote);

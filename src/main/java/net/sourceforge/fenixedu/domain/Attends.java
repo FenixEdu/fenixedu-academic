@@ -203,10 +203,6 @@ public class Attends extends Attends_Base {
         if (!getProjectSubmissionsSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.attends.cant.delete.has.project.submissions"));
         }
-        if (!getDegreeProjectTutorialServicesSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
-                    "error.attends.cant.delete.has.degree.project.tutorial.services"));
-        }
     }
 
     public boolean isAbleToBeRemoved() {

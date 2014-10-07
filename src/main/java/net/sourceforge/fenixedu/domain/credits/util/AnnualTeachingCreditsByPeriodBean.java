@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -57,15 +58,16 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
         this.executionPeriod = executionPeriod;
         this.teacher = teacher;
         if (roleType != null) {
-            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-            boolean inValidCreditsPeriod = executionPeriod.isInValidCreditsPeriod(roleType);
+            TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionPeriod);
+            boolean inValidCreditsPeriod = TeacherCreditsFillingCE.isInValidCreditsPeriod(executionPeriod, roleType);
             boolean isLocked = teacherService != null && teacherService.getTeacherServiceLock() != null;
             if (roleType.equals(RoleType.DEPARTMENT_MEMBER)) {
                 boolean canLockAndEditTeacherCredits = inValidCreditsPeriod && !isLocked;
                 setCanLockTeacherCredits(canLockAndEditTeacherCredits);
                 setCanEditTeacherCredits(canLockAndEditTeacherCredits);
             } else if (roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) || roleType.equals(RoleType.SCIENTIFIC_COUNCIL)) {
-                boolean inValidTeacherCreditsPeriod = executionPeriod.isInValidCreditsPeriod(RoleType.DEPARTMENT_MEMBER);
+                boolean inValidTeacherCreditsPeriod =
+                        TeacherCreditsFillingCE.isInValidCreditsPeriod(executionPeriod, RoleType.DEPARTMENT_MEMBER);
                 setCanUnlockTeacherCredits(inValidCreditsPeriod && inValidTeacherCreditsPeriod && isLocked);
                 setCanEditTeacherCredits(roleType.equals(RoleType.SCIENTIFIC_COUNCIL)
                         || (inValidCreditsPeriod && (isLocked || !inValidTeacherCreditsPeriod)));
@@ -95,7 +97,7 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 
     public List<InstitutionWorkTime> getInstitutionWorkTime() {
         List<InstitutionWorkTime> institutionWorkingTimes = new ArrayList<InstitutionWorkTime>();
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionPeriod);
         if (teacherService != null && !teacherService.getInstitutionWorkTimes().isEmpty()) {
             institutionWorkingTimes.addAll(teacherService.getInstitutionWorkTimes());
         }
@@ -125,7 +127,7 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 
     public List<OtherService> getOtherServices() {
         List<OtherService> otherServices = new ArrayList<OtherService>();
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionPeriod);
         if (teacherService != null && !teacherService.getOtherServices().isEmpty()) {
             otherServices.addAll(teacherService.getOtherServices());
         }
@@ -140,7 +142,7 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
     }
 
     public ReductionService getCreditsReductionService() {
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionPeriod);
         return teacherService != null ? teacherService.getReductionService() : null;
     }
 
@@ -194,7 +196,7 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
     }
 
     public TeacherService getTeacherService() {
-        return teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        return TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionPeriod);
     }
 
     public Boolean getCanLockTeacherCredits() {

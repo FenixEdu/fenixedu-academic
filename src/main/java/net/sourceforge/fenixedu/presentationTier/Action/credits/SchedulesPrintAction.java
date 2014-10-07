@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.struts.action.ActionForm;
@@ -54,7 +55,7 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
         setWeekDays(request);
 
         request.setAttribute("teacher", teacher);
-        request.setAttribute("teacherService", teacher.getTeacherServiceByExecutionPeriod(executionSemester));
+        request.setAttribute("teacherService", TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester));
 
         return mapping.findForward("show-schedules-resume-print");
     }

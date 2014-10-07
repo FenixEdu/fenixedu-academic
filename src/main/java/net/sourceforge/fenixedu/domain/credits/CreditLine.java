@@ -28,8 +28,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 /**
  * @author jpvl
  */
-public abstract class CreditLine extends CreditLine_Base implements
-        net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator {
+public abstract class CreditLine extends CreditLine_Base {
 
     public CreditLine() {
         super();

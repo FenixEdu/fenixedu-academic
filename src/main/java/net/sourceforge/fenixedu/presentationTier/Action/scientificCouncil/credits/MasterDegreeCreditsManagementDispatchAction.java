@@ -426,7 +426,8 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         StringBuilder teachers = new StringBuilder();
         for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
             TeacherService teacherService =
-                    professorship.getTeacher().getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
+                    TeacherService.getTeacherServiceByExecutionPeriod(professorship.getTeacher(),
+                            executionCourse.getExecutionPeriod());
             TeacherMasterDegreeService masterDegreeService = null;
             if (teacherService != null) {
                 masterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);
@@ -440,7 +441,8 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         StringBuilder teachers = new StringBuilder();
         for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
             TeacherService teacherService =
-                    professorship.getTeacher().getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
+                    TeacherService.getTeacherServiceByExecutionPeriod(professorship.getTeacher(),
+                            executionCourse.getExecutionPeriod());
             TeacherMasterDegreeService masterDegreeService = null;
             if (teacherService != null) {
                 masterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);

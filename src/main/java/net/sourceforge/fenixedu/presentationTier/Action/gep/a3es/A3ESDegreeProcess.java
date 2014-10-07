@@ -450,7 +450,7 @@ public class A3ESDegreeProcess implements Serializable {
     private Double getHours(Professorship professorhip) {
         Teacher teacher = professorhip.getPerson().getTeacher();
         TeacherService teacherService =
-                teacher.getTeacherServiceByExecutionPeriod(professorhip.getExecutionCourse().getExecutionPeriod());
+                TeacherService.getTeacherServiceByExecutionPeriod(teacher, professorhip.getExecutionCourse().getExecutionPeriod());
         Double result = 0.0;
         if (teacherService != null) {
             for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {

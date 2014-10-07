@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -76,7 +77,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
         HashMap<String, Double> teacherPercentageMap = new HashMap<String, Double>();
 
         for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
-            Double availablePercentage = shift.getAvailableShiftPercentage(professorship);
+            Double availablePercentage = TeacherService.getAvailableShiftPercentage(shift, professorship);
             teachingServicePercentages.add(new TeachingServicePercentage(shift, availablePercentage));
             for (DegreeTeachingService degreeTeachingService : shift.getDegreeTeachingServicesSet()) {
                 if (professorship == degreeTeachingService.getProfessorship()) {

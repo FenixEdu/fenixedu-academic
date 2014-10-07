@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
@@ -120,7 +121,8 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
                                         .toLocalDate());
 
                         Double mandatoryLessonHours =
-                                teacher.getMandatoryLessonHours(getLastSemester(personContractSituation, executionYear));
+                                TeacherCredits.calculateMandatoryLessonHours(teacher,
+                                        getLastSemester(personContractSituation, executionYear));
 
                         Period yearsInHouse =
                                 new Period(giafProfessionalData.getInstitutionEntryDate(),

@@ -629,19 +629,6 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
                 AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear());
     }
 
-    public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacher(AcademicChronology academicChronology) {
-        int index = getBegin().withChronology(academicChronology).get(AcademicSemesterDateTimeFieldType.academicSemester());
-        AcademicSemesterCE academicSemester = academicChronology.getAcademicSemesterIn(index);
-        return academicSemester != null ? academicSemester.getTeacherCreditsFillingForTeacher(academicChronology) : null;
-    }
-
-    public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOffice(
-            AcademicChronology academicChronology) {
-        int index = getBegin().withChronology(academicChronology).get(AcademicSemesterDateTimeFieldType.academicSemester());
-        AcademicSemesterCE academicSemester = academicChronology.getAcademicSemesterIn(index);
-        return academicSemester != null ? academicSemester.getTeacherCreditsFillingForDepartmentAdmOffice(academicChronology) : null;
-    }
-
     public boolean belongsToPeriod(DateTime begin, DateTime end) {
         return !getBegin().isAfter(end) && !getEnd().isBefore(begin);
     }
@@ -745,10 +732,6 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     public boolean isRoot() {
-        return false;
-    }
-
-    public boolean isTeacherCreditsFilling() {
         return false;
     }
 

@@ -25,13 +25,16 @@ package net.sourceforge.fenixedu.domain.teacher;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.joda.time.Interval;
 import org.joda.time.LocalDateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -129,6 +132,23 @@ public abstract class Career extends Career_Base {
         } else {
             setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    public static Set<Career> getCareersByType(Person person, CareerType type) {
+        return getCareersByTypeAndInterval(person, type, null);
+    }
+
+    public static Set<Career> getCareersByTypeAndInterval(Person person, CareerType type, Interval intersecting) {
+        final Set<Career> careers = new HashSet<Career>();
+        for (final Career career : person.getAssociatedCareersSet()) {
+            if (type == null || type.equals(CareerType.PROFESSIONAL) && career instanceof ProfessionalCareer
+                    || type.equals(CareerType.TEACHING) && career instanceof TeachingCareer) {
+                if (intersecting == null || career.getInterval().overlaps(intersecting)) {
+                    careers.add(career);
+                }
+            }
+        }
+        return careers;
     }
 
 }

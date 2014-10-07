@@ -78,11 +78,11 @@ public class ReadAllTeacherCredits {
 
     public static CreditLineDTO calculateCreditLineDTO(ExecutionSemester executionSemester, Teacher teacher)
             throws ParseException {
-        double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
-        double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
-        double thesesCredits = teacher.getThesesCredits(executionSemester);
-        double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        double managementCredits = TeacherCredits.calculateManagementFunctionsCredits(teacher, executionSemester);
+        double serviceExemptionsCredits = TeacherCredits.calculateServiceExemptionCredits(teacher, executionSemester);
+        double thesesCredits = TeacherCredits.calculateThesesCredits(teacher, executionSemester);
+        double mandatoryLessonHours = TeacherCredits.calculateMandatoryLessonHours(teacher, executionSemester);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
 
         return new CreditLineDTO(executionSemester, teacherService, managementCredits, serviceExemptionsCredits,
                 mandatoryLessonHours, teacher, thesesCredits);

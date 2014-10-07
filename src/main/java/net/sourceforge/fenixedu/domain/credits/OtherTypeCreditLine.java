@@ -36,7 +36,6 @@ public class OtherTypeCreditLine extends OtherTypeCreditLine_Base {
         return CreditsEvent.OTHER_CREDIT;
     }
 
-    @Override
     public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
         return this.getExecutionPeriod().equals(executionSemester);
     }

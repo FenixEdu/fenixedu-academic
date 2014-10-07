@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credi
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
@@ -30,10 +31,11 @@ public class CreateTeacherCreditsFillingPeriod {
         check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         if (bean != null) {
             if (bean.isTeacher()) {
-                bean.getExecutionPeriod().editTeacherCreditsPeriod(bean.getBeginForTeacher(), bean.getEndForTeacher());
+                TeacherCreditsFillingCE.editTeacherCreditsPeriod(bean.getExecutionPeriod(), bean.getBeginForTeacher(),
+                        bean.getEndForTeacher());
             } else {
-                bean.getExecutionPeriod().editDepartmentOfficeCreditsPeriod(bean.getBeginForDepartmentAdmOffice(),
-                        bean.getEndForDepartmentAdmOffice());
+                TeacherCreditsFillingCE.editDepartmentOfficeCreditsPeriod(bean.getExecutionPeriod(),
+                        bean.getBeginForDepartmentAdmOffice(), bean.getEndForDepartmentAdmOffice());
             }
         }
     }

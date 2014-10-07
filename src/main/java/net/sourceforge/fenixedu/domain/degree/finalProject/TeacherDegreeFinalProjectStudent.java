@@ -20,12 +20,11 @@ package net.sourceforge.fenixedu.domain.degree.finalProject;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
-public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectStudent_Base implements ICreditsEventOriginator {
+public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectStudent_Base {
 
     public TeacherDegreeFinalProjectStudent() {
         setRootDomainObject(Bennu.getInstance());
@@ -38,7 +37,6 @@ public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectS
         setStudent(registration);
     }
 
-    @Override
     public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
         return this.getExecutionPeriod().equals(executionSemester);
     }

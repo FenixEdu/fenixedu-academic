@@ -172,7 +172,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
                     department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
             for (Teacher teacher : allCurrentTeachers) {
                 TeacherPersonalExpectation teacherPersonalExpectation =
-                        teacher.getTeacherPersonalExpectationByExecutionYear(executionYear);
+                        TeacherPersonalExpectation.getTeacherPersonalExpectationByExecutionYear(teacher, executionYear);
                 result.put(teacher, teacherPersonalExpectation);
             }
         }

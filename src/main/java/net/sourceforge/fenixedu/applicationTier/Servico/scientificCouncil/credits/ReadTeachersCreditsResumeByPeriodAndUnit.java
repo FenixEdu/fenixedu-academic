@@ -73,8 +73,8 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit {
                             updateCreditLine(teacher, executionSemester, creditsReportDTO, true);
                         }
                         creditsReportDTO.setUnit(workingUnit);
-                        creditsReportDTO.setPastCredits(teacher.getBalanceOfCreditsUntil(fromExecutionPeriod
-                                .getPreviousExecutionPeriod()));
+                        creditsReportDTO.setPastCredits(TeacherCredits.calculateBalanceOfCreditsUntil(teacher,
+                                fromExecutionPeriod.getPreviousExecutionPeriod()));
                         creditLines.add(creditsReportDTO);
                     }
                 }
@@ -94,14 +94,14 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit {
             if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
                 totalCredits += teacherCredits.getTotalCredits().subtract(teacherCredits.getMandatoryLessonHours()).doubleValue();
             } else {
-                TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+                TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
                 if (teacherService != null) {
                     totalCredits = teacherService.getCredits();
                 }
-                totalCredits -= teacher.getMandatoryLessonHours(executionSemester);
-                totalCredits += teacher.getManagementFunctionsCredits(executionSemester);
-                totalCredits += teacher.getServiceExemptionCredits(executionSemester);
-                totalCredits += teacher.getThesesCredits(executionSemester);
+                totalCredits -= TeacherCredits.calculateMandatoryLessonHours(teacher, executionSemester);
+                totalCredits += TeacherCredits.calculateManagementFunctionsCredits(teacher, executionSemester);
+                totalCredits += TeacherCredits.calculateServiceExemptionCredits(teacher, executionSemester);
+                totalCredits += TeacherCredits.calculateThesesCredits(teacher, executionSemester);
             }
         }
         creditLine.getCreditsByExecutionPeriod().put(executionSemester, totalCredits);

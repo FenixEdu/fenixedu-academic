@@ -181,7 +181,7 @@ public class PersonFunctionBean implements Serializable {
                     .getName(), getUnit().getPresentationName(), getTeacher().getPerson().getNickname(), getCredits().toString()));
 
         }
-        TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(getExecutionSemester());
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(getTeacher(), getExecutionSemester());
         if (teacherService == null) {
             teacherService = new TeacherService(getTeacher(), getExecutionSemester());
         }
@@ -206,7 +206,7 @@ public class PersonFunctionBean implements Serializable {
     }
 
     protected void createLogForDeletePersonFunction(ExecutionSemester executionSemester) {
-        TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(executionSemester);
+        TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(getTeacher(), executionSemester);
         if (teacherService == null) {
             teacherService = new TeacherService(getTeacher(), getExecutionSemester());
         }

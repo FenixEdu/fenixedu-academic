@@ -117,17 +117,6 @@ public class AcademicYearCE extends AcademicYearCE_Base {
     }
 
     @Override
-    public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOffice(
-            AcademicChronology academicChronology) {
-        throw new DomainException("error.unsupported.operation");
-    }
-
-    @Override
-    public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacher(AcademicChronology academicChronology) {
-        throw new DomainException("error.unsupported.operation");
-    }
-
-    @Override
     protected boolean associatedWithDomainEntities() {
         return true;
     }

@@ -18,6 +18,11 @@
  */
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
+import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
+
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -29,5 +34,27 @@ public class TeacherCreditsFillingForTeacherCE extends TeacherCreditsFillingForT
 
         super();
         super.initEntry(parentEntry, title, description, begin, end, rootEntry);
+    }
+
+    public static TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacher(AcademicInterval academicInterval) {
+        AcademicCalendarEntry entry = academicInterval.getAcademicCalendarEntry();
+        AcademicChronology academicChronology = academicInterval.getAcademicChronology();
+        if (entry instanceof AcademicSemesterCE) {
+            final AcademicSemesterCE academicSemesterCE = (AcademicSemesterCE) academicChronology.findSameEntry(entry);
+            List<AcademicCalendarEntry> childEntries =
+                    academicSemesterCE.getChildEntriesWithTemplateEntries(TeacherCreditsFillingForTeacherCE.class);
+            return (TeacherCreditsFillingForTeacherCE) (!childEntries.isEmpty() ? childEntries.iterator().next() : null);
+        } else {
+            int index =
+                    entry.getBegin().withChronology(academicChronology).get(AcademicSemesterDateTimeFieldType.academicSemester());
+            AcademicSemesterCE academicSemester = academicChronology.getAcademicSemesterIn(index);
+            if (academicSemester == null) {
+                return null;
+            }
+            final AcademicSemesterCE academicSemesterCE = (AcademicSemesterCE) academicChronology.findSameEntry(academicSemester);
+            List<AcademicCalendarEntry> childEntries =
+                    academicSemesterCE.getChildEntriesWithTemplateEntries(TeacherCreditsFillingForTeacherCE.class);
+            return (TeacherCreditsFillingForTeacherCE) (!childEntries.isEmpty() ? childEntries.iterator().next() : null);
+        }
     }
 }
