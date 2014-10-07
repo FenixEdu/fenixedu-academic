@@ -22,14 +22,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
@@ -37,10 +42,9 @@ import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandida
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -261,8 +265,23 @@ public class OutboundMobilityContextBean implements Serializable {
             for (final OutboundMobilityCandidacyContestGroup mobilityGroup : mobilityGroups) {
                 mobilityGroup.addMobilityCoordinatorService(person);
             }
-            Role.getRoleByRoleType(RoleType.COORDINATOR).addAssociatedPersons(person);
+            addOperationPermissions(person);
         }
+    }
+
+    private void addOperationPermissions(Person person) {
+        for (PersistentAccessGroup accessGroup : person.getPersistentAccessGroupSet()) {
+            if (accessGroup instanceof PersistentAcademicAuthorizationGroup && accessGroup.getDeletedRootDomainObject() == null) {
+                if (((PersistentAcademicAuthorizationGroup) accessGroup).getOperation().equals(
+                        AcademicOperationType.VALIDATE_MOBILITY_OUTBOUND_CANDIDACIES)) {
+                    return;
+                }
+            }
+        }
+        PersistentAcademicAuthorizationGroup authorizationGroup =
+                new PersistentAcademicAuthorizationGroup(AcademicOperationType.VALIDATE_MOBILITY_OUTBOUND_CANDIDACIES,
+                        new HashSet<AcademicProgram>(), new HashSet<AdministrativeOffice>());
+        person.addPersistentAccessGroup(authorizationGroup);
     }
 
     public InputStream getStream() {
@@ -336,8 +355,8 @@ public class OutboundMobilityContextBean implements Serializable {
                 }
             }
         } else {
-            throw new DomainException("error.mobility.outbound.unable.to.set.grades", BundleUtil.getString(
-                    Bundle.ACADEMIC, "error.mobility.outbound.null.file"));
+            throw new DomainException("error.mobility.outbound.unable.to.set.grades", BundleUtil.getString(Bundle.ACADEMIC,
+                    "error.mobility.outbound.null.file"));
         }
     }
 

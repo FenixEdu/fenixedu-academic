@@ -42,9 +42,9 @@
 		<bean:message key="title.weekly.work.load.instructions.header" arg0=""/>
 	</logic:notPresent>
 	<ul>
-		<li><bean:message key="title.weekly.work.load.contact.tooltip"/></li>
-		<li><bean:message key="title.weekly.work.load.autonomousStudy.tooltip"/></li>
-		<li><bean:message key="title.weekly.work.load.other.tooltip"/></li>
+		<li><strong><bean:message key="title.weekly.work.load.contact"/></strong>: <bean:message key="title.weekly.work.load.contact.tooltip"/></li>
+		<li><strong><bean:message key="title.weekly.work.load.autonomousStudy"/></strong>: <bean:message key="title.weekly.work.load.autonomousStudy.tooltip"/></li>
+		<li><strong><bean:message key="title.weekly.work.load.other"/></strong>: <bean:message key="title.weekly.work.load.other.tooltip"/></li>
 	</ul>
 	<bean:message key="title.weekly.work.load.instructions.footer"/>
 </div>

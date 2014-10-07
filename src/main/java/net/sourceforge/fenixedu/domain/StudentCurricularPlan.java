@@ -1840,7 +1840,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public MasterDegreeThesisDataVersion readActiveMasterDegreeThesisDataVersion() {
         MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
         if (masterDegreeThesis != null) {
-            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis.getMasterDegreeThesisDataVersionsSet()) {
+            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
+                    .getMasterDegreeThesisDataVersionsSet()) {
                 if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     return masterDegreeThesisDataVersion;
                 }
@@ -1853,7 +1854,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
         List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = new ArrayList<MasterDegreeThesisDataVersion>();
         if (masterDegreeThesis != null) {
-            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis.getMasterDegreeThesisDataVersionsSet()) {
+            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
+                    .getMasterDegreeThesisDataVersionsSet()) {
                 if (!masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     masterDegreeThesisDataVersions.add(masterDegreeThesisDataVersion);
                 }
@@ -1982,7 +1984,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private boolean isToPayImprovementOfApprovedEnrolments() {
         final RegistrationProtocol protocol = getRegistration().getRegistrationProtocol();
-        return protocol.isMilitaryAgreement();
+        return !protocol.isMilitaryAgreement();
     }
 
     final public List<Enrolment> getEnroledImprovements() {

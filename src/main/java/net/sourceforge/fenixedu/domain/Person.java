@@ -460,7 +460,8 @@ public class Person extends Person_Base {
         this.setExpirationDateOfDocumentIdYearMonthDay(candidacyPersonalDetails.getExpirationDateOfDocumentIdYearMonthDay());
         this.setGender(candidacyPersonalDetails.getGender());
         this.setIdDocumentType(candidacyPersonalDetails.getIdDocumentType());
-        this.setName(candidacyPersonalDetails.getName());
+        this.setGivenNames(candidacyPersonalDetails.getGivenNames());
+        this.setFamilyNames(candidacyPersonalDetails.getFamilyNames());
         this.setSocialSecurityNumber(candidacyPersonalDetails.getSocialSecurityNumber());
 
         final PhysicalAddressData physicalAddressData =
@@ -540,7 +541,8 @@ public class Person extends Person_Base {
         this.setIdentification(candidacyExternalDetails.getDocumentIdNumber(), candidacyExternalDetails.getIdDocumentType());
         this.setExpirationDateOfDocumentIdYearMonthDay(candidacyExternalDetails.getExpirationDateOfDocumentIdYearMonthDay());
         this.setGender(candidacyExternalDetails.getGender());
-        this.setName(candidacyExternalDetails.getName());
+        this.setGivenNames(candidacyExternalDetails.getGivenNames());
+        this.setFamilyNames(candidacyExternalDetails.getFamilyNames());
         this.setSocialSecurityNumber(candidacyExternalDetails.getSocialSecurityNumber());
 
         final PhysicalAddressData physicalAddressData =
@@ -925,12 +927,16 @@ public class Person extends Person_Base {
         final String givenNames = personBean.getGivenNames();
         final String composedName = familyName == null || familyName.isEmpty() ? givenNames : givenNames + " " + familyName;
 
-        if ((givenNames != null || familyName != null) && !fullName.equals(composedName)) {
-            throw new DomainException("error.person.splittedNamesDoNotMatch");
-        }
-
         // personal info
-        setNames(fullName, givenNames, familyName);
+        if (givenNames != null || familyName != null) {
+            ensureUserProfile();
+            getProfile().changeName(givenNames, familyName, null);
+        } else {
+            if ((givenNames != null || familyName != null) && !fullName.equals(composedName)) {
+                throw new DomainException("error.person.splittedNamesDoNotMatch");
+            }
+            setNames(fullName, givenNames, familyName);
+        }
 
         setGender(personBean.getGender());
         setProfession(personBean.getProfession());

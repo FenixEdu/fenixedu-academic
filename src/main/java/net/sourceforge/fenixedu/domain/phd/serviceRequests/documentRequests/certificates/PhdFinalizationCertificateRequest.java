@@ -107,7 +107,7 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
                         "error.PhdFinalizationCertificateRequest.registry.diploma.submission.batch.not.sent");
             }
 
-            if (!rectorateSubmissionBatch.isSent()) {
+            if (!rectorateSubmissionBatch.isSent() && !rectorateSubmissionBatch.isReceived()) {
                 throw new PhdDomainOperationException(
                         "error.PhdFinalizationCertificateRequest.registry.diploma.submission.batch.not.sent");
             }

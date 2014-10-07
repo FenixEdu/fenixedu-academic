@@ -37,8 +37,9 @@
 
 <logic:notEmpty name="domainObjectActionLogs">
 	<bean:define id ="URL" value="<%="/manager/manageRoles.do?method=showRoleOperationLogs&username=" + request.getParameter("username")%>"/>
-	<logic:present name="roleID">
-		<bean:define id ="URL" value="<%="/manager/viewPersonsWithRole.do?method=showRoleOperationLogs&roleID=" + request.getParameter("roleID")%>"/>
+	<logic:present name="role">
+		<bean:define id="roleID" name="role" property="externalId" type="java.lang.String"/>
+		<bean:define id ="URL" value="<%="/manager/viewPersonsWithRole.do?method=showRoleOperationLogs&roleID=" + roleID %>"/>
 	</logic:present>
 	
 	

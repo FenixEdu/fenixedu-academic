@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyCo
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -51,6 +52,11 @@ public class UpdateNicknameDA extends FenixDispatchAction {
             addActionMessage(request, e.getKey());
             request.setAttribute("personBean", new PersonBean(person));
             request.setAttribute("emergencyContactBean", new EmergencyContactBean(person));
+        } catch (BennuCoreDomainException be) {
+            addActionMessage(request, be.getLocalizedMessage(), false);
+            request.setAttribute("personBean", new PersonBean(person));
+            request.setAttribute("emergencyContactBean", new EmergencyContactBean(person));
+
         }
 
         request.setAttribute("personBean", personBean);

@@ -2115,9 +2115,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
         for (final CompetenceCourse competenceCourse : getCompetenceCourses()) {
             final LocalizedString lstring = competenceCourse.getLocalizedEvaluationMethod(getExecutionPeriod());
-            final String competenceEvaluationMethod = lstring.getContent();
-            if (competenceEvaluationMethod != null) {
-                return competenceEvaluationMethod;
+            if (lstring != null) {
+                return lstring.getContent();
             }
         }
         return "";
@@ -2582,6 +2581,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
             if (curricularCourse.hasEnrolmentForPeriod(getExecutionPeriod())) {
                 return true;
+            }
+            if (curricularCourse.isAnual()
+                    && getExecutionPeriod().getPreviousExecutionPeriod().getExecutionYear() == getExecutionYear()) {
+                if (curricularCourse.hasEnrolmentForPeriod(getExecutionPeriod().getPreviousExecutionPeriod())) {
+                    return true;
+                }
             }
         }
         return false;

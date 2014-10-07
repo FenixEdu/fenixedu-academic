@@ -31,8 +31,8 @@
 <html:xhtml />
 
 
-<bean:define id="hasYear" value="<%= Boolean.valueOf(request.getParameter("selectedYear") != null).toString() %>" type="java.lang.String"/>
-<bean:define id="hasMonth" value="<%= Boolean.valueOf(request.getParameter("selectedMonth") != null).toString()%>" type="java.lang.String"/>
+<bean:define id="hasYear" value='<%= Boolean.valueOf(request.getParameter("selectedYear") != null).toString() %>' type="java.lang.String"/>
+<bean:define id="hasMonth" value='<%= Boolean.valueOf(request.getParameter("selectedMonth") != null).toString()%>' type="java.lang.String"/>
 
 
 <logic:equal name="hasYear" value="true">
@@ -49,7 +49,7 @@
 
 	<logic:notEmpty name="announcements">
 
-		<bean:define id="tabularVersion" value="<%= request.getParameter("tabularVersion") != null ? Boolean.valueOf(request.getParameter("tabularVersion")).toString() : Boolean.FALSE.toString() %>"/>
+		<bean:define id="tabularVersion" value='<%= request.getParameter("tabularVersion") != null ? Boolean.valueOf(request.getParameter("tabularVersion")).toString() : Boolean.FALSE.toString() %>'/>
 	
 		<logic:equal name="tabularVersion" value="false">
 			<logic:iterate id="announcement" name="announcements"
@@ -270,14 +270,14 @@
 					<fr:property name="confirmationKey(remove)" value="message.remove.announcement.confirmation" />
 					<fr:property name="confirmationBundle(remove)" value="MESSAGING_RESOURCES" />
 
-					<fr:property name="link(approve)" value="<%= contextPrefix + "method=aproveAction&amp;announcementId=${externalId}&amp;action=true&amp;"+extraParameters+"&amp;tabularVersion=true" %>" />
+					<fr:property name="link(approve)" value='<%= contextPrefix + "method=aproveAction&amp;announcementId=${externalId}&amp;action=true&amp;"+extraParameters+"&amp;tabularVersion=true" %>' />
 					<fr:property name="param(approve)" value="externalId/announcementId,announcementBoard.externalId/announcementBoardId" />
 					<fr:property name="key(approve)" value="messaging.approve.link" />
 					<fr:property name="bundle(approve)" value="MESSAGING_RESOURCES" />
 					<fr:property name="order(approve)" value="4" />
 					<fr:property name="visibleIf(approve)" value="canApproveUser" />
 
-					<fr:property name="link(notApprove)" value="<%= contextPrefix + "method=aproveAction&amp;announcementId=${externalId}&amp;action=false&amp;"+extraParameters+"&amp;tabularVersion=true" %>" />
+					<fr:property name="link(notApprove)" value='<%= contextPrefix + "method=aproveAction&amp;announcementId=${externalId}&amp;action=false&amp;"+extraParameters+"&amp;tabularVersion=true" %>' />
 					<fr:property name="param(notApprove)" value="externalId/announcementId,announcementBoard.externalId/announcementBoardId" />
 					<fr:property name="key(notApprove)" value="messaging.not.approve.link" />
 					<fr:property name="bundle(notApprove)" value="MESSAGING_RESOURCES" />
@@ -287,7 +287,7 @@
 					<fr:property name="sortUrl" value="<%= urlLinkSort  %>" />
 					<fr:property name="sortParameter" value="sortBy" />
 					<fr:property name="sortBy"
-						value="<%= request.getParameter("sortBy") != null ?  request.getParameter("sortBy") : "creationDate=desc"%>" />
+						value='<%= request.getParameter("sortBy") != null ?  request.getParameter("sortBy") : "creationDate=desc"%>' />
 				</fr:layout>
 			</fr:view>
 		</logic:equal>

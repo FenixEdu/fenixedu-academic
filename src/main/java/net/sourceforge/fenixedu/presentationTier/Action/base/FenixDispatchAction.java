@@ -279,6 +279,14 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         this.addActionMessage(ActionMessages.GLOBAL_MESSAGE, request, key);
     }
 
+    protected void addActionMessage(HttpServletRequest request, String key, boolean resource) {
+        this.addActionMessage(ActionMessages.GLOBAL_MESSAGE, request, key, resource);
+    }
+
+    protected void addActionMessage(String propertyName, HttpServletRequest request, String key, boolean resource) {
+        this.getActionMessages(request).add(propertyName, new ActionMessage(key, resource));
+    }
+
     protected void addActionMessage(String propertyName, HttpServletRequest request, String key) {
         this.getActionMessages(request).add(propertyName, new ActionMessage(key));
     }

@@ -94,8 +94,9 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
             if (phdIndividualProgramProcess.isConcluded()) {
                 LocalDate conclusionDate = phdIndividualProgramProcess.getThesisProcess().getConclusionDate();
 
-                if (conclusionDate.getYear() != civilYear && conclusionDate.getYear() != civilYear - 1
-                        && conclusionDate.getYear() != civilYear + 1) {
+                if (conclusionDate == null
+                        || (conclusionDate.getYear() != civilYear && conclusionDate.getYear() != civilYear - 1 && conclusionDate
+                                .getYear() != civilYear + 1)) {
                     continue;
                 }
             }

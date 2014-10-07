@@ -19,6 +19,7 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.text.MessageFormat;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -60,7 +61,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         addParameter("institution", getInstitutionName());
         addParameter("university", getUniversity(getDocumentRequest().getConclusionDate().toDateTimeAtCurrentTime())
-                .getPartyName().getContent(getLanguage()));
+                .getPartyName().getContent(Locale.getDefault()));
 
         setFirstParagraph(request);
         setSecondParagraph(person, request);
@@ -223,10 +224,12 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         final StringBuilder result = new StringBuilder();
         LocalDate date = new LocalDate();
         String day = Integer.toString(date.getDayOfMonth());
-        String month = date.toString("MMMM", getLocale()).toLowerCase();
+        String month = date.toString("MMMM", getLocale());
+        if (getDocumentRequest().getLanguage().getLanguage().equals(Locale.getDefault().getLanguage())) {
+            month = month.toLowerCase();
+        }
         result.append(universityName).append(", ");
-        result.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.in"));
-        result.append(" " + day + " ");
+        result.append(day + " ");
         result.append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "label.of"));
         result.append(" " + month + " ");
         result.append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "label.of"));
@@ -234,20 +237,13 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         return result.toString();
     }
 
-    private String getDatePattern() {
-        final StringBuilder result = new StringBuilder();
-        result.append("dd '");
-        result.append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "label.of"));
-        result.append("' MMMM '");
-        result.append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "label.of"));
-        result.append("' yyyy");
-        return result.toString();
-    }
-
     protected String[] getDateByWords(LocalDate date) {
 
         String day = Integer.toString(date.getDayOfMonth());
-        String month = date.toString("MMMM", getLocale()).toLowerCase();
+        String month = date.toString("MMMM", getLocale());
+        if (getDocumentRequest().getLanguage().getLanguage().equals(Locale.getDefault().getLanguage())) {
+            month = month.toLowerCase();
+        }
         String year = Integer.toString(date.getYear());
         String finalDate[] = new String[] { day, month, year };
         return finalDate;

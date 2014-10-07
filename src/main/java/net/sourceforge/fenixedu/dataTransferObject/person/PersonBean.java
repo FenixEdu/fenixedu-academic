@@ -174,6 +174,8 @@ public class PersonBean implements Serializable {
 
     private void initPersonBeanFromPersonalDetails(IndividualCandidacyPersonalDetails personalDetails) {
         setName(personalDetails.getName());
+        setGivenNames(personalDetails.getGivenNames());
+        setFamilyNames(personalDetails.getFamilyNames());
         setGender(personalDetails.getGender());
         setMaritalStatus(personalDetails.getMaritalStatus());
         setNationality(personalDetails.getCountry());

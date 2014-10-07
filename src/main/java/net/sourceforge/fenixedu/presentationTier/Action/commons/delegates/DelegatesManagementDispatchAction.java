@@ -224,7 +224,9 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
                 String address = "-";
                 String areaCode = "-";
                 if (delegate != null) {
-                    phone = (StringUtils.isEmpty(delegate.getDefaultPhoneNumber())) ? "-" : delegate.getDefaultPhoneNumber();
+                    phone =
+                            (StringUtils.isEmpty(delegate.getDefaultMobilePhoneNumber()) ? "-" : delegate
+                                    .getDefaultMobilePhoneNumber());
                     email =
                             (StringUtils.isEmpty(delegate.getDefaultEmailAddressValue())) ? "-" : delegate
                                     .getDefaultEmailAddressValue();

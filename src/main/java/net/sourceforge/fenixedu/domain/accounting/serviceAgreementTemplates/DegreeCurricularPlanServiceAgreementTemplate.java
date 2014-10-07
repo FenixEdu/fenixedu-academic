@@ -86,9 +86,7 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricul
                 } else {
                     if (gratuityPaymentPlan.hasPrecedenceOver(result.getClass())) {
                         result = gratuityPaymentPlan;
-                    }
-
-                    if (!result.hasPrecedenceOver(gratuityPaymentPlan.getClass())) {
+                    } else if (!result.hasPrecedenceOver(gratuityPaymentPlan.getClass())) {
                         // Incompatible payment plans
                         throw new DomainException(
                                 "error.net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.more.than.one.gratuity.payment.plan.is.appliable");

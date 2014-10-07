@@ -195,18 +195,18 @@
 				 		
 				 		<bean:define id="nrOfGroups" name="infoSiteShift" property="nrOfGroups"/>
 				 		<td class="acenter" width="10%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">				 			 		
-				 			<b><bean:message key="label.nrOfGroups"/> </b><bean:write name="nrOfGroups"/>				 							 			
+				 			<b><bean:message key="label.nrOfGroups"/> </b> ${nrOfGroups < 0 ? '0' : nrOfGroups}				 							 			
 						</td>
 				 		
 				 		<td class="acenter" width="13%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-					 		<logic:equal name="nrOfGroups" value="0">
+					 		<logic:lessEqual name="nrOfGroups" value="0">
 								 		<bean:message key="link.insertGroup"/>										
-							</logic:equal>	
-							<logic:notEqual name="nrOfGroups" value="0">
+							</logic:lessEqual>	
+							<logic:greaterThan name="nrOfGroups" value="0">
 						 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 									<bean:message key="link.insertGroup"/>
 								</html:link>	   
-							</logic:notEqual>	
+							</logic:greaterThan>	
 						</td>						 		
 						
 						<td class="acenter" width="20%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size()%>">
