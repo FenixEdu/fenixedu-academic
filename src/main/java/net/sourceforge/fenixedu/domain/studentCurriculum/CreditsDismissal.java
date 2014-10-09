@@ -125,6 +125,12 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     }
 
     @Override
+    void deleteFromCredits() {
+        getNoEnrolCurricularCoursesSet().clear();
+        super.deleteFromCredits();
+    }
+
+    @Override
     public boolean isCreditsDismissal() {
         return true;
     }
