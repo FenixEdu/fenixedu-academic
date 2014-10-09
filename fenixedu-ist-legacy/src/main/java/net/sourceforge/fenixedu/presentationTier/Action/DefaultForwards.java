@@ -36,10 +36,6 @@ public final class DefaultForwards {
     public static class PublicNotAuthorized extends ForwardAction {
     }
 
-    @Mapping(path = "/alumniReminder", parameter = "/showAlumniDataReminder.jsp")
-    public static class AlumniReminder extends ForwardAction {
-    }
-
     @Mapping(path = "/notFound", module = "publico", parameter = "/notFound.jsp")
     public static class NotFoundAction extends ForwardAction {
     }

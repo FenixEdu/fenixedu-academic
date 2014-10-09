@@ -37,16 +37,3 @@
 	<slot name="person.name" key="label.get.person"/>
 </schema>
 
-<schema name="select.degree.type"
-		type="net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA$ReportBean"
-		bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="executionYear" key="label.executionYear" layout="menu-select-postback">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-		<property name="format" value="${year}" />
-	</slot>
-	<slot name="degreeType" key="label.degreeType"
-		layout="menu-postback"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="destination" value="postBack"/>
-	</slot>
-</schema>

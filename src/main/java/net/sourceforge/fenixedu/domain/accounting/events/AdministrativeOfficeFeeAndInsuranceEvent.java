@@ -226,12 +226,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
                 continue;
             }
 
-            StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
-            if (studentCandidacy.getDgesStudentImportationProcess() == null) {
-                continue;
-            }
-
-            return studentCandidacy;
+            return (StudentCandidacy) candidacy;
         }
 
         return null;

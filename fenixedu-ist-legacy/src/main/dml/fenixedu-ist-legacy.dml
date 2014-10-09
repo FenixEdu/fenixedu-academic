@@ -1,0 +1,73 @@
+package net.sourceforge.fenixedu.domain;
+
+valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymentCodes as PrintedPaymentCodes {
+    externalizeWith {
+        String exportAsString();
+    }
+    
+    internalizeWith importFromString();
+}
+
+
+class student.importation.DgesBaseProcess extends QueueJobWithFile {
+    EntryPhase entryPhase;
+}
+
+class student.importation.DgesStudentImportationProcess extends student.importation.DgesBaseProcess {
+}
+
+class student.importation.DgesStudentImportationFile extends File {
+}
+
+class student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration extends student.importation.DgesBaseProcess {
+}
+
+class student.importation.ExportExistingStudentsFromImportationProcess extends student.importation.DgesBaseProcess {
+}
+
+class accounting.events.export.DebtsFile extends File {
+    String errors;
+}
+
+class accounting.events.export.SIBSOutgoingPaymentFile extends accounting.events.export.DebtsFile {
+    DateTime successfulSentDate;
+    PrintedPaymentCodes printedPaymentCodes;
+}
+
+class accounting.events.export.SIBSOutgoingPaymentQueueJob extends QueueJob {
+    DateTime lastSuccessfulSentPaymentFileDate;
+} 
+
+relation DgesBaseProcessExecutionYear {
+    ExecutionYear playsRole executionYear;
+    student.importation.DgesBaseProcess playsRole DgesBaseProcess {
+        multiplicity *;
+    }
+}
+
+relation ImportCandidaciesFromDgesProcessDgesImportationStudentFile {
+    student.importation.DgesStudentImportationProcess playsRole dgesStudentImportationProcess;
+    student.importation.DgesStudentImportationFile playsRole dgesStudentImportationFile;
+}
+
+relation DgesStudentImportationProcessCampus {
+    .org.fenixedu.spaces.domain.Space playsRole dgesStudentImportationForCampus;
+    student.importation.DgesStudentImportationProcess playsRole dgesStudentImportationProcess {
+        multiplicity*;
+    }
+}
+
+relation DgesStudentImportationProcessStudentCandidacy {
+    student.importation.DgesStudentImportationProcess playsRole dgesStudentImportationProcess;
+    candidacy.StudentCandidacy playsRole studentCandidacy {
+        multiplicity *;
+    }
+}
+
+relation SIBSOutgoingPaymentFileExecutionYear {
+    ExecutionYear playsRole executionYear;
+    accounting.events.export.SIBSOutgoingPaymentFile playsRole sIBSOutgoingPaymentFiles {
+        multiplicity *;
+    }
+}
+
