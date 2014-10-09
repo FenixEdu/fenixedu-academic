@@ -83,7 +83,7 @@
 				%>
 						<tr>
 							<td>
-								<div><img src="<%= request.getContextPath() +"/user/photo/" + person.getExternalId() %>"  style="padding: 1em 0;" /></div>
+								<div><img src="<%= request.getContextPath() +"/user/photo/" + person.getUsername() %>"  style="padding: 1em 0;" /></div>
 							</td>
 							<td><%= person.getUsername() %></td>
 							<td><%= person.getName() %></td>

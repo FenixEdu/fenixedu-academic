@@ -24,6 +24,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <h2>
 	<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.finalWork"/>
@@ -85,251 +87,103 @@
 <bean:define id="executionYear" name="finalWorkInformationForm" property="executionYear"/>
 <logic:notEmpty name="degree">
 	<logic:notEmpty name="executionYear">
-		<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.ListOfProposals"/>
+		<p><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.ListOfProposals"/>
 		<html:link page="<%= "/finalWorkManagement.do?method=listProposals&amp;degree=" + degree.toString() + "&amp;executionYear=" + executionYear.toString() %>">
 			<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.here"/>
-		</html:link>.
+		</html:link>.</p>
 	</logic:notEmpty>
 </logic:notEmpty>
 
+<bean:define id="degree" name="finalWorkInformationForm" property="degree"/>
 <logic:present name="finalDegreeWorkProposalHeaders">
 	<logic:greaterEqual name="finalDegreeWorkProposalHeaders" value="1">
-		<table class="mtop15">
-			<tr>
-				<th class="listClasses-header" rowspan="2" colspan="2">
-				</th>
-				<th class="listClasses-header" rowspan="2">
-					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.number"/>
-				</th>
-				<th class="listClasses-header" rowspan="2">
-					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.title"/>
-				</th>
-				<th class="listClasses-header">
-					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.orientatorName"/>
-				</th>
-				<th class="listClasses-header" rowspan="2">
-					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.companyLink"/>
-				</th>
-				<th class="listClasses-header" rowspan="2">
-				</th>
-				<th class="listClasses-header" rowspan="2">
-				</th>
-			</tr>
-			<tr>
-		        <th class="listClasses-header">
-		        	<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.coorientatorName"/>
-	    	    </th>
-			</tr>
-			<% java.util.Set processedExecutionDegreeIds = new java.util.HashSet(); %>
-			<bean:define id="degree" name="finalWorkInformationForm" property="degree"/>
-			<logic:iterate id="finalDegreeWorkProposalHeader" name="finalDegreeWorkProposalHeaders">
-				<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
-				<logic:equal name="executionDegreeId" value="<%= degree.toString() %>">
-					<tr>
-						<th class="listClasses-header" rowspan="2" colspan="2">
-							<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.proposal"/>
-						</th>				
-						<td class="listClasses" rowspan="2">
-							<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/> 
-						</td>
-						<td class="listClasses" rowspan="2">
-							<logic:equal name="finalDegreeWorkProposalHeader" property="editable" value="true">
-					        	<html:link page="<%= "/finalWorkManagement.do?method=editFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString() %>">
-									<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
-						        </html:link>
-					        </logic:equal>
-							<logic:notEqual name="finalDegreeWorkProposalHeader" property="editable" value="true">
-					        	<html:link page="<%= "/finalWorkManagement.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId().toString() %>">
-									<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
-						        </html:link>
-					        </logic:notEqual>
-						</td>
-						<td class="listClasses">
-							<bean:write name="finalDegreeWorkProposalHeader" property="orientatorName"/> 
-						</td>
-						<td class="listClasses" rowspan="2">
-							<bean:write name="finalDegreeWorkProposalHeader" property="companyLink"/>
-						</td>
-						<td class="listClasses" rowspan="2">
-						</td>
-						<td class="listClasses" rowspan="2">
-				        	<html:link target="_blank" page="<%= "/finalWorkManagement.do?method=print&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId() %>">
-								<bean:message bundle="APPLICATION_RESOURCES" key="print"/>
-					        </html:link>
-					        <br />
-				        	<html:link target="_self" page="<%= "/finalWorkManagement.do?method=prepareToTransposeFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getExternalId() %>">
-								<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.transpose"/>
-					        </html:link>
-						</td>
-					</tr>
-					<tr>
-						<td class="listClasses">
-							<bean:write name="finalDegreeWorkProposalHeader" property="coorientatorName"/> 
-						</td>
-					</tr>
+		<c:forEach var="proposal" items="${finalDegreeWorkProposalHeaders}">
+			<c:if test="${proposal.executionDegreeOID == degree}">
+				<%-- Pass from Infos to Domain --%>
+				<c:set var="proposal" value="${proposal.proposal}"/>
+				<div class="panel panel-default" id="proposal${proposal.externalId}">
+					<div class="panel-heading clearfix">
+						<h4 class="col-sm-8">
+							${proposal.title} (${proposal.proposalNumber})
+						</h4>
+						<span class="col-sm-4 text-right">
+							<a href="${pageContext.request.contextPath}/teacher/finalWorkManagement.do?method=print&finalDegreeWorkProposalOID=${proposal.externalId}" class="btn btn-default">${fr:message('resources.ApplicationResources', 'print')}</a>
+							<a href="${pageContext.request.contextPath}/teacher/finalWorkManagement.do?method=prepareToTransposeFinalDegreeWorkProposal&finalDegreeWorkProposalOID=${proposal.externalId}" class="btn btn-default">${fr:message('resources.ApplicationResources', 'finalDegreeWorkProposalHeader.transpose')}</a>
+						</span>
+					</div>
+					<div class="panel-body">
+						<h5><b><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.orientatorName"/></b>: ${proposal.orientator.name}</h5>
+						<c:if test="${not empty proposal.coorientator}">
+							<h5><b><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.coorientatorName"/></b>: ${proposal.coorientator.name}</h5>
+						</c:if>
+						<c:if test="${not empty proposal.companionName}">
+							<h5><b><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.companyLink"/></b>: ${proposal.companionName}</h5>
+						</c:if>
 
-					<logic:equal name="finalDegreeWorkProposalHeader" property="groupProposals.empty" value="false">
-						<bean:size id="numberOfGroups" name="finalDegreeWorkProposalHeader" property="groupProposals"/>
-						<% int total = 1; %>
-						<logic:iterate id="groupProposal" name="finalDegreeWorkProposalHeader" property="groupProposals">
-							<logic:notEmpty name="groupProposal" property="infoGroup">
-								<bean:size id="numberOfStudents" name="groupProposal" property="infoGroup.groupStudents"/>
-								<% total += numberOfStudents.intValue(); %>
-							</logic:notEmpty>
-						</logic:iterate>
-	
-						
-							<tr>
-								<td bgcolor="#a2aebc" align="center" rowspan="<%= total %>">
-									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidates"/>
-								</td>
-								<td bgcolor="#a2aebc" align="center">
-									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.teacher.attribute"/>
-								</td>
-								<td bgcolor="#a2aebc" align="center">
-									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.preference"/>
-								</td>
-								<td bgcolor="#a2aebc" align="center">
-									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.number"/>
-								</td>
-								<td bgcolor="#a2aebc" align="center">
-									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.name"/>
-								</td>
-								<td bgcolor="#a2aebc" align="center">
-									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.email"/>
-								</td>
-								<td bgcolor="#a2aebc" align="center">
-									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.phone"/>
-								</td>
-								<td bgcolor="#a2aebc" align="center">
-								</td>
-							</tr>
-							<% boolean isOdd = true; %>
-							<% java.lang.String bgColor = null; %>
-							<logic:iterate id="groupProposal" name="finalDegreeWorkProposalHeader" property="groupProposals" type="net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal">
-								<% isOdd = !isOdd; %>
-								<% if (isOdd) { %>
-									<% bgColor = "#d3cec8"; %>
-								<% } else { %>
-									<% bgColor = "#eae7e4"; %>
-								<% }
-								
-								Integer numberOfStudents = groupProposal.getInfoGroup() == null ? Integer.valueOf(1) : Integer.valueOf(groupProposal.getInfoGroup().getGroupStudents().size());
-								
-								java.lang.String emails = ""; %>
-								
-								<logic:notEmpty name="groupProposal" property="infoGroup">
-									<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents" length="1">
-										<bean:define id="student" name="groupStudent" property="student"/>
-										<bean:define id="email" name="student" property="infoPerson.email"/>
-										<% emails += email; %>
-									</logic:iterate>
-									<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents" offset="1">
-										<bean:define id="student" name="groupStudent" property="student"/>
-										<bean:define id="email" name="student" property="infoPerson.email"/>
-										<% emails += "," + email; %>
-									</logic:iterate>
-									<tr>
-										<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">			
-								<html:form action="/finalWorkManagement">
-								<bean:define id="proposalId" name="groupProposal" property="externalId"/>
-								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="attributeFinalDegreeWork"/>
-								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal" value="<%= String.valueOf(proposalId) %>"/>
-								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>
-								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree"/>
-								<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedGroupProposals" property="selectedGroupProposals" onclick="this.form.submit();"><bean:write name="groupProposal" property="externalId"/></html:multibox>
-									</html:form>									
+						<br>
 
-										</td>
-										<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
-											<a href="mailto:<%= emails %>"><bean:write name="groupProposal" property="orderOfPreference"/></a>
-										</td>
-										<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents" length="1">
-											<bean:define id="student" name="groupStudent" property="student"/>
-											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:define id="registrationOID" name="student" property="externalId"/>
-												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
-												<bean:define id="curriculumLink">
-													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
-												</bean:define>
-												<html:link page='<%= curriculumLink.toString() %>'>
-													<bean:write name="student" property="infoPerson.username"/>
-												</html:link>
-											</td>
-											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:define id="registrationOID" name="student" property="externalId"/>
-												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
-												<bean:define id="curriculumLink">
-													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
-												</bean:define>
-												<html:link page='<%= curriculumLink.toString() %>'>
-													<bean:write name="student" property="infoPerson.nome"/>
-												</html:link>
-											</td>
-											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:define id="email" name="student" property="infoPerson.email"/>
-												<a href="mailto:<%= email %>"><bean:write name="email"/></a>
-											</td>
-											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:write name="student" property="infoPerson.telefone"/>
-											</td>
-											<td bgcolor="<%= bgColor %>" align="center">
-												<logic:notEmpty name="groupStudent" property="finalDegreeWorkProposalConfirmation">
-													<bean:define id="proposalID" name="finalDegreeWorkProposalHeader" property="externalId"/>
-													<logic:equal name="groupStudent" property="finalDegreeWorkProposalConfirmation.externalId" value="<%= proposalID.toString() %>">
-														<bean:message bundle="APPLICATION_RESOURCES" key="label.attribution.confirmed"/>
-													</logic:equal>
+						<logic:empty name="proposal" property="groupProposals">
+									<p><b><bean:message bundle="APPLICATION_RESOURCES" key="message.finalDegreeWorkProposal.no.candidates"/></b></p>
+						</logic:empty>
+						<logic:notEmpty name="proposal" property="groupProposals">
+
+									<h5><b><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidates"/></b></h5>
+									<table class="table">
+										<thead>
+											<tr>
+												<th><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.preference"/></th>
+												<th><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.number"/></th>
+												<th><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.name"/></th>
+												<th><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.email"/></th>
+												<th><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidacies.student.phone"/></th>
+												<th><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.teacher.attributed"/></th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${proposal.groupProposals}" var="groupProposal">
+												<logic:notEmpty name="groupProposal" property="finalDegreeDegreeWorkGroup">
+													<c:forEach items="${groupProposal.finalDegreeDegreeWorkGroup.groupStudents}" var="groupStudent">
+														<bean:define id="student" name="groupStudent" property="student"/>
+														<bean:define id="registrationOID" name="student" property="externalId"/>
+														<bean:define id="curriculumLink">
+														/fenix/teacher/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= degree.toString() %>
+														</bean:define>
+														<tr>
+															<td><bean:write name="groupProposal" property="orderOfPreference"/></td>
+															<td><a href='<%= curriculumLink.toString() %>'>${groupStudent.student.person.username}</a></td>
+															<td>${groupStudent.student.person.name}</td>
+															<td>${groupStudent.student.person.profile.email}</td>
+															<td>
+																${groupStudent.student.person.defaultPhoneNumber}
+															</td>
+															
+															<c:if test="${groupProposal.finalDegreeDegreeWorkGroup == proposal.groupAttributedByTeacher}">
+																<td>
+																	<span class="glyphicon glyphicon-ok"></span>
+																	<c:if test="${groupStudent.finalDegreeWorkProposalConfirmation == proposal}">
+																		<bean:message bundle="APPLICATION_RESOURCES" key="label.attribution.confirmed"/>
+																	</c:if>
+																</td>
+																<td>
+																	<a href="${pageContext.request.contextPath}/teacher/finalWorkManagement.do?method=attributeFinalDegreeWork&selectedGroupProposal=${groupProposal.externalId}&executionYear=${executionYear}&degree=${degree}" class="btn btn-danger btn-xs"><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.delete.attribution"/></a>
+																</td>
+															</c:if>
+															<c:if test="${groupProposal.finalDegreeDegreeWorkGroup != proposal.groupAttributedByTeacher}">
+																<td><span class="glyphicon glyphicon-remove"></span></td>
+																<td><a href="${pageContext.request.contextPath}/teacher/finalWorkManagement.do?method=attributeFinalDegreeWork&selectedGroupProposal=${groupProposal.externalId}&executionYear=${executionYear}&degree=${degree}" class="btn btn-success btn-xs"><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.attribution"/></button></td>
+															</c:if>
+														</tr>
+													</c:forEach>
 												</logic:notEmpty>
-											</td>											
-										</logic:iterate>
-									</tr>
-									<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents" offset="1">
-										<bean:define id="student" name="groupStudent" property="student"/>
-										<tr>
-											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:define id="registrationOID" name="student" property="externalId"/>
-												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
-												<bean:define id="curriculumLink">
-													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
-												</bean:define>
-												<html:link page='<%= curriculumLink.toString() %>'>
-													<bean:write name="student" property="infoPerson.username"/> 
-												</html:link>
-											</td>
-											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:define id="registrationOID" name="student" property="externalId"/>
-												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
-												<bean:define id="curriculumLink">
-													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
-												</bean:define>
-												<html:link page='<%= curriculumLink.toString() %>'>
-													<bean:write name="student" property="infoPerson.nome"/>
-												</html:link>
-											</td>
-											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:define id="email" name="student" property="infoPerson.email"/>
-												<a href="mailto:<%= email %>"><bean:write name="email"/></a>
-											</td>
-											<td bgcolor="<%= bgColor %>" align="center">
-												<bean:write name="student" property="infoPerson.telefone"/>
-											</td>
-											<td bgcolor="<%= bgColor %>" align="center">
-												<logic:notEmpty name="groupStudent" property="finalDegreeWorkProposalConfirmation">
-													<bean:define id="proposalID" name="finalDegreeWorkProposalHeader" property="externalId"/>
-													<logic:equal name="groupStudent" property="finalDegreeWorkProposalConfirmation.externalId" value="<%= proposalID.toString() %>">
-														<bean:message bundle="APPLICATION_RESOURCES" key="label.attribution.confirmed"/>
-													</logic:equal>
-												</logic:notEmpty>
-											</td>
-										</tr>
-									</logic:iterate>					
-								</logic:notEmpty>
-							</logic:iterate>
-
-					</logic:equal>
-				</logic:equal>
-			</logic:iterate>
-		</table>
+											</c:forEach>
+										</tbody>
+									</table>
+						</logic:notEmpty>
+					</div>
+				</div>
+			</c:if>
+		</c:forEach>
 	</logic:greaterEqual>
 	<logic:lessThan name="finalDegreeWorkProposalHeaders" value="1">
 		<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeaders.notPresent"/></span>

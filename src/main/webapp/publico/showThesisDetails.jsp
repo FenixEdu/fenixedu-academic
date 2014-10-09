@@ -20,7 +20,8 @@
 --%>
 <%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
@@ -78,9 +79,6 @@
 
 	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
 	<p>
-	<%
-		if (thesis.getDissertation().isAccessible(Authenticate.getUser())) {
-	%>
 		(<bean:define id="extAbstractDownloadUrl" name="thesis" property="extendedAbstract.downloadUrl" type="java.lang.String"/>
 		<html:link href="<%= extAbstractDownloadUrl %>">
 			<html:img page="/images/icon_pdf.gif" module=""/>
@@ -94,19 +92,6 @@
 			<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.thesis"/>
 			<fr:view name="thesis" property="dissertation.size" layout="fileSize"/>
 		</html:link>)
-	<%
-		} else {
-	%>
-		(<html:img page="/images/icon_pdf.gif" module=""/>
-		<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.extendedAbstract"/>
-		<fr:view name="thesis" property="extendedAbstract.size" layout="fileSize"/>
-
-		<html:img page="/images/icon_pdf.gif" module=""/>
-		<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.thesis"/>
-		<fr:view name="thesis" property="dissertation.size" layout="fileSize"/>)
-	<%
-		}
-	%>
 	</p>
 	<p>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="label.publication.subject.to.copyright"/>

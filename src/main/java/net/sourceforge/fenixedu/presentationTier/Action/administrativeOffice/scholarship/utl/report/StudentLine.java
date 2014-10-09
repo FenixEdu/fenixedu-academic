@@ -437,6 +437,10 @@ public class StudentLine implements IFileLine, java.io.Serializable {
         return isDegreeQualificationOwner() || isMasterQualificationOwner() || isPhdQualificationOwner();
     }
 
+    public double getNumberOfDoneECTS() {
+        return getRegistration().getEctsCredits();
+    }
+
     public Double getNumberOfEnrolledECTS() {
         if (getStudentCurricularPlan() == null) {
             return null;
@@ -1019,6 +1023,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
             getFirstRegistrationExecutionYear();
             getCountNumberOfEnrolmentsYearsSinceRegistrationStart();
             getNumberOfDegreeCurricularYears();
+            getNumberOfDoneECTS();
             getCurricularYearOneYearAgo();
             getNumberOfEnrolledEctsOneYearAgo();
             getNumberOfApprovedEctsOneYearAgo();

@@ -72,3 +72,7 @@
 		</logic:iterate>
 	</table>
 </logic:notEmpty>
+
+<logic:empty name="executionCoursesAudits">
+	<br/><em><bean:message key="label.inquiry.audit.processes.empty" bundle="INQUIRIES_RESOURCES"/></em>
+</logic:empty>
