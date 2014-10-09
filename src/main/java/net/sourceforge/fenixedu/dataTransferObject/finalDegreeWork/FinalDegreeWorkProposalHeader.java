@@ -66,11 +66,11 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
         return proposal == null ? null : new FinalDegreeWorkProposalHeader(proposal, executionDegree);
     }
 
-    private Proposal getProposal() {
+    public Proposal getProposal() {
         return proposalDomainReference;
     }
 
-    private ExecutionDegree getExecutionDegree() {
+    public ExecutionDegree getExecutionDegree() {
         return executionDegreeDomainReference;
     }
 
