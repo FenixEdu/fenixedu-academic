@@ -23,6 +23,9 @@
 <%@page import="net.sourceforge.fenixedu.domain.Employee"%>
 <%@page import="net.sourceforge.fenixedu.domain.student.Student"%>
 <%@page import="org.fenixedu.bennu.core.domain.User"%>
+<%@page import="org.fenixedu.bennu.core.domain.UserProfile"%>
+<%@page import="org.fenixedu.bennu.core.groups.DynamicGroup"%>
+<%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -109,6 +112,11 @@ function check(e,v){
 			Integer employeeNumber = personalInfo.getEmployee() != null ? personalInfo.getEmployee().getEmployeeNumber() : null;
 			String personalIds = Joiner.on(", ").skipNulls().join(username, studentNumber, employeeNumber);
 			personalIds = StringUtils.isNotBlank(personalIds) ? "(" + personalIds + ")" : "";
+			UserProfile profile = personalInfo.getProfile() != null ? personalInfo.getProfile() : null;
+			String emergencyContact = "";
+			if (profile != null){
+				emergencyContact = profile.getEmergencyContact() != null ? profile.getEmergencyContact().getContact() : "";
+			} 
 		%>
 		<div class="pp">
 			<table class="ppid" cellpadding="0" cellspacing="0">
@@ -155,7 +163,8 @@ function check(e,v){
                                 <fr:property name="classes" value="nobullet list6" />
                             </fr:layout>
                         </fr:view>
-					</td>
+					</td>					
+					
                     <td class="ppleft2" valign="top" style="text-align: right;">
                         <bean:message key="label.person.email" bundle="APPLICATION_RESOURCES"/>
                     </td>
@@ -166,6 +175,17 @@ function check(e,v){
                             </fr:layout>
                         </fr:view>
                     </td>
+				</tr>
+				<tr>
+					<bean:define id="showEmergencyContact" value="<%= ((java.lang.Boolean) DynamicGroup.get("emergency-contact-viewers").isMember(Authenticate.getUser())).toString() %>" />
+					<logic:equal name="showEmergencyContact" value="true">
+						<td class="ppleft" valign="top" style="width: 18em;">
+							<bean:message key="label.person.emergencyContact" bundle="APPLICATION_RESOURCES"/>					
+						</td> 					
+						<td class="ppright" valign="top" style="width: 18em;">
+	                    	<%= emergencyContact %>	
+						</td>
+					</logic:equal>
 				</tr>
 			</table>
 

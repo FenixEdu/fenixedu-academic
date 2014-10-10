@@ -634,6 +634,28 @@
 </logic:equal>
 
 
+<!-- Emergency Contact -->
+<fr:form action="/updateEmergencyContact.do?method=updateEmergencyContact">
+	<p class="mtop15">
+		<bean:message key="label.homepage.contact.emergency.instructions" bundle="HOMEPAGE_RESOURCES"/>
+	</p>
+	<fr:edit id="emergencyContact" name="emergencyContactBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA$EmergencyContactBean">
+			<fr:slot name="contact" key="label.contact">
+				<fr:property name="size" value="50"/>
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
+			<fr:property name="columnClasses" value=",,tdclear "/>
+		</fr:layout>
+	</fr:edit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
+		<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
+	</html:submit>
+</fr:form>
+
+
 <!-- Dados Pessoais -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
