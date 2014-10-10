@@ -8,11 +8,11 @@
     </parent>
 
     <groupId>pt.ist</groupId>
-    <artifactId>fenixedu-teacher-credits</artifactId>
+    <artifactId>fenixedu-teacher-evaluation</artifactId>
     <packaging>jar</packaging>
     <version>4.0.0-SNAPSHOT</version>
 
-    <name>FenixEdu Delegates</name>
+    <name>FenixEdu Teacher Evaluation</name>
     <url>http://tecnico.ulisboa.pt/</url>
     <inceptionYear>2011</inceptionYear>
 
@@ -23,7 +23,7 @@
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/ist-dsi/fenixedu-teacher-credits/issues/</url>
+        <url>https://github.com/ist-dsi/fenixedu-teacher-evaluation/issues/</url>
     </issueManagement>
 
     <licenses>
@@ -36,12 +36,12 @@
 
     <ciManagement>
         <system>Travis CI</system>
-        <url>https://travis-ci.org/ist-dsi/fenixedu-teacher-credits</url>
+        <url>https://travis-ci.org/ist-dsi/fenixedu-teacher-evaluation</url>
     </ciManagement>
 
     <scm>
-        <connection>scm:git:git@github.com:ist-dsi/fenixedu-teacher-credits.git</connection>
-        <developerConnection>scm:git:git@github.com:ist-dsi/fenixedu-teacher-credits.git</developerConnection>
+        <connection>scm:git:git@github.com:ist-dsi/fenixedu-teacher-evaluation.git</connection>
+        <developerConnection>scm:git:git@github.com:ist-dsi/fenixedu-teacher-evaluation.git</developerConnection>
         <url>http://tecnico.ulisboa.pt/</url>
         <tag>HEAD</tag>
     </scm>
@@ -83,11 +83,6 @@
         <dependency>
             <groupId>pt.ist</groupId>
             <artifactId>fenix</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>pt.ist</groupId>
-            <artifactId>fenixedu-teacher-evaluation</artifactId>
             <version>4.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
