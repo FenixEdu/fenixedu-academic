@@ -1,0 +1,189 @@
+package net.sourceforge.fenixedu.domain;
+
+enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileType                                         as TeacherEvaluationFileType;
+enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark                                             as TeacherEvaluationMark;
+
+class teacher.evaluation.FacultyEvaluationProcess  {
+    MultiLanguageString title;
+    Interval autoEvaluationInterval;
+    Interval evaluationInterval;
+    boolean allowNoEval;
+    String suffix;
+    boolean areApprovedMarksPublished;
+}
+
+class teacher.evaluation.FacultyEvaluationProcessYear  {
+    String year;
+}
+
+class teacher.evaluation.TeacherEvaluationProcess  {
+    TeacherEvaluationMark approvedEvaluationMark;
+}
+
+class teacher.evaluation.ApprovedTeacherEvaluationProcessMark  {
+    TeacherEvaluationMark approvedEvaluationMark;
+}
+
+class teacher.evaluation.TeacherEvaluation  {
+    DateTime createdDate;
+    DateTime autoEvaluationLock;
+    DateTime evaluationLock;
+    TeacherEvaluationMark autoEvaluationMark;
+    TeacherEvaluationMark evaluationMark;
+}
+
+class teacher.evaluation.NoEvaluation extends teacher.evaluation.TeacherEvaluation {
+}
+
+class teacher.evaluation.CurricularEvaluation extends teacher.evaluation.TeacherEvaluation {
+}
+
+class teacher.evaluation.RadistEvaluation extends teacher.evaluation.TeacherEvaluation {
+}
+
+class teacher.evaluation.TeacherEvaluationCoEvaluator  {
+}
+
+class teacher.evaluation.InternalCoEvaluator extends teacher.evaluation.TeacherEvaluationCoEvaluator {
+}
+
+class teacher.evaluation.ExternalCoEvaluator extends teacher.evaluation.TeacherEvaluationCoEvaluator {
+    String name;
+}
+
+class teacher.evaluation.TeacherEvaluationFile extends File {
+    TeacherEvaluationFileType teacherEvaluationFileType;
+}
+
+relation RootDomainObjectFacultyEvaluationProcess {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    teacher.evaluation.FacultyEvaluationProcess playsRole facultyEvaluationProcess {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectFacultyEvaluationProcessYear {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    teacher.evaluation.FacultyEvaluationProcessYear playsRole facultyEvaluationProcessYear {
+        multiplicity *;
+    }
+}
+
+relation FacultyEvaluationProcessFacultyEvaluationProcessYear {
+    teacher.evaluation.FacultyEvaluationProcess playsRole facultyEvaluationProcess;
+    teacher.evaluation.FacultyEvaluationProcessYear playsRole facultyEvaluationProcessYear {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectApprovedTeacherEvaluationProcessMark {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    teacher.evaluation.ApprovedTeacherEvaluationProcessMark playsRole approvedTeacherEvaluationProcessMark {
+        multiplicity *;
+    }
+}
+
+relation FacultyEvaluationProcessYearpprovedTeacherEvaluationProcessMark {
+    teacher.evaluation.FacultyEvaluationProcessYear playsRole facultyEvaluationProcessYear;
+    teacher.evaluation.ApprovedTeacherEvaluationProcessMark playsRole approvedTeacherEvaluationProcessMark {
+        multiplicity *;
+    }
+}
+
+relation TeacherEvaluationProcessApprovedTeacherEvaluationProcessMark {
+    teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProces;
+    teacher.evaluation.ApprovedTeacherEvaluationProcessMark playsRole approvedTeacherEvaluationProcessMark {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectTeacherEvaluationProcess {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcess {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectTeacherEvaluation {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    teacher.evaluation.TeacherEvaluation playsRole teacherEvaluation {
+        multiplicity *;
+    }
+}
+
+relation TeacherEvaluationAutoEvaluationLockUser {
+    teacher.evaluation.TeacherEvaluation playsRole lockedTeacherAutoEvaluations {
+        multiplicity *;
+    }
+    .org.fenixedu.bennu.core.domain.User playsRole userWhoLockedAutoEvaluation;
+}
+
+relation TeacherEvaluationEvaluationLockUser {
+    teacher.evaluation.TeacherEvaluation playsRole lockedTeacherEvaluations {
+        multiplicity *;
+    }
+    .org.fenixedu.bennu.core.domain.User playsRole userWhoLockedEvaluation;
+}
+
+relation FacultyEvaluationProcessTeacherEvaluationProcess {
+    teacher.evaluation.FacultyEvaluationProcess playsRole facultyEvaluationProcess;
+    teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcess {
+        multiplicity *;
+    }
+}
+
+relation TeacherEvaluationProcessTeacherEvaluation {
+    teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcess;
+    teacher.evaluation.TeacherEvaluation playsRole teacherEvaluation {
+        multiplicity *;
+    }
+}
+
+relation TeacherEvaluationProcessEvaluee {
+    teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcessFromEvaluee {
+        multiplicity *;
+    }
+    Person playsRole evaluee;
+}
+
+relation TeacherEvaluationProcessEvaluator {
+    teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcessFromEvaluator {
+        multiplicity *;
+    }
+    Person playsRole evaluator;
+}
+
+relation TeacherEvaluationTeacherEvaluationFile {
+    teacher.evaluation.TeacherEvaluation playsRole teacherEvaluation;
+    teacher.evaluation.TeacherEvaluationFile playsRole teacherEvaluationFile {
+        multiplicity *;
+    }
+}
+
+relation TeacherEvaluationFilePerson {
+    Person playsRole createdBy;
+    teacher.evaluation.TeacherEvaluationFile playsRole teacherEvaluationFile {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectTeacherEvaluationCoEvaluator {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    teacher.evaluation.TeacherEvaluationCoEvaluator playsRole teacherEvaluationCoEvaluator {
+        multiplicity *;
+    }
+}
+
+relation TeacherEvaluationProcessTeacherEvaluationCoEvaluator {
+    teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcessFromEvaluee;
+    teacher.evaluation.TeacherEvaluationCoEvaluator playsRole teacherEvaluationCoEvaluator {
+        multiplicity *;
+    }
+}
+
+relation InternalCoEvaluatorPerson {
+    teacher.evaluation.InternalCoEvaluator playsRole internalCoEvaluator {
+        multiplicity *;
+    }
+    Person playsRole person;
+}
