@@ -29,7 +29,7 @@ public class AddExamCoordinator {
 
     @Atomic
     public static void run(Person person, ExecutionYear executionYear, Unit unit) {
-        person.addPersonRoleByRoleType(RoleType.EXAM_COORDINATOR);
+        RoleType.grant(RoleType.EXAM_COORDINATOR, person.getUser());
         new ExamCoordinator(person, executionYear, unit);
     }
 
