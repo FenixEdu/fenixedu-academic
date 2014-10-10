@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherDe
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentUCResultsBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberPresidentApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

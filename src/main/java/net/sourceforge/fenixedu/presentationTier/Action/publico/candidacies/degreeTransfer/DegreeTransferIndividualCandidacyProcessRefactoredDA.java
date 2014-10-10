@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
@@ -259,13 +258,7 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
         Student student = Student.readStudentByNumber(Integer.valueOf(bean.getPersonNumber()));
 
         if (student == null) {
-            Employee employee = Employee.readByNumber(Integer.valueOf(bean.getPersonNumber()));
-            if (employee == null) {
-                throw new DomainException(
-                        "error.degreeTransfer.person.number.is.not.empty.but.check.for.enrollment.on.institution");
-            }
-
-            student = employee.getPerson().getStudent();
+            throw new DomainException("error.degreeTransfer.person.number.is.not.empty.but.check.for.enrollment.on.institution");
         }
 
         ExecutionYear candidacyExecutionInterval = bean.getCandidacyExecutionInterval();

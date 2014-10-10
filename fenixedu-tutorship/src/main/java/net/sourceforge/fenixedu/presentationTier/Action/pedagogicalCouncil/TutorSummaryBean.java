@@ -105,7 +105,7 @@ public class TutorSummaryBean extends TutorSearchBean {
 
         if (isSearchType()) {
             if (getDepartment() != null && getTeacher() == null && getExecutionSemester() == null) {
-                for (Employee employee : getDepartment().getAllCurrentActiveWorkingEmployees()) {
+                for (Employee employee : Employee.getAllCurrentActiveWorkingEmployees(getDepartment().getDepartmentUnit())) {
                     Teacher teacher = employee.getPerson().getTeacher();
                     if (teacher != null) {
                         if (!teacher.getTutorshipsSet().isEmpty()) {
@@ -118,7 +118,7 @@ public class TutorSummaryBean extends TutorSearchBean {
                     }
                 }
             } else if (getDepartment() != null && getTeacher() == null && getExecutionSemester() != null) {
-                for (Employee employee : getDepartment().getAllCurrentActiveWorkingEmployees()) {
+                for (Employee employee : Employee.getAllCurrentActiveWorkingEmployees(getDepartment().getDepartmentUnit())) {
                     Teacher teacher = employee.getPerson().getTeacher();
                     if (teacher != null) {
                         if (!teacher.getTutorshipsSet().isEmpty()) {

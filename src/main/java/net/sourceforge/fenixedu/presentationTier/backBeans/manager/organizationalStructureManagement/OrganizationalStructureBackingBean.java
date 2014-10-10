@@ -61,6 +61,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -156,7 +157,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (this.getUnit() != null) {
             List<Function> allNonInherentFunctions = new ArrayList<Function>();
             YearMonthDay currentDate = new YearMonthDay();
-            for (Function function : this.getUnit().getFunctionsSet()) {
+            for (Function function : getUnit().getFunctionsSet()) {
                 if (!function.isInherentFunction()
                         && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
                                 .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString()
@@ -174,7 +175,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (this.getUnit() != null) {
             List<Function> allInherentFunctions = new ArrayList<Function>();
             YearMonthDay currentDate = new YearMonthDay();
-            for (Function function : this.getUnit().getFunctionsSet()) {
+            for (Function function : getUnit().getFunctionsSet()) {
                 if (function.isInherentFunction()
                         && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
                                 .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString()
@@ -793,7 +794,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String prepareAssociateInherentParentFunction() throws FenixServiceException {
 
         Function function = this.getFunction();
-        if (!function.getPersonFunctions().isEmpty()) {
+        if (!PersonFunction.getPersonFunctions(function).isEmpty()) {
             setErrorMessage("error.becomeInherent");
             return "";
         }

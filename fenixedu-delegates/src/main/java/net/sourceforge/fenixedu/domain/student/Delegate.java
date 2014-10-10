@@ -81,7 +81,7 @@ public class Delegate extends Delegate_Base {
     // TODO: controlo de acesso?
     public static void removeActiveDelegatePersonFunctionFromPersonByFunction(Person person, Function function) {
         YearMonthDay today = new YearMonthDay();
-        List<PersonFunction> delegatesFunctions = function.getActivePersonFunctions();
+        List<PersonFunction> delegatesFunctions = PersonFunction.getActivePersonFunctions(function);
         if (!delegatesFunctions.isEmpty()) {
             for (PersonFunction personfunction : delegatesFunctions) {
                 Person delegate = personfunction.getPerson();
@@ -111,7 +111,7 @@ public class Delegate extends Delegate_Base {
 
         /* Check if there is another active person function with this type */
         if (delegateFunction != null) {
-            List<PersonFunction> delegateFunctions = delegateFunction.getActivePersonFunctions();
+            List<PersonFunction> delegateFunctions = PersonFunction.getActivePersonFunctions(delegateFunction);
             if (!delegateFunctions.isEmpty()) {
                 for (PersonFunction personFunction : delegateFunctions) {
                     if (personFunction.getBeginDate().equals(currentDate)) {
@@ -210,7 +210,7 @@ public class Delegate extends Delegate_Base {
         for (Function function : degreeUnit.getFunctionsSet()) {
             if (function.getFunctionType() != null && function.getFunctionType().equals(functionType)
                     && function.belongsToPeriod(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay())) {
-                return function.getPersonFunctions();
+                return PersonFunction.getPersonFunctions(function);
             }
         }
         return Collections.emptyList();
@@ -222,7 +222,7 @@ public class Delegate extends Delegate_Base {
         List<PersonFunction> result = new ArrayList<PersonFunction>();
         final Function function = getActiveDelegateFunctionByType(degreeUnit, functionType);
         if (function != null) {
-            return function.getActivePersonFunctionsStartingIn(executionYear);
+            return PersonFunction.getActivePersonFunctionsStartingIn(function, executionYear);
         }
         return result;
     }
@@ -287,7 +287,7 @@ public class Delegate extends Delegate_Base {
         for (FunctionType delegateFunctionType : FunctionType.getAllDelegateFunctionTypes()) {
             Set<Function> functions = Function.readAllFunctionsByType(delegateFunctionType);
             for (Function function : functions) {
-                for (PersonFunction personFunction : function.getPersonFunctions()) {
+                for (PersonFunction personFunction : PersonFunction.getPersonFunctions(function)) {
                     if (personFunction.getPerson().equals(student.getPerson())) {
                         result.add(personFunction);
                     }
@@ -302,7 +302,7 @@ public class Delegate extends Delegate_Base {
         List<PersonFunction> result = new ArrayList<PersonFunction>();
         Set<Function> functions = Function.readAllActiveFunctionsByType(functionType);
         for (Function function : functions) {
-            for (PersonFunction personFunction : function.getActivePersonFunctionsStartingIn(currentExecutionYear)) {
+            for (PersonFunction personFunction : PersonFunction.getActivePersonFunctionsStartingIn(function, currentExecutionYear)) {
                 if (personFunction.getPerson().equals(student.getPerson())) {
                     result.add(personFunction);
                 }
@@ -319,7 +319,7 @@ public class Delegate extends Delegate_Base {
         for (FunctionType delegateFunctionType : FunctionType.getAllDelegateFunctionTypes()) {
             Set<Function> functions = Function.readAllActiveFunctionsByType(delegateFunctionType);
             for (Function function : functions) {
-                for (PersonFunction personFunction : function.getActivePersonFunctionsStartingIn(currentExecutionYear)) {
+                for (PersonFunction personFunction : PersonFunction.getActivePersonFunctionsStartingIn(function, currentExecutionYear)) {
                     if (personFunction.getPerson().equals(student.getPerson())) {
                         result.add(personFunction);
                     }

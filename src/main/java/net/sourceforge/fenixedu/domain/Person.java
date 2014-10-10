@@ -89,15 +89,7 @@ import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.HumanName;
@@ -107,7 +99,6 @@ import net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -766,197 +757,6 @@ public class Person extends Person_Base {
         return "/candidateDocuments/person/P" + getExternalId();
     }
 
-    public List<PersonFunction> getActivePersonFunctions() {
-        return getPersonFunctions(null, false, true, false);
-    }
-
-    public List<PersonFunction> getInactivePersonFunctions() {
-        return getPersonFunctions(null, false, false, false);
-    }
-
-    public List<Function> getActiveInherentPersonFunctions() {
-        final List<Function> inherentFunctions = new ArrayList<Function>();
-        for (final PersonFunction accountability : getActivePersonFunctions()) {
-            inherentFunctions.addAll(accountability.getFunction().getInherentFunctionsSet());
-        }
-        return inherentFunctions;
-    }
-
-    /**
-     * The main difference between this method and {@link #getActivePersonFunctions()} is that person functions with a virtual
-     * function are also included. This method also collects person functions from the given unit and all subunits.
-     * 
-     * @see Function#isVirtual()
-     */
-    public List<PersonFunction> getAllActivePersonFunctions(final Unit unit) {
-        return getPersonFunctions(unit, true, true, null);
-    }
-
-    public boolean containsActivePersonFunction(final Function function) {
-        for (final PersonFunction personFunction : getActivePersonFunctions()) {
-            if (personFunction.getFunction().equals(function)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasAnyPersonFunctions() {
-        return !getPersonFunctions().isEmpty();
-    }
-
-    public Collection<PersonFunction> getAllActivePersonFunctions(final FunctionType functionType) {
-        final Set<PersonFunction> personFunctions = new HashSet<PersonFunction>();
-        for (final PersonFunction personFunction : getActivePersonFunctions()) {
-            if (personFunction.getFunction().isOfFunctionType(functionType)) {
-                personFunctions.add(personFunction);
-            }
-        }
-        return personFunctions;
-    }
-
-    public Collection<PersonFunction> getPersonFunctions() {
-        return (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION,
-                PersonFunction.class);
-    }
-
-    public Collection<PersonFunction> getPersonFunctions(final Function function) {
-
-        final Collection<PersonFunction> personFunctions = getPersonFunctions();
-        final Iterator<PersonFunction> iterator = personFunctions.iterator();
-
-        while (iterator.hasNext()) {
-            final PersonFunction element = iterator.next();
-            if (element.getFunction() == function) {
-                continue;
-            }
-            iterator.remove();
-        }
-
-        return personFunctions;
-    }
-
-    public List<PersonFunction> getPersonFuntions(final YearMonthDay begin, final YearMonthDay end) {
-        return getPersonFuntions(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, begin, end);
-    }
-
-    public List<PersonFunction> getPersonFunctions(final Unit unit, final boolean includeSubUnits, final Boolean active,
-            final Boolean virtual) {
-        return getPersonFunctions(unit, includeSubUnits, active, virtual, AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
-    }
-
-    public boolean hasActivePersonFunction(final FunctionType functionType, final Unit unit) {
-        final YearMonthDay currentDate = new YearMonthDay();
-        for (final PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
-                AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
-            if (personFunction.getUnit().equals(unit) && personFunction.getFunction().getFunctionType() == functionType
-                    && personFunction.isActive(currentDate)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Collection<PersonFunction> getPersonFunctions(final AccountabilityTypeEnum accountabilityTypeEnum) {
-        return (Collection<PersonFunction>) getParentAccountabilities(accountabilityTypeEnum, PersonFunction.class);
-    }
-
-    public List<PersonFunction> getPersonFuntions(final AccountabilityTypeEnum accountabilityTypeEnum, final YearMonthDay begin,
-            final YearMonthDay end) {
-        final List<PersonFunction> result = new ArrayList<PersonFunction>();
-        for (final Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(accountabilityTypeEnum,
-                PersonFunction.class)) {
-            if (accountability.belongsToPeriod(begin, end)) {
-                result.add((PersonFunction) accountability);
-            }
-        }
-        return result;
-    }
-
-    public List<PersonFunction> getPersonFunctions(final Unit unit) {
-        return getPersonFunctions(unit, false, null, null);
-    }
-
-    /**
-     * Filters all parent PersonFunction accountabilities and returns all the PersonFunctions that selection indicated in the
-     * parameters.
-     * 
-     * @param unit
-     *            filter all PersonFunctions to this unit, or <code>null</code> for all PersonFunctions
-     * @param includeSubUnits
-     *            if even subunits of the given unit are considered
-     * @param active
-     *            the state of the function, <code>null</code> for all PersonFunctions
-     */
-    public List<PersonFunction> getPersonFunctions(final Unit unit, final boolean includeSubUnits, final Boolean active,
-            final Boolean virtual, final AccountabilityTypeEnum accountabilityTypeEnum) {
-        final List<PersonFunction> result = new ArrayList<PersonFunction>();
-
-        Collection<Unit> allSubUnits = Collections.emptyList();
-        if (includeSubUnits) {
-            allSubUnits = unit.getAllSubUnits();
-        }
-
-        final YearMonthDay today = new YearMonthDay();
-
-        for (final PersonFunction personFunction : getPersonFunctions(accountabilityTypeEnum)) {
-            if (active != null && personFunction.isActive(today) == !active) {
-                continue;
-            }
-
-            if (virtual != null && personFunction.getFunction().isVirtual() == !virtual) {
-                continue;
-            }
-
-            final Unit functionUnit = personFunction.getUnit();
-            if (unit == null || functionUnit.equals(unit) || includeSubUnits && allSubUnits.contains(functionUnit)) {
-                result.add(personFunction);
-            }
-        }
-
-        return result;
-    }
-
-    public List<PersonFunction> getPersonFunctions(final Party party, final boolean includeSubUnits, final Boolean active,
-            final Boolean virtual, final AccountabilityTypeEnum accountabilityTypeEnum) {
-        if (party.isUnit()) {
-            return getPersonFunctions((Unit) party, includeSubUnits, active, virtual, AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
-        }
-        final List<PersonFunction> result = new ArrayList<PersonFunction>();
-
-        final YearMonthDay today = new YearMonthDay();
-        for (final PersonFunction personFunction : getPersonFunctions(accountabilityTypeEnum)) {
-            if (active != null && personFunction.isActive(today) == !active) {
-                continue;
-            }
-            if (virtual != null && personFunction.getFunction().isVirtual() == !virtual) {
-                continue;
-            }
-            if (personFunction.getParentParty().isPerson()) {
-                final Person functionPerson = (Person) personFunction.getParentParty();
-                if (party == null || functionPerson.equals(party)) {
-                    result.add(personFunction);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public boolean hasFunctionType(final FunctionType functionType, final AccountabilityTypeEnum accountabilityTypeEnum) {
-        for (final PersonFunction accountability : getPersonFunctions(null, false, true, false, accountabilityTypeEnum)) {
-            if (accountability.getFunction().getFunctionType() == functionType) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public PersonFunction addPersonFunction(final Function function, final YearMonthDay begin, final YearMonthDay end,
-            final Double credits) {
-        return new PersonFunction(function.getUnit(), this, function, begin, end, credits);
-    }
-
     /**
      * @return a group that only contains this person
      */
@@ -1008,9 +808,6 @@ public class Person extends Person_Base {
         setNationality(null);
         setCountryOfBirth(null);
 
-        if (getResearcher() != null) {
-            getResearcher().delete();
-        }
         super.delete();
     }
 
@@ -1021,43 +818,11 @@ public class Person extends Person_Base {
                 && getExportGroupingReceiversSet().isEmpty() && getPersistentGroupsSet().isEmpty()
                 && getAssociatedQualificationsSet().isEmpty() && getAssociatedAlteredCurriculumsSet().isEmpty()
                 && getEnrolmentEvaluationsSet().isEmpty() && getExportGroupingSendersSet().isEmpty()
-                && getResponsabilityTransactionsSet().isEmpty() && getGuidesSet().isEmpty() && getEmployee() == null
-                && getTeacher() == null && !hasAnyPersonFunctions() && getInternalParticipantsSet().isEmpty()
-                && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet().isEmpty())) {
+                && getResponsabilityTransactionsSet().isEmpty() && getGuidesSet().isEmpty() && getTeacher() == null
+                && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet()
+                .isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.person.cannot.be.deleted"));
         }
-    }
-
-    public ExternalContract getExternalContract() {
-        final Collection<ExternalContract> externalContracts =
-                (Collection<ExternalContract>) getParentAccountabilities(AccountabilityTypeEnum.WORKING_CONTRACT,
-                        ExternalContract.class);
-
-        final Iterator<ExternalContract> iter = externalContracts.iterator();
-        return iter.hasNext() ? externalContracts.iterator().next() : null;
-    }
-
-    public boolean hasExternalContract() {
-        return getExternalContract() != null;
-    }
-
-    public ResearchContract getExternalResearchContract() {
-        final Collection<ResearchContract> externalContracts =
-                (Collection<ResearchContract>) getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT,
-                        ResearchContract.class);
-
-        final Iterator<ResearchContract> iter = externalContracts.iterator();
-        if (iter.hasNext()) {
-            final ResearchContract contract = externalContracts.iterator().next();
-            if (Boolean.TRUE.equals(contract.getExternalContract())) {
-                return contract;
-            }
-        }
-        return null;
-    }
-
-    public boolean hasExternalResearchContract() {
-        return getExternalResearchContract() != null;
     }
 
     @Override
@@ -1165,39 +930,6 @@ public class Person extends Person_Base {
 
     public boolean hasSomeStudentCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
         return getSomeStudentCandidacyForExecutionDegree(executionDegree) != null;
-    }
-
-    public Collection<Invitation> getInvitationsOrderByDate() {
-        final Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
-        invitations
-                .addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
-        return invitations;
-    }
-
-    public List<Invitation> getActiveInvitations() {
-        final YearMonthDay today = new YearMonthDay();
-        final List<Invitation> invitations = new ArrayList<Invitation>();
-        for (final Accountability accoutAccountability : getParentAccountabilities(AccountabilityTypeEnum.INVITATION,
-                Invitation.class)) {
-            if (((Invitation) accoutAccountability).isActive(today)) {
-                invitations.add((Invitation) accoutAccountability);
-            }
-        }
-        return invitations;
-    }
-
-    public boolean isInvited(final YearMonthDay date) {
-        for (final Invitation invitation : (Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION,
-                Invitation.class)) {
-            if (invitation.isActive(date)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasAnyInvitation() {
-        return !getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class).isEmpty();
     }
 
     // -------------------------------------------------------------
@@ -2080,15 +1812,6 @@ public class Person extends Person_Base {
         return false;
     }
 
-    public String getUnitText() {
-        if (getEmployee() != null && getEmployee().getLastWorkingPlace() != null) {
-            return getEmployee().getLastWorkingPlace().getNameWithAcronym();
-        } else if (hasExternalContract()) {
-            return getExternalContract().getInstitutionUnit().getPresentationNameWithParents();
-        }
-        return "";
-    }
-
     public Set<Thesis> getOrientedOrCoorientedThesis(final ExecutionYear year) {
         final Set<Thesis> thesis = new HashSet<Thesis>();
         for (final ThesisEvaluationParticipant participant : getThesisEvaluationParticipantsSet()) {
@@ -2110,121 +1833,6 @@ public class Person extends Person_Base {
         }
         Collections.sort(participants, ThesisEvaluationParticipant.COMPARATOR_BY_STUDENT_NUMBER);
         return participants;
-    }
-
-    public List<ResearchUnit> getWorkingResearchUnits() {
-        final List<ResearchUnit> units = new ArrayList<ResearchUnit>();
-        final Collection<? extends Accountability> parentAccountabilities =
-                getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
-
-        final YearMonthDay currentDate = new YearMonthDay();
-        for (final Accountability accountability : parentAccountabilities) {
-            if (accountability.isActive(currentDate)) {
-                units.add((ResearchUnit) accountability.getParentParty());
-            }
-        }
-
-        return units;
-    }
-
-    public List<ResearchUnit> getWorkingResearchUnitsAndParents() {
-        final Set<ResearchUnit> baseUnits = new HashSet<ResearchUnit>();
-        for (final ResearchUnit unit : getWorkingResearchUnits()) {
-            baseUnits.add(unit);
-            for (final Unit parentUnit : unit.getAllActiveParentUnits(new YearMonthDay())) {
-                if (parentUnit.isResearchUnit()) {
-                    baseUnits.add((ResearchUnit) parentUnit);
-                }
-            }
-        }
-        return new ArrayList<ResearchUnit>(baseUnits);
-    }
-
-    public Set<Unit> getAssociatedResearchOrDepartmentUnits() {
-        final Set<Unit> units = new HashSet<Unit>();
-        final Set<Accountability> parentAccountabilities = new HashSet<Accountability>();
-
-        parentAccountabilities.addAll(getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT));
-        parentAccountabilities.addAll(getParentAccountabilities(AccountabilityTypeEnum.WORKING_CONTRACT));
-
-        for (final Accountability accountability : parentAccountabilities) {
-            final Unit unit = getActiveAncestorUnitFromAccountability(accountability);
-            if (unit != null) {
-                units.add(unit);
-            }
-        }
-
-        return units;
-    }
-
-    private Unit getActiveAncestorUnitFromAccountability(final Accountability accountability) {
-        final YearMonthDay currentDate = new YearMonthDay();
-        if (!accountability.isActive(currentDate)) {
-            return null;
-        }
-
-        final Unit parentUnit = (Unit) accountability.getParentParty();
-        if (isResearchDepartmentScientificOrSectionUnitType(parentUnit)) {
-            return parentUnit;
-        }
-
-        for (final Unit grandParentUnit : parentUnit.getParentUnits()) {
-            if (isResearchDepartmentScientificOrSectionUnitType(grandParentUnit)) {
-                return grandParentUnit;
-            }
-        }
-
-        return null;
-    }
-
-    private boolean isResearchDepartmentScientificOrSectionUnitType(final Unit unit) {
-        return unit.isResearchUnit() || unit.isDepartmentUnit() || unit.isScientificAreaUnit() || unit.isSectionUnit();
-    }
-
-    // FIXME Anil : This method is identical to getWorkingResearchUnitNames
-    public String getAssociatedResearchOrDepartmentUnitsNames() {
-        String names = "";
-        final Set<Unit> units = getAssociatedResearchOrDepartmentUnits();
-        int length = units.size();
-        for (final Unit unit : units) {
-            names += unit.getName();
-            if (--length > 0) {
-                names += ", ";
-            }
-        }
-        return names;
-    }
-
-    public String getWorkingResearchUnitNames() {
-
-        String names = "";
-        final List<ResearchUnit> units = getWorkingResearchUnits();
-        int length = units.size();
-        for (final ResearchUnit unit : units) {
-            names += unit.getName();
-            if (--length > 0) {
-                names += ", ";
-            }
-        }
-        return names;
-    }
-
-    public boolean isExternalPerson() {
-        return !hasActiveInternalContract() && (hasExternalContract() || hasExternalResearchContract());
-    }
-
-    private boolean hasActiveInternalContract() {
-        final Collection<EmployeeContract> contracts =
-                (Collection<EmployeeContract>) getParentAccountabilities(AccountabilityTypeEnum.WORKING_CONTRACT,
-                        EmployeeContract.class);
-
-        final YearMonthDay currentDate = new YearMonthDay();
-        for (final EmployeeContract employeeContract : contracts) {
-            if (employeeContract.isActive(currentDate)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean isPhotoAvailableToCurrentUser() {
@@ -2347,25 +1955,6 @@ public class Person extends Person_Base {
     @Override
     public String getPartyPresentationName() {
         return getPresentationName();
-    }
-
-    public PersonFunction getActiveGGAEDelegatePersonFunction() {
-        for (final PersonFunction personFunction : getActivePersonFunctions()) {
-            if (personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_GGAE)) {
-                return personFunction;
-            }
-        }
-        return null;
-    }
-
-    public List<PersonFunction> getAllGGAEDelegatePersonFunctions() {
-        final List<PersonFunction> result = new ArrayList<PersonFunction>();
-        for (final PersonFunction personFunction : getPersonFunctions()) {
-            if (personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_GGAE)) {
-                result.add(personFunction);
-            }
-        }
-        return result;
     }
 
     public boolean isPedagogicalCouncilMember() {
@@ -2680,76 +2269,6 @@ public class Person extends Person_Base {
         return emailAddress == null ? null : emailAddress.getValue();
     }
 
-    public String getEmployer(final RoleType roleType) {
-        final PersonProfessionalData personProfessionalData = getPersonProfessionalData();
-        return personProfessionalData == null ? null : personProfessionalData.getEmployer(roleType);
-    }
-
-    public String getWorkingPlaceCostCenter() {
-        final Employee employee = getEmployee();
-        final Unit unit = employee == null ? null : employee.getCurrentWorkingPlace();
-        final Integer costCenterCode = unit == null ? null : unit.getCostCenterCode();
-        return costCenterCode == null ? null : costCenterCode.toString();
-    }
-
-    public String getEmployeeRoleDescription() {
-        final RoleType roleType =
-                getMostImportantRoleType(RoleType.TEACHER, RoleType.RESEARCHER, RoleType.EMPLOYEE, RoleType.GRANT_OWNER);
-        if (roleType == RoleType.RESEARCHER && !hasRole(RoleType.EMPLOYEE)) {
-            return "EXTERNAL_RESEARCH_PERSONNEL";
-        }
-        return roleType == null ? null : roleType.name();
-    }
-
-    // Temp method used for mission system.
-    public String getWorkingPlaceForAnyRoleType() {
-        final Unit unit = getWorkingPlaceUnitForAnyRoleType();
-        return unit != null ? unit.getCostCenterCode().toString() : null;
-    }
-
-    public Unit getWorkingPlaceUnitForAnyRoleType() {
-        if (hasRole(RoleType.TEACHER) || hasRole(RoleType.EMPLOYEE) || hasRole(RoleType.GRANT_OWNER)) {
-            return getEmployee() != null ? getEmployee().getCurrentWorkingPlace() : null;
-        }
-        if (hasRole(RoleType.RESEARCHER)) {
-            if (getEmployee() != null && getResearcher() != null && getResearcher().isActiveContractedResearcher()) {
-                final Unit currentWorkingPlace = getEmployee().getCurrentWorkingPlace();
-                if (currentWorkingPlace != null) {
-                    return currentWorkingPlace;
-                }
-            }
-            final Collection<? extends Accountability> accountabilities =
-                    getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
-            final YearMonthDay currentDate = new YearMonthDay();
-            for (final Accountability accountability : accountabilities) {
-                if (accountability.isActive(currentDate)) {
-                    return (Unit) accountability.getParentParty();
-                }
-            }
-        }
-        return null;
-    }
-
-    private RoleType getMostImportantRoleType(final RoleType... roleTypes) {
-        for (final RoleType roleType : roleTypes) {
-            if (hasRole(roleType)) {
-                return roleType;
-            }
-        }
-        return null;
-    }
-
-    private boolean hasAnyRoleHack(final RoleType[] roleTypes) {
-        for (final RoleType roleType : roleTypes) {
-            if (hasRole(roleType)
-                    && (roleType != RoleType.RESEARCHER || getResearcher() != null
-                            && getResearcher().isActiveContractedResearcher())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean hasAnyRole(final RoleType[] roleTypes) {
         for (final RoleType roleType : roleTypes) {
             if (hasRole(roleType)) {
@@ -2978,35 +2497,6 @@ public class Person extends Person_Base {
                         builder.append(email);
                         builder.append("\n");
                     }
-                }
-            }
-        }
-        return builder.toString();
-    }
-
-    public static String readAllUserData(final String types) {
-        RoleType[] roles;
-        if (types != null && StringUtils.isNotBlank(types)) {
-            roles = new RoleType[types.split("-").length];
-            int i = 0;
-            for (final String typeString : types.split("-")) {
-                roles[i] = RoleType.valueOf(typeString);
-                i++;
-            }
-        } else {
-            roles = new RoleType[0];
-        }
-        final StringBuilder builder = new StringBuilder();
-        for (final User user : Bennu.getInstance().getUserSet()) {
-            if (!StringUtils.isEmpty(user.getUsername())) {
-                final Person person = user.getPerson();
-                if (roles.length == 0 || person.hasAnyRole(roles)) {
-                    builder.append(user.getUsername());
-                    builder.append("\t");
-                    builder.append(person.getName());
-                    builder.append("\t");
-                    builder.append(person.getExternalId());
-                    builder.append("\n");
                 }
             }
         }

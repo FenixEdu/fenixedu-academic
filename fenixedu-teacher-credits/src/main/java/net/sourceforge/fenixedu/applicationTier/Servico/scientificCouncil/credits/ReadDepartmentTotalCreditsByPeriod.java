@@ -32,6 +32,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
@@ -45,7 +47,7 @@ public class ReadDepartmentTotalCreditsByPeriod {
         List<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod, untilExecutionPeriod);
 
         List<Teacher> teachers =
-                department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
+                TeacherCredits.getAllTeachersFromUnit(department, fromExecutionPeriod.getBeginDateYearMonthDay(),
                         untilExecutionPeriod.getEndDateYearMonthDay());
 
         SortedMap<ExecutionYear, PeriodCreditsReportDTO> departmentGlobalCredits =
@@ -54,10 +56,10 @@ public class ReadDepartmentTotalCreditsByPeriod {
         ExecutionSemester lasExecutionPeriod =
                 (!executionPeriodsBetween.isEmpty()) ? executionPeriodsBetween.get(executionPeriodsBetween.size() - 1) : null;
         for (Teacher teacher : teachers) {
-            if (!teacher.isMonitor(lasExecutionPeriod) && !teacher.isInactive(lasExecutionPeriod)) {
+            if (!ProfessionalCategory.isMonitor(teacher, lasExecutionPeriod)
+                    && !PersonProfessionalData.isTeacherInactive(teacher, lasExecutionPeriod)) {
                 Unit workingUnit =
-                        teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(),
-                                untilExecutionPeriod.getEndDateYearMonthDay());
+                        teacher.getPerson().getEmployee() != null ? teacher.getPerson().getEmployee().getLastWorkingPlace(untilExecutionPeriod.getBeginDateYearMonthDay(), untilExecutionPeriod.getEndDateYearMonthDay()) : null;
                 Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
                 if (workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {
                     for (ExecutionSemester executionSemester : executionPeriodsBetween) {
@@ -84,7 +86,7 @@ public class ReadDepartmentTotalCreditsByPeriod {
         PeriodCreditsReportDTO reportDTO = departmentCredits.get(executionSemester.getExecutionYear());
         reportDTO.setCredits(round(reportDTO.getCredits() + teacherPeriodTotalCredits));
 
-        boolean careerTeacher = teacher.isTeacherCareerCategory(executionSemester);
+        boolean careerTeacher = ProfessionalCategory.isTeacherCareerCategory(teacher, executionSemester);
         if (careerTeacher) {
             reportDTO.setCareerCategoryTeacherCredits(round(reportDTO.getCareerCategoryTeacherCredits()
                     + teacherPeriodTotalCredits));

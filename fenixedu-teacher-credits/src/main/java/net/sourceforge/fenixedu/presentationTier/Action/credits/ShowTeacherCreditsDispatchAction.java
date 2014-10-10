@@ -131,7 +131,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
             throws ParseException {
         request.setAttribute("teacher", teacher);
 
-        ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
+        ProfessionalCategory categoryByPeriod = ProfessionalCategory.getCategoryByPeriod(teacher, executionSemester);
         String professionalCategory = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
 
         request.setAttribute("teacherCategory", professionalCategory);
@@ -148,14 +148,15 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
             request.setAttribute("teacherServiceNotes", teacherService.getTeacherServiceNotes());
         }
 
-        Set<PersonContractSituation> serviceExemptions = teacher.getValidTeacherServiceExemptions(executionSemester);
+        Set<PersonContractSituation> serviceExemptions =
+                PersonContractSituation.getValidTeacherServiceExemptions(teacher, executionSemester);
 
         if (!serviceExemptions.isEmpty()) {
             request.setAttribute("serviceExemptions", serviceExemptions);
         }
 
         List<PersonFunction> personFuntions =
-                teacher.getPersonFuntions(executionSemester.getBeginDateYearMonthDay(),
+                PersonFunction.getPersonFuntions(teacher.getPerson(), executionSemester.getBeginDateYearMonthDay(),
                         executionSemester.getEndDateYearMonthDay());
 
         if (!personFuntions.isEmpty()) {

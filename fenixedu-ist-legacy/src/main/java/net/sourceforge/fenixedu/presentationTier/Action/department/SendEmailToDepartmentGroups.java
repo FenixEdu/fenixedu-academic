@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
@@ -40,6 +39,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.Departm
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.UnitMailSenderAction;
 
+import org.abego.treelayout.internal.util.Contract;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -70,7 +70,7 @@ public class SendEmailToDepartmentGroups extends UnitMailSenderAction {
             for (Unit subUnit : departmentUnit.getAllSubUnits()) {
                 if (subUnit.isScientificAreaUnit()) {
                     ScientificAreaUnit scientificAreaUnit = (ScientificAreaUnit) subUnit;
-                    if (scientificAreaUnit.isCurrentUserMemberOfScientificArea()) {
+                    if (isCurrentUserMemberOfScientificArea(scientificAreaUnit)) {
                         units.add(scientificAreaUnit);
                     }
                 }
@@ -84,6 +84,15 @@ public class SendEmailToDepartmentGroups extends UnitMailSenderAction {
 
         request.setAttribute("units", units);
         return mapping.findForward("chooseUnit");
+    }
+
+    private static boolean isCurrentUserMemberOfScientificArea(ScientificAreaUnit scientificAreaUnit) {
+        for (Contract contract : EmployeeContract.getWorkingContracts(scientificAreaUnit)) {
+            if (contract.getPerson().equals(AccessControl.getPerson())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Unit getDepartment() {
@@ -121,7 +130,7 @@ public class SendEmailToDepartmentGroups extends UnitMailSenderAction {
         if (unit instanceof DepartmentUnit) {
             final DepartmentUnit departmentUnit = (DepartmentUnit) unit;
             final Department department = departmentUnit.getDepartment();
-            return department.isCurrentUserCurrentDepartmentPresident() && unitSender != null;
+            return DepartmentPresidentStrategy.isCurrentUserCurrentDepartmentPresident(department) && unitSender != null;
         }
         return false;
     }

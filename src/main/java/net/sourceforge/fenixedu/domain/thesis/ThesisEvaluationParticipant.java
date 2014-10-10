@@ -22,15 +22,13 @@ import java.text.Collator;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.signals.DomainObjectEvent;
+import org.fenixedu.bennu.signals.Signal;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -58,33 +56,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         setType(type);
         setThesis(thesis);
         setPerson(person);
-        updateParticipantInformation(person);
-    }
-
-    protected void updateParticipantInformation(Person person) {
-        Teacher teacher = person.getTeacher();
-
-        if (teacher != null && teacher.getDepartment() != null) {
-            if (teacher.getLastCategory() == null) {
-                setCategory("-");
-            } else {
-                setCategory(teacher.getLastCategory().getName().getContent());
-            }
-            setAffiliation(teacher.getDepartment().getRealName());
-        } else {
-            Employee employee = person.getEmployee();
-            if (employee != null) {
-                Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
-                if (currentWorkingPlace != null) {
-                    setAffiliation(currentWorkingPlace.getNameWithAcronym());
-                }
-            } else {
-                ExternalContract contract = person.getExternalContract();
-                if (contract != null) {
-                    setAffiliation(contract.getInstitutionUnit().getName());
-                }
-            }
-        }
+        Signal.emit("academic.thesis.participant.created", new DomainObjectEvent<>(this));
     }
 
     @Override

@@ -69,7 +69,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
         addParameter("degreeFinalizationInfo", getDegreeFinalizationInfo(req));
 
-        fillEmployeeFields();
+        fillInstitutionAndStaffFields();
         setFooter(req);
         setBranchField();
     }

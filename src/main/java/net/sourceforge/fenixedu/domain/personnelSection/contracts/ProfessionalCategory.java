@@ -18,10 +18,18 @@
  */
 package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -123,5 +131,89 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
             }
         }
         return null;
+    }
+
+    public static boolean isMonitor(Teacher teacher, ExecutionSemester executionSemester) {
+        if (executionSemester != null) {
+            ProfessionalCategory category = getCategoryByPeriod(teacher, executionSemester);
+            return (category != null && category.isTeacherMonitorCategory());
+        }
+        return false;
+    }
+
+    public static boolean isAssistant(Teacher teacher, ExecutionSemester executionSemester) {
+        if (executionSemester != null) {
+            ProfessionalCategory category = getCategoryByPeriod(teacher, executionSemester);
+            return (category != null && category.isTeacherAssistantCategory());
+        }
+        return false;
+    }
+
+    public static boolean isTeacherCareerCategory(Teacher teacher, ExecutionSemester executionSemester) {
+        if (executionSemester != null) {
+            ProfessionalCategory category = getCategoryByPeriod(teacher, executionSemester);
+            return (category != null && category.isTeacherCareerCategory());
+        }
+        return false;
+    }
+
+    public static boolean isTeacherProfessorCategory(Teacher teacher, ExecutionSemester executionSemester) {
+        if (executionSemester != null) {
+            ProfessionalCategory category = getCategoryByPeriod(teacher, executionSemester);
+            return (category != null && category.isTeacherProfessorCategory());
+        }
+        return false;
+    }
+
+    public static ProfessionalCategory getCategory(Teacher teacher) {
+        ProfessionalCategory category = ProfessionalCategory.getCurrentCategory(teacher);
+        if (category == null) {
+            PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+            return personProfessionalData == null ? null : personProfessionalData
+                    .getLastProfessionalCategoryByCategoryType(CategoryType.TEACHER);
+        }
+        return category;
+    }
+
+    public static ProfessionalCategory getCurrentCategory(Teacher teacher) {
+        ProfessionalCategory professionalCategory = null;
+        PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+        if (personProfessionalData != null) {
+            professionalCategory =
+                    personProfessionalData.getProfessionalCategoryByCategoryType(CategoryType.TEACHER, new LocalDate());
+        }
+        if (professionalCategory == null) {
+            professionalCategory =
+                    teacher.getTeacherAuthorization().map(a -> a.getTeacherCategory().getProfessionalCategory()).orElse(null);
+        }
+        return professionalCategory;
+    }
+
+    public static ProfessionalCategory getLastCategory(Teacher teacher, LocalDate begin, LocalDate end) {
+        ProfessionalCategory professionalCategory = null;
+        PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+        if (personProfessionalData != null) {
+            professionalCategory =
+                    personProfessionalData.getLastProfessionalCategoryByCategoryType(CategoryType.TEACHER, begin, end);
+        }
+        if (professionalCategory == null) {
+            List<ExecutionSemester> executionSemesters = ExecutionSemester.readExecutionPeriodsInTimePeriod(begin, end);
+            Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+            for (ExecutionSemester executionSemester : executionSemesters) {
+                professionalCategory =
+                        teacher.getTeacherAuthorization(executionSemester.getAcademicInterval())
+                                .map(a -> a.getTeacherCategory().getProfessionalCategory()).orElse(null);
+                if (professionalCategory != null) {
+                    return professionalCategory;
+                }
+            }
+        }
+        return professionalCategory;
+    }
+
+    public static ProfessionalCategory getCategoryByPeriod(Teacher teacher, ExecutionSemester executionSemester) {
+        OccupationPeriod lessonsPeriod = executionSemester.getLessonsPeriod();
+        return getLastCategory(teacher, lessonsPeriod.getStartYearMonthDay().toLocalDate(), lessonsPeriod
+                .getEndYearMonthDayWithNextPeriods().toLocalDate());
     }
 }

@@ -129,12 +129,6 @@ public class FindPersonAction extends FenixDispatchAction {
         request.setAttribute("degreeType", degreeType == null ? "" : degreeType.toString());
         request.setAttribute("departmentId", departmentId == null ? "" : departmentId.toString());
 
-        if (isEmployeeOrTeacher(userView)) {
-            request.setAttribute("show", Boolean.TRUE);
-        } else {
-            request.setAttribute("show", Boolean.FALSE);
-        }
-
         Boolean viewPhoto = null;
         if (request.getParameter("viewPhoto") != null && request.getParameter("viewPhoto").length() > 0) {
             viewPhoto = getCheckBoxValue(request.getParameter("viewPhoto"));
@@ -164,10 +158,6 @@ public class FindPersonAction extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
         request.setAttribute("bean", bean);
         return mapping.findForward("findPerson");
-    }
-
-    private boolean isEmployeeOrTeacher(User userView) {
-        return userView.getPerson().hasRole(RoleType.EMPLOYEE) || userView.getPerson().hasRole(RoleType.TEACHER);
     }
 
     private Boolean getCheckBoxValue(String value) {

@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -75,12 +74,6 @@ public class StudentDA extends StudentRegistrationDA {
     public ActionForward prepareEditPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final Student student = getAndSetStudent(request);
-
-        final Employee employee = student.getPerson().getEmployee();
-        if (employee != null && employee.getCurrentWorkingContract() != null) {
-            addActionMessage(request, "message.student.personIsEmployee");
-            return mapping.findForward("viewStudentDetails");
-        }
 
         request.setAttribute("personBean", new PersonBeanFactoryEditor(student.getPerson()));
         return mapping.findForward("editPersonalData");

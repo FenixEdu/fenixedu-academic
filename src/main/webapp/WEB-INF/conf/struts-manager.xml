@@ -74,7 +74,7 @@
                   <form-property type="java.lang.String" name="degreeType"></form-property>
                   <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
                   <form-property type="java.lang.String" name="executionDegreeID"></form-property>
-                  <form-property type="java.lang.Integer" name="coordinatorNumber"></form-property>
+                  <form-property type="java.lang.String" name="coordinatorID"></form-property>
                   <form-property type="java.lang.String[]" name="responsibleCoordinatorsIDs"></form-property>
                   <form-property type="java.lang.String[]" name="removeCoordinatorsIDs"></form-property>
                   <form-property type="java.lang.String" name="executionYearID"></form-property>

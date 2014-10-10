@@ -273,7 +273,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
         // check if person already exists
         if (person != null) {
-            if (isPersonStudentOrEmployeeAndNumberIsCorrect(person, bean.getPersonNumber())) {
+            if (isPersonStudentAndNumberIsCorrect(person, bean.getPersonNumber())) {
                 if (!person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
                     // found person with diff date
                     addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
@@ -334,10 +334,9 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
         return mapping.findForward("candidacy-continue-creation");
     }
 
-    protected boolean isPersonStudentOrEmployeeAndNumberIsCorrect(Person person, String personNumber) {
+    protected boolean isPersonStudentAndNumberIsCorrect(Person person, String personNumber) {
         return (person.getStudent() != null && person.getStudent().getNumber().toString().equals(personNumber))
-                || (person.getEmployee() != null && person.getEmployee().getEmployeeNumber().toString().equals(personNumber))
-                || (person.getStudent() == null && person.getEmployee() == null && StringUtils.isEmpty(personNumber));
+                || (person.getStudent() == null && StringUtils.isEmpty(personNumber));
     }
 
     public ActionForward executeCreateCandidacyPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm,

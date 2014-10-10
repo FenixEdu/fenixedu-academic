@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO.TeacherDistributionServiceEntryDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -57,7 +56,8 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadTeacherServiceDistributionByTeachers {
 
-    protected List run(String departmentId, List<String> executionPeriodsIDs) throws FenixServiceException, ParseException {
+    @Atomic
+    public static List run(String departmentId, List<String> executionPeriodsIDs) throws FenixServiceException, ParseException {
 
         final List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         for (String executionPeriodID : executionPeriodsIDs) {
@@ -77,7 +77,8 @@ public class ReadTeacherServiceDistributionByTeachers {
             List<Teacher> teachers = department.getAllTeachers(executionPeriodEntry);
 
             for (Teacher teacher : teachers) {
-                ProfessionalCategory professionalCategory = teacher.getCategoryByPeriod(executionPeriodEntry);
+                ProfessionalCategory professionalCategory =
+                        ProfessionalCategory.getCategoryByPeriod(teacher, executionPeriodEntry);
                 if (professionalCategory == null) {
                     continue;
                 }
@@ -137,7 +138,7 @@ public class ReadTeacherServiceDistributionByTeachers {
 
                 }
 
-                for (PersonFunction personFunction : teacher.getManagementFunctions(executionPeriodEntry)) {
+                for (PersonFunction personFunction : PersonFunction.getManagementFunctions(teacher, executionPeriodEntry)) {
                     returnDTO.addManagementFunctionToTeacher(teacher.getExternalId(), personFunction.getFunction().getName(),
                             personFunction.getCredits());
                 }
@@ -148,7 +149,7 @@ public class ReadTeacherServiceDistributionByTeachers {
 
                 if (exemptionCredits > 0.0) {
                     Set<PersonContractSituation> serviceExemptions =
-                            teacher.getValidTeacherServiceExemptions(executionPeriodEntry);
+                            PersonContractSituation.getValidTeacherServiceExemptions(teacher, executionPeriodEntry);
                     returnDTO.addExemptionSituationToTeacher(teacher.getExternalId(), serviceExemptions, exemptionCredits);
                 }
             }
@@ -165,7 +166,8 @@ public class ReadTeacherServiceDistributionByTeachers {
         return returnArraylist;
     }
 
-    private ExecutionSemester findEndPeriod(final List<ExecutionSemester> executionPeriodList, final ExecutionSemester startPeriod) {
+    private static ExecutionSemester findEndPeriod(final List<ExecutionSemester> executionPeriodList,
+            final ExecutionSemester startPeriod) {
         ExecutionSemester endPeriod = null;
 
         if (!executionPeriodList.isEmpty() && startPeriod != null) {
@@ -184,16 +186,4 @@ public class ReadTeacherServiceDistributionByTeachers {
         }
         return endPeriod;
     }
-
-    // Service Invokers migrated from Berserk
-
-    private static final ReadTeacherServiceDistributionByTeachers serviceInstance =
-            new ReadTeacherServiceDistributionByTeachers();
-
-    @Atomic
-    public static List runReadTeacherServiceDistributionByTeachers(String departmentId, List<String> executionPeriodsIDs)
-            throws FenixServiceException, ParseException, NotAuthorizedException {
-        return serviceInstance.run(departmentId, executionPeriodsIDs);
-    }
-
 }

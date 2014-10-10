@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -43,7 +42,8 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadActiveDegreeCurricularPlansByExecutionYear {
 
-    protected List run(String executionYearID) throws FenixServiceException {
+    @Atomic
+    public static List run(String executionYearID) throws FenixServiceException {
         ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
         Collection executionDegrees = null;
@@ -66,16 +66,4 @@ public class ReadActiveDegreeCurricularPlansByExecutionYear {
 
         return infoDegreeCurricularPlans;
     }
-
-    // Service Invokers migrated from Berserk
-
-    private static final ReadActiveDegreeCurricularPlansByExecutionYear serviceInstance =
-            new ReadActiveDegreeCurricularPlansByExecutionYear();
-
-    @Atomic
-    public static List runReadActiveDegreeCurricularPlansByExecutionYear(String executionYearID) throws FenixServiceException,
-            NotAuthorizedException {
-        return serviceInstance.run(executionYearID);
-    }
-
 }

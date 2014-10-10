@@ -1323,10 +1323,7 @@
 
 <schema name="phd.show.permissions.member" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
 	<slot name="name" />
-	<slot name="employee" layout="format">
-		<property name="format" value=" (F${employeeNumber})" />
-		<property name="classes" value="nowrap" />
-	</slot>
+	<slot name="username" />
 </schema>
 
 <schema name="DegreeCurricularPlan.presentationName" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="PHD_RESOURCES">
@@ -1397,8 +1394,8 @@
 	<slot name="processData.migrationStatus" layout="phd-enum-renderer" />
 	<slot name="processData.migrationExceptionMessageFromBundle" layout="null-as-label"/>
 	<slot name="title" />
-	<slot name="guiderNumber" />
-	<slot name="assistantGuiderNumber" />
+	<slot name="guiderId" />
+	<slot name="assistantGuiderId" />
 	<slot name="startProcessDate" layout="year-month-day" />
 	<slot name="startDevelopmentDate" layout="year-month-day" />
 	<slot name="requirementDate" layout="year-month-day" />
@@ -1500,7 +1497,7 @@
 	<slot name="phdStudentNumber" />
 	<slot name="institutionCode" />
 	<slot name="name" />
-	<slot name="teacherCode" />
+	<slot name="teacherId" />
 </schema>
 
 <schema name="PhdMigrationIndividualProcessData.simple" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData">

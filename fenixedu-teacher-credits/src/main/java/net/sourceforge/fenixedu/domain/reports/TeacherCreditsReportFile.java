@@ -110,7 +110,7 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                     new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
                             executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
             for (Teacher teacher : teachers) {
-                boolean isContractedTeacher = teacher.isActiveForSemester(executionSemester);
+                boolean isContractedTeacher = PersonProfessionalData.isTeacherActiveForSemester(teacher, executionSemester);
                 if (isContractedTeacher || teacher.hasTeacherAuthorization(executionSemester.getAcademicInterval())) {
                     final Row row = spreadsheet.addRow();
                     row.setCell(teacher.getPerson().getUsername());
@@ -120,18 +120,18 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                     ProfessionalCategory category = null;
                     PersonContractSituation situation = null;
                     ProfessionalRegime regime = null;
-                    category = teacher.getCategoryByPeriod(executionSemester);
+                    category = ProfessionalCategory.getCategoryByPeriod(teacher, executionSemester);
                     if (isContractedTeacher) {
                         situation =
-                                teacher.getCurrentOrLastTeacherContractSituation(executionSemester.getBeginDateYearMonthDay()
-                                        .toLocalDate(), executionSemester.getEndDateYearMonthDay().toLocalDate());
+                                PersonContractSituation.getCurrentOrLastTeacherContractSituation(teacher, executionSemester.getBeginDateYearMonthDay()
+                                .toLocalDate(), executionSemester.getEndDateYearMonthDay().toLocalDate());
                         regime = getProfessionalRegime(situation, semesterInterval);
                     }
                     row.setCell(category == null ? null : category.getName().getContent());
                     row.setCell(situation == null ? null : situation.getContractSituation().getName().getContent());
 
                     row.setCell(regime == null ? null : regime.getName().getContent());
-                    row.setCell(teacher.isTeacherProfessorCategory(executionSemester) ? "S" : "N");
+                    row.setCell(ProfessionalCategory.isTeacherProfessorCategory(teacher, executionSemester) ? "S" : "N");
                     Department lastDepartment = teacher.getLastDepartment(executionSemester.getAcademicInterval());
                     row.setCell(lastDepartment == null ? null : lastDepartment.getName());
                     Department creditsDepartment = teacher.getDepartment(executionSemester.getAcademicInterval()).orElse(null);
@@ -217,7 +217,7 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
     }
 
     public String getServiceExemptionDescription(ExecutionSemester executionSemester, Teacher teacher) {
-        Set<PersonContractSituation> personProfessionalExemptions = teacher.getValidTeacherServiceExemptions(executionSemester);
+        Set<PersonContractSituation> personProfessionalExemptions = PersonContractSituation.getValidTeacherServiceExemptions(teacher, executionSemester);
         List<String> serviceExemption = new ArrayList<String>();
 
         for (PersonContractSituation personContractSituation : personProfessionalExemptions) {

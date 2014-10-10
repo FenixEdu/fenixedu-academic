@@ -27,12 +27,10 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.groups.Group;
@@ -155,19 +153,6 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
                 }
             }
         }
-    }
-
-    public boolean isUserMemberOfScientificArea(Person person) {
-        for (Contract contract : getWorkingContracts()) {
-            if (contract.getPerson().equals(person)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isCurrentUserMemberOfScientificArea() {
-        return isUserMemberOfScientificArea(AccessControl.getPerson());
     }
 
     @Override

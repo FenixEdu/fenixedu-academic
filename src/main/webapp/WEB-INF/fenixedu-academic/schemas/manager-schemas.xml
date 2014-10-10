@@ -211,16 +211,6 @@
     </slot>    
 </schema>	
 
-<schema name="InternalPersonBeanRelationTypes" type="net.sourceforge.fenixedu.dataTransferObject.person.InternalPersonBean" bundle="MANAGER_RESOURCES">
-	<slot name="relationTypesAsList" key="label.person.relationTypes" layout="option-select" 
-			validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoleTypeForInternalRelationProvider"/>
-		<property name="eachSchema" value="net.sourceforge.fenixedu.dataTransferObject.person.InternalPersonBean.relationTypes.name"/>
-		<property name="classes" value="nobullet noindent"/>
-		<property name="sortBy" value="localizedName"/>
-	</slot>
-</schema>	
-
 <schema name="net.sourceforge.fenixedu.dataTransferObject.person.InternalPersonBean.relationTypes.name" type="net.sourceforge.fenixedu.domain.person.RoleType">
 	<slot name="localizedName"/>
 </schema>	
@@ -350,23 +340,6 @@
 		</validator>
     </slot>    
 </schema>	
-
-<schema name="ViewPersonInvitations" type="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" bundle="MANAGER_RESOURCES">
-	<slot name="beginDate" />
-	<slot name="endDate" />
-	<slot name="hostUnit.presentationNameWithParents" key="label.host.unit"/>
-	<slot name="responsible.name" key="label.responsible.party"/>
-</schema>
-
-<schema name="EditInviteTimeInterval" type="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" bundle="MANAGER_RESOURCES">
-	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<setter signature="setInvitationInterval(beginDate, endDate)"/>
-</schema>
-
-<schema name="EditInvitationResponsible" type="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" bundle="MANAGER_RESOURCES">
-	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>				
-</schema>
 
 <schema name="EditUserLoginPeriod" type="org.fenixedu.bennu.core.domain.UserLoginPeriod" bundle="MANAGER_RESOURCES">
 		<slot name="beginDate" required="true" />
@@ -834,13 +807,6 @@
 	type="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType"
 	constructor="name">
 	<slot name="name" />
-</schema>
-
-<schema name="personManagement.merge.chooseObjects"
-		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.MergePersonsDA$MergePersonsBean"
-		bundle="MANAGER_RESOURCES">
-	<slot name="leftOid" key="label.personManagement.merge.destiny.oid"/>
-	<slot name="rightOid" key="label.personManagement.merge.remove.oid"/> 
 </schema>
 
 <schema name="manager.qualification.showQualifications"

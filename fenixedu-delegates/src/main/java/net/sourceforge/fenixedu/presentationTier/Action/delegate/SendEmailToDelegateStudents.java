@@ -169,7 +169,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
                 }
             }
         } else {
-            return person.getActiveGGAEDelegatePersonFunction();
+            return PersonFunction.getActiveGGAEDelegatePersonFunction(person);
         }
         return null; // no active function was found
     }

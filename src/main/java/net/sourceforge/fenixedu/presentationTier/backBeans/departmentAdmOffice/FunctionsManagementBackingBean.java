@@ -135,7 +135,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                         .contains(getEmployeeDepartmentUnit()))
                 || (this.getUnit().getTopUnits().isEmpty() && !this.getUnit().equals(getEmployeeDepartmentUnit()))) {
             setErrorMessage("error.invalid.unit");
-        } else if (!this.getUnit().getFunctionsSet().contains(this.getFunction())) {
+        } else if (!getUnit().getFunctionsSet().contains(this.getFunction())) {
             setErrorMessage("error.invalid.function");
         } else {
 
@@ -217,7 +217,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public List<PersonFunction> getActiveFunctions() throws FenixServiceException {
         if (this.activeFunctions == null) {
             Person person = this.getPerson();
-            List<PersonFunction> activeFunctions = person.getActivePersonFunctions();
+            List<PersonFunction> activeFunctions = PersonFunction.getActivePersonFunctions(person);
             this.activeFunctions = new ArrayList<PersonFunction>();
 
             addValidFunctions(activeFunctions, this.activeFunctions);
@@ -230,7 +230,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         if (this.inactiveFunctions == null) {
             Person person = this.getPerson();
-            List<PersonFunction> inactiveFunctions = person.getInactivePersonFunctions();
+            List<PersonFunction> inactiveFunctions = PersonFunction.getInactivePersonFunctions(person);
             this.inactiveFunctions = new ArrayList<PersonFunction>();
 
             addValidFunctions(inactiveFunctions, this.inactiveFunctions);
@@ -394,7 +394,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getValidFunctions() throws FenixServiceException {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
-        for (Function function : this.getUnit().getFunctionsSet()) {
+        for (Function function : getUnit().getFunctionsSet()) {
             if (!function.isInherentFunction()
                     && ((this.getPersonFunction() != null && function.equals(this.getPersonFunction().getFunction())) || (this
                             .getPersonFunction() == null && function.isActive(new YearMonthDay())))) {

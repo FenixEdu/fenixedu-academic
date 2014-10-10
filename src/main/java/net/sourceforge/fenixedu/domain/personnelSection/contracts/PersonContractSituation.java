@@ -19,7 +19,11 @@
 package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -213,6 +217,62 @@ public class PersonContractSituation extends PersonContractSituation_Base {
     public boolean isLongDuration(Interval interval) {
         Integer daysBetween = interval.toPeriod(PeriodType.days()).getDays();
         return (daysBetween == null || daysBetween >= 90);
+    }
+
+    public static PersonContractSituation getCurrentOrLastTeacherContractSituation(Teacher teacher) {
+        PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+        return personProfessionalData != null ? personProfessionalData
+                .getCurrentOrLastPersonContractSituationByCategoryType(CategoryType.TEACHER) : null;
+    }
+
+    public static PersonContractSituation getCurrentOrLastTeacherContractSituation(Teacher teacher, LocalDate begin, LocalDate end) {
+        PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+        return personProfessionalData != null ? personProfessionalData.getCurrentOrLastPersonContractSituationByCategoryType(
+                CategoryType.TEACHER, begin, end) : null;
+    }
+
+    public static PersonContractSituation getDominantTeacherContractSituation(Teacher teacher, Interval interval) {
+        PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+        return personProfessionalData != null ? personProfessionalData.getDominantPersonContractSituationByCategoryType(
+                CategoryType.TEACHER, interval) : null;
+    }
+
+    public static Set<PersonContractSituation> getValidTeacherServiceExemptions(Teacher teacher, Interval interval) {
+        PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+        if (personProfessionalData != null) {
+            return personProfessionalData.getValidPersonProfessionalExemptionByCategoryType(CategoryType.TEACHER, interval);
+        }
+        return new HashSet<PersonContractSituation>();
+    }
+
+    public static PersonContractSituation getDominantTeacherServiceExemption(Teacher teacher, ExecutionSemester executionSemester) {
+        PersonContractSituation dominantExemption = null;
+        int daysInDominantExemption = 0;
+        Interval semesterInterval =
+                new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
+                        executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
+        for (PersonContractSituation personContractSituation : PersonContractSituation.getValidTeacherServiceExemptions(teacher, executionSemester)) {
+            int daysInInterval = personContractSituation.getDaysInInterval(semesterInterval);
+            if (dominantExemption == null || daysInInterval > daysInDominantExemption) {
+                dominantExemption = personContractSituation;
+                daysInDominantExemption = daysInInterval;
+            }
+        }
+
+        return dominantExemption;
+    }
+
+    public static Set<PersonContractSituation> getValidTeacherServiceExemptions(Teacher teacher,
+            ExecutionSemester executionSemester) {
+        PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+        Interval semesterInterval =
+                new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
+                        executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
+        if (semesterInterval != null && personProfessionalData != null) {
+            return personProfessionalData.getValidPersonProfessionalExemptionByCategoryType(CategoryType.TEACHER,
+                    semesterInterval);
+        }
+        return new HashSet<PersonContractSituation>();
     }
 
 }

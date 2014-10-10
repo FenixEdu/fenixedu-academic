@@ -18,21 +18,36 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree;
 
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 import org.fenixedu.bennu.core.security.Authenticate;
 
-public class DegreesToCreateRegistration extends DegreesByEmployeeUnit {
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+
+public class DegreesToCreateRegistration implements DataProvider {
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return AcademicAccessRule
+                .getDegreesAccessibleToFunction(AcademicOperationType.CREATE_REGISTRATION, Authenticate.getUser())
+                .filter(DegreesToCreateRegistration::canCreateStudent).sorted(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID)
+                .collect(Collectors.toSet());
+    }
+
+    protected static boolean canCreateStudent(Degree degree) {
+        final DegreeType degreeType = degree.getDegreeType();
+        return degreeType.canCreateStudent() && !degreeType.canCreateStudentOnlyWithCandidacy();
+    }
 
     @Override
-    protected Collection<Degree> getDegrees() {
-        return AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.CREATE_REGISTRATION,
-                Authenticate.getUser()).collect(Collectors.toSet());
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
     }
 
 }

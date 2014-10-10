@@ -89,8 +89,8 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         @Override
         public int compare(VigilantWrapper v1, VigilantWrapper v2) {
 
-            ProfessionalCategory c1 = v1.getTeacher() != null ? v1.getTeacher().getGiafProfessionalCategory() : null;
-            ProfessionalCategory c2 = v2.getTeacher() != null ? v2.getTeacher().getGiafProfessionalCategory() : null;
+            ProfessionalCategory c1 = v1.getTeacher() != null ? ProfessionalCategory.getCategory(v1.getTeacher()) : null;
+            ProfessionalCategory c2 = v2.getTeacher() != null ? ProfessionalCategory.getCategory(v2.getTeacher()) : null;
 
             if (c1 == null && c2 == null) {
                 return 0;
@@ -223,7 +223,8 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public String getTeacherCategoryCode() {
-        return getTeacher() != null && getTeacher().getGiafProfessionalCategory() != null ? getTeacher().getGiafProfessionalCategory().getName().getContent() : "";
+        return getTeacher() != null && ProfessionalCategory.getCategory(getTeacher()) != null ? ProfessionalCategory
+                .getCategory(getTeacher()).getName().getContent() : "";
     }
 
     public List<Space> getCampus() {
@@ -433,7 +434,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         Teacher teacher = this.getPerson().getTeacher();
         if (teacher != null) {
             Set<PersonContractSituation> validTeacherServiceExemptions =
-                    teacher.getValidTeacherServiceExemptions(new Interval(begin, end.plusDays(1)));
+                    PersonContractSituation.getValidTeacherServiceExemptions(teacher, new Interval(begin, end.plusDays(1)));
             if (!validTeacherServiceExemptions.isEmpty()) {
                 return UnavailableTypes.SERVICE_EXEMPTION;
             }
@@ -460,7 +461,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     public boolean isCathedraticTeacher() {
         Teacher teacher = this.getTeacher();
         if (teacher != null) {
-            return teacher.getGiafProfessionalCategory().getWeight() <= 3;
+            return ProfessionalCategory.getCategory(teacher).getWeight() <= 3;
         }
         return false;
     }

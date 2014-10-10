@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 
 import org.joda.time.YearMonthDay;
 
@@ -50,8 +51,7 @@ public class AssociateNewFunctionToPerson {
         if (function == null) {
             throw new FenixServiceException("error.noFunction");
         }
-
-        person.addPersonFunction(function, begin, end, credits);
+        new PersonFunction(function.getUnit(), person, function, begin, end, credits);
     }
 
     // Service Invokers migrated from Berserk

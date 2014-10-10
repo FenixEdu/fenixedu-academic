@@ -26,7 +26,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -68,11 +67,7 @@ public class SearchPerson implements Serializable {
 
         private Boolean activePersons;
 
-        private Boolean showOnlySearchableResearchers;
-
         private Integer studentNumber;
-
-        private Integer mechanoGraphicalNumber;
 
         private String paymentCode;
 
@@ -81,11 +76,10 @@ public class SearchPerson implements Serializable {
 
         public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
                 String roleType, String degreeTypeString, String degreeId, String departmentId, Boolean activePersons,
-                Integer studentNumber, Boolean showOnlySearchableResearchers) {
+                Integer studentNumber) {
 
             this(name, email, username, documentIdNumber, idDocumentType, roleType, degreeTypeString, degreeId, departmentId,
                     activePersons, studentNumber, (String) null);
-            setShowOnlySearchableResearchers(showOnlySearchableResearchers);
         }
 
         public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
@@ -125,8 +119,7 @@ public class SearchPerson implements Serializable {
             return StringUtils.isEmpty(this.email) && StringUtils.isEmpty(this.username)
                     && StringUtils.isEmpty(this.documentIdNumber) && this.role == null && this.degree == null
                     && this.department == null && this.degreeType == null && this.nameWords == null && this.studentNumber == null
-                    && this.mechanoGraphicalNumber == null && this.idDocumentType == null
-                    && this.showOnlySearchableResearchers == null && StringUtils.isEmpty(this.getPaymentCode());
+                    && this.idDocumentType == null && StringUtils.isEmpty(this.getPaymentCode());
         }
 
         private static String[] getNameWords(String name) {
@@ -185,10 +178,6 @@ public class SearchPerson implements Serializable {
             return studentNumber;
         }
 
-        public Integer getMechanoGraphicalNumber() {
-            return mechanoGraphicalNumber;
-        }
-
         public void setEmail(String email) {
             this.email = (email != null && !email.equals("")) ? StringNormalizer.normalize(email.trim()) : null;
         }
@@ -234,18 +223,6 @@ public class SearchPerson implements Serializable {
             this.studentNumber = studentNumber;
         }
 
-        public void setMechanoGraphicalNumber(Integer mechanoGraphicalNumber) {
-            this.mechanoGraphicalNumber = mechanoGraphicalNumber;
-        }
-
-        public Boolean getShowOnlySearchableResearchers() {
-            return showOnlySearchableResearchers;
-        }
-
-        public void setShowOnlySearchableResearchers(Boolean showOnlySearchableResearchers) {
-            this.showOnlySearchableResearchers = showOnlySearchableResearchers;
-        }
-
         public String getPaymentCode() {
             return this.paymentCode;
         }
@@ -288,17 +265,6 @@ public class SearchPerson implements Serializable {
             persons = new ArrayList<Person>();
             if (person != null) {
                 persons.add(person);
-            }
-
-        } else if (searchParameters.getMechanoGraphicalNumber() != null) {
-            final Employee employee = Employee.readByNumber(searchParameters.getMechanoGraphicalNumber());
-            final Student student = Student.readStudentByNumber(searchParameters.getMechanoGraphicalNumber());
-            persons = new TreeSet<Person>();
-            if (employee != null) {
-                persons.add(employee.getPerson());
-            }
-            if (student != null) {
-                persons.add(student.getPerson());
             }
 
         } else if (searchParameters.getName() != null) {
@@ -361,9 +327,7 @@ public class SearchPerson implements Serializable {
                     && verifyAnyEmailAddress(searchParameters.getEmail(), person)
                     && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(), person)
                     && verifyStudentNumber(searchParameters.getStudentNumber(), person)
-                    && verifyMechanoGraphicalNumber(searchParameters.getMechanoGraphicalNumber(), person)
-                    && verifyPaymentCodes(searchParameters.getPaymentCode(), person)
-                    && verifyShowOnlySearchableResearchers(searchParameters.showOnlySearchableResearchers, person);
+                    && verifyPaymentCodes(searchParameters.getPaymentCode(), person);
         }
 
         protected boolean verifyAnyEmailAddress(final String email, final Person person) {
@@ -377,12 +341,6 @@ public class SearchPerson implements Serializable {
         protected boolean verifyStudentNumber(Integer studentNumber, Person person) {
             return (studentNumber == null || (person.getStudent() != null && person.getStudent().getNumber()
                     .equals(studentNumber)));
-        }
-
-        protected boolean verifyMechanoGraphicalNumber(Integer mechanoGraphicalNumber, Person person) {
-            return (mechanoGraphicalNumber == null
-                    || (person.getStudent() != null && person.getStudent().getNumber().equals(mechanoGraphicalNumber)) || (person
-                    .getEmployee() != null && person.getEmployee().getEmployeeNumber().equals(mechanoGraphicalNumber)));
         }
 
         protected boolean verifyActiveState(Boolean activePersons, Person person) {
@@ -431,11 +389,6 @@ public class SearchPerson implements Serializable {
 
         protected static boolean verifyNameEquality(String[] nameWords, Person person) {
             return person.verifyNameEquality(nameWords);
-        }
-
-        protected static boolean verifyShowOnlySearchableResearchers(Boolean showOnlySearchableResearchers, final Person person) {
-            return showOnlySearchableResearchers == null || showOnlySearchableResearchers && person.getResearcher() != null
-                    && person.getResearcher().getAllowsToBeSearched();
         }
 
         protected static boolean verifyPaymentCodes(String paymentCode, final Person person) {

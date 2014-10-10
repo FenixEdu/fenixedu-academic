@@ -58,7 +58,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
         addParameter("certificationMessage",
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.certification"));
         setPersonFields();
-        fillEmployeeFields();
+        fillInstitutionAndStaffFields();
         setFooter(getDocumentRequest());
         addParametersInformation();
     }

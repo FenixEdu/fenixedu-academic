@@ -99,9 +99,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
 
         for (String degreeCurricularPlanID : this.getChoosenDegreeCurricularPlansIDs()) {
             Collection<DegreeModuleScope> degreeModuleScopes =
-                    ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear
-                            .runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlanID,
-                                    this.choosenExecutionYearID);
+                    ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear.run(degreeCurricularPlanID, this.choosenExecutionYearID);
 
             for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
                 if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {

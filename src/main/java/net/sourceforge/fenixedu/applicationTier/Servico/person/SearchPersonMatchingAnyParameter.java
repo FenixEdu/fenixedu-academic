@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -78,17 +77,6 @@ public class SearchPersonMatchingAnyParameter extends SearchPerson {
                 }
 
             }
-            if (searchParameters.getMechanoGraphicalNumber() != null) {
-                final Employee employee = Employee.readByNumber(searchParameters.getMechanoGraphicalNumber());
-                final Student student = Student.readStudentByNumber(searchParameters.getMechanoGraphicalNumber());
-                if (employee != null) {
-                    persons.add(employee.getPerson());
-                }
-                if (student != null) {
-                    persons.add(student.getPerson());
-                }
-
-            }
             if (searchParameters.getName() != null) {
                 persons.addAll(Person.findPerson(searchParameters.getName()));
                 final RoleType roleBd = searchParameters.getRole();
@@ -135,9 +123,7 @@ public class SearchPersonMatchingAnyParameter extends SearchPerson {
                     || verifyNameEquality(getSearchParameters().getNameWords(), person)
                     || verifyAnyEmailAddress(getSearchParameters().getEmail(), person)
                     || verifyDegreeType(getSearchParameters().getDegree(), getSearchParameters().getDegreeType(), person)
-                    || verifyStudentNumber(getSearchParameters().getStudentNumber(), person)
-                    || verifyMechanoGraphicalNumber(getSearchParameters().getMechanoGraphicalNumber(), person)
-                    || verifyShowOnlySearchableResearchers(getSearchParameters().getShowOnlySearchableResearchers(), person);
+                    || verifyStudentNumber(getSearchParameters().getStudentNumber(), person);
         }
     }
 

@@ -200,7 +200,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 .getCandidacy().getSelectedDegree(), userView.getPerson().getUser());
     }
 
-    static private boolean isGriOfficeEmployee(User userView) {
+    static private boolean isInternationalRelationsOfficer(User userView) {
         return userView.getPerson().hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
     }
 
@@ -433,7 +433,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
+            if (!isAllowedToManageProcess(process, userView) && !isInternationalRelationsOfficer(userView)) {
                 throw new PreConditionNotValidException();
             }
             if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy() || process.hasAnyPaymentForCandidacy()) {
@@ -453,7 +453,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
+            if (!isAllowedToManageProcess(process, userView) && !isInternationalRelationsOfficer(userView)) {
                 throw new PreConditionNotValidException();
             }
             if (process.isCandidacyCancelled()) {
@@ -474,7 +474,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
+            if (!isAllowedToManageProcess(process, userView) && !isInternationalRelationsOfficer(userView)) {
                 throw new PreConditionNotValidException();
             }
             if (process.isCandidacyCancelled()) {
@@ -493,7 +493,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
+            if (!isAllowedToManageProcess(process, userView) && !isInternationalRelationsOfficer(userView)) {
                 throw new PreConditionNotValidException();
             }
             if (process.isCandidacyCancelled()) {
@@ -618,7 +618,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView)) {
+            if (!isInternationalRelationsOfficer(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
@@ -894,7 +894,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 return;
             }
 
-            if (isGriOfficeEmployee(userView)) {
+            if (isInternationalRelationsOfficer(userView)) {
                 return;
             }
 
@@ -938,7 +938,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 return;
             }
 
-            if (isGriOfficeEmployee(userView)) {
+            if (isInternationalRelationsOfficer(userView)) {
                 return;
             }
         }
@@ -969,7 +969,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (isGriOfficeEmployee(userView)) {
+            if (isInternationalRelationsOfficer(userView)) {
                 return;
             }
 
@@ -1005,7 +1005,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView)) {
+            if (!isInternationalRelationsOfficer(userView)) {
                 throw new PreConditionNotValidException();
             }
 
@@ -1052,7 +1052,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView)) {
+            if (!isInternationalRelationsOfficer(userView)) {
                 throw new PreConditionNotValidException();
             }
 
@@ -1101,7 +1101,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
+            if (!isAllowedToManageProcess(process, userView) && !isInternationalRelationsOfficer(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
@@ -1137,7 +1137,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 throw new PreConditionNotValidException();
             }
 
-            if (isGriOfficeEmployee(userView)) {
+            if (isInternationalRelationsOfficer(userView)) {
                 return;
             }
 
@@ -1218,7 +1218,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView)) {
+            if (!isInternationalRelationsOfficer(userView)) {
                 throw new PreConditionNotValidException();
             }
 
@@ -1261,7 +1261,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView)) {
+            if (!isInternationalRelationsOfficer(userView)) {
                 throw new PreConditionNotValidException();
             }
 

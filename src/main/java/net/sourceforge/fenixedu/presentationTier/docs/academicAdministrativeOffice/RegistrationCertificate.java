@@ -84,7 +84,7 @@ public class RegistrationCertificate extends AdministrativeOfficeDocument {
 
         fillSeventhParagraph(registration, studentRegistered);
 
-        fillEmployeeFields();
+        fillInstitutionAndStaffFields();
         setFooter(getDocumentRequest());
 
     }

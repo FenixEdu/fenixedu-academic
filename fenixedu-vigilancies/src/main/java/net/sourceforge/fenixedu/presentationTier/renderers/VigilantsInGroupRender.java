@@ -241,8 +241,8 @@ public class VigilantsInGroupRender extends InputRenderer {
             Teacher t1 = e1.getPerson().getTeacher();
             Teacher t2 = e2.getPerson().getTeacher();
 
-            ProfessionalCategory c1 = (t1 != null) ? t1.getGiafProfessionalCategory() : null;
-            ProfessionalCategory c2 = (t2 != null) ? t2.getGiafProfessionalCategory() : null;
+            ProfessionalCategory c1 = (t1 != null) ? ProfessionalCategory.getCategory(t1) : null;
+            ProfessionalCategory c2 = (t2 != null) ? ProfessionalCategory.getCategory(t2) : null;
 
             if (c1 == null && c2 == null) {
                 return 0;

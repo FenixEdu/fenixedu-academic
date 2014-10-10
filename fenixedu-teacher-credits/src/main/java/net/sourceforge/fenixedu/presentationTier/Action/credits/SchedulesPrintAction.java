@@ -73,7 +73,7 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
     private void setWorkingUnit(HttpServletRequest request, OccupationPeriod occupationPeriod, Teacher teacher) {
         if (occupationPeriod != null) {
             Unit lastWorkingUnit =
-                    teacher.getLastWorkingUnit(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());
+                    teacher.getPerson().getEmployee() != null ? teacher.getPerson().getEmployee().getLastWorkingPlace(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay()) : null;
             if (lastWorkingUnit != null) {
                 request.setAttribute("workingUnit", lastWorkingUnit);
                 Unit departmentUnit = lastWorkingUnit.getDepartmentUnit();
@@ -87,8 +87,7 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
     private void setLegalRegimen(HttpServletRequest request, OccupationPeriod occupationPeriod, Teacher teacher) {
         if (occupationPeriod != null) {
             PersonContractSituation teacherContractSituation =
-                    teacher.getCurrentOrLastTeacherContractSituation(occupationPeriod.getStartYearMonthDay().toLocalDate(),
-                            occupationPeriod.getEndYearMonthDay().toLocalDate());
+                    PersonContractSituation.getCurrentOrLastTeacherContractSituation(teacher, occupationPeriod.getStartYearMonthDay().toLocalDate(), occupationPeriod.getEndYearMonthDay().toLocalDate());
             if (teacherContractSituation != null) {
                 request.setAttribute("teacherContractSituation", teacherContractSituation);
             }

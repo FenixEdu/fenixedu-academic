@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -68,7 +69,7 @@ public class TeacherInquiryTemplate extends TeacherInquiryTemplate_Base {
         }
         final Teacher teacher = person.getTeacher();
         boolean mandatoryTeachingService = false;
-        if (teacher != null && teacher.isTeacherProfessorCategory(professorship.getExecutionCourse().getExecutionPeriod())) {
+        if (teacher != null && ProfessionalCategory.isTeacherProfessorCategory(teacher, professorship.getExecutionCourse().getExecutionPeriod())) {
             mandatoryTeachingService = true;
         }
 

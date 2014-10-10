@@ -185,16 +185,8 @@ public class InfoPerson extends InfoObject {
         return getPerson().getAvailableWebSite();
     }
 
-    public InfoExternalPerson getInfoExternalPerson() {
-        return InfoExternalPerson.newInfoFromDomain(getPerson().getExternalContract());
-    }
-
     public static InfoPerson newInfoFromDomain(Person person) {
         return (person != null) ? new InfoPerson(person) : null;
-    }
-
-    public InfoEmployee getInfoEmployee() {
-        return InfoEmployee.newInfoFromDomain(getPerson().getEmployee());
     }
 
     public List<InfoStudentCurricularPlan> getInfoStudentCurricularPlanList() {

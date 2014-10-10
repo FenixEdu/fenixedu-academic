@@ -48,8 +48,6 @@ public class InfoGratuityValues extends InfoObject {
 
     private InfoExecutionDegree infoExecutionDegree;
 
-    private InfoEmployee infoEmployee;
-
     private Date when;
 
     private List<InfoPaymentPhase> infoPaymentPhases;
@@ -171,21 +169,6 @@ public class InfoGratuityValues extends InfoObject {
      */
     public void setFinalProofValue(Double finalProofValue) {
         this.finalProofValue = finalProofValue;
-    }
-
-    /**
-     * @return Returns the infoEmployee.
-     */
-    public InfoEmployee getInfoEmployee() {
-        return infoEmployee;
-    }
-
-    /**
-     * @param infoEmployee
-     *            The infoEmployee to set.
-     */
-    public void setInfoEmployee(InfoEmployee infoEmployee) {
-        this.infoEmployee = infoEmployee;
     }
 
     /**

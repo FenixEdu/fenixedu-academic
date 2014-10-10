@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 
 public class TeacherCreditsBean implements Serializable {
     private Teacher teacher;
@@ -113,7 +114,7 @@ public class TeacherCreditsBean implements Serializable {
 
     private boolean isTeacherActiveForYear(ExecutionYear currentExecutionYear) {
         for (ExecutionSemester executionSemester : currentExecutionYear.getExecutionPeriodsSet()) {
-            if (teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
+            if (PersonProfessionalData.isTeacherActiveOrHasAuthorizationForSemester(teacher, executionSemester)) {
                 return true;
             }
         }

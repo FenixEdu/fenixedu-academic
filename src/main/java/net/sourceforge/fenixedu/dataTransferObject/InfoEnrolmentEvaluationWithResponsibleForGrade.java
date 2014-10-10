@@ -32,7 +32,7 @@ public class InfoEnrolmentEvaluationWithResponsibleForGrade extends InfoEnrolmen
         if (enrolmentEvaluation != null) {
             setInfoPersonResponsibleForGrade(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getPersonResponsibleForGrade()));
             if (enrolmentEvaluation.getPerson() != null) {
-                setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getPerson()));
+                setInfoPerson(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getPerson()));
             }
         }
     }

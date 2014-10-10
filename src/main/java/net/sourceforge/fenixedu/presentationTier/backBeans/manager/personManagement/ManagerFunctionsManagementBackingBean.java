@@ -133,7 +133,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
         if (this.activeFunctions == null) {
             Person person = this.getPerson();
-            List<PersonFunction> activeFunctions = person.getPersonFunctions(null, false, true, null);
+            List<PersonFunction> activeFunctions = PersonFunction.getPersonFunctions(person, null, false, true, null);
             Collections.sort(activeFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
             this.activeFunctions = activeFunctions;
         }
@@ -145,7 +145,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
         if (this.inactiveFunctions == null) {
             Person person = this.getPerson();
-            List<PersonFunction> inactiveFunctions = person.getPersonFunctions(null, false, false, null);
+            List<PersonFunction> inactiveFunctions = PersonFunction.getPersonFunctions(person, null, false, false, null);
             Collections.sort(inactiveFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
             this.inactiveFunctions = inactiveFunctions;
         }
@@ -155,7 +155,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     @Override
     public List<Function> getInherentFunctions() throws FenixServiceException {
         if (this.inherentFunctions == null) {
-            this.inherentFunctions = this.getPerson().getActiveInherentPersonFunctions();
+            this.inherentFunctions = PersonFunction.getActiveInherentPersonFunctions(this.getPerson());
         }
         return inherentFunctions;
     }

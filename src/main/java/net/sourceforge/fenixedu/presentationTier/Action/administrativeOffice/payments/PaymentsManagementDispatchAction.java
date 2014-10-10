@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -181,10 +180,6 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         return getDomainObject(request, "personId");
     }
 
-    protected Unit getCurrentUnit(HttpServletRequest request) {
-        return getUserView(request).getPerson().getEmployee().getCurrentWorkingPlace();
-    }
-
     public ActionForward preparePaymentInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -279,10 +274,5 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         }
         return events;
     }
-
-    // protected Unit getReceiptOwnerUnit(HttpServletRequest request) {
-    // return
-    // getUserView(request).getPerson().getEmployee().getCurrentWorkingPlace();
-    // }
 
 }

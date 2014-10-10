@@ -71,7 +71,7 @@
                   <form-property type="java.lang.Boolean" name="courseAssistant"></form-property>
                   <form-property type="java.lang.String" name="coursesToAssist"></form-property>
                   <form-property type="java.lang.Boolean" name="hasGuider"></form-property>
-                  <form-property type="java.lang.String" name="guiderNumber"></form-property>
+                  <form-property type="java.lang.String" name="guiderId"></form-property>
             </form-bean>
             <!-- Dynamic-FormBean for searchExecutionCourse -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="searchExecutionCourses">

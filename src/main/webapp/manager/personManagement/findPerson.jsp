@@ -78,15 +78,6 @@
 	
 	<tr>
 		<td>
-			<bean:message bundle="MANAGER_RESOURCES" key="label.mechanographical.number" />
-		</td>
-		<td>
-			<input type="text" name="mechanoGraphicalNumber" size="25"/>
-		</td>		
-	</tr>
-	
-	<tr>
-		<td>
 			<br /><br />
 		</td>
 	</tr>	

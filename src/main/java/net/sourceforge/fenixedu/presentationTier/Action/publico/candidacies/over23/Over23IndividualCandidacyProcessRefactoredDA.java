@@ -257,7 +257,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 
         // check if person already exists
         if (person != null) {
-            if (isPersonStudentOrEmployeeAndNumberIsCorrect(person, bean.getPersonNumber())) {
+            if (isPersonStudentAndNumberIsCorrect(person, bean.getPersonNumber())) {
                 if (!person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
                     // found person with diff date
                     addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
@@ -401,7 +401,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 
             // check if person already exists
             if (person != null) {
-                if (isPersonStudentOrEmployeeAndNumberIsCorrect(person, bean.getPersonNumber())) {
+                if (isPersonStudentAndNumberIsCorrect(person, bean.getPersonNumber())) {
                     if (!person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
                         // found person with diff date
                         addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()

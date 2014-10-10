@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.UnitFunctionalities;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeMessagingApp;
 
+import org.abego.treelayout.internal.util.Contract;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -74,7 +75,7 @@ public class DepartmentFunctionalities extends UnitFunctionalities {
         for (Unit subUnit : departmentUnit.getAllSubUnits()) {
             if (subUnit.isScientificAreaUnit()) {
                 ScientificAreaUnit scientificAreaUnit = (ScientificAreaUnit) subUnit;
-                if (scientificAreaUnit.isCurrentUserMemberOfScientificArea()) {
+                if (isCurrentUserMemberOfScientificArea(scientificAreaUnit)) {
                     units.add(scientificAreaUnit);
                 }
             }
@@ -88,6 +89,15 @@ public class DepartmentFunctionalities extends UnitFunctionalities {
 
         request.setAttribute("units", units);
         return mapping.findForward("chooseUnit");
+    }
+
+    private static boolean isCurrentUserMemberOfScientificArea(ScientificAreaUnit scientificAreaUnit) {
+        for (Contract contract : EmployeeContract.getWorkingContracts(scientificAreaUnit)) {
+            if (contract.getPerson().equals(AccessControl.getPerson())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

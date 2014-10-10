@@ -18,7 +18,11 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -150,4 +154,22 @@ public class Invitation extends Invitation_Base {
         return AccountabilityType.readByType(AccountabilityTypeEnum.INVITATION);
     }
 
+    public static Collection<Invitation> getInvitationsOrderByDate(Person person) {
+        final Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
+        invitations.addAll((Collection<Invitation>) person.getParentAccountabilities(AccountabilityTypeEnum.INVITATION,
+                Invitation.class));
+        return invitations;
+    }
+
+    public static List<Invitation> getActiveInvitations(Person person) {
+        final YearMonthDay today = new YearMonthDay();
+        final List<Invitation> invitations = new ArrayList<Invitation>();
+        for (final Accountability accoutAccountability : person.getParentAccountabilities(AccountabilityTypeEnum.INVITATION,
+                Invitation.class)) {
+            if (((Invitation) accoutAccountability).isActive(today)) {
+                invitations.add((Invitation) accoutAccountability);
+            }
+        }
+        return invitations;
+    }
 }

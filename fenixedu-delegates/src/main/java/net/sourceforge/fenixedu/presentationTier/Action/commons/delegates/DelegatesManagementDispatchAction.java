@@ -587,13 +587,13 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
         List<DelegateBean> result = new ArrayList<DelegateBean>();
         Set<Function> functions = Function.readAllActiveFunctionsByType(FunctionType.DELEGATE_OF_GGAE);
         for (Function function : functions) {
-            if (function.getActivePersonFunctionsStartingIn(executionYear).isEmpty()) {
+            if (PersonFunction.getActivePersonFunctionsStartingIn(function, executionYear).isEmpty()) {
                 DelegateBean bean = new DelegateBean();
                 bean.setDelegateType(FunctionType.DELEGATE_OF_GGAE);
                 bean.setGgaeDelegateFunction(function);
                 result.add(bean);
             } else {
-                for (PersonFunction personFunction : function.getActivePersonFunctionsStartingIn(executionYear)) {
+                for (PersonFunction personFunction : PersonFunction.getActivePersonFunctionsStartingIn(function, executionYear)) {
                     DelegateBean bean = new DelegateBean();
                     bean.setGgaeDelegate(personFunction.getPerson());
                     bean.setDelegateType(FunctionType.DELEGATE_OF_GGAE);

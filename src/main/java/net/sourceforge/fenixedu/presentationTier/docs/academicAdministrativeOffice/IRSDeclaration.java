@@ -83,7 +83,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
         setAmounts(person, civilYear);
         setFooter(getDocumentRequest());
-        fillEmployeeFields();
+        fillInstitutionAndStaffFields();
     }
 
     final private void setPersonFields(final Registration registration, final Person person) {

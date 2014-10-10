@@ -558,7 +558,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.pageOf"));
     }
 
-    protected void fillEmployeeFields() {
+    protected void fillInstitutionAndStaffFields() {
         final String institutionName = getInstitutionName();
         final Person coordinator = getAdministrativeOffice().getCoordinator().getPerson();
 

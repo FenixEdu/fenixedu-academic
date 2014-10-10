@@ -42,7 +42,7 @@ public class SearchEmployeesAndTeachers implements AutoCompleteProvider<Person> 
             result = new ArrayList<Person>(Person.findPerson(""));
         } else {
             for (Person person : Person.findPerson(StringNormalizer.normalize(value))) {
-                if ((person.getTeacher() != null && person.getTeacher().isActive())
+                if ((person.getTeacher() != null && person.getTeacher().isActiveContractedTeacher())
                         || (person.getEmployee() != null && person.getEmployee().isActive())) {
                     result.add(person);
                 }

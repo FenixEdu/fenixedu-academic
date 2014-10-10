@@ -52,8 +52,6 @@ public enum RoleType implements IPresentableEnum {
 
     COORDINATOR("allCoordinators"),
 
-    EMPLOYEE("activeEmployees"),
-
     PERSONNEL_SECTION("#personnelSection"),
 
     MANAGER("#managers"),
@@ -90,8 +88,6 @@ public enum RoleType implements IPresentableEnum {
     PEDAGOGICAL_COUNCIL("#pedagogicalCouncil"),
 
     CANDIDATE("candidate"),
-
-    EXAM_COORDINATOR("examCoordinator"),
 
     ACADEMIC_ADMINISTRATIVE_OFFICE("#academicAdmOffice"),
 

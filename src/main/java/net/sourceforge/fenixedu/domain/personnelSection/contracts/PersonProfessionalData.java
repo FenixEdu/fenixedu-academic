@@ -21,7 +21,9 @@ package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
@@ -29,6 +31,7 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.PeriodType;
 
 public class PersonProfessionalData extends PersonProfessionalData_Base {
 
@@ -305,6 +308,67 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
             }
         }
         return null;
+    }
+
+    public static boolean isTeacherActiveForSemester(Teacher teacher, ExecutionSemester executionSemester) {
+        int minimumWorkingDays = 90;
+        int activeDays = 0;
+        Interval semesterInterval =
+                new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
+                        executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
+        PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+        if (personProfessionalData != null) {
+            GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalData();
+            if (giafProfessionalData != null) {
+                for (final PersonContractSituation situation : giafProfessionalData.getValidPersonContractSituations()) {
+                    if (situation.overlaps(semesterInterval) && situation.getProfessionalCategory() != null
+                            && situation.getProfessionalCategory().getCategoryType().equals(CategoryType.TEACHER)) {
+                        LocalDate beginDate =
+                                situation.getBeginDate().isBefore(semesterInterval.getStart().toLocalDate()) ? semesterInterval
+                                        .getStart().toLocalDate() : situation.getBeginDate();
+                        LocalDate endDate =
+                                situation.getEndDate() == null
+                                        || situation.getEndDate().isAfter(semesterInterval.getEnd().toLocalDate()) ? semesterInterval
+                                        .getEnd().toLocalDate() : situation.getEndDate();
+                        int days =
+                                new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay()).toPeriod(
+                                        PeriodType.days()).getDays() + 1;
+                        activeDays = activeDays + days;
+                    }
+                }
+            }
+        }
+        return activeDays >= minimumWorkingDays;
+    }
+
+    public static boolean isTeacherActiveOrHasAuthorizationForSemester(Teacher teacher, ExecutionSemester executionSemester) {
+        return isTeacherActiveForSemester(teacher, executionSemester)
+                || teacher.hasTeacherAuthorization(executionSemester.getAcademicInterval());
+    }
+
+    public static boolean isTeacherInactive(Teacher teacher, ExecutionSemester executionSemester) {
+        return !isTeacherActiveForSemester(teacher, executionSemester);
+    }
+
+    public static boolean hasAnyTeacherContractSituation(Teacher teacher) {
+        PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+        if (personProfessionalData != null) {
+            return !personProfessionalData.getPersonContractSituationsByCategoryType(CategoryType.TEACHER).isEmpty();
+        }
+        return false;
+    }
+
+    public static boolean hasAnyTeacherContractSituation(Teacher teacher, LocalDate beginDate, LocalDate endDate) {
+        PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+        if (personProfessionalData != null) {
+            for (PersonContractSituation personContractSituation : personProfessionalData
+                    .getPersonContractSituationsByCategoryType(CategoryType.TEACHER)) {
+                if (personContractSituation.betweenDates(beginDate, endDate)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

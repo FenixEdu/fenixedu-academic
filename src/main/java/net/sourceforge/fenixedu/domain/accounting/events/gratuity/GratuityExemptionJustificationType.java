@@ -30,13 +30,13 @@ import org.fenixedu.commons.i18n.I18N;
 
 public enum GratuityExemptionJustificationType {
 
-    // Teachers,Researchers,Employees and Agents from institution
+    // Staff and Agents from institution
     INSTITUTION,
 
     // Institution or Institution Partners Grant Owners
     INSTITUTION_GRANT_OWNER,
 
-    // Teachers,Researcher and Employees from Institution Partners
+    // Staff from Institution Partners
     OTHER_INSTITUTION,
 
     // PALOP Teachers

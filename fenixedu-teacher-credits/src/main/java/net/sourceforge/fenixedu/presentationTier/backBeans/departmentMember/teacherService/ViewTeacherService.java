@@ -232,8 +232,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     public String getDepartmentName() {
         Person person = getUserView().getPerson();
-        Department department =
-                person.getEmployee() != null ? person.getEmployee().getCurrentDepartmentWorkingPlace() : null;
+        Department department = person.getEmployee() != null ? person.getEmployee().getCurrentDepartmentWorkingPlace() : null;
         return department == null ? null : department.getRealName();
     }
 
@@ -257,8 +256,8 @@ public class ViewTeacherService extends FenixBackingBean {
         List<String> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
         this.teacherServiceDTO =
-                ReadTeacherServiceDistributionByTeachers.runReadTeacherServiceDistributionByTeachers(getUserView().getPerson()
-                        .getEmployee().getCurrentDepartmentWorkingPlace().getExternalId(), ExecutionPeriodsIDs);
+                ReadTeacherServiceDistributionByTeachers.run(getUserView().getPerson().getEmployee()
+                        .getCurrentDepartmentWorkingPlace().getExternalId(), ExecutionPeriodsIDs);
 
     }
 

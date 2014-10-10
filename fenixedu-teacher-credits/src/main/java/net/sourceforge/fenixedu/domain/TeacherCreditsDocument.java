@@ -90,8 +90,11 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
             throws ParseException {
         CreditLineDTO creditLineDTO = ReadAllTeacherCredits.readCreditLineDTO(executionSemester, teacher);
         Unit lastWorkingUnit =
-                teacher.getLastWorkingUnit(executionSemester.getBeginDateYearMonthDay(),
-                        executionSemester.getEndDateYearMonthDay());
+                teacher.getPerson().getEmployee() != null ? teacher
+                        .getPerson()
+                        .getEmployee()
+                        .getLastWorkingPlace(executionSemester.getBeginDateYearMonthDay(),
+                                executionSemester.getEndDateYearMonthDay()) : null;
 
         final StringBuilder htmlText = new StringBuilder();
         htmlText.append("<html><body><div style=\"font-family: Arial, Helvetica, sans-serif;font-size: 100%;\">");
@@ -106,7 +109,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
         htmlText.append("</td><td><strong>Username:</strong>").append(teacher.getPerson().getUsername());
         htmlText.append("</td></tr><tr><td><strong>Categoria:</strong>");
 
-        ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
+        ProfessionalCategory categoryByPeriod = ProfessionalCategory.getCategoryByPeriod(teacher, executionSemester);
         String category = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
         if (category != null) {
             htmlText.append(category);
@@ -343,7 +346,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
         htmlText.append("<h3>8) Cargos de Gestão</h3>");
         List<PersonFunction> personFuntions =
-                teacher.getPersonFuntions(executionSemester.getBeginDateYearMonthDay(),
+                PersonFunction.getPersonFuntions(teacher.getPerson(), executionSemester.getBeginDateYearMonthDay(),
                         executionSemester.getEndDateYearMonthDay());
 
         if (personFuntions.isEmpty()) {
@@ -370,7 +373,8 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
         htmlText.append("<h3>9) Situações em Não Exercício</h3>");
 
-        Set<PersonContractSituation> serviceExemptions = teacher.getValidTeacherServiceExemptions(executionSemester);
+        Set<PersonContractSituation> serviceExemptions =
+                PersonContractSituation.getValidTeacherServiceExemptions(teacher, executionSemester);
 
         if (serviceExemptions.isEmpty()) {
             htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos da categoria situações em não exercício.</p>");

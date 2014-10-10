@@ -34,7 +34,7 @@ import org.fenixedu.bennu.core.groups.Group;
  * <ul>
  * <li>Addressee: Someone or something that is the interested party of the document, like a person who receives some certificate
  * document.</li>
- * <li>Operator: An employee who processes the document.</li>
+ * <li>Operator: Who processes the document.</li>
  * <li>Source: A domain entity who feeds the information presented in the document. This one may not make sense in all cases, it
  * is only used when needed.</li>
  * </ul>

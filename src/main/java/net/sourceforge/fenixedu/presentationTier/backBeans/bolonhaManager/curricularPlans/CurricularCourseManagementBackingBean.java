@@ -43,11 +43,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -725,8 +725,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private Department getPersonDepartment() {
         final User userView = getUserView();
         final Person person = userView == null ? null : userView.getPerson();
-        final Employee employee = person == null ? null : person.getEmployee();
-        return employee == null ? null : employee.getCurrentDepartmentWorkingPlace();
+        final Teacher teacher = person == null ? null : person.getTeacher();
+        return teacher == null ? null : teacher.getDepartment();
     }
 
     private List<SelectItem> readCompetenceCourses() {

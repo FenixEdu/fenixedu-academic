@@ -89,7 +89,11 @@ public class ReductionServiceBean implements Serializable {
     }
 
     public String getTeacherCategory() {
+<<<<<<< HEAD
         ProfessionalCategory category = getTeacher().getCategoryByPeriod(getExecutionSemester());
+=======
+        ProfessionalCategory category = ProfessionalCategory.getCategoryByPeriod(getTeacher(), ExecutionSemester.readActualExecutionSemester());
+>>>>>>> b544671... Dependency cleanup: Isolated giaf contracts
         return category != null ? category.getName().getContent() : null;
     }
 

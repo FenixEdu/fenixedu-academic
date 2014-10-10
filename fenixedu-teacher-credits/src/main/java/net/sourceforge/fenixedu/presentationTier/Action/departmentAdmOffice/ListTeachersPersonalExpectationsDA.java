@@ -213,7 +213,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
             final Row row = spreadsheet.addRow();
             row.setCell(teacher.getPerson().getName());
             row.setCell(teacher.getPerson().getUsername());
-            ProfessionalCategory professionalCategory = teacher.getGiafProfessionalCategory();
+            ProfessionalCategory professionalCategory = ProfessionalCategory.getCategory(teacher);
             String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
             row.setCell(category);
 

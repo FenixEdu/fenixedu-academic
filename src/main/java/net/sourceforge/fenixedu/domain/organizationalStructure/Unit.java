@@ -25,7 +25,6 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -35,18 +34,15 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.accessControl.MembersLinkGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -345,20 +341,6 @@ public class Unit extends Unit_Base {
         return possibleCoordinators.iterator().next();
     }
 
-    final public Person getActiveUnitCoordinator() {
-        return getActiveUnitCoordinator(new YearMonthDay());
-    }
-
-    final public Person getActiveUnitCoordinator(final YearMonthDay yearMonthDay) {
-        for (final Accountability accountability : getUnitCoordinatorFunction().getAccountabilitiesSet()) {
-            if (accountability.isPersonFunction() && accountability.isActive(yearMonthDay)) {
-                return ((PersonFunction) accountability).getPerson();
-            }
-        }
-
-        return null;
-    }
-
     public List<Unit> getInactiveSubUnits(YearMonthDay currentDate) {
         return getSubUnitsByState(currentDate, false);
     }
@@ -504,134 +486,6 @@ public class Unit extends Unit_Base {
             allParentUnits.addAll(subUnit.getAllParentUnits());
         }
         return allParentUnits;
-    }
-
-    public Collection<ExternalContract> getExternalPersons() {
-        return (Collection<ExternalContract>) getChildAccountabilities(ExternalContract.class,
-                AccountabilityTypeEnum.WORKING_CONTRACT);
-    }
-
-    public List<Contract> getWorkingContracts() {
-        List<Contract> contracts = new ArrayList<Contract>();
-        contracts.addAll(getEmployeeContractsByType(AccountabilityTypeEnum.WORKING_CONTRACT));
-        return contracts;
-    }
-
-    private Collection<Contract> getEmployeeContractsByType(AccountabilityTypeEnum contractType) {
-        return (Collection<Contract>) getChildAccountabilities(EmployeeContract.class, contractType);
-    }
-
-    public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
-        List<Contract> contracts = new ArrayList<Contract>();
-        for (Contract contract : getWorkingContracts()) {
-            if (contract.belongsToPeriod(begin, end)) {
-                contracts.add(contract);
-            }
-        }
-        return contracts;
-    }
-
-    public List<Contract> getContracts(YearMonthDay begin, YearMonthDay end, AccountabilityTypeEnum... types) {
-        List<Contract> contracts = new ArrayList<Contract>();
-        for (Contract contract : getContracts(types)) {
-            if (contract.belongsToPeriod(begin, end)) {
-                contracts.add(contract);
-            }
-        }
-        return contracts;
-    }
-
-    public Collection<Contract> getContracts(AccountabilityTypeEnum... types) {
-        return (Collection<Contract>) getChildAccountabilities(Contract.class, types);
-    }
-
-    public List<Teacher> getAllTeachers() {
-        List<Teacher> teachers = new ArrayList<Teacher>();
-        List<Employee> employees = getAllWorkingEmployees();
-        for (Employee employee : employees) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.hasAnyTeacherContractSituation()) {
-                teachers.add(teacher);
-            }
-        }
-        return teachers;
-    }
-
-    public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
-        List<Teacher> teachers = new ArrayList<Teacher>();
-        List<Employee> employees = getAllWorkingEmployees(begin, end);
-        for (Employee employee : employees) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.hasAnyTeacherContractSituation(begin.toLocalDate(), end.toLocalDate())) {
-                teachers.add(teacher);
-            }
-        }
-        return teachers;
-    }
-
-    public List<Teacher> getAllTeachers(AcademicInterval academicInterval) {
-        return getAllTeachers(academicInterval.getStart().toYearMonthDay(), academicInterval.getEnd().toYearMonthDay());
-    }
-
-    public List<Teacher> getAllCurrentTeachers() {
-        List<Teacher> teachers = new ArrayList<Teacher>();
-        List<Employee> employees = getAllCurrentActiveWorkingEmployees();
-        for (Employee employee : employees) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.getCurrentTeacherContractSituation() != null) {
-                teachers.add(teacher);
-            }
-        }
-        return teachers;
-    }
-
-    public List<Employee> getAllCurrentNonTeacherEmployees() {
-        List<Employee> employees = getAllCurrentActiveWorkingEmployees();
-        for (Iterator<Employee> iter = employees.iterator(); iter.hasNext();) {
-            Employee employee = iter.next();
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.getCurrentTeacherContractSituation() != null) {
-                iter.remove();
-            }
-        }
-        return employees;
-    }
-
-    public List<Employee> getAllWorkingEmployees() {
-        Set<Employee> employees = new HashSet<Employee>();
-        for (Contract contract : getWorkingContracts()) {
-            employees.add(contract.getEmployee());
-        }
-        for (Unit subUnit : getSubUnits()) {
-            employees.addAll(subUnit.getAllWorkingEmployees());
-        }
-        return new ArrayList<Employee>(employees);
-    }
-
-    public List<Employee> getAllWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
-        Set<Employee> employees = new HashSet<Employee>();
-        for (Contract contract : getWorkingContracts(begin, end)) {
-            employees.add(contract.getEmployee());
-        }
-        for (Unit subUnit : getSubUnits()) {
-            employees.addAll(subUnit.getAllWorkingEmployees(begin, end));
-        }
-        return new ArrayList<Employee>(employees);
-    }
-
-    public List<Employee> getAllCurrentActiveWorkingEmployees() {
-        Set<Employee> employees = new HashSet<Employee>();
-        YearMonthDay currentDate = new YearMonthDay();
-        for (Contract contract : getWorkingContracts()) {
-            Employee employee = contract.getEmployee();
-            if (contract.isActive(currentDate)) {
-                employees.add(employee);
-            }
-        }
-        for (Unit subUnit : getSubUnits()) {
-            employees.addAll(subUnit.getAllCurrentActiveWorkingEmployees());
-        }
-        return new ArrayList<Employee>(employees);
     }
 
     @Override
@@ -1017,25 +871,6 @@ public class Unit extends Unit_Base {
         return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
     }
 
-    public static void mergeExternalUnits(Unit fromUnit, Unit destinationUnit) {
-
-        if (fromUnit == null || destinationUnit == null || fromUnit.equals(destinationUnit)) {
-            throw new DomainException("error.merge.external.units.equals.units");
-        }
-
-        if (!fromUnit.isNoOfficialExternal() || destinationUnit.isInternal()) {
-            throw new DomainException("error.merge.external.units.invalid.units");
-        }
-
-        Collection<? extends Accountability> externalContracts =
-                fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
-        destinationUnit.getChildsSet().addAll(externalContracts);
-        destinationUnit.getAssociatedNonAffiliatedTeachersSet().addAll(fromUnit.getAssociatedNonAffiliatedTeachersSet());
-        destinationUnit.getPrecedentDegreeInformationsSet().addAll(fromUnit.getPrecedentDegreeInformationsSet());
-
-        fromUnit.delete();
-    }
-
     public List<UnitFile> getAccessibileFiles(Person person) {
         List<UnitFile> files = new ArrayList<UnitFile>();
         for (UnitFile file : getFilesSet()) {
@@ -1137,21 +972,6 @@ public class Unit extends Unit_Base {
 
     protected List<Group> getDefaultGroups() {
         return new ArrayList<Group>();
-    }
-
-    /**
-     * Used by UnitBasedSender as sender group members
-     * 
-     * @return members allowed to use the UnitBasedSenders
-     */
-    public Collection<Person> getPossibleGroupMembers() {
-        HashSet<Person> people = new HashSet<Person>();
-
-        for (Employee employee : getAllWorkingEmployees(new YearMonthDay(), null)) {
-            people.add(employee.getPerson());
-        }
-
-        return people;
     }
 
     public Collection<Function> getVirtualFunctions() {
@@ -1265,22 +1085,6 @@ public class Unit extends Unit_Base {
             unitAcronym = new UnitAcronym(acronym);
         }
         setUnitAcronym(unitAcronym);
-    }
-
-    public boolean hasCurrentActiveWorkingEmployee(final Employee employee) {
-        final YearMonthDay currentDate = new YearMonthDay();
-        for (final Contract contract : getWorkingContracts()) {
-            final Employee employeeFromContract = contract.getEmployee();
-            if (employee == employeeFromContract && contract.isActive(currentDate)) {
-                return true;
-            }
-        }
-        for (final Unit subUnit : getSubUnits()) {
-            if (subUnit.hasCurrentActiveWorkingEmployee(employee)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public Boolean hasParentUnit(Unit parentUnit) {

@@ -23,6 +23,11 @@ import java.math.BigDecimal;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.credits.util.ReductionServiceBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
+import net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluationProcessMark;
+import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessYear;
+import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark;
+import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
 import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -118,7 +123,7 @@ public class ReductionService extends ReductionService_Base {
     }
 
     private void checkTeacherCategory() {
-        if (!getTeacherService().getTeacher().isTeacherProfessorCategory(getTeacherService().getExecutionPeriod())) {
+        if (!ProfessionalCategory.isTeacherProfessorCategory(getTeacherService().getTeacher(), getTeacherService().getExecutionPeriod())) {
             throw new DomainException("label.creditsReduction.invalidCategory");
         }
     }

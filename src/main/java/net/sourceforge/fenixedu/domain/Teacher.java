@@ -36,27 +36,18 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.LocalDate;
-import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
 public class Teacher extends Teacher_Base {
@@ -151,21 +142,6 @@ public class Teacher extends Teacher_Base {
         }
     }
 
-    public Unit getCurrentWorkingUnit() {
-        Employee employee = this.getPerson().getEmployee();
-        return (employee != null) ? employee.getCurrentWorkingPlace() : null;
-    }
-
-    public Unit getLastWorkingUnit() {
-        Employee employee = this.getPerson().getEmployee();
-        return (employee != null) ? employee.getLastWorkingPlace() : null;
-    }
-
-    public Unit getLastWorkingUnit(YearMonthDay begin, YearMonthDay end) {
-        Employee employee = this.getPerson().getEmployee();
-        return (employee != null) ? employee.getLastWorkingPlace(begin, end) : null;
-    }
-
     /**
      * Gets the latest department of the teacher for the given interval
      * 
@@ -244,103 +220,6 @@ public class Teacher extends Teacher_Base {
         return getLastCategory(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER)).orElse(null);
     }
 
-    public ProfessionalCategory getGiafProfessionalCategory() {
-        ProfessionalCategory category = getCurrentCategory();
-        if (category == null) {
-            PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-            return personProfessionalData == null ? null : personProfessionalData
-                    .getLastProfessionalCategoryByCategoryType(CategoryType.TEACHER);
-        }
-        return category;
-    }
-
-    public ProfessionalCategory getCurrentCategory() {
-        ProfessionalCategory professionalCategory = null;
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        if (personProfessionalData != null) {
-            professionalCategory =
-                    personProfessionalData.getProfessionalCategoryByCategoryType(CategoryType.TEACHER, new LocalDate());
-        }
-        if (professionalCategory == null) {
-            professionalCategory =
-                    getCategory(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER)).map(
-                            c -> c.getProfessionalCategory()).orElse(null);
-        }
-        return professionalCategory;
-    }
-
-    public ProfessionalCategory getLastGiafProfessionalCategory(LocalDate begin, LocalDate end) {
-        ProfessionalCategory professionalCategory = null;
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        if (personProfessionalData != null) {
-            professionalCategory =
-                    personProfessionalData.getLastProfessionalCategoryByCategoryType(CategoryType.TEACHER, begin, end);
-        }
-        if (professionalCategory == null) {
-            List<ExecutionSemester> executionSemesters = ExecutionSemester.readExecutionPeriodsInTimePeriod(begin, end);
-            Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
-            for (ExecutionSemester executionSemester : executionSemesters) {
-                professionalCategory =
-                        getCategory(executionSemester.getAcademicInterval()).map(c -> c.getProfessionalCategory()).orElse(null);
-                if (professionalCategory != null) {
-                    return professionalCategory;
-                }
-            }
-        }
-        return professionalCategory;
-    }
-
-    public ProfessionalCategory getCategoryByPeriod(ExecutionSemester executionSemester) {
-        OccupationPeriod lessonsPeriod = executionSemester.getLessonsPeriod();
-        return getLastGiafProfessionalCategory(lessonsPeriod.getStartYearMonthDay().toLocalDate(), lessonsPeriod
-                .getEndYearMonthDayWithNextPeriods().toLocalDate());
-    }
-
-    public PersonContractSituation getCurrentTeacherContractSituation() {
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        return personProfessionalData != null ? personProfessionalData
-                .getCurrentPersonContractSituationByCategoryType(CategoryType.TEACHER) : null;
-    }
-
-    public PersonContractSituation getCurrentOrLastTeacherContractSituation() {
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        return personProfessionalData != null ? personProfessionalData
-                .getCurrentOrLastPersonContractSituationByCategoryType(CategoryType.TEACHER) : null;
-    }
-
-    public PersonContractSituation getCurrentOrLastTeacherContractSituation(LocalDate begin, LocalDate end) {
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        return personProfessionalData != null ? personProfessionalData.getCurrentOrLastPersonContractSituationByCategoryType(
-                CategoryType.TEACHER, begin, end) : null;
-    }
-
-    public PersonContractSituation getDominantTeacherContractSituation(Interval interval) {
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        return personProfessionalData != null ? personProfessionalData.getDominantPersonContractSituationByCategoryType(
-                CategoryType.TEACHER, interval) : null;
-    }
-
-    public boolean hasAnyTeacherContractSituation() {
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        if (personProfessionalData != null) {
-            return !personProfessionalData.getPersonContractSituationsByCategoryType(CategoryType.TEACHER).isEmpty();
-        }
-        return false;
-    }
-
-    public boolean hasAnyTeacherContractSituation(LocalDate beginDate, LocalDate endDate) {
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        if (personProfessionalData != null) {
-            for (PersonContractSituation personContractSituation : personProfessionalData
-                    .getPersonContractSituationsByCategoryType(CategoryType.TEACHER)) {
-                if (personContractSituation.betweenDates(beginDate, endDate)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionYear(ExecutionYear executionYear) {
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
@@ -397,134 +276,6 @@ public class Teacher extends Teacher_Base {
     /***************************************************************************
      * PRIVATE METHODS *
      **************************************************************************/
-
-    public List<PersonFunction> getPersonFuntions(YearMonthDay beginDate, YearMonthDay endDate) {
-        return getPerson().getPersonFuntions(beginDate, endDate);
-    }
-
-    public Set<PersonContractSituation> getValidTeacherServiceExemptions(Interval interval) {
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        if (personProfessionalData != null) {
-            return personProfessionalData.getValidPersonProfessionalExemptionByCategoryType(CategoryType.TEACHER, interval);
-        }
-        return new HashSet<PersonContractSituation>();
-    }
-
-    public PersonContractSituation getDominantTeacherServiceExemption(ExecutionSemester executionSemester) {
-        PersonContractSituation dominantExemption = null;
-        int daysInDominantExemption = 0;
-        Interval semesterInterval =
-                new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
-                        executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
-        for (PersonContractSituation personContractSituation : getValidTeacherServiceExemptions(executionSemester)) {
-            int daysInInterval = personContractSituation.getDaysInInterval(semesterInterval);
-            if (dominantExemption == null || daysInInterval > daysInDominantExemption) {
-                dominantExemption = personContractSituation;
-                daysInDominantExemption = daysInInterval;
-            }
-        }
-
-        return dominantExemption;
-    }
-
-    public Set<PersonContractSituation> getValidTeacherServiceExemptions(ExecutionSemester executionSemester) {
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        Interval semesterInterval =
-                new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
-                        executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
-        if (semesterInterval != null && personProfessionalData != null) {
-            return personProfessionalData.getValidPersonProfessionalExemptionByCategoryType(CategoryType.TEACHER,
-                    semesterInterval);
-        }
-        return new HashSet<PersonContractSituation>();
-    }
-
-    public boolean isActive() {
-        PersonContractSituation situation = getCurrentTeacherContractSituation();
-        return situation != null && situation.isActive(new LocalDate());
-    }
-
-    public boolean isActiveForSemester(ExecutionSemester executionSemester) {
-        int minimumWorkingDays = 90;
-        int activeDays = 0;
-        Interval semesterInterval =
-                new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
-                        executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
-        PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-        if (personProfessionalData != null) {
-            GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalData();
-            if (giafProfessionalData != null) {
-                for (final PersonContractSituation situation : giafProfessionalData.getValidPersonContractSituations()) {
-                    if (situation.overlaps(semesterInterval) && situation.getProfessionalCategory() != null
-                            && situation.getProfessionalCategory().getCategoryType().equals(CategoryType.TEACHER)) {
-                        LocalDate beginDate =
-                                situation.getBeginDate().isBefore(semesterInterval.getStart().toLocalDate()) ? semesterInterval
-                                        .getStart().toLocalDate() : situation.getBeginDate();
-                        LocalDate endDate =
-                                situation.getEndDate() == null
-                                        || situation.getEndDate().isAfter(semesterInterval.getEnd().toLocalDate()) ? semesterInterval
-                                        .getEnd().toLocalDate() : situation.getEndDate();
-                        int days =
-                                new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay()).toPeriod(
-                                        PeriodType.days()).getDays() + 1;
-                        activeDays = activeDays + days;
-                    }
-                }
-            }
-        }
-        return activeDays >= minimumWorkingDays;
-    }
-
-    public boolean isActiveOrHasAuthorizationForSemester(ExecutionSemester executionSemester) {
-        return isActiveForSemester(executionSemester) || hasTeacherAuthorization(executionSemester.getAcademicInterval());
-    }
-
-    public boolean isInactive(ExecutionSemester executionSemester) {
-        return !isActiveForSemester(executionSemester);
-    }
-
-    public boolean isMonitor(ExecutionSemester executionSemester) {
-        if (executionSemester != null) {
-            ProfessionalCategory category = getCategoryByPeriod(executionSemester);
-            return (category != null && category.isTeacherMonitorCategory());
-        }
-        return false;
-    }
-
-    public boolean isAssistant(ExecutionSemester executionSemester) {
-        if (executionSemester != null) {
-            ProfessionalCategory category = getCategoryByPeriod(executionSemester);
-            return (category != null && category.isTeacherAssistantCategory());
-        }
-        return false;
-    }
-
-    public boolean isTeacherCareerCategory(ExecutionSemester executionSemester) {
-        if (executionSemester != null) {
-            ProfessionalCategory category = getCategoryByPeriod(executionSemester);
-            return (category != null && category.isTeacherCareerCategory());
-        }
-        return false;
-    }
-
-    public boolean isTeacherProfessorCategory(ExecutionSemester executionSemester) {
-        if (executionSemester != null) {
-            ProfessionalCategory category = getCategoryByPeriod(executionSemester);
-            return (category != null && category.isTeacherProfessorCategory());
-        }
-        return false;
-    }
-
-    public List<PersonFunction> getManagementFunctions(ExecutionSemester executionSemester) {
-        List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-        for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
-            if (personFunction.belongsToPeriod(executionSemester.getBeginDateYearMonthDay(),
-                    executionSemester.getEndDateYearMonthDay())) {
-                personFunctions.add(personFunction);
-            }
-        }
-        return personFunctions;
-    }
 
     public static Teacher readTeacherByUsername(final String userName) {
         final Person person = Person.readPersonByUsername(userName);
@@ -691,6 +442,10 @@ public class Teacher extends Teacher_Base {
     public Optional<TeacherAuthorization> getLatestTeacherAuthorizationInInterval(Interval interval) {
         return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getAcademicInterval().overlaps(interval))
                 .findFirst();
+    }
+
+    public boolean isActiveContractedTeacher() {
+        return getTeacherAuthorization().map(a -> a.isContracted()).orElse(false);
     }
 
     public boolean isErasmusCoordinator() {

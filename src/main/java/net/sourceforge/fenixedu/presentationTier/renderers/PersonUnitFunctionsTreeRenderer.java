@@ -137,7 +137,7 @@ public class PersonUnitFunctionsTreeRenderer extends AbstractUnitFunctionsTreeRe
 
         SortedSet<PersonFunction> result =
                 new TreeSet<PersonFunction>(new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
-        result.addAll(person.getPersonFunctions(function));
+        result.addAll(PersonFunction.getPersonFunctions(person, function));
 
         return result;
     }

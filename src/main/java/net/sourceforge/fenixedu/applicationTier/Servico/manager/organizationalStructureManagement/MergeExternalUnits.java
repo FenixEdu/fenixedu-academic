@@ -20,11 +20,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
@@ -50,7 +54,7 @@ public class MergeExternalUnits {
             String fromUnitName = fromUnit.getName();
             String fromUnitID = fromUnit.getExternalId();
 
-            Unit.mergeExternalUnits(fromUnit, destinationUnit);
+            mergeExternalUnits(fromUnit, destinationUnit);
 
             if (sendMail != null && sendMail.booleanValue()) {
 
@@ -78,5 +82,24 @@ public class MergeExternalUnits {
                 }
             }
         }
+    }
+
+    public static void mergeExternalUnits(Unit fromUnit, Unit destinationUnit) {
+
+        if (fromUnit == null || destinationUnit == null || fromUnit.equals(destinationUnit)) {
+            throw new DomainException("error.merge.external.units.equals.units");
+        }
+
+        if (!fromUnit.isNoOfficialExternal() || destinationUnit.isInternal()) {
+            throw new DomainException("error.merge.external.units.invalid.units");
+        }
+
+        Collection<? extends Accountability> externalContracts =
+                fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
+        destinationUnit.getChildsSet().addAll(externalContracts);
+        destinationUnit.getAssociatedNonAffiliatedTeachersSet().addAll(fromUnit.getAssociatedNonAffiliatedTeachersSet());
+        destinationUnit.getPrecedentDegreeInformationsSet().addAll(fromUnit.getPrecedentDegreeInformationsSet());
+
+        fromUnit.delete();
     }
 }

@@ -21,12 +21,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.function;
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
@@ -54,10 +56,13 @@ public class ReadPersonFunctionsByPersonIDAndExecutionYearID {
             Date beginDate = executionYear.getBeginDate();
             Date endDate = executionYear.getEndDate();
             personFunctions =
-                    person.getPersonFuntions(YearMonthDay.fromDateFields(beginDate), YearMonthDay.fromDateFields(endDate));
+                    PersonFunction.getPersonFuntions(person, YearMonthDay.fromDateFields(beginDate),
+                            YearMonthDay.fromDateFields(endDate));
 
         } else {
-            personFunctions = new ArrayList<PersonFunction>(person.getPersonFunctions());
+            personFunctions =
+                    new ArrayList<PersonFunction>((Collection<PersonFunction>) person.getParentAccountabilities(
+                            AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class));
         }
 
         return personFunctions;

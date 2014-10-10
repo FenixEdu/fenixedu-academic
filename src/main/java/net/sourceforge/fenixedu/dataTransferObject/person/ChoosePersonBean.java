@@ -23,7 +23,6 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.YearMonthDay;
 
@@ -114,10 +113,6 @@ public class ChoosePersonBean implements Serializable {
 
     public void setFirstTimeSearch(boolean firstTimeSearch) {
         this.firstTimeSearch = firstTimeSearch;
-    }
-
-    public boolean isEmployee() {
-        return getPerson() != null && getPerson().hasRole(RoleType.EMPLOYEE);
     }
 
     public Integer getStudentNumber() {

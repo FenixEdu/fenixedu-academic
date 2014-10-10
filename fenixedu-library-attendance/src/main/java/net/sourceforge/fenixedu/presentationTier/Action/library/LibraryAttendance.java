@@ -30,7 +30,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
@@ -46,6 +49,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -210,10 +214,10 @@ public class LibraryAttendance implements Serializable {
                 }
             }
             if (person.getTeacher() != null) {
-                externalTeacherUnit = person.getTeacher().getCurrentWorkingUnit();
+                externalTeacherUnit = person.getEmployee() != null ? person.getEmployee().getCurrentWorkingPlace() : null;
             }
-            if (!person.getWorkingResearchUnits().isEmpty()) {
-                researcherUnit = person.getWorkingPlaceUnitForAnyRoleType();
+            if (!ResearchUnit.getWorkingResearchUnits(person).isEmpty()) {
+                researcherUnit = getWorkingPlaceUnitForAnyRoleType(person);
             }
 
             if (person.hasRole(RoleType.GRANT_OWNER) && person.getEmployee() != null) {
@@ -221,7 +225,7 @@ public class LibraryAttendance implements Serializable {
                         person.getPersonProfessionalData() != null ? person.getPersonProfessionalData()
                                 .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
                 if (currentGrantOwnerContractSituation != null) {
-                    grantOwnerUnit = person.getWorkingPlaceUnitForAnyRoleType();
+                    grantOwnerUnit = getWorkingPlaceUnitForAnyRoleType(person);
                     grantOwnerEnd = currentGrantOwnerContractSituation.getEndDate();
                 }
             }
@@ -237,12 +241,36 @@ public class LibraryAttendance implements Serializable {
                 }
             }
 
-            for (Invitation otherInvitation : person.getActiveInvitations()) {
+            for (Invitation otherInvitation : Invitation.getActiveInvitations(person)) {
                 if (invitation == null || invitation.getEndDate().isBefore(otherInvitation.getEndDate())) {
                     invitation = otherInvitation;
                 }
             }
         }
+    }
+
+    public static Unit getWorkingPlaceUnitForAnyRoleType(Person person) {
+        if (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE) || person.hasRole(RoleType.GRANT_OWNER)) {
+            return person.getEmployee() != null ? person.getEmployee().getCurrentWorkingPlace() : null;
+        }
+        if (person.hasRole(RoleType.RESEARCHER)) {
+            if (person.getEmployee() != null && person.getResearcher() != null
+                    && person.getResearcher().isActiveContractedResearcher()) {
+                final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
+                if (currentWorkingPlace != null) {
+                    return currentWorkingPlace;
+                }
+            }
+            final Collection<? extends Accountability> accountabilities =
+                    person.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+            final YearMonthDay currentDate = new YearMonthDay();
+            for (final Accountability accountability : accountabilities) {
+                if (accountability.isActive(currentDate)) {
+                    return (Unit) accountability.getParentParty();
+                }
+            }
+        }
+        return null;
     }
 
     public Collection<Person> getMatches() {

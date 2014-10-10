@@ -51,7 +51,8 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
 
     public List<Employee> getEmployees() {
         List<Employee> result =
-                (getDepartment() != null) ? new ArrayList<Employee>(getDepartment().getAllCurrentActiveWorkingEmployees()) : null;
+                (getDepartment() != null) ? new ArrayList<Employee>(Employee.getAllCurrentActiveWorkingEmployees(getDepartment()
+                        .getDepartmentUnit())) : null;
 
         if (result != null) {
             ComparatorChain chainComparator = new ComparatorChain();

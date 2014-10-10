@@ -22,10 +22,20 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 @GroupOperator("departmentPresident")
 public class DepartmentPresidentStrategy extends FenixGroupStrategy {
@@ -34,7 +44,7 @@ public class DepartmentPresidentStrategy extends FenixGroupStrategy {
 
     @Override
     public Set<User> getMembers() {
-        return Bennu.getInstance().getDepartmentsSet().stream().map(d -> d.getCurrentDepartmentPresident().getUser())
+        return Bennu.getInstance().getDepartmentsSet().stream().map(d -> getCurrentDepartmentPresident(d).getUser())
                 .filter(Objects::nonNull).collect(Collectors.toSet());
     }
 
@@ -44,8 +54,8 @@ public class DepartmentPresidentStrategy extends FenixGroupStrategy {
                 && user.getPerson() != null
                 && user.getPerson().getEmployee() != null
                 && user.getPerson().getEmployee().getCurrentDepartmentWorkingPlace() != null
-                && user.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
-                        .isCurrentDepartmentPresident(user.getPerson());
+                && getCurrentDepartmentPresident(user.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()).equals(
+                        user.getPerson());
     }
 
     @Override
@@ -56,5 +66,27 @@ public class DepartmentPresidentStrategy extends FenixGroupStrategy {
     @Override
     public boolean isMember(User user, DateTime when) {
         return isMember(user);
+    }
+
+    public static Person getCurrentDepartmentPresident(Department department) {
+        final YearMonthDay today = new YearMonthDay();
+        for (final Accountability accountability : department.getDepartmentUnit().getChildsSet()) {
+            if (accountability.isPersonFunction() && accountability.isActive(today)) {
+                final PersonFunction personFunction = (PersonFunction) accountability;
+                final Function function = personFunction.getFunction();
+                if (function != null && function.getFunctionType() == FunctionType.PRESIDENT) {
+                    final Party childParty = accountability.getChildParty();
+                    if (childParty != null && childParty.isPerson()) {
+                        return (Person) childParty;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static boolean isCurrentUserCurrentDepartmentPresident(Department department) {
+        final Person person = AccessControl.getPerson();
+        return person == null ? false : getCurrentDepartmentPresident(department).equals(person);
     }
 }

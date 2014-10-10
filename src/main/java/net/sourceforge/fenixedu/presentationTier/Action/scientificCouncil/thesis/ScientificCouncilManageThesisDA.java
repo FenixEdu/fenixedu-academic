@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumen
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -339,11 +338,11 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         VariantBean bean = getRenderedObject("usernameChoice");
         if (bean != null) {
             ExecutionDegree executionDegree = FenixFramework.getDomainObject(request.getParameter("executionDegreeID"));
-            Employee employee = Employee.readByNumber(bean.getInteger());
-            if (employee == null || executionDegree.isPersonInScientificCommission(employee.getPerson())) {
-                addActionMessage("addError", request, "error.scientificComission.employee");
+            Person person = Person.readPersonByUsername(bean.getString());
+            if (person == null || executionDegree.isPersonInScientificCommission(person)) {
+                addActionMessage("addError", request, "error.scientificComission.person");
             } else {
-                addScientificCommissionFromExecutionDegree(executionDegree, employee.getPerson());
+                addScientificCommissionFromExecutionDegree(executionDegree, person);
                 RenderUtils.invalidateViewState("usernameChoice");
             }
         }

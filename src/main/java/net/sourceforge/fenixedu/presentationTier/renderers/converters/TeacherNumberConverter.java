@@ -18,24 +18,22 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.converters;
 
-import net.sourceforge.fenixedu.domain.Employee;
-
-import org.apache.commons.lang.StringUtils;
-
+import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+
+import com.google.common.base.Strings;
 
 public class TeacherNumberConverter extends Converter {
 
     @Override
     public Object convert(Class type, Object value) {
+        String id = ((String) value).trim();
 
-        String numberText = ((String) value).trim();
-
-        if (numberText.length() == 0 || !StringUtils.isNumeric(numberText)) {
+        if (Strings.isNullOrEmpty(id)) {
             return null;
         }
 
-        return Employee.readByNumber(Integer.valueOf(numberText)).getPerson().getTeacher();
+        return Teacher.readTeacherByUsername(id);
     }
 
 }

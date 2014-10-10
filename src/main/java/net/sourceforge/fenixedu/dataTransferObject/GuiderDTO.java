@@ -45,11 +45,11 @@ public class GuiderDTO extends DataTranferObject {
         this.guiderName = guiderName;
     }
 
-    public String getGuiderNumber() {
+    public String getGuiderId() {
         return guiderId;
     }
 
-    public void setGuiderNumber(String guiderId) {
+    public void setGuiderId(String guiderId) {
         this.guiderId = guiderId;
     }
 

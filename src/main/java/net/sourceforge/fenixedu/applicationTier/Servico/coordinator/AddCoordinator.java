@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ResponsibleDegreeCoordina
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixframework.Atomic;
@@ -35,12 +34,7 @@ public class AddCoordinator {
 
         final Person person = Person.readPersonByUsername(username);
         if (person == null) {
-            throw new FenixServiceException("error.noEmployeeForUsername");
-        }
-
-        final Employee employee = person.getEmployee();
-        if (employee == null) {
-            throw new FenixServiceException("error.noEmployeeForUsername");
+            throw new FenixServiceException("error.noUserForUsername");
         }
 
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);

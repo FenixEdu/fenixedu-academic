@@ -40,9 +40,6 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-import com.google.common.base.Strings;
-import com.google.common.primitives.Ints;
-
 @StrutsFunctionality(app = ManagerPersonManagementApp.class, path = "find-person", titleKey = "label.manager.findPerson")
 @Mapping(path = "/findPerson", module = "manager")
 @Forwards({ @Forward(name = "findPerson", path = "/manager/personManagement/findPerson.jsp"),
@@ -71,23 +68,9 @@ public class FindPersonAction extends FenixDispatchAction {
         String documentIdNumber = getStringFromRequest(request, "documentIdNumber");
         request.setAttribute("documentIdNumber", documentIdNumber);
 
-        String mechanoGraphicalNumber =
-                getStringFromRequest(request, "mechanoGraphicalNumber") != null ? getStringFromRequest(request,
-                        "mechanoGraphicalNumber").replace(" ", "") : null;
-        request.setAttribute("mechanoGraphicalNumber", mechanoGraphicalNumber);
-
-        if (!Strings.isNullOrEmpty(mechanoGraphicalNumber) && Ints.tryParse(mechanoGraphicalNumber) == null) {
-            addActionMessage(request, "error.mechanoGraphicalNumber", getStringFromRequest(request, "mechanoGraphicalNumber"));
-            return prepareFindPerson(mapping, actionForm, request, response);
-        }
-
         SearchParameters searchParameters =
                 new SearchPerson.SearchParameters(name, email, username, documentIdNumber, null, null, null, null, null, null,
                         null, (String) null);
-
-        if ((mechanoGraphicalNumber != null) && (mechanoGraphicalNumber.length() > 0)) {
-            searchParameters.setMechanoGraphicalNumber(Integer.parseInt(mechanoGraphicalNumber));
-        }
 
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 

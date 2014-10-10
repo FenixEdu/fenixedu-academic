@@ -23,7 +23,6 @@ package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Department;
@@ -35,12 +34,9 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.spaces.domain.Space;
 
 public class PersonInformationBean {
 
@@ -51,10 +47,8 @@ public class PersonInformationBean {
     private List<String> workWebAdresses = new ArrayList<String>();
     private List<String> personalEmails = new ArrayList<String>();
     private List<String> workEmails = new ArrayList<String>();
-    private List<String> personCategories;
     private Department teacherDepartment;
 
-    private String employeeUnit;
     private List<String> studentDegrees;
     private List<Registration> studentRegistrations;
     private String campus;
@@ -78,11 +72,6 @@ public class PersonInformationBean {
 
         fillPersonalAndWorkContacts(person.getWebAddresses(), getPersonalWebAdresses(), getWorkWebAdresses(), checkIfPublic);
         fillPersonalAndWorkContacts(person.getEmailAddresses(), getPersonalEmails(), getWorkEmails(), checkIfPublic);
-
-        setPersonCategories(new ArrayList<String>());
-        Stream.of(RoleType.ALUMNI, RoleType.DELEGATE, RoleType.EMPLOYEE, RoleType.GRANT_OWNER, RoleType.RESEARCHER,
-                RoleType.STUDENT, RoleType.TEACHER).filter(roleType -> roleType.actualGroup().isMember(person.getUser()))
-                .forEach(role -> getPersonCategories().add(role.name()));
 
         setStudentDegrees(new ArrayList<String>());
         setStudentRegistrations(new ArrayList<Registration>());
@@ -113,17 +102,6 @@ public class PersonInformationBean {
             Department department = person.getTeacher().getDepartment();
             if (department != null) {
                 setTeacherDepartment(department);
-            }
-        }
-
-        if (person.getEmployee() != null) {
-            final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
-            if (currentWorkingPlace != null) {
-                setEmployeeUnit(currentWorkingPlace.getName());
-            }
-            Space currentCampus = person.getEmployee().getCurrentCampus();
-            if (currentCampus != null) {
-                setCampus(currentCampus.getName());
             }
         }
     }
@@ -179,32 +157,12 @@ public class PersonInformationBean {
         this.email = email;
     }
 
-    public List<String> getPersonCategories() {
-        return personCategories;
-    }
-
-    public void setPersonCategories(List<String> personCategories) {
-        this.personCategories = personCategories;
-    }
-
-    public String getTeacherDepartment() {
-        return teacherDepartment.getRealName();
-    }
-
     public void setTeacherDepartment(Department teacherDepartment) {
         this.teacherDepartment = teacherDepartment;
     }
 
-    public Department getTeacherDepartmentUnit() {
+    public Department getTeacherDepartment() {
         return teacherDepartment;
-    }
-
-    public String getEmployeeUnit() {
-        return employeeUnit;
-    }
-
-    public void setEmployeeUnit(String employeeUnit) {
-        this.employeeUnit = employeeUnit;
     }
 
     public List<String> getStudentDegrees() {

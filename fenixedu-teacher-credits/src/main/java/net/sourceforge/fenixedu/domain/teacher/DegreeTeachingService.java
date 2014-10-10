@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.util.Bundle;
 
@@ -109,7 +110,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
         double totalHours = 0;
         final ExecutionCourse executionCourse = getProfessorship().getExecutionCourse();
         final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-        if (getProfessorship().getTeacher().isTeacherProfessorCategory(executionSemester)) {
+        if (ProfessionalCategory.isTeacherProfessorCategory(getProfessorship().getTeacher(), executionSemester)) {
             double hoursAfter20PM = getShift().getHoursOnSaturdaysOrNightHours(20);
             double hoursBefore20PM = getShift().getUnitHours().doubleValue() - hoursAfter20PM;
             totalHours += hoursBefore20PM * (getPercentage().doubleValue() / 100);
@@ -123,8 +124,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 
     public double getEfectiveLoad() {
         double afterHeightFactor =
-                getProfessorship().getTeacher().isTeacherProfessorCategory(
-                        getProfessorship().getExecutionCourse().getExecutionPeriod()) ? 1.5 : 1;
+                ProfessionalCategory.isTeacherProfessorCategory(getProfessorship().getTeacher(), getProfessorship().getExecutionCourse().getExecutionPeriod()) ? 1.5 : 1;
 
         double weeklyHoursAfter20 = getTotalHoursAfter20AndSaturdays() / 14;
         double weeklyHoursBefore20 = (getShift().getCourseLoadWeeklyAverage().doubleValue() - weeklyHoursAfter20);

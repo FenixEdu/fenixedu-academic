@@ -28,9 +28,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.ExternalPhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -159,20 +157,6 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void setExecutionYear(ExecutionYear executionYear) {
         this.executionYear = executionYear;
-    }
-
-    public Person getOrCreatePersonFromBean() {
-        if (!getPersonBean().hasPerson()) {
-            Person person = new Person(getPersonBean());
-            getPersonBean().setPerson(person);
-            return person;
-        }
-
-        if (getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)) {
-            return getPersonBean().getPerson();
-        }
-
-        return getPersonBean().getPerson().edit(personBean);
     }
 
     public Degree getDegree() {

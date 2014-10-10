@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -371,7 +372,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void printUnitWorkingEmployees(Unit subUnit, ExecutionYear iExecutionYear, StringBuilder buffer) {
 
         buffer.append("<ul class='unit3'>");
-        List<Contract> contractsByContractType = subUnit.getWorkingContracts();
+        List<Contract> contractsByContractType = EmployeeContract.getWorkingContracts(subUnit);
         Collections.sort(contractsByContractType, Contract.CONTRACT_COMPARATOR_BY_PERSON_NAME);
 
         for (Contract contract : contractsByContractType) {
@@ -472,7 +473,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public SortedSet<PersonFunction> getValidPersonFunction(ExecutionYear iExecutionYear, Function function) {
         SortedSet<PersonFunction> personFunctions = new TreeSet<PersonFunction>(PersonFunction.COMPARATOR_BY_PERSON_NAME);
-        for (PersonFunction personFunction : function.getPersonFunctions()) {
+        for (PersonFunction personFunction : PersonFunction.getPersonFunctions(function)) {
             if (personFunction
                     .belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear.getEndDateYearMonthDay())) {
                 personFunctions.add(personFunction);

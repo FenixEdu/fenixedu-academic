@@ -43,10 +43,10 @@ import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
@@ -139,8 +139,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public Department getPersonDepartment() {
         final User userView = getUserView();
         final Person person = userView == null ? null : userView.getPerson();
-        final Employee employee = person == null ? null : person.getEmployee();
-        return employee == null ? null : employee.getCurrentDepartmentWorkingPlace();
+        final Teacher teacher = person == null ? null : person.getTeacher();
+        return teacher == null ? null : teacher.getDepartment();
     }
 
     public Department getDepartmentToDisplay() {

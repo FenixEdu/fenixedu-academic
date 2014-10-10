@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.DepartmentPresidentStrategy;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryStudentCycleAnswer;
@@ -33,6 +34,7 @@ import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -120,8 +122,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
                 && userView.getPerson().hasRole(RoleType.DEPARTMENT_MEMBER)) {
             ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
             if (executionSemester != null
-                    && (userView.getPerson().getTeacher().isActiveForSemester(executionSemester) || userView.getPerson()
-                            .getTeacher().hasTeacherAuthorization())) {
+                    && (PersonProfessionalData.isTeacherActiveForSemester(userView.getPerson().getTeacher(), executionSemester) || userView
+                            .getPerson().getTeacher().hasTeacherAuthorization())) {
                 TeacherService teacherService =
                         TeacherService.getTeacherServiceByExecutionPeriod(userView.getPerson().getTeacher(), executionSemester);
                 return (teacherService == null || teacherService.getTeacherServiceLock() == null)
@@ -135,7 +137,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         if (userView.getPerson() != null && userView.getPerson().getTeacher() != null
                 && userView.getPerson().hasRole(RoleType.DEPARTMENT_MEMBER)) {
             Department department = userView.getPerson().getTeacher().getDepartment();
-            if (department != null && department.isCurrentUserCurrentDepartmentPresident()) {
+            if (department != null && DepartmentPresidentStrategy.isCurrentUserCurrentDepartmentPresident(department)) {
                 ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
                 if (executionSemester != null
                         && TeacherCreditsFillingCE.isInValidCreditsPeriod(executionSemester,
@@ -194,9 +196,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
      */
     private boolean isAlumniWithNoData(User userView) {
         Person person = userView.getPerson();
-        if (person.getStudent() != null && person.getStudent().getAlumni() != null && person.hasRole(RoleType.ALUMNI)) {
-            if ((person.getTeacher() != null && person.getTeacher().isActive()) || person.hasRole(RoleType.EMPLOYEE)
-                    || person.hasRole(RoleType.RESEARCHER)) {
+        if (person.getStudent() != null && person.getStudent().getAlumni() != null && person.hasRole(RoleType.ALUMNI) != null) {
+            if ((person.getTeacher() != null && person.getTeacher().isActiveContractedTeacher())
+                    || person.hasRole(RoleType.EMPLOYEE) != null || person.hasRole(RoleType.RESEARCHER) != null) {
                 return false;
             }
             return person.getFormations().isEmpty();

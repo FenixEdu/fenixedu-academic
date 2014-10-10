@@ -118,7 +118,7 @@ public class PhdGuidersReport extends PhdReport {
         addHeaderCell(sheet, getHeaderInBundle("guiderName"), 3);
         addHeaderCell(sheet, getHeaderInBundle("guiderRole"), 4);
         addHeaderCell(sheet, getHeaderInBundle("guiderInstitution"), 5);
-        addHeaderCell(sheet, getHeaderInBundle("guiderNumber"), 6);
+        addHeaderCell(sheet, getHeaderInBundle("guiderId"), 6);
         addHeaderCell(sheet, getHeaderInBundle("guiderDepartmentCode"), 7);
         addHeaderCell(sheet, getHeaderInBundle("guiderDepartmentName"), 8);
     }

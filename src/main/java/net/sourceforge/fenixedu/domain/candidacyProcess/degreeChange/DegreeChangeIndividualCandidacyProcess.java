@@ -166,13 +166,6 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 
         @Override
         public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, User userView) {
-            /*
-             * 06/04/2009 The candidacy may be submited by someone who's not
-             * authenticated in the system
-             * 
-             * if (!isDegreeAdministrativeOfficeEmployee(userView)) {throw new
-             * PreConditionNotValidException();}
-             */
         }
 
         @Override

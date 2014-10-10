@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.TeacherCreditsDocument;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
@@ -94,7 +95,7 @@ public class CreditLineDTO {
         setTeacher(teacher);
 
         double totalCredits = 0;
-        if (!getTeacher().isMonitor(executionSemester)) {
+        if (!ProfessionalCategory.isMonitor(getTeacher(), executionSemester)) {
             totalCredits =
                     getTeachingDegreeCredits() + getMasterDegreeCredits() + getTfcAdviseCredits() + getThesesCredits()
                             + getOtherCredits() + getManagementCredits() + getServiceExemptionCredits();

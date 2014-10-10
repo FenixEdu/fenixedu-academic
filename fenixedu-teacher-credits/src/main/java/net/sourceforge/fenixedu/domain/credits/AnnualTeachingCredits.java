@@ -24,6 +24,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -89,7 +91,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         boolean hasFinalAndAccumulatedCredits = false;
 
         for (ExecutionSemester executionSemester : getAnnualCreditsState().getExecutionYear().getExecutionPeriodsSet()) {
-            if (getTeacher().isActiveForSemester(executionSemester)
+            if (PersonProfessionalData.isTeacherActiveForSemester(getTeacher(), executionSemester)
                     || getTeacher().hasTeacherAuthorization(executionSemester.getAcademicInterval())) {
                 BigDecimal thisSemesterManagementFunctionCredits =
                         new BigDecimal(TeacherCredits.calculateManagementFunctionsCredits(getTeacher(), executionSemester));
@@ -163,7 +165,8 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
     }
 
     private boolean canHaveFinalCredits(ExecutionSemester executionSemester, Teacher teacher) {
-        return getTeacher().isActiveForSemester(executionSemester) && !getTeacher().isMonitor(executionSemester);
+        return PersonProfessionalData.isTeacherActiveForSemester(getTeacher(), executionSemester)
+                && !ProfessionalCategory.isMonitor(getTeacher(), executionSemester);
     }
 
     private BigDecimal getPreviousAccumulatedCredits() {

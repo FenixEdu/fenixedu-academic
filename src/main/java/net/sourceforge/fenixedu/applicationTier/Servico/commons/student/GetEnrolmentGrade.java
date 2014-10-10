@@ -41,7 +41,7 @@ public class GetEnrolmentGrade {
 
         final InfoEnrolmentEvaluation infolatestEvaluation = InfoEnrolmentEvaluation.newInfoFromDomain(latestEvaluation);
         if (latestEvaluation.getPerson() != null) {
-            infolatestEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(latestEvaluation.getPerson()));
+            infolatestEvaluation.setInfoPerson(InfoPerson.newInfoFromDomain(latestEvaluation.getPerson()));
             if (latestEvaluation.getPersonResponsibleForGrade() != null) {
                 infolatestEvaluation.setInfoPersonResponsibleForGrade(InfoPerson.newInfoFromDomain(latestEvaluation
                         .getPersonResponsibleForGrade()));

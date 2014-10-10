@@ -89,8 +89,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         String executionYearID = executionYear.getExternalId();
 
-        List degreeCurricularPlans =
-                ReadActiveDegreeCurricularPlansByExecutionYear.runReadActiveDegreeCurricularPlansByExecutionYear(executionYearID);
+        List degreeCurricularPlans = ReadActiveDegreeCurricularPlansByExecutionYear.run(executionYearID);
         final ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
         comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));

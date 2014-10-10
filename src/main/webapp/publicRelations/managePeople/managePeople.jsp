@@ -53,7 +53,11 @@
 </fr:form>
 <br>
 <br>
-<fr:view name="persons" schema="unitSite.manager">
+<fr:view name="persons">
+    <fr:schema name="unitSite.manager" type="net.sourceforge.fenixedu.domain.Person" bundle="SITE_RESOURCES">
+        <fr:slot name="username" key="label.alias"/>
+        <fr:slot name="name" key="label.name"/>
+    </fr:schema>
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle1 thlight mtop05"/>
             <fr:property name="link(delete)" value="/managePublicRelationsPeople.do?method=removeManager"/>

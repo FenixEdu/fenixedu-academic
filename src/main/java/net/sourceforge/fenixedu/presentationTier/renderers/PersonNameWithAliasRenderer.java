@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * This renderer shows a person's name like the PersonNameRenderer but it also
@@ -127,19 +126,7 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
         String name = person.getName();
         HtmlComponent component = super.render(name, String.class);
 
-        if (person.hasExternalContract()) {
-            return addLabel(person, component, getExternalLabel());
-        } else {
-            return addLabel(person, component, person.getUsername());
-        }
-    }
-
-    private String getExternalLabel() {
-        if (!isKey()) {
-            return getLabel();
-        } else {
-            return RenderUtils.getResourceString(getBundle(), getLabel());
-        }
+        return addLabel(person, component, person.getUsername());
     }
 
     private HtmlComponent addLabel(Person person, HtmlComponent component, String label) {

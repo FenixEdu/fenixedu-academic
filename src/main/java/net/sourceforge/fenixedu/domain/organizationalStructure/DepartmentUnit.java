@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
@@ -264,23 +263,6 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         } else {
             return UnitBasedSender.newInstance(this);
         }
-    }
-
-    public Person getCurrentDepartmentPresident() {
-        final YearMonthDay today = new YearMonthDay();
-        for (final Accountability accountability : getChildsSet()) {
-            if (accountability.isPersonFunction() && accountability.isActive(today)) {
-                final PersonFunction personFunction = (PersonFunction) accountability;
-                final Function function = personFunction.getFunction();
-                if (function != null && function.getFunctionType() == FunctionType.PRESIDENT) {
-                    final Party childParty = accountability.getChildParty();
-                    if (childParty != null && childParty.isPerson()) {
-                        return (Person) childParty;
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     @Override

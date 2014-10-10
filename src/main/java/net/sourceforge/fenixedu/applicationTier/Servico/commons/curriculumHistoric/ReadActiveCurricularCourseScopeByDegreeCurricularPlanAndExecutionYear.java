@@ -25,7 +25,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -43,7 +42,8 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear {
 
-    public SortedSet<DegreeModuleScope> run(String degreeCurricularPlanID, AcademicInterval academicInterval)
+    @Atomic
+    public static SortedSet<DegreeModuleScope> run(String degreeCurricularPlanID, AcademicInterval academicInterval)
             throws FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
@@ -64,8 +64,10 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
         return scopes;
     }
 
+    @Atomic
     @Deprecated
-    public SortedSet<DegreeModuleScope> run(String degreeCurricularPlanID, String executioYearID) throws FenixServiceException {
+    public static SortedSet<DegreeModuleScope> run(String degreeCurricularPlanID, String executioYearID)
+            throws FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         final ExecutionYear executionYear = FenixFramework.getDomainObject(executioYearID);
 
@@ -84,23 +86,5 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
         }
 
         return scopes;
-    }
-
-    // Service Invokers migrated from Berserk
-
-    private static final ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear serviceInstance =
-            new ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear();
-
-    @Atomic
-    public static SortedSet<DegreeModuleScope> runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(
-            String degreeCurricularPlanID, AcademicInterval academicInterval) throws FenixServiceException,
-            NotAuthorizedException {
-        return serviceInstance.run(degreeCurricularPlanID, academicInterval);
-    }
-
-    @Atomic
-    public static SortedSet<DegreeModuleScope> runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(
-            String degreeCurricularPlanID, String executioYearID) throws FenixServiceException, NotAuthorizedException {
-        return serviceInstance.run(degreeCurricularPlanID, executioYearID);
     }
 }

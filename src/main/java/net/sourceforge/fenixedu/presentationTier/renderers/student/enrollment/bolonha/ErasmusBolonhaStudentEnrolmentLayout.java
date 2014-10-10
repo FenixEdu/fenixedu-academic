@@ -59,7 +59,7 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmentLayout {
 
-    protected boolean isAcademicAdminOfficeEmployee() {
+    protected boolean isAcademicRelationsOfficeMember() {
         final Person person = AccessControl.getPerson();
         return person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE) || canPerformStudentEnrolments;
     }
@@ -100,7 +100,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 
             String degreeName = degreeModuleToEvaluate.getName();
 
-            if (isAcademicAdminOfficeEmployee() && degreeModuleToEvaluate.getDegreeModule() instanceof CurricularCourse) {
+            if (isAcademicRelationsOfficeMember() && degreeModuleToEvaluate.getDegreeModule() instanceof CurricularCourse) {
                 if (!StringUtils.isEmpty(degreeModuleToEvaluate.getDegreeModule().getCode())) {
                     degreeName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeName;
                 }
@@ -269,7 +269,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 
             String degreeName = curricularCourse.getName();
 
-            if (isAcademicAdminOfficeEmployee() && curricularCourse instanceof CurricularCourse) {
+            if (isAcademicRelationsOfficeMember() && curricularCourse instanceof CurricularCourse) {
                 if (!StringUtils.isEmpty(curricularCourse.getCode())) {
                     degreeName = curricularCourse.getCode() + " - " + degreeName;
                 }

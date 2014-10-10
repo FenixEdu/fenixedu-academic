@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -34,7 +35,7 @@ public class ExternalContract extends ExternalContract_Base {
     public ExternalContract(Person person, Unit institution, YearMonthDay beginDate, YearMonthDay endDate) {
         super();
 
-        if (person.hasExternalContract()) {
+        if (ExternalContract.getExternalContract(person) != null) {
             throw new DomainException("error.externalContract.person.already.is.externalPerson");
         }
 
@@ -153,6 +154,15 @@ public class ExternalContract extends ExternalContract_Base {
             }
         }
         return externalPersons;
+    }
+
+    public static ExternalContract getExternalContract(Person person) {
+        final Collection<ExternalContract> externalContracts =
+                (Collection<ExternalContract>) person.getParentAccountabilities(AccountabilityTypeEnum.WORKING_CONTRACT,
+                        ExternalContract.class);
+
+        final Iterator<ExternalContract> iter = externalContracts.iterator();
+        return iter.hasNext() ? externalContracts.iterator().next() : null;
     }
 
 }

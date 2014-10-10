@@ -177,7 +177,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             return prepareAddCoordinator(mapping, form, request, response);
         } catch (FenixServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
-            if (e.getMessage().equals("error.noEmployeeForUsername")) {
+            if (e.getMessage().equals("error.noUserForUsername")) {
                 actionErrors.add("unknownTeacher", new ActionError(e.getMessage(), username, Unit.getInstitutionAcronym()));
             } else {
                 actionErrors.add("unknownTeacher", new ActionError(e.getMessage()));

@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ManagementCouncilUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
@@ -117,10 +116,10 @@ public class CreateUnit {
             case SECTION:
                 return SectionUnit.createNewSectionUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,
                         accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
-
-            case RESEARCH_UNIT:
-                return ResearchUnit.createNewResearchUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end,
-                        parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
+//
+//            case RESEARCH_UNIT:
+//                return ResearchUnit.createNewResearchUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end,
+//                        parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
 
             case MANAGEMENT_COUNCIL:
                 return ManagementCouncilUnit.createManagementCouncilUnit(unitName, unitNameCard, costCenterCode, acronym, begin,

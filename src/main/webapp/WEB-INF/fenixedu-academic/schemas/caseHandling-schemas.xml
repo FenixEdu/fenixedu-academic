@@ -1716,7 +1716,7 @@
 </schema>
 
 <schema name="PublicCandidacyProcess.candidacyDataBean.personNumber" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
-	<slot name="personNumber" key="label.personNumber">
+	<slot name="personNumber" key="label.studentNumber">
 		<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
 	</slot>

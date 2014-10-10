@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.phd.migration;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
@@ -34,6 +33,7 @@ import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.Incomplet
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationGuidingNotFoundException;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 
 public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
     public static final String IST_INSTITUTION_CODE = "1518";
@@ -55,7 +55,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
         private transient Integer phdStudentNumber;
         private transient String institutionCode;
         private transient String name;
-        private transient String teacherCode;
+        private transient String teacherId;
 
         public PhdMigrationGuidingBean(String data) {
             setData(data);
@@ -67,7 +67,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
                 String[] compounds = getData().split("\\t");
 
                 this.phdStudentNumber = Integer.parseInt(compounds[0].trim());
-                this.teacherCode = compounds[2].trim();
+                this.teacherId = compounds[2].trim();
                 this.institutionCode = compounds[3].trim();
                 this.name = compounds[4].trim();
             } catch (NoSuchElementException e) {
@@ -107,12 +107,12 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
             this.name = name;
         }
 
-        public String getTeacherCode() {
-            return teacherCode;
+        public String getTeacherId() {
+            return teacherId;
         }
 
-        public void setTeacherCode(String teacherCode) {
-            this.teacherCode = teacherCode;
+        public void setTeacherId(String teacherId) {
+            this.teacherId = teacherId;
         }
 
     }
@@ -124,7 +124,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
     public void parseAndSetNumber(Map<String, String> INSTITUTION_MAP) {
         final PhdMigrationGuidingBean guidingBean = getGuidingBean();
 
-        setTeacherNumber(guidingBean.getTeacherCode());
+        setTeacherId(guidingBean.getTeacherId());
         setInstitution(INSTITUTION_MAP.get(guidingBean.getInstitutionCode()));
     }
 
@@ -157,8 +157,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
     private PhdParticipantBean getInternalPhdParticipantBean(final PhdIndividualProgramProcess individualProcess) {
         final PhdParticipantBean participantBean = new PhdParticipantBean();
         participantBean.setIndividualProgramProcess(individualProcess);
-        final Teacher teacher =
-                Employee.readByNumber(Integer.valueOf(getGuidingBean().getTeacherCode())).getPerson().getTeacher();
+        final Teacher teacher = User.findByUsername(getGuidingBean().getTeacherId()).getPerson().getTeacher();
 
         if (teacher == null) {
             throw new PhdMigrationGuidingNotFoundException("The guiding is not present in the system as a teacher");

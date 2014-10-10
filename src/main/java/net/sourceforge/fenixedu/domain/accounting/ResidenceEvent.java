@@ -18,8 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.accounting;
 
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -32,7 +30,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
-import net.sourceforge.fenixedu.predicates.EventsPredicates;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.bennu.core.domain.User;
@@ -107,7 +104,6 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 
     @Override
     public void cancel(Person responsible) {
-        check(this, EventsPredicates.MANAGER_OR_RESIDENCE_UNIT_EMPLOYEE);
         super.cancel(responsible);
     }
 

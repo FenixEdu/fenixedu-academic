@@ -94,9 +94,8 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
         final ExecutionDegreeListBean executionDegreeBean = getRenderedObject("academicInterval");
         try {
             final SortedSet<DegreeModuleScope> degreeModuleScopes =
-                    ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear
-                            .runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(executionDegreeBean
-                                    .getDegreeCurricularPlan().getExternalId(), executionDegreeBean.getAcademicInterval());
+                    ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear.run(executionDegreeBean
+            .getDegreeCurricularPlan().getExternalId(), executionDegreeBean.getAcademicInterval());
 
             final ActionErrors errors = new ActionErrors();
             if (degreeModuleScopes.isEmpty()) {

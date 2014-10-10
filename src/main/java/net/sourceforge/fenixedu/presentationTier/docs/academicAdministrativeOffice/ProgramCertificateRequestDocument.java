@@ -66,7 +66,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.certification"));
         setPersonFields();
         addParametersInformation();
-        fillEmployeeFields();
+        fillInstitutionAndStaffFields();
         setFooter(getDocumentRequest());
         addParameter("enrolment", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.serviceRequests.enrolment"));
     }

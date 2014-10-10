@@ -202,7 +202,7 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
 
         Set<Function> functions = Function.readAllActiveFunctionsByType(FunctionType.DELEGATE_OF_GGAE);
         for (Function function : functions) {
-            for (PersonFunction personFunction : function.getActivePersonFunctionsStartingIn(currentExecutionYear)) {
+            for (PersonFunction personFunction : PersonFunction.getActivePersonFunctionsStartingIn(function, currentExecutionYear)) {
                 DelegateSearchBean bean = new DelegateSearchBean(personFunction.getPerson(), personFunction);
                 result.add(bean);
             }

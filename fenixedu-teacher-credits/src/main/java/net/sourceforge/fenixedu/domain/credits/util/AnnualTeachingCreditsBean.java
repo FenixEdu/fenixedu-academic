@@ -33,8 +33,10 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
+import net.sourceforge.fenixedu.domain.accessControl.DepartmentPresidentStrategy;
 import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
@@ -160,8 +162,8 @@ public class AnnualTeachingCreditsBean implements Serializable {
 
     public String getProfessionalCategoryName() {
         ProfessionalCategory professionalCategory =
-                teacher.getLastGiafProfessionalCategory(executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
-                        .getEndDateYearMonthDay().toLocalDate());
+                ProfessionalCategory.getLastCategory(teacher, executionYear.getBeginDateYearMonthDay().toLocalDate(),
+                        executionYear.getEndDateYearMonthDay().toLocalDate());
         return professionalCategory == null ? null : professionalCategory.getName().getContent();
     }
 
@@ -357,7 +359,7 @@ public class AnnualTeachingCreditsBean implements Serializable {
         Department department = getTeacher().getDepartment();
         return userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)
                 || (loggedTeacher != null && loggedTeacher.equals(getTeacher()))
-                || (department != null && department.isCurrentUserCurrentDepartmentPresident());
+                || (department != null && DepartmentPresidentStrategy.isCurrentUserCurrentDepartmentPresident(department));
     }
 
     public void calculateCredits() {
@@ -372,7 +374,7 @@ public class AnnualTeachingCreditsBean implements Serializable {
         boolean hasFinalAndAccumulatedCredits = false;
 
         for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            if (getTeacher().isActiveForSemester(executionSemester)
+            if (PersonProfessionalData.isTeacherActiveForSemester(getTeacher(), executionSemester)
                     || getTeacher().hasTeacherAuthorization(executionSemester.getAcademicInterval())) {
                 BigDecimal thisSemesterManagementFunctionCredits =
                         new BigDecimal(TeacherCredits.calculateManagementFunctionsCredits(getTeacher(), executionSemester));
@@ -400,7 +402,8 @@ public class AnnualTeachingCreditsBean implements Serializable {
                     setHasAnyLimitation(true);
                 }
                 yearCredits = yearCredits.add(thisSemesterYearCredits);
-                if (getTeacher().isActiveForSemester(executionSemester) && !getTeacher().isMonitor(executionSemester)) {
+                if (PersonProfessionalData.isTeacherActiveForSemester(getTeacher(), executionSemester)
+                        && !ProfessionalCategory.isMonitor(getTeacher(), executionSemester)) {
                     yearCreditsForFinalCredits = yearCreditsForFinalCredits.add(thisSemesterYearCredits);
                     annualTeachingLoadFinalCredits = annualTeachingLoadFinalCredits.add(thisSemesterTeachingLoad);
                     if (executionSemester.getSemester() == 2) {

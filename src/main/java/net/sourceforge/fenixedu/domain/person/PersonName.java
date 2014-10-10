@@ -24,7 +24,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -96,7 +95,6 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
         super();
         this.setRootDomainObject(Bennu.getInstance());
         setPerson(person);
-        setIsExternalPerson(Boolean.valueOf(person.hasExternalContract()));
     }
 
     @Override
@@ -212,18 +210,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
         final StringBuilder text = new StringBuilder();
         text.append(person.getName());
 
-        final String textToAppend;
-        Employee employee = person.getEmployee();
-        if (employee != null && employee.getLastWorkingPlace() != null) {
-            textToAppend = employee.getLastWorkingPlace().getName();
-        } else {
-            if (person.hasExternalContract()) {
-                textToAppend = person.getExternalContract().getInstitutionUnit().getName();
-            } else {
-                textToAppend = person.getUsername();
-            }
-        }
-        appendText(text, textToAppend);
+        appendText(text, person.getUsername());
 
         return text.toString();
     }

@@ -50,33 +50,6 @@
 	</slot>
 </schema>
 
-<schema name="choose.executionDegree"
-	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-		<slot name="degree" key="label.degree" 
-		layout="menu-select"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.DegreesByEmployeeUnit" />
-		<property name="format" value="${presentationName}" />
-	</slot>
-	<slot name="executionYear" key="label.executionYear" 
-		layout="menu-select-postback"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-		<property name="format" value="${year}" />
-		<property name="destination" value="degreePostBack"/>
-	</slot>
-	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
-		layout="menu-select-postback"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.DegreeCurricularPlansForDegree" />
-		<property name="format" value="${name}" />
-		<property name="destination" value="degreeCurricularPlanPostBack"/>		
-	</slot>
-</schema>
-
 <schema name="choose.person"
 	type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

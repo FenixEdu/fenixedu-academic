@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteExecutionD
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionDegreesManagement.EditExecutionDegree;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -143,13 +142,12 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer coordinatorNumber = (Integer) form.get("coordinatorNumber");
+        final String coordinatorID = (String) form.get("coordinatorID");
         final String executionDegreeID = (String) form.get("executionDegreeID");
-        String username = Employee.readByNumber(coordinatorNumber).getPerson().getUsername();
 
         try {
 
-            AddCoordinator.run(executionDegreeID, username);
+            AddCoordinator.run(executionDegreeID, coordinatorID);
 
         } catch (final IllegalDataAccessException e) {
             addMessage(request, "error.notAuthorized");

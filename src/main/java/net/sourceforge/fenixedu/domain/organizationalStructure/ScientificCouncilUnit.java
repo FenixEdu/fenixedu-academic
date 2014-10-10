@@ -18,17 +18,13 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
@@ -92,11 +88,6 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
         }
 
         return null;
-    }
-
-    @Override
-    public Collection<Person> getPossibleGroupMembers() {
-        return RoleType.SCIENTIFIC_COUNCIL.actualGroup().getMembers().stream().map(User::getPerson).collect(Collectors.toSet());
     }
 
     public static ScientificCouncilUnit getScientificCouncilUnit() {

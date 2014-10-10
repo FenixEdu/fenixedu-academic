@@ -90,7 +90,7 @@ public class DelegatesGroup extends FenixGroup {
         Set<User> users = new HashSet<>();
         if (degree == null) {
             for (Function f : Function.readAllActiveFunctionsByType(function)) {
-                for (PersonFunction personFunction : f.getActivePersonFunctions()) {
+                for (PersonFunction personFunction : PersonFunction.getActivePersonFunctions(f)) {
                     User user = personFunction.getPerson().getUser();
                     if (user != null) {
                         users.add(user);

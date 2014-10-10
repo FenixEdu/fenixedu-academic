@@ -68,7 +68,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
         addParameter("enrolmentsInfo", getEnrolmentsInfo());
         fillFirstParagraph(coordinator, coordinatorTitle);
         fillthirdthParagraph(registration, request, student);
-        fillEmployeeFields();
+        fillInstitutionAndStaffFields();
         setFooter(getDocumentRequest());
     }
 

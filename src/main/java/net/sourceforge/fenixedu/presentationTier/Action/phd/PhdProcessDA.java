@@ -112,10 +112,6 @@ abstract public class PhdProcessDA extends PhdDA {
     protected boolean validateAreaCodeAndAreaOfAreaCode(HttpServletRequest request, final Person person, Country country,
             String areaCode, String areaOfAreaCode) {
 
-        if (person != null && person.hasRole(RoleType.EMPLOYEE)) {
-            return true;
-        }
-
         if (country.isDefaultCountry() && !StringUtils.isEmpty(areaCode) && !AREA_CODE_REGEX.matcher(areaCode).matches()) {
             addErrorMessage(request, "error.areaCode.invalidFormat.for.national.address");
 

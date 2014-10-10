@@ -18,16 +18,12 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Bundle;
 
@@ -124,41 +120,6 @@ public class Function extends Function_Base {
         }
     }
 
-    public List<PersonFunction> getPersonFunctions() {
-        List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-        for (Accountability accountability : getAccountabilitiesSet()) {
-            if (accountability.isPersonFunction()) {
-                personFunctions.add((PersonFunction) accountability);
-            }
-        }
-        return personFunctions;
-    }
-
-    public List<PersonFunction> getActivePersonFunctions() {
-        List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-        YearMonthDay currentDate = new YearMonthDay();
-        for (Accountability accountability : getAccountabilitiesSet()) {
-            if (accountability.isPersonFunction() && accountability.isActive(currentDate)) {
-                personFunctions.add((PersonFunction) accountability);
-            }
-        }
-        return personFunctions;
-    }
-
-    public List<PersonFunction> getActivePersonFunctionsByPerson(final Person person) {
-        List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-        YearMonthDay currentDate = new YearMonthDay();
-        for (Accountability accountability : getAccountabilitiesSet()) {
-            if (accountability.isPersonFunction() && accountability.isActive(currentDate)) {
-                PersonFunction personFunction = (PersonFunction) accountability;
-                if (personFunction.getPerson().equals(person)) {
-                    personFunctions.add(personFunction);
-                }
-            }
-        }
-        return personFunctions;
-    }
-
     public boolean isInherentFunction() {
         return (this.getParentInherentFunction() != null);
     }
@@ -216,20 +177,6 @@ public class Function extends Function_Base {
             }
         }
         return result;
-    }
-
-    public List<PersonFunction> getActivePersonFunctionsStartingIn(ExecutionYear executionYear) {
-        List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-        for (Accountability accountability : getAccountabilitiesSet()) {
-            if (accountability.isPersonFunction()) {
-                if (accountability.getBeginDate().isBefore(executionYear.getEndDateYearMonthDay())
-                        && (accountability.getEndDate() == null || accountability.getEndDate().isAfter(
-                                executionYear.getBeginDateYearMonthDay()))) {
-                    personFunctions.add((PersonFunction) accountability);
-                }
-            }
-        }
-        return personFunctions;
     }
 
     public boolean isOfFunctionType(FunctionType functionType) {

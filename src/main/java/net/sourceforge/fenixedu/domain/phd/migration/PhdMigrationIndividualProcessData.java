@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain.phd.migration;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -153,23 +152,23 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     public Person getGuidingPerson() {
-        if (getProcessBean().getGuiderNumber().contains("E")) {
+        if (getProcessBean().getGuiderId().contains("E")) {
             throw new PersonNotFoundException();
         }
 
-        return getPerson(getProcessBean().getGuiderNumber());
+        return getPerson(getProcessBean().getGuiderId());
     }
 
     public Person getAssistantGuidingPerson() {
-        if (getProcessBean().getAssistantGuiderNumber().contains("E")) {
+        if (getProcessBean().getAssistantGuiderId().contains("E")) {
             throw new PersonNotFoundException();
         }
 
-        return getPerson(getProcessBean().getAssistantGuiderNumber());
+        return getPerson(getProcessBean().getAssistantGuiderId());
     }
 
     public Person getPerson(String identification) {
-        Teacher teacher = Employee.readByNumber(Integer.valueOf(identification)).getPerson().getTeacher();
+        Teacher teacher = User.findByUsername(identification).getPerson().getTeacher();
 
         if (teacher == null) {
             throw new PersonNotFoundException();
@@ -520,16 +519,16 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         ExecuteProcessActivity.run(individualProcess, ExemptPublicPresentationSeminarComission.class.getSimpleName(),
                 new PublicPresentationSeminarProcessBean());
 
-        if (!StringUtils.isEmpty(getProcessBean().getGuiderNumber())) {
-            final PhdMigrationGuiding migrationGuiding = getGuiding(getProcessBean().getGuiderNumber());
+        if (!StringUtils.isEmpty(getProcessBean().getGuiderId())) {
+            final PhdMigrationGuiding migrationGuiding = getGuiding(getProcessBean().getGuiderId());
             if (migrationGuiding != null) {
                 final PhdParticipantBean guidingBean = migrationGuiding.getPhdParticipantBean(individualProcess);
                 ExecuteProcessActivity.run(individualProcess, AddGuidingInformation.class.getSimpleName(), guidingBean);
             }
         }
 
-        if (!StringUtils.isEmpty(getProcessBean().getAssistantGuiderNumber())) {
-            final PhdMigrationGuiding migrationAssistantGuiding = getGuiding(getProcessBean().getAssistantGuiderNumber());
+        if (!StringUtils.isEmpty(getProcessBean().getAssistantGuiderId())) {
+            final PhdMigrationGuiding migrationAssistantGuiding = getGuiding(getProcessBean().getAssistantGuiderId());
             if (migrationAssistantGuiding != null) {
                 final PhdParticipantBean assistantGuidingBean =
                         migrationAssistantGuiding.getPhdParticipantBean(individualProcess);
@@ -548,8 +547,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     private PhdMigrationGuiding getGuiding(String guidingNumber) {
         String alternativeGuidingNumber = "0".concat(guidingNumber);
         for (PhdMigrationGuiding migrationGuiding : getPhdMigrationProcess().getPhdMigrationGuidingSet()) {
-            if (guidingNumber.equals(migrationGuiding.getTeacherNumber())
-                    || alternativeGuidingNumber.equals(migrationGuiding.getTeacherNumber())) {
+            if (guidingNumber.equals(migrationGuiding.getTeacherId())
+                    || alternativeGuidingNumber.equals(migrationGuiding.getTeacherId())) {
                 return migrationGuiding;
             }
         }

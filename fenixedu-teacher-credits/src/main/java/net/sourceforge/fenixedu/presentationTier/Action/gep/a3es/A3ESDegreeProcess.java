@@ -56,6 +56,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
@@ -389,8 +390,7 @@ public class A3ESDegreeProcess implements Serializable {
             if (executionSemesters.contains(executionCourse.getExecutionPeriod())) {
                 for (Professorship professorhip : executionCourse.getProfessorshipsSet()) {
                     if (professorhip.isResponsibleFor() == responsibleTeacher
-                            && professorhip.getPerson().getTeacher()
-                                    .isActiveOrHasAuthorizationForSemester(executionCourse.getExecutionPeriod())) {
+                            && PersonProfessionalData.isTeacherActiveOrHasAuthorizationForSemester(professorhip.getPerson().getTeacher(), executionCourse.getExecutionPeriod())) {
                         Double hours = responsiblesMap.get(professorhip.getTeacher());
                         if (hours == null) {
                             hours = 0.0;
@@ -421,8 +421,7 @@ public class A3ESDegreeProcess implements Serializable {
                             for (ThesisEvaluationParticipant thesisEvaluationParticipant : attends.getEnrolment().getThesis()
                                     .getOrientation()) {
                                 if (thesisEvaluationParticipant.getPerson().getTeacher() != null
-                                        && thesisEvaluationParticipant.getPerson().getTeacher()
-                                                .isActiveOrHasAuthorizationForSemester(executionCourse.getExecutionPeriod())) {
+                                        && PersonProfessionalData.isTeacherActiveOrHasAuthorizationForSemester(thesisEvaluationParticipant.getPerson().getTeacher(), executionCourse.getExecutionPeriod())) {
                                     teachers.add(thesisEvaluationParticipant.getPerson().getTeacher());
                                 }
                             }
@@ -504,8 +503,7 @@ public class A3ESDegreeProcess implements Serializable {
                 for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                     if (executionSemesters.contains(executionCourse.getExecutionPeriod())) {
                         for (Professorship professorhip : executionCourse.getProfessorshipsSet()) {
-                            if (professorhip.getPerson().getTeacher()
-                                    .isActiveOrHasAuthorizationForSemester(executionCourse.getExecutionPeriod())) {
+                            if (PersonProfessionalData.isTeacherActiveOrHasAuthorizationForSemester(professorhip.getPerson().getTeacher(), executionCourse.getExecutionPeriod())) {
                                 teachers.add(professorhip.getPerson().getTeacher());
                             }
                         }
@@ -517,11 +515,9 @@ public class A3ESDegreeProcess implements Serializable {
                                     for (ThesisEvaluationParticipant thesisEvaluationParticipant : attends.getEnrolment()
                                             .getThesis().getOrientation()) {
                                         if (thesisEvaluationParticipant.getPerson().getTeacher() != null
-                                                && thesisEvaluationParticipant
-                                                        .getPerson()
-                                                        .getTeacher()
-                                                        .isActiveOrHasAuthorizationForSemester(
-                                                                executionCourse.getExecutionPeriod())) {
+                                                && PersonProfessionalData.isTeacherActiveOrHasAuthorizationForSemester(thesisEvaluationParticipant
+                                                .getPerson()
+                                                .getTeacher(), executionCourse.getExecutionPeriod())) {
                                             teachers.add(thesisEvaluationParticipant.getPerson().getTeacher());
                                         }
                                     }
@@ -543,8 +539,7 @@ public class A3ESDegreeProcess implements Serializable {
                                 InternalPhdParticipant internalPhdParticipant = (InternalPhdParticipant) phdParticipant;
                                 if (internalPhdParticipant.isGuidingOrAssistantGuiding()
                                         && internalPhdParticipant.getPerson().getTeacher() != null
-                                        && internalPhdParticipant.getPerson().getTeacher()
-                                                .isActiveOrHasAuthorizationForSemester(executionSemester)) {
+                                        && PersonProfessionalData.isTeacherActiveOrHasAuthorizationForSemester(internalPhdParticipant.getPerson().getTeacher(), executionSemester)) {
                                     teachers.add(internalPhdParticipant.getPerson().getTeacher());
                                 }
                             }

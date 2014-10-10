@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberPresidentApp;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation.TeacherEvaluationDA;
 
 import org.apache.struts.action.ActionForm;

@@ -66,7 +66,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
         @Forward(name = "chooseNewStudentExecutionDegreeAndIdentification",
                 path = "/academicAdminOffice/chooseNewStudentExecutionDegreeAndIdentification.jsp"),
         @Forward(name = "fillNewPersonData", path = "/academicAdminOffice/fillNewPersonData.jsp"),
-        @Forward(name = "fillNewPersonDataForEmployee", path = "/academicAdminOffice/fillNewPersonDataForEmployee.jsp"),
         @Forward(name = "fillOriginInformation", path = "/academicAdminOffice/fillOriginInformation.jsp"),
         @Forward(name = "createStudentSuccess", path = "/academicAdminOffice/createStudentSuccess.jsp"),
         @Forward(name = "showCreateStudentConfirmation", path = "/academicAdminOffice/showCreateStudentConfirmation.jsp") })
@@ -242,11 +241,6 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
             personBean.setStudentNumber(person.getStudent() != null ? person.getStudent().getNumber() : choosePersonBean
                     .getStudentNumber());
-
-            if (isEmployeeAndHasCurrentWorkingContract(person)) {
-                request.setAttribute("personBean", personBean);
-                return mapping.findForward("fillNewPersonDataForEmployee");
-            }
         } else {
             personBean =
                     new PersonBean(choosePersonBean.getName(), identificationNumber, choosePersonBean.getDocumentType(),
@@ -255,10 +249,6 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("personBean", personBean);
         return mapping.findForward("fillNewPersonData");
-    }
-
-    private boolean isEmployeeAndHasCurrentWorkingContract(Person person) {
-        return person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null;
     }
 
     private boolean checkIngression(HttpServletRequest request, ExecutionDegreeBean executionDegreeBean,
@@ -370,8 +360,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
         request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
         request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
 
-        return isEmployeeAndHasCurrentWorkingContract(personBean.getPerson()) ? mapping
-                .findForward("fillNewPersonDataForEmployee") : mapping.findForward("fillNewPersonData");
+        return mapping.findForward("fillNewPersonData");
     }
 
     public ActionForward createStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

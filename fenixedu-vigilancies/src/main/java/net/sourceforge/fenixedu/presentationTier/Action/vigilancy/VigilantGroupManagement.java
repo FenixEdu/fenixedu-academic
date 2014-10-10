@@ -609,7 +609,8 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
         List<Employee> employees =
-                department.getAllWorkingEmployees(currentYear.getBeginDateYearMonthDay(), currentYear.getEndDateYearMonthDay());
+                Employee.getAllWorkingEmployees(department.getDepartmentUnit(), currentYear.getBeginDateYearMonthDay(),
+                        currentYear.getEndDateYearMonthDay());
 
         Collection<VigilantGroup> groups = coordinator.getVigilantGroupsSet();
 

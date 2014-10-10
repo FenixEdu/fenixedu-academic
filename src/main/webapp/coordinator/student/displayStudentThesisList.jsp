@@ -57,9 +57,9 @@
 					</h:column>			
 					<h:column >
 						<f:facet name="header">
-							<h:outputText value="#{bundle['label.coordinator.guiderNumber']}" />		
+							<h:outputText value="#{bundle['label.coordinator.guiderId']}" />		
 						</f:facet>
-						<h:outputText value="#{(!empty guider.guiderNumber) ? guider.guiderNumber : '-'}" />
+						<h:outputText value="#{(!empty guider.guiderId) ? guider.guiderId : '-'}" />
 					</h:column>
 					<h:column>
 						<f:facet name="header">

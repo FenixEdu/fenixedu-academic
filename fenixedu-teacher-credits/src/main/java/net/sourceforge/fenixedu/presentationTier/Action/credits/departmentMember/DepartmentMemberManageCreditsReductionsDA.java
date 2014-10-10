@@ -29,13 +29,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.accessControl.DepartmentPresidentStrategy;
 import net.sourceforge.fenixedu.domain.credits.util.ReductionServiceBean;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageCreditsReductionsDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberPresidentApp;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberPresidentApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -68,7 +69,7 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
         User userView = Authenticate.getUser();
         Department department = userView.getPerson().getTeacher().getDepartment();
         List<ReductionService> creditsReductions = new ArrayList<ReductionService>();
-        if (department != null && department.isCurrentUserCurrentDepartmentPresident()) {
+        if (department != null && DepartmentPresidentStrategy.isCurrentUserCurrentDepartmentPresident(department)) {
             boolean inValidTeacherCreditsPeriod =
                     TeacherCreditsFillingCE.isInValidCreditsPeriod(executionSemester, RoleType.DEPARTMENT_MEMBER);
             for (Teacher teacher : department.getAllCurrentTeachers()) {

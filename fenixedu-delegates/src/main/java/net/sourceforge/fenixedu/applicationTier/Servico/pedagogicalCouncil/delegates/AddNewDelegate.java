@@ -82,7 +82,7 @@ public class AddNewDelegate {
             /* Check if there is another active person function with this type */
             if (function != null) {
 
-                List<PersonFunction> delegateFunctions = function.getActivePersonFunctions();
+                List<PersonFunction> delegateFunctions = PersonFunction.getActivePersonFunctions(function);
 
                 for (PersonFunction personFunction : delegateFunctions) {
                     if (personFunction.getCurricularYear().equals(curricularYear)
@@ -141,7 +141,7 @@ public class AddNewDelegate {
 
             /* Check if there is another active person function with this type */
             if (function != null) {
-                List<PersonFunction> delegateFunctions = function.getActivePersonFunctions();
+                List<PersonFunction> delegateFunctions = PersonFunction.getActivePersonFunctions(function);
                 for (PersonFunction personFunction : delegateFunctions) {
                     if (personFunction.getBeginDate().equals(currentDate)) {
                         if (personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_YEAR)) {

@@ -48,7 +48,7 @@ public class PersonFunctionsBean implements Serializable {
 
     private void initFunctions(Person person) {
         this.functions = new ArrayList<Function>();
-        for (PersonFunction pf : person.getAllActivePersonFunctions(getUnit())) {
+        for (PersonFunction pf : PersonFunction.getAllActivePersonFunctions(person, getUnit())) {
             this.functions.add(pf.getFunction());
         }
 

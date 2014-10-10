@@ -27,9 +27,13 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -38,6 +42,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -97,7 +102,7 @@ public class TeacherCredits extends TeacherCredits_Base {
     private void saveTeacherCredits() throws ParseException {
         Teacher teacher = getTeacher();
         ExecutionSemester executionSemester = getTeacherCreditsState().getExecutionSemester();
-        setProfessionalCategory(teacher.getCategoryByPeriod(executionSemester));
+        setProfessionalCategory(ProfessionalCategory.getCategoryByPeriod(teacher, executionSemester));
         double managementCredits = calculateManagementFunctionsCredits(teacher, executionSemester);
         double serviceExemptionsCredits = calculateServiceExemptionCredits(teacher, executionSemester);
         double thesesCredits = calculateThesesCredits(teacher, executionSemester);
@@ -112,7 +117,7 @@ public class TeacherCredits extends TeacherCredits_Base {
         setServiceExemptionCredits(new BigDecimal(serviceExemptionsCredits));
 
         double totalCredits = 0;
-        if (!getTeacher().isMonitor(executionSemester)) {
+        if (!ProfessionalCategory.isMonitor(getTeacher(), executionSemester)) {
             totalCredits =
                     getTeachingDegreeCredits().doubleValue() + getMasterDegreeCredits().doubleValue()
                             + getTfcAdviseCredits().doubleValue() + thesesCredits + getOtherCredits().doubleValue()
@@ -167,7 +172,8 @@ public class TeacherCredits extends TeacherCredits_Base {
 
     public static double calculateManagementFunctionsCredits(Teacher teacher, ExecutionSemester executionSemester) {
         double totalCredits = 0.0;
-        for (PersonFunction personFunction : teacher.getPerson().getPersonFunctions()) {
+        for (PersonFunction personFunction : (Collection<PersonFunction>) teacher.getPerson().getParentAccountabilities(
+                AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
             if (personFunction.belongsToPeriod(executionSemester.getBeginDateYearMonthDay(),
                     executionSemester.getEndDateYearMonthDay())
                     && !personFunction.getFunction().isVirtual()) {
@@ -186,9 +192,10 @@ public class TeacherCredits extends TeacherCredits_Base {
         Interval semesterInterval =
                 new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
                         executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
-        if (teacher.isActiveForSemester(executionSemester)) {
-            teacherContractSituation = teacher.getDominantTeacherContractSituation(semesterInterval);
-            PersonContractSituation personContractSituation = teacher.getDominantTeacherServiceExemption(executionSemester);
+        if (PersonProfessionalData.isTeacherActiveForSemester(teacher, executionSemester)) {
+            teacherContractSituation = PersonContractSituation.getDominantTeacherContractSituation(teacher, semesterInterval);
+            PersonContractSituation personContractSituation =
+                    PersonContractSituation.getDominantTeacherServiceExemption(teacher, executionSemester);
             if (personContractSituation != null && !personContractSituation.countForCredits(semesterInterval)) {
                 teacherContractSituation = personContractSituation;
             }
@@ -225,7 +232,7 @@ public class TeacherCredits extends TeacherCredits_Base {
             TeacherCredits teacherCredits = readTeacherCredits(startPeriod, teacher);
             if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
                 totalCredits += teacherCredits.getTotalCredits().subtract(teacherCredits.getMandatoryLessonHours()).doubleValue();
-            } else if (!teacher.isMonitor(startPeriod)) {
+            } else if (!ProfessionalCategory.isMonitor(teacher, startPeriod)) {
                 final ExecutionSemester executionSemester = startPeriod;
                 TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
                 if (teacherService != null) {
@@ -242,7 +249,8 @@ public class TeacherCredits extends TeacherCredits_Base {
     }
 
     public static double calculateServiceExemptionCredits(Teacher teacher, ExecutionSemester executionSemester) {
-        Set<PersonContractSituation> personProfessionalExemptions = teacher.getValidTeacherServiceExemptions(executionSemester);
+        Set<PersonContractSituation> personProfessionalExemptions =
+                PersonContractSituation.getValidTeacherServiceExemptions(teacher, executionSemester);
         Interval semesterInterval =
                 new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
                         executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
@@ -368,4 +376,18 @@ public class TeacherCredits extends TeacherCredits_Base {
         supportLessons.addAll(professorship.getSupportLessonsSet());
         return supportLessons;
     }
+
+    public static List<Teacher> getAllTeachersFromUnit(Unit unit, YearMonthDay begin, YearMonthDay end) {
+        List<Teacher> teachers = new ArrayList<Teacher>();
+        List<Employee> employees = Employee.getAllWorkingEmployees(unit, begin, end);
+        for (Employee employee : employees) {
+            Teacher teacher = employee.getPerson().getTeacher();
+            if (teacher != null
+                    && PersonProfessionalData.hasAnyTeacherContractSituation(teacher, begin.toLocalDate(), end.toLocalDate())) {
+                teachers.add(teacher);
+            }
+        }
+        return teachers;
+    }
+
 }

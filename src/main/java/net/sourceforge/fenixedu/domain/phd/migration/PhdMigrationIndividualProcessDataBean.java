@@ -39,8 +39,8 @@ public class PhdMigrationIndividualProcessDataBean implements Serializable {
     private Integer processNumber;
     private PhdProgram phdProgram;
     private String title;
-    private String guiderNumber;
-    private String assistantGuiderNumber;
+    private String guiderId;
+    private String assistantGuiderId;
     private LocalDate startProcessDate;
     private LocalDate startDevelopmentDate;
     private LocalDate requirementDate;
@@ -76,8 +76,8 @@ public class PhdMigrationIndividualProcessDataBean implements Serializable {
                 throw new IncompleteFieldsException("phdProgram");
             }
             title = fields[2].trim();
-            guiderNumber = fields[3].trim();
-            assistantGuiderNumber = fields[4].trim();
+            guiderId = fields[3].trim();
+            assistantGuiderId = fields[4].trim();
             startProcessDate = ConversionUtilities.parseDate(fields[5].trim());
             startDevelopmentDate = ConversionUtilities.parseDate(fields[6].trim());
             requirementDate = ConversionUtilities.parseDate(fields[7].trim());
@@ -136,20 +136,20 @@ public class PhdMigrationIndividualProcessDataBean implements Serializable {
         this.title = title;
     }
 
-    public String getGuiderNumber() {
-        return guiderNumber;
+    public String getGuiderId() {
+        return guiderId;
     }
 
-    public void setGuiderNumber(String guiderNumber) {
-        this.guiderNumber = guiderNumber;
+    public void setGuiderId(String guiderId) {
+        this.guiderId = guiderId;
     }
 
-    public String getAssistantGuiderNumber() {
-        return assistantGuiderNumber;
+    public String getAssistantGuiderId() {
+        return assistantGuiderId;
     }
 
-    public void setAssistantGuiderNumber(String assistantGuiderNumber) {
-        this.assistantGuiderNumber = assistantGuiderNumber;
+    public void setAssistantGuiderId(String assistantGuiderId) {
+        this.assistantGuiderId = assistantGuiderId;
     }
 
     public LocalDate getStartProcessDate() {

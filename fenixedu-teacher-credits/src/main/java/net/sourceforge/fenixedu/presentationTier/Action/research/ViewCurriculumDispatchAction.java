@@ -131,7 +131,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 
             orientedThesis.addAll(person.getOrientedOrCoorientedThesis(iteratorYear));
 
-            functions.addAll(person.getPersonFuntions(iteratorYear.getBeginDateYearMonthDay(),
+            functions.addAll(PersonFunction.getPersonFuntions(person, iteratorYear.getBeginDateYearMonthDay(),
                     iteratorYear.getEndDateYearMonthDay()));
             iteratorYear = iteratorYear.getNextExecutionYear();
         }

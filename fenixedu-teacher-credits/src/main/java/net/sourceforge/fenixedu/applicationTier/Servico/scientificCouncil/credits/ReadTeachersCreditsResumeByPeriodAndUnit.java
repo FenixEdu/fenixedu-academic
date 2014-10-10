@@ -36,6 +36,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
@@ -56,15 +58,15 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit {
                     getExecutionPeriodsBetween(fromExecutionPeriod, untilExecutionPeriod);
 
             List<Teacher> teachers =
-                    department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
+                    TeacherCredits.getAllTeachersFromUnit(department, fromExecutionPeriod.getBeginDateYearMonthDay(),
                             untilExecutionPeriod.getEndDateYearMonthDay());
 
             List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();
             for (Teacher teacher : teachers) {
-                if (!teacher.isMonitor(executionPeriodsBetween.last()) && !teacher.isInactive(executionPeriodsBetween.last())) {
+                if (!ProfessionalCategory.isMonitor(teacher, executionPeriodsBetween.last())
+                        && !PersonProfessionalData.isTeacherInactive(teacher, executionPeriodsBetween.last())) {
                     Unit workingUnit =
-                            teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(),
-                                    untilExecutionPeriod.getEndDateYearMonthDay());
+                            teacher.getPerson().getEmployee() != null ? teacher.getPerson().getEmployee().getLastWorkingPlace(untilExecutionPeriod.getBeginDateYearMonthDay(), untilExecutionPeriod.getEndDateYearMonthDay()) : null;
                     Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
                     if (workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {
                         TeacherCreditsReportDTO creditsReportDTO = new TeacherCreditsReportDTO();
@@ -89,7 +91,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit {
             TeacherCreditsReportDTO creditLine, boolean countCredits) throws ParseException {
 
         double totalCredits = 0.0;
-        if (countCredits && !teacher.isMonitor(executionSemester)) {
+        if (countCredits && !ProfessionalCategory.isMonitor(teacher, executionSemester)) {
             TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionSemester, teacher);
             if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
                 totalCredits += teacherCredits.getTotalCredits().subtract(teacherCredits.getMandatoryLessonHours()).doubleValue();

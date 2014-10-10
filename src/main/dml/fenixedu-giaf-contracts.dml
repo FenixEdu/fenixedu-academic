@@ -1,0 +1,630 @@
+package net.sourceforge.fenixedu.domain;
+
+class personnelSection.contracts.ContractSituation  {
+    String giafId (REQUIRED);
+    MultiLanguageString name (REQUIRED);
+    Boolean endSituation (REQUIRED);
+    Boolean serviceExemption (REQUIRED);
+    Boolean inExercise (REQUIRED);
+    Boolean hasMandatoryCredits (REQUIRED);
+    Boolean giveCredits (REQUIRED);
+    Boolean mustHaveAssociatedExemption (REQUIRED);
+}
+
+class personnelSection.contracts.ProfessionalContractType  {
+    String giafId;
+    MultiLanguageString name;
+}
+
+class personnelSection.contracts.PersonProfessionalData  {
+}
+
+class personnelSection.contracts.GiafProfessionalData  {
+    String giafPersonIdentification;
+    LocalDate institutionEntryDate;
+    String contractSituationGiafId;
+    LocalDate contractSituationDate;
+    String professionalRelationGiafId;
+    LocalDate professionalRelationDate;
+    String professionalContractTypeGiafId;
+    String professionalCategoryGiafId;
+    LocalDate professionalCategoryDate;
+    String professionalRegimeGiafId;
+    LocalDate professionalRegimeDate;
+    LocalDate terminationSituationDate;
+    DateTime creationDate;
+    DateTime modifiedDate;
+    DateTime importationDate;
+    DateTime anulationDate;
+}
+
+class personnelSection.contracts.PersonProfessionalContract  {
+    LocalDate beginDate;
+    LocalDate endDate;
+    DateTime creationDate;
+    DateTime modifiedDate;
+    DateTime importationDate;
+    DateTime anulationDate;
+    String contractSituationGiafId;
+}
+
+class personnelSection.contracts.PersonContractSituation  {
+    LocalDate beginDate;
+    LocalDate endDate;
+    String step;
+    DateTime creationDate;
+    DateTime modifiedDate;
+    DateTime importationDate;
+    DateTime anulationDate;
+    String contractSituationGiafId;
+    String professionalCategoryGiafId;
+}
+
+class personnelSection.contracts.ProfessionalCategory {
+    String giafId;
+    MultiLanguageString name;
+    CategoryType categoryType;
+    Integer weight;
+    String identificationCardLabel;
+}
+
+class personnelSection.contracts.PersonProfessionalCategory  {
+    LocalDate beginDate;
+    LocalDate endDate;
+    String step;
+    String level;
+    DateTime creationDate;
+    DateTime modifiedDate;
+    DateTime importationDate;
+    DateTime anulationDate;
+    String professionalCategoryGiafId;
+    String professionalRegimeGiafId;
+    String professionalRelationGiafId;
+}
+
+class personnelSection.contracts.ProfessionalRegime  {
+    String giafId;
+    MultiLanguageString name;
+    Integer weighting;
+    BigDecimal fullTimeEquivalent;
+    CategoryType categoryType;
+}
+
+class personnelSection.contracts.PersonProfessionalRegime  {
+    LocalDate beginDate;
+    LocalDate endDate;
+    DateTime creationDate;
+    DateTime modifiedDate;
+    DateTime importationDate;
+    DateTime anulationDate;
+    String professionalRegimeGiafId;
+}
+
+class personnelSection.contracts.ProfessionalRelation  {
+    String giafId;
+    MultiLanguageString name;
+    Boolean fullTimeEquivalent;
+}
+
+class personnelSection.contracts.PersonProfessionalRelation  {
+    LocalDate beginDate;
+    LocalDate endDate;
+    DateTime creationDate;
+    DateTime modifiedDate;
+    DateTime importationDate;
+    DateTime anulationDate;
+    String professionalRelationGiafId;
+    String professionalCategoryGiafId;
+}
+
+class personnelSection.contracts.FunctionsAccumulation  {
+    String giafId;
+    MultiLanguageString name;
+}
+
+class personnelSection.contracts.PersonFunctionsAccumulation  {
+    LocalDate beginDate;
+    LocalDate endDate;
+    BigDecimal hours;
+    DateTime creationDate;
+    DateTime modifiedDate;
+    DateTime importationDate;
+    DateTime anulationDate;
+    String functionsAccumulationGiafId;
+    String professionalRegimeGiafId;
+}
+
+class personnelSection.contracts.PersonProfessionalExemption  {
+    LocalDate beginDate;
+    LocalDate endDate;
+    DateTime creationDate;
+    DateTime modifiedDate;
+    DateTime importationDate;
+    DateTime anulationDate; 
+}
+
+class personnelSection.contracts.PersonSabbatical extends personnelSection.contracts.PersonProfessionalExemption {
+}
+
+class personnelSection.contracts.PersonGrantOwnerEquivalent extends personnelSection.contracts.PersonProfessionalExemption {
+    String motive;
+    String local;
+    String giafCountryName;
+    String grantOwnerEquivalentGiafId;
+}
+
+class personnelSection.contracts.PersonServiceExemption extends personnelSection.contracts.PersonProfessionalExemption {
+    String serviceExemptionGiafId;
+}
+
+class personnelSection.contracts.PersonAbsence extends personnelSection.contracts.PersonProfessionalExemption {
+    String absenceGiafId;
+}
+
+class personnelSection.contracts.GrantOwnerEquivalent  {
+    String giafId;
+    MultiLanguageString name;
+    Boolean hasMandatoryCredits (REQUIRED);
+    Boolean giveCredits (REQUIRED);
+    Boolean isSabaticalOrEquivalent (REQUIRED);
+}
+
+class personnelSection.contracts.ServiceExemption  {
+    String giafId;
+    MultiLanguageString name;
+    Boolean hasMandatoryCredits (REQUIRED);
+    Boolean giveCredits (REQUIRED);
+    Boolean isSabaticalOrEquivalent (REQUIRED);
+}
+
+class personnelSection.contracts.Absence  {
+    String giafId;
+    MultiLanguageString name;
+    Boolean importAbsence (REQUIRED);
+    Boolean hasMandatoryCredits (REQUIRED);
+    Boolean giveCredits (REQUIRED);
+    Boolean isSabaticalOrEquivalent (REQUIRED);
+}
+
+class research.Researcher  {
+    Boolean allowsToBeSearched;
+}
+
+class Employee  {
+    DateTime creationDate;
+    Integer employeeNumber;
+    Integer workingHours;
+}
+
+class organizationalStructure.Contract extends organizationalStructure.Accountability {
+}
+
+class organizationalStructure.ExternalContract extends organizationalStructure.Contract {
+}
+
+class organizationalStructure.Invitation extends organizationalStructure.Contract {
+}
+
+class organizationalStructure.ResearchContract extends organizationalStructure.Contract {
+    Boolean externalContract;
+}
+
+class organizationalStructure.ResearcherContract extends organizationalStructure.ResearchContract {
+}
+
+class organizationalStructure.ResearchScholarshipContract extends organizationalStructure.ResearchContract {
+}
+
+class organizationalStructure.ResearchTechnicalStaffContract extends organizationalStructure.ResearchContract {
+}
+
+class organizationalStructure.ResearchInternshipContract extends organizationalStructure.ResearchContract {
+}
+
+class organizationalStructure.ResearchUnit extends organizationalStructure.Unit {
+}
+
+class organizationalStructure.EmployeeContract extends organizationalStructure.Contract {
+    Boolean teacherContract;                
+}
+
+class organizationalStructure.SharedFunction extends organizationalStructure.Function {
+    BigDecimal credits;
+}
+
+class organizationalStructure.PersonFunctionShared extends organizationalStructure.PersonFunction {
+    BigDecimal percentage;
+}
+
+class util.email.ResearchUnitBasedSender extends util.email.UnitBasedSender {
+}
+
+class accessControl.PersistentResearchAuthorGroup extends accessControl.FenixPredicateGroup;
+
+class accessControl.PersistentCampusEmployeeGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+
+relation GiafProfessionalDataRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalContractRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.PersonProfessionalContract playsRole personProfessionalContracts {
+        multiplicity *;
+    }
+}
+
+relation PersonContractSituationRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.PersonContractSituation playsRole personContractSituations {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalCategoryRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.PersonProfessionalCategory playsRole personProfessionalCategories {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalRegimeRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.PersonProfessionalRegime playsRole personProfessionalRegimes {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalRelationRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.PersonProfessionalRelation playsRole personProfessionalRelations {
+        multiplicity *;
+    }
+}
+
+relation ContractSituationRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.ContractSituation playsRole contractSituations {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalContractTypeRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.ProfessionalContractType playsRole professionalContractTypes {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalCategoryRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.ProfessionalCategory playsRole professionalCategories {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalRegimeRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.ProfessionalRegime playsRole professionalRegimes {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalRelationRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.ProfessionalRelation playsRole professionalRelations {
+        multiplicity *;
+    }
+}
+
+relation PersonFunctionsAccumulationRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.PersonFunctionsAccumulation playsRole personFunctionsAccumulations {
+        multiplicity *;
+    }
+}
+
+relation FunctionsAccumulationRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.FunctionsAccumulation playsRole functionsAccumulations {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalExemptionRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.PersonProfessionalExemption playsRole personProfessionalExemptions {
+        multiplicity *;
+    }
+}
+
+relation ServiceExemptionRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.ServiceExemption playsRole serviceExemptions {
+        multiplicity *;
+    }
+}
+
+relation GrantOwnerEquivalentRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.GrantOwnerEquivalent playsRole grantOwnerEquivalences {
+        multiplicity *;
+    }
+}
+
+relation AbsenceRootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    personnelSection.contracts.Absence playsRole absences {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalDataPerson {
+    Person playsRole person;
+    personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
+}
+
+relation GiafProfessionalDataPersonCampus {
+    .org.fenixedu.spaces.domain.Space playsRole campus;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalDatas {
+        multiplicity *;
+    }
+}
+
+relation GiafProfessionalDataPersonProfessionalData {
+    personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalDatas {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalContractGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
+    personnelSection.contracts.PersonProfessionalContract playsRole personProfessionalContracts {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalContractSituationPersonProfessionalContract {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
+    personnelSection.contracts.PersonContractSituation playsRole personContractSituations {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalCategoryGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
+    personnelSection.contracts.PersonProfessionalCategory playsRole personProfessionalCategories {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalRegimeGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
+    personnelSection.contracts.PersonProfessionalRegime playsRole personProfessionalRegimes {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalRelationGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
+    personnelSection.contracts.PersonProfessionalRelation playsRole personProfessionalRelations {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalExemptionGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
+    personnelSection.contracts.PersonProfessionalExemption playsRole personProfessionalExemptions {
+        multiplicity *;
+    }
+}
+
+relation PersonFunctionsAccumulationGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
+    personnelSection.contracts.PersonFunctionsAccumulation playsRole personFunctionsAccumulations {
+        multiplicity *;
+    }
+}
+
+relation GiafProfessionalDataContractSituation {
+    personnelSection.contracts.ContractSituation playsRole contractSituation;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
+        multiplicity *;
+    }
+}
+
+relation GiafProfessionalDataProfessionalRelation {
+    personnelSection.contracts.ProfessionalRelation playsRole professionalRelation;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
+        multiplicity *;
+    }
+}
+
+relation GiafProfessionalDataProfessionalContractType {
+    personnelSection.contracts.ProfessionalContractType playsRole professionalContractType;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
+        multiplicity *;
+    }
+}
+
+relation GiafProfessionalDataProfessionalCategory {
+    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalCategoryTeacherCategory {
+    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory {
+        multiplicity 0..1;
+    }
+    TeacherCategory playsRole teacherCategory {
+        multiplicity 1..1;
+    }
+}
+
+relation GiafProfessionalDataProfessionalRegime {
+    personnelSection.contracts.ProfessionalRegime playsRole professionalRegime;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
+        multiplicity *;
+    }
+}
+
+relation ContractSituationPersonProfessionalContract {
+    personnelSection.contracts.ContractSituation playsRole contractSituation;
+    personnelSection.contracts.PersonProfessionalContract playsRole personProfessionalContracts {
+        multiplicity *;
+    }
+}
+
+relation ContractSituationPersonContractSituation {
+    personnelSection.contracts.ContractSituation playsRole contractSituation;
+    personnelSection.contracts.PersonContractSituation playsRole personContractSituations {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalCategoryPersonContractSituation {
+    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
+    personnelSection.contracts.PersonContractSituation playsRole personContractSituations {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalCategoryPersonProfessionalCategory {
+    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
+    personnelSection.contracts.PersonProfessionalCategory playsRole personProfessionalCategories {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalRegimePersonProfessionalCategory {
+    personnelSection.contracts.ProfessionalRegime playsRole professionalRegime;
+    personnelSection.contracts.PersonProfessionalCategory playsRole personProfessionalCategories {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalRelationPersonProfessionalCategory {
+    personnelSection.contracts.ProfessionalRelation playsRole professionalRelation;
+    personnelSection.contracts.PersonProfessionalCategory playsRole personProfessionalCategories {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalRegimePersonProfessionalRegime {
+    personnelSection.contracts.ProfessionalRegime playsRole professionalRegime;
+    personnelSection.contracts.PersonProfessionalRegime playsRole personProfessionalRegimes {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalRelationPersonProfessionalRelation {
+    personnelSection.contracts.ProfessionalRelation playsRole professionalRelation;
+    personnelSection.contracts.PersonProfessionalRelation playsRole personProfessionalRelations {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalCategoryPersonProfessionalRelation {
+    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
+    personnelSection.contracts.PersonProfessionalRelation playsRole personProfessionalRelations {
+        multiplicity *;
+    }
+}
+
+
+relation FunctionsAccumulationPersonFunctionsAccumulation {
+    personnelSection.contracts.FunctionsAccumulation playsRole functionsAccumulation;
+    personnelSection.contracts.PersonFunctionsAccumulation playsRole personFunctionsAccumulations {
+        multiplicity *;
+    }
+}
+
+relation PersonFunctionsAccumulationProfessionalRegime {
+    personnelSection.contracts.ProfessionalRegime playsRole professionalRegime;
+    personnelSection.contracts.PersonFunctionsAccumulation playsRole personFunctionsAccumulations {
+        multiplicity *;
+    }
+}
+
+relation ServiceExemptionPersonServiceExemption {
+    personnelSection.contracts.ServiceExemption playsRole serviceExemption;
+    personnelSection.contracts.PersonServiceExemption playsRole personServiceExemptions {
+        multiplicity *;
+    }
+}
+
+relation GrantOwnerEquivalentPersonGrantOwnerEquivalent {
+    personnelSection.contracts.GrantOwnerEquivalent playsRole grantOwnerEquivalent;
+    personnelSection.contracts.PersonGrantOwnerEquivalent playsRole personGrantOwnerEquivalences {
+        multiplicity *;
+    }
+}
+
+relation AbsencePersonAbsence {
+    personnelSection.contracts.Absence playsRole absence;
+    personnelSection.contracts.PersonAbsence playsRole personAbsences {
+        multiplicity *;
+    }
+}
+
+relation PersonGrantOwnerEquivalentCountry {
+    personnelSection.contracts.PersonGrantOwnerEquivalent playsRole personGrantOwnerEquivalences {
+        multiplicity *;
+    }
+    Country playsRole country; 
+}
+
+relation ResearcherRootDomainObject {
+    research.Researcher playsRole researchers {
+        multiplicity *;
+    }
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+}
+
+relation ResearcherPerson {
+    Person playsRole person;
+    research.Researcher playsRole researcher;
+}
+
+relation PublicationCollaborators {
+    organizationalStructure.ResearchUnit playsRole collaboratorIn {
+        multiplicity *;
+    }
+    Person playsRole publicationCollaborators {
+        multiplicity *;
+    }
+}
+
+relation PersistentCampusEmployeeGroupCampus {
+    public accessControl.PersistentCampusEmployeeGroup playsRole campusEmployeeGroup {
+        multiplicity 0..1;
+    }
+    public .org.fenixedu.spaces.domain.Space playsRole campus {
+        multiplicity 1..1;
+    }
+}
+
+relation EmployeePerson {
+    Employee playsRole employee;
+    Person playsRole person;
+}
+
+relation RootDomainObjectEmployee {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    Employee playsRole employees {
+        multiplicity *;
+    }
+}
+
+relation InvitationParty {
+    organizationalStructure.Party playsRole responsible;
+    organizationalStructure.Invitation playsRole invitationAccountabilities {
+        multiplicity *;
+    }
+}

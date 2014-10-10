@@ -38,8 +38,8 @@
 	
 	<div class='simpleblock4'>
 		<p>	
-		<bean:message bundle="MANAGER_RESOURCES" key="label.coordinator.number"/>:
-		<html:text bundle="HTMLALT_RESOURCES" altKey="text.coordinatorNumber" size="5" property="coordinatorNumber" />
+		<bean:message bundle="MANAGER_RESOURCES" key="label.coordinator.id"/>:
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.coordinatorID" size="9" property="coordinatorID" />
 		</p>
 	</div>
 	

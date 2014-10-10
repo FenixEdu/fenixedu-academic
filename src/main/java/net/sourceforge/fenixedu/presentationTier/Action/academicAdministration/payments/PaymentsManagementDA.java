@@ -306,7 +306,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
                 (AnnulAccountingTransactionBean) getObjectFromViewState("annulAccountingTransactionBean");
         try {
 
-            AnnulAccountingTransaction.run(getLoggedPerson(request).getEmployee(), annulAccountingTransactionBean);
+            AnnulAccountingTransaction.run(annulAccountingTransactionBean);
         } catch (DomainExceptionWithLabelFormatter ex) {
 
             addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));

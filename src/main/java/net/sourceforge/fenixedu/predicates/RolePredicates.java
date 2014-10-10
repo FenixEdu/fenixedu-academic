@@ -48,8 +48,7 @@ public class RolePredicates {
                 return true;
             }
 
-            if (contactPerson.getStudent() != null && !contactPerson.hasRole(RoleType.GRANT_OWNER)
-                    && !contactPerson.hasRole(RoleType.EMPLOYEE)) {
+            if (contactPerson.getStudent() != null) {
                 return AcademicAuthorizationGroup.get(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(
                         Authenticate.getUser());
             }
@@ -141,13 +140,6 @@ public class RolePredicates {
         public boolean evaluate(Object object) {
             return hasRole(RoleType.DIRECTIVE_COUNCIL);
 
-        };
-    };
-
-    public static final AccessControlPredicate<Object> EMPLOYEE_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.EMPLOYEE);
         };
     };
 

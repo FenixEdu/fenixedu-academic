@@ -145,8 +145,8 @@ public class TeacherCurricularInformation implements Serializable {
 
     public String getProfessionalCategoryName() {
         ProfessionalCategory lastCategory =
-                getTeacher().getLastGiafProfessionalCategory(executionSemesters.first().getBeginDateYearMonthDay().toLocalDate(),
-                        executionSemesters.last().getEndDateYearMonthDay().toLocalDate());
+                ProfessionalCategory.getLastCategory(getTeacher(), executionSemesters.first().getBeginDateYearMonthDay()
+                        .toLocalDate(), executionSemesters.last().getEndDateYearMonthDay().toLocalDate());
 
         if (lastCategory != null) {
             if (lastCategory.getName().getContent().equalsIgnoreCase("Assistente")) {
@@ -320,7 +320,7 @@ public class TeacherCurricularInformation implements Serializable {
                     if (phdIndividualProgramProcess.getPhdProgram().equals(degree.getPhdProgram())
                             && phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())
                             && phdIndividualProgramProcess.isGuiderOrAssistentGuider(teacher.getPerson())
-                            && teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
+                            && PersonProfessionalData.isTeacherActiveOrHasAuthorizationForSemester(teacher, executionSemester)) {
                         addLecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram().getAcronym(), "Dissertação", "OT",
                                 (float) 0);
                     }

@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
@@ -160,14 +159,13 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
             String username = bean.getString();
 
             Person person = Person.readPersonByUsername(username);
-            Employee employee = person == null ? null : person.getEmployee();
-            if (employee == null) {
-                addActionMessage("addError", request, "error.coordinator.scientificComission.employee.doesNotExist");
+            if (person == null) {
+                addActionMessage("addError", request, "error.coordinator.scientificComission.person.doesNotExist");
             } else {
                 ExecutionDegree executionDegree = getExecutionDegree(request);
 
                 try {
-                    AddScientificCommission.runAddScientificCommission(executionDegree.getExternalId(), employee.getPerson());
+                    AddScientificCommission.runAddScientificCommission(executionDegree.getExternalId(), person);
                     RenderUtils.invalidateViewState("usernameChoice");
                 } catch (DomainException e) {
                     addActionMessage("addError", request, e.getKey(), e.getArgs());

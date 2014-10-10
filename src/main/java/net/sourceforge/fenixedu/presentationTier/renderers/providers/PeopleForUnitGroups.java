@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -55,12 +56,7 @@ public class PeopleForUnitGroups implements DataProvider {
 
     private Collection<Person> getPeopleForUnit(Unit unit) {
         Set<Person> people = new HashSet<Person>();
-        people.addAll(unit.getPossibleGroupMembers());
-        for (Unit subUnit : unit.getAllSubUnits()) {
-            if (subUnit.isResearchUnit()) {
-                people.addAll(subUnit.getPossibleGroupMembers());
-            }
-        }
+        people.addAll(Employee.getPossibleGroupMembers(unit));
         for (PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroupsSet()) {
             for (Person person : persistentGroupMembers.getPersonsSet()) {
                 if (!people.contains(person)) {

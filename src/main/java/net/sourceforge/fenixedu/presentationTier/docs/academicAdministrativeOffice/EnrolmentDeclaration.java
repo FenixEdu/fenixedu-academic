@@ -74,7 +74,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
         fillFirstParagraph(coordinatorTitle, coordinator);
         fillSecondParagraph(registration, student);
         fillthirdthParagraph(registration, numberEnrolments, studentEnrolment);
-        fillEmployeeFields();
+        fillInstitutionAndStaffFields();
         setFooter(getDocumentRequest());
     }
 

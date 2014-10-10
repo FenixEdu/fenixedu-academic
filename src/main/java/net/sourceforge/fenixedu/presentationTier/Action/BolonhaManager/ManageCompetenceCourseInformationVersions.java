@@ -35,10 +35,10 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoadBean;
@@ -87,7 +87,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         Person loggedPerson = getLoggedPerson(request);
         CompetenceCourseInformationRequestBean requestBean = getOrCreateRequestBean(request);
 
-        request.setAttribute("department", loggedPerson.getEmployee().getCurrentDepartmentWorkingPlace());
+        request.setAttribute("department", loggedPerson.getTeacher() != null ? loggedPerson.getTeacher().getDepartment() : null);
         request.setAttribute("requestBean", requestBean);
         return mapping.findForward("showCourses");
     }
@@ -460,8 +460,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 
     public Department getPersonDepartment() {
         final Person person = AccessControl.getPerson();
-        final Employee employee = person == null ? null : person.getEmployee();
-        return employee == null ? null : employee.getCurrentDepartmentWorkingPlace();
+        final Teacher teacher = person == null ? null : person.getTeacher();
+        return teacher == null ? null : teacher.getDepartment();
     }
 
 }

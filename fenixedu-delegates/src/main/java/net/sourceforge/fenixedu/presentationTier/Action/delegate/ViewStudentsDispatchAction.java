@@ -188,7 +188,7 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
                 }
             }
         } else {
-            delegateFunction = person.getActiveGGAEDelegatePersonFunction();
+            delegateFunction = PersonFunction.getActiveGGAEDelegatePersonFunction(person);
         }
         return delegateFunction;
     }

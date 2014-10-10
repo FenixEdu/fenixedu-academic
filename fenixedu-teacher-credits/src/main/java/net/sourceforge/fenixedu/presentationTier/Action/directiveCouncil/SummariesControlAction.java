@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -245,7 +246,8 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
 
                 Teacher teacher = professorship.getTeacher();
                 String categoryName =
-                        teacher != null && teacher.getGiafProfessionalCategory() != null ? teacher.getGiafProfessionalCategory().getName().getContent() : null;
+                        teacher != null && ProfessionalCategory.getCategory(teacher) != null ? ProfessionalCategory
+                                .getCategory(teacher).getName().getContent() : null;
                 String siglas = getSiglas(professorship);
 
                 String teacherEmail =

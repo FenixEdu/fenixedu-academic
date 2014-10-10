@@ -1098,7 +1098,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
         final PhdMigrationIndividualProcessDataBean processDataBean = getAssociatedMigrationProcess().getProcessBean();
 
-        return getAssociatedMigrationgGuidingOrAssistant(processDataBean.getGuiderNumber());
+        return getAssociatedMigrationgGuidingOrAssistant(processDataBean.getGuiderId());
     }
 
     public PhdMigrationGuiding getAssociatedMigrationAssistantGuiding() {
@@ -1108,13 +1108,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
         final PhdMigrationIndividualProcessDataBean processDataBean = getAssociatedMigrationProcess().getProcessBean();
 
-        return getAssociatedMigrationgGuidingOrAssistant(processDataBean.getAssistantGuiderNumber());
+        return getAssociatedMigrationgGuidingOrAssistant(processDataBean.getAssistantGuiderId());
     }
 
-    private PhdMigrationGuiding getAssociatedMigrationgGuidingOrAssistant(String guiderNumber) {
+    private PhdMigrationGuiding getAssociatedMigrationgGuidingOrAssistant(String guiderId) {
         for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
             for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuidingSet()) {
-                if (guidingData.getTeacherNumber().equals(guiderNumber)) {
+                if (guidingData.getTeacherId().equals(guiderId)) {
                     return guidingData;
                 }
             }

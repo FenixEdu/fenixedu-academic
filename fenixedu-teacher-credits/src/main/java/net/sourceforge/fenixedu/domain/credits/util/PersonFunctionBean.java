@@ -223,7 +223,7 @@ public class PersonFunctionBean implements Serializable {
 
     public List<PersonFunctionShared> getPersonFunctionsShared() {
         List<PersonFunctionShared> functions = new ArrayList<PersonFunctionShared>();
-        for (PersonFunction personFunction : getFunction().getPersonFunctions()) {
+        for (PersonFunction personFunction : PersonFunction.getPersonFunctions(getFunction())) {
             if (personFunction instanceof PersonFunctionShared) {
                 PersonFunctionShared personFunctionShared = (PersonFunctionShared) personFunction;
                 if (personFunctionShared.getExecutionInterval().equals(getExecutionSemester())) {

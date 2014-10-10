@@ -21,6 +21,7 @@ package net.sourceforge.fenixedu.domain.credits.util;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +29,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
@@ -115,7 +117,8 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 
     public List<PersonFunction> getPersonFunctions() {
         List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-        for (PersonFunction personFunction : teacher.getPerson().getPersonFunctions()) {
+        for (PersonFunction personFunction : (Collection<PersonFunction>) teacher.getPerson().getParentAccountabilities(
+                AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
             if (personFunction.belongsToPeriod(executionPeriod.getBeginDateYearMonthDay(),
                     executionPeriod.getEndDateYearMonthDay())
                     && !personFunction.getFunction().isVirtual()) {
@@ -138,7 +141,8 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
         Interval executionYearInterval =
                 new Interval(executionPeriod.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionPeriod
                         .getEndDateYearMonthDay().plusDays(1).toDateTimeAtMidnight());
-        return new ArrayList<PersonContractSituation>(teacher.getValidTeacherServiceExemptions(executionYearInterval));
+        return new ArrayList<PersonContractSituation>(PersonContractSituation.getValidTeacherServiceExemptions(teacher,
+                executionYearInterval));
     }
 
     public ReductionService getCreditsReductionService() {

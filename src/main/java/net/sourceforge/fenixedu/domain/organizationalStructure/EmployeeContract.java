@@ -18,6 +18,10 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -75,6 +79,23 @@ public class EmployeeContract extends EmployeeContract_Base {
     @Override
     public Employee getEmployee() {
         return getPerson().getEmployee();
+    }
+
+    public static List<Contract> getWorkingContracts(Unit unit) {
+        List<Contract> contracts = new ArrayList<Contract>();
+        contracts.addAll((Collection<? extends Contract>) unit.getChildAccountabilities(EmployeeContract.class,
+                AccountabilityTypeEnum.WORKING_CONTRACT));
+        return contracts;
+    }
+
+    public static List<Contract> getWorkingContracts(Unit unit, YearMonthDay begin, YearMonthDay end) {
+        List<Contract> contracts = new ArrayList<Contract>();
+        for (Contract contract : getWorkingContracts(unit)) {
+            if (contract.belongsToPeriod(begin, end)) {
+                contracts.add(contract);
+            }
+        }
+        return contracts;
     }
 
 }

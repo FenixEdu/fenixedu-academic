@@ -67,7 +67,7 @@ public class PersonsInFunctionGroup extends FenixGroup {
     @Override
     public Set<User> getMembers() {
         Set<User> users = new HashSet<>();
-        for (PersonFunction f : function.getPersonFunctions()) {
+        for (PersonFunction f : PersonFunction.getPersonFunctions(function)) {
             if (f.isActive()) {
                 User user = f.getPerson().getUser();
                 if (user != null) {

@@ -48,9 +48,9 @@ public class SaveCandidacyDocumentFiles {
     @Atomic
     public static void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {
 
-        Group masterDegreeOfficeEmployeesGroup = RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE.actualGroup();
+        Group masterDegreeAdministrativeOfficeGroup = RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE.actualGroup();
         Group coordinatorsGroup = RoleType.COORDINATOR.actualGroup();
-        Group permittedGroup = masterDegreeOfficeEmployeesGroup.or(coordinatorsGroup);
+        Group permittedGroup = masterDegreeAdministrativeOfficeGroup.or(coordinatorsGroup);
 
         for (CandidacyDocumentUploadBean candidacyDocumentUploadBean : candidacyDocuments) {
             if (candidacyDocumentUploadBean.getTemporaryFile() != null) {

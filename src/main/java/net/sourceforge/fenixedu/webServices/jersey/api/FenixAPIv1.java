@@ -261,7 +261,7 @@ public class FenixAPIv1 {
         final Set<FenixRole> roles = new HashSet<FenixRole>();
 
         if (isTeacher(person) || person.hasRole(RoleType.TEACHER)) {
-            roles.add(new FenixPerson.TeacherFenixRole(pib.getTeacherDepartmentUnit()));
+            roles.add(new FenixPerson.TeacherFenixRole(pib.getTeacherDepartment()));
         }
 
         if (person.hasRole(RoleType.STUDENT)) {

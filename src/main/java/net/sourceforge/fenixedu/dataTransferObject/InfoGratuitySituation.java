@@ -47,8 +47,6 @@ public class InfoGratuitySituation extends InfoObject {
 
     private InfoStudentCurricularPlan infoStudentCurricularPlan;
 
-    private InfoEmployee infoEmployee;
-
     private Date when;
 
     private List transactionList;
@@ -98,21 +96,6 @@ public class InfoGratuitySituation extends InfoObject {
      */
     public void setSituationType(GratuitySituationType situationType) {
         this.situationType = situationType;
-    }
-
-    /**
-     * @return Returns the infoEmployee.
-     */
-    public InfoEmployee getInfoEmployee() {
-        return infoEmployee;
-    }
-
-    /**
-     * @param infoEmployee
-     *            The infoEmployee to set.
-     */
-    public void setInfoEmployee(InfoEmployee infoEmployee) {
-        this.infoEmployee = infoEmployee;
     }
 
     /**

@@ -85,7 +85,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
         fillSeventhParagraph(registration, studentRegistered);
 
         setFooter(getDocumentRequest());
-        fillEmployeeFields();
+        fillInstitutionAndStaffFields();
     }
 
     protected void fillFirstParagraph(Person coordinator, String coordinatorTitle) {

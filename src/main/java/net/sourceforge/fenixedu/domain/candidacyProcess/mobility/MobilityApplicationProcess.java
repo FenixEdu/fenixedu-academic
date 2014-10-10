@@ -291,7 +291,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
         return false;
     }
 
-    static private boolean isGriOfficeEmployee(User userView) {
+    static private boolean isInternationalRelationsOfficer(User userView) {
         return userView.getPerson().hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
     }
 
@@ -523,7 +523,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     private static class ViewMobilityQuota extends Activity<MobilityApplicationProcess> {
         @Override
         public void checkPreConditions(MobilityApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+            if (!isInternationalRelationsOfficer(userView) && !isManager(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
@@ -538,7 +538,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
         @Override
         public void checkPreConditions(MobilityApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+            if (!isInternationalRelationsOfficer(userView) && !isManager(userView)) {
                 throw new PreConditionNotValidException();
             }
 
@@ -577,7 +577,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
         @Override
         public void checkPreConditions(MobilityApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+            if (!isInternationalRelationsOfficer(userView) && !isManager(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
@@ -616,7 +616,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     static private class ViewErasmusCoordinators extends Activity<MobilityApplicationProcess> {
         @Override
         public void checkPreConditions(MobilityApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+            if (!isInternationalRelationsOfficer(userView) && !isManager(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
@@ -631,7 +631,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
         @Override
         public void checkPreConditions(MobilityApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+            if (!isInternationalRelationsOfficer(userView) && !isManager(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
@@ -665,7 +665,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
         @Override
         public void checkPreConditions(MobilityApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+            if (!isInternationalRelationsOfficer(userView) && !isManager(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
@@ -701,7 +701,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     static private class ViewChildProcessWithMissingRequiredDocumentFiles extends Activity<MobilityApplicationProcess> {
         @Override
         public void checkPreConditions(MobilityApplicationProcess process, User userView) {
-            if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+            if (!isInternationalRelationsOfficer(userView) && !isManager(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
@@ -820,7 +820,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
                 return;
             }
 
-            if (isGriOfficeEmployee(userView)) {
+            if (isInternationalRelationsOfficer(userView)) {
                 return;
             }
 
@@ -859,7 +859,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
                 return;
             }
 
-            if (isGriOfficeEmployee(userView)) {
+            if (isInternationalRelationsOfficer(userView)) {
                 return;
             }
 

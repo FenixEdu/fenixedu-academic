@@ -30,18 +30,6 @@
     <slot name="nickname" key="researcher.viewCurriculum.name" />
 </schema>
 
-<schema name="createExternalPerson" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean">
-    <slot name="name" key="label.personName">
-        <property name="size" value="50" />
-    </slot>
-</schema>
-
-<schema name="createExternalUnit" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalUnitBean">
-    <slot name="unitName" key="label.unit.name">
-        <property name="size" value="50" />
-    </slot>
-</schema>
-
 <schema name="view.persistent.group" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" bundle="RESEARCHER_RESOURCES">
     <slot name="name" key="label.groupName" />
     <slot name="persons" key="label.members">

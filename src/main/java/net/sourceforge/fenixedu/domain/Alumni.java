@@ -175,10 +175,6 @@ public class Alumni extends Alumni_Base {
         // (n�o � docente, nao � aluno, nao � funcionario, ...)
 
         Person p = getStudent().getPerson();
-        if (p.hasRole(RoleType.EMPLOYEE)) {
-            return Boolean.FALSE;
-        }
-
         if (p.hasRole(RoleType.TEACHER)) {
             return Boolean.FALSE;
         }

@@ -48,7 +48,7 @@ public class InfoEnrolmentEvaluation extends InfoObject {
 
     private InfoPerson infoPersonResponsibleForGrade;
 
-    private InfoPerson infoEmployee;
+    private InfoPerson infoPerson;
 
     public InfoEnrolmentEvaluation() {
     }
@@ -77,7 +77,7 @@ public class InfoEnrolmentEvaluation extends InfoObject {
         result += "state = " + this.state + "; ";
         result += "infoEnrolment = " + this.infoEnrolment + "; ";
         result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
-        result += "employee = " + this.infoEmployee + "]\n";
+        result += "processedBy = " + this.infoPerson + "]\n";
         result += "when = " + this.when + "]\n";
         return result;
     }
@@ -155,15 +155,15 @@ public class InfoEnrolmentEvaluation extends InfoObject {
     /**
      * @return
      */
-    public InfoPerson getInfoEmployee() {
-        return infoEmployee;
+    public InfoPerson getInfoPerson() {
+        return infoPerson;
     }
 
     /**
      * @param person
      */
-    public void setInfoEmployee(InfoPerson person) {
-        infoEmployee = person;
+    public void setInfoPerson(InfoPerson person) {
+        infoPerson = person;
     }
 
     /**

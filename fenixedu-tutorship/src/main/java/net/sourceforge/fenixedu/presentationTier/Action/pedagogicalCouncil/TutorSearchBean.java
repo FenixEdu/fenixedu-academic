@@ -44,7 +44,7 @@ public class TutorSearchBean implements Serializable {
             TutorSearchBean bean = (TutorSearchBean) source;
             Set<Teacher> teachers = new HashSet<Teacher>();
             if (bean.getDepartment() != null) {
-                for (Employee employee : bean.getDepartment().getAllCurrentActiveWorkingEmployees()) {
+                for (Employee employee : Employee.getAllCurrentActiveWorkingEmployees(bean.getDepartment().getDepartmentUnit())) {
                     if (employee.getPerson().getTeacher() != null) {
                         if (!bean.getOnlyTutors() || !employee.getPerson().getTeacher().getTutorshipsSet().isEmpty()) {
                             teachers.add(employee.getPerson().getTeacher());

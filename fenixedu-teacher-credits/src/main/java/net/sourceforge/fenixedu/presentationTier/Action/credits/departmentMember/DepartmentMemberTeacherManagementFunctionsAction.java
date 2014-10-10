@@ -53,7 +53,7 @@ public class DepartmentMemberTeacherManagementFunctionsAction extends FenixActio
         final User userView = Authenticate.getUser();
         if (userView.getPerson().getTeacher() != null) {
             List<PersonFunction> personFunctions =
-                    new ArrayList<PersonFunction>(userView.getPerson().getPersonFunctions(
+                    new ArrayList<PersonFunction>(PersonFunction.getPersonFunctions(userView.getPerson(),
                             AccountabilityTypeEnum.MANAGEMENT_FUNCTION));
             Collections.sort(personFunctions, new ReverseComparator(new BeanComparator("beginDate")));
             request.setAttribute("personFunctions", personFunctions);

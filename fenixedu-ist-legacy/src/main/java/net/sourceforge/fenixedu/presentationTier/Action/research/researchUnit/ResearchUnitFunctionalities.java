@@ -68,7 +68,7 @@ public class ResearchUnitFunctionalities extends UnitFunctionalities {
         if (unit != null) {
             return prepare(mapping, form, request, response);
         }
-        List<ResearchUnit> units = AccessControl.getPerson().getWorkingResearchUnitsAndParents();
+        List<ResearchUnit> units = ResearchUnit.getWorkingResearchUnitsAndParents(AccessControl.getPerson());
         if (units.size() == 1) {
             request.setAttribute("unit", units.iterator().next());
             return prepare(mapping, form, request, response);

@@ -57,7 +57,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -72,21 +71,6 @@ public class Department extends Department_Base {
     public Department() {
         super();
         setRootDomainObject(Bennu.getInstance());
-    }
-
-    public List<Employee> getAllCurrentActiveWorkingEmployees() {
-        Unit departmentUnit = getDepartmentUnit();
-        return (departmentUnit != null) ? departmentUnit.getAllCurrentActiveWorkingEmployees() : new ArrayList<Employee>(0);
-    }
-
-    public List<Employee> getAllWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
-        Unit departmentUnit = getDepartmentUnit();
-        return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees(begin, end) : new ArrayList<Employee>(0);
-    }
-
-    public List<Employee> getAllWorkingEmployees() {
-        Unit departmentUnit = getDepartmentUnit();
-        return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees() : new ArrayList<Employee>(0);
     }
 
     public List<Teacher> getAllCurrentTeachers() {
@@ -287,27 +271,8 @@ public class Department extends Department_Base {
         return isUserMemberOfCompetenceCourseMembersGroup(AccessControl.getPerson());
     }
 
-    public boolean hasCurrentActiveWorkingEmployee(final Employee employee) {
-        final Unit unit = getDepartmentUnit();
-        return unit != null && unit.hasCurrentActiveWorkingEmployee(employee);
-    }
-
     public DepartmentForum getDepartmentForum() {
         return getForum();
-    }
-
-    public Person getCurrentDepartmentPresident() {
-        final DepartmentUnit unit = getDepartmentUnit();
-        return unit == null ? null : unit.getCurrentDepartmentPresident();
-    }
-
-    public boolean isCurrentUserCurrentDepartmentPresident() {
-        final Person person = AccessControl.getPerson();
-        return isCurrentDepartmentPresident(person);
-    }
-
-    public boolean isCurrentDepartmentPresident(final Person person) {
-        return person != null && person == getCurrentDepartmentPresident();
     }
 
     public static Department find(final String departmentCode) {

@@ -237,7 +237,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
             return Delegate.getAllActiveDelegateFunctions(person.getStudent());
         } else {
             List<PersonFunction> result = new ArrayList<PersonFunction>();
-            result.add(person.getActiveGGAEDelegatePersonFunction());
+            result.add(PersonFunction.getActiveGGAEDelegatePersonFunction(person));
             return result;
         }
     }
@@ -246,7 +246,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
         if (person.getStudent() != null) {
             return Delegate.getAllDelegateFunctions(person.getStudent());
         } else {
-            return person.getAllGGAEDelegatePersonFunctions();
+            return PersonFunction.getAllGGAEDelegatePersonFunctions(person);
         }
     }
 
@@ -258,12 +258,12 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
         if (searchBean.getOnlyActiveDelegates()) {
             Set<Function> functions = Function.readAllActiveFunctionsByType(FunctionType.DELEGATE_OF_YEAR);
             for (Function function : functions) {
-                personFunctions.addAll(function.getActivePersonFunctionsStartingIn(currentExecutionYear));
+                personFunctions.addAll(PersonFunction.getActivePersonFunctionsStartingIn(function, currentExecutionYear));
             }
         } else {
             Set<Function> functions = Function.readAllFunctionsByType(FunctionType.DELEGATE_OF_YEAR);
             for (Function function : functions) {
-                personFunctions.addAll(function.getPersonFunctions());
+                personFunctions.addAll(PersonFunction.getPersonFunctions(function));
             }
         }
         for (PersonFunction personFunction : personFunctions) {
@@ -284,12 +284,12 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
         if (searchBean.getOnlyActiveDelegates()) {
             Set<Function> functions = Function.readAllActiveFunctionsByType(searchBean.getDelegateType());
             for (Function function : functions) {
-                personFunctions.addAll(function.getActivePersonFunctionsStartingIn(currentExecutionYear));
+                personFunctions.addAll(PersonFunction.getActivePersonFunctionsStartingIn(function, currentExecutionYear));
             }
         } else {
             Set<Function> functions = Function.readAllFunctionsByType(searchBean.getDelegateType());
             for (Function function : functions) {
-                personFunctions.addAll(function.getPersonFunctions());
+                personFunctions.addAll(PersonFunction.getPersonFunctions(function));
             }
         }
         for (PersonFunction personFunction : personFunctions) {

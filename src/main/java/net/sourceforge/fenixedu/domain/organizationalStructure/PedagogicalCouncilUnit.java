@@ -18,16 +18,12 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 
 public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
@@ -49,11 +45,6 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
         groups.add(RoleType.PEDAGOGICAL_COUNCIL.actualGroup());
 
         return groups;
-    }
-
-    @Override
-    public Collection<Person> getPossibleGroupMembers() {
-        return RoleType.PEDAGOGICAL_COUNCIL.actualGroup().getMembers().stream().map(User::getPerson).collect(Collectors.toSet());
     }
 
     public static PedagogicalCouncilUnit getPedagogicalCouncilUnit() {

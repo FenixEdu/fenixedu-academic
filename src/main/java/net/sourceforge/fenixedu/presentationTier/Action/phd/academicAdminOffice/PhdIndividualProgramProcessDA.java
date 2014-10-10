@@ -1315,8 +1315,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
                 request.setAttribute("personalDataBean", processData.getPhdMigrationIndividualPersonalData().getPersonalBean());
             }
 
-            final String guiderCode = processData.getProcessBean().getGuiderNumber();
-            final String assistantGuiderCode = processData.getProcessBean().getAssistantGuiderNumber();
+            final String guiderCode = processData.getProcessBean().getGuiderId();
+            final String assistantGuiderCode = processData.getProcessBean().getAssistantGuiderId();
 
             if (guiderCode != null) {
                 final PhdMigrationGuiding guiderData = getMigrationGuidingData(guiderCode);
@@ -1361,10 +1361,10 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         return null;
     }
 
-    private PhdMigrationGuiding getMigrationGuidingData(String teacherCode) {
+    private PhdMigrationGuiding getMigrationGuidingData(String teacherId) {
         for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
             for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuidingSet()) {
-                if (guidingData.getTeacherNumber().equals(teacherCode)) {
+                if (guidingData.getTeacherId().equals(teacherId)) {
                     return guidingData;
                 }
             }

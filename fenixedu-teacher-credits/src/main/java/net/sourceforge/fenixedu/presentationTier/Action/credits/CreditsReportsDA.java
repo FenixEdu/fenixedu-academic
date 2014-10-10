@@ -144,9 +144,9 @@ public class CreditsReportsDA extends FenixDispatchAction {
             spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.managementPosition.credits"));
             for (Teacher teacher : department.getAllTeachers(departmentCreditsBean.getExecutionSemester())) {
 
-                for (PersonFunction personFunction : teacher.getPerson().getPersonFuntions(
-                        departmentCreditsBean.getExecutionSemester().getBeginDateYearMonthDay(),
-                        departmentCreditsBean.getExecutionSemester().getEndDateYearMonthDay())) {
+                for (PersonFunction personFunction : PersonFunction.getPersonFuntions(teacher.getPerson(), departmentCreditsBean
+                        .getExecutionSemester().getBeginDateYearMonthDay(), departmentCreditsBean.getExecutionSemester()
+                        .getEndDateYearMonthDay())) {
                     spreadsheet.newRow();
                     spreadsheet.addCell(personFunction.getPerson().getUsername());
                     spreadsheet.addCell(personFunction.getPerson().getName());

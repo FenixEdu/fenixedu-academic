@@ -32,7 +32,6 @@
                   <form-property type="java.lang.String" name="email"></form-property>
                   <form-property type="java.lang.String" name="username"></form-property>
                   <form-property type="java.lang.String" name="documentIdNumber"></form-property>
-                  <form-property type="java.lang.String" name="mechanoGraphicalNumber"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
             </form-bean>
       </form-beans>

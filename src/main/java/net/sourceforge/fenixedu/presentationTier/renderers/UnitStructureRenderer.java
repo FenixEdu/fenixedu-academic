@@ -24,6 +24,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -433,7 +434,7 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     private SortedSet<Person> getPersonsWithContract(Unit unit, SortedSet<Person> persons) {
-        for (Contract contract : unit.getWorkingContracts()) {
+        for (Contract contract : EmployeeContract.getWorkingContracts(unit)) {
             if (!isAccountabilityVisible(contract)) {
                 continue;
             }
@@ -539,7 +540,7 @@ public class UnitStructureRenderer extends OutputRenderer {
     }
 
     protected SortedSet<PersonFunction> getPersonFunctions(Function function, TreeSet<PersonFunction> collection) {
-        for (PersonFunction pf : function.getPersonFunctions()) {
+        for (PersonFunction pf : PersonFunction.getPersonFunctions(function)) {
             if (!isAccountabilityVisible(pf)) {
                 continue;
             }

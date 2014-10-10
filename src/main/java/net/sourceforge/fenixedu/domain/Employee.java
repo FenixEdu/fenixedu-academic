@@ -24,13 +24,19 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
@@ -255,8 +261,8 @@ public class Employee extends Employee_Base {
     }
 
     private boolean unitDepartment(Unit unit, boolean onlyActiveEmployees) {
-        return (unit.isDepartmentUnit() && ((DepartmentUnit) unit).getDepartment() != null && (!onlyActiveEmployees || ((DepartmentUnit) unit)
-                .getDepartment().hasCurrentActiveWorkingEmployee(this)));
+        return (unit.isDepartmentUnit() && ((DepartmentUnit) unit).getDepartment() != null && (!onlyActiveEmployees || Employee
+                .hasCurrentActiveWorkingEmployee(unit, this)));
     }
 
     public static Employee readByNumber(final Integer employeeNumber) {
@@ -304,7 +310,7 @@ public class Employee extends Employee_Base {
     }
 
     public boolean isUnitCoordinator() {
-        return getCurrentWorkingPlace().getActiveUnitCoordinator() == getPerson();
+        return PersonFunction.getActiveUnitCoordinator(getCurrentWorkingPlace()) == getPerson();
     }
 
     public static Integer getNextEmployeeNumber() {
@@ -346,6 +352,66 @@ public class Employee extends Employee_Base {
             RoleType.revoke(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE, getPerson().getUser());
         }
         this.getPerson().getManageableDepartmentCreditsSet().remove(department);
+    }
+
+    public static List<Employee> getAllCurrentActiveWorkingEmployees(Unit unit) {
+        Set<Employee> employees = new HashSet<Employee>();
+        YearMonthDay currentDate = new YearMonthDay();
+        for (Contract contract : EmployeeContract.getWorkingContracts(unit)) {
+            Employee employee = contract.getEmployee();
+            if (contract.isActive(currentDate)) {
+                employees.add(employee);
+            }
+        }
+        for (Unit subUnit : unit.getSubUnits()) {
+            employees.addAll(getAllCurrentActiveWorkingEmployees(subUnit));
+        }
+        return new ArrayList<Employee>(employees);
+    }
+
+    public static List<Employee> getAllWorkingEmployees(Unit unit, YearMonthDay begin, YearMonthDay end) {
+        Set<Employee> employees = new HashSet<Employee>();
+        for (Contract contract : EmployeeContract.getWorkingContracts(unit, begin, end)) {
+            employees.add(contract.getEmployee());
+        }
+        for (Unit subUnit : unit.getSubUnits()) {
+            employees.addAll(getAllWorkingEmployees(subUnit, begin, end));
+        }
+        return new ArrayList<Employee>(employees);
+    }
+
+    public static boolean hasCurrentActiveWorkingEmployee(Unit unit, Employee employee) {
+        final YearMonthDay currentDate = new YearMonthDay();
+        for (final Contract contract : EmployeeContract.getWorkingContracts(unit)) {
+            final Employee employeeFromContract = contract.getEmployee();
+            if (employee == employeeFromContract && contract.isActive(currentDate)) {
+                return true;
+            }
+        }
+        for (final Unit subUnit : unit.getSubUnits()) {
+            final Employee employee1 = employee;
+            if (hasCurrentActiveWorkingEmployee(subUnit, employee1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Collection<Person> getPossibleGroupMembers(Unit unit) {
+        if (unit instanceof ScientificCouncilUnit) {
+            return RoleType.SCIENTIFIC_COUNCIL.actualGroup().getMembers().stream().map(u -> u.getPerson())
+                    .collect(Collectors.toSet());
+        }
+        if (unit instanceof PedagogicalCouncilUnit) {
+            return RoleType.PEDAGOGICAL_COUNCIL.actualGroup().getMembers().stream().map(u -> u.getPerson())
+                    .collect(Collectors.toSet());
+        }
+        return getAllCurrentActiveWorkingEmployees(unit).stream().map(e -> e.getPerson()).collect(Collectors.toSet());
+    }
+
+    public static List<Employee> getAllWorkingEmployees(Department department, YearMonthDay begin, YearMonthDay end) {
+        Unit departmentUnit = department.getDepartmentUnit();
+        return (departmentUnit != null) ? Employee.getAllWorkingEmployees(departmentUnit, begin, end) : new ArrayList<Employee>(0);
     }
 
 }

@@ -129,7 +129,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         addPersonalInfo();
         setFooter(getDocumentRequest());
         addProgrammeInfo();
-        fillEmployeeFields();
+        fillInstitutionAndStaffFields();
 
     }
 

@@ -1302,7 +1302,7 @@ public class Thesis extends Thesis_Base {
         if (president == null) {
             conditions.add(new ThesisCondition("thesis.condition.president.required"));
         } else {
-            if (president.isExternalPerson()) {
+            if (president.getTeacher() == null || !president.getTeacher().isActiveContractedTeacher()) {
                 conditions.add(new ThesisCondition("thesis.condition.president.notInternal"));
             } else {
                 boolean isMember = false;
@@ -1582,7 +1582,7 @@ public class Thesis extends Thesis_Base {
     }
 
     private boolean isInternalPerson(Person person) {
-        return person != null && !person.isExternalPerson();
+        return person != null && person.getTeacher() != null && person.getTeacher().isActiveContractedTeacher();
     }
 
     @Override

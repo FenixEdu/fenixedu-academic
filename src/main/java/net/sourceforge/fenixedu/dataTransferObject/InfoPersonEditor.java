@@ -96,11 +96,7 @@ public class InfoPersonEditor extends InfoObject {
 
     private InfoCountryEditor infoPais;
 
-    private InfoEmployee infoEmployee;
-
     private List<InfoStudentCurricularPlan> infoStudentCurricularPlanList;
-
-    private InfoExternalPerson infoExternalPerson;
 
     private InfoTeacher infoTeacher;
 
@@ -436,22 +432,6 @@ public class InfoPersonEditor extends InfoObject {
 
     public void setAvailableWebSite(Boolean availableWebSite) {
         this.availableWebSite = availableWebSite;
-    }
-
-    public InfoExternalPerson getInfoExternalPerson() {
-        return infoExternalPerson;
-    }
-
-    public void setInfoExternalPerson(InfoExternalPerson infoExternalPerson) {
-        this.infoExternalPerson = infoExternalPerson;
-    }
-
-    public InfoEmployee getInfoEmployee() {
-        return infoEmployee;
-    }
-
-    public void setInfoEmployee(InfoEmployee infoEmployee) {
-        this.infoEmployee = infoEmployee;
     }
 
     public List<InfoStudentCurricularPlan> getInfoStudentCurricularPlanList() {
