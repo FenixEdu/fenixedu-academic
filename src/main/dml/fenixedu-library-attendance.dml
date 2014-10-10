@@ -1,0 +1,35 @@
+package net.sourceforge.fenixedu.domain;
+
+class space.SpaceAttendances {
+    String personUsername;
+    String responsibleForEntranceUsername;
+    DateTime entranceTime;
+    DateTime exitTime;
+    String responsibleForExitUsername;
+}
+
+relation RootDomainObjectHasLibraries {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForLibrary;
+    .org.fenixedu.spaces.domain.Space playsRole libraries {
+        multiplicity *;
+    }
+}
+
+relation SpacesHaveAttendances {
+    .org.fenixedu.spaces.domain.Space playsRole occupiedLibraryPlace {
+        multiplicity 0..1;
+    }
+    space.SpaceAttendances playsRole currentAttendance {
+        multiplicity *;
+    }
+}
+
+relation SpacesHaveAttendanceHistory {
+    .org.fenixedu.spaces.domain.Space playsRole visitedLibraryPlace {
+        multiplicity 0..1;
+    }
+    space.SpaceAttendances playsRole pastAttendances {
+        multiplicity *;
+    }
+}
+

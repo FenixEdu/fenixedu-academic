@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.fenixedu.spaces.domain.Space;
@@ -41,7 +40,7 @@ public class LibraryInformation implements Serializable {
             LibraryInformation attendance = (LibraryInformation) source;
             Set<Space> availableSpaces = new HashSet<Space>();
             for (Space space : attendance.getLibrary().getChildren()) {
-                if (SpaceUtils.currentAttendaceCount(space) < space.getAllocatableCapacity()) {
+                if (LibraryAttendance.currentAttendaceCount(space) < space.getAllocatableCapacity()) {
                     availableSpaces.add(space);
                 }
             }

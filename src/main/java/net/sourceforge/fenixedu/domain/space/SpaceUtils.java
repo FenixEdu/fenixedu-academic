@@ -476,11 +476,6 @@ public class SpaceUtils {
         return lessons;
     }
 
-    public static int currentAttendaceCount(Space space) {
-        return space.getCurrentAttendanceSet().size()
-                + space.getChildren().stream().mapToInt(SpaceUtils::currentAttendaceCount).sum();
-    }
-
     public static String[] getIdentificationWords(String name) {
         String[] identificationWords = null;
         if (name != null && !Strings.isNullOrEmpty(name.trim())) {

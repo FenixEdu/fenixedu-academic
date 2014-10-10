@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfession
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -64,7 +63,7 @@ public class LibraryAttendance implements Serializable {
             LibraryAttendance attendance = (LibraryAttendance) source;
             Set<Space> availableSpaces = new HashSet<Space>();
             for (Space space : attendance.getLibrary().getChildren()) {
-                if (SpaceUtils.currentAttendaceCount(space) < space.getAllocatableCapacity()) {
+                if (currentAttendaceCount(space) < space.getAllocatableCapacity()) {
                     availableSpaces.add(space);
                 }
             }
@@ -330,7 +329,7 @@ public class LibraryAttendance implements Serializable {
     }
 
     public boolean isFull() {
-        return SpaceUtils.currentAttendaceCount(getLibrary()) >= getLibrary().getAllocatableCapacity();
+        return currentAttendaceCount(getLibrary()) >= getLibrary().getAllocatableCapacity();
     }
 
     public void search() {
@@ -378,11 +377,16 @@ public class LibraryAttendance implements Serializable {
         }
     }
 
+    public static int currentAttendaceCount(Space space) {
+        return space.getCurrentAttendanceSet().size()
+                + space.getChildren().stream().mapToInt(LibraryAttendance::currentAttendaceCount).sum();
+    }
+
     private static SpaceAttendances addAttendance(Space space, Person person, String responsibleUsername) {
         if (person == null) {
             return null;
         }
-        if (!(SpaceUtils.currentAttendaceCount(space) < space.getAllocatableCapacity())) {
+        if (!(currentAttendaceCount(space) < space.getAllocatableCapacity())) {
             throw new DomainException("error.space.maximumAttendanceExceeded");
         }
         SpaceAttendances attendance = new SpaceAttendances(person.getUsername(), responsibleUsername, new DateTime());
