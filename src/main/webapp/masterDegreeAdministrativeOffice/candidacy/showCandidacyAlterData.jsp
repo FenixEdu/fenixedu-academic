@@ -64,7 +64,7 @@
 	<logic:present name="precedentDegreeInformation">
 		
 		<bean:define id="precedentDegreeInformation" name="precedentDegreeInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean"/>
-		<% if(!precedentDegreeInformation.getPrecedentDegreeInformation().getRegistration() != null) { %>
+		<% if(precedentDegreeInformation.getPrecedentDegreeInformation().getRegistration() != null) { %>
 			<h2><strong><bean:message key="label.person.title.previousCompleteDegree" bundle="ADMIN_OFFICE_RESOURCES" /></strong></h2>		
 			<fr:edit id="precedentDegreeInformation" name="precedentDegreeInformation">
 				<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="CANDIDATE_RESOURCES">	
