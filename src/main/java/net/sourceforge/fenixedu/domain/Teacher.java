@@ -25,9 +25,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
@@ -42,6 +44,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -64,14 +67,14 @@ public class Teacher extends Teacher_Base {
         public int compare(Teacher teacher1, Teacher teacher2) {
             final int teacherIdCompare = teacher1.getPerson().getUsername().compareTo(teacher2.getPerson().getUsername());
 
-            if (teacher1.getCategory() == null && teacher2.getCategory() == null) {
+            if (teacher1.getLastCategory() == null && teacher2.getLastCategory() == null) {
                 return teacherIdCompare;
-            } else if (teacher1.getCategory() == null) {
+            } else if (teacher1.getLastCategory() == null) {
                 return 1;
-            } else if (teacher2.getCategory() == null) {
+            } else if (teacher2.getLastCategory() == null) {
                 return -1;
             } else {
-                final int categoryCompare = teacher1.getCategory().compareTo(teacher2.getCategory());
+                final int categoryCompare = teacher1.getLastCategory().compareTo(teacher2.getLastCategory());
                 return categoryCompare == 0 ? teacherIdCompare : categoryCompare;
             }
         }
@@ -163,75 +166,85 @@ public class Teacher extends Teacher_Base {
         return (employee != null) ? employee.getLastWorkingPlace(begin, end) : null;
     }
 
-    public Department getCurrentWorkingDepartment() {
-        Employee employee = this.getPerson().getEmployee();
-        if (employee != null) {
-            Department currentDepartmentWorkingPlace = employee.getCurrentDepartmentWorkingPlace();
-            if (currentDepartmentWorkingPlace != null) {
-                return currentDepartmentWorkingPlace;
-            }
-        }
-
-        TeacherAuthorization teacherAuthorization = getTeacherAuthorization(ExecutionSemester.readActualExecutionSemester());
-        return teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization ? ((ExternalTeacherAuthorization) teacherAuthorization)
-                .getDepartment() : null;
+    /**
+     * Gets the latest department of the teacher for the given interval
+     * 
+     * @param interval the time frame to consider
+     * @return an {@code Optional} of the department.
+     */
+    public Optional<Department> getDepartment(AcademicInterval interval) {
+        return getTeacherAuthorization(interval).map(a -> a.getDepartment());
     }
 
-    public Department getLastWorkingDepartment(YearMonthDay begin, YearMonthDay end) {
-        Employee employee = this.getPerson().getEmployee();
-        if (employee != null) {
-            Department lastDepartmentWorkingPlace = employee.getLastDepartmentWorkingPlace(begin, end);
-            if (lastDepartmentWorkingPlace != null) {
-                return lastDepartmentWorkingPlace;
-            }
-
-        }
-        List<ExecutionSemester> executionSemesters =
-                ExecutionSemester.readExecutionPeriodsInTimePeriod(begin.toLocalDate(), end.toLocalDate());
-        Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
-        for (ExecutionSemester executionSemester : executionSemesters) {
-            TeacherAuthorization teacherAuthorization = getTeacherAuthorization(executionSemester);
-            if (teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization) {
-                return ((ExternalTeacherAuthorization) teacherAuthorization).getDepartment();
-            }
-        }
-        return null;
+    /**
+     * Same as {@link #getDepartment(AcademicInterval)} for the current semester
+     * 
+     * @return The department or null
+     */
+    public Department getDepartment() {
+        return getDepartment(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER)).orElse(null);
     }
 
-    public Department getLastWorkingDepartment() {
-        Employee employee = this.getPerson().getEmployee();
-        if (employee != null) {
-            Department lastDepartmentWorkingPlace = employee.getLastDepartmentWorkingPlace();
-            if (lastDepartmentWorkingPlace != null) {
-                return lastDepartmentWorkingPlace;
-            }
-        }
-
-        TeacherAuthorization teacherAuthorization = getLastTeacherAuthorization();
-        return teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization ? ((ExternalTeacherAuthorization) teacherAuthorization)
-                .getDepartment() : null;
+    /**
+     * Gets the last department the teacher had up to the given interval (inclusive). Useful when we don't want to consider
+     * authorization interruptions, and a teacher once belonging to a department stays with that status.
+     * 
+     * @param interval the time frame to consider
+     * @return an {@code Optional} of the department.
+     */
+    public Department getLastDepartment(AcademicInterval interval) {
+        return getLastTeacherAuthorization(interval).map(a -> a.getDepartment()).orElse(null);
     }
 
-    public List<Unit> getWorkingPlacesByPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
-        List<Unit> workingPlaces = new ArrayList<Unit>();
-        Employee employee = this.getPerson().getEmployee();
-        if (employee != null) {
-            workingPlaces.addAll(employee.getWorkingPlaces(beginDate, endDate));
-        }
-
-        for (TeacherAuthorization ta : getAuthorizationSet()) {
-
-            if (ta instanceof ExternalTeacherAuthorization && ((ExternalTeacherAuthorization) ta).getActive()
-                    && ta.getExecutionSemester().isInTimePeriod(beginDate, endDate)
-                    && !workingPlaces.contains(((ExternalTeacherAuthorization) ta).getDepartment().getDepartmentUnit())) {
-                workingPlaces.add(((ExternalTeacherAuthorization) ta).getDepartment().getDepartmentUnit());
-            }
-        }
-
-        return workingPlaces;
+    /**
+     * Same as {@link #getLastDepartment(AcademicInterval)} for the current semester
+     * 
+     * @return The department or null
+     */
+    public Department getLastDepartment() {
+        return getLastDepartment(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER));
     }
 
-    public ProfessionalCategory getCategory() {
+    /**
+     * Gets the latest category of the teacher in the given interval.
+     * 
+     * @param interval the time frame to consider
+     * @return an {@code Optional} of the category.
+     */
+    public Optional<TeacherCategory> getCategory(AcademicInterval interval) {
+        return getTeacherAuthorization(interval).map(a -> a.getTeacherCategory());
+    }
+
+    /**
+     * Same as {@link #getCategory(AcademicInterval)} for the current semester
+     * 
+     * @return the category or null
+     */
+    public TeacherCategory getCategory() {
+        return getCategory(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER)).orElse(null);
+    }
+
+    /**
+     * Gets the last category the teacher had up to the given interval (inclusive). Useful when we don't want to consider
+     * authorization interruptions, and a teacher once having a category preserves that status.
+     * 
+     * @param interval the time frame to consider
+     * @return an {@code Optional} of the category.
+     */
+    public Optional<TeacherCategory> getLastCategory(AcademicInterval interval) {
+        return getLastTeacherAuthorization(interval).map(a -> a.getTeacherCategory());
+    }
+
+    /**
+     * Same as {@link #getLastCategory(AcademicInterval)} for the current semester
+     * 
+     * @return the category or null
+     */
+    public TeacherCategory getLastCategory() {
+        return getLastCategory(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER)).orElse(null);
+    }
+
+    public ProfessionalCategory getGiafProfessionalCategory() {
         ProfessionalCategory category = getCurrentCategory();
         if (category == null) {
             PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
@@ -249,15 +262,14 @@ public class Teacher extends Teacher_Base {
                     personProfessionalData.getProfessionalCategoryByCategoryType(CategoryType.TEACHER, new LocalDate());
         }
         if (professionalCategory == null) {
-            TeacherAuthorization teacherAuthorization = getTeacherAuthorization(ExecutionSemester.readActualExecutionSemester());
-            if (teacherAuthorization != null) {
-                professionalCategory = teacherAuthorization.getProfessionalCategory();
-            }
+            professionalCategory =
+                    getCategory(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER)).map(
+                            c -> c.getProfessionalCategory()).orElse(null);
         }
         return professionalCategory;
     }
 
-    public ProfessionalCategory getLastCategory(LocalDate begin, LocalDate end) {
+    public ProfessionalCategory getLastGiafProfessionalCategory(LocalDate begin, LocalDate end) {
         ProfessionalCategory professionalCategory = null;
         PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
         if (personProfessionalData != null) {
@@ -268,9 +280,10 @@ public class Teacher extends Teacher_Base {
             List<ExecutionSemester> executionSemesters = ExecutionSemester.readExecutionPeriodsInTimePeriod(begin, end);
             Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
             for (ExecutionSemester executionSemester : executionSemesters) {
-                TeacherAuthorization teacherAuthorization = getTeacherAuthorization(executionSemester);
-                if (teacherAuthorization != null && teacherAuthorization.getProfessionalCategory() != null) {
-                    return teacherAuthorization.getProfessionalCategory();
+                professionalCategory =
+                        getCategory(executionSemester.getAcademicInterval()).map(c -> c.getProfessionalCategory()).orElse(null);
+                if (professionalCategory != null) {
+                    return professionalCategory;
                 }
             }
         }
@@ -279,7 +292,7 @@ public class Teacher extends Teacher_Base {
 
     public ProfessionalCategory getCategoryByPeriod(ExecutionSemester executionSemester) {
         OccupationPeriod lessonsPeriod = executionSemester.getLessonsPeriod();
-        return getLastCategory(lessonsPeriod.getStartYearMonthDay().toLocalDate(), lessonsPeriod
+        return getLastGiafProfessionalCategory(lessonsPeriod.getStartYearMonthDay().toLocalDate(), lessonsPeriod
                 .getEndYearMonthDayWithNextPeriods().toLocalDate());
     }
 
@@ -463,10 +476,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public boolean isActiveOrHasAuthorizationForSemester(ExecutionSemester executionSemester) {
-        if (isActiveForSemester(executionSemester) || getTeacherAuthorization(executionSemester) != null) {
-            return true;
-        }
-        return false;
+        return isActiveForSemester(executionSemester) || hasTeacherAuthorization(executionSemester.getAcademicInterval());
     }
 
     public boolean isInactive(ExecutionSemester executionSemester) {
@@ -608,25 +618,6 @@ public class Teacher extends Teacher_Base {
         return false;
     }
 
-    public Unit getCurrentSectionOrScientificArea() {
-        final Employee employee = getPerson().getEmployee();
-        if (employee != null) {
-            final Unit unit = employee.getCurrentSectionOrScientificArea();
-            if (unit != null) {
-                return unit;
-            }
-        }
-
-        final TeacherAuthorization teacherAuthorization =
-                getTeacherAuthorization(ExecutionSemester.readActualExecutionSemester());
-        if (teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization) {
-            final ExternalTeacherAuthorization externalTeacherAuthorization = (ExternalTeacherAuthorization) teacherAuthorization;
-            final Department department = externalTeacherAuthorization.getDepartment();
-            return department.getDepartmentUnit();
-        }
-        return null;
-    }
-
     public List<Tutorship> getActiveTutorshipsByStudentsEntryYearAndDegree(ExecutionYear entryYear, Degree degree) {
         return getTutorshipsByStudentsEntryYearAndDegree(this.getActiveTutorships(), entryYear, degree);
     }
@@ -694,10 +685,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public boolean canBeTutorOfDepartment(Department department) {
-        if (getCurrentWorkingDepartment() != null && getCurrentWorkingDepartment().equals(department)) {
-            return true;
-        }
-        return false;
+        return getDepartment() != null && getDepartment().equals(department);
     }
 
     public List<Tutorship> getTutorshipsByStudentsEntryYear(ExecutionYear entryYear) {
@@ -770,40 +758,39 @@ public class Teacher extends Teacher_Base {
         return getPerson().getProfessorshipsSet().iterator();
     }
 
-    public boolean hasTeacherAuthorization(ExecutionSemester executionSemester) {
-        for (TeacherAuthorization ta : getAuthorizationSet()) {
-            if (ta instanceof ExternalTeacherAuthorization && ((ExternalTeacherAuthorization) ta).getActive()
-                    && ((ExternalTeacherAuthorization) ta).getExecutionSemester().equals(executionSemester)) {
-                return true;
-            }
-        }
-        return false;
+    public Stream<TeacherAuthorization> getRevokedTeacherAuthorizationStream() {
+        return getRevokedAuthorizationSet().stream().sorted(Collections.reverseOrder());
     }
 
-    public TeacherAuthorization getTeacherAuthorization(ExecutionSemester executionSemester) {
-        for (TeacherAuthorization ta : getAuthorizationSet()) {
-            if (ta instanceof ExternalTeacherAuthorization && ((ExternalTeacherAuthorization) ta).getActive()
-                    && ((ExternalTeacherAuthorization) ta).getExecutionSemester().equals(executionSemester)) {
-                return ta;
-            } else if (ta instanceof AplicaTeacherAuthorization) {
-                return ta;
-            }
-        }
-        return null;
+    public Stream<TeacherAuthorization> getTeacherAuthorizationStream() {
+        return getAuthorizationSet().stream().sorted(Collections.reverseOrder());
     }
 
-    public TeacherAuthorization getLastTeacherAuthorization() {
-        LocalDate today = new LocalDate();
-        TeacherAuthorization lastTeacherAuthorization = null;
-        for (TeacherAuthorization ta : getAuthorizationSet()) {
-            if ((lastTeacherAuthorization == null || ta.getExecutionSemester().getEndDateYearMonthDay()
-                    .isAfter(lastTeacherAuthorization.getExecutionSemester().getEndDateYearMonthDay()))
-                    && ta.getExecutionSemester().getEndDateYearMonthDay().isAfter(today)
-                    && (ta instanceof AplicaTeacherAuthorization || ((ExternalTeacherAuthorization) ta).getActive())) {
-                lastTeacherAuthorization = ta;
-            }
-        }
-        return lastTeacherAuthorization;
+    public Optional<TeacherAuthorization> getTeacherAuthorization(AcademicInterval interval) {
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getAcademicInterval().overlaps(interval))
+                .findFirst();
+    }
+
+    public Optional<TeacherAuthorization> getTeacherAuthorization() {
+        return getTeacherAuthorization(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER));
+    }
+
+    public boolean hasTeacherAuthorization(AcademicInterval interval) {
+        return getTeacherAuthorization(interval).isPresent();
+    }
+
+    public boolean hasTeacherAuthorization() {
+        return getTeacherAuthorization().isPresent();
+    }
+
+    protected Optional<TeacherAuthorization> getLastTeacherAuthorization(AcademicInterval interval) {
+        return getTeacherAuthorizationStream().filter(a -> !a.getExecutionSemester().getAcademicInterval().isAfter(interval))
+                .findFirst();
+    }
+
+    public Optional<TeacherAuthorization> getLatestTeacherAuthorizationInInterval(Interval interval) {
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getAcademicInterval().overlaps(interval))
+                .findFirst();
     }
 
     public boolean isErasmusCoordinator() {

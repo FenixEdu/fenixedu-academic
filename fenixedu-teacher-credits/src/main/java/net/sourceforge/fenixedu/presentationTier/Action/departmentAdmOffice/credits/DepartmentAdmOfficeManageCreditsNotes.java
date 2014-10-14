@@ -86,7 +86,7 @@ public class DepartmentAdmOfficeManageCreditsNotes extends ManageCreditsNotes {
             HttpServletRequest request) {
         User userView = Authenticate.getUser();
         Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCreditsSet();
-        Department teacherWorkingDepartment = teacher.getCurrentWorkingDepartment();
+        Department teacherWorkingDepartment = teacher.getDepartment();
         if (teacherWorkingDepartment != null) {
             return manageableDepartments.contains(teacherWorkingDepartment);
         }

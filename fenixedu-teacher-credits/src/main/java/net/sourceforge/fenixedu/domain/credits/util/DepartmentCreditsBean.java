@@ -104,7 +104,7 @@ public class DepartmentCreditsBean implements Serializable {
     public List<PersonFunction> getDepartmentPersonFunctions() {
         List<PersonFunction> result = new ArrayList<PersonFunction>();
         if (department != null) {
-            for (Teacher teacher : department.getAllTeachers(getExecutionSemester().getAcademicInterval())) {
+            for (Teacher teacher : department.getAllTeachers(getExecutionSemester())) {
                 for (PersonFunction personFuntion : teacher.getPerson().getPersonFuntions(
                         getExecutionSemester().getBeginDateYearMonthDay(), getExecutionSemester().getEndDateYearMonthDay())) {
                     if (!personFuntion.getFunction().isVirtual()) {

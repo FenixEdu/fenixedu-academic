@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -326,8 +327,9 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
                 if ((dcp == null || sheet.isFor(dcp)) && sheet.getCurricularCourse().hasAnyExecutionDegreeFor(getExecutionYear())) {
                     ExecutionDegree executionDegree =
                             sheet.getCurricularCourse().getExecutionDegreeFor(getExecutionYear().getAcademicInterval());
-                    if (AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, person.getUser()).collect(Collectors.toSet())
-                            .contains(executionDegree.getDegree())) {
+                    if (AcademicAccessRule
+                            .getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, person.getUser())
+                            .collect(Collectors.toSet()).contains(executionDegree.getDegree())) {
                         markSheets.add(sheet);
                     }
                 }
@@ -661,6 +663,14 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             }
         }
         return null;
+    }
+
+    public Stream<TeacherAuthorization> getTeacherAuthorizationStream() {
+        return getTeacherAuthorizationSet().stream();
+    }
+
+    public Stream<TeacherAuthorization> getRevokedTeacherAuthorizationStream() {
+        return getRevokedTeacherAuthorizationSet().stream();
     }
 
 }

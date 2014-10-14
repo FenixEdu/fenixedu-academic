@@ -89,7 +89,8 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         boolean hasFinalAndAccumulatedCredits = false;
 
         for (ExecutionSemester executionSemester : getAnnualCreditsState().getExecutionYear().getExecutionPeriodsSet()) {
-            if (getTeacher().isActiveForSemester(executionSemester) || getTeacher().hasTeacherAuthorization(executionSemester)) {
+            if (getTeacher().isActiveForSemester(executionSemester)
+                    || getTeacher().hasTeacherAuthorization(executionSemester.getAcademicInterval())) {
                 BigDecimal thisSemesterManagementFunctionCredits =
                         new BigDecimal(TeacherCredits.calculateManagementFunctionsCredits(getTeacher(), executionSemester));
                 managementFunctionsCredits = managementFunctionsCredits.add(thisSemesterManagementFunctionCredits);

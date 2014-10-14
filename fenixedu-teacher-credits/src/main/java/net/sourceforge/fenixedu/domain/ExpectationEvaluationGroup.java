@@ -91,12 +91,8 @@ public class ExpectationEvaluationGroup extends ExpectationEvaluationGroup_Base 
     }
 
     private void checkTeachersDepartments(Teacher appraiser, Teacher evaluated, ExecutionYear executionYear) {
-        Department appraiserDepartment =
-                appraiser.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
-                        executionYear.getEndDateYearMonthDay());
-        Department evaluatedDepartment =
-                evaluated.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
-                        executionYear.getEndDateYearMonthDay());
+        Department appraiserDepartment = appraiser.getLastDepartment(executionYear.getAcademicInterval());
+        Department evaluatedDepartment = evaluated.getLastDepartment(executionYear.getAcademicInterval());
         if (appraiserDepartment == null || evaluatedDepartment == null || !appraiserDepartment.equals(evaluatedDepartment)) {
             throw new DomainException("error.ExpectationEvaluationGroup.invalid.departments");
         }

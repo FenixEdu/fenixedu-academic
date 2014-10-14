@@ -90,7 +90,7 @@ public class SendEmailToDepartmentGroups extends UnitMailSenderAction {
         final Person person = AccessControl.getPerson();
         final Teacher teacher = person.getTeacher();
         if (teacher != null) {
-            return teacher.getCurrentWorkingDepartment().getDepartmentUnit();
+            return teacher.getDepartment().getDepartmentUnit();
         }
         final Employee employee = person.getEmployee();
         if (employee != null) {

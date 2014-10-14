@@ -87,7 +87,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.coordinator.thesis.edit.teacher.currentWorkingDepartment')}</label>
+						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.coordinator.thesis.edit.teacher.department')}</label>
 						<div class="col-sm-10">
 							${thesis.orientator.affiliation}
 						</div>
@@ -111,7 +111,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.coordinator.thesis.edit.teacher.currentWorkingDepartment')}</label>
+						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.coordinator.thesis.edit.teacher.department')}</label>
 						<div class="col-sm-10">
 							${thesis.coorientator.affiliation}
 						</div>

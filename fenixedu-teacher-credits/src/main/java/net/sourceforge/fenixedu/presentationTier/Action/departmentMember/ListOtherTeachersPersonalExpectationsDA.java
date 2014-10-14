@@ -86,8 +86,7 @@ public class ListOtherTeachersPersonalExpectationsDA extends ListTeachersPersona
         Teacher teacher = teacherPersonalExpectation.getTeacher();
 
         Department loggedTeacherDepartment = getDepartment(request);
-        Department teacherWorkingDepartment =
-                teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+        Department teacherWorkingDepartment = teacher.getLastDepartment(executionYear.getAcademicInterval());
 
         TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod =
                 TeacherPersonalExpectationPeriod.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(
@@ -104,7 +103,7 @@ public class ListOtherTeachersPersonalExpectationsDA extends ListTeachersPersona
     }
 
     private Department getDepartment(HttpServletRequest request) {
-        return getLoggedPerson(request).getTeacher().getCurrentWorkingDepartment();
+        return getLoggedPerson(request).getTeacher().getDepartment();
     }
 
     @Override

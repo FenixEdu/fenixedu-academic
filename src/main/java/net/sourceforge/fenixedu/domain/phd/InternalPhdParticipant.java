@@ -101,7 +101,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
         if (!isEmpty(super.getCategory())) {
             return super.getCategory();
         }
-        return getTeacher() != null && getTeacher().getCategory() != null ? getTeacher().getCategory().getName().getContent() : EMPTY;
+        return getTeacher() != null && getTeacher().getLastCategory() != null ? getTeacher().getLastCategory().getName().getContent() : EMPTY;
     }
 
     public Teacher getTeacher() {
@@ -110,7 +110,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     public Department getDepartment() {
         if (isTeacher()) {
-            return getTeacher().getCurrentWorkingDepartment();
+            return getTeacher().getDepartment();
         }
 
         return null;

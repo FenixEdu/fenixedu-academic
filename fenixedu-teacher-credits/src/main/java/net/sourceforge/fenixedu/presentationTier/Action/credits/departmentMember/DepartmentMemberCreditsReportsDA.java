@@ -51,7 +51,7 @@ public class DepartmentMemberCreditsReportsDA extends CreditsReportsDA {
         User userView = Authenticate.getUser();
         DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
         List<Department> availableDepartments = new ArrayList<Department>();
-        availableDepartments.add(userView.getPerson().getTeacher().getCurrentWorkingDepartment());
+        availableDepartments.add(userView.getPerson().getTeacher().getDepartment());
         departmentCreditsBean.setAvailableDepartments(availableDepartments);
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
         return mapping.findForward("exportDepartmentCourses");

@@ -34,13 +34,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.CategoryType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.domain.TeacherCategory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificTeachersApp;
@@ -72,12 +69,12 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
     public static class TeacherAuthorizationManagementBean implements Serializable {
+        private static final long serialVersionUID = 1812211290868535463L;
+
         private String username;
-        private ProfessionalCategory professionalCategory;
+        private TeacherCategory teacherCategory;
         private ExecutionSemester executionSemester;
         private Double lessonHours;
-        private Boolean canPark;
-        private Boolean canHaveCard;
         private Department department;
 
         public TeacherAuthorizationManagementBean() {
@@ -91,12 +88,12 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
             return username;
         }
 
-        public void setProfessionalCategory(ProfessionalCategory professionalCategory) {
-            this.professionalCategory = professionalCategory;
+        public void setTeacherCategory(TeacherCategory teacherCategory) {
+            this.teacherCategory = teacherCategory;
         }
 
-        public ProfessionalCategory getProfessionalCategory() {
-            return professionalCategory;
+        public TeacherCategory getTeacherCategory() {
+            return teacherCategory;
         }
 
         public void setExecutionSemester(ExecutionSemester executionSemester) {
@@ -108,7 +105,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
         }
 
         @Atomic
-        ExternalTeacherAuthorization create() throws FenixActionException {
+        TeacherAuthorization create() throws FenixActionException {
 
             User user = User.findByUsername(getUsername());
             if (user == null) {
@@ -116,34 +113,11 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
             }
             final Person person = user.getPerson();
 
-            if (person.getTeacher() != null) {
-                for (final TeacherAuthorization teacherAuthorization : person.getTeacher().getAuthorizationSet()) {
-                    if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
-                        final ExternalTeacherAuthorization auth = (ExternalTeacherAuthorization) teacherAuthorization;
-                        if (auth.getActive().booleanValue() && auth.getExecutionSemester() == getExecutionSemester()) {
-                            throw new FenixActionException("already.created.teacher.authorization");
-                        }
-                    }
-                }
+            if (person.getTeacher() == null) {
+                new Teacher(person);
             }
-
-            ExternalTeacherAuthorization eta = new ExternalTeacherAuthorization();
-            eta.setAuthorizer(AccessControl.getPerson());
-            eta.setExecutionSemester(getExecutionSemester());
-            eta.setProfessionalCategory(getProfessionalCategory());
-            eta.setRootDomainObject(Bennu.getInstance());
-            eta.setActive(true);
-            eta.setCanPark(getCanPark());
-            eta.setCanHaveCard(false);
-            eta.setLessonHours(Double.valueOf(getLessonHours()));
-            eta.setDepartment(getDepartment());
-            if (person.getTeacher() != null) {
-                eta.setTeacher(person.getTeacher());
-            } else {
-                Teacher teacher = new Teacher(person);
-                eta.setTeacher(teacher);
-            }
-            return eta;
+            return TeacherAuthorization.createOrUpdate(person.getTeacher(), getDepartment(), getExecutionSemester(),
+                    getTeacherCategory(), false, getLessonHours());
         }
 
         public void setLessonHours(Double lessonHours) {
@@ -152,22 +126,6 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
         public Double getLessonHours() {
             return lessonHours;
-        }
-
-        public void setCanPark(Boolean canPark) {
-            this.canPark = canPark;
-        }
-
-        public Boolean getCanPark() {
-            return canPark;
-        }
-
-        public void setCanHaveCard(Boolean canHaveCard) {
-            this.canHaveCard = canHaveCard;
-        }
-
-        public Boolean getCanHaveCard() {
-            return canHaveCard;
         }
 
         public Department getDepartment() {
@@ -180,6 +138,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
     }
 
     public static class TeacherAuthorizationsUploadBean implements Serializable {
+        private static final long serialVersionUID = -3469499844474498832L;
 
         private ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 
@@ -247,15 +206,12 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                     }
 
                     final String username = parts[0].trim();
-                    final ProfessionalCategory professionalCategory =
-                            ProfessionalCategory.find(parts[1].trim(), CategoryType.TEACHER);
+                    final TeacherCategory teacherCategory = TeacherCategory.find(parts[1].trim());
                     final String i = parts[2].trim();
                     final Double lessonHours =
                             StringUtils.isNumeric(i.replace(".", " ").replace(',', ' ').replace(" ", "")) ? Double.valueOf(i
                                     .replace(',', '.')) : null;
-                    final Boolean canPark = Boolean.valueOf("S".equalsIgnoreCase(parts[3].trim()));
-                    final Boolean canHaveCard = Boolean.valueOf("S".equalsIgnoreCase(parts[4].trim()));
-                    final Department department = Department.find(parts[5].trim());
+                    final Department department = Department.find(parts[3].trim());
 
                     if (username == null || username.isEmpty() || User.findByUsername(username) == null) {
                         messages.add(BundleUtil.getString(Bundle.SCIENTIFIC, "label.message.username.invalid",
@@ -263,15 +219,15 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                         continue;
                     }
 
-                    if (professionalCategory == null) {
-                        messages.add(BundleUtil.getString(Bundle.SCIENTIFIC, "label.message.professionalCategory.invalid",
+                    if (teacherCategory == null) {
+                        messages.add(BundleUtil.getString(Bundle.SCIENTIFIC, "label.message.teacherCategory.invalid",
                                 Integer.toString(lineCount), parts[1].trim()));
                         continue;
                     }
 
                     if (department == null) {
                         messages.add(BundleUtil.getString(Bundle.SCIENTIFIC, "label.message.department.invalid",
-                                Integer.toString(lineCount), parts[5].trim()));
+                                Integer.toString(lineCount), parts[3].trim()));
                         continue;
                     }
 
@@ -283,10 +239,8 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
                     final TeacherAuthorizationManagementBean bean = new TeacherAuthorizationManagementBean();
                     bean.setUsername(username);
-                    bean.setProfessionalCategory(professionalCategory);
+                    bean.setTeacherCategory(teacherCategory);
                     bean.setLessonHours(lessonHours);
-                    bean.setCanPark(canPark);
-                    bean.setCanHaveCard(canHaveCard);
                     bean.setDepartment(department);
                     bean.setExecutionSemester(executionSemester);
                     result.add(bean);
@@ -312,15 +266,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
     @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ArrayList<ExternalTeacherAuthorization> teacher = new ArrayList<ExternalTeacherAuthorization>();
-
-        for (TeacherAuthorization teacherAuthorization : Bennu.getInstance().getTeacherAuthorizationSet()) {
-            if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
-                teacher.add((ExternalTeacherAuthorization) teacherAuthorization);
-            }
-        }
-
-        request.setAttribute("auths", teacher);
+        request.setAttribute("auths", Bennu.getInstance().getTeacherAuthorizationSet());
         return mapping.findForward("listTeacherAuthorization");
     }
 
@@ -362,7 +308,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
     public ActionForward revoke(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ExternalTeacherAuthorization auth = FenixFramework.getDomainObject(request.getParameter("oid"));
+        TeacherAuthorization auth = FenixFramework.getDomainObject(request.getParameter("oid"));
         auth.revoke();
         return list(mapping, actionForm, request, response);
     }

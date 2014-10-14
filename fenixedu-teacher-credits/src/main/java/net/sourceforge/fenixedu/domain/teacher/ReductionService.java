@@ -79,23 +79,21 @@ public class ReductionService extends ReductionService_Base {
                     maxCreditsFromEvaluationAndAge.toString());
         }
         super.setCreditsReduction(creditsReduction);
-        Department lastWorkingDepartment = getDepartment();
-        setPendingApprovalFromDepartment(lastWorkingDepartment);
+        Department lastDepartment = getDepartment();
+        setPendingApprovalFromDepartment(lastDepartment);
         log("label.teacher.schedule.reductionService.edit", getCreditsReduction());
     }
 
     private Department getDepartment() {
-        return getTeacherService().getTeacher().getLastWorkingDepartment(
-                getTeacherService().getExecutionPeriod().getBeginDateYearMonthDay(),
-                getTeacherService().getExecutionPeriod().getEndDateYearMonthDay());
+        return getTeacherService().getTeacher().getLastDepartment(getTeacherService().getExecutionPeriod().getAcademicInterval());
     }
 
     @Override
     public void setRequestCreditsReduction(Boolean requestCreditsReduction) {
         checkTeacherCategory();
         super.setRequestCreditsReduction(requestCreditsReduction);
-        Department lastWorkingDepartment = requestCreditsReduction ? getDepartment() : null;
-        setPendingApprovalFromDepartment(lastWorkingDepartment);
+        Department lastDepartment = requestCreditsReduction ? getDepartment() : null;
+        setPendingApprovalFromDepartment(lastDepartment);
         log("label.teacher.schedule.reductionService.edit", getRequestCreditsReduction());
     }
 

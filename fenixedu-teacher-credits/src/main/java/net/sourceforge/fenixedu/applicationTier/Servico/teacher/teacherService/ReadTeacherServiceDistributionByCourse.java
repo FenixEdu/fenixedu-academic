@@ -223,7 +223,7 @@ public class ReadTeacherServiceDistributionByCourse {
 
             boolean teacherBelongsToDepartment = false;
 
-            if (teacher.getCurrentWorkingDepartment() == department) {
+            if (teacher.getDepartment() == department) {
                 teacherBelongsToDepartment = true;
             }
 

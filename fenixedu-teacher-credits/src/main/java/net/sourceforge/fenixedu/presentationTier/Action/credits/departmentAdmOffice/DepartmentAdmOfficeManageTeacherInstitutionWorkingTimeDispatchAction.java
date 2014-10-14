@@ -71,7 +71,7 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
         Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCreditsSet();
 
         if (teacher != null) {
-            Department teacherWorkingDepartment = teacher.getCurrentWorkingDepartment();
+            Department teacherWorkingDepartment = teacher.getDepartment();
             return teacherWorkingDepartment != null && manageableDepartments.contains(teacherWorkingDepartment);
         }
         return false;

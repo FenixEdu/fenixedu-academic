@@ -283,30 +283,6 @@ public class Employee extends Employee_Base {
         return RoleType.EMPLOYEE;
     }
 
-    public Unit getCurrentSectionOrScientificArea() {
-        return getSectionOrScientificArea(getCurrentWorkingPlace());
-    }
-
-    private Unit getSectionOrScientificArea(Unit unit) {
-        if (unit == null) {
-            return null;
-        }
-
-        if (unit.isScientificAreaUnit() || unit.isSectionUnit()) {
-            return unit;
-        }
-
-        for (Unit parent : unit.getParentUnits()) {
-            Unit parentUnit = getSectionOrScientificArea(parent);
-
-            if (parentUnit != null) {
-                return parentUnit;
-            }
-        }
-
-        return null;
-    }
-
     public ProfessionalCategory getCategory() {
         PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
         ProfessionalCategory professionalCategory = null;

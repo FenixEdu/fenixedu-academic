@@ -38,7 +38,7 @@
 	<td ><fr:view name="teacher">
 		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Teacher">
 			<fr:slot name="person.presentationName" key="label.name"/>
-			<fr:slot name="currentWorkingDepartment.name" key="label.department" layout="null-as-label"/>
+			<fr:slot name="department.name" key="label.department" layout="null-as-label"/>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="creditsStyle"/>

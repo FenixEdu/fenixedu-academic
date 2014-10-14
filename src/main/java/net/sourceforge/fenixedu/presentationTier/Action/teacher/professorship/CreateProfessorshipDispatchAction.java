@@ -224,7 +224,8 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
         if (executionPeriod.getSemester().intValue() == 2 && executionPeriod.getExecutionYear().getYear().equals("2010/2011")) {
         } else {
             if (person.getTeacher() == null
-                    || (person.getTeacher().getTeacherAuthorization(executionPeriod) == null && !person.hasRole(RoleType.TEACHER))) {
+                    || (!person.getTeacher().hasTeacherAuthorization(executionPeriod.getAcademicInterval()) && !person
+                            .hasRole(RoleType.TEACHER))) {
                 request.setAttribute("notAuth", true);
                 return showExecutionYearExecutionPeriods(mapping, personExecutionCourseForm, request, response);
             }

@@ -171,7 +171,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends Action {
             }
         });
 
-        Department department = infoTeacher.getTeacher().getCurrentWorkingDepartment();
+        Department department = infoTeacher.getTeacher().getDepartment();
         InfoDepartment teacherDepartment = InfoDepartment.newInfoFromDomain(department);
 
         final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCreditsSet();

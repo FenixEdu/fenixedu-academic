@@ -48,7 +48,7 @@ public class ViewQUCResultsDepartmentDA extends ViewQUCResultsDA {
 
     @Override
     protected DepartmentUnit getDepartmentUnit(HttpServletRequest request) {
-        DepartmentUnit departmentUnit = AccessControl.getPerson().getTeacher().getCurrentWorkingDepartment().getDepartmentUnit();
+        DepartmentUnit departmentUnit = AccessControl.getPerson().getTeacher().getDepartment().getDepartmentUnit();
         return departmentUnit;
     }
 

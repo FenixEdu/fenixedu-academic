@@ -36,13 +36,11 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationType;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
@@ -61,6 +59,7 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.StringNormalizer;
+import org.joda.time.Interval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,15 +134,18 @@ public class TeacherCurricularInformation implements Serializable {
     }
 
     public String getUnitName() {
-        Department lastWorkingDepartment =
-                getTeacher().getLastWorkingDepartment(executionSemesters.first().getBeginDateYearMonthDay(),
-                        executionSemesters.last().getEndDateYearMonthDay());
-        return lastWorkingDepartment == null ? null : lastWorkingDepartment.getName();
+        Department lastDepartment =
+                getTeacher()
+                        .getLatestTeacherAuthorizationInInterval(
+                                new Interval(executionSemesters.first().getBeginDateYearMonthDay().toDateTimeAtMidnight(),
+                                        executionSemesters.last().getEndDateYearMonthDay().plusDays(1).toDateTimeAtMidnight()))
+                        .map(a -> a.getDepartment()).orElse(null);
+        return lastDepartment == null ? null : lastDepartment.getName();
     }
 
     public String getProfessionalCategoryName() {
         ProfessionalCategory lastCategory =
-                getTeacher().getLastCategory(executionSemesters.first().getBeginDateYearMonthDay().toLocalDate(),
+                getTeacher().getLastGiafProfessionalCategory(executionSemesters.first().getBeginDateYearMonthDay().toLocalDate(),
                         executionSemesters.last().getEndDateYearMonthDay().toLocalDate());
 
         if (lastCategory != null) {
@@ -218,12 +220,8 @@ public class TeacherCurricularInformation implements Serializable {
     }
 
     protected Float getAuthorizationRegimeTime(ExecutionSemester executionSemester) {
-        TeacherAuthorization teacherAuthorization = getTeacher().getTeacherAuthorization(executionSemester);
-        if (teacherAuthorization != null) {
-            Double lessonHours = ((ExternalTeacherAuthorization) teacherAuthorization).getLessonHours();
-            return new Float(Math.round(lessonHours * 100 / 12));
-        }
-        return 0f;
+        return getTeacher().getTeacherAuthorization(executionSemester.getAcademicInterval())
+                .map(a -> new Float(Math.round(a.getLessonHours() * 100 / 12))).orElse(0f);
     }
 
     public List<String> getTop5ResultParticipation() {

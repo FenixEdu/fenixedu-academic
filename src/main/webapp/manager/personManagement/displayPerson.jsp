@@ -231,11 +231,10 @@ function check(e,v){
 					</logic:notEmpty> --%>
 					
 					<logic:notEmpty name="personalInfo" property="teacher" >
-						<logic:notEmpty  name="personalInfo" property="teacher.currentCategory" >
+						<logic:notEmpty  name="personalInfo" property="teacher.category" >
 							<tr>
 								<td class="ppleft2"><bean:message key="label.teacher.category" bundle="APPLICATION_RESOURCES" />:</td>
-								<bean:define id="categoryName" name="personalInfo" property="teacher.currentCategory.name"/>
-								<td class="ppright"><bean:write name="personalInfo" property="teacher.currentCategory.name"/></td>
+								<td class="ppright"><bean:write name="personalInfo" property="teacher.category.name"/></td>
 							</tr>
 						</logic:notEmpty>
 					</logic:notEmpty>

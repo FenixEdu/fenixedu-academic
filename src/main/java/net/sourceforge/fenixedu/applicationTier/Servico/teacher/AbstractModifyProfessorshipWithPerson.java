@@ -37,7 +37,7 @@ public abstract class AbstractModifyProfessorshipWithPerson {
         }
         if (person.getTeacher() != null) {
             final Person requesterPerson = requester;
-            Department teacherDepartment = person.getTeacher().getCurrentWorkingDepartment();
+            Department teacherDepartment = person.getTeacher().getDepartment();
             Collection departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCreditsSet();
             if (!departmentsWithAccessGranted.contains(teacherDepartment)) {
                 throw new NotAuthorizedException();

@@ -46,8 +46,7 @@ public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID {
         if (executionYearID != null) {
             ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
-            teachersFromDepartment =
-                    department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+            teachersFromDepartment = department.getAllTeachers(executionYear);
 
         } else {
             teachersFromDepartment = department.getAllTeachers();

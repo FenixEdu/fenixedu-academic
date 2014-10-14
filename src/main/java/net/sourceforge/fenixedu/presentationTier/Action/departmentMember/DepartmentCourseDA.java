@@ -126,7 +126,7 @@ public class DepartmentCourseDA extends FenixDispatchAction {
     }
 
     private Department getDepartment(HttpServletRequest request) {
-        return getLoggedPerson(request).getTeacher().getLastWorkingDepartment();
+        return getLoggedPerson(request).getTeacher().getLastDepartment();
     }
 
     private void exportStudentsToExcel(HttpServletResponse response, CurricularCourse curricularCourse,

@@ -121,7 +121,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
             if (executionSemester != null
                     && (userView.getPerson().getTeacher().isActiveForSemester(executionSemester) || userView.getPerson()
-                            .getTeacher().getTeacherAuthorization(executionSemester) != null)) {
+                            .getTeacher().hasTeacherAuthorization())) {
                 TeacherService teacherService =
                         TeacherService.getTeacherServiceByExecutionPeriod(userView.getPerson().getTeacher(), executionSemester);
                 return (teacherService == null || teacherService.getTeacherServiceLock() == null)
@@ -134,7 +134,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     private boolean hasPendingTeachingReductionService(User userView) {
         if (userView.getPerson() != null && userView.getPerson().getTeacher() != null
                 && userView.getPerson().hasRole(RoleType.DEPARTMENT_MEMBER)) {
-            Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
+            Department department = userView.getPerson().getTeacher().getDepartment();
             if (department != null && department.isCurrentUserCurrentDepartmentPresident()) {
                 ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
                 if (executionSemester != null

@@ -37,6 +37,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -55,7 +57,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -89,55 +90,34 @@ public class Department extends Department_Base {
     }
 
     public List<Teacher> getAllCurrentTeachers() {
-        Unit departmentUnit = getDepartmentUnit();
-        List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers() : new ArrayList<Teacher>(0);
-        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorizedSet()) {
-            if (teacherAuthorization.getActive()
-                    && teacherAuthorization.getExecutionSemester().equals(ExecutionSemester.readActualExecutionSemester())
-                    && !list.contains(teacherAuthorization.getTeacher())) {
-                list.add(teacherAuthorization.getTeacher());
-            }
-        }
-        return list;
+        return getAllTeachers(ExecutionSemester.readActualExecutionSemester());
+    }
+
+    public List<Teacher> getAllTeachers(AcademicInterval interval) {
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getAcademicInterval().overlaps(interval))
+                .map(a -> a.getTeacher()).collect(Collectors.toList());
+    }
+
+    public List<Teacher> getAllTeachers(ExecutionSemester semester) {
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().equals(semester)).map(a -> a.getTeacher())
+                .collect(Collectors.toList());
+    }
+
+    public List<Teacher> getAllTeachers(ExecutionYear executionYear) {
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getExecutionYear().equals(executionYear))
+                .map(a -> a.getTeacher()).collect(Collectors.toList());
     }
 
     public List<Teacher> getAllTeachers() {
-        Unit departmentUnit = getDepartmentUnit();
-        List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers() : new ArrayList<Teacher>(0);
-        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorizedSet()) {
-            if (teacherAuthorization.getActive() && !list.contains(teacherAuthorization.getTeacher())) {
-                list.add(teacherAuthorization.getTeacher());
-            }
-        }
-        return list;
+        return getTeacherAuthorizationStream().map(a -> a.getTeacher()).collect(Collectors.toList());
     }
 
-    public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
-        Unit departmentUnit = getDepartmentUnit();
-        List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>(0);
-        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorizedSet()) {
-            if (teacherAuthorization.getActive()
-                    && teacherAuthorization.getExecutionSemester().getAcademicInterval()
-                            .overlaps(new Interval(begin.toDateMidnight(), end.toDateMidnight()))
-                    && !list.contains(teacherAuthorization.getTeacher())) {
-                list.add(teacherAuthorization.getTeacher());
-            }
-        }
-        return list;
+    public Stream<TeacherAuthorization> getRevokedTeacherAuthorizationStream() {
+        return getRevokedTeacherAuthorizationSet().stream();
     }
 
-    public List<Teacher> getAllTeachers(AcademicInterval academicInterval) {
-        Unit departmentUnit = getDepartmentUnit();
-        List<Teacher> list =
-                (departmentUnit != null) ? departmentUnit.getAllTeachers(academicInterval) : new ArrayList<Teacher>(0);
-        for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorizedSet()) {
-            if (teacherAuthorization.getActive()
-                    && teacherAuthorization.getExecutionSemester().getAcademicInterval().overlaps(academicInterval)
-                    && !list.contains(teacherAuthorization.getTeacher())) {
-                list.add(teacherAuthorization.getTeacher());
-            }
-        }
-        return list;
+    public Stream<TeacherAuthorization> getTeacherAuthorizationStream() {
+        return getTeacherAuthorizationSet().stream();
     }
 
     public Set<DegreeType> getDegreeTypes() {

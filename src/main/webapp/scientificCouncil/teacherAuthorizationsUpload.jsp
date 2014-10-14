@@ -19,14 +19,13 @@
 
 --%>
 <%@ page isELIgnored="true"%>
-<%@page import="net.sourceforge.fenixedu.domain.teacher.CategoryType"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ page import="org.fenixedu.bennu.core.domain.Bennu"%>
 <%@ page import="net.sourceforge.fenixedu.domain.Department"%>
-<%@ page import="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory"%>
+<%@ page import="net.sourceforge.fenixedu.domain.TeacherCategory"%>
 <html:xhtml/>
 
 <h2><bean:message key="label.upload.authorizations" /></h2>
@@ -43,16 +42,10 @@
 			<bean:message key="teacherAuthorization.upload.instructions.column"/> 1: <bean:message key="teacherAuthorization.upload.instructions.column.username"/>
 		</li>
 		<li>
-			<bean:message key="teacherAuthorization.upload.instructions.column"/> 2: <bean:message key="teacherAuthorization.upload.instructions.column.professionalCategory"/>
+			<bean:message key="teacherAuthorization.upload.instructions.column"/> 2: <bean:message key="teacherAuthorization.upload.instructions.column.teacherCategory"/>
 		</li>
 		<li>
 			<bean:message key="teacherAuthorization.upload.instructions.column"/> 3: <bean:message key="teacherAuthorization.upload.instructions.column.lessonHours"/>
-		</li>
-		<li>
-			<bean:message key="teacherAuthorization.upload.instructions.column"/> 4: <bean:message key="teacherAuthorization.upload.instructions.column.carParkAccess"/>
-		</li>
-		<li>
-			<bean:message key="teacherAuthorization.upload.instructions.column"/> 5: <bean:message key="teacherAuthorization.upload.instructions.column.identificationCard"/>
 		</li>
 		<li>
 			<bean:message key="teacherAuthorization.upload.instructions.column"/> 6: <bean:message key="teacherAuthorization.upload.instructions.column.department"/>
@@ -107,17 +100,15 @@
 			</li>
 		<% } %>
 	</ul>
-	<bean:message key="teacherAuthorization.upload.instructions.column.professionalCategory.possible.values"/>
+	<bean:message key="teacherAuthorization.upload.instructions.column.teacherCategory.possible.values"/>
 	<ul>
 		<%
-			for (final ProfessionalCategory professionalCategory : Bennu.getInstance().getProfessionalCategoriesSet()) {
-			    if (professionalCategory.getCategoryType() == CategoryType.TEACHER) {
+			for (final TeacherCategory teacherCategory : Bennu.getInstance().getTeacherCategorySet()) {
 		%>
 			<li>
-				<%= professionalCategory.getName().getContent() %>
+				<%= teacherCategory.getName().getContent() %>
 			</li>
 		<%
-			    }
 			}
 		%>
 	</ul>

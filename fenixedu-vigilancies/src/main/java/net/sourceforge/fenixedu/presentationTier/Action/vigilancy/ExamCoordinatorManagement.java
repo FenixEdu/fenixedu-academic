@@ -162,7 +162,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         bean.setExecutionYear(currentYear);
         Person person = getLoggedPerson(request);
         if (person.getTeacher() != null) {
-            bean.setSelectedDepartment(person.getTeacher().getCurrentWorkingDepartment());
+            bean.setSelectedDepartment(person.getTeacher().getDepartment());
         } else if (person.getEmployee() != null) {
             bean.setSelectedDepartment(person.getEmployee().getCurrentDepartmentWorkingPlace());
         }

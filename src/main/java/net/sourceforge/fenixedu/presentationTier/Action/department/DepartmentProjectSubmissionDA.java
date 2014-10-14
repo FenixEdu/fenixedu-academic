@@ -56,7 +56,7 @@ public class DepartmentProjectSubmissionDA extends ProjectSubmissionsManagementD
     @EntryPoint
     public ActionForward showProjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Department department = AccessControl.getPerson().getTeacher().getCurrentWorkingDepartment();
+        final Department department = AccessControl.getPerson().getTeacher().getDepartment();
         Map<ExecutionCourse, Set<Project>> coursesProjects = new HashMap<ExecutionCourse, Set<Project>>();
         for (Project project : department.getProjectsSet()) {
             for (ExecutionCourse course : project.getAssociatedExecutionCoursesSet()) {

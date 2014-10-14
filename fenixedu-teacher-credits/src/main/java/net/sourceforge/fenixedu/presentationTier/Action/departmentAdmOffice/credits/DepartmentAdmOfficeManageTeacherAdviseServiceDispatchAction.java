@@ -86,8 +86,8 @@ public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends
         Teacher teacher = FenixFramework.getDomainObject(dynaForm.getString("teacherId"));
         Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCreditsSet();
 
-        if (teacher == null || teacher.getCurrentWorkingDepartment() == null
-                || !manageableDepartments.contains(teacher.getCurrentWorkingDepartment())) {
+        if (teacher == null || teacher.getDepartment() == null
+                || !manageableDepartments.contains(teacher.getDepartment())) {
             request.setAttribute("teacherNotFound", "teacherNotFound");
             return mapping.findForward("teacher-not-found");
         }

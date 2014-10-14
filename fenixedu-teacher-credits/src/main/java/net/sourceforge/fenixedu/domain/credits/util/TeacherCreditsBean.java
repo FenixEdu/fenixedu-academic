@@ -113,7 +113,7 @@ public class TeacherCreditsBean implements Serializable {
 
     private boolean isTeacherActiveForYear(ExecutionYear currentExecutionYear) {
         for (ExecutionSemester executionSemester : currentExecutionYear.getExecutionPeriodsSet()) {
-            if (teacher.isActiveForSemester(executionSemester) || teacher.getTeacherAuthorization(executionSemester) != null) {
+            if (teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
                 return true;
             }
         }

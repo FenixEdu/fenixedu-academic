@@ -192,7 +192,7 @@ public class TeacherCredits extends TeacherCredits_Base {
             if (personContractSituation != null && !personContractSituation.countForCredits(semesterInterval)) {
                 teacherContractSituation = personContractSituation;
             }
-        } else if (teacher.getTeacherAuthorization(executionSemester) != null) {
+        } else if (teacher.hasTeacherAuthorization(executionSemester.getAcademicInterval())) {
             TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
             return teacherService == null ? 0 : teacherService.getTeachingDegreeHours();
         }

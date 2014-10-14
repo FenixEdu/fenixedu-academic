@@ -51,11 +51,10 @@
 	<th><bean:message key="label.equalTo"/></th>
 	<th><bean:message key="department"/></th>
 	<th><bean:message key="label.hours"/></th>
-	<th><bean:message key="label.park"/></th>
 	<th><bean:message key="label.authorized.by"/></th>
 </tr>
 <logic:iterate id="obj" name="auths">
-<bean:define id="auth" name="obj" type="net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization" />
+<bean:define id="auth" name="obj" type="net.sourceforge.fenixedu.domain.TeacherAuthorization" />
 <tr>
 <td>
 	<bean:write name="auth" property="teacher.person.user.username"/>
@@ -75,7 +74,7 @@
 </logic:equal>
 </td>
 <td>
-	<bean:write name="auth" property="professionalCategory.name"/>
+	<bean:write name="auth" property="teacherCategory.name"/>
 </td>
 <td>
 	<logic:present name="auth" property="department">
@@ -84,15 +83,6 @@
 </td>
 <td>
 	<bean:write name="auth" property="lessonHours"/>
-</td>
-<td>
-	<logic:equal name="auth" property="canPark" value="true">
-		Sim
-	</logic:equal>
-	<logic:equal name="auth" property="canPark" value="false">
-		Não
-	</logic:equal>
-	
 </td>
 <td>
 	<bean:write name="auth" property="authorizer.nickname"/> 

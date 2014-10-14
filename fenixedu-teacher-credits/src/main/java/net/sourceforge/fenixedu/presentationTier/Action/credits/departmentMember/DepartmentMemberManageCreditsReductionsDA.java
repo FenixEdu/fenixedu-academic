@@ -30,8 +30,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.util.ReductionServiceBean;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -68,7 +66,7 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
             HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         User userView = Authenticate.getUser();
-        Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
+        Department department = userView.getPerson().getTeacher().getDepartment();
         List<ReductionService> creditsReductions = new ArrayList<ReductionService>();
         if (department != null && department.isCurrentUserCurrentDepartmentPresident()) {
             boolean inValidTeacherCreditsPeriod =
@@ -101,11 +99,7 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
             reductionServiceBean = getRenderedObject("reductionServiceBean");
             if (reductionServiceBean != null && reductionServiceBean.getTeacher() != null) {
                 User userView = Authenticate.getUser();
-                Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
-                if (!isTeacherFromDepartment(reductionServiceBean.getTeacher(), department)) {
-                    addActionMessage("error", request, "message.teacher.not-found-or-not-belong-to-department");
-                    return selectTeacher(mapping, form, request, response);
-                }
+                Department department = userView.getPerson().getTeacher().getDepartment();
                 if (reductionServiceBean.getReductionService() == null) {
                     TeacherService teacherService =
                             TeacherService.getTeacherServiceByExecutionPeriod(reductionServiceBean.getTeacher(),
@@ -128,20 +122,4 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
         request.setAttribute("reductionServiceBean", new ReductionServiceBean());
         return mapping.findForward("showReductionService");
     }
-
-    private boolean isTeacherFromDepartment(Teacher teacher, Department department) {
-        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-        List<Unit> workingPlacesByPeriod =
-                teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
-                        executionSemester.getEndDateYearMonthDay());
-        for (Unit unit : workingPlacesByPeriod) {
-            DepartmentUnit departmentUnit = unit.getDepartmentUnit();
-            Department teacherDepartment = departmentUnit != null ? departmentUnit.getDepartment() : null;
-            if (teacherDepartment != null && teacherDepartment.equals(department)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

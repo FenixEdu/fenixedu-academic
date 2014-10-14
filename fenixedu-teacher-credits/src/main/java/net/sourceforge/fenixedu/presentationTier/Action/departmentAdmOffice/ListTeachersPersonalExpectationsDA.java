@@ -96,8 +96,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
         Teacher teacher = teacherPersonalExpectation.getTeacher();
         ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();
 
-        Department teacherWorkingDepartment =
-                teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+        Department teacherWorkingDepartment = teacher.getLastDepartment(executionYear.getAcademicInterval());
         Department employeeDepartment = getDepartment(request);
 
         if (teacherWorkingDepartment != null && teacherWorkingDepartment.equals(employeeDepartment)) {
@@ -168,8 +167,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
         Map<Teacher, TeacherPersonalExpectation> result =
                 new TreeMap<Teacher, TeacherPersonalExpectation>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
         if (executionYear != null && department != null) {
-            List<Teacher> allCurrentTeachers =
-                    department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+            List<Teacher> allCurrentTeachers = department.getAllTeachers(executionYear);
             for (Teacher teacher : allCurrentTeachers) {
                 TeacherPersonalExpectation teacherPersonalExpectation =
                         TeacherPersonalExpectation.getTeacherPersonalExpectationByExecutionYear(teacher, executionYear);
@@ -215,7 +213,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
             final Row row = spreadsheet.addRow();
             row.setCell(teacher.getPerson().getName());
             row.setCell(teacher.getPerson().getUsername());
-            ProfessionalCategory professionalCategory = teacher.getCategory();
+            ProfessionalCategory professionalCategory = teacher.getGiafProfessionalCategory();
             String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
             row.setCell(category);
 

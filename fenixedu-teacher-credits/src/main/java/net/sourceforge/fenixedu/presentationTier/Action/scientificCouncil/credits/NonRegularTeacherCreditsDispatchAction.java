@@ -83,7 +83,7 @@ public class NonRegularTeacherCreditsDispatchAction extends FenixDispatchAction 
 
     private boolean isNonRegularTeacher(Person person) {
         return person.getTeacher() == null || person.getEmployee() == null
-                || person.getTeacher().getCurrentWorkingDepartment() == null;
+                || person.getTeacher().getDepartment() == null;
     }
 
     public ActionForward prepareEditNonRegularTeachingService(ActionMapping mapping, ActionForm form, HttpServletRequest request,

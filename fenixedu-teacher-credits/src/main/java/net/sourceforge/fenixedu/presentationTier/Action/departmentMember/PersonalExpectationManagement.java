@@ -233,7 +233,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
             ExecutionYear executionYear) {
         TeacherPersonalExpectation teacherPersonalExpectation =
                 TeacherPersonalExpectation.getTeacherPersonalExpectationByExecutionYear(teacher, executionYear);
-        Department department = teacher.getCurrentWorkingDepartment();
+        Department department = teacher.getDepartment();
         if (department != null) {
             TeacherExpectationDefinitionPeriod period =
                     TeacherPersonalExpectationPeriod.getTeacherExpectationDefinitionPeriodForExecutionYear(department,
@@ -246,7 +246,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     private void checkTeacherAndPeriodToEdit(HttpServletRequest request, TeacherPersonalExpectation teacherPersonalExpectation)
             throws FenixActionException {
         ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();
-        Department department = teacherPersonalExpectation.getTeacher().getCurrentWorkingDepartment();
+        Department department = teacherPersonalExpectation.getTeacher().getDepartment();
         if (department != null) {
             TeacherExpectationDefinitionPeriod period =
                     TeacherPersonalExpectationPeriod.getTeacherExpectationDefinitionPeriodForExecutionYear(department,

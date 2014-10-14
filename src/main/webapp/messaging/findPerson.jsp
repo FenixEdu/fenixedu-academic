@@ -251,12 +251,12 @@
 
 					<logic:notEmpty name="personalInfo" property="teacher">
 						<logic:notEmpty name="personalInfo"
-							property="teacher.currentCategory">
+							property="teacher.category">
 							<tr>
 								<td class="ppleft2"><bean:message
 										key="label.teacher.category" />:</td>
 								<td class="ppright"><bean:write name="personalInfo"
-										property="teacher.currentCategory.name" />
+										property="teacher.category.name" />
 								</td>
 							</tr>
 						</logic:notEmpty>

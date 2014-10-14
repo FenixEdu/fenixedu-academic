@@ -74,9 +74,7 @@ public class ReadTeacherServiceDistributionByTeachers {
 
         for (ExecutionSemester executionPeriodEntry : executionPeriodList) {
 
-            List<Teacher> teachers =
-                    department.getAllTeachers(executionPeriodEntry.getBeginDateYearMonthDay(),
-                            executionPeriodEntry.getEndDateYearMonthDay());
+            List<Teacher> teachers = department.getAllTeachers(executionPeriodEntry);
 
             for (Teacher teacher : teachers) {
                 ProfessionalCategory professionalCategory = teacher.getCategoryByPeriod(executionPeriodEntry);

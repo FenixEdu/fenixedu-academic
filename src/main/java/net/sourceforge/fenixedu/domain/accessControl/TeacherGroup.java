@@ -143,8 +143,7 @@ public class TeacherGroup extends FenixGroup {
         }
         //by department
         if (department != null) {
-            for (Teacher teacher : department.getAllTeachers(getExecutionYear().getBeginDateYearMonthDay(), getExecutionYear()
-                    .getEndDateYearMonthDay())) {
+            for (Teacher teacher : department.getAllTeachers(getExecutionYear())) {
                 User user = teacher.getPerson().getUser();
                 if (user != null) {
                     users.add(user);
@@ -195,11 +194,7 @@ public class TeacherGroup extends FenixGroup {
                 }
             }
             if (department != null) {
-                if (department.equals(user
-                        .getPerson()
-                        .getTeacher()
-                        .getLastWorkingDepartment(getExecutionYear().getBeginDateYearMonthDay(),
-                                getExecutionYear().getEndDateYearMonthDay()))) {
+                if (department.equals(user.getPerson().getTeacher().getLastDepartment(getExecutionYear().getAcademicInterval()))) {
                     return true;
                 }
             }

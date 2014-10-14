@@ -143,6 +143,10 @@
 	<slot name="name" key="label.category" layout="null-as-label"/>
 </schema>
 
+<schema name="view.teacherCategory.name" type="net.sourceforge.fenixedu.domain.TeacherCategory" bundle="CONTRACTS_RESOURCES">
+    <slot name="name" key="label.category" layout="null-as-label"/>
+</schema>
+
 <schema name="view.professionalCategory.nameAndType" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory" bundle="CONTRACTS_RESOURCES">
 	<slot name="name" key="label.category" layout="null-as-label"/>
 	<slot name="categoryType" key="label.type" layout="null-as-label"/>

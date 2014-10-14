@@ -83,13 +83,13 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     protected void updateParticipantInformation(Person person) {
         Teacher teacher = person.getTeacher();
 
-        if (teacher != null && teacher.getCurrentWorkingDepartment() != null) {
-            if (teacher.getCategory() == null) {
+        if (teacher != null && teacher.getDepartment() != null) {
+            if (teacher.getLastCategory() == null) {
                 setCategory("-");
             } else {
-                setCategory(teacher.getCategory().getName().getContent());
+                setCategory(teacher.getLastCategory().getName().getContent());
             }
-            setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
+            setAffiliation(teacher.getDepartment().getRealName());
         } else {
             Employee employee = person.getEmployee();
             if (employee != null) {

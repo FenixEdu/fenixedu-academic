@@ -110,9 +110,7 @@ public class ListCourseResponsibles extends FenixDispatchAction {
                 for (Professorship professorship : execCourse.getProfessorshipsSet()) {
                     if (professorship.isResponsibleFor()) {
                         Teacher teacher = professorship.getTeacher();
-                        Department dept =
-                                teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
-                                        executionYear.getEndDateYearMonthDay());
+                        Department dept = teacher.getLastDepartment(executionYear.getAcademicInterval());
                         CurricularCourse curricCourse = null;
                         CompetenceCourse compCourse = null;
                         ExecutionDegree execDegree = null;

@@ -511,12 +511,6 @@
 		</slot>
 	</schema>
 
-	<schema name="teacherCategory.edit" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory">
-		<slot name="name">
-			<property name="size" value="50"/>
-		</slot>
-	</schema>
-	
 	<schema name="evaluation.project.view-with-name-description-and-grouping" type="net.sourceforge.fenixedu.domain.Project" bundle="APPLICATION_RESOURCES">
 	    <slot name="name" />
 	    <slot name="description" layout="null-as-label">

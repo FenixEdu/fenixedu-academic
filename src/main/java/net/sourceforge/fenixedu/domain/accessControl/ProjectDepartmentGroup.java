@@ -83,7 +83,7 @@ public class ProjectDepartmentGroup extends FenixGroup {
             return false;
         }
         final Teacher teacher = user.getPerson().getTeacher();
-        final Department department = teacher.getCurrentWorkingDepartment();
+        final Department department = teacher.getDepartment();
         if (department != null) {
             return project.getDeparmentsSet().contains(department);
         }

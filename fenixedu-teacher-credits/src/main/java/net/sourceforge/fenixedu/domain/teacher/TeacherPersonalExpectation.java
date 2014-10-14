@@ -109,7 +109,7 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
     }
 
     public boolean isAllowedToEditExpectation() {
-        Department department = getTeacher().getCurrentWorkingDepartment();
+        Department department = getTeacher().getDepartment();
         if (department != null) {
             TeacherExpectationDefinitionPeriod period =
                     TeacherPersonalExpectationPeriod.getTeacherExpectationDefinitionPeriodForExecutionYear(department,
@@ -120,7 +120,7 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
     }
 
     public boolean isAllowedToEditAutoEvaluation() {
-        Department department = getTeacher().getCurrentWorkingDepartment();
+        Department department = getTeacher().getDepartment();
         if (department != null) {
             TeacherAutoEvaluationDefinitionPeriod period =
                     TeacherPersonalExpectationPeriod.getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(department,
@@ -131,7 +131,7 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
     }
 
     public boolean isAllowedToEditEvaluation() {
-        Department department = getTeacher().getCurrentWorkingDepartment();
+        Department department = getTeacher().getDepartment();
         if (department != null) {
             TeacherPersonalExpectationsEvaluationPeriod period =
                     TeacherPersonalExpectationPeriod.getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(department,

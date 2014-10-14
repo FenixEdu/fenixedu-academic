@@ -23,7 +23,7 @@
 <schema name="teacher.tutor.name" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party">	
 	<slot name="name" key="label.tutor" />
 	<slot name="teacher.teacherId" key="label.teacherId"/>
-	<slot name="teacher.currentWorkingDepartment.realName" key="label.department" />
+	<slot name="teacher.department.realName" key="label.department" />
 </schema>
 
 <schema name="teacher.tutor.performanceGrid.filters" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean" >

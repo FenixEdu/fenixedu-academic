@@ -88,13 +88,13 @@
 
 <schema name="thesis.review.person" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="name" key="label.scientificCouncil.thesis.review.person.name" />
-    <slot name="teacher.category" key="label.scientificCouncil.thesis.review.teacher.category" schema="view.professionalCategory.name" />
-    <slot name="teacher.currentWorkingDepartment.realName" key="label.scientificCouncil.thesis.review.teacher.currentWorkingDepartment" />
+    <slot name="teacher.category" key="label.scientificCouncil.thesis.review.teacher.category" schema="view.teacherCategory.name" />
+    <slot name="teacher.department.realName" key="label.scientificCouncil.thesis.review.teacher.department" />
 </schema>
 
 <schema name="thesis.review.person.external" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="name" key="label.scientificCouncil.thesis.review.person.name" />
-    <slot name="externalPerson.institutionUnit.nameWithAcronym" key="label.scientificCouncil.thesis.review.teacher.currentWorkingDepartment" />
+    <slot name="externalPerson.institutionUnit.nameWithAcronym" key="label.scientificCouncil.thesis.review.teacher.department" />
 </schema>
 
 <schema name="thesis.review.information" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
@@ -134,7 +134,7 @@
     <slot name="category" key="label.teacher.category" layout="null-as-label">
         <property name="label" value="-" />
     </slot>
-    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment" layout="null-as-label">
+    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.department" layout="null-as-label">
         <property name="label" value="-" />
     </slot>
 </schema>

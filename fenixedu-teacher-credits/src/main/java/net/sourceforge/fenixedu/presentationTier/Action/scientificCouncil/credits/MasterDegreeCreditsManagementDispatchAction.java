@@ -50,6 +50,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificCreditsApp;
 import net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler;
@@ -455,10 +456,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     private StringBuilder getTeachersDepartaments(ExecutionCourse executionCourse) {
         StringBuilder teachers = new StringBuilder();
         for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
-            ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-            Department department =
-                    professorship.getTeacher().getLastWorkingDepartment(executionSemester.getBeginDateYearMonthDay(),
-                            executionSemester.getEndDateYearMonthDay());
+            Department department = professorship.getTeacher().getLastDepartment(executionCourse.getAcademicInterval());
             teachers.append(department != null ? department.getRealName() : "").append(LINE_BRAKE);
         }
         return teachers;

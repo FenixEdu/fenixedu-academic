@@ -47,7 +47,7 @@ public class ShowAllTeacherCreditsResumeAction extends FenixDispatchAction {
     protected void readAllTeacherCredits(HttpServletRequest request, Teacher teacher) throws FenixActionException {
 
         request.setAttribute("teacher", teacher);
-        Department department = teacher.getCurrentWorkingDepartment();
+        Department department = teacher.getDepartment();
         if (department != null) {
             request.setAttribute("department", department.getRealName());
         }

@@ -31,14 +31,11 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCategory;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-
-import org.joda.time.YearMonthDay;
-
 import pt.ist.fenixframework.FenixFramework;
 
 public class DepartmentManagementBackingBean extends FenixBackingBean {
@@ -52,9 +49,9 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
 
     };
 
-    private final Collection<ProfessionalCategory> sortedDepartmentCategories = new TreeSet<ProfessionalCategory>();
+    private final Collection<TeacherCategory> sortedDepartmentCategories = new TreeSet<TeacherCategory>();
 
-    private Map<ProfessionalCategory, List<Teacher>> teachersByCategory;
+    private Map<TeacherCategory, List<Teacher>> teachersByCategory;
 
     public List<DepartmentUnit> getDepartmentUnits() {
         final List<DepartmentUnit> result = new ArrayList<DepartmentUnit>(UnitUtils.readAllDepartmentUnits());
@@ -87,19 +84,17 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
 
         Department department = getDepartment();
         if (department != null) {
-            YearMonthDay today = new YearMonthDay();
-            YearMonthDay tomorrow = today.plusDays(1);
-            result.addAll(department.getAllTeachers(today, tomorrow));
+            result.addAll(department.getAllCurrentTeachers());
         }
 
         return new ArrayList<Teacher>(result);
     }
 
     private void initializeStructures() {
-        teachersByCategory = new TreeMap<ProfessionalCategory, List<Teacher>>();
+        teachersByCategory = new TreeMap<TeacherCategory, List<Teacher>>();
 
         for (final Teacher teacher : getDepartmentTeachers()) {
-            ProfessionalCategory category = teacher.getCategory();
+            TeacherCategory category = teacher.getLastCategory();
 
             if (!teachersByCategory.containsKey(category)) {
                 final List<Teacher> categoryTeachers = new ArrayList<Teacher>();
@@ -114,7 +109,7 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public Map<ProfessionalCategory, List<Teacher>> getTeachersByCategory() {
+    public Map<TeacherCategory, List<Teacher>> getTeachersByCategory() {
         if (teachersByCategory == null) {
             initializeStructures();
         }
@@ -122,12 +117,12 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
         return teachersByCategory;
     }
 
-    public List<ProfessionalCategory> getSortedDepartmentCategories() {
+    public List<TeacherCategory> getSortedDepartmentCategories() {
         if (sortedDepartmentCategories.isEmpty()) {
             initializeStructures();
         }
 
-        return new ArrayList<ProfessionalCategory>(sortedDepartmentCategories);
+        return new ArrayList<TeacherCategory>(sortedDepartmentCategories);
     }
 
 }

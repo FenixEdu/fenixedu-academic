@@ -142,7 +142,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
             spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.managementPosition.unit"), 10000);
             spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.teacher-dfp-student.percentage"));
             spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.managementPosition.credits"));
-            for (Teacher teacher : department.getAllTeachers(departmentCreditsBean.getExecutionSemester().getAcademicInterval())) {
+            for (Teacher teacher : department.getAllTeachers(departmentCreditsBean.getExecutionSemester())) {
 
                 for (PersonFunction personFunction : teacher.getPerson().getPersonFuntions(
                         departmentCreditsBean.getExecutionSemester().getBeginDateYearMonthDay(),
@@ -209,9 +209,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
                 for (AnnualTeachingCredits annualTeachingCredits : annualCreditsState.getAnnualTeachingCreditsSet()) {
                     Teacher teacher = annualTeachingCredits.getTeacher();
                     Department teacherDepartment =
-                            teacher.getLastWorkingDepartment(departmentCreditsBean.getExecutionYear().getFirstExecutionPeriod()
-                                    .getBeginDateYearMonthDay(), departmentCreditsBean.getExecutionYear()
-                                    .getLastExecutionPeriod().getEndDateYearMonthDay());
+                            teacher.getLastDepartment(departmentCreditsBean.getExecutionYear().getAcademicInterval());
                     if (teacherDepartment != null && teacherDepartment.equals(department)) {
                         spreadsheet.newRow();
                         spreadsheet.addCell(teacher.getTeacherId());

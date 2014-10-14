@@ -89,8 +89,8 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         @Override
         public int compare(VigilantWrapper v1, VigilantWrapper v2) {
 
-            ProfessionalCategory c1 = v1.getTeacher() != null ? v1.getTeacher().getCategory() : null;
-            ProfessionalCategory c2 = v2.getTeacher() != null ? v2.getTeacher().getCategory() : null;
+            ProfessionalCategory c1 = v1.getTeacher() != null ? v1.getTeacher().getGiafProfessionalCategory() : null;
+            ProfessionalCategory c2 = v2.getTeacher() != null ? v2.getTeacher().getGiafProfessionalCategory() : null;
 
             if (c1 == null && c2 == null) {
                 return 0;
@@ -223,7 +223,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public String getTeacherCategoryCode() {
-        return getTeacher() != null && getTeacher().getCategory() != null ? getTeacher().getCategory().getName().getContent() : "";
+        return getTeacher() != null && getTeacher().getGiafProfessionalCategory() != null ? getTeacher().getGiafProfessionalCategory().getName().getContent() : "";
     }
 
     public List<Space> getCampus() {
@@ -460,7 +460,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     public boolean isCathedraticTeacher() {
         Teacher teacher = this.getTeacher();
         if (teacher != null) {
-            return teacher.getCategory().getWeight() <= 3;
+            return teacher.getGiafProfessionalCategory().getWeight() <= 3;
         }
         return false;
     }

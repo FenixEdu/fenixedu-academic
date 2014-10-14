@@ -160,14 +160,13 @@ public class AnnualTeachingCreditsBean implements Serializable {
 
     public String getProfessionalCategoryName() {
         ProfessionalCategory professionalCategory =
-                teacher.getLastCategory(executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
+                teacher.getLastGiafProfessionalCategory(executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
                         .getEndDateYearMonthDay().toLocalDate());
         return professionalCategory == null ? null : professionalCategory.getName().getContent();
     }
 
     public String getDepartmentName() {
-        Department department =
-                teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+        Department department = teacher.getLastDepartment(executionYear.getAcademicInterval());
         return department == null ? null : department.getName();
     }
 
@@ -355,7 +354,7 @@ public class AnnualTeachingCreditsBean implements Serializable {
     public boolean getCanUserSeeTeacherServiceLogs() {
         User userView = Authenticate.getUser();
         Teacher loggedTeacher = userView.getPerson().getTeacher();
-        Department department = getTeacher().getCurrentWorkingDepartment();
+        Department department = getTeacher().getDepartment();
         return userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)
                 || (loggedTeacher != null && loggedTeacher.equals(getTeacher()))
                 || (department != null && department.isCurrentUserCurrentDepartmentPresident());
@@ -373,15 +372,19 @@ public class AnnualTeachingCreditsBean implements Serializable {
         boolean hasFinalAndAccumulatedCredits = false;
 
         for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            if (getTeacher().isActiveForSemester(executionSemester) || getTeacher().hasTeacherAuthorization(executionSemester)) {
+            if (getTeacher().isActiveForSemester(executionSemester)
+                    || getTeacher().hasTeacherAuthorization(executionSemester.getAcademicInterval())) {
                 BigDecimal thisSemesterManagementFunctionCredits =
                         new BigDecimal(TeacherCredits.calculateManagementFunctionsCredits(getTeacher(), executionSemester));
                 managementFunctionCredits = managementFunctionCredits.add(thisSemesterManagementFunctionCredits);
                 serviceExemptionCredits =
-                        serviceExemptionCredits.add(new BigDecimal(TeacherCredits.calculateServiceExemptionCredits(getTeacher(), executionSemester)));
-                BigDecimal thisSemesterTeachingLoad = new BigDecimal(TeacherCredits.calculateMandatoryLessonHours(getTeacher(), executionSemester));
+                        serviceExemptionCredits.add(new BigDecimal(TeacherCredits.calculateServiceExemptionCredits(getTeacher(),
+                                executionSemester)));
+                BigDecimal thisSemesterTeachingLoad =
+                        new BigDecimal(TeacherCredits.calculateMandatoryLessonHours(getTeacher(), executionSemester));
                 annualTeachingLoad = annualTeachingLoad.add(thisSemesterTeachingLoad).setScale(2, BigDecimal.ROUND_HALF_UP);
-                TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(getTeacher(), executionSemester);
+                TeacherService teacherService =
+                        TeacherService.getTeacherServiceByExecutionPeriod(getTeacher(), executionSemester);
                 BigDecimal thisSemesterCreditsReduction = BigDecimal.ZERO;
                 if (teacherService != null) {
                     teachingCredits = teachingCredits.add(new BigDecimal(teacherService.getTeachingDegreeCredits()));

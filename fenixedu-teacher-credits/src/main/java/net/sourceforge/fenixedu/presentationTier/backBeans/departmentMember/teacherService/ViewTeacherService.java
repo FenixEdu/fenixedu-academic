@@ -232,9 +232,9 @@ public class ViewTeacherService extends FenixBackingBean {
 
     public String getDepartmentName() {
         Person person = getUserView().getPerson();
-        Department currentWorkingDepartment =
+        Department department =
                 person.getEmployee() != null ? person.getEmployee().getCurrentDepartmentWorkingPlace() : null;
-        return currentWorkingDepartment == null ? null : currentWorkingDepartment.getRealName();
+        return department == null ? null : department.getRealName();
     }
 
     public String getTeacherService() throws FenixServiceException, ParseException {

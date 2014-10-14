@@ -40,7 +40,7 @@
 	<td ><fr:view name="personFunctionBean">
 		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.PersonFunctionBean">
 			<fr:slot name="teacher.person.presentationName" key="label.name"/>
-			<fr:slot name="teacher.currentWorkingDepartment.name" key="label.department" layout="null-as-label"/>
+			<fr:slot name="teacher.department.name" key="label.department" layout="null-as-label"/>
 			<fr:slot name="executionSemester" key="label.period" layout="format">
 				<fr:property name="format" value="${name}  ${executionYear.year}" />
 			</fr:slot>

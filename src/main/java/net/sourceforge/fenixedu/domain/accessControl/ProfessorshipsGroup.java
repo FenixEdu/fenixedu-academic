@@ -20,14 +20,13 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
@@ -99,14 +98,8 @@ public class ProfessorshipsGroup extends FenixGroup {
 
     private void fillMembers(Set<User> users, ExecutionSemester semester) {
         if (externalAuthorizations) {
-            for (TeacherAuthorization authorization : semester.getAuthorizationSet()) {
-                if (authorization instanceof ExternalTeacherAuthorization) {
-                    User user = authorization.getTeacher().getPerson().getUser();
-                    if (user != null) {
-                        users.add(user);
-                    }
-                }
-            }
+            users.addAll(semester.getTeacherAuthorizationStream().filter(a -> !a.isContracted())
+                    .map(a -> a.getTeacher().getPerson().getUser()).collect(Collectors.toSet()));
         } else {
             for (final ExecutionCourse executionCourse : semester.getAssociatedExecutionCoursesSet()) {
                 for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
@@ -132,11 +125,8 @@ public class ProfessorshipsGroup extends FenixGroup {
         //TODO: select active 'when'
         AcademicInterval interval = AcademicInterval.readDefaultAcademicInterval(period);
         if (externalAuthorizations) {
-            for (ExternalTeacherAuthorization authorization : user.getPerson().getTeacherAuthorizationsAuthorizedSet()) {
-                final ExternalTeacherAuthorization externalAuthorization = authorization;
-                if (interval.contains(externalAuthorization.getExecutionSemester().getAcademicInterval())) {
-                    return true;
-                }
+            if (user.getPerson().getTeacher().getTeacherAuthorization(interval).isPresent()) {
+                return true;
             }
         } else {
             for (final Professorship professorship : user.getPerson().getProfessorshipsSet()) {

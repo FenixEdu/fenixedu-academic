@@ -24,11 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorshipWithPerson;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
 
@@ -91,12 +89,10 @@ public class TeachersManagerDA extends ExecutionCourseBaseAction {
 
         if (person != null) {
             try {
-                final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-                if ((person.getTeacher() != null && (person.getTeacher().getTeacherAuthorization(executionSemester) != null || person
-                        .hasRole(RoleType.TEACHER)))) {
+                if (person.getTeacher().hasTeacherAuthorization()) {
                     Professorship professorship = Professorship.create(false, getExecutionCourse(request), person, 0.0);
                     request.setAttribute("teacherOID", professorship.getExternalId());
-                } else if (person.getTeacher() == null || person.getTeacher().getCategoryByPeriod(executionSemester) == null) {
+                } else {
                     final ActionMessages actionErrors = new ActionErrors();
                     actionErrors.add("error", new ActionMessage("label.invalid.teacher.without.auth"));
                     saveErrors(request, actionErrors);

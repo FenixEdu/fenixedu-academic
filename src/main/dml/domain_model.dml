@@ -1249,18 +1249,14 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
     }
 
 	class TeacherAuthorization {
-
+	    protected Boolean contracted (REQUIRED);
+	    protected DateTime revokeTime (REQUIRED);
+        protected Double lessonHours (REQUIRED);
 	}
-	
-	class AplicaTeacherAuthorization extends TeacherAuthorization{
-	}
 
-	class ExternalTeacherAuthorization extends TeacherAuthorization{
-		Boolean active;
-		DateTime unactiveTime;
-		Double lessonHours;
-		Boolean canPark;
-		Boolean canHaveCard;
+	class TeacherCategory {
+	    LocalizedString name (REQUIRED);
+	    Integer weight (REQUIRED);
 	}
 
 	class TutorshipIntention  {
@@ -3599,7 +3595,7 @@ class personnelSection.contracts.PersonContractSituation  {
     String professionalCategoryGiafId;
 }
 
-class personnelSection.contracts.ProfessionalCategory  {
+class personnelSection.contracts.ProfessionalCategory {
     String giafId;
     MultiLanguageString name;
     CategoryType categoryType;
@@ -10664,6 +10660,15 @@ relation GiafProfessionalDataProfessionalCategory {
     }
 }
 
+relation ProfessionalCategoryTeacherCategory {
+    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory {
+        multiplicity 0..1;
+    }
+    TeacherCategory playsRole teacherCategory {
+        multiplicity 1..1;
+    }
+}
+
 relation GiafProfessionalDataProfessionalRegime {
     personnelSection.contracts.ProfessionalRegime playsRole professionalRegime;
     personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
@@ -12209,53 +12214,112 @@ relation UTLScholarshipReportSource {
 	student.scholarship.report.UTLScholarshipSource playsRole utlScholarshipSource;
 }
 
-	relation TeacherTeacherAuthorization {
-    	Teacher playsRole teacher;
-    	TeacherAuthorization playsRole authorization {
-        	multiplicity *;
-    	}
-	}
-	
-	relation TeacherAuthorizationProfessionalCategory {
-    	personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
-    	TeacherAuthorization playsRole authorization {
-        	multiplicity *;
-    	}
-	}
-	
-	relation ExternalTeacherAuthorizationPerson {
-    	Person playsRole authorizer;
-    	ExternalTeacherAuthorization playsRole teacherAuthorizationsAuthorized {
-        	multiplicity *;
-    	}
-	}
-	
-	relation ExternalTeacherAuthorizationDepartment {
-    	Department playsRole department;
-    	ExternalTeacherAuthorization playsRole teacherAuthorizationsAuthorized {
-        	multiplicity *;
-    	}
-	}
-	
-	relation ExternalTeacherAuthorizationRevoker {
-    	Person playsRole revoker;
-    	ExternalTeacherAuthorization playsRole teacherAuthorizationsRevoked {
-        	multiplicity *;
-    	}
-	}
-	
-	relation TeacherAuthorizationExecutionSemester {
-    	ExecutionSemester playsRole executionSemester;
-    	TeacherAuthorization playsRole authorization {
-        	multiplicity *;
-    	}
-	}
+relation BennuTeacherAuthorizations {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+        multiplicity 0..1;
+    }
+    public TeacherAuthorization playsRole teacherAuthorization {
+        multiplicity *;
+    }
+}
 
-relation TeacherAuthorizationRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	TeacherAuthorization playsRole teacherAuthorization {
-        	multiplicity *;
-    	}
+relation BennuRevokedTeacherAuthorizations {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole revokedRootDomainObject {
+        multiplicity 0..1;
+    }
+    public TeacherAuthorization playsRole revokedTeacherAuthorization {
+        multiplicity *;
+    }
+}
+
+relation TeacherTeacherAuthorization {
+	protected Teacher playsRole teacher {
+	    multiplicity 0..1;
+	}
+	protected TeacherAuthorization playsRole authorization {
+    	multiplicity *;
+	}
+}
+
+relation TeacherRevokedTeacherAuthorization {
+    protected Teacher playsRole revokedTeacher {
+        multiplicity 0..1;
+    }
+    protected TeacherAuthorization playsRole revokedAuthorization {
+        multiplicity *;
+    }
+}
+
+relation DepartmentTeacherAuthorizations {
+    protected Department playsRole department {
+        multiplicity 0..1;
+    }
+    protected TeacherAuthorization playsRole teacherAuthorization {
+    	multiplicity *;
+	}
+}
+
+relation DepartmentRevokedTeacherAuthorizations {
+    protected Department playsRole revokedDepartment {
+        multiplicity 0..1;
+    }
+    protected TeacherAuthorization playsRole revokedTeacherAuthorization {
+        multiplicity *;
+    }
+}
+
+relation ExecutionSemesterTeacherAuthorizations {
+    protected ExecutionSemester playsRole executionSemester {
+        multiplicity 0..1;
+    }
+    protected TeacherAuthorization playsRole teacherAuthorization {
+        multiplicity *;
+    }
+}
+
+relation ExecutionSemesterRevokedTeacherAuthorizations {
+    protected ExecutionSemester playsRole revokedExecutionSemester {
+        multiplicity 0..1;
+    }
+    protected TeacherAuthorization playsRole revokedTeacherAuthorization {
+        multiplicity *;
+    }
+}
+
+relation TeacherAuthorizationAuthorizer {
+    protected .org.fenixedu.bennu.core.domain.User playsRole authorizer {
+        multiplicity 0..1;
+    }
+    protected TeacherAuthorization playsRole teacherAuthorizationAuthorized {
+        multiplicity *;
+    }
+}
+
+relation TeacherAuthorizationRevokerer {
+	protected .org.fenixedu.bennu.core.domain.User playsRole revoker {
+        multiplicity 0..1;
+	}
+	protected TeacherAuthorization playsRole teacherAuthorizationRevoked {
+    	multiplicity *;
+	}
+}
+
+relation TeacherCategoryRoot {
+    protected .org.fenixedu.bennu.core.domain.Bennu playsRole root {
+        multiplicity 1..1;
+    }
+    public TeacherCategory playsRole teacherCategory {
+        multiplicity *;
+    }
+}
+
+relation TeacherAuthorizationTeacherCategory {
+    protected TeacherCategory playsRole teacherCategory {
+        multiplicity 1..1;
+    }
+    protected TeacherAuthorization playsRole authorization {
+        multiplicity *;
+    }
 }
 
 relation PhdGratuityPaymentPeriodRootDomainObject {

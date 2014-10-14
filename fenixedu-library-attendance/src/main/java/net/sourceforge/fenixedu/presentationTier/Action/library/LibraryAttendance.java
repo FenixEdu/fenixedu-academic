@@ -28,10 +28,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -213,12 +210,7 @@ public class LibraryAttendance implements Serializable {
                 }
             }
             if (person.getTeacher() != null) {
-                TeacherAuthorization teacherAuthorization =
-                        person.getTeacher().getTeacherAuthorization(ExecutionSemester.readActualExecutionSemester());
-                if (teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization) {
-                    externalTeacherUnit =
-                            ((ExternalTeacherAuthorization) teacherAuthorization).getDepartment().getDepartmentUnit();
-                }
+                externalTeacherUnit = person.getTeacher().getCurrentWorkingUnit();
             }
             if (!person.getWorkingResearchUnits().isEmpty()) {
                 researcherUnit = person.getWorkingPlaceUnitForAnyRoleType();

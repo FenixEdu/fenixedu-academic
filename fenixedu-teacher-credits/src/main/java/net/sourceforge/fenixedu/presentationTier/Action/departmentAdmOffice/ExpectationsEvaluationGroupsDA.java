@@ -97,8 +97,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
         ExecutionYear executionYear = getExecutionYearFromParameter(request);
 
         Department employeeDepartment = getDepartment(request);
-        Department teacherWorkingDepartment =
-                teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+        Department teacherWorkingDepartment = teacher.getLastDepartment(executionYear.getAcademicInterval());
 
         if (teacherWorkingDepartment != null && employeeDepartment != null && teacherWorkingDepartment.equals(employeeDepartment)) {
             request.setAttribute("expectationEvaluationGroupBean", new ExpectationEvaluationGroupBean(teacher, executionYear));
@@ -138,9 +137,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
         ExecutionYear executionYear = group.getExecutionYear();
 
         Department employeeDepartment = getDepartment(request);
-        Department appraiserDepartment =
-                appraiser.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
-                        executionYear.getEndDateYearMonthDay());
+        Department appraiserDepartment = appraiser.getLastDepartment(executionYear.getAcademicInterval());
 
         if (appraiserDepartment != null && employeeDepartment != null && appraiserDepartment.equals(employeeDepartment)) {
             try {
@@ -164,8 +161,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
         Map<Teacher, List<ExpectationEvaluationGroup>> result =
                 new TreeMap<Teacher, List<ExpectationEvaluationGroup>>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
         if (executionYear != null && department != null) {
-            List<Teacher> currentTeachers =
-                    department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+            List<Teacher> currentTeachers = department.getAllTeachers(executionYear);
             for (Teacher teacher : currentTeachers) {
                 result.put(teacher, ExpectationEvaluationGroup.getEvaluatedExpectationEvaluationGroups(teacher, executionYear));
             }

@@ -42,8 +42,8 @@
 			
 			<fr:slot name="lessonHours" key="label.lessonHours" required="true" />
 			
-			<fr:slot name="professionalCategory" key="label.professionalCategory" layout="menu-select"  required="true">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.TeacherProfessionalCategoryProvider" />
+			<fr:slot name="teacherCategory" key="label.professionalCategory" layout="menu-select"  required="true">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.TeacherCategoryProvider" />
 				<fr:property name="format" value="${name}" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>
@@ -59,8 +59,6 @@
 				<fr:property name="format" value="${realName}" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>
-			
-			<fr:slot name="canPark" key="label.canPark" />
 			
 		</fr:schema>
 		<fr:layout name="tabular">

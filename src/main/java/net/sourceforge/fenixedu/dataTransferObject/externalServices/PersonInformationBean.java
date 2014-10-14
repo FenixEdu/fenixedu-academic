@@ -110,7 +110,7 @@ public class PersonInformationBean {
         }
 
         if (person.getTeacher() != null) {
-            Department department = person.getTeacher().getCurrentWorkingDepartment();
+            Department department = person.getTeacher().getDepartment();
             if (department != null) {
                 setTeacherDepartment(department);
             }

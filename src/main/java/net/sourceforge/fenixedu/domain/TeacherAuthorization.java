@@ -18,10 +18,113 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-public class TeacherAuthorization extends TeacherAuthorization_Base {
+import java.util.Objects;
 
-    public TeacherAuthorization() {
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.joda.time.DateTime;
+
+public class TeacherAuthorization extends TeacherAuthorization_Base {
+    protected TeacherAuthorization() {
         super();
+        setRootDomainObject(Bennu.getInstance());
     }
 
+    protected TeacherAuthorization(Teacher teacher, Department department, ExecutionSemester executionSemester,
+            TeacherCategory teacherCategory, Boolean contracted, Double lessonHours) {
+        this();
+        setTeacher(teacher);
+        setDepartment(department);
+        setExecutionSemester(executionSemester);
+        setTeacherCategory(teacherCategory);
+        setContracted(contracted);
+        setLessonHours(lessonHours);
+        setAuthorizer(Authenticate.getUser());
+    }
+
+    public static TeacherAuthorization createOrUpdate(Teacher teacher, Department department,
+            ExecutionSemester executionSemester, TeacherCategory teacherCategory, Boolean contracted, Double lessonHours) {
+        Objects.requireNonNull(teacher);
+        Objects.requireNonNull(department);
+        Objects.requireNonNull(executionSemester);
+        Objects.requireNonNull(teacherCategory);
+        Objects.requireNonNull(contracted);
+        Objects.requireNonNull(lessonHours);
+        TeacherAuthorization existing = teacher.getTeacherAuthorization(executionSemester.getAcademicInterval()).orElse(null);
+        if (existing != null) {
+            if (existing.getDepartment().equals(department) && existing.getContracted().equals(contracted)
+                    && existing.getLessonHours().equals(lessonHours)) {
+                return existing;
+            } else {
+                existing.revoke();
+            }
+        }
+        return new TeacherAuthorization(teacher, department, executionSemester, teacherCategory, contracted, lessonHours);
+    }
+
+    public void revoke() {
+        setRevokedRootDomainObject(getRootDomainObject());
+        setRootDomainObject(null);
+        setRevokedTeacher(getTeacher());
+        setTeacher(null);
+        setRevokedDepartment(getDepartment());
+        setDepartment(null);
+        setRevokedExecutionSemester(getExecutionSemester());
+        setExecutionSemester(null);
+        setRevoker(Authenticate.getUser());
+    }
+
+    @Override
+    public Department getDepartment() {
+        // FIXME: Removed when framework support read-only slots
+        return super.getDepartment();
+    }
+
+    @Override
+    public ExecutionSemester getExecutionSemester() {
+        // FIXME: Removed when framework support read-only slots
+        return super.getExecutionSemester();
+    }
+
+    @Override
+    public Teacher getTeacher() {
+        // FIXME: Removed when framework support read-only slots
+        return super.getTeacher();
+    }
+
+    @Override
+    public TeacherCategory getTeacherCategory() {
+        // FIXME: Removed when framework support read-only slots
+        return super.getTeacherCategory();
+    }
+
+    public boolean isContracted() {
+        // FIXME: Removed when framework support read-only slots
+        return super.getContracted();
+    }
+
+    @Override
+    public Double getLessonHours() {
+        // FIXME: Removed when framework support read-only slots
+        return super.getLessonHours();
+    }
+
+    @Override
+    public User getAuthorizer() {
+        // FIXME: Removed when framework support read-only slots
+        return super.getAuthorizer();
+    }
+
+    @Override
+    public User getRevoker() {
+        // FIXME: Removed when framework support read-only slots
+        return super.getRevoker();
+    }
+
+    @Override
+    public DateTime getRevokeTime() {
+        // FIXME: Removed when framework support read-only slots
+        return super.getRevokeTime();
+    }
 }

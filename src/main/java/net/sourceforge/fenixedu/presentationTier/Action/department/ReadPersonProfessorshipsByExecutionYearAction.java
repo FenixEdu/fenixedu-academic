@@ -241,7 +241,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         Person person = (Person) FenixFramework.getDomainObject(infoPerson.getExternalId());
         InfoDepartment teacherDepartment = null;
         if (person.getTeacher() != null) {
-            Department department = person.getTeacher().getCurrentWorkingDepartment();
+            Department department = person.getTeacher().getDepartment();
             teacherDepartment = InfoDepartment.newInfoFromDomain(department);
             final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCreditsSet();
             request.setAttribute("isDepartmentManager", (departmentList.contains(department) || department == null));

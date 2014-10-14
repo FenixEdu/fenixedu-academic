@@ -18,19 +18,13 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice;
 
-import java.util.Collection;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ViewTeacherCreditsDA;
@@ -39,7 +33,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.Depa
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -77,20 +70,7 @@ public class DepartmentAdmOfficeViewTeacherCreditsDA extends ViewTeacherCreditsD
     }
 
     private boolean isTeacherOfManageableDepartments(Teacher teacher) {
-        User userView = Authenticate.getUser();
-        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCreditsSet();
-        List<Unit> workingPlacesByPeriod =
-                teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
-                        executionSemester.getEndDateYearMonthDay());
-        for (Unit unit : workingPlacesByPeriod) {
-            DepartmentUnit departmentUnit = unit.getDepartmentUnit();
-            Department teacherDepartment = departmentUnit != null ? departmentUnit.getDepartment() : null;
-            if (teacherDepartment != null && manageableDepartments.contains(teacherDepartment)) {
-                return true;
-            }
-        }
-        return false;
+        return Authenticate.getUser().getPerson().getManageableDepartmentCreditsSet().contains(teacher.getDepartment());
     }
 
     public ActionForward unlockTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,

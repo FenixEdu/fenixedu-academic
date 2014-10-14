@@ -231,8 +231,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
     private List<DepartmentTeacherResultsResume> getDepartmentTeachersResume(DepartmentUnit departmentUnit,
             ExecutionSemester executionSemester, boolean allTeachers, boolean backToResume) {
         List<DepartmentTeacherResultsResume> teachersResume = new ArrayList<DepartmentTeacherResultsResume>();
-        for (Teacher teacher : departmentUnit.getDepartment().getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
-                executionSemester.getEndDateYearMonthDay())) {
+        for (Teacher teacher : departmentUnit.getDepartment().getAllTeachers(executionSemester)) {
             DepartmentTeacherResultsResume departmentTeacherResultsResume = null;
             for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
                 if (!professorship.getInquiryResultsSet().isEmpty()) {
@@ -240,7 +239,8 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
                         Collection<InquiryResult> professorshipResults = professorship.getInquiryResultsSet();
                         if (!professorshipResults.isEmpty()) {
                             for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-                                List<InquiryResult> teacherShiftResults = InquiryResult.getInquiryResults(professorship, shiftType);
+                                List<InquiryResult> teacherShiftResults =
+                                        InquiryResult.getInquiryResults(professorship, shiftType);
                                 if (!teacherShiftResults.isEmpty()) {
                                     TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult =
                                             new TeacherShiftTypeGroupsResumeResult(professorship, shiftType,

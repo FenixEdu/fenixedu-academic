@@ -73,9 +73,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
         if (person != null) {
             groups.add(UserGroup.of(person.getUser()));
         }
-        final Department department =
-                teacher.getLastWorkingDepartment(executionSemester.getBeginDateYearMonthDay(),
-                        executionSemester.getEndDateYearMonthDay());
+        final Department department = teacher.getLastDepartment(executionSemester.getAcademicInterval());
         if (department != null && department.getDepartmentUnit() != null) {
             groups.add(UnitGroup.get(department.getDepartmentUnit(), FunctionType.PRESIDENT, false));
         }

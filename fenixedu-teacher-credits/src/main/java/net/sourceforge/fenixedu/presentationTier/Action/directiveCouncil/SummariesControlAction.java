@@ -245,7 +245,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
 
                 Teacher teacher = professorship.getTeacher();
                 String categoryName =
-                        teacher != null && teacher.getCategory() != null ? teacher.getCategory().getName().getContent() : null;
+                        teacher != null && teacher.getGiafProfessionalCategory() != null ? teacher.getGiafProfessionalCategory().getName().getContent() : null;
                 String siglas = getSiglas(professorship);
 
                 String teacherEmail =
@@ -355,9 +355,7 @@ public abstract class SummariesControlAction extends FenixDispatchAction {
 
     private Set<ExecutionCourse> getDepartmentExecutionCourses(Department department, ExecutionSemester executionSemester) {
         Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
-        List<Teacher> allDepartmentTeachers =
-                department.getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
-                        executionSemester.getEndDateYearMonthDay());
+        List<Teacher> allDepartmentTeachers = department.getAllTeachers(executionSemester);
 
         for (Teacher teacher : allDepartmentTeachers) {
             for (Professorship professorship : teacher.getProfessorships()) {

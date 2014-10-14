@@ -367,11 +367,11 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             teacherEvaluationProcesses = new TreeSet<TeacherEvaluationProcess>(TeacherEvaluationProcess.COMPARATOR_BY_EVALUEE);
             final Teacher teacher = person.getTeacher();
             if (teacher != null) {
-                final Department department = teacher.getCurrentWorkingDepartment();
+                final Department department = teacher.getDepartment();
                 if (department.isCurrentDepartmentPresident(person)) {
                     for (final TeacherEvaluationProcess teacherEvaluation : facultyEvaluationProcess
                             .getTeacherEvaluationProcessSet()) {
-                        if (teacherEvaluation.getEvaluee().getTeacher().getCurrentWorkingDepartment() == department) {
+                        if (teacherEvaluation.getEvaluee().getTeacher().getDepartment() == department) {
                             teacherEvaluationProcesses.add(teacherEvaluation);
                             final TeacherEvaluation currentTeacherEvaluation = teacherEvaluation.getCurrentTeacherEvaluation();
                             if (currentTeacherEvaluation != null && currentTeacherEvaluation.getAutoEvaluationLock() != null) {
@@ -454,9 +454,8 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
                     TeacherEvaluation teacherEvaluation = teacherEvaluationProcess.getCurrentTeacherEvaluation();
                     if (teacherEvaluation != null) {
                         String department =
-                                teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher()
-                                        .getLastWorkingDepartment() == null ? withoutDepartment : teacherEvaluation
-                                        .getTeacherEvaluationProcess().getEvaluee().getTeacher().getLastWorkingDepartment()
+                                teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher().getLastDepartment() == null ? withoutDepartment : teacherEvaluation
+                                        .getTeacherEvaluationProcess().getEvaluee().getTeacher().getLastDepartment()
                                         .getName();
                         for (TeacherEvaluationFileType teacherEvaluationFileType : teacherEvaluation.getAutoEvaluationFileSet()) {
                             TeacherEvaluationFileBean teacherEvaluationFileBean =
@@ -503,9 +502,8 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
                     TeacherEvaluation teacherEvaluation = teacherEvaluationProcess.getCurrentTeacherEvaluation();
                     if (teacherEvaluation != null) {
                         String department =
-                                teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher()
-                                        .getLastWorkingDepartment() == null ? withoutDepartment : teacherEvaluation
-                                        .getTeacherEvaluationProcess().getEvaluee().getTeacher().getLastWorkingDepartment()
+                                teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher().getLastDepartment() == null ? withoutDepartment : teacherEvaluation
+                                        .getTeacherEvaluationProcess().getEvaluee().getTeacher().getLastDepartment()
                                         .getName();
                         for (TeacherEvaluationFileType teacherEvaluationFileType : teacherEvaluation.getEvaluationFileSet()) {
                             TeacherEvaluationFileBean teacherEvaluationFileBean =

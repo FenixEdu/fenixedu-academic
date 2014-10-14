@@ -24,12 +24,9 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
@@ -114,8 +111,7 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                             executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
             for (Teacher teacher : teachers) {
                 boolean isContractedTeacher = teacher.isActiveForSemester(executionSemester);
-                TeacherAuthorization teacherAuthorization = teacher.getTeacherAuthorization(executionSemester);
-                if (isContractedTeacher || teacherAuthorization != null) {
+                if (isContractedTeacher || teacher.hasTeacherAuthorization(executionSemester.getAcademicInterval())) {
                     final Row row = spreadsheet.addRow();
                     row.setCell(teacher.getPerson().getUsername());
                     row.setCell(teacher.getPerson().getEmployee() != null ? teacher.getPerson().getEmployee().getEmployeeNumber() : null);
@@ -124,25 +120,21 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                     ProfessionalCategory category = null;
                     PersonContractSituation situation = null;
                     ProfessionalRegime regime = null;
+                    category = teacher.getCategoryByPeriod(executionSemester);
                     if (isContractedTeacher) {
-                        category = teacher.getCategoryByPeriod(executionSemester);
                         situation =
                                 teacher.getCurrentOrLastTeacherContractSituation(executionSemester.getBeginDateYearMonthDay()
                                         .toLocalDate(), executionSemester.getEndDateYearMonthDay().toLocalDate());
                         regime = getProfessionalRegime(situation, semesterInterval);
-                    } else if (teacherAuthorization != null) {
-                        category = teacherAuthorization.getProfessionalCategory();
                     }
                     row.setCell(category == null ? null : category.getName().getContent());
                     row.setCell(situation == null ? null : situation.getContractSituation().getName().getContent());
 
                     row.setCell(regime == null ? null : regime.getName().getContent());
                     row.setCell(teacher.isTeacherProfessorCategory(executionSemester) ? "S" : "N");
-                    Department lastWorkingDepartment =
-                            teacher.getLastWorkingDepartment(executionSemester.getBeginDateYearMonthDay(),
-                                    executionSemester.getEndDateYearMonthDay());
-                    row.setCell(lastWorkingDepartment == null ? null : lastWorkingDepartment.getName());
-                    Department creditsDepartment = getCreditsDepartment(teacher, executionSemester);
+                    Department lastDepartment = teacher.getLastDepartment(executionSemester.getAcademicInterval());
+                    row.setCell(lastDepartment == null ? null : lastDepartment.getName());
+                    Department creditsDepartment = teacher.getDepartment(executionSemester.getAcademicInterval()).orElse(null);
                     row.setCell(creditsDepartment == null ? null : creditsDepartment.getName());
 
                     TeacherService teacherService = TeacherService.getTeacherServiceByExecutionPeriod(teacher, executionSemester);
@@ -203,36 +195,6 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                 giafProfessionalData != null ? giafProfessionalData.getPersonProfessionalData() : null;
         return personProfessionalData != null ? personProfessionalData.getDominantProfessionalRegime(giafProfessionalData,
                 interval, CategoryType.TEACHER) : null;
-    }
-
-    private Department getCreditsDepartment(Teacher teacher, ExecutionSemester executionSemester) {
-
-        TeacherAuthorization teacherAuthorization = teacher.getTeacherAuthorization(executionSemester);
-        if (teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization) {
-            return ((ExternalTeacherAuthorization) teacherAuthorization).getDepartment();
-        }
-
-        Employee employee = teacher.getPerson().getEmployee();
-        if (employee != null) {
-            List<Contract> workingContracts =
-                    employee.getWorkingContracts(executionSemester.getBeginDateYearMonthDay(),
-                            executionSemester.getEndDateYearMonthDay());
-
-            Contract mostSignificantContract = null;
-            int mostSignificantContractDays = 0;
-            for (Contract contract : workingContracts) {
-                if (contract.getUnit().getDepartmentUnit() != null) {
-                    int contractDays = getDaysIn(contract, executionSemester);
-                    if (mostSignificantContract == null || contractDays > mostSignificantContractDays) {
-                        mostSignificantContractDays = contractDays;
-                        mostSignificantContract = contract;
-                    }
-                }
-            }
-            return mostSignificantContract != null ? mostSignificantContract.getUnit().getDepartmentUnit().getDepartmentUnit()
-                    .getDepartment() : null;
-        }
-        return null;
     }
 
     private int getDaysIn(Contract contract, ExecutionSemester executionSemester) {

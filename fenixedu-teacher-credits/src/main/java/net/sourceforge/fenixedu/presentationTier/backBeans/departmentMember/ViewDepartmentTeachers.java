@@ -133,7 +133,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     }
 
     public Department getDepartment() {
-        return getUserView().getPerson().getTeacher().getLastWorkingDepartment();
+        return getUserView().getPerson().getTeacher().getLastDepartment();
 
     }
 

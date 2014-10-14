@@ -333,7 +333,7 @@ public class SearchPerson implements Serializable {
                     for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
                         final Person person = peopleIterator.next();
                         final Teacher teacher = person.getTeacher();
-                        if (teacher == null || teacher.getCurrentWorkingDepartment() != department) {
+                        if (teacher == null || teacher.getDepartment() != department) {
                             peopleIterator.remove();
                         }
                     }

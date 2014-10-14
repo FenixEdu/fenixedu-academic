@@ -37,7 +37,7 @@
     <slot name="category" key="label.teacher.category" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
-    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment" layout="null-as-label">
+    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.department" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
 </schema>
@@ -329,7 +329,7 @@
         <property name="otherSize" value="50"/>
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CategoryProvider"/>
     </slot>
-    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment">
+    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.department">
         <property name="size" value="60"/>
     </slot>
 </schema>
@@ -341,7 +341,7 @@
         <property name="otherSize" value="50"/>
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CategoryProvider"/>
     </slot>
-    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment">
+    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.department">
         <property name="size" value="60"/>
     </slot>
     <slot name="thesis.orientatorCreditsDistribution" key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>
@@ -354,7 +354,7 @@
         <property name="otherSize" value="50"/>
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CategoryProvider"/>
     </slot>
-    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment">
+    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.department">
         <property name="size" value="60"/>
     </slot>
     <slot name="thesis.coorientatorCreditsDistribution" key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>
@@ -676,7 +676,7 @@
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="coordinator.chooseTutor.person.email" />
 	</slot>
-	<slot name="teacher.currentWorkingDepartment.name" key="label.department" />
+	<slot name="teacher.department.name" key="label.department" />
 	<slot name="teacher.category.name" key="label.teacherCategory"/>
 	<slot name="teacher.numberOfPastTutorships" key="label.coordinator.tutor.tutorshipInfo.pastTutoredStudents"/>
 	<slot name="teacher.numberOfActiveTutorships" key="label.coordinator.tutor.tutorshipInfo.currentTutoredStudents"/>
@@ -690,7 +690,7 @@
 		<property name="useParent" value="true"/>
 		<property name="linkFormat" value="/tutorManagement.do?method=viewTutorshipHistory&amp;forwardTo=prepareChooseTutorHistory&amp;teacherId=${teacher.teacherId}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
 	</slot>
-	<slot name="teacher.currentWorkingDepartment.name" key="label.department" />
+	<slot name="teacher.department.name" key="label.department" />
 	<slot name="teacher.category.name" key="label.teacherCategory"/>
 	<slot name="teacher.numberOfPastTutorships" key="label.coordinator.tutor.tutorshipInfo.pastTutoredStudents.br"/>
 	<slot name="teacher.numberOfActiveTutorships" key="label.coordinator.tutor.tutorshipInfo.allTutoredStudents.br"/>	
