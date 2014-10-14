@@ -79,10 +79,14 @@ public class FileDownloadLegacyRedirectFilter implements Filter {
     }
 
     public final static String getOidFromUrl(String url) {
-        String[] parts = url.substring(url.indexOf(SERVLET_PATH)).replace(SERVLET_PATH, "").split("\\/");
-        if (parts.length == 0) {
+        try {
+            String[] parts = url.substring(url.indexOf(SERVLET_PATH)).replace(SERVLET_PATH, "").split("\\/");
+            if (parts.length == 0) {
+                return null;
+            }
+            return parts[0];
+        } catch (Exception e) {
             return null;
         }
-        return parts[0];
     }
 }
