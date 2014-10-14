@@ -34,6 +34,7 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
  * 
  * @author cfgi
  */
+@Deprecated
 public class OrderedRelationAdapter<HolderType extends DomainObject, ObjectType extends DomainObject> extends
         RelationAdapter<HolderType, ObjectType> {
 
