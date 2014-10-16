@@ -73,8 +73,11 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
             boolean inValidTeacherCreditsPeriod = executionSemester.isInValidCreditsPeriod(RoleType.DEPARTMENT_MEMBER);
             for (Teacher teacher : department.getAllCurrentTeachers()) {
                 TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-                if (teacherService != null && teacherService.getReductionService() != null
-                        && teacherService.getReductionService().getRequestCreditsReduction()
+                if (teacherService != null
+                        && teacherService.getReductionService() != null
+                        && ((teacherService.getReductionService().getRequestCreditsReduction() != null && teacherService
+                                .getReductionService().getRequestCreditsReduction()) || teacherService.getReductionService()
+                                .getCreditsReductionAttributed() != null)
                         && (teacherService.getTeacherServiceLock() != null || !inValidTeacherCreditsPeriod)) {
                     creditsReductions.add(teacherService.getReductionService());
                 }
