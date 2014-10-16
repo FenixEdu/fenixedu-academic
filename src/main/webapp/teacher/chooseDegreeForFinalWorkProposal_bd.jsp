@@ -107,8 +107,8 @@
 							${proposal.title} (${proposal.proposalNumber})
 						</h4>
 						<span class="col-sm-4 text-right">
-							<a href="${pageContext.request.contextPath}/teacher/finalWorkManagement.do?method=print&finalDegreeWorkProposalOID=${proposal.externalId}" class="btn btn-default">${fr:message('resources.ApplicationResources', 'print')}</a>
-							<a href="${pageContext.request.contextPath}/teacher/finalWorkManagement.do?method=prepareToTransposeFinalDegreeWorkProposal&finalDegreeWorkProposalOID=${proposal.externalId}" class="btn btn-default">${fr:message('resources.ApplicationResources', 'finalDegreeWorkProposalHeader.transpose')}</a>
+							<html:link target="_blank" action="/finalWorkManagement.do?method=print&finalDegreeWorkProposalOID=${proposal.externalId}" styleClass="btn btn-default">${fr:message('resources.ApplicationResources', 'print')}</html:link>
+							<html:link target="_self" action="finalWorkManagement.do?method=prepareToTransposeFinalDegreeWorkProposal&finalDegreeWorkProposalOID=${proposal.externalId}" styleClass="btn btn-default">${fr:message('resources.ApplicationResources', 'finalDegreeWorkProposalHeader.transpose')}</html:link>
 						</span>
 					</div>
 					<div class="panel-body">
@@ -147,11 +147,11 @@
 														<bean:define id="student" name="groupStudent" property="student"/>
 														<bean:define id="registrationOID" name="student" property="externalId"/>
 														<bean:define id="curriculumLink">
-														/fenix/teacher/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= degree.toString() %>
+														/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= degree.toString() %>
 														</bean:define>
 														<tr>
 															<td><bean:write name="groupProposal" property="orderOfPreference"/></td>
-															<td><a href='<%= curriculumLink.toString() %>'>${groupStudent.student.person.username}</a></td>
+															<td><html:link page='<%= curriculumLink.toString() %>'>${groupStudent.student.person.username}</html:link></td>
 															<td>${groupStudent.student.person.name}</td>
 															<td>${groupStudent.student.person.profile.email}</td>
 															<td>
