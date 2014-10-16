@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA.EmergencyContactBean;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -332,7 +333,10 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("personBean", new PersonBean(Authenticate.getUser().getPerson()));
+        final Person person = Authenticate.getUser().getPerson();
+        request.setAttribute("personBean", new PersonBean(person));
+        EmergencyContactBean emergencyContactBean = new EmergencyContactBean(person);
+        request.setAttribute("emergencyContactBean", emergencyContactBean);
         return mapping.findForward("visualizePersonalInformation");
     }
 

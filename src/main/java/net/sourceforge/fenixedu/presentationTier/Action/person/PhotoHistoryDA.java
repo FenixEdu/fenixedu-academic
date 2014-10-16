@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA.EmergencyContactBean;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -61,7 +62,10 @@ public class PhotoHistoryDA extends FenixDispatchAction {
 
     public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("personBean", new PersonBean(Authenticate.getUser().getPerson()));
+        final Person person = Authenticate.getUser().getPerson();
+        request.setAttribute("personBean", new PersonBean(person));
+        EmergencyContactBean emergencyContactBean = new EmergencyContactBean(person);
+        request.setAttribute("emergencyContactBean", emergencyContactBean);
         return mapping.findForward("visualizePersonalInformation");
     }
 

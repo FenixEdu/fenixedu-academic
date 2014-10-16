@@ -854,7 +854,11 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 		String description;
 	}
 	
-    class Employee  {
+	class EmergencyContact {
+		String contact;
+	}
+		
+	class Employee  {
         DateTime creationDate;
         Integer employeeNumber;
         Integer workingHours;
@@ -7261,6 +7265,15 @@ relation PersonUserProfile {
     }
     .org.fenixedu.bennu.core.domain.UserProfile playsRole profile {
         multiplicity 0..1;
+    }
+}
+
+relation UserProfileEmergencyContact {
+	.org.fenixedu.bennu.core.domain.UserProfile playsRole profile {
+		multiplicity 1;
+    }
+    EmergencyContact playsRole emergencyContact{
+    	multiplicity 0..1;
     }
 }
 

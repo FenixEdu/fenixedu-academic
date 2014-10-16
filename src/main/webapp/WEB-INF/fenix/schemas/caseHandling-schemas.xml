@@ -1668,21 +1668,13 @@
 		</validator>			 	
 		<property name="maxLength" value="50" />
 		<property name="size" value="20"/>
-	</slot>
-	
-	<slot name="personBean.phone" key="label.phone" >
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\+?\d{4,15})?"/>
-            <property name="message" value="error.phone.invalidFormat"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="CANDIDATE_RESOURCES"/>
-            <property name="isKey" value="true"/>
-        </validator>
+	</slot>	
+    
+    <slot name="personBean.mobile" key="label.mobile" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>		
     	<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
     </slot>
-	
 </schema>
 
 <schema name="PublicCandidacyProcess.candidacyDataBean.internal.candidate.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">

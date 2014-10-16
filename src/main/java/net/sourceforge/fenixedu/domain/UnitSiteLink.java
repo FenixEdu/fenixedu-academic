@@ -77,9 +77,6 @@ public class UnitSiteLink extends UnitSiteLink_Base {
     static {
         TOP_ORDER_ADAPTER = new OrderedRelationAdapter<UnitSite, UnitSiteLink>("linkOrder", "topLinks");
         FOOTER_ORDER_ADAPTER = new OrderedRelationAdapter<UnitSite, UnitSiteLink>("linkOrder", "footerLinks");
-
-        getRelationUnitSiteTopLinks().addListener(TOP_ORDER_ADAPTER);
-        getRelationUnitSiteFooterLinks().addListener(FOOTER_ORDER_ADAPTER);
     }
 
     public UnitSiteLink() {
@@ -98,6 +95,22 @@ public class UnitSiteLink extends UnitSiteLink_Base {
     public void setLabel(MultiLanguageString label) {
         check(this, UnitSitePredicates.linkSiteManagers);
         super.setLabel(label);
+    }
+
+    @Override
+    public void setTopUnitSite(UnitSite topUnitSite) {
+        if (topUnitSite != null) {
+            setLinkOrder(topUnitSite.getTopLinksSet().stream().mapToInt(UnitSiteLink::getLinkOrder).max().orElse(0) + 1);
+        }
+        super.setTopUnitSite(topUnitSite);
+    }
+
+    @Override
+    public void setFooterUnitSite(UnitSite footerUnitSite) {
+        if (footerUnitSite != null) {
+            setLinkOrder(footerUnitSite.getFooterLinksSet().stream().mapToInt(UnitSiteLink::getLinkOrder).max().orElse(0) + 1);
+        }
+        super.setFooterUnitSite(footerUnitSite);
     }
 
     public void delete() {

@@ -71,7 +71,9 @@ public class FindPersonAction extends FenixDispatchAction {
         String documentIdNumber = getStringFromRequest(request, "documentIdNumber");
         request.setAttribute("documentIdNumber", documentIdNumber);
 
-        String mechanoGraphicalNumber = getStringFromRequest(request, "mechanoGraphicalNumber").replace(" ", "");
+        String mechanoGraphicalNumber =
+                getStringFromRequest(request, "mechanoGraphicalNumber") != null ? getStringFromRequest(request,
+                        "mechanoGraphicalNumber").replace(" ", "") : null;
         request.setAttribute("mechanoGraphicalNumber", mechanoGraphicalNumber);
 
         if (!Strings.isNullOrEmpty(mechanoGraphicalNumber) && Ints.tryParse(mechanoGraphicalNumber) == null) {
@@ -98,8 +100,13 @@ public class FindPersonAction extends FenixDispatchAction {
         request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
         request.setAttribute("personListFinded", result.getPage(pageNumber.intValue()));
         request.setAttribute("totalFindedPersons", result.getCollection().size());
+        request.setAttribute("modulePrefix", getModulePrefix());
 
         return mapping.findForward("displayPerson");
+    }
+
+    protected String getModulePrefix() {
+        return "manager";
     }
 
     public ActionForward viewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

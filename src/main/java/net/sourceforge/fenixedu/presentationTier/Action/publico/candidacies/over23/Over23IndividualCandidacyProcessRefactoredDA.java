@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -352,6 +351,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
             logger.error(e.getMessage(), e);
+            getIndividualCandidacyProcessBean().getPersonBean().setPerson(null);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("candidacy-continue-creation");
         }

@@ -482,6 +482,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
             logger.error(e.getMessage(), e);
+            getIndividualCandidacyProcessBean().getPersonBean().setPerson(null);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             sendSubmissionErrorReportMail(getIndividualCandidacyProcessBean(), e);
             return mapping.findForward("error-on-application-submission");
@@ -887,7 +888,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             writer.flush();
             writer.close();
 
-            response.flushBuffer();   
+            response.flushBuffer();
         }
 
         return null;
@@ -1190,8 +1191,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         sb.append(BundleUtil.getString(Bundle.CANDIDATE, "error.mobility.report.mail.intro"));
         sb.append("\n");
         sb.append("\nError message: ");
-        sb.append(BundleUtil.getString(Bundle.APPLICATION, exception.getKey(),
-                exception.getArgs()));
+        sb.append(BundleUtil.getString(Bundle.APPLICATION, exception.getKey(), exception.getArgs()));
         sb.append("\n");
 
         // Data input from candidate
@@ -1263,8 +1263,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         // Email construction and sending
         String errorReportAddress = Installation.getInstance().getInstituitionalEmailAddress("nmci");
         String errorReportSubject =
-                BundleUtil.getString(Bundle.CANDIDATE, "error.mobility.report.mail.subject",
-                        Unit.getInstitutionAcronym());
+                BundleUtil.getString(Bundle.CANDIDATE, "error.mobility.report.mail.subject", Unit.getInstitutionAcronym());
         String errorReportBody = sb.toString();
 
         SystemSender systemSender = Bennu.getInstance().getSystemSender();

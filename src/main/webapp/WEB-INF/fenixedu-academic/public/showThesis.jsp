@@ -123,34 +123,17 @@
 			<c:if test="${thesis.evaluated}">
 				${thesis.finalTitle}, ${thesis.student.name}, ${thesis.discussed.year}
 				<p>
-					<c:choose>
-						<c:when test="${thesis.dissertation.isAccessible(LOGGED_USER_ATTRIBUTE)}">
-							(<a href="${thesis.extendedAbstract.downloadUrl}">
-								<img src="${pageContext.request.contextPath}/images/icon_pdf.gif"/>
-								${fr:message('resources.ResearcherResources', 'link.dissertation.download.extendedAbstract')}
-								${thesis.extendedAbstract.prettyFileSize}
-							</a>)
+					(<a href="${thesis.extendedAbstract.downloadUrl}">
+						<img src="${pageContext.request.contextPath}/images/icon_pdf.gif"/>
+						${fr:message('resources.ResearcherResources', 'link.dissertation.download.extendedAbstract')}
+						${thesis.extendedAbstract.prettyFileSize}
+					</a>)
 
-							(<a href="${thesis.dissertation.downloadUrl}">
-								<img src="${pageContext.request.contextPath}/images/icon_pdf.gif"/>
-								${fr:message('resources.ResearcherResources', 'link.dissertation.download.thesis')}
-								${thesis.dissertation.prettyFileSize}
-							</a>)
-						</c:when>
-						<c:otherwise>
-							(
-								<img src="${pageContext.request.contextPath}/images/icon_pdf.gif"/>
-								${fr:message('resources.ResearcherResources', 'link.dissertation.download.extendedAbstract')}
-								${thesis.extendedAbstract.prettyFileSize}
-							)
-
-							(
-								<img src="${pageContext.request.contextPath}/images/icon_pdf.gif"/>
-								${fr:message('resources.ResearcherResources', 'link.dissertation.download.thesis')}
-								${thesis.dissertation.prettyFileSize}
-							)
-						</c:otherwise>
-					</c:choose>
+					(<a href="${thesis.dissertation.downloadUrl}">
+						<img src="${pageContext.request.contextPath}/images/icon_pdf.gif"/>
+						${fr:message('resources.ResearcherResources', 'link.dissertation.download.thesis')}
+						${thesis.dissertation.prettyFileSize}
+					</a>)						
 				</p>
 				<p>
 					<em>${fr:message('resources.ResearcherResources', 'label.publication.subject.to.copyright')}</em>

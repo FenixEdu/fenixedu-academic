@@ -46,22 +46,22 @@
 		</li>
 		<li>
 			Transferências Externos - 
-			<bean:write name="externalDegreeChangeSize" /> -
+			<bean:write name="externalDegreeTransferSize" /> -
 			<html:link action="/candidacyPaymentCodes.do?method=prepareCreatePaymentCodes&type=EXTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS" >Criar Referências</html:link>
 		</li>
 		<li>
 			Transferências Internos - 
-			<bean:write name="internalDegreeChangeSize" /> -
+			<bean:write name="internalDegreeTransferSize" /> -
 			<html:link action="/candidacyPaymentCodes.do?method=prepareCreatePaymentCodes&type=INTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS" >Criar Referências</html:link>
 		</li>
 		<li>
 			Mudanças de Curso Externos - 
-			<bean:write name="externalDegreeTransferSize" /> -
+			<bean:write name="externalDegreeChangeSize" /> -
 			<html:link action="/candidacyPaymentCodes.do?method=prepareCreatePaymentCodes&type=EXTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS" >Criar Referências</html:link>
 		</li>
 		<li>
 			Mudanças de Curso Internos - 
-			<bean:write name="internalDegreeTransferSize" /> -
+			<bean:write name="internalDegreeChangeSize" /> -
 			<html:link action="/candidacyPaymentCodes.do?method=prepareCreatePaymentCodes&type=INTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS" >Criar Referências</html:link>
 		</li>
 		<li>

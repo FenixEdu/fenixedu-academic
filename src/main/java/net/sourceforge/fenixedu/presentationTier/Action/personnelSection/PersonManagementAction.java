@@ -41,4 +41,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "findPerson", path = "/manager/personManagement/findPerson.jsp") })
 public class PersonManagementAction extends FindPersonAction {
 
+    @Override
+    protected String getModulePrefix() {
+        return "personnelSection";
+    }
 }

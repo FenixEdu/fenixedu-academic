@@ -33,19 +33,21 @@
 <em><bean:message key="label.teacherService.credits"/></em>
 <h3><bean:message key="label.credits.creditsReduction.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <%net.sourceforge.fenixedu.domain.ExecutionSemester executionSemester = net.sourceforge.fenixedu.domain.ExecutionSemester.readActualExecutionSemester(); 
-Boolean canChangeCredits = executionSemester.isInValidCreditsPeriod(net.sourceforge.fenixedu.domain.person.RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+Boolean canAproveReductionServiceCredits = executionSemester.isInValidCreditsPeriod(net.sourceforge.fenixedu.domain.person.RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+Boolean canInsertReductionServiceCredits = canAproveReductionServiceCredits && !executionSemester.isInValidCreditsPeriod(net.sourceforge.fenixedu.domain.person.RoleType.DEPARTMENT_MEMBER);
 
 %>
 <bean:define id="executionSemesterName" value="<%= executionSemester.getQualifiedName()%>"/>
-<bean:define id="canChange" value="<%= canChangeCredits.toString()%>"/>
+<bean:define id="canAproveReductionService" value="<%= canAproveReductionServiceCredits.toString()%>"/>
+<bean:define id="canInsertReductionService" value="<%= canInsertReductionServiceCredits.toString()%>"/>
 <h3><bean:write name="executionSemesterName"/></h3>
-<%--
-<logic:equal name="canChange" value="true">
+
+<logic:equal name="canInsertReductionService" value="true">
 	<p><html:link page="/creditsReductions.do?method=selectTeacher">
 		<bean:message key="label.reductionService.insert" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 	</html:link></p>
 </logic:equal>
- --%>
+
 <logic:present name="creditsReductions">
 	<fr:view name="creditsReductions">
 		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.ReductionService">
@@ -63,7 +65,7 @@ Boolean canChangeCredits = executionSemester.isInValidCreditsPeriod(net.sourcefo
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
 			<fr:property name="columnClasses" value="headerTable,,"/>
-			<logic:equal name="canChange" value="true">
+			<logic:equal name="canAproveReductionService" value="true">
 				<fr:property name="link(edit)" value="/creditsReductions.do?method=aproveReductionService" />
 				<fr:property name="key(edit)" value="label.edit" />
 				<fr:property name="param(edit)" value="externalId/reductionServiceOID" />

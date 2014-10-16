@@ -45,7 +45,7 @@ public class SPUtil {
 
         try {
             this.properties = new Properties();
-            properties.load(SPUtil.class.getClassLoader().getResourceAsStream("/sp.properties"));
+            properties.load(getClass().getResourceAsStream("/sp.properties"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

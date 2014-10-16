@@ -235,6 +235,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
             logger.error(e.getMessage(), e);
+            getIndividualCandidacyProcessBean().getPersonBean().setPerson(null);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("candidacy-continue-creation");
         }
