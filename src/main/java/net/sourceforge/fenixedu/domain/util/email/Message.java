@@ -278,18 +278,20 @@ public class Message extends Message_Base {
     @Atomic(mode = TxMode.WRITE)
     private void createEmailBatch(final Sender sender, final Person person, final Set<String> tos, final Set<String> ccs,
             Set<Set<String>> destinationBccs) {
-        for (final Set<String> bccs : destinationBccs) {
-            if (!bccs.isEmpty()) {
-                new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
-                        Collections.EMPTY_SET, Collections.EMPTY_SET, bccs, this);
+        if (getRootDomainObjectFromPendingRelation() != null) {
+            for (final Set<String> bccs : destinationBccs) {
+                if (!bccs.isEmpty()) {
+                    new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
+                            Collections.EMPTY_SET, Collections.EMPTY_SET, bccs, this);
+                }
             }
+            if (!tos.isEmpty() || !ccs.isEmpty()) {
+                new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person), tos, ccs,
+                        Collections.EMPTY_SET, this);
+            }
+            setRootDomainObjectFromPendingRelation(null);
+            setSent(new DateTime());
         }
-        if (!tos.isEmpty() || !ccs.isEmpty()) {
-            new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person), tos, ccs,
-                    Collections.EMPTY_SET, this);
-        }
-        setRootDomainObjectFromPendingRelation(null);
-        setSent(new DateTime());
     }
 
     private Set<Set<String>> split(final Set<String> destinations) {
