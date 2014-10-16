@@ -28,9 +28,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPho
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA.EmergencyContactBean;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
@@ -146,7 +148,10 @@ public class UploadPhotoDA extends FenixDispatchAction {
 
         UploadOwnPhoto.run(new ByteArray(photo.getFileInputStream()).getBytes(),
                 ContentType.getContentType(photo.getContentType()));
-        request.setAttribute("personBean", new PersonBean(Authenticate.getUser().getPerson()));
+        final Person person = Authenticate.getUser().getPerson();
+        request.setAttribute("personBean", new PersonBean(person));
+        EmergencyContactBean emergencyContactBean = new EmergencyContactBean(person);
+        request.setAttribute("emergencyContactBean", emergencyContactBean);
         return mapping.findForward("visualizePersonalInformation");
     }
 
