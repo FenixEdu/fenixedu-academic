@@ -320,7 +320,7 @@
 	<lastPageFooter>
 		<band height="137" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-21" positionType="Float" x="367" y="42" width="88" height="18"/>
+				<reportElement key="staticText-21" positionType="Float" x="367" y="42" width="95" height="18"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
