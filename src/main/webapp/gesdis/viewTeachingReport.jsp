@@ -31,7 +31,9 @@
 <bean:define id="executionCourse" name="infoSiteCourseInformation" property="infoExecutionCourse"/>
 <bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 <bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
-
+<bean:define id="fenixUrl" type="java.lang.String">
+	<%= org.fenixedu.bennu.core.util.CoreConfiguration.getConfiguration().applicationUrl() %>
+</bean:define>
 
 <table class="tstyle1">
 	<tr>
@@ -71,7 +73,7 @@
 		<td><strong><bean:message key="message.teachingReport.courseURL"/></strong></td>
 		<td>
 			<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.externalId"/>
-			<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/>publico/executionCourse.do?method=firstPage&amp;executionCourseID=<%= objectCode %>
+			<bean:write name="fenixUrl"/>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<%= objectCode %>
 		</td>
 	</tr>
 </table>

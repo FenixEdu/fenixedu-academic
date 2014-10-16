@@ -45,6 +45,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -318,10 +319,13 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     public ActionForward checkLists(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
+        String fenixUrl = CoreConfiguration.getConfiguration().applicationUrl();
+        if (!fenixUrl.endsWith("/")) {
+            fenixUrl += "/";
+        }
         String publicAccessURL =
-                MessageFormat.format(BundleUtil.getString(Bundle.ALUMNI, "alumni.public.registration.url.content.path"),
-                        BundleUtil.getString(Bundle.GLOBAL, "fenix.url"));
+                MessageFormat
+                        .format(BundleUtil.getString(Bundle.ALUMNI, "alumni.public.registration.url.content.path"), fenixUrl);
         request.setAttribute("publicAccessUrl", publicAccessURL);
         return mapping.findForward("alumniMailingLists");
     }

@@ -24,7 +24,7 @@
 <%@ page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %></bean:define>
-<bean:define id="fenixUrl" type="java.lang.String"><bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<bean:define id="fenixUrl" type="java.lang.String"><%= org.fenixedu.bennu.core.util.CoreConfiguration.getConfiguration().applicationUrl() %></bean:define>
 <bean:define id="searchTitle" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.title"/></bean:define>
 
 <div id="logoist">
@@ -54,7 +54,7 @@
 		<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />
 	</form>
 	 --%>
-	<form action="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>search/">
+	<form action="<%= institutionUrl %>search/">
 		<input type="hidden" name="cx" value="007266409324096302065:xkagxvojzme" />
 		<input type="hidden" name="cof" value="FORID:10" />
 		<input type="hidden" name="ie" value="UTF-8" />

@@ -25,6 +25,11 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="string"%>
 <%@ page import="java.util.Calendar" %>
+
+<bean:define id="fenixUrl" type="java.lang.String">
+	<%= org.fenixedu.bennu.core.util.CoreConfiguration.getConfiguration().applicationUrl() %>
+</bean:define>
+								
 <logic:present name="infoSiteCoursesInformation">
 	<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation">
 
@@ -98,7 +103,7 @@
 								<% session.setAttribute("locale", net.sourceforge.fenixedu.util.LocaleFactory.pt_PT); %>
 								<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.externalId"/>
 								<bean:define id="courseURL" type="java.lang.String">
-									<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/><bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.sigla"/>/<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES" locale="locale"/>/<bean:write name="curricularCourse" property="acronym"/>/<string:replace replace="/" with="-"><bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/></string:replace>/<string:replace replace=" " with="-"><bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/></string:replace>
+									<bean:write name="fenixUrl">/<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.sigla"/>/<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES" locale="locale"/>/<bean:write name="curricularCourse" property="acronym"/>/<string:replace replace="/" with="-"><bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/></string:replace>/<string:replace replace=" " with="-"><bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/></string:replace>
 								</bean:define>
 								<html:link href="<%= courseURL %>"><bean:write name="courseURL"/></html:link>
 							</td>
@@ -374,7 +379,7 @@
 							<% session.setAttribute("locale", net.sourceforge.fenixedu.util.LocaleFactory.pt_PT); %>
 							<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.externalId"/>
 							<bean:define id="courseURL" type="java.lang.String">
-								<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/><bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>/<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES" locale="locale"/>/<bean:write name="curricularCourse" property="acronym"/>/<string:replace replace="/" with="-"><bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.infoExecutionYear.year"/></string:replace>/<string:replace replace=" " with="-"><bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/></string:replace>
+								<bean:write name="fenixUrl">/<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>/<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES" locale="locale"/>/<bean:write name="curricularCourse" property="acronym"/>/<string:replace replace="/" with="-"><bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.infoExecutionYear.year"/></string:replace>/<string:replace replace=" " with="-"><bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/></string:replace>
 							</bean:define>
 							<html:link href="<%= courseURL %>"><bean:write name="courseURL"/></html:link>
 						</td>

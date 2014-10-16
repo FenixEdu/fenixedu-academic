@@ -28,6 +28,9 @@
 <h3><bean:message key="title.teachingReport.evaluation"/></h3>
 
 <logic:present name="siteView">
+<bean:define id="fenixUrl" type="java.lang.String">
+	<%= org.fenixedu.bennu.core.util.CoreConfiguration.getConfiguration().applicationUrl() %>
+</bean:define>
 <html:form action="/teachingReport">
 	<bean:define id="siteCourseInformation" name="siteView" property="component"/>
 	<bean:define id="executionCourse" name="siteCourseInformation" property="infoExecutionCourse"/>
@@ -71,7 +74,7 @@
 			<td><bean:message key="message.teachingReport.courseURL"/></td>
 			<td>
 				<bean:define id="objectCode" name="siteCourseInformation" property="infoExecutionCourse.externalId"/>
-				<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/>publico/executionCourse.do?method=firstPage&amp;executionCourseID=<%= objectCode %>
+				<bean:write name="fenixUrl"/>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<%= objectCode %>
 			</td>
 		</tr>
 	</table>

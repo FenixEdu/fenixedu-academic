@@ -23,6 +23,9 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<bean:define id="fenixUrl" type="java.lang.String">
+	<%= org.fenixedu.bennu.core.util.CoreConfiguration.getConfiguration().applicationUrl() %>
+</bean:define>
 <logic:present name="infoSiteCoursesInformation">
 	<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation">
 		<logic:iterate id="curricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
@@ -91,7 +94,7 @@
 					<td colspan="3">
 						<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.externalId"/>
 						<bean:define id="courseURL" type="java.lang.String">
-							<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/><bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.sigla"/>/<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES"/>/<bean:write name="curricularCourse" property="acronym"/>
+							<bean:write name="fenixUrl"/>/<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.sigla"/>/<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES"/>/<bean:write name="curricularCourse" property="acronym"/>
 						</bean:define>
 						<html:link href="<%= courseURL %>"><bean:write name="courseURL"/></html:link>
 					</td>
