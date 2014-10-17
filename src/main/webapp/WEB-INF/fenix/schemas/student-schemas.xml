@@ -457,7 +457,7 @@
 </schema>
 
 <schema name="student.yearDelegateElection.voteCandidate" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
-	<slot name="student" key="label.empty" bundle="DELEGATES_RESOURCES" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="student" key="label.empty" bundle="DELEGATES_RESOURCES" layout="radio-select" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.YearCandidateDelegateManagementProvider"/>
 		<property name="eachSchema" value="student.yearDelegateElection.photo"/>
 		<property name="eachLayout" value="values-dash" />
