@@ -27,6 +27,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.EntryPhase;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -36,7 +37,9 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -179,21 +182,22 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
     }
 
     private void addHeaders(Spreadsheet spreadsheet) {
-        spreadsheet.setHeader("Data de Matricula");
-        spreadsheet.setHeader("Tipo Ingresso");
-        spreadsheet.setHeader("Curso");
-        spreadsheet.setHeader("Nº de Aluno");
-        spreadsheet.setHeader("Nome");
-        spreadsheet.setHeader("B.I");
+    	
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.registeredDegreeCandidacies.registrationDate"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.ingression.type"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.degree"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.net.sourceforge.fenixedu.domain.Attends.registration.number"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.net.sourceforge.fenixedu.domain.Attends.registration.student.name"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.passportIdNumber"));
 
-        spreadsheet.setHeader("Aluno deslocado");
-        spreadsheet.setHeader("Localidade");
-        spreadsheet.setHeader("Email " + Unit.getInstitutionAcronym());
-        spreadsheet.setHeader("Email pessoal");
-        spreadsheet.setHeader("Telefone");
-        spreadsheet.setHeader("Telemovel");
-        spreadsheet.setHeader("Deslocado da residencia");
-        spreadsheet.setHeader("Turnos");
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.dislocatedFromPermanentResidence"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.area"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.institutional.email"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.partyContacts.EmailAddress"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.partyContacts.Phone"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.partyContacts.MobilePhone"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.net.sourceforge.fenixedu.domain.Shift.shiftTypesPrettyPrint"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.courses"));
     }
 
     private void addRow(final Spreadsheet spreadsheet, final StudentCandidacy candidacy) {
@@ -209,15 +213,14 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
         row.setCell(person.getDocumentIdNumber());
 
         row.setCell(candidacy.getDislocatedFromPermanentResidence() != null
-                && candidacy.getDislocatedFromPermanentResidence().booleanValue() ? "Sim" : "Nao");
+                && candidacy.getDislocatedFromPermanentResidence().booleanValue() ? BundleUtil.getString(Bundle.APPLICATION, "label.yes") : BundleUtil.getString(Bundle.APPLICATION, "label.no"));
         row.setCell(person.getArea());
         row.setCell(person.getInstitutionalEmailAddressValue());
         row.setCell(getPersonalEmailAddress(person));
         row.setCell(getPhone(person));
         row.setCell(getMobilePhone(person));
-        row.setCell(candidacy.getDislocatedFromPermanentResidence() != null
-                && candidacy.getDislocatedFromPermanentResidence().booleanValue() ? "Sim" : "Nao");
         row.setCell(getShiftNames(candidacy));
+        row.setCell(getEnrolledUCs(candidacy));
     }
 
     private String getPersonalEmailAddress(final Person person) {
@@ -248,6 +251,26 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 
         for (final Shift shift : registration.getShiftsFor(candidacy.getExecutionYear().getFirstExecutionPeriod())) {
             builder.append(shift.getNome()).append(",");
+        }
+
+        if (builder.length() > 1) {
+            builder.deleteCharAt(builder.length() - 1);
+        }
+
+        return builder.toString();
+    }
+    
+    private String getEnrolledUCs(final StudentCandidacy candidacy) {
+        if (candidacy.getRegistration() == null) {
+            return " ";
+        }
+
+        final Registration registration = candidacy.getRegistration();
+        final StringBuilder builder = new StringBuilder();
+
+        ;
+        for (final ExecutionCourse execCourse : registration.getAttendingExecutionCoursesFor(candidacy.getExecutionYear().getFirstExecutionPeriod())) {
+            builder.append(execCourse.getNome()).append(",");
         }
 
         if (builder.length() > 1) {
