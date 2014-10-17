@@ -142,7 +142,9 @@
 			        <fr:destination name="schoolLevelPostback" path="/dfaCandidacy.do?method=schoolLevelPostback" />
 				</fr:layout>
 			</fr:edit>
-		<% } %>	
+		<% } else { %>	
+			<fr:edit id="precedentDegreeInformation" name="precedentDegreeInformation" visible="false"/>
+		<% } %>
 	</logic:present>
 
 	<html:submit onclick="this.form.action=removeAnchor(this.form.action);"><bean:message key="button.submit" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>	
