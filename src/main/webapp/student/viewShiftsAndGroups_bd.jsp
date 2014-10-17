@@ -195,7 +195,7 @@
 				 		
 				 		<bean:define id="nrOfGroups" name="infoSiteShift" property="nrOfGroups"/>
 				 		<td class="acenter" width="10%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">				 			 		
-				 			<b><bean:message key="label.nrOfGroups"/> </b> ${nrOfGroups < 0 ? '0' : nrOfGroups}				 							 			
+				 			<b><bean:message key="label.nrOfGroups"/> </b> ${nrOfGroups}				 							 			
 						</td>
 				 		
 				 		<td class="acenter" width="13%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
