@@ -117,7 +117,7 @@ public class Function extends Function_Base {
     }
 
     private boolean canBeDeleted() {
-        return getAccountabilitiesSet().isEmpty() && getInherentFunctionsSet().isEmpty() && getPersonsInFunctionGroup() != null;
+        return getAccountabilitiesSet().isEmpty() && getInherentFunctionsSet().isEmpty() && getPersonsInFunctionGroup() == null;
     }
 
     public List<PersonFunction> getPersonFunctions() {
