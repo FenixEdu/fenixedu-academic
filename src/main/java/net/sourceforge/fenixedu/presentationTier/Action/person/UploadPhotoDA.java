@@ -158,6 +158,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
     public ActionForward cancel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("personBean", new PersonBean(AccessControl.getPerson()));
+        request.setAttribute("emergencyContactBean", new EmergencyContactBean(AccessControl.getPerson()));
         return mapping.findForward("visualizePersonalInformation");
     }
 
@@ -168,12 +169,14 @@ public class UploadPhotoDA extends FenixDispatchAction {
             photo.cancelSubmission();
         }
         request.setAttribute("personBean", new PersonBean(AccessControl.getPerson()));
+        request.setAttribute("emergencyContactBean", new EmergencyContactBean(AccessControl.getPerson()));
         return mapping.findForward("visualizePersonalInformation");
     }
 
     public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("personBean", new PersonBean(AccessControl.getPerson()));
+        request.setAttribute("emergencyContactBean", new EmergencyContactBean(AccessControl.getPerson()));
         return mapping.findForward("visualizePersonalInformation");
     }
 
