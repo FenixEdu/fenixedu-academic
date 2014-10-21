@@ -781,10 +781,6 @@
 		<put name="titleString" value="public.alumni.registration.result" />
 		<put name="body" value="/publico/alumni/alumniRegistrationResult.jsp" />
 	</definition>
-	<definition name="alumni.alumniMailingLists" extends="definition.public.alumni">
-		<put name="titleString" value="public.alumni.mailingLists" />
-		<put name="body" value="/publico/alumni/alumniMailingLists.jsp" />
-	</definition>
 	<definition name="alumni.errorSendMail" extends="definition.public.alumni">
 		<put name="titleString" value="public.alumni.sendMailError" />
 		<put name="body" value="/publico/alumni/alumniPublicAccessErrorSendMail.jsp" />
