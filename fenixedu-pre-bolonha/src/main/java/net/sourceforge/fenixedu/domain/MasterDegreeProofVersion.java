@@ -25,11 +25,9 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -48,22 +46,6 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
     public MasterDegreeProofVersion() {
         super();
         setRootDomainObject(Bennu.getInstance());
-    }
-
-    public MasterDegreeProofVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee, Date lastModification,
-            Date proofDate, Date thesisDeliveryDate, MasterDegreeClassification finalResult, Integer attachedCopiesNumber,
-            State currentState, List<Teacher> juries, List<ExternalContract> externalJuries) {
-        this();
-        this.setMasterDegreeThesis(masterDegreeThesis);
-        this.setResponsibleEmployee(responsibleEmployee);
-        this.setLastModification(lastModification);
-        this.setProofDate(proofDate);
-        this.setThesisDeliveryDate(thesisDeliveryDate);
-        this.setFinalResult(finalResult);
-        this.setAttachedCopiesNumber(attachedCopiesNumber);
-        this.setCurrentState(currentState);
-        this.getJuriesSet().addAll(juries);
-        this.getExternalJuriesSet().addAll(externalJuries);
     }
 
     public boolean isConcluded() {

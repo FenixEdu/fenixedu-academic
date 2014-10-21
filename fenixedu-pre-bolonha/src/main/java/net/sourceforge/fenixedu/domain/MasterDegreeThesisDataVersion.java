@@ -26,7 +26,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,16 +47,6 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     public MasterDegreeThesisDataVersion() {
         super();
         setRootDomainObject(Bennu.getInstance());
-    }
-
-    public MasterDegreeThesisDataVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee,
-            String dissertationTitle, Date lastModification, State currentState) {
-        this();
-        this.setMasterDegreeThesis(masterDegreeThesis);
-        this.setResponsibleEmployee(responsibleEmployee);
-        this.setDissertationTitle(dissertationTitle);
-        this.setLastModification(lastModification);
-        this.setCurrentState(currentState);
     }
 
     public static MasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle) {

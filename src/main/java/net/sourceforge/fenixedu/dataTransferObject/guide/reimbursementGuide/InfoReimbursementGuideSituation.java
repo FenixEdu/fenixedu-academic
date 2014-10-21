@@ -18,13 +18,12 @@
  */
 /*
  * Created on 12/Nov/2003
- *  
+ * 
  */
 package net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
@@ -46,27 +45,11 @@ public class InfoReimbursementGuideSituation extends InfoObject {
 
     protected String remarks;
 
-    protected InfoEmployee infoEmployee;
-
     protected Calendar modificationDate;
 
     protected Calendar officialDate;
 
     protected ReimbursementGuideState reimbursementGuideState;
-
-    /**
-     * @return
-     */
-    public InfoEmployee getInfoEmployee() {
-        return infoEmployee;
-    }
-
-    /**
-     * @param infoEmployee
-     */
-    public void setInfoEmployee(InfoEmployee infoEmployee) {
-        this.infoEmployee = infoEmployee;
-    }
 
     /**
      * @return
@@ -157,8 +140,6 @@ public class InfoReimbursementGuideSituation extends InfoObject {
         super.copyFromDomain(reimbursementGuideSituation);
         if (reimbursementGuideSituation != null) {
 
-            setInfoEmployee(InfoEmployee.newInfoFromDomain(reimbursementGuideSituation.getEmployee()));
-            // setInfoReimbursementGuide(null);
             setModificationDate(reimbursementGuideSituation.getModificationDate());
             setOfficialDate(reimbursementGuideSituation.getOfficialDate());
             setReimbursementGuideState(reimbursementGuideSituation.getReimbursementGuideState());

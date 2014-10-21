@@ -45,8 +45,6 @@ public class InfoMasterDegreeThesisDataVersion extends InfoObject {
 
     private List<InfoExternalPerson> infoExternalGuiders;
 
-    private InfoEmployee infoResponsibleEmployee;
-
     private String dissertationTitle;
 
     private Timestamp lastModification;
@@ -109,14 +107,6 @@ public class InfoMasterDegreeThesisDataVersion extends InfoObject {
         return infoMasterDegreeThesis;
     }
 
-    public void setInfoResponsibleEmployee(InfoEmployee infoResponsibleEmployee) {
-        this.infoResponsibleEmployee = infoResponsibleEmployee;
-    }
-
-    public InfoEmployee getInfoResponsibleEmployee() {
-        return infoResponsibleEmployee;
-    }
-
     public void setLastModification(Timestamp lastModification) {
         this.lastModification = lastModification;
     }
@@ -133,7 +123,6 @@ public class InfoMasterDegreeThesisDataVersion extends InfoObject {
         result += "infoExternalAssistentGuiders = " + this.infoExternalAssistentGuiders.toString() + "; \n";
         result += "infoAssistentGuiders = " + this.infoAssistentGuiders.toString() + "; \n";
         result += "infoGuiders" + this.infoGuiders.toString() + "; \n";
-        result += "infoResponsibleEmployee = " + this.infoResponsibleEmployee.getExternalId() + "; \n";
         result += "dissertationTitle = " + this.dissertationTitle.toString() + "; \n";
         result += "lastModification = " + this.lastModification.toString() + "; \n";
         result += "currentState = " + this.currentState.toString() + "; \n";

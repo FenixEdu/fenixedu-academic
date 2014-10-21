@@ -71,7 +71,6 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
                 GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
                 if (year.equals("2002/2003") && gratuitySituation.getTransactionListSet().size() == 0) {
-                    gratuitySituation.setEmployee(null);
                     gratuitySituation.setGratuityValues(null);
                     gratuitySituation.setStudentCurricularPlan(null);
                     this.gratuitySituationsToDelete.add(gratuitySituation);
@@ -142,7 +141,6 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
             }
         }
 
-        gratuitySituation.setEmployee(null);
         gratuitySituation.setGratuityValues(null);
         gratuitySituation.setStudentCurricularPlan(null);
         this.gratuitySituationsToDelete.add(gratuitySituation);

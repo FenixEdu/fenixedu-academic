@@ -1358,10 +1358,10 @@
 </schema>
 
 <schema name="registration.gratuitySituation.editPenaltyExemption" type="net.sourceforge.fenixedu.domain.GratuitySituation" bundle="APPLICATION_RESOURCES">
-	<slot name="penaltyExemptionEmployee" layout="null-as-label" key="label.masterDegree.gratuity.exemptionPenalty.responsible" read-only="true">
+	<slot name="penaltyExemptionUser" layout="null-as-label" key="label.masterDegree.gratuity.exemptionPenalty.responsible" read-only="true">
 		<property name="label" value=" - "/>
 		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="responsibleEmployee.name"/>
+		<property name="subSchema" value="responsibleUser.name"/>
 	</slot>	
 	<slot name="penaltyExemptionDate" key="label.masterDegree.gratuity.exemptionPenalty.date" layout="null-as-label" read-only="true">
 		<property name="label" value=" - "/>
@@ -1375,8 +1375,8 @@
 	<slot name="name" />
 </schema>
 
-<schema name="responsibleEmployee.name" type="net.sourceforge.fenixedu.domain.Employee">
-	<slot name="person.name" />
+<schema name="responsibleUser.name" type="org.fenixedu.bennu.core.domain.User">
+	<slot name="name" />
 </schema>
 
 <schema name="CurriculumLineLocationBean.edit" 

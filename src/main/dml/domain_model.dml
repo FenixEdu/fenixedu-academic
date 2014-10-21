@@ -7722,13 +7722,6 @@ relation GratuityPaymentPlanGratuityEventWithPaymentPlan {
     accounting.PaymentPlan playsRole gratuityPaymentPlan;
 }
 
-relation GratuitySituationEmployee {
-    GratuitySituation playsRole gratuitySituations {
-        multiplicity *;
-    }
-    Employee playsRole employee;
-}
-
 relation GratuitySituationGratuityValues {
     GratuitySituation playsRole gratuitySituations {
         multiplicity *;
@@ -7740,7 +7733,7 @@ relation GratuitySituationPenaltyExemptionEmployee {
     GratuitySituation playsRole penaltyExemptionGratuitySituations {
         multiplicity *;
     }
-    Employee playsRole penaltyExemptionEmployee;
+    .org.fenixedu.bennu.core.domain.User playsRole penaltyExemptionUser;
 }
 
 relation GratuitySituationStudentCurricularPlan {
@@ -7755,13 +7748,6 @@ relation GratuityTransactionGratuitySituation {
         multiplicity *;
     }
     GratuitySituation playsRole gratuitySituation;
-}
-
-relation GratuityValuesEmployee {
-    GratuityValues playsRole gratuityValues {
-        multiplicity *;
-    }
-    Employee playsRole employee;
 }
 
 relation GratuityValuesExecutionDegree {
@@ -8662,13 +8648,6 @@ relation ReimbursementGuideGuide {
         multiplicity *;
     }
     Guide playsRole guide;
-}
-
-relation ReimbursementGuideSituationEmployee {
-    reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
-        multiplicity *;
-    }
-    Employee playsRole employee;
 }
 
 relation ReimbursementGuideSituationReimbursementGuide {
@@ -10101,13 +10080,6 @@ relation StudentCurricularPlanDegreeCurricularPlan {
     }
     DegreeCurricularPlan playsRole degreeCurricularPlan;
 }
-
-relation StudentCurricularPlanEmployee {
-    StudentCurricularPlan playsRole studentCurricularPlans {
-        multiplicity *;
-    }
-    Employee playsRole employee;
-    }
 
 relation StudentCurricularPlanEnrolment {
     StudentCurricularPlan playsRole studentCurricularPlan;

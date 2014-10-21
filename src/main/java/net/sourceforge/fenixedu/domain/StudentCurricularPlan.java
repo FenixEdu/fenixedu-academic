@@ -302,7 +302,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         setDegreeCurricularPlan(null);
         setBranch(null);
-        setEmployee(null);
 
         for (; !getEnrolmentsSet().isEmpty(); getEnrolmentsSet().iterator().next().delete()) {
             ;

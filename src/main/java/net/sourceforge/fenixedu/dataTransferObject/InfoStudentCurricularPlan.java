@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
@@ -132,11 +131,6 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
     public int compareTo(Object arg0) {
         InfoStudentCurricularPlan obj0 = (InfoStudentCurricularPlan) arg0;
         return obj0.getCurrentState().compareTo(this.getCurrentState());
-    }
-
-    public InfoPerson getInfoEmployee() {
-        final Employee employee = getStudentCurricularPlan().getEmployee();
-        return employee == null ? null : InfoPerson.newInfoFromDomain(employee.getPerson());
     }
 
     public Date getWhen() {

@@ -80,13 +80,6 @@ relation CandidateSituationMasterDegreeCandidate {
     MasterDegreeCandidate playsRole masterDegreeCandidate;
 }
 
-relation MasterDegreeProofVersionEmployee {
-    MasterDegreeProofVersion playsRole masterDegreeProofVersions {
-        multiplicity *;
-    }
-    Employee playsRole responsibleEmployee;
-}
-
 relation MasterDegreeProofVersionExternalJury {
     MasterDegreeProofVersion playsRole masterDegreeProofsExternalJury {
         multiplicity *;
@@ -126,13 +119,6 @@ relation MasterDegreeThesisDataVersionAssistentGuider {
     Teacher playsRole assistentGuiders {
         multiplicity *;
     }
-}
-
-relation MasterDegreeThesisDataVersionEmployee {
-    MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
-        multiplicity *;
-    }
-    Employee playsRole responsibleEmployee;
 }
 
 relation MasterDegreeThesisDataVersionExternalAssistentGuider {

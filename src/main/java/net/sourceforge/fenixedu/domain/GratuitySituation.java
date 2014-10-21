@@ -35,10 +35,10 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
@@ -352,11 +352,11 @@ public class GratuitySituation extends GratuitySituation_Base {
         setHasPenaltyExemption(hasPenaltyExemption);
         if (hasPenaltyExemption != null && hasPenaltyExemption) {
             setPenaltyExemptionDate(new YearMonthDay());
-            setPenaltyExemptionEmployee(AccessControl.getPerson().getEmployee());
+            setPenaltyExemptionUser(Authenticate.getUser());
             setPenaltyExemptionJustification(justification);
         } else {
             setPenaltyExemptionDate(null);
-            setPenaltyExemptionEmployee(null);
+            setPenaltyExemptionUser(null);
             setPenaltyExemptionJustification(null);
         }
     }
