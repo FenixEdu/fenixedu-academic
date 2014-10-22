@@ -90,13 +90,13 @@ public abstract class ThesisDocument extends FenixReport {
 
     protected void fillOrientation() {
         final ThesisEvaluationParticipant orientator = thesis.getOrientator();
-        addParameter("orientatorName", orientator.getPersonName());
+        addParameter("orientatorName", orientator.getPerson().getName());
         addParameter("orientatorCategory", participantCategoryName(orientator));
         addParameter("orientatorAffiliation", neverNull(orientator.getAffiliation()));
 
         final ThesisEvaluationParticipant coorientator = thesis.getCoorientator();
         if (coorientator != null) {
-            addParameter("coorientatorName", coorientator.getPersonName());
+            addParameter("coorientatorName", coorientator.getPerson().getName());
             addParameter("coorientatorCategory", participantCategoryName(coorientator));
             addParameter("coorientatorAffiliation", neverNull(coorientator.getAffiliation()));
         } else {
@@ -108,7 +108,7 @@ public abstract class ThesisDocument extends FenixReport {
 
     protected void fillJury() {
         final ThesisEvaluationParticipant juryPresident = thesis.getPresident();
-        addParameter("juryPresidentName", juryPresident.getPersonName());
+        addParameter("juryPresidentName", juryPresident.getPerson().getName());
         addParameter("juryPresidentCategory", participantCategoryName(juryPresident));
         addParameter("juryPresidentAffiliation", neverNull(juryPresident.getAffiliation()));
 
@@ -126,7 +126,7 @@ public abstract class ThesisDocument extends FenixReport {
                 if (guidanceVowel == 0 && isGuidanceVowel(vowel)) {
                     guidanceVowel = i;
                 }
-                addParameter(vowelPrefix + "Name", vowel.getPersonName());
+                addParameter(vowelPrefix + "Name", vowel.getPerson().getName());
                 addParameter(vowelPrefix + "Category", participantCategoryName(vowel));
                 addParameter(vowelPrefix + "Affiliation", neverNull(vowel.getAffiliation()));
             } else {

@@ -397,7 +397,7 @@
 				<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="thesis" property="submitter.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
-			<td><bean:write name="thesis" property="submitter.personName"/></td>
+			<td><bean:write name="thesis" property="submitter.person.name"/></td>
 			<td><bean:write name="thesis" property="submitter.person.username"/></td>
 			<td><%=((org.joda.time.DateTime)dateSubmission).toString("dd/MM/yyyy hh:mm")%> </td>
 		</tr>
@@ -411,7 +411,7 @@
 				<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="thesis" property="confirmer.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
-			<td><bean:write name="thesis" property="confirmer.personName"/></td>
+			<td><bean:write name="thesis" property="confirmer.person.name"/></td>
 			<td><bean:write name="thesis" property="confirmer.person.username"/></td>
 			<td><%=((org.joda.time.DateTime)dateConfirmation).toString("dd/MM/yyyy hh:mm")%> </td>
 		</tr>
@@ -425,7 +425,7 @@
 				<bean:define id="url" type="java.lang.String">/user/photo/<bean:write name="thesis" property="proposalApprover.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
-			<td><bean:write name="thesis" property="proposalApprover.personName"/></td>
+			<td><bean:write name="thesis" property="proposalApprover.person.name"/></td>
 			<td><bean:write name="thesis" property="proposalApprover.person.username"/></td>
 			<td><%=((org.joda.time.DateTime)dateApproval).toString("dd/MM/yyyy hh:mm")%> </td>
 		</tr>

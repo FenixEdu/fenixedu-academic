@@ -35,7 +35,7 @@ public class PersonAutoCompleteProvider implements AutoCompleteProvider<Person> 
         final String searchValue = StringNormalizer.normalize(value);
 
         final List<Person> result = new ArrayList<Person>();
-        result.addAll(Person.findInternalPerson(value));
+        result.addAll(Person.findPerson(value));
         result.add(Person.findByUsername(searchValue));
         return result;
     }

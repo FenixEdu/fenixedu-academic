@@ -33,7 +33,6 @@
 <jsp:include page="/coordinator/context.jsp" />
 
 <bean:define id="target" name="bean" property="targetType"/>
-<bean:define id="internal" name="bean" property="internal"/>
 
 <h2><bean:message key="title.coordinator.thesis.proposal"  bundle="APPLICATION_RESOURCES"/></h2>
 
@@ -58,62 +57,27 @@
     </div>
 </logic:present>
 
-<logic:equal name="bean" property="internal" value="true">
-    <div class="dinline forminline">
-        <fr:form action="<%= String.format("/manageThesis.do?method=selectPerson&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-            <fr:edit id="bean" name="bean" schema="<%= "thesis.bean.selectPerson.internal." + target %>">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 dinline"/>
-                    <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-                </fr:layout>
-                
-                <fr:destination name="changePersonType" path="/manageThesis.do?method=changePersonType"/>
-                <fr:destination name="invalid" path="/manageThesis.do?method=selectPersonInvalid"/>
-            </fr:edit>
-            <br/>
+<div class="dinline forminline">
+    <fr:form action="<%= String.format("/manageThesis.do?method=selectPerson&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+        <fr:edit id="bean" name="bean" schema="<%= "thesis.bean.selectPerson.internal." + target %>">
+            <fr:layout name="tabular">
+                <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 dinline"/>
+                <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+            </fr:layout>
             
-            <html:submit>
-                <bean:message key="button.coordinator.thesis.edit.person.choose" bundle="APPLICATION_RESOURCES"/>
-            </html:submit>
-        </fr:form>
+            <fr:destination name="changePersonType" path="/manageThesis.do?method=changePersonType"/>
+            <fr:destination name="invalid" path="/manageThesis.do?method=selectPersonInvalid"/>
+        </fr:edit>
+        <br/>
         
-        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-            <html:submit>
-                <bean:message key="label.cancel" bundle="APPLICATION_RESOURCES"/>
-            </html:submit>
-        </fr:form>
-    </div>
-</logic:equal>
-
-<logic:equal name="bean" property="internal" value="false">
-    <div class="dinline forminline">
-        <fr:form action="<%= String.format("/manageThesis.do?method=selectExternalPerson&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-            <fr:edit id="bean" name="bean" layout="tabular" schema="thesis.bean.selectPerson.external">
-                <fr:layout name="tabular">
-                    <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 dinline"/>
-                    <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-                </fr:layout>
-                
-                <fr:destination name="changePersonType" path="/manageThesis.do?method=changePersonType"/>
-                <fr:destination name="invalid" path="/manageThesis.do?method=selectPersonInvalid"/>
-            </fr:edit>
-	        <br/>
+        <html:submit>
+            <bean:message key="button.coordinator.thesis.edit.person.choose" bundle="APPLICATION_RESOURCES"/>
+        </html:submit>
+    </fr:form>
     
-            <html:submit>
-                <bean:message key="button.coordinator.thesis.edit.person.choose" bundle="APPLICATION_RESOURCES"/>
-            </html:submit>
-    
-            <logic:present name="proposeCreation">
-                <html:submit property="create">
-                    <bean:message key="button.coordinator.thesis.edit.externalPerson.create" bundle="APPLICATION_RESOURCES"/>
-                </html:submit>
-            </logic:present>    
-        </fr:form>
-    
-        <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-            <html:submit>
-                <bean:message key="label.cancel" bundle="APPLICATION_RESOURCES"/>
-            </html:submit>
-        </fr:form>
-    </div>
-</logic:equal>
+    <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+        <html:submit>
+            <bean:message key="label.cancel" bundle="APPLICATION_RESOURCES"/>
+        </html:submit>
+    </fr:form>
+</div>

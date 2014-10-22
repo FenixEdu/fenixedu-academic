@@ -1278,20 +1278,6 @@ public class Person extends Person_Base {
                 .searchByName(name, size).map(p -> p.getPerson()).filter(Objects::nonNull));
     }
 
-    public static Stream<Person> findInternalPersonStream(final String name, final int size) {
-        return Stream.concat(
-                PersonName.findInternalPersonStream(name, size).map(n -> n.getPerson()),
-                UserProfile.searchByName(name, size).map(p -> p.getPerson()).filter(Objects::nonNull)
-                        .filter(p -> !p.isExternalPerson()));
-    }
-
-    public static Stream<Person> findExternalPersonStream(final String name, final int size) {
-        return Stream.concat(
-                PersonName.findExternalPersonStream(name, size).map(n -> n.getPerson()),
-                UserProfile.searchByName(name, size).map(p -> p.getPerson()).filter(Objects::nonNull)
-                        .filter(p -> p.isExternalPerson()));
-    }
-
     public static Collection<Person> findPerson(final String name, final int size) {
         return findPersonStream(name, size).collect(Collectors.toSet());
     }
@@ -2059,28 +2045,12 @@ public class Person extends Person_Base {
         return findPerson(name, Integer.MAX_VALUE);
     }
 
-    public static Collection<Person> findInternalPerson(final String name) {
-        return findInternalPerson(name, Integer.MAX_VALUE);
-    }
-
-    public static Collection<Person> findInternalPerson(final String name, int maxHits) {
-        return findInternalPersonStream(name, maxHits).collect(Collectors.toSet());
-    }
-
-    public static Collection<Person> findInternalPersonMatchingFirstAndLastName(final String completeName) {
+    public static Collection<Person> findPersonMatchingFirstAndLastName(final String completeName) {
         if (completeName != null) {
             final String[] splittedName = completeName.split(" ");
-            return splittedName.length > 0 ? findInternalPerson(splittedName[0] + " " + splittedName[splittedName.length - 1]) : Collections.EMPTY_LIST;
+            return splittedName.length > 0 ? findPerson(splittedName[0] + " " + splittedName[splittedName.length - 1]) : Collections.EMPTY_LIST;
         }
         return Collections.EMPTY_LIST;
-    }
-
-    public static Collection<Person> findExternalPerson(final String name) {
-        return findExternalPerson(name, Integer.MAX_VALUE);
-    }
-
-    public static Collection<Person> findExternalPerson(final String name, int maxHits) {
-        return findExternalPersonStream(name, maxHits).collect(Collectors.toSet());
     }
 
     public static Collection<Person> findPersonByDocumentID(final String documentIDValue) {

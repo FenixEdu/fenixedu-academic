@@ -79,7 +79,7 @@ public class EditPersonAction extends FenixDispatchAction {
 
         SearchPerson.SearchParameters parameters =
                 new SearchParameters(personBean.getName(), null, personBean.getUsername(), personBean.getDocumentIdNumber(),
-                        null, null, null, null, null, null, null, null, (String) null);
+                        null, null, null, null, null, null, null, (String) null);
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
         CollectionPager<Person> persons = SearchPerson.runSearchPerson(parameters, predicate);

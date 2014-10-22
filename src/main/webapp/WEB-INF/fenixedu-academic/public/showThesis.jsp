@@ -77,7 +77,7 @@
 					<div class="row">
 						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.person.name')}</label>
 						<div class="col-sm-10">
-							${thesis.orientator.personName}
+							${thesis.orientator.person.name}
 						</div>
 					</div>
 					<div class="row">
@@ -101,7 +101,7 @@
 					<div class="row">
 						<label class="col-sm-2 text-right">${fr:message('resources.ApplicationResources', 'label.person.name')}</label>
 						<div class="col-sm-10">
-							${thesis.coorientator.personName}
+							${thesis.coorientator.person.name}
 						</div>
 					</div>
 					<div class="row">

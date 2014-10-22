@@ -49,7 +49,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
@@ -759,18 +758,12 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
             if (numbers.length() > 0) {
                 numbers.append(" ");
             }
-            if (thesisEvaluationParticipant.getPerson() != null) {
-                final Person person = thesisEvaluationParticipant.getPerson();
-                if (person.getTeacher() != null) {
-                    final Teacher teacher = person.getTeacher();
-                    numbers.append(teacher.getPerson().getUsername());
-                }
-            }
+            numbers.append(thesisEvaluationParticipant.getPerson().getUsername());
 
             if (names.length() > 0) {
                 names.append(" ");
             }
-            names.append(thesisEvaluationParticipant.getPersonName());
+            names.append(thesisEvaluationParticipant.getPerson().getName());
 
             if (oasb.length() > 0) {
                 oasb.append(" ");

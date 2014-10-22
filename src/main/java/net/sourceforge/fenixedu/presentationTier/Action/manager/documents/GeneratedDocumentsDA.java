@@ -71,8 +71,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
         if (searchBean.hasAddressee()) {
             SearchPerson.SearchParameters parameters =
                     new SearchParameters(searchBean.getAddressee().getName(), null, searchBean.getAddressee().getUsername(),
-                            searchBean.getAddressee().getDocumentIdNumber(), null, null, null, null, null, null, null, null,
-                            (String) null);
+                            searchBean.getAddressee().getDocumentIdNumber(), null, null, null, null, null, null, null, (String) null);
             SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
             CollectionPager<Person> persons = SearchPerson.runSearchPerson(parameters, predicate);
             Set<GeneratedDocument> personDocuments = new HashSet<GeneratedDocument>();
@@ -84,8 +83,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
         if (searchBean.hasOperator()) {
             SearchPerson.SearchParameters parameters =
                     new SearchParameters(searchBean.getOperator().getName(), null, searchBean.getOperator().getUsername(),
-                            searchBean.getOperator().getDocumentIdNumber(), null, null, null, null, null, null, null, null,
-                            (String) null);
+                            searchBean.getOperator().getDocumentIdNumber(), null, null, null, null, null, null, null, (String) null);
             SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
             CollectionPager<Person> operators = SearchPerson.runSearchPerson(parameters, predicate);
             Set<GeneratedDocument> operatorDocuments = new HashSet<GeneratedDocument>();
@@ -123,7 +121,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
         PersonBean personBean = getRenderedObject();
         SearchPerson.SearchParameters parameters =
                 new SearchParameters(personBean.getName(), null, personBean.getUsername(), personBean.getDocumentIdNumber(),
-                        null, null, null, null, null, null, null, null, (String) null);
+                        null, null, null, null, null, null, null, (String) null);
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
         CollectionPager<Person> persons = SearchPerson.runSearchPerson(parameters, predicate);
         request.setAttribute("resultPersons", persons.getCollection());

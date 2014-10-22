@@ -39,9 +39,9 @@ public class SearchEmployeesAndTeachers implements AutoCompleteProvider<Person> 
         String slotName = argsMap.get("slot");
 
         if (value == null) {
-            result = new ArrayList<Person>(Person.findInternalPerson(""));
+            result = new ArrayList<Person>(Person.findPerson(""));
         } else {
-            for (Person person : Person.findInternalPerson(StringNormalizer.normalize(value))) {
+            for (Person person : Person.findPerson(StringNormalizer.normalize(value))) {
                 if ((person.getTeacher() != null && person.getTeacher().isActive())
                         || (person.getEmployee() != null && person.getEmployee().isActive())) {
                     result.add(person);

@@ -33,7 +33,7 @@
 </schema>
 
 <schema name="thesis.jury.proposal.person" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant" bundle="APPLICATION_RESOURCES">
-    <slot name="personName" key="label.person.name"/>
+    <slot name="person.name" key="label.person.name"/>
     <slot name="category" key="label.teacher.category" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
@@ -42,82 +42,53 @@
     </slot>
 </schema>
 
-<schema name="thesis.bean.selectPerson.internal" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean" bundle="APPLICATION_RESOURCES">
-    <slot name="internal" key="label.coordinator.thesis.edit.internal" layout="radio-postback">
-        <property name="trueLabel" value="label.coordinator.thesis.edit.internalPerson"/>
-        <property name="falseLabel" value="label.coordinator.thesis.edit.externalPerson"/>
-        <property name="bundle" value="APPLICATION_RESOURCES"/>
-        <property name="destination" value="changePersonType"/>
-        <property name="classes" value="nobullet liinline"/>
-    </slot>
-</schema>
-
 <schema name="thesis.bean.selectPerson.internal.orientator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
-        extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
+        bundle="APPLICATION_RESOURCES">
     <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
-        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
         <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
 </schema>
 
 <schema name="thesis.bean.selectPerson.internal.coorientator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
-        extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
+        bundle="APPLICATION_RESOURCES">
     <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
-        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
         <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
 </schema>
 
 <schema name="thesis.bean.selectPerson.internal.president" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
-        extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
+        bundle="APPLICATION_RESOURCES">
     <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
-        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPresidentForThesis"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
         <property name="args" value="thesis=${thesis.externalId}"/>
         <property name="minChars" value="0"/>
     </slot>
 </schema>
 
 <schema name="thesis.bean.selectPerson.internal.vowel" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
-        extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
+        bundle="APPLICATION_RESOURCES">
     <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
-        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
-        <property name="args" value="slot=name"/>
-        <property name="minChars" value="3"/>
-    </slot>
-</schema>
-
-<schema name="thesis.bean.selectPerson.external" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean" bundle="APPLICATION_RESOURCES">
-    <slot name="internal" key="label.coordinator.thesis.edit.internal" layout="radio-postback">
-        <property name="trueLabel" value="label.coordinator.thesis.edit.internalPerson" />
-        <property name="falseLabel" value="label.coordinator.thesis.edit.externalPerson"/>
-        <property name="bundle" value="APPLICATION_RESOURCES"/>
-        <property name="destination" value="changePersonType"/>
-        <property name="classes" value="nobullet liinline"/>
-    </slot>
-    <slot name="person" key="label.coordinator.thesis.edit.personName" layout="autoComplete"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="size" value="70"/>
-        <property name="rawSlotName" value="rawPersonName"/>
-        <property name="labelField" value="name"/>
-        <property name="indicatorShown" value="true"/>
-        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
         <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
@@ -323,7 +294,7 @@
 </schema>
 
 <schema name="thesis.jury.proposal.participant.edit" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="personName" read-only="true" key="label.person.name"/>
+    <slot name="person.name" read-only="true" key="label.person.name"/>
     <slot name="category" layout="menu-select-with-other" key="label.teacher.category">
         <property name="style" value="margin-right: 0.5em;"/>
         <property name="otherSize" value="50"/>
@@ -335,7 +306,7 @@
 </schema>
 
 <schema name="thesis.jury.proposal.participant.edit.with.credits" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="personName" read-only="true" key="label.person.name"/>
+    <slot name="person.name" read-only="true" key="label.person.name"/>
     <slot name="category" layout="menu-select-with-other" key="label.teacher.category">
         <property name="style" value="margin-right: 0.5em;"/>
         <property name="otherSize" value="50"/>
@@ -348,7 +319,7 @@
 </schema>
 
 <schema name="thesis.jury.proposal.participant.edit.with.credits.co" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="personName" read-only="true" key="label.person.name"/>
+    <slot name="person.name" read-only="true" key="label.person.name"/>
     <slot name="category" layout="menu-select-with-other" key="label.teacher.category">
         <property name="style" value="margin-right: 0.5em;"/>
         <property name="otherSize" value="50"/>

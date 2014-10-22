@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
@@ -536,57 +535,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         request.setAttribute("bean", bean);
         return mapping.findForward("select-person");
-    }
-
-    public ActionForward selectUnitInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        ThesisBean bean = getRenderedObject("bean");
-
-        if (bean == null) {
-            return searchStudent(mapping, actionForm, request, response);
-        }
-
-        request.setAttribute("bean", bean);
-        return mapping.findForward("select-unit");
-    }
-
-    public ActionForward selectExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        ThesisBean bean = getRenderedObject("bean");
-        boolean create = request.getParameter("create") != null;
-
-        if (bean == null) {
-            return editProposal(mapping, actionForm, request, response);
-        }
-
-        request.setAttribute("bean", bean);
-
-        Unit selectedUnit = bean.getUnit();
-        if (selectedUnit == null) {
-            if (create) {
-                DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-                Thesis thesis = getThesis(request);
-                ChangeThesisPerson.run(degreeCurricularPlan, thesis,
-                        new PersonChange(bean.getTargetType(), bean.getRawPersonName(), bean.getRawUnitName(), bean.getTarget()));
-
-                return editProposal(mapping, actionForm, request, response);
-            } else {
-                if (bean.getRawUnitName() == null || bean.getRawUnitName().trim().length() == 0) {
-                    addActionMessage("info", request, "thesis.selectUnit.external.name.required");
-                } else {
-                    request.setAttribute("proposeCreation", true);
-                }
-
-                return mapping.findForward("select-unit");
-            }
-        } else {
-            DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-            Thesis thesis = getThesis(request);
-            ChangeThesisPerson.run(degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), bean.getRawPersonName(),
-                    bean.getUnit(), bean.getTarget()));
-
-            return editProposal(mapping, actionForm, request, response);
-        }
     }
 
     public ActionForward submitProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

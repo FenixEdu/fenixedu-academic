@@ -29,7 +29,7 @@ public class SearchInternalPersonsByNameHavingTeacherOrIsResearcher extends Sear
     @Override
     protected Collection<Person> search(String value, int size) {
         final Collection<Person> result = new HashSet<Person>();
-        for (final Person person : Person.findInternalPerson(value, size)) {
+        for (final Person person : Person.findPerson(value, size)) {
             if (person.getUser() != null && (person.getTeacher() != null || person.hasRole(RoleType.RESEARCHER))) {
                 result.add(person);
             }

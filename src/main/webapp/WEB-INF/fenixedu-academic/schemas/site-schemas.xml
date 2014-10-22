@@ -18,48 +18,6 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="create.researchContract.internal" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean" bundle="WEBSITEMANAGER_RESOURCES">
-  	<slot name="externalPerson" layout="radio-postback" key="label.person">
-		<property name="classes" value="liinline nobullet"/>
-		<property name="falseLabel" value="label.coordinator.thesis.edit.internalPerson"/>
-		<property name="trueLabel" value="label.coordinator.thesis.edit.externalPerson"/>
-		<property name="bundle" value="DEFAULT"/>
-	</slot>
-	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
-		<property name="size" value="70"/>
-		<property name="rawSlotName" value="personNameString"/>
-		<property name="labelField" value="name"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
-		<property name="args" value="slot=name"/>
-		<property name="minChars" value="4"/>
-	</slot>
-	<slot name="begin"> 
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
-	</slot>
-	<slot name="end">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
-	</slot>
-	<slot name="contractType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ResearchContractResearchContractTypeProvider"/> 
-		<property name="eachLayout" value=""/>
-	</slot>
-</schema>
-
-<schema name="create.researchContract.external" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean" extends="create.researchContract.internal" bundle="WEBSITEMANAGER_RESOURCES">
-	<slot name="person" layout="autoComplete">
-		<property name="size" value="70"/>
-		<property name="rawSlotName" value="personNameString"/>
-		<property name="labelField" value="name"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons"/>
-		<property name="args" value="slot=name"/>
-		<property name="minChars" value="4"/>
-	</slot>
-</schema>
-
 
 <schema name="view.researchContract" type="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract" bundle="WEBSITEMANAGER_RESOURCES">
 	<slot name="person.name" key="label.personName"/>
@@ -258,7 +216,7 @@
 </schema>
 
 <schema name="public.thesis.coordinator" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="personNameWithLogin"/>
+    <slot name="person" layout="name-with-alias"/>
 </schema>
 
 <schema name="view.competence.courses" type="net.sourceforge.fenixedu.domain.CompetenceCourse">

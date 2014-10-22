@@ -83,7 +83,7 @@ public class FindPersonAction extends FenixDispatchAction {
 
         SearchParameters searchParameters =
                 new SearchPerson.SearchParameters(name, email, username, documentIdNumber, null, null, null, null, null, null,
-                        null, null, (String) null);
+                        null, (String) null);
 
         if ((mechanoGraphicalNumber != null) && (mechanoGraphicalNumber.length() > 0)) {
             searchParameters.setMechanoGraphicalNumber(Integer.parseInt(mechanoGraphicalNumber));

@@ -47,7 +47,7 @@ public class SearchSimilarNamesPersonsProvider implements DataProvider {
         ChoosePersonBean choosePersonBean = (ChoosePersonBean) source;
         Set<Person> result = new HashSet<Person>(Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber()));
         result.addAll(Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(),
-                Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())));
+                Person.findPersonMatchingFirstAndLastName(choosePersonBean.getName())));
 
         if (choosePersonBean.getStudentNumber() != null) {
             Student student = Student.readStudentByNumber(choosePersonBean.getStudentNumber());

@@ -98,7 +98,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
                 new SearchPerson.SearchParameters(searchPersonBean.getName(), null, searchPersonBean.getUsername(),
                         searchPersonBean.getDocumentIdNumber(), searchPersonBean.getIdDocumentType() != null ? searchPersonBean
                                 .getIdDocumentType().toString() : null, null, null, null, null, null,
-                        searchPersonBean.getStudentNumber(), Boolean.FALSE, (String) null);
+                        searchPersonBean.getStudentNumber(), (String) null);
 
         final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 

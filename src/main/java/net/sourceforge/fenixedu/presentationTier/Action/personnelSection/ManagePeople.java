@@ -77,7 +77,7 @@ public class ManagePeople extends FenixDispatchAction {
 
         CollectionPager<Person> result =
                 SearchPersonMatchingAnyParameter.run(bean.getName(), null, null, bean.getDocumentIdNumber(),
-                        bean.getIdDocumentType(), null, null, null, null, null, null, null);
+                        bean.getIdDocumentType(), null, null, null, null, null, null);
 
         request.setAttribute("resultPersons", result.getCollection());
         request.setAttribute("anyPersonSearchBean", bean);

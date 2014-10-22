@@ -46,7 +46,6 @@ public class ThesisBean implements Serializable {
     private ThesisEvaluationParticipant target;
 
     private Degree degree;
-    private boolean internal;
     private String rawPersonName;
     private Person person;
     private UnitName unitName;
@@ -68,8 +67,6 @@ public class ThesisBean implements Serializable {
         this.person = null;
         this.unitName = null;
         this.target = null;
-
-        this.internal = true;
     }
 
     public ThesisBean(final Thesis thesis) {
@@ -115,14 +112,6 @@ public class ThesisBean implements Serializable {
 
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-    public boolean isInternal() {
-        return this.internal;
-    }
-
-    public void setInternal(boolean internal) {
-        this.internal = internal;
     }
 
     public Unit getUnit() {

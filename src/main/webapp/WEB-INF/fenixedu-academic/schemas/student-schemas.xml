@@ -229,7 +229,7 @@
 </schema>
 
 <schema name="student.thesis.person.name" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
-    <slot name="personName" layout="person-name"/>
+    <slot name="person.name" layout="person-name"/>
 </schema>
 
 <schema name="student.thesis.details.abstract" type="net.sourceforge.fenixedu.domain.thesis.Thesis">

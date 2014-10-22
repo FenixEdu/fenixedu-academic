@@ -271,7 +271,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
             return true;
         }
         return !Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(),
-                Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty();
+                Person.findPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty();
     }
 
     public ActionForward searchAgainPersonForCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

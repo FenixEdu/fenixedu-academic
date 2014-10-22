@@ -154,7 +154,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
             return true;
         }
         return !Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(),
-                Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty();
+                Person.findPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty();
     }
 
     public ActionForward createCandidacyInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,

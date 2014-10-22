@@ -41,7 +41,7 @@
 			<bean:define id="dateCreator" name="thesis" property="creation" />
 			<td><bean:message key="label.thesis.operation.creation" bundle="STUDENT_RESOURCES"/></td>
 			<td><%=((org.joda.time.DateTime)dateCreator).toString("dd/MM/yyyy hh:mm")%> </td>
-			<td><bean:write name="thesis" property="creator.personName" /> </td>
+			<td><bean:write name="thesis" property="creator.person.name" /> </td>
 		</tr>
 	</logic:present>
 		<logic:present name="thesis" property="submission" > 
@@ -49,7 +49,7 @@
 		<bean:define id="dateSubmission" name="thesis" property="submission" />
 			<td><bean:message key="label.thesis.operation.submission"  bundle="STUDENT_RESOURCES"/></td>
 			<td><%=((org.joda.time.DateTime)dateSubmission).toString("dd/MM/yyyy hh:mm")%> </td>
-			<td><bean:write name="thesis" property="submitter.personName"/></td>
+			<td><bean:write name="thesis" property="submitter.person.name"/></td>
 		</tr>
 	</logic:present>	
 
@@ -58,7 +58,7 @@
 			<bean:define id="dateConfirmation" name="thesis" property="confirmation" />
 			<td><bean:message key="label.thesis.operation.confirmation" bundle="STUDENT_RESOURCES" /></td>
 			<td><%=((org.joda.time.DateTime)dateConfirmation).toString("dd/MM/yyyy hh:mm")%> </td>
-			<td><bean:write name="thesis" property="confirmer.personName"/></td>
+			<td><bean:write name="thesis" property="confirmer.person.name"/></td>
 		</tr>
 	</logic:present>	
 	<logic:present name="thesis" property="approval"> 
@@ -66,7 +66,7 @@
 			<bean:define id="dateApproval" name="thesis" property="approval" />
 			<td><bean:message key="label.thesis.operation.approval" bundle="STUDENT_RESOURCES" /></td>
 			<td><%=((org.joda.time.DateTime)dateApproval).toString("dd/MM/yyyy hh:mm")%> </td>
-			<td><bean:write name="thesis" property="proposalApprover.personName"/></td>
+			<td><bean:write name="thesis" property="proposalApprover.person.name"/></td>
 		</tr>
 	</logic:present>	
 	</tbody>

@@ -58,26 +58,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         setType(type);
         setThesis(thesis);
         setPerson(person);
-        setPersonName(person.getName());
-    }
-
-    public String getPersonNameWithLogin() {
-        Person person = getPerson();
-
-        if (person == null || person.isExternalPerson()) {
-            return getPersonName() + " (Externa)";
-        } else {
-            return getPersonName() + " (" + person.getUsername() + ")";
-        }
-    }
-
-    @Override
-    public void setPerson(Person person) {
-        super.setPerson(person);
-
-        if (person != null) { // consider remove
-            updateParticipantInformation(person);
-        }
+        updateParticipantInformation(person);
     }
 
     protected void updateParticipantInformation(Person person) {
@@ -104,6 +85,12 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
                 }
             }
         }
+    }
+
+    @Override
+    public Person getPerson() {
+        // FIXME remove when framework supports read-only slots
+        return super.getPerson();
     }
 
     public double getParticipationCredits() {

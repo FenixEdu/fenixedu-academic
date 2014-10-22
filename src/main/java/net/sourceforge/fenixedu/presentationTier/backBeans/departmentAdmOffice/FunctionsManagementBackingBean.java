@@ -311,7 +311,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         SearchParameters searchParameters =
                 new SearchPerson.SearchParameters(personName, null, null, null, null, null, null, null, null, Boolean.TRUE, null,
-                        Boolean.FALSE, (String) null);
+                        (String) null);
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
         CollectionPager<Person> allPersons = SearchPerson.runSearchPerson(searchParameters, predicate);

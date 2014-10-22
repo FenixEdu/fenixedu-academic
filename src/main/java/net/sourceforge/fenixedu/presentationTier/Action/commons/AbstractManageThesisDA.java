@@ -95,41 +95,6 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
         return mapping.findForward("search-student");
     }
 
-    public ActionForward selectExternalPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        ThesisBean bean = getRenderedObject("bean");
-        boolean create = request.getParameter("create") != null;
-
-        if (bean == null) {
-            return editProposal(mapping, actionForm, request, response);
-        }
-
-        request.setAttribute("bean", bean);
-
-        Person selectedPerson = bean.getPerson();
-        if (selectedPerson == null) {
-            if (!create) {
-                if (bean.getRawPersonName() == null || bean.getRawPersonName().trim().length() == 0) {
-                    addActionMessage("info", request, "thesis.selectPerson.external.name.required");
-                } else {
-                    request.setAttribute("proposeCreation", true);
-                }
-
-                return mapping.findForward("select-person");
-            } else {
-                RenderUtils.invalidateViewState("bean");
-                return mapping.findForward("select-unit");
-            }
-        } else {
-            DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-            Thesis thesis = getThesis(request);
-            ChangeThesisPerson.run(degreeCurricularPlan, thesis,
-                    new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
-
-            return editProposal(mapping, actionForm, request, response);
-        }
-    }
-
     public abstract ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception;
 

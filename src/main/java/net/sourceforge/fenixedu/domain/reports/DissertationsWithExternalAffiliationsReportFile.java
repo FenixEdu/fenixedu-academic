@@ -19,8 +19,6 @@
 package net.sourceforge.fenixedu.domain.reports;
 
 import java.io.IOException;
-import java.util.Set;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -115,21 +113,6 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
         }
         row.setCell(oasb.toString());
         row.setCell(odsb.toString());
-    }
-
-    private Set<String> getAffiliations(final Thesis thesis) {
-        final Set<String> affiliations = new TreeSet<String>();
-        for (final ThesisEvaluationParticipant thesisEvaluationParticipant : thesis.getParticipationsSet()) {
-            final ThesisParticipationType thesisParticipationType = thesisEvaluationParticipant.getType();
-            if (thesisParticipationType == ThesisParticipationType.ORIENTATOR
-                    || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
-                final String affiliation = thesisEvaluationParticipant.getAffiliation();
-                if (affiliation != null) {
-                    affiliations.add(affiliation);
-                }
-            }
-        }
-        return affiliations;
     }
 
 }

@@ -137,7 +137,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
 
         SearchParameters searchParameters =
                 new SearchPerson.SearchParameters(bean.getDelegateName(), null, null, null, null, RoleType.DELEGATE.getName(),
-                        null, null, null, Boolean.TRUE, null, Boolean.FALSE, (String) null);
+                        null, null, null, Boolean.TRUE, null, (String) null);
 
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 

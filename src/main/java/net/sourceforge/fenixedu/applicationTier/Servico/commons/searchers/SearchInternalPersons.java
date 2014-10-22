@@ -26,7 +26,7 @@ public class SearchInternalPersons extends SearchParties<Person> {
 
     @Override
     protected Collection<Person> search(String value, int size) {
-        return Person.findInternalPerson(value, size);
+        return Person.findPerson(value, size);
     }
 
 }

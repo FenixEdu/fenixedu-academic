@@ -50,13 +50,13 @@ public class ApproveJuryDocument extends ThesisDocument {
             author = date = ccAuthor = ccDate = StringUtils.EMPTY;
         } else {
             final Person person = thesisEvaluationParticipant.getPerson();
-            if (person != null && person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+            if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
                 author = date = StringUtils.EMPTY;
-                ccAuthor = thesisEvaluationParticipant.getPersonName();
+                ccAuthor = thesisEvaluationParticipant.getPerson().getName();
                 ccDate = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", thesis.getApproval().toDate());
             } else {
                 ccAuthor = ccDate = StringUtils.EMPTY;
-                author = thesisEvaluationParticipant.getPersonName();
+                author = thesisEvaluationParticipant.getPerson().getName();
                 date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", thesis.getApproval().toDate());
             }
         }

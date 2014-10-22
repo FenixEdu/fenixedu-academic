@@ -39,12 +39,12 @@ public class SearchPersonMatchingAnyParameter extends SearchPerson {
 
     public static CollectionPager<Person> run(String name, String email, String username, String documentIdNumber,
             IDDocumentType idDocumentType, String roleType, String degreeTypeString, String degreeId, String departmentId,
-            Boolean activePersons, Integer studentNumber, Boolean externalPersons) {
+            Boolean activePersons, Integer studentNumber) {
 
         SearchParameters searchParameters =
                 new SearchPersonMatchingAnyParameter.SearchParameters(name, email, username, documentIdNumber,
                         idDocumentType == null ? null : idDocumentType.name(), roleType, degreeTypeString, degreeId,
-                        departmentId, activePersons, studentNumber, externalPersons, (String) null);
+                        departmentId, activePersons, studentNumber, (String) null);
 
         if (searchParameters.emptyParameters()) {
             return new CollectionPager<Person>(new HashSet<Person>(), 25);
@@ -90,15 +90,13 @@ public class SearchPersonMatchingAnyParameter extends SearchPerson {
 
             }
             if (searchParameters.getName() != null) {
-                if (searchParameters.getExternalPersons() == null || !searchParameters.getExternalPersons()) {
-                    persons.addAll(Person.findInternalPerson(searchParameters.getName()));
-                    final RoleType roleBd = searchParameters.getRole();
-                    if (roleBd != null) {
-                        for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
-                            final Person person = peopleIterator.next();
-                            if (!person.hasRole(roleBd)) {
-                                peopleIterator.remove();
-                            }
+                persons.addAll(Person.findPerson(searchParameters.getName()));
+                final RoleType roleBd = searchParameters.getRole();
+                if (roleBd != null) {
+                    for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
+                        final Person person = peopleIterator.next();
+                        if (!person.hasRole(roleBd)) {
+                            peopleIterator.remove();
                         }
                     }
                     final Department department = searchParameters.getDepartment();
@@ -111,10 +109,6 @@ public class SearchPersonMatchingAnyParameter extends SearchPerson {
                             }
                         }
                     }
-                }
-
-                if (searchParameters.getExternalPersons() == null || searchParameters.getExternalPersons()) {
-                    persons.addAll(Person.findExternalPerson(searchParameters.getName()));
                 }
             }
         }

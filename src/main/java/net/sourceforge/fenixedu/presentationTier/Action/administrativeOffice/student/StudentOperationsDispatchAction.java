@@ -219,7 +219,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
                 choosePersonBean.setFirstTimeSearch(false);
                 if (!persons.isEmpty()
                         || !Person.findByDateOfBirth(dateOfBirth,
-                                Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty()
+                                Person.findPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty()
                         || (choosePersonBean.getStudentNumber() != null && Student.readStudentByNumber(choosePersonBean
                                 .getStudentNumber()) != null)) {
                     // show similar persons

@@ -3409,8 +3409,7 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
     class thesis.ThesisEvaluationParticipant  {
         String affiliation;
         String category;
-        String personName;
-        ThesisParticipationType type;
+        ThesisParticipationType type (REQUIRED);
     }
 
     class time.calendarStructure.AcademicCalendarEntry  {
@@ -8262,7 +8261,9 @@ relation PersonTeacher {
 }
 
 relation PersonThesisEvaluationParticipant {
-    Person playsRole person;
+    protected Person playsRole person {
+        multiplicity 1..1;
+    }
     thesis.ThesisEvaluationParticipant playsRole thesisEvaluationParticipants {
         multiplicity *;
     }

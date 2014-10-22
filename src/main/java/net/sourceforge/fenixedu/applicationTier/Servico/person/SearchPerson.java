@@ -68,8 +68,6 @@ public class SearchPerson implements Serializable {
 
         private Boolean activePersons;
 
-        private Boolean externalPersons;
-
         private Boolean showOnlySearchableResearchers;
 
         private Integer studentNumber;
@@ -83,16 +81,16 @@ public class SearchPerson implements Serializable {
 
         public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
                 String roleType, String degreeTypeString, String degreeId, String departmentId, Boolean activePersons,
-                Integer studentNumber, Boolean externalPersons, Boolean showOnlySearchableResearchers) {
+                Integer studentNumber, Boolean showOnlySearchableResearchers) {
 
             this(name, email, username, documentIdNumber, idDocumentType, roleType, degreeTypeString, degreeId, departmentId,
-                    activePersons, studentNumber, externalPersons, (String) null);
+                    activePersons, studentNumber, (String) null);
             setShowOnlySearchableResearchers(showOnlySearchableResearchers);
         }
 
         public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
                 String roleType, String degreeTypeString, String degreeId, String departmentId, Boolean activePersons,
-                Integer studentNumber, Boolean externalPersons, String paymentCode) {
+                Integer studentNumber, String paymentCode) {
             this();
 
             setActivePersons(activePersons);
@@ -104,7 +102,6 @@ public class SearchPerson implements Serializable {
                 setIdDocumentType(IDDocumentType.valueOf(idDocumentType));
             }
             setStudentNumber(studentNumber);
-            setExternalPersons(externalPersons);
             setPaymentCode(paymentCode);
 
             if (roleType != null && roleType.length() > 0) {
@@ -188,10 +185,6 @@ public class SearchPerson implements Serializable {
             return studentNumber;
         }
 
-        public Boolean getExternalPersons() {
-            return externalPersons;
-        }
-
         public Integer getMechanoGraphicalNumber() {
             return mechanoGraphicalNumber;
         }
@@ -235,10 +228,6 @@ public class SearchPerson implements Serializable {
 
         public void setActivePersons(Boolean activePersons) {
             this.activePersons = activePersons;
-        }
-
-        public void setExternalPersons(Boolean externalPersons) {
-            this.externalPersons = externalPersons;
         }
 
         public void setStudentNumber(Integer studentNumber) {
@@ -316,16 +305,13 @@ public class SearchPerson implements Serializable {
 
             persons = new ArrayList<Person>();
 
-            if (searchParameters.getExternalPersons() == null || !searchParameters.getExternalPersons()) {
-
-                persons.addAll(Person.findInternalPerson(searchParameters.getName()));
-                final RoleType roleBd = searchParameters.getRole();
-                if (roleBd != null) {
-                    for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
-                        final Person person = peopleIterator.next();
-                        if (!person.hasRole(roleBd)) {
-                            peopleIterator.remove();
-                        }
+            persons.addAll(Person.findPerson(searchParameters.getName()));
+            final RoleType roleBd = searchParameters.getRole();
+            if (roleBd != null) {
+                for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
+                    final Person person = peopleIterator.next();
+                    if (!person.hasRole(roleBd)) {
+                        peopleIterator.remove();
                     }
                 }
                 final Department department = searchParameters.getDepartment();
@@ -339,11 +325,6 @@ public class SearchPerson implements Serializable {
                     }
                 }
             }
-
-            if (searchParameters.getExternalPersons() == null || searchParameters.getExternalPersons()) {
-                persons.addAll(Person.findExternalPerson(searchParameters.getName()));
-            }
-
         } else if (!StringUtils.isEmpty(searchParameters.getPaymentCode())) {
             persons = new ArrayList<Person>();
 
