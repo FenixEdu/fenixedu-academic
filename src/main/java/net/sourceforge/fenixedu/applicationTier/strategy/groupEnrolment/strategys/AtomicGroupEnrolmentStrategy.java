@@ -28,9 +28,9 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 /**
  * @author asnr and scpo
- * 
+ *
  */
-
+@Deprecated
 public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy implements IGroupEnrolmentStrategy {
 
     public AtomicGroupEnrolmentStrategy() {

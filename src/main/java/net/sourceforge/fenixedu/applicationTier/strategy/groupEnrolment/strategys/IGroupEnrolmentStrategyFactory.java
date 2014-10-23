@@ -26,8 +26,9 @@ import net.sourceforge.fenixedu.domain.Grouping;
 
 /**
  * @author scpo and asnr
- * 
+ *
  */
+@Deprecated
 public interface IGroupEnrolmentStrategyFactory {
     public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(Grouping grouping);
 

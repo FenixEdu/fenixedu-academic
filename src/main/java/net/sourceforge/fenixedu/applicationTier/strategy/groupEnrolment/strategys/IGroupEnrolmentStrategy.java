@@ -32,8 +32,9 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 /**
  * @author scpo and asnr
- * 
+ *
  */
+@Deprecated
 public interface IGroupEnrolmentStrategy {
 
     public boolean checkNumberOfGroups(Grouping grouping, Shift shift);
