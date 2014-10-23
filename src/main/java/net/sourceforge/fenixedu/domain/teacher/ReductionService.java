@@ -21,20 +21,13 @@ package net.sourceforge.fenixedu.domain.teacher;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DepartmentCreditsPool;
+import net.sourceforge.fenixedu.domain.credits.util.ReductionServiceBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluationProcessMark;
-import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessYear;
-import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark;
-import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
-import org.joda.time.PeriodType;
-import org.joda.time.YearMonthDay;
 
 public class ReductionService extends ReductionService_Base {
 
@@ -49,7 +42,6 @@ public class ReductionService extends ReductionService_Base {
         }
         setTeacherService(teacherService);
         setCreditsReduction(creditsReduction);
-        log("label.teacher.schedule.reductionService.create", getCreditsReduction());
     }
 
     public ReductionService(final TeacherService teacherService, final Boolean requestCreditsReduction) {
@@ -63,7 +55,6 @@ public class ReductionService extends ReductionService_Base {
         }
         setTeacherService(teacherService);
         setRequestCreditsReduction(requestCreditsReduction);
-        log("label.teacher.schedule.reductionService.create", getRequestCreditsReduction());
     }
 
     public ReductionService(final BigDecimal creditsReductionAttributed, final TeacherService teacherService) {
@@ -77,7 +68,6 @@ public class ReductionService extends ReductionService_Base {
         }
         setTeacherService(teacherService);
         setCreditsReductionAttributed(creditsReductionAttributed);
-        log("label.teacher.schedule.reductionService.approve", getCreditsReductionAttributed());
     }
 
     @Override
@@ -98,14 +88,6 @@ public class ReductionService extends ReductionService_Base {
         return getTeacherService().getTeacher().getLastWorkingDepartment(
                 getTeacherService().getExecutionPeriod().getBeginDateYearMonthDay(),
                 getTeacherService().getExecutionPeriod().getEndDateYearMonthDay());
-    }
-
-    public BigDecimal getMaxCreditsFromEvaluationAndAge() {
-        BigDecimal maxCreditsFromEvaluation = getTeacherEvaluationMark();
-        BigDecimal maxCreditsFromAge = getTeacherMaxCreditsFromAge();
-        BigDecimal maxCreditsFromEvaluationAndAge = maxCreditsFromEvaluation.add(maxCreditsFromAge);
-        BigDecimal maxCreditsReduction = getMaxCreditsReduction();
-        return maxCreditsReduction.min(maxCreditsFromEvaluationAndAge);
     }
 
     @Override
@@ -143,78 +125,14 @@ public class ReductionService extends ReductionService_Base {
         }
     }
 
-    private BigDecimal getTeacherMaxCreditsFromAge() {
-        YearMonthDay dateOfBirthYearMonthDay = getTeacherService().getTeacher().getPerson().getDateOfBirthYearMonthDay();
-        if (dateOfBirthYearMonthDay != null) {
-            Interval interval =
-                    new Interval(dateOfBirthYearMonthDay.toLocalDate().toDateTimeAtStartOfDay(), getTeacherService()
-                            .getExecutionPeriod().getEndDateYearMonthDay().plusDays(1).toLocalDate().toDateTimeAtStartOfDay());
-            int age = interval.toPeriod(PeriodType.years()).getYears();
-            if (age >= 65) {
-                return BigDecimal.ONE;
-            }
-        }
-        return BigDecimal.ZERO;
-    }
-
-    private BigDecimal getTeacherEvaluationMark() {
-        FacultyEvaluationProcessYear lastFacultyEvaluationProcessYear = null;
-        for (final FacultyEvaluationProcessYear facultyEvaluationProcessYear : Bennu.getInstance()
-                .getFacultyEvaluationProcessYearSet()) {
-            if (facultyEvaluationProcessYear.getApprovedTeacherEvaluationProcessMarkSet().size() != 0
-                    && (lastFacultyEvaluationProcessYear == null || facultyEvaluationProcessYear.getYear().compareTo(
-                            lastFacultyEvaluationProcessYear.getYear()) > 0)) {
-                lastFacultyEvaluationProcessYear = facultyEvaluationProcessYear;
-            }
-        }
-        TeacherEvaluationProcess lastTeacherEvaluationProcess = null;
-        for (TeacherEvaluationProcess teacherEvaluationProcess : getTeacherService().getTeacher().getPerson()
-                .getTeacherEvaluationProcessFromEvalueeSet()) {
-            if (teacherEvaluationProcess.getFacultyEvaluationProcess().equals(
-                    lastFacultyEvaluationProcessYear.getFacultyEvaluationProcess())) {
-                lastTeacherEvaluationProcess = teacherEvaluationProcess;
-                break;
-            }
-        }
-        TeacherEvaluationMark approvedEvaluationMark = null;
-
-        BigDecimal maxCreditsReduction = getMaxCreditsReduction();
-        if (lastTeacherEvaluationProcess != null) {
-            for (ApprovedTeacherEvaluationProcessMark approvedTeacherEvaluationProcessMark : lastTeacherEvaluationProcess
-                    .getApprovedTeacherEvaluationProcessMarkSet()) {
-                if (approvedTeacherEvaluationProcessMark.getFacultyEvaluationProcessYear().equals(
-                        lastFacultyEvaluationProcessYear)) {
-                    approvedEvaluationMark = approvedTeacherEvaluationProcessMark.getApprovedEvaluationMark();
-                    if (approvedEvaluationMark != null) {
-                        switch (approvedEvaluationMark) {
-                        case EXCELLENT:
-                            return maxCreditsReduction;
-                        case VERY_GOOD:
-                            return BigDecimal.ZERO.max(maxCreditsReduction.subtract(BigDecimal.ONE));
-                        case GOOD:
-                            return BigDecimal.ZERO.max(maxCreditsReduction.subtract(new BigDecimal(2)));
-                        default:
-                            return BigDecimal.ZERO;
-                        }
-                    } else {
-                        return BigDecimal.ZERO;
-                    }
-                }
-            }
-        } else {
-            return maxCreditsReduction;
-        }
-        return BigDecimal.ZERO;
+    public BigDecimal getMaxCreditsFromEvaluationAndAge() {
+        ReductionServiceBean reductionServiceBean = new ReductionServiceBean(this);
+        return reductionServiceBean.getMaxCreditsFromEvaluationAndAge();
     }
 
     private BigDecimal getMaxCreditsReduction() {
-        Department department = getDepartment();
-        DepartmentCreditsPool departmentCreditsPool =
-                DepartmentCreditsPool.getDepartmentCreditsPool(department, getTeacherService().getExecutionPeriod()
-                        .getExecutionYear());
-
-        return departmentCreditsPool == null || departmentCreditsPool.getMaximumCreditsReduction() == null ? new BigDecimal(3) : departmentCreditsPool
-                .getMaximumCreditsReduction();
+        ReductionServiceBean reductionServiceBean = new ReductionServiceBean(this);
+        return reductionServiceBean.getMaxCreditsReduction();
     }
 
     private void log(final String key, BigDecimal credits) {
@@ -227,8 +145,7 @@ public class ReductionService extends ReductionService_Base {
     private void log(final String key, Boolean requested) {
         final StringBuilder log = new StringBuilder();
         log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS, key));
-        log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                requested ? "message.yes" : "message.no"));
+        log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS, requested ? "message.yes" : "message.no"));
         new TeacherServiceLog(getTeacherService(), log.toString());
     }
 

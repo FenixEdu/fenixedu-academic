@@ -546,6 +546,12 @@ $(document).ready(function() {
 					<fr:property name="param(edit)" value="executionPeriod.externalId/executionPeriodOID,teacher.externalId/teacherOID" />
 					<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
 					<fr:property name="visibleIf(edit)" value="canEditTeacherCreditsReductions" />
+				  	<logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">
+					  	<fr:property name="link(aprove)" value="/creditsReductions.do?method=aproveReductionService" />
+						<fr:property name="key(aprove)" value="label.edit" />
+						<fr:property name="param(aprove)" value="executionPeriod.externalId/executionPeriodOID,teacher.externalId/teacherOID" />
+						<fr:property name="bundle(aprove)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+					</logic:equal>
 				</fr:layout>
 			</fr:view>
 		</logic:equal>

@@ -76,6 +76,7 @@
 				<fr:slot name="facultyEvaluationProcessYear.year" key="label.evaluation.year" layout="null-as-label"/>
 				<fr:slot name="teacherEvaluationMarkString" key="label.evaluation.mark"  layout="null-as-label"/>
 				<fr:slot name="teacher.person.dateOfBirthYearMonthDay" key="label.dateOfBirth"  layout="null-as-label"/>
+				<fr:slot name="maxCreditsFromEvaluationAndAge" key="label.maxCreditsFromEvaluationAndAgeSugested" layout="null-as-label"/>
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
@@ -84,9 +85,9 @@
 		</fr:view>
 		<logic:empty name="reductionServiceBean" property="reductionService">
 			<bean:define id="teacherService" name="reductionServiceBean" property="teacherService"/>
-			<bean:define id="teacherOID" name="reductionServiceBean" property="teacher.externalId"/>
+			<bean:define id="teacherServiceOID" name="teacherService" property="externalId"/>
 			<div class="forminline dinline">
-				<fr:form action="/creditsReductions.do?method=showReductionServices">
+				<fr:form action="<%="/creditsReductions.do?method=showReductionServices&teacherServiceOID="+ teacherServiceOID%>">
 					<fr:edit id="reductionServiceBean" name="reductionServiceBean" visible="false"/>
 					<fr:create id="reductionService" schema="create.reductionServiceAttributed" type="net.sourceforge.fenixedu.domain.teacher.ReductionService">
 						<fr:hidden slot="teacherService" name="teacherService"/>
@@ -94,28 +95,27 @@
 							<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
 							<fr:property name="columnClasses" value="headerTable,,tdclear tderror1"/>
 						</fr:layout>
-						<fr:destination name="invalid" path="<%="/creditsReductions.do?method=aproveReductionService&invalidated=true"%>"/>
+						<fr:destination name="invalid" path="<%="/creditsReductions.do?method=aproveReductionService&invalidated=true&teacherServiceOID="+ teacherServiceOID%>"/>
 					</fr:create>
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible"><bean:message key="button.submit" /></html:submit>
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message key="button.submit" /></html:submit>
 				</fr:form>
-				<fr:form action="/creditsReductions.do?method=showReductionServices">
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible"><bean:message key="button.cancel" /></html:submit>
+				<fr:form action="<%="/creditsReductions.do?method=showReductionServices&teacherServiceOID="+ teacherServiceOID%>">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message key="button.cancel" /></html:submit>
 				</fr:form>
 			</div>
 		</logic:empty>
 		<logic:notEmpty name="reductionServiceBean" property="reductionService">
 			<bean:define id="reductionServiceOID" name="reductionServiceBean" property="reductionService.externalId"/>
-			<fr:edit id="reductionService" name="reductionServiceBean" property="reductionService" action="/creditsReductions.do?method=showReductionServices">
+			<fr:edit id="reductionService" name="reductionServiceBean" property="reductionService" action="<%="/creditsReductions.do?method=showReductionServices&reductionServiceOID="+ reductionServiceOID%>">
 				<fr:schema type="net.sourceforge.fenixedu.domain.teacher.ReductionService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
 					<fr:slot name="requestCreditsReduction" key="label.requestedReductionCredits" readOnly="true" layout="radio"/>
-					<fr:slot name="maxCreditsFromEvaluationAndAge" key="label.maxCreditsFromEvaluationAndAgeSugested" readOnly="true" layout="null-as-label"/>
 					<fr:slot name="creditsReductionAttributed" key="label.attributedReductionCredits" required="true" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 				</fr:schema>
 				<fr:layout>
 					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
 					<fr:property name="columnClasses" value="headerTable,,tdclear tderror1"/>
 				</fr:layout>
-				<fr:destination name="cancel" path="/creditsReductions.do?method=showReductionServices"/>
+				<fr:destination name="cancel" path="<%="/creditsReductions.do?method=showReductionServices&reductionServiceOID="+ reductionServiceOID%>"/>
 				<fr:destination name="invalid" path="<%="/creditsReductions.do?method=aproveReductionService&invalidated=true&reductionServiceOID="+ reductionServiceOID%>"/>
 			</fr:edit>
 		</logic:notEmpty>
