@@ -8,7 +8,7 @@ This file contains the steps required to update from one version to another. The
 
 ## Migrating from 1.x to 2.0
 
-[instructions](doc/migration/1.x-2.x)
+[instructions](doc/migration/1.x-2.x.md)
 
 ## 1.1.x to 1.2.0
  * Run etc/database_operations/run
