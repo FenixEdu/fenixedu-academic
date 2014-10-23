@@ -37,7 +37,6 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -46,9 +45,11 @@ import net.sourceforge.fenixedu.util.ProposalState;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
+import pt.ist.fenixframework.FenixFramework;
+
 /**
  * @author joaosa & rmalo
- * 
+ *
  */
 public class Grouping extends Grouping_Base {
 
@@ -203,7 +204,8 @@ public class Grouping extends Grouping_Base {
     public static Grouping create(String goupingName, Date enrolmentBeginDay, Date enrolmentEndDay,
             EnrolmentGroupPolicyType enrolmentGroupPolicyType, Integer groupMaximumNumber, Integer idealCapacity,
             Integer maximumCapacity, Integer minimumCapacity, String projectDescription, ShiftType shiftType,
-            Boolean automaticEnrolment, Boolean differentiatedCapacity, ExecutionCourse executionCourse) {
+            Boolean automaticEnrolment, Boolean differentiatedCapacity, ExecutionCourse executionCourse,
+            Map<String, Integer> shiftCapacityMap) {
 
         if (goupingName == null || enrolmentBeginDay == null || enrolmentEndDay == null || enrolmentGroupPolicyType == null) {
             throw new NullPointerException();
@@ -232,7 +234,12 @@ public class Grouping extends Grouping_Base {
         GroupsAndShiftsManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.groupAndShifts.grouping.added", grouping.getName(), executionCourse.getNome(),
                 executionCourse.getDegreePresentationString());
+
+        if (differentiatedCapacity) {
+            setDiferentiatedCapacityShiftsGroupingProperties(shiftType, shiftCapacityMap, grouping);
+        }
         return grouping;
+
     }
 
     private static void addGroupingToAttends(final Grouping grouping, final Collection<Attends> attends) {
@@ -248,21 +255,10 @@ public class Grouping extends Grouping_Base {
         }
     }
 
-    public void createOrEditShiftGroupingProperties(List<InfoShift> infoShifts) {
-        for (final InfoShift info : infoShifts) {
-            Shift shift = info.getShift();
-            if (shift.getShiftGroupingProperties() != null) {
-                shift.getShiftGroupingProperties().setCapacity(info.getGroupCapacity());
-            } else {
-                shift.setShiftGroupingProperties(new ShiftGroupingProperties(shift, this, info.getGroupCapacity()));
-            }
-        }
-    }
-
     public void edit(String goupingName, Date enrolmentBeginDay, Date enrolmentEndDay,
             EnrolmentGroupPolicyType enrolmentGroupPolicyType, Integer groupMaximumNumber, Integer idealCapacity,
             Integer maximumCapacity, Integer minimumCapacity, String projectDescription, ShiftType shiftType,
-            Boolean automaticEnrolment, Boolean differentiatedCapacity, List<InfoShift> infoShifts) {
+            Boolean automaticEnrolment, Boolean differentiatedCapacity, Map<String, Integer> shiftCapacityMap) {
 
         if (goupingName == null || enrolmentBeginDay == null || enrolmentEndDay == null || enrolmentGroupPolicyType == null) {
             throw new NullPointerException();
@@ -301,15 +297,6 @@ public class Grouping extends Grouping_Base {
         if (!differentiatedCapacity && groupMaximumNumberFix < getMaxStudentGroupsCount()) {
             throw new DomainException(this.getClass().getName(),
                     "error.groupProperties.edit.maxGroupCap.inferiorToExistingNumber");
-        } else if (getDifferentiatedCapacity() && differentiatedCapacity && isShiftTypeEqual(shiftType)) {
-            for (InfoShift infoshift : infoShifts) {
-                if (getStudentGroupsIndexedByShift().containsKey(infoshift.getShift())) {
-                    if (infoshift.getGroupCapacity() < getStudentGroupsIndexedByShift().get(infoshift.getShift()).size()) {
-                        throw new DomainException(this.getClass().getName(),
-                                "error.groupProperties.edit.maxGroupCap.inferiorToExistingNumber");
-                    }
-                }
-            }
         }
 
         setName(goupingName);
@@ -325,13 +312,13 @@ public class Grouping extends Grouping_Base {
         setAutomaticEnrolment(automaticEnrolment);
         setDifferentiatedCapacity(differentiatedCapacity);
 
-        if (differentiatedCapacity) {
-            createOrEditShiftGroupingProperties(infoShifts);
-        } else {
+        if (!differentiatedCapacity) {
             Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingPropertiesSet();
             for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
                 shiftGP.delete();
             }
+        } else {
+            setDiferentiatedCapacityShiftsGroupingProperties(shiftType, shiftCapacityMap, this);
         }
 
         if (shiftType == null) {
@@ -340,10 +327,28 @@ public class Grouping extends Grouping_Base {
 
         List<ExecutionCourse> ecs = getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
-            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING,
-                    "log.executionCourse.groupAndShifts.grouping.edited", getName(), ec.getNome(),
-                    ec.getDegreePresentationString());
+            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.groupAndShifts.grouping.edited",
+                    getName(), ec.getNome(), ec.getDegreePresentationString());
         }
+
+    }
+
+    private static void setDiferentiatedCapacityShiftsGroupingProperties(ShiftType shiftType,
+            Map<String, Integer> shiftCapacityMap, Grouping grouping) {
+        shiftCapacityMap.forEach((shiftID, capacity) -> {
+            Shift shift = ((Shift) FenixFramework.getDomainObject(shiftID));
+            if (shift.getTypes().contains(shiftType)) {
+                if (capacity != null && grouping.getStudentGroupsIndexedByShift().get(shift) != null
+                        && capacity < grouping.getStudentGroupsIndexedByShift().get(shift).size()) {
+                    throw new DomainException("error.groupProperties.edit.maxGroupCap.inferiorToExistingNumber");
+                }
+                if (shift.getShiftGroupingProperties() == null) {
+                    shift.setShiftGroupingProperties(new ShiftGroupingProperties(shift, grouping, capacity));
+                } else {
+                    shift.getShiftGroupingProperties().setCapacity(capacity);
+                }
+            }
+        });
     }
 
     private boolean isShiftTypeEqual(ShiftType shiftType) {
@@ -429,8 +434,8 @@ public class Grouping extends Grouping_Base {
 
         List<ExecutionCourse> ecs = getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
-            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING, labelKey, groupNumber.toString(),
-                    getName(), Integer.toString(students.size()), sbStudentNumbers.toString(), ec.getNome(),
+            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING, labelKey, groupNumber.toString(), getName(),
+                    Integer.toString(students.size()), sbStudentNumbers.toString(), ec.getNome(),
                     ec.getDegreePresentationString());
         }
     }
@@ -460,9 +465,8 @@ public class Grouping extends Grouping_Base {
 
         List<ExecutionCourse> ecs = getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
-            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING,
-                    "log.executionCourse.groupAndShifts.grouping.removed", getName(), ec.getNome(),
-                    ec.getDegreePresentationString());
+            GroupsAndShiftsManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.groupAndShifts.grouping.removed",
+                    getName(), ec.getNome(), ec.getDegreePresentationString());
         }
 
         Collection<Attends> attends = this.getAttendsSet();
