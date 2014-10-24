@@ -27,6 +27,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.base.Strings;
+
 public class WriteStudentAttendingCourse {
 
     protected void run(Registration registration, String executionCourseId) throws FenixServiceException {
@@ -34,15 +36,18 @@ public class WriteStudentAttendingCourse {
         ServiceMonitoring.logService(this.getClass(), registration, executionCourseId);
 
         if (registration == null) {
-            throw new FenixServiceException("error.invalid.student");
+            throw new FenixServiceException("error.registration.not.exist");
         }
         registration.addAttendsTo(readExecutionCourse(executionCourseId));
     }
 
     private ExecutionCourse readExecutionCourse(String executionCourseId) throws FenixServiceException {
+        if (Strings.isNullOrEmpty(executionCourseId)) {
+            throw new FenixServiceException("errors.notSelected.executionCourse");
+        }
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
-            throw new FenixServiceException("noExecutionCourse");
+            throw new FenixServiceException("error.executionCourse.not.exist");
         }
         return executionCourse;
     }

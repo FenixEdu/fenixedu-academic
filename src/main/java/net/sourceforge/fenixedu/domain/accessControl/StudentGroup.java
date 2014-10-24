@@ -37,6 +37,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
@@ -106,6 +108,10 @@ public class StudentGroup extends FenixGroup {
 
     public static StudentGroup get(CycleType cycle) {
         return new StudentGroup(null, null, cycle, null, null, null, null);
+    }
+
+    public static StudentGroup get(CycleType cycle, ExecutionYear executionYear) {
+        return new StudentGroup(null, null, cycle, null, null, null, executionYear);
     }
 
     public static StudentGroup get(Space campus) {
@@ -221,12 +227,26 @@ public class StudentGroup extends FenixGroup {
         if (cycleType == null) {
             return registrations;
         }
-        return registrations.filter(new Predicate<Registration>() {
+        return registrations.filter(getPredicateForActiveRegistrationsThatHaveAtLeastOneEnrolment(cycleType, executionYear));
+    }
+
+    private static Predicate<Registration> getPredicateForActiveRegistrationsThatHaveAtLeastOneEnrolment(
+            final CycleType cycleType, final ExecutionYear executionYear) {
+        return new Predicate<Registration>() {
             @Override
             public boolean apply(Registration registration) {
-                return Objects.equal(registration.getCycleType(executionYear), cycleType);
+                StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(executionYear);
+                if (studentCurricularPlan != null && !studentCurricularPlan.hasConcludedCycle(cycleType, executionYear)) {
+                    CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getCycle(cycleType);
+                    if (cycleCurriculumGroup != null
+                            && cycleCurriculumGroup.isConcluded(executionYear).equals(ConclusionValue.NOT_CONCLUDED)
+                            && cycleCurriculumGroup.hasAnyEnrolments()) {
+                        return true;
+                    }
+                }
+                return false;
             }
-        });
+        };
     }
 
     private static FluentIterable<Registration> filterCurricularYear(FluentIterable<Registration> registrations,
@@ -333,7 +353,9 @@ public class StudentGroup extends FenixGroup {
                         && !registration.getActiveStudentCurricularPlan().getDegree().equals(degree)) {
                     continue;
                 }
-                if (cycle != null && registration.getCurrentCycleType() != cycle) {
+                if (cycle != null
+                        && !getPredicateForActiveRegistrationsThatHaveAtLeastOneEnrolment(cycle, executionYear).apply(
+                                registration)) {
                     continue;
                 }
                 if (campus != null && registration.getCampus() != campus) {

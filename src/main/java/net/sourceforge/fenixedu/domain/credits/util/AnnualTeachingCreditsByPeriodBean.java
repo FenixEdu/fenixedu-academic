@@ -151,7 +151,8 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 
     public Boolean getRequestCreditsReduction() {
         ReductionService reductionService = getCreditsReductionService();
-        return reductionService != null ? reductionService.getRequestCreditsReduction() : false;
+        return reductionService != null && reductionService.getRequestCreditsReduction() != null ? reductionService
+                .getRequestCreditsReduction() : false;
     }
 
     public String getCreditsReductionServiceAttribute() {

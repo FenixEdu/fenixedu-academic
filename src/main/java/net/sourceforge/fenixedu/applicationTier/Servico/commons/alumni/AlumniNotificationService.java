@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 public class AlumniNotificationService {
 
@@ -62,7 +63,10 @@ public class AlumniNotificationService {
     }
 
     public static String getRegisterConclusionURL(final Alumni alumni) {
-        final String fenixURL = BundleUtil.getString(Bundle.GLOBAL, "fenix.url");
+        String fenixURL = CoreConfiguration.getConfiguration().applicationUrl();
+        if (!fenixURL.endsWith("/")) {
+            fenixURL += "/";
+        }
         return MessageFormat.format(BundleUtil.getString(Bundle.ALUMNI, "alumni.public.registration.conclusion.url"), fenixURL,
                 alumni.getExternalId().toString(), alumni.getUrlRequestToken());
     }

@@ -19,7 +19,10 @@
 package net.sourceforge.fenixedu.domain.credits.util;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DepartmentCreditsPool;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
@@ -33,20 +36,26 @@ import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.joda.time.Interval;
+import org.joda.time.PeriodType;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 
 public class ReductionServiceBean implements Serializable {
     private Teacher teacher;
     private ReductionService reductionService;
+    private ExecutionSemester executionSemester;
 
-    public ReductionServiceBean(Teacher teacher) {
+    public ReductionServiceBean(Teacher teacher, ExecutionSemester executionSemester) {
         this.teacher = teacher;
+        this.executionSemester = executionSemester;
     }
 
     public ReductionServiceBean(ReductionService reductionService) {
         this.reductionService = reductionService;
         this.teacher = reductionService.getTeacherService().getTeacher();
+        this.executionSemester = reductionService.getTeacherService().getExecutionPeriod();
     }
 
     public ReductionServiceBean() {
@@ -68,14 +77,25 @@ public class ReductionServiceBean implements Serializable {
         this.reductionService = reductionService;
     }
 
+    public ExecutionSemester getExecutionSemester() {
+        if (executionSemester == null) {
+            executionSemester = ExecutionSemester.readActualExecutionSemester();
+        }
+        return executionSemester;
+    }
+
+    public void setExecutionSemester(ExecutionSemester executionSemester) {
+        this.executionSemester = executionSemester;
+    }
+
     public String getTeacherCategory() {
-        ProfessionalCategory category = getTeacher().getCategoryByPeriod(ExecutionSemester.readActualExecutionSemester());
+        ProfessionalCategory category = getTeacher().getCategoryByPeriod(getExecutionSemester());
         return category != null ? category.getName().getContent() : null;
     }
 
     @Atomic
     public TeacherService getTeacherService() {
-        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+        ExecutionSemester executionSemester = getExecutionSemester();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
         if (teacherService == null) {
             teacherService = new TeacherService(teacher, executionSemester);
@@ -123,5 +143,82 @@ public class ReductionServiceBean implements Serializable {
             }
         }
         return null;
+    }
+
+    public BigDecimal getMaxCreditsFromEvaluationAndAge() {
+        BigDecimal maxCreditsFromEvaluation = getTeacherEvaluationMark();
+        BigDecimal maxCreditsFromAge = getTeacherMaxCreditsFromAge();
+        BigDecimal maxCreditsFromEvaluationAndAge = maxCreditsFromEvaluation.add(maxCreditsFromAge);
+        BigDecimal maxCreditsReduction = getMaxCreditsReduction();
+        return maxCreditsReduction.min(maxCreditsFromEvaluationAndAge);
+    }
+
+    public BigDecimal getTeacherEvaluationMark() {
+        FacultyEvaluationProcessYear lastFacultyEvaluationProcessYear = getFacultyEvaluationProcessYear();
+        TeacherEvaluationProcess lastTeacherEvaluationProcess = null;
+        for (TeacherEvaluationProcess teacherEvaluationProcess : getTeacherService().getTeacher().getPerson()
+                .getTeacherEvaluationProcessFromEvalueeSet()) {
+            if (teacherEvaluationProcess.getFacultyEvaluationProcess().equals(
+                    lastFacultyEvaluationProcessYear.getFacultyEvaluationProcess())) {
+                lastTeacherEvaluationProcess = teacherEvaluationProcess;
+                break;
+            }
+        }
+        TeacherEvaluationMark approvedEvaluationMark = null;
+
+        BigDecimal maxCreditsReduction = getMaxCreditsReduction();
+        if (lastTeacherEvaluationProcess != null) {
+            for (ApprovedTeacherEvaluationProcessMark approvedTeacherEvaluationProcessMark : lastTeacherEvaluationProcess
+                    .getApprovedTeacherEvaluationProcessMarkSet()) {
+                if (approvedTeacherEvaluationProcessMark.getFacultyEvaluationProcessYear().equals(
+                        lastFacultyEvaluationProcessYear)) {
+                    approvedEvaluationMark = approvedTeacherEvaluationProcessMark.getApprovedEvaluationMark();
+                    if (approvedEvaluationMark != null) {
+                        switch (approvedEvaluationMark) {
+                        case EXCELLENT:
+                            return maxCreditsReduction;
+                        case VERY_GOOD:
+                            return BigDecimal.ZERO.max(maxCreditsReduction.subtract(BigDecimal.ONE));
+                        case GOOD:
+                            return BigDecimal.ZERO.max(maxCreditsReduction.subtract(new BigDecimal(2)));
+                        default:
+                            return BigDecimal.ZERO;
+                        }
+                    } else {
+                        return BigDecimal.ZERO;
+                    }
+                }
+            }
+        } else {
+            return maxCreditsReduction;
+        }
+        return BigDecimal.ZERO;
+    }
+
+    public BigDecimal getMaxCreditsReduction() {
+        Department department =
+                getTeacherService().getTeacher().getLastWorkingDepartment(
+                        getTeacherService().getExecutionPeriod().getBeginDateYearMonthDay(),
+                        getTeacherService().getExecutionPeriod().getEndDateYearMonthDay());
+        DepartmentCreditsPool departmentCreditsPool =
+                DepartmentCreditsPool.getDepartmentCreditsPool(department, getTeacherService().getExecutionPeriod()
+                        .getExecutionYear());
+
+        return departmentCreditsPool == null || departmentCreditsPool.getMaximumCreditsReduction() == null ? new BigDecimal(3) : departmentCreditsPool
+                .getMaximumCreditsReduction();
+    }
+
+    public BigDecimal getTeacherMaxCreditsFromAge() {
+        YearMonthDay dateOfBirthYearMonthDay = getTeacherService().getTeacher().getPerson().getDateOfBirthYearMonthDay();
+        if (dateOfBirthYearMonthDay != null) {
+            Interval interval =
+                    new Interval(dateOfBirthYearMonthDay.toLocalDate().toDateTimeAtStartOfDay(), getTeacherService()
+                            .getExecutionPeriod().getEndDateYearMonthDay().plusDays(1).toLocalDate().toDateTimeAtStartOfDay());
+            int age = interval.toPeriod(PeriodType.years()).getYears();
+            if (age >= 65) {
+                return BigDecimal.ONE;
+            }
+        }
+        return BigDecimal.ZERO;
     }
 }

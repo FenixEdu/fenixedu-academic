@@ -120,9 +120,9 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends FenixDisp
             addActionMessage(request, e.getMessage(), e.getArgs());
             return mapping.findForward("prepareShiftEnrollment");
 
-        } catch (FenixServiceException exception) {
-            addActionMessage(request, "errors.impossible.operation");
-            return mapping.getInputForward();
+        } catch (FenixServiceException ex) {
+            addActionMessage(request, ex.getMessage(), ex.getArgs());
+            return mapping.findForward("prepareShiftEnrollment");
         }
 
         return mapping.findForward("prepareShiftEnrollment");
