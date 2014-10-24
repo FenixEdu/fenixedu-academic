@@ -66,11 +66,9 @@ public class PhysicalAddress extends PhysicalAddress_Base {
             PhysicalAddressData data) {
         this();
         super.init(party, type, defaultContact);
-        setVisibleToAlumni(Boolean.FALSE);
-        setVisibleToEmployees(Boolean.FALSE);
         setVisibleToPublic(Boolean.FALSE);
         setVisibleToStudents(Boolean.FALSE);
-        setVisibleToTeachers(Boolean.FALSE);
+        setVisibleToStaff(Boolean.FALSE);
         edit(data);
     }
 

@@ -59,7 +59,7 @@ public class WebAddressBean extends PartyContactBean {
     @Override
     public PartyContact createNewContact() {
         return WebAddress.createWebAddress(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
-                getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
+                getVisibleToStudents(), getVisibleToStaff());
     }
 
     @Override

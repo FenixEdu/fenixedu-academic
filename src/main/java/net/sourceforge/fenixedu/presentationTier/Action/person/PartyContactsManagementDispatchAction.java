@@ -74,9 +74,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
         if (contact.getVisibleToPublic().booleanValue()) {
             contact.setVisibleToStudents(Boolean.TRUE);
-            contact.setVisibleToTeachers(Boolean.TRUE);
-            contact.setVisibleToEmployees(Boolean.TRUE);
-            contact.setVisibleToAlumni(Boolean.TRUE);
+            contact.setVisibleToStaff(Boolean.TRUE);
         }
         contact.setVisibleToManagement(Boolean.TRUE);
         request.setAttribute("partyContact", contact);
@@ -98,8 +96,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
         if (contact.getVisibleToPublic().booleanValue()) {
             contact.setVisibleToPublic(new Boolean(contact.getVisibleToStudents().booleanValue()
-                    && contact.getVisibleToTeachers().booleanValue() && contact.getVisibleToEmployees().booleanValue()
-                    && contact.getVisibleToAlumni().booleanValue()));
+                    && contact.getVisibleToStaff().booleanValue()));
         }
         contact.setVisibleToManagement(Boolean.TRUE);
         request.setAttribute("partyContact", contact);

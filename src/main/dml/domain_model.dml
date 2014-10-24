@@ -2176,15 +2176,16 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
         class classProperties.ExecutionCourseProperty extends classProperties.GeneralClassProperty {
         }
 
+    class contacts.ContactRoot {
+    }
+
     class contacts.PartyContact  {
         Boolean defaultContact;
         PartyContactType type;
         DateTime lastModifiedDate;
         Boolean visibleToPublic (REQUIRED);
         Boolean visibleToStudents (REQUIRED);
-        Boolean visibleToTeachers (REQUIRED);
-        Boolean visibleToEmployees (REQUIRED);
-        Boolean visibleToAlumni (REQUIRED);
+        Boolean visibleToStaff (REQUIRED);
         Boolean active;
     }
 
@@ -9379,15 +9380,64 @@ relation RootDomainObjectParty {
     }
 }
 
-relation RootDomainObjectPartyContact {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+relation ContactRootLink {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole root {
+        multiplicity 1..1;
+    }
+    contacts.ContactRoot playsRole contactRoot {
+        multiplicity 0..1;
+    }
+}
+
+relation ContactsStudentVisibilityGroup {
+    protected contacts.ContactRoot playsRole contactRootForStudentVisibility {
+        multiplicity 0..1;
+    }
+    protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole studentVisibilityGroup {
+        multiplicity 1..1;
+    }
+}
+
+relation ContactsStaffVisibilityGroup {
+    protected contacts.ContactRoot playsRole contactRootForStaffVisibility {
+        multiplicity 0..1;
+    }
+    protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole staffVisibilityGroup {
+        multiplicity 1..1;
+    }
+}
+
+relation ContactsSystemVisibilityGroup {
+    protected contacts.ContactRoot playsRole contactRootForManagementVisibility {
+        multiplicity 0..1;
+    }
+    protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole managementVisibilityGroup {
+        multiplicity 1..1;
+    }
+}
+
+relation ContactsEmergencyContactVisibilityGroup {
+    protected contacts.ContactRoot playsRole contactRootForEmergencyContactVisibility {
+        multiplicity 0..1;
+    }
+    protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole emergencyContactVisibilityGroup {
+        multiplicity 1..1;
+    }
+}
+
+relation ContactRootContacts {
+    contacts.ContactRoot playsRole contactRoot {
+        multiplicity 1..1;
+    }
     contacts.PartyContact playsRole partyContacts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInvalidPartyContact {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    contacts.ContactRoot playsRole contactRoot {
+        multiplicity 0..1;
+    }
     contacts.PartyContactValidation playsRole invalidPartyContactValidations {
         multiplicity *;
     }

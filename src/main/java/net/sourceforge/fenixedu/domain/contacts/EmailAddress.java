@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -51,14 +50,11 @@ public class EmailAddress extends EmailAddress_Base {
     };
 
     public static EmailAddress createEmailAddress(Party party, String email, PartyContactType type, Boolean isDefault,
-            Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
-            Boolean visibleToAlumni) {
+            Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToStaff) {
 
         EmailAddress result = null;
         if (!StringUtils.isEmpty(email)) {
-            result =
-                    new EmailAddress(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees,
-                            visibleToAlumni, isDefault, email);
+            result = new EmailAddress(party, type, visibleToPublic, visibleToStudents, visibleToStaff, isDefault, email);
         }
         return result;
     }
@@ -85,11 +81,9 @@ public class EmailAddress extends EmailAddress_Base {
     }
 
     protected EmailAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
-            final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
-            final boolean visibleToAlumni, final boolean defaultContact, final String value) {
+            final boolean visibleToStudents, final boolean visibleToStaff, final boolean defaultContact, final String value) {
         this();
-        super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, visibleToAlumni,
-                defaultContact);
+        super.init(party, type, visibleToPublic, visibleToStudents, visibleToStaff, defaultContact);
         checkParameters(value);
         setValue(value);
     }
@@ -165,7 +159,7 @@ public class EmailAddress extends EmailAddress_Base {
     }
 
     static public EmailAddress find(final String emailAddressString) {
-        for (final PartyContact contact : Bennu.getInstance().getPartyContactsSet()) {
+        for (final PartyContact contact : ContactRoot.getInstance().getPartyContactsSet()) {
             if (contact.isEmailAddress()) {
                 final EmailAddress emailAddress = (EmailAddress) contact;
                 if (emailAddress.hasValue(emailAddressString)) {

@@ -49,13 +49,10 @@ public class WebAddress extends WebAddress_Base {
     };
 
     public static WebAddress createWebAddress(Party party, String url, PartyContactType type, Boolean isDefault,
-            Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
-            Boolean visibleToAlumni) {
+            Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToStaff) {
         WebAddress result = null;
         if (!StringUtils.isEmpty(url)) {
-            result =
-                    new WebAddress(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees,
-                            visibleToAlumni, isDefault, url);
+            result = new WebAddress(party, type, visibleToPublic, visibleToStudents, visibleToStaff, isDefault, url);
         }
         return result;
     }
@@ -82,11 +79,9 @@ public class WebAddress extends WebAddress_Base {
     }
 
     protected WebAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
-            final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
-            final boolean visibleToAlumni, final boolean defaultContact, final String url) {
+            final boolean visibleToStudents, final boolean visibleToStaff, final boolean defaultContact, final String url) {
         this();
-        super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, visibleToAlumni,
-                defaultContact);
+        super.init(party, type, visibleToPublic, visibleToStudents, visibleToStaff, defaultContact);
         checkParameters(url);
         super.setUrl(url);
     }

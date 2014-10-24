@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contacts.ContactRoot;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -68,7 +69,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
                         PhysicalAddressValidation.PREDICATE_FILE);
 
         final Collection<PartyContactValidation> partyContactValidation =
-                Bennu.getInstance().getInvalidPartyContactValidationsSet();
+                ContactRoot.getInstance().getInvalidPartyContactValidationsSet();
         final List<PartyContactValidation> invalidPartyContactValidations = filter(partyContactValidation, predicate);
         request.setAttribute("partyContacts", invalidPartyContactValidations);
         return mapping.findForward("showPendingPartyContactsValidation");

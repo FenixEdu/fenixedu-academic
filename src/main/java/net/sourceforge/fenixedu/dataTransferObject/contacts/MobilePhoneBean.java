@@ -62,7 +62,7 @@ public class MobilePhoneBean extends PartyContactBean {
     public PartyContact createNewContact() {
         check(this, RolePredicates.PARTY_CONTACT_BEAN_PREDICATE);
         return MobilePhone.createMobilePhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
-                getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
+                getVisibleToStudents(), getVisibleToStaff());
     }
 
     @Override

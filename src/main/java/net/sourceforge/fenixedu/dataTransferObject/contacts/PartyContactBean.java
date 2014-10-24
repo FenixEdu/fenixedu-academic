@@ -45,11 +45,7 @@ public abstract class PartyContactBean implements Serializable {
 
     private Boolean visibleToStudents = Boolean.FALSE;
 
-    private Boolean visibleToTeachers = Boolean.FALSE;
-
-    private Boolean visibleToEmployees = Boolean.FALSE;
-
-    private Boolean visibleToAlumni = Boolean.FALSE;
+    private Boolean visibleToStaff = Boolean.FALSE;
 
     private Boolean visibleToManagement = Boolean.TRUE;
 
@@ -68,9 +64,7 @@ public abstract class PartyContactBean implements Serializable {
         setDefaultContact(partyContact.getDefaultContact());
         setVisibleToPublic(partyContact.getVisibleToPublic());
         setVisibleToStudents(partyContact.getVisibleToStudents());
-        setVisibleToTeachers(partyContact.getVisibleToTeachers());
-        setVisibleToEmployees(partyContact.getVisibleToEmployees());
-        setVisibleToAlumni(partyContact.getVisibleToAlumni());
+        setVisibleToStaff(partyContact.getVisibleToStaff());
     }
 
     public Party getParty() {
@@ -129,28 +123,12 @@ public abstract class PartyContactBean implements Serializable {
         this.visibleToStudents = visibleToStudents;
     }
 
-    public Boolean getVisibleToTeachers() {
-        return visibleToTeachers;
+    public Boolean getVisibleToStaff() {
+        return visibleToStaff;
     }
 
-    public void setVisibleToTeachers(Boolean visibleToTeachers) {
-        this.visibleToTeachers = visibleToTeachers;
-    }
-
-    public Boolean getVisibleToEmployees() {
-        return visibleToEmployees;
-    }
-
-    public void setVisibleToEmployees(Boolean visibleToEmployees) {
-        this.visibleToEmployees = visibleToEmployees;
-    }
-
-    public Boolean getVisibleToAlumni() {
-        return visibleToAlumni;
-    }
-
-    public void setVisibleToAlumni(Boolean visibleToAlumni) {
-        this.visibleToAlumni = visibleToAlumni;
+    public void setVisibleToStaff(Boolean visibleToStaff) {
+        this.visibleToStaff = visibleToStaff;
     }
 
     public Boolean getVisibleToManagement() {
@@ -212,9 +190,7 @@ public abstract class PartyContactBean implements Serializable {
                 changes || (getContact().getDefaultContact().booleanValue() != isDefault)
                         || (getContact().getVisibleToPublic().booleanValue() != getVisibleToPublic().booleanValue())
                         || (getContact().getVisibleToStudents().booleanValue() != getVisibleToStudents().booleanValue())
-                        || (getContact().getVisibleToTeachers().booleanValue() != getVisibleToTeachers().booleanValue())
-                        || (getContact().getVisibleToEmployees().booleanValue() != getVisibleToEmployees().booleanValue())
-                        || (getContact().getVisibleToAlumni().booleanValue() != getVisibleToAlumni().booleanValue());
+                        || (getContact().getVisibleToStaff().booleanValue() != getVisibleToStaff().booleanValue());
 
         if (changes) {
             if (!isInstitutional()) {
@@ -223,9 +199,7 @@ public abstract class PartyContactBean implements Serializable {
             getContact().setDefaultContactInformation(isDefault);
             getContact().setVisibleToPublic(getVisibleToPublic());
             getContact().setVisibleToStudents(getVisibleToStudents());
-            getContact().setVisibleToTeachers(getVisibleToTeachers());
-            getContact().setVisibleToEmployees(getVisibleToEmployees());
-            getContact().setVisibleToAlumni(getVisibleToAlumni());
+            getContact().setVisibleToStaff(getVisibleToStaff());
         }
 
         return changes;

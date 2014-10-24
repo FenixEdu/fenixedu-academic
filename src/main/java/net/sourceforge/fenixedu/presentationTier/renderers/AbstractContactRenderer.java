@@ -24,16 +24,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contacts.ContactRoot;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
@@ -108,30 +106,17 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
     }
 
     private boolean isVisible(PartyContact contact, boolean publicSpace) {
-        if (!Authenticate.isLogged() && publicSpace && contact.getVisibleToPublic().booleanValue()) {
+        if (publicSpace && contact.getVisibleToPublic()) {
             return true;
         }
-        if (Authenticate.isLogged()) {
-            User user = Authenticate.getUser();
-            Person reader = user.getPerson();
-            if (reader.hasRole(RoleType.MANAGER).booleanValue() || reader.hasRole(RoleType.DIRECTIVE_COUNCIL).booleanValue()) {
-                return true;
-            }
-            if (reader.hasRole(RoleType.EMPLOYEE).booleanValue() && contact.getVisibleToEmployees().booleanValue()) {
-                return true;
-            }
-            if (reader.hasRole(RoleType.TEACHER).booleanValue() && contact.getVisibleToTeachers().booleanValue()) {
-                return true;
-            }
-            if (reader.hasRole(RoleType.STUDENT).booleanValue() && contact.getVisibleToStudents().booleanValue()) {
-                return true;
-            }
-            if (reader.hasRole(RoleType.ALUMNI).booleanValue() && contact.getVisibleToAlumni().booleanValue()) {
-                return true;
-            }
-            if (contact.getVisibleToPublic()) {
-                return true;
-            }
+        if (contact.getVisibleToStudents() && ContactRoot.getInstance().getStudentVisibility().isMember(Authenticate.getUser())) {
+            return true;
+        }
+        if (contact.getVisibleToStaff() && ContactRoot.getInstance().getStaffVisibility().isMember(Authenticate.getUser())) {
+            return true;
+        }
+        if (ContactRoot.getInstance().getManagementVisibility().isMember(Authenticate.getUser())) {
+            return true;
         }
         return false;
     }

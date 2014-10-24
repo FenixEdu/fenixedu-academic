@@ -37,23 +37,11 @@
 		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
 		<property name="bodyText" value="label.contact.visible.to.students.description" />
 	</slot>
-	<slot name="visibleToAlumni" layout="option-select-postback"
-		key="label.contact.visible.to.alumni" default="false">
-		<property name="destination" value="postback-set-elements" />
-		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
-		<property name="bodyText" value="label.contact.visible.to.alumni.description" />
-	</slot>
-	<slot name="visibleToTeachers" layout="option-select-postback"
+	<slot name="visibleToStaff" layout="option-select-postback"
 		key="label.contact.visible.to.teachers" default="false">
 		<property name="destination" value="postback-set-elements" />
 		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
 		<property name="bodyText" value="label.contact.visible.to.teachers.description" />
-	</slot>
-	<slot name="visibleToEmployees" layout="option-select-postback"
-		key="label.contact.visible.to.employees" default="false">
-		<property name="destination" value="postback-set-elements" />
-		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
-		<property name="bodyText" value="label.contact.visible.to.employees.description" />
 	</slot>
 	<slot name="visibleToManagement" key="label.contact.visible.to.management" default="true">
 		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
@@ -151,9 +139,7 @@
 	<remove name="value" /> 
 	<remove name="visibleToPublic" /> 
 	<remove name="visibleToStudents" />
-	<remove name="visibleToAlumni" />
-	<remove name="visibleToTeachers" />
-	<remove name="visibleToEmployees" /> 
+	<remove name="visibleToStaff" />
 	<remove name="visibleToManagement" />
 </schema>
 

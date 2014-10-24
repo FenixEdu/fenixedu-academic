@@ -30,11 +30,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.Bundle;
 
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
@@ -55,12 +53,10 @@ public abstract class PartyContact extends PartyContact_Base {
 
     protected PartyContact() {
         super();
-        super.setRootDomainObject(Bennu.getInstance());
+        setContactRoot(ContactRoot.getInstance());
         setVisibleToPublic(Boolean.FALSE);
         setVisibleToStudents(Boolean.FALSE);
-        setVisibleToTeachers(Boolean.FALSE);
-        setVisibleToEmployees(Boolean.FALSE);
-        setVisibleToAlumni(Boolean.FALSE);
+        setVisibleToStaff(Boolean.FALSE);
         setLastModifiedDate(new DateTime());
         setActive(true);
         setDefaultContact(false);
@@ -75,31 +71,22 @@ public abstract class PartyContact extends PartyContact_Base {
 
         if (type.equals(PartyContactType.INSTITUTIONAL)) {
             setVisibleToPublic();
-        } else if (party.isPerson() && !((Person) party).hasRole(RoleType.TEACHER)
-                && !((Person) party).hasRole(RoleType.EMPLOYEE)) {
-            setVisibleToStudents(type == PartyContactType.WORK);
-            setVisibleToAlumni(type == PartyContactType.WORK);
-            setVisibleToTeachers(type == PartyContactType.WORK);
-            setVisibleToEmployees(type == PartyContactType.WORK);
         } else {
-            setVisibleToTeachers(type == PartyContactType.WORK);
-            setVisibleToEmployees(type == PartyContactType.WORK);
+            setVisibleToStudents(type == PartyContactType.WORK);
+            setVisibleToStaff(type == PartyContactType.WORK);
         }
         setDefaultContactInformation(defaultContact);
         setLastModifiedDate(new DateTime());
     }
 
     protected void init(final Party party, final PartyContactType type, final boolean visibleToPublic,
-            final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
-            final boolean visibleToAlumni, final boolean defaultContact) {
+            final boolean visibleToStudents, final boolean visibleToStaff, final boolean defaultContact) {
         checkParameters(party, type);
         super.setParty(party);
         super.setType(type);
         setVisibleToPublic(new Boolean(visibleToPublic));
         setVisibleToStudents(new Boolean(visibleToStudents));
-        setVisibleToTeachers(new Boolean(visibleToTeachers));
-        setVisibleToEmployees(new Boolean(visibleToEmployees));
-        setVisibleToAlumni(new Boolean(visibleToAlumni));
+        setVisibleToStaff(new Boolean(visibleToStaff));
         setDefaultContactInformation(defaultContact);
         setLastModifiedDate(new DateTime());
     }
@@ -107,9 +94,7 @@ public abstract class PartyContact extends PartyContact_Base {
     private void setVisibleToPublic() {
         super.setVisibleToPublic(Boolean.TRUE);
         super.setVisibleToStudents(Boolean.TRUE);
-        super.setVisibleToTeachers(Boolean.TRUE);
-        super.setVisibleToEmployees(Boolean.TRUE);
-        super.setVisibleToAlumni(Boolean.TRUE);
+        super.setVisibleToStaff(Boolean.TRUE);
     }
 
     @Override
@@ -117,9 +102,7 @@ public abstract class PartyContact extends PartyContact_Base {
         super.setVisibleToPublic(visibleToPublic);
         if (visibleToPublic.booleanValue()) {
             super.setVisibleToStudents(Boolean.TRUE);
-            super.setVisibleToTeachers(Boolean.TRUE);
-            super.setVisibleToEmployees(Boolean.TRUE);
-            super.setVisibleToAlumni(Boolean.TRUE);
+            super.setVisibleToStaff(Boolean.TRUE);
         }
     }
 
@@ -132,17 +115,9 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     @Override
-    public void setVisibleToTeachers(Boolean visibleToTeachers) {
-        super.setVisibleToTeachers(visibleToTeachers);
-        if (!visibleToTeachers.booleanValue()) {
-            super.setVisibleToPublic(Boolean.FALSE);
-        }
-    }
-
-    @Override
-    public void setVisibleToEmployees(Boolean visibleToEmployees) {
-        super.setVisibleToEmployees(visibleToEmployees);
-        if (!visibleToEmployees.booleanValue()) {
+    public void setVisibleToStaff(Boolean visibleToStaff) {
+        super.setVisibleToStaff(visibleToStaff);
+        if (!visibleToStaff.booleanValue()) {
             super.setVisibleToPublic(Boolean.FALSE);
         }
     }
@@ -260,8 +235,8 @@ public abstract class PartyContact extends PartyContact_Base {
             setPrevPartyContact(null);
             if (getPartyContactValidation() != null) {
                 final PartyContactValidation validation = getPartyContactValidation();
-                if (validation.getRootDomainObject() != null) {
-                    validation.setRootDomainObject(null);
+                if (validation.getContactRoot() != null) {
+                    validation.setContactRoot(null);
                 }
             }
         }
@@ -540,6 +515,6 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     private static Set<PartyContact> getAllInstancesOf(Class<? extends PartyContact> type) {
-        return Sets.<PartyContact> newHashSet(Iterables.filter(Bennu.getInstance().getPartyContactsSet(), type));
+        return Sets.<PartyContact> newHashSet(Iterables.filter(ContactRoot.getInstance().getPartyContactsSet(), type));
     }
 }

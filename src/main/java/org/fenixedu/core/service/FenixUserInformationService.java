@@ -30,7 +30,7 @@ public class FenixUserInformationService implements UserInformationService {
     @Override
     public String getContacts(User user) {
         return user.getPerson().getPartyContacts(Phone.class).stream()
-                .filter(p -> p.getVisibleToEmployees() != null && p.getVisibleToEmployees()).map(c -> ((Phone) c).getNumber())
+                .filter(p -> p.getVisibleToStaff() != null && p.getVisibleToStaff()).map(c -> ((Phone) c).getNumber())
                 .collect(Collectors.joining(","));
     }
 }

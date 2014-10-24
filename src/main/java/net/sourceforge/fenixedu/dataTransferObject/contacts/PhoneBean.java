@@ -63,7 +63,7 @@ public class PhoneBean extends PartyContactBean {
     public PartyContact createNewContact() {
         check(this, RolePredicates.PARTY_CONTACT_BEAN_PREDICATE);
         return Phone.createPhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
-                getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
+                getVisibleToStudents(), getVisibleToStaff());
     }
 
     @Override

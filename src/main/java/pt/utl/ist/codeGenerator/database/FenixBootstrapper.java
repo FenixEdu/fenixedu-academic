@@ -343,7 +343,7 @@ public class FenixBootstrapper {
         person.setCountryOfBirth(Country.readDefault());
 
         EmailAddress.createEmailAddress(person, adminSection.getAdminUserEmail(), PartyContactType.PERSONAL, true, true, true,
-                true, true, true);
+                true);
         for (PartyContact partyContact : person.getPartyContactsSet()) {
             partyContact.setValid();
             partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);

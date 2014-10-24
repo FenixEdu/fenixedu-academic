@@ -130,9 +130,7 @@
         <th></th>
         <th><bean:message key="label.contact.visible.to.public" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
         <th><bean:message key="label.contact.visible.to.students" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
-        <th><bean:message key="label.contact.visible.to.alumni" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
-        <th><bean:message key="label.contact.visible.to.teachers" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
-        <th><bean:message key="label.contact.visible.to.employees" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+        <th><bean:message key="label.contact.visible.to.staff" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
         <th><bean:message key="label.contact.visible.to.management" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
         <th></th>
     </tr>
@@ -170,22 +168,10 @@
                 <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
             </td>
             <td class="acenter">
-                <logic:equal name="contact" property="visibleToAlumni" value="true">
+                <logic:equal name="contact" property="visibleToStaff" value="true">
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
-                <logic:equal name="contact" property="visibleToAlumni" value="false">-</logic:equal>
-            </td>
-            <td class="acenter">
-                <logic:equal name="contact" property="visibleToTeachers" value="true">
-                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-                </logic:equal>
-                <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
-            </td>
-            <td class="acenter">
-                <logic:equal name="contact" property="visibleToEmployees" value="true">
-                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-                </logic:equal>
-                <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
+                <logic:equal name="contact" property="visibleToStaff" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
@@ -262,22 +248,10 @@
                 <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
             </td>
             <td class="acenter">
-                <logic:equal name="contact" property="visibleToAlumni" value="true">
+                <logic:equal name="contact" property="visibleToStaff" value="true">
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
-                <logic:equal name="contact" property="visibleToAlumni" value="false">-</logic:equal>
-            </td>
-            <td class="acenter">
-                <logic:equal name="contact" property="visibleToTeachers" value="true">
-                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-                </logic:equal>
-                <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
-            </td>
-            <td class="acenter">
-                <logic:equal name="contact" property="visibleToEmployees" value="true">
-                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-                </logic:equal>
-                <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
+                <logic:equal name="contact" property="visibleToStaff" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
@@ -356,22 +330,10 @@
                 <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
             </td>
             <td class="acenter">
-                <logic:equal name="contact" property="visibleToAlumni" value="true">
+                <logic:equal name="contact" property="visibleToStaff" value="true">
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
-                <logic:equal name="contact" property="visibleToAlumni" value="false">-</logic:equal>
-            </td>
-            <td class="acenter">
-                <logic:equal name="contact" property="visibleToTeachers" value="true">
-                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-                </logic:equal>
-                <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
-            </td>
-            <td class="acenter">
-                <logic:equal name="contact" property="visibleToEmployees" value="true">
-                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-                </logic:equal>
-                <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
+                <logic:equal name="contact" property="visibleToStaff" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
@@ -453,22 +415,10 @@
                 <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
             </td>
             <td class="acenter">
-                <logic:equal name="contact" property="visibleToAlumni" value="true">
+                <logic:equal name="contact" property="visibleToStaff" value="true">
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
-                <logic:equal name="contact" property="visibleToAlumni" value="false">-</logic:equal>
-            </td>
-            <td class="acenter">
-                <logic:equal name="contact" property="visibleToTeachers" value="true">
-                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-                </logic:equal>
-                <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
-            </td>
-            <td class="acenter">
-                <logic:equal name="contact" property="visibleToEmployees" value="true">
-                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-                </logic:equal>
-                <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
+                <logic:equal name="contact" property="visibleToStaff" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
@@ -549,22 +499,10 @@
                 <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
             </td>
             <td class="acenter">
-                <logic:equal name="contact" property="visibleToAlumni" value="true">
+                <logic:equal name="contact" property="visibleToStaff" value="true">
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
                 </logic:equal>
-                <logic:equal name="contact" property="visibleToAlumni" value="false">-</logic:equal>
-            </td>
-            <td class="acenter">
-                <logic:equal name="contact" property="visibleToTeachers" value="true">
-                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-                </logic:equal>
-                <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
-            </td>
-            <td class="acenter">
-                <logic:equal name="contact" property="visibleToEmployees" value="true">
-                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-                </logic:equal>
-                <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
+                <logic:equal name="contact" property="visibleToStaff" value="false">-</logic:equal>
             </td>
             <td class="acenter">
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>

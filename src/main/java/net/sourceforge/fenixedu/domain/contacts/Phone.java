@@ -47,13 +47,10 @@ public class Phone extends Phone_Base {
     };
 
     public static Phone createPhone(Party party, String number, PartyContactType type, Boolean isDefault,
-            Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
-            Boolean visibleToAlumni) {
+            Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToStaff) {
         Phone result = null;
         if (!StringUtils.isEmpty(number)) {
-            result =
-                    new Phone(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees,
-                            visibleToAlumni, isDefault, number);
+            result = new Phone(party, type, visibleToPublic, visibleToStudents, visibleToStaff, isDefault, number);
         }
         return result;
     }
@@ -79,11 +76,9 @@ public class Phone extends Phone_Base {
     }
 
     protected Phone(final Party party, final PartyContactType type, final boolean visibleToPublic,
-            final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
-            final boolean visibleToAlumni, final boolean defaultContact, final String number) {
+            final boolean visibleToStudents, final boolean visibleToStaff, final boolean defaultContact, final String number) {
         this();
-        super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, visibleToAlumni,
-                defaultContact);
+        super.init(party, type, visibleToPublic, visibleToStudents, visibleToStaff, defaultContact);
         checkParameters(number);
         super.setNumber(number);
     }
