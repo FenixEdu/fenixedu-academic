@@ -64,7 +64,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     public String getPersonNameWithLogin() {
         Person person = getPerson();
 
-        if (person == null || person.hasExternalContract()) {
+        if (person == null || person.isExternalPerson()) {
             return getPersonName() + " (Externa)";
         } else {
             return getPersonName() + " (" + person.getIstUsername() + ")";
