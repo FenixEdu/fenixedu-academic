@@ -48,7 +48,6 @@ import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -191,7 +190,6 @@ public class Unit extends Unit_Base {
         }
 
         getUnitName().delete();
-        getFunctionalityPrintersSet().clear();
         getAllowedPeopleToUploadFilesSet().clear();
 
         setRootDomainObjectForEarthUnit(null);
@@ -1067,15 +1065,6 @@ public class Unit extends Unit_Base {
         destinationUnit.getPrecedentDegreeInformationsSet().addAll(fromUnit.getPrecedentDegreeInformationsSet());
 
         fromUnit.delete();
-    }
-
-    public String[] getPrinterNamesByFunctionalityName(final String name) {
-        for (FunctionalityPrinters functionalityPrinters : getFunctionalityPrintersSet()) {
-            if (functionalityPrinters.getFunctionality().equals(name)) {
-                return functionalityPrinters.getPrinterNames();
-            }
-        }
-        return new String[0];
     }
 
     public List<UnitFile> getAccessibileFiles(Person person) {

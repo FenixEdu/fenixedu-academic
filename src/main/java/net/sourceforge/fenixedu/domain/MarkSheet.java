@@ -20,21 +20,14 @@ package net.sourceforge.fenixedu.domain;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrintServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -48,18 +41,15 @@ import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class MarkSheet extends MarkSheet_Base {
-
     static final private Comparator<MarkSheet> COMPARATOR_BY_EVALUATION_DATE = new Comparator<MarkSheet>() {
         @Override
         public int compare(MarkSheet o1, MarkSheet o2) {
@@ -611,63 +601,6 @@ public class MarkSheet extends MarkSheet_Base {
             }
         }
         return null;
-    }
-
-    @Atomic
-    static public void printMarksheet(MarkSheet markSheet, String printerName) throws FenixServiceException {
-        if (markSheet == null) {
-            throw new InvalidArgumentsServiceException("mark sheet cannot be null");
-        }
-        if (!markSheet.isRectification()) {
-            printMarkSheet(markSheet, printerName);
-        } else {
-            printRectificationMarkSheet(markSheet, printerName);
-        }
-        if (!markSheet.getPrinted()) {
-            markSheet.setPrinted(Boolean.TRUE);
-        }
-    }
-
-    @Atomic
-    static public void printMarksheets(final Collection<MarkSheet> markSheets, final Person person, final String printerName)
-            throws FenixServiceException {
-        for (final MarkSheet markSheet : markSheets) {
-            if (markSheet.canManage(person)) {
-                try {
-                    printMarksheet(markSheet, printerName);
-                } catch (InvalidArgumentsServiceException e) {
-
-                }
-            }
-        }
-    }
-
-    static private void printRectificationMarkSheet(MarkSheet markSheet, String printerName) throws UnableToPrintServiceException {
-        final EnrolmentEvaluation rectification = markSheet.getEnrolmentEvaluationsSet().iterator().next();
-
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("markSheet", markSheet);
-        parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
-        parameters.put("rectification", rectification);
-        parameters.put("rectified", rectification.getRectified());
-
-        boolean result = ReportsUtils.printReport("markSheetRectification", parameters, Collections.emptyList(), printerName);
-        if (!result) {
-            throw new UnableToPrintServiceException("error.print.failed");
-        }
-    }
-
-    static private void printMarkSheet(MarkSheet markSheet, String printerName) throws UnableToPrintServiceException {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("markSheet", markSheet);
-        parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
-        List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluationsSet());
-        Collections.sort(evaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
-
-        boolean result = ReportsUtils.printReport("markSheet", parameters, evaluations, printerName);
-        if (!result) {
-            throw new UnableToPrintServiceException("error.print.failed");
-        }
     }
 
     /*

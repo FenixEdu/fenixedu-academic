@@ -59,9 +59,4 @@ public class ReportsUtils {
             throw new RuntimeException("Exception while generating reports '" + Arrays.toString(reports) + "'", e);
         }
     }
-
-    public static boolean printReport(String string, Map<String, Object> parameters, Collection<?> emptyList, String printerName) {
-        throw new UnsupportedOperationException();
-    }
-
 }

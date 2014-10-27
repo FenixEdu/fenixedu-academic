@@ -4009,11 +4009,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
     class util.email.SystemSender extends util.email.Sender {}
 
-    class util.FunctionalityPrinters  {
-        String functionality;
-        String keyPrinters;
-    }
-
     class vigilancy.ExamCoordinator  {
         Boolean allowedToCreateGroups;
     }
@@ -4061,7 +4056,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         Boolean convokable;
         String justification;
     }
-
 
 class personnelSection.contracts.ContractSituation  {
     String giafId (REQUIRED);
@@ -11052,13 +11046,6 @@ relation RootDomainObjectForumSubscription {
     }
 }
 
-relation RootDomainObjectFunctionalityPrinters {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    util.FunctionalityPrinters playsRole functionalityPrinters {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectGeneralClassProperty {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     classProperties.GeneralClassProperty playsRole generalClassPropertys {
@@ -12553,15 +12540,6 @@ relation UnitFunction {
         multiplicity *;
     }
     organizationalStructure.Unit playsRole unit;
-}
-
-relation UnitFunctionalityPrinters {
-    util.FunctionalityPrinters playsRole functionalityPrinters {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole units {
-        multiplicity *;
-    }
 }
 
 relation UnitNameUnitNamePart {

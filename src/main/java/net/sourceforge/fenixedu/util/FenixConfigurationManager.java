@@ -155,9 +155,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "mail.smtp.name", description = "The name of the SMTP server used to send Emails")
         public String getMailSmtpName();
 
-        @ConfigurationProperty(key = "markSheet.printers.*")
-        public Map<String, String> getMarkSheetPrinters();
-
         @ConfigurationProperty(key = "merge.units.emails",
                 description = "comma separated emails of persons who want to receive emails about merge of units.")
         public String getMergeUnitsEmails();
@@ -257,10 +254,6 @@ public class FenixConfigurationManager {
 
     private static HostAccessControl hostAccessControl = new HostAccessControl(getConfiguration().getHostControlName());
 
-    private static final class PrinterManagerHolder {
-        private static PrinterManager printerManager = new PrinterManager(getConfiguration().getMarkSheetPrinters());
-    }
-
     public static ConfigurationProperties getConfiguration() {
         return ConfigurationInvocationHandler.getConfiguration(ConfigurationProperties.class);
     }
@@ -268,9 +261,4 @@ public class FenixConfigurationManager {
     public static HostAccessControl getHostAccessControl() {
         return hostAccessControl;
     }
-
-    public static PrinterManager getPrinterManager() {
-        return PrinterManagerHolder.printerManager;
-    }
-
 }
