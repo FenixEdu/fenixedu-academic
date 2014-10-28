@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.YearMonthDay;
@@ -279,12 +278,7 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public Boolean hasAnyRole() {
-        return !this.getPerson().getPersonRolesSet().isEmpty();
-    }
-
-    @Override
-    public Boolean isEmployee() {
-        return this.getPerson().hasRole(RoleType.EMPLOYEE);
+        return this.getPerson().getUser() != null;
     }
 
     @Override

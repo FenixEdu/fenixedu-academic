@@ -285,28 +285,6 @@
 	</slot>
 </schema>
 
-<schema name="PhdProgramCandidacyProcessBean.PersonBean.view" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
-	<slot name="name" />
-	<slot name="gender" />
-	<slot name="maritalStatus" />
-	<slot name="idDocumentType"  />
-	<slot name="documentIdNumber" />
-	<slot name="documentIdEmissionDate" />
-	<slot name="documentIdEmissionLocation" />
-	<slot name="socialSecurityNumber" />
-	<slot name="dateOfBirth" />
-	<slot name="nationality.name" />
-	<slot name="fatherName" />
-	<slot name="motherName" />
-	<slot name="address" />
-	<slot name="area" />
-	<slot name="areaCode" />
-	<slot name="areaOfAreaCode" />
-	<slot name="phone" />
-	<slot name="mobile" />
-	<slot name="email" />
-</schema>
-
 <schema name="PhdProgramDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="type">
 		<property name="includedValues" value="CANDIDACY_FORM,REGISTRATION_FORM,STUDY_PLAN,CV,DEGREE_FINALIZATION_CERTIFICATE,HABILITATION_CERTIFICATE_DOCUMENT,DISSERTATION_OR_FINAL_WORK_DOCUMENT,ID_DOCUMENT,SOCIAL_SECURITY,RECOMMENDATION_LETTER,HEALTH_BULLETIN,GUIDER_ACCEPTANCE_LETTER,ASSISTENT_GUIDER_ACCEPTANCE_LETTER,MOTIVATION_LETTER,RESEARCH_PLAN,OTHER" />

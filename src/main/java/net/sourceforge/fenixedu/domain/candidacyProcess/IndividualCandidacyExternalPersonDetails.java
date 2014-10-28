@@ -113,11 +113,6 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
     }
 
     @Override
-    public Boolean isEmployee() {
-        return false;
-    }
-
-    @Override
     public void editPublic(PersonBean personBean) {
         this.edit(personBean);
     }

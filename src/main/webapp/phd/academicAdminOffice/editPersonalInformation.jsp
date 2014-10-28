@@ -63,17 +63,7 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 <p class="mtop15 mbottom05"><strong><bean:message  key="label.phd.personalInformation" bundle="PHD_RESOURCES"/></strong></p>
-<logic:equal name="isEmployee" value="true">
-	<fr:view
-		name="editPersonalInformationBean"
-		schema="PhdProgramCandidacyProcessBean.PersonBean.view">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight mtop15" />
-		</fr:layout>
-	</fr:view>
-</logic:equal>
-<logic:notEqual name="isEmployee" value="true">
-	<fr:form action="/phdIndividualProgramProcess.do">
+<fr:form action="/phdIndividualProgramProcess.do">
 
 	<input type="hidden" name="method" value="" />
 	<input type="hidden" name="processId" value="<%=processId.toString()%>" />
@@ -94,8 +84,6 @@
 	
 </fr:form>
 	
-</logic:notEqual>
-
 
 
 <%--  ### End of Operation Area  ### --%>

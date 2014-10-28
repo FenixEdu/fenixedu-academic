@@ -53,32 +53,18 @@
 	
 	<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 	<p class="mtop15 mbottom05"><strong><bean:message  key="label.phd.personalInformation" bundle="PHD_RESOURCES"/></strong></p>
-	<logic:equal name="isEmployee" value="true">
-		<fr:view
-			name="createCandidacyBean" property="personBean"
-			schema="PhdProgramCandidacyProcessBean.PersonBean.view">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight mtop15" />
-			</fr:layout>
-		</fr:view>
-		<fr:edit id="createCandidacyBean.editPersonalInformation.simplified"
-			name="createCandidacyBean"
-			property="personBean" visible="false" />
-	</logic:equal>
-	<logic:notEqual name="isEmployee" value="true">
-		<fr:edit id="createCandidacyBean.editPersonalInformation.simplified"
-			name="createCandidacyBean"
-			property="personBean"
-			schema="PhdProgramCandidacyProcessBean.editPersonalInformation.simplified">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-				<fr:property name="columnClasses" value=",,tdclear tderror1" />
-				<fr:property name="requiredMarkShown" value="true" />
-			</fr:layout>
-			<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=createCandidacyInvalid" />
-			
-		</fr:edit>
-	</logic:notEqual>
+	<fr:edit id="createCandidacyBean.editPersonalInformation.simplified"
+		name="createCandidacyBean"
+		property="personBean"
+		schema="PhdProgramCandidacyProcessBean.editPersonalInformation.simplified">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			<fr:property name="requiredMarkShown" value="true" />
+		</fr:layout>
+		<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=createCandidacyInvalid" />
+		
+	</fr:edit>
 	
 	<p class="mtop15 mbottom05"><strong><bean:message  key="label.phd.candidacy.academicAdminOffice.createCandidacy.phdProgramInformation" bundle="PHD_RESOURCES"/></strong></p>
 	<fr:edit id="createCandidacyBean.editProgramInformation"

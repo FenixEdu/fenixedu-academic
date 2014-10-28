@@ -288,15 +288,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             if (!bean.getPersonBean().hasPerson()) {
                 result = new Person(bean.getPersonBean());
             } else {
-                if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)
-                        || !bean.getPersonBean().getPerson().getPersonRolesSet().isEmpty()
-                        || bean.getPersonBean().getPerson().getUser() != null
-                        || bean.getPersonBean().getPerson().getStudent() != null || bean.hasInstitutionId()) {
+                if (bean.getPersonBean().getPerson().getUser() != null) {
                     result = bean.getPersonBean().getPerson();
                 } else {
-                    /*
-                     * if person never had any identity in the system then let edit information
-                     */
                     result = bean.getPersonBean().getPerson().edit(bean.getPersonBean());
                 }
             }
@@ -1052,15 +1046,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                 if (!bean.getPersonBean().hasPerson()) {
                     result = new Person(bean.getPersonBean());
                 } else {
-                    if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)
-                            || !bean.getPersonBean().getPerson().getPersonRolesSet().isEmpty()
-                            || bean.getPersonBean().getPerson().getUser() != null
-                            || bean.getPersonBean().getPerson().getStudent() != null || bean.hasInstitutionId()) {
+                    if (bean.getPersonBean().getPerson().getUser() != null) {
                         result = bean.getPersonBean().getPerson();
                     } else {
-                        /*
-                         * if person never had any identity in the system then let edit information
-                         */
                         result = bean.getPersonBean().getPerson().editByPublicCandidate(bean.getPersonBean());
                     }
                 }

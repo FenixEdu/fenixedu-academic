@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -211,14 +210,4 @@ public class RegistrationOperation extends CandidacyOperation {
     public boolean isInput() {
         return false;
     }
-
-    @Override
-    public boolean isAuthorized(Person person) {
-        if (getCandidacy().getPerson().hasRole(RoleType.PERSON)) {
-            return person.hasRole(RoleType.EMPLOYEE);
-        } else {
-            return super.isAuthorized(person);
-        }
-    }
-
 }

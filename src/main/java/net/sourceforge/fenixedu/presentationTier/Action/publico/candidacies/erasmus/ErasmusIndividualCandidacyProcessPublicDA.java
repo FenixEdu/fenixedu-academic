@@ -922,11 +922,6 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
         } else if (persons.size() == 1) {
             Person person = persons.iterator().next();
-            if (person.getEmployee() != null) {
-                addActionMessage("individualCandidacyMessages", request,
-                        "mobility.error.person.with.same.identifier.exists.employee");
-                return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
-            }
 
             if (person.getStudent() != null && person.getStudent().hasActiveRegistrations()) {
                 addActionMessage("individualCandidacyMessages", request,

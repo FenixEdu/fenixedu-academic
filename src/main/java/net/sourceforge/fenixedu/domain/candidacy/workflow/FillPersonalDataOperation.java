@@ -72,8 +72,10 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
         addForm(new FillPersonalDataWelcomeForm());
 
-        setPersonalInformationForm(PersonalInformationForm.createFromPerson(getPerson()));
-        addForm(getPersonalInformationForm());
+        if (getPerson().getUser() != null) {
+            setPersonalInformationForm(PersonalInformationForm.createFromPerson(getPerson()));
+            addForm(getPersonalInformationForm());
+        }
 
         setFiliationForm(FiliationForm.createFromPerson(getPerson()));
         addForm(getFiliationForm());

@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
@@ -86,10 +85,7 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
     }
 
     protected void canEditPersonalInformation(final HttpServletRequest request, final Person person) {
-        if (person.hasRole(RoleType.EMPLOYEE)) {
-            request.setAttribute("canEditPersonalInformation", false);
-            addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
-        } else if (!person.getPersonRolesSet().isEmpty() || person.getUser() != null || person.getStudent() != null) {
+        if (person.getUser() != null || person.getStudent() != null) {
             request.setAttribute("canEditPersonalInformation", false);
             addWarningMessage(request, "message.existing.person.data.must.be.updated.in.academic.office");
         } else {

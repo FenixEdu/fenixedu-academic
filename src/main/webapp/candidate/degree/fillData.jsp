@@ -75,7 +75,6 @@
 	<bean:define id="isInputForm" name="currentForm" property="input" />
 	<bean:define id="schemaName" name="currentForm" property="schemaName" type="java.lang.String" />
 	<bean:define id="candidacyID" name="candidacy" property="externalId" />
-	<bean:define id="schemaSuffix" name="schemaSuffix" />
 	
 	<input alt="input.candidacyID" type="hidden" name="candidacyID" value="<%=candidacyID%>" />
 	
@@ -84,7 +83,7 @@
 	<logic:equal name="isInputForm" value="true">
 		<fr:edit id="<%=editViewStateId%>"
 			name="currentForm"
-			schema="<%=schemaName + schemaSuffix%>">
+			schema="<%=schemaName%>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thright thlight thwidth inobullet" />
 				<fr:property name="columnClasses" value="width250px,,tdclear tderror1" />

@@ -279,7 +279,6 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         /* TODO: UGLY HACK DUE TO PENDING VALIDATION DATA FOR PERSON */
         initPersonBeanUglyHack(personBean, person);
 
-        setIsEmployeeAttributeAndMessage(request, personBean.getPerson());
         request.setAttribute("editPersonalInformationBean", personBean);
         return mapping.findForward("editPersonalInformation");
     }
@@ -301,8 +300,6 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         if (!validateAreaCodeAndAreaOfAreaCode(request, getEditPersonalInformationBean().getPerson(),
                 getEditPersonalInformationBean().getCountryOfResidence(), getEditPersonalInformationBean().getAreaCode(),
                 getEditPersonalInformationBean().getAreaOfAreaCode())) {
-
-            setIsEmployeeAttributeAndMessage(request, getEditPersonalInformationBean().getPerson());
 
             request.setAttribute("editPersonalInformationBean", getEditPersonalInformationBean());
 
@@ -1397,7 +1394,6 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
             public boolean eval(PhdMigrationIndividualProcessData process) {
                 return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
                         AcademicOperationType.MANAGE_PHD_PROCESSES).contains(process.getProcessBean().getPhdProgram());
-
             }
         });
 

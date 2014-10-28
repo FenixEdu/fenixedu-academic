@@ -422,10 +422,6 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
         return null;
     }
 
-    public Boolean getIsCandidateEmployee() {
-        return this.getCandidacy().getPersonalDetails().isEmployee();
-    }
-
     public Boolean getIsCandidateWithRoles() {
         return this.getCandidacy().getPersonalDetails().hasAnyRole();
     }

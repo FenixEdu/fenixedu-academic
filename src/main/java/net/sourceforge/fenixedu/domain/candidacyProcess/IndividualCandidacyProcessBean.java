@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.LocalDate;
 
@@ -145,15 +144,12 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     public Person getOrCreatePersonFromBean() {
         if (!getPersonBean().hasPerson()) {
             // validate email only
-            Person person = new Person(getPersonBean(), true, false);
-            return person;
+            return new Person(getPersonBean(), true, false);
         }
 
-        if (getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)) {
+        if (getPersonBean().getPerson().getUser() != null) {
             return getPersonBean().getPerson();
-        } else if (!getPersonBean().getPerson().getPersonRolesSet().isEmpty() && this.isPublicCandidacy()) {
-            return getPersonBean().getPerson();
-        } else if (getPersonBean().getPerson().getPersonRolesSet().isEmpty() && this.isPublicCandidacy()) {
+        } else if (isPublicCandidacy()) {
             return getPersonBean().getPerson().editByPublicCandidate(personBean);
         } else {
             return getPersonBean().getPerson().edit(getPersonBean());

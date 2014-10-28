@@ -78,11 +78,6 @@
 
 <p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>« <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>
 
-<logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateEmployee" value="true">
-	<p><bean:message key="message.application.employee.edition.forbidden" bundle="CANDIDATE_RESOURCES"/></p>
-</logic:equal>
-
-<logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateEmployee" value="false">
 <logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateWithRoles" value="true">
 	<p><bean:message key="message.application.person.with.roles.forbidden" bundle="CANDIDATE_RESOURCES"/></p>
 </logic:equal>
@@ -221,5 +216,4 @@
 		<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>
 	</p>
 </fr:form>
-</logic:equal>
 </logic:equal>

@@ -119,7 +119,6 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
                         getOperationType(request), getLoggedPerson(request));
         request.setAttribute("operation", operation);
         request.setAttribute("candidacy", getCandidacy(request));
-        request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
         if (operation != null && operation.isInput()) {
             LogFirstTimeCandidacyTimestamp.logTimestamp(getCandidacy(request), FirstTimeCandidacyStage.STARTED_FILLING_FORMS);
@@ -131,10 +130,6 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     }
 
-    private String getSchemaSuffixForPerson(HttpServletRequest request) {
-        return (getUserView(request).getPerson().hasRole(RoleType.EMPLOYEE)) ? ".forEmployee" : "";
-    }
-
     public ActionForward processForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         request.setAttribute("candidacy", getCandidacy(request));
@@ -142,7 +137,6 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         final CandidacyOperation operation =
                 (CandidacyOperation) RenderUtils.getViewState("operation-view-state").getMetaObject().getObject();
         request.setAttribute("operation", operation);
-        request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
         if (!validateCurrentForm(request)) {
             return mapping.findForward("fillData");
@@ -154,7 +148,6 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         } else {
             final StudentCandidacy candidacy = getCandidacy(request);
             if (candidacy.isConcluded()) {
-                request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
                 request.setAttribute("candidacyID", candidacy.getExternalId());
 
                 addActionMessage(request, "warning.candidacy.process.is.already.concluded");
@@ -276,7 +269,6 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
         }
 
-        request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
         request.setAttribute("candidacyID", candidacyOperation.getCandidacy().getExternalId());
 
         return showCandidacyDetails(mapping, form, request, response);
@@ -353,7 +345,6 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         request.setAttribute("operation", RenderUtils.getViewState("operation-view-state").getMetaObject().getObject());
         Form form = (Form) RenderUtils.getViewState("fillData" + getCurrentFormPosition(request)).getMetaObject().getObject();
         request.setAttribute("currentForm", form);
-        request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
         if (isPostback(request)) {
             if (getFromRequest(request, "country") != null) {

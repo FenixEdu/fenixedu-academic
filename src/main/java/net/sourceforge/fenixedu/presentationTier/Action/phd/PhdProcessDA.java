@@ -131,15 +131,6 @@ abstract public class PhdProcessDA extends PhdDA {
         return true;
     }
 
-    protected void setIsEmployeeAttributeAndMessage(HttpServletRequest request, Person person) {
-        if (person != null && person.hasRole(RoleType.EMPLOYEE)) {
-            request.setAttribute("isEmployee", true);
-            addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
-        } else {
-            request.setAttribute("isEmployee", false);
-        }
-    }
-
     protected String getMessageFromResource(final String key, String... args) {
         return BundleUtil.getString(Bundle.PHD, key, args);
     }

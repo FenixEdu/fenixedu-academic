@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.domain.candidacy.MDCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -369,9 +368,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
         Person selectedPerson = bean.getPerson();
         if (selectedPerson != null) {
-            if (!selectedPerson.hasRole(RoleType.EMPLOYEE)) {
-                selectedPerson.edit(this.getPersonalDetails());
-            }
+            selectedPerson.edit(this.getPersonalDetails());
             this.setPersonalDetails(new IndividualCandidacyInternalPersonDetails(this, selectedPerson));
         } else {
             selectedPerson = new Person(this.getPersonalDetails());
@@ -412,14 +409,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
             }
 
         }));
-    }
-
-    public Boolean isCandidacyBelongsToStudent() {
-        return this.isCandidacyInternal() && this.getPersonalDetails().getPerson().hasRole(RoleType.STUDENT);
-    }
-
-    public Boolean isCandidacyBelongsToEmployee() {
-        return this.isCandidacyInternal() && this.getPersonalDetails().getPerson().hasRole(RoleType.EMPLOYEE);
     }
 
     public void editFormationEntries(List<FormationBean> formationConcludedBeanList,

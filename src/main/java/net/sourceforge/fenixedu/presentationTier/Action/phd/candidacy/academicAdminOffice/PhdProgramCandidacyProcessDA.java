@@ -144,7 +144,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
         } else {
             bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
-            setIsEmployeeAttributeAndMessage(request, bean.getChoosePersonBean().getPerson());
             return mapping.findForward("createCandidacy");
         }
 
@@ -162,7 +161,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
             HttpServletResponse response) {
 
         request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
-        setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
 
         return mapping.findForward("createCandidacy");
     }
@@ -170,7 +168,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     public ActionForward createCandidacyPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
-        setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
 
         RenderUtils.invalidateViewState();
 
@@ -186,7 +183,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
                     getCreateCandidacyProcessBean().getPersonBean().getCountryOfResidence(), getCreateCandidacyProcessBean()
                             .getPersonBean().getAreaCode(), getCreateCandidacyProcessBean().getPersonBean().getAreaOfAreaCode())) {
 
-                setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
                 request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
                 return mapping.findForward("createCandidacy");
 
@@ -196,7 +192,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
         } catch (DomainException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());
-            setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
             request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
             return mapping.findForward("createCandidacy");
         }

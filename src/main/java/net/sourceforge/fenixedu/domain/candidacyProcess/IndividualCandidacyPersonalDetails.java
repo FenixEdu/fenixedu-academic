@@ -240,8 +240,6 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
     @Deprecated
     public abstract PhysicalAddress getDefaultPhysicalAddress();
 
-    public abstract Boolean isEmployee();
-
     public abstract Boolean hasAnyRole();
 
     public abstract String getEidentifier();
