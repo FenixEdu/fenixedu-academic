@@ -104,7 +104,6 @@ enum net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType                   
 enum net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState                                                     as InquiriesRegistryState;
 enum net.sourceforge.fenixedu.domain.inquiries.InquiryNotAnsweredJustification                                            as InquiryNotAnsweredJustification;
 enum net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType		                                          as InquiryResponsePeriodType;
-enum net.sourceforge.fenixedu.domain.internship.LanguageKnowledgeLevel                                                    as LanguageKnowledgeLevel;
 enum net.sourceforge.fenixedu.domain.masterDegree.GuideRequester                                                          as GuideRequester;
 enum net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification                                              as MasterDegreeClassification;
 enum net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType                                    as AcademicalInstitutionType;
@@ -4754,49 +4753,6 @@ class residence.ResidencePriceTable  {
 
 class residence.ResidenceMonth  {
     Month month;
-}
-
-class internship.InternshipCandidacySession  {
-    Interval candidacyInterval;
-}
-
-class internship.InternshipCandidacy  {
-    Integer candidacyCode (REQUIRED);
-    DateTime candidacyDate (REQUIRED);
-
-    String studentNumber;
-    Integer studentYear;
-    String degree;
-    String branch;
-    String name;
-    Gender gender;
-
-    String street;
-    String area;
-    String areaCode;
-
-    String email;
-    String telephone;
-    String mobilePhone;
-
-    LocalDate birthday;
-    String parishOfBirth;
-    String documentIdNumber;
-    String emissionLocationOfDocumentId;
-    LocalDate emissionDateOfDocumentId;
-    LocalDate expirationDateOfDocumentId;
-
-    String passportIdNumber;
-    String emissionLocationOfPassport;
-    LocalDate emissionDateOfPassport;
-    LocalDate expirationDateOfPassport;
-
-    LanguageKnowledgeLevel english;
-    LanguageKnowledgeLevel french;
-    LanguageKnowledgeLevel spanish;
-    LanguageKnowledgeLevel german;
-
-    Boolean previousCandidacy;
 }
 
 class QueueJob  {
@@ -13860,85 +13816,6 @@ relation UnitUnitBasedSender {
     organizationalStructure.Unit playsRole unit;
     util.email.UnitBasedSender playsRole unitBasedSender {
         multiplicity *;
-    }
-}
-
-
-relation RootDomainObjectInternshipCandidacySession {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    internship.InternshipCandidacySession playsRole internshipCandidacySession {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectInternshipCandidacy {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    internship.InternshipCandidacy playsRole internshipCandidacy {
-        multiplicity *;
-    }
-}
-
-relation InternshipCandidacySessionUniversities {
-    internship.InternshipCandidacySession playsRole internshipCandidacySession {
-        multiplicity *;
-    }
-    organizationalStructure.AcademicalInstitutionUnit playsRole university {
-        multiplicity *;
-    }
-}
-
-relation InternshipCandidacySessionDestinations {
-    internship.InternshipCandidacySession playsRole internshipCandidacySession {
-        multiplicity *;
-    }
-    Country playsRole destination {
-        multiplicity *;
-    }
-}
-
-relation InternshipCandidacyInternshipSession {
-    internship.InternshipCandidacy playsRole internshipCandidacy {
-        multiplicity *;
-    }
-    internship.InternshipCandidacySession playsRole internshipCandidacySession {
-        multiplicity 1..1;
-    }
-}
-
-relation InternshipCandidateCountryOfBirth {
-    internship.InternshipCandidacy playsRole internshipCandidacy {
-        multiplicity *;
-    }
-    Country playsRole countryOfBirth;
-}
-
-relation InternshipCandidateFirstDestination {
-    internship.InternshipCandidacy playsRole firstInternshipDestination {
-        multiplicity *;
-    }
-    Country playsRole firstDestination;
-}
-
-relation InternshipCandidateSecondDestination {
-    internship.InternshipCandidacy playsRole secondInternshipDestination {
-        multiplicity *;
-    }
-    Country playsRole secondDestination;
-}
-
-relation InternshipCandidateThirdDestination {
-    internship.InternshipCandidacy playsRole thirdInternshipDestination {
-        multiplicity *;
-    }
-    Country playsRole thirdDestination;
-}
-
-relation InternshipCandidateAcademicInstitution {
-    internship.InternshipCandidacy playsRole internshipCandidacy {
-        multiplicity *;
-    }
-    organizationalStructure.AcademicalInstitutionUnit playsRole university {
-        multiplicity 1..1;
     }
 }
 

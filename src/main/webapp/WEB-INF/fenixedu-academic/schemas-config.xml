@@ -58,7 +58,6 @@
 	<!ENTITY caseHandlingSchemas SYSTEM "/fenixedu-academic/schemas/caseHandling-schemas.xml">
 	<!ENTITY residenceManagement SYSTEM "/fenixedu-academic/schemas/residenceManagement-schemas.xml">
     <!ENTITY alumni SYSTEM "/fenixedu-academic/schemas/alumni-schemas.xml">
-    <!ENTITY internationalRelationsOffice SYSTEM "/fenixedu-academic/schemas/internationalRelationsOffice-schemas.xml">
     <!ENTITY gep SYSTEM "/fenixedu-academic/schemas/gep-schemas.xml">
     <!ENTITY grp SYSTEM "/fenixedu-academic/schemas/grp-schemas.xml">
     <!ENTITY phdProgram SYSTEM "/fenixedu-academic/schemas/phd-program-schemas.xml">
@@ -703,7 +702,6 @@
     &caseHandlingSchemas;
     &residenceManagement;
     &alumni;
-    &internationalRelationsOffice;
     &gep;
     &grp;
     &phdProgram;

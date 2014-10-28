@@ -32,11 +32,6 @@ public class InternationalRelationsApplication extends ForwardAction {
     static final String HINT = "International Relations";
     static final String ACCESS_GROUP = "role(INTERNATIONAL_RELATION_OFFICE)";
 
-    @StrutsApplication(bundle = BUNDLE, path = "internships", titleKey = "label.internationalrelations.internship", hint = HINT,
-            accessGroup = ACCESS_GROUP)
-    public static class InternRelationsInternshipApp {
-    }
-
     @StrutsApplication(bundle = "AcademicAdminOffice", path = "consult", titleKey = "link.consult", hint = HINT,
             accessGroup = ACCESS_GROUP)
     public static class InternRelationsConsultApp {
