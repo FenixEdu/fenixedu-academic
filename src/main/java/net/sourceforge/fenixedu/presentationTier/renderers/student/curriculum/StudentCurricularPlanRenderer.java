@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -36,6 +37,7 @@ import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -1297,7 +1299,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
     private boolean isViewerAdministrativeOfficeEmployeeOrManager(final StudentCurricularPlan studentCurricularPlan) {
         final Person person = AccessControl.getPerson();
         return person.hasRole(RoleType.MANAGER)
-                || AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM)
+                || AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, person.getUser()).collect(Collectors.toSet())
                         .contains(studentCurricularPlan.getDegree());
     }
 

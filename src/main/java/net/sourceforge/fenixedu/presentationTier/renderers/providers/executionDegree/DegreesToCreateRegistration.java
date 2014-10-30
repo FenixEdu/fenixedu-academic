@@ -19,18 +19,20 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class DegreesToCreateRegistration extends DegreesByEmployeeUnit {
 
     @Override
     protected Collection<Degree> getDegrees() {
-        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.CREATE_REGISTRATION);
+        return AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.CREATE_REGISTRATION,
+                Authenticate.getUser()).collect(Collectors.toSet());
     }
 
 }

@@ -22,12 +22,15 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -45,8 +48,8 @@ public class DegreeTypesDegreeForOldMarkSheets implements DataProvider {
         if (markSheetManagementBean.getExecutionPeriod() != null) {
             final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
             Set<Degree> availableDegrees =
-                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.MANAGE_MARKSHEETS);
+                    AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS,
+                            Authenticate.getUser()).collect(Collectors.toSet());
             Set<Degree> degrees = new HashSet<Degree>();
             for (Degree degree : availableDegrees) {
                 if (!degree.isBolonhaDegree()) {

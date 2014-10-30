@@ -18,12 +18,15 @@
  */
 package net.sourceforge.fenixedu.predicates;
 
+import java.util.stream.Collectors;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class MarkSheetPredicates {
 
@@ -63,19 +66,21 @@ public class MarkSheetPredicates {
 
         @Override
         public boolean evaluate(final MarkSheet markSheet) {
-            return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                    AcademicOperationType.REMOVE_GRADES).contains(markSheet.getCurricularCourse().getDegree());
+            return AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.REMOVE_GRADES, Authenticate.getUser())
+                    .collect(Collectors.toSet()).contains(markSheet.getCurricularCourse().getDegree());
         }
     };
 
     static public boolean checkRectification(Degree degree) {
-        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.RECTIFICATION_MARKSHEETS).contains(degree);
+        return AcademicAccessRule
+                .getDegreesAccessibleToFunction(AcademicOperationType.RECTIFICATION_MARKSHEETS, Authenticate.getUser())
+                .collect(Collectors.toSet()).contains(degree);
     }
 
     static public boolean checkDissertation(Degree degree) {
-        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.DISSERTATION_MARKSHEETS).contains(degree);
+        return AcademicAccessRule
+                .getDegreesAccessibleToFunction(AcademicOperationType.DISSERTATION_MARKSHEETS, Authenticate.getUser())
+                .collect(Collectors.toSet()).contains(degree);
     }
 
     private static boolean hasScientificCouncilRole() {

@@ -22,19 +22,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
@@ -270,18 +265,7 @@ public class OutboundMobilityContextBean implements Serializable {
     }
 
     private void addOperationPermissions(Person person) {
-        for (PersistentAccessGroup accessGroup : person.getPersistentAccessGroupSet()) {
-            if (accessGroup instanceof PersistentAcademicAuthorizationGroup && accessGroup.getDeletedRootDomainObject() == null) {
-                if (((PersistentAcademicAuthorizationGroup) accessGroup).getOperation().equals(
-                        AcademicOperationType.VALIDATE_MOBILITY_OUTBOUND_CANDIDACIES)) {
-                    return;
-                }
-            }
-        }
-        PersistentAcademicAuthorizationGroup authorizationGroup =
-                new PersistentAcademicAuthorizationGroup(AcademicOperationType.VALIDATE_MOBILITY_OUTBOUND_CANDIDACIES,
-                        new HashSet<AcademicProgram>(), new HashSet<AdministrativeOffice>());
-        person.addPersistentAccessGroup(authorizationGroup);
+        AcademicOperationType.VALIDATE_MOBILITY_OUTBOUND_CANDIDACIES.grant(person.getUser());
     }
 
     public InputStream getStream() {

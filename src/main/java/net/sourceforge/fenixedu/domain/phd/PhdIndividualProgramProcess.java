@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
@@ -41,6 +42,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
@@ -219,8 +221,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public boolean isAllowedToManageProcess(User userView) {
         if (userView != null) {
             Set<AcademicProgram> programs =
-                    AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                            AcademicOperationType.MANAGE_PHD_PROCESSES);
+                    AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESSES, userView.getPerson().getUser()).collect(Collectors.toSet());
 
             return programs.contains(this.getPhdProgram());
         } else {
@@ -242,8 +243,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         }
 
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.MANAGE_PHD_PROCESS_STATE);
+                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESS_STATE, userView.getPerson().getUser()).collect(Collectors.toSet());
 
         return programs.contains(this.getPhdProgram());
     }
@@ -773,8 +773,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean isRegistrationAvailable() {
         return getRegistration() != null
-                && AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.MANAGE_REGISTRATIONS).contains(getRegistration().getDegree());
+                && AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser()).collect(Collectors.toSet()).contains(getRegistration().getDegree());
     }
 
     @Override

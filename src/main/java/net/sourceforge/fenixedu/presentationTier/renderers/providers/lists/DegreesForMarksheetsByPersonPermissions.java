@@ -21,10 +21,12 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.lists;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -41,7 +43,7 @@ public class DegreesForMarksheetsByPersonPermissions implements DataProvider {
 
         Person person = AccessControl.getPerson();
         Set<Degree> degreesForOperation =
-                AcademicAuthorizationGroup.getDegreesForOperation(person, AcademicOperationType.MANAGE_MARKSHEETS);
+                AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, person.getUser()).collect(Collectors.toSet());
         if (!degreesForOperation.isEmpty()) {
             return degreesForOperation;
         }

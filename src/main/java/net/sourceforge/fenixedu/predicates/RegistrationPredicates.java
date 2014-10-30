@@ -18,12 +18,14 @@
  */
 package net.sourceforge.fenixedu.predicates;
 
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class RegistrationPredicates {
 
@@ -43,8 +45,8 @@ public class RegistrationPredicates {
                         return true;
                     }
 
-                    return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.MANAGE_CONCLUSION).contains(registration.getDegree());
+                    return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_CONCLUSION,
+                            registration.getDegree(), Authenticate.getUser());
                 }
             };
 

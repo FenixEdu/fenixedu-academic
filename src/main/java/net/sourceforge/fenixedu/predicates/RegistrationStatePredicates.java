@@ -22,7 +22,7 @@
 package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -40,8 +40,9 @@ public class RegistrationStatePredicates {
                 @Override
                 public boolean evaluate(RegistrationState c) {
                     final Person person = AccessControl.getPerson();
-                    return AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_REGISTRATIONS)
-                            .contains(c.getRegistration().getDegree()) || person.hasRole(RoleType.MANAGER);
+                    return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, c
+                            .getRegistration().getDegree(), person.getUser())
+                            || person.hasRole(RoleType.MANAGER);
                 }
             };
 

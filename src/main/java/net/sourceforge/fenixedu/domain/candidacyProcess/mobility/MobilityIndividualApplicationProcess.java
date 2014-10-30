@@ -21,15 +21,13 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -194,15 +192,12 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     static private boolean isAllowedToManageProcess(MobilityIndividualApplicationProcess process, User userView) {
-        Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
-
         if (process == null || process.getCandidacy() == null) {
             return false;
         }
 
-        return programs.contains(process.getCandidacy().getSelectedDegree());
+        return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES, process
+                .getCandidacy().getSelectedDegree(), userView.getPerson().getUser());
     }
 
     static private boolean isGriOfficeEmployee(User userView) {

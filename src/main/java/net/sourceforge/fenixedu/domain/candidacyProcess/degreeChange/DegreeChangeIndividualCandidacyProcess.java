@@ -21,13 +21,11 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
@@ -154,15 +152,13 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
     // static information
 
     static private boolean isAllowedToManageProcess(DegreeChangeIndividualCandidacyProcess process, User userView) {
-        Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
         if (process == null || process.getCandidacy() == null) {
             return false;
         }
 
-        return programs.contains(process.getCandidacy().getSelectedDegree());
+        return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES, process
+                .getCandidacy().getSelectedDegree(), userView.getPerson().getUser());
     }
 
     @StartActivity

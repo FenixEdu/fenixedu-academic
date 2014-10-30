@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -46,7 +47,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServi
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -55,6 +55,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -97,10 +98,10 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private DegreeByExecutionYearBean getOrCreateDegreeSearchBean() {
         DegreeByExecutionYearBean bean = getRenderedObject("degreeByExecutionYearBean");
-        return (bean != null) ? bean : new DegreeByExecutionYearBean(AcademicAuthorizationGroup.getDegreeTypesForOperation(
-                AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS),
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.SERVICE_REQUESTS));
+        return (bean != null) ? bean : new DegreeByExecutionYearBean(AcademicAccessRule.getDegreeTypesAccessibleToFunction(
+                AcademicOperationType.SERVICE_REQUESTS, Authenticate.getUser()).collect(Collectors.toSet()), AcademicAccessRule
+                .getDegreesAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS, Authenticate.getUser()).collect(
+                        Collectors.toSet()));
     }
 
     private DocumentRequestSearchBean getOrCreateRequestSearchBean() {
@@ -141,11 +142,12 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
             final DocumentRequestSearchBean requestSearchBean, Set<RegistrationAcademicServiceRequest> resultList,
             final ArrayList<AcademicServiceRequest> requestList) {
         Set<AcademicProgram> accessiblePrograms =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.SERVICE_REQUESTS);
+                AcademicAccessRule
+                        .getProgramsAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS, Authenticate.getUser()).collect(
+                                Collectors.toSet());
         Set<DegreeType> accessibleDegreeTypes =
-                AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.SERVICE_REQUESTS);
+                AcademicAccessRule.getDegreeTypesAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS,
+                        Authenticate.getUser()).collect(Collectors.toSet());
 
         final Degree chosenDegree = degreeSearchBean.getDegree();
         final DegreeType chosenDegreeType = degreeSearchBean.getDegreeType();

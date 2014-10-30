@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.util.Money;
@@ -43,6 +42,7 @@ import net.sourceforge.fenixedu.util.Money;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -133,8 +133,7 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
         AmountBean bean = getRenderedObject("bean");
         List<EntryDTO> list = new ArrayList<EntryDTO>();
         list.add(new EntryDTO(EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, event, bean.getValue()));
-        event.process(AccessControl.getPerson().getUser(), list, new AccountingTransactionDetailDTO(bean.getPaymentDate(),
-                PaymentMode.CASH));
+        event.process(Authenticate.getUser(), list, new AccountingTransactionDetailDTO(bean.getPaymentDate(), PaymentMode.CASH));
 
         PhdGratuityEvent gratuityEvent = (PhdGratuityEvent) exemption.getEvent();
         PhdIndividualProgramProcess process = gratuityEvent.getPhdIndividualProgramProcess();

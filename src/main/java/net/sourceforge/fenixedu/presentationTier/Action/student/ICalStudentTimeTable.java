@@ -90,7 +90,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
     public ActionForward generateKey(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         try {
-            UserPrivateKey.generateNewKeyForUser(AccessControl.getPerson().getUser());
+            UserPrivateKey.generateNewKeyForUser(Authenticate.getUser());
         } catch (Exception E) {
             throw new DomainException("error.impossible.to.generate.sha256.key");
         }
@@ -108,7 +108,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
                 && privateKey.getPrivateKeyValidity().isAfter(new DateTime())) {
             if (privateKey.getPrivateKeyValidity() != null) {
                 request.setAttribute("expirationDate", privateKey.getPrivateKeyValidity().toString("dd/MM/yyyy HH:mm"));
-                request.setAttribute("user", AccessControl.getPerson().getUser().getUsername());
+                request.setAttribute("user", Authenticate.getUser().getUsername());
                 request.setAttribute("classURL", getUrl("syncClasses", registration, request));
                 request.setAttribute("examsURL", getUrl("syncExams", registration, request));
             }
@@ -145,9 +145,9 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
                     scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort)
                             + request.getContextPath();
             url +=
-                    "/external/iCalendarSync.do?method=" + to + "&user=" + AccessControl.getPerson().getUser().getUsername() + ""
+                    "/external/iCalendarSync.do?method=" + to + "&user=" + Authenticate.getUser().getUsername() + ""
                             + "&registrationID=" + registration.getExternalId() + "&payload="
-                            + calculatePayload(to, registration, AccessControl.getPerson().getUser());
+                            + calculatePayload(to, registration, Authenticate.getUser());
             return url;
         } catch (Exception e) {
             return null;

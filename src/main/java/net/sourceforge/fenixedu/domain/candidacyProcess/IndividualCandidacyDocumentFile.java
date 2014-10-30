@@ -18,10 +18,13 @@
  */
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.util.stream.Collectors;
+
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -59,8 +62,7 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         Person person = user.getPerson();
 
         // Academic Administration Permissions
-        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(person,
-                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+        for (AcademicProgram program : AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_CANDIDACY_PROCESSES, person.getUser()).collect(Collectors.toSet())) {
             for (IndividualCandidacy individualCandidacy : getIndividualCandidacySet()) {
                 if (individualCandidacy.getAllDegrees().contains(program)) {
                     return true;

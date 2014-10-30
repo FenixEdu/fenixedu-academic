@@ -27,7 +27,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -57,8 +57,8 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
         }
 
-        if (!AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
-                AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree())) {
+        if (!AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.ENROLMENT_WITHOUT_RULES,
+                getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())) {
             checkRegistrationRegime();
         }
 

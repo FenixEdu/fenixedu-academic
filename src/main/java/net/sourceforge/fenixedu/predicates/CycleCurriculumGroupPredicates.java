@@ -19,7 +19,7 @@
 package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -39,8 +39,8 @@ public class CycleCurriculumGroupPredicates {
                         return true;
                     }
 
-                    return AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_CONCLUSION)
-                            .contains(cycleCurriculumGroup.getRegistration().getDegree());
+                    return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_CONCLUSION,
+                            cycleCurriculumGroup.getRegistration().getDegree(), person.getUser());
                 }
             };
 

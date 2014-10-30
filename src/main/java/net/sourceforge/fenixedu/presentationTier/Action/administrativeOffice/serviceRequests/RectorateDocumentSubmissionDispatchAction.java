@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -75,8 +77,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Set<AdministrativeOffice> offices =
-                AcademicAuthorizationGroup.getOfficesForOperation(getLoggedPerson(request),
-                        AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING);
+                AcademicAccessRule.getOfficesAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING, getLoggedPerson(request).getUser()).collect(Collectors.toSet());
 
         request.setAttribute("unsent",
                 RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(offices, RectorateSubmissionState.UNSENT));

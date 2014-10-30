@@ -24,19 +24,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.ist.fenixframework.Atomic;
 
 public class AuthorizationGroupBean implements Serializable, Comparable<AuthorizationGroupBean> {
 
     private static final long serialVersionUID = -8809011815711452960L;
 
-    private PersistentAcademicAuthorizationGroup group;
+    private AcademicAccessRule rule;
 
     private AcademicOperationType operation;
 
@@ -60,24 +65,24 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
         this.offices = new HashSet<AdministrativeOffice>();
     }
 
-    public AuthorizationGroupBean(PersistentAcademicAuthorizationGroup group) {
+    public AuthorizationGroupBean(AcademicAccessRule rule) {
         super();
-        setGroup(group);
+        setRule(rule);
     }
 
     public String getId() {
-        return group == null ? "-1" : group.getExternalId();
+        return rule == null ? "-1" : rule.getExternalId();
     }
 
-    public PersistentAcademicAuthorizationGroup getGroup() {
-        return group;
+    public AcademicAccessRule getRule() {
+        return rule;
     }
 
-    private void setGroup(PersistentAcademicAuthorizationGroup group) {
-        this.group = group;
-        this.operation = group.getOperation();
-        this.programs = new HashSet<AcademicProgram>(group.getProgramSet());
-        this.offices = new HashSet<AdministrativeOffice>(group.getOfficeSet());
+    private void setRule(AcademicAccessRule rule) {
+        this.rule = rule;
+        this.operation = rule.getOperation();
+        this.programs = new HashSet<AcademicProgram>(rule.getProgramSet());
+        this.offices = new HashSet<AdministrativeOffice>(rule.getOfficeSet());
     }
 
     public AcademicOperationType getOperation() {
@@ -89,7 +94,7 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
     }
 
     public boolean getNewObject() {
-        return group == null;
+        return rule == null;
     }
 
     public Set<AcademicProgram> getPrograms() {
@@ -110,49 +115,40 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
 
     @Atomic
     public void edit() {
-        if (group.getDeletedRootDomainObject() == null) {
-            setGroup(group.changeOperation(operation));
-        }
+        rule.changeOperation(operation);
     }
 
     @Atomic
     public void create(Party party, Set<AcademicProgram> newPrograms, Set<AdministrativeOffice> newOffices) {
-        for (PersistentAccessGroup accessGroup : party.getPersistentAccessGroupSet()) {
-            if (accessGroup instanceof PersistentAcademicAuthorizationGroup && accessGroup.getDeletedRootDomainObject() == null) {
-                if (((PersistentAcademicAuthorizationGroup) accessGroup).getOperation().equals(operation)) {
-                    throw new DomainException("error.person.already.has.permission.of.type", operation.getLocalizedName());
-                }
-            }
+        setRule(operation.grant(makeGroup(party), newPrograms, newOffices).orElse(null));
+    }
+
+    private Group makeGroup(Party party) {
+        if (party instanceof Person) {
+            return UserGroup.of(((Person) party).getUser());
         }
-        setGroup(new PersistentAcademicAuthorizationGroup(operation, newPrograms, newOffices));
-        party.addPersistentAccessGroup(group);
+        return UnitGroup.recursiveWorkers((Unit) party);
     }
 
     @Atomic
     public void editAuthorizationPrograms(Set<AcademicProgram> newPrograms, Set<AdministrativeOffice> newOffices) {
-        if (group.getDeletedRootDomainObject() == null) {
-            setGroup(group.changeProgramsAndOffices(newPrograms, newOffices));
-        }
+        setRule(rule.changeProgramsAndOffices(newPrograms, newOffices));
     }
 
     @Atomic
     public void delete(Party party) {
-        if (group.getMemberSet().size() > 1) {
-            group.revoke(party);
-        } else {
-            group.delete();
-        }
+        setRule((AcademicAccessRule) rule.changeWhoCanAccess(rule.getWhoCanAccess().minus(makeGroup(party))).orElse(null));
     }
 
     @Override
     public int compareTo(AuthorizationGroupBean bean) {
-        if (this.group == bean.group) {
+        if (this.rule == bean.rule) {
             return 0;
         }
-        if (this.group == null) {
+        if (this.rule == null) {
             return 1;
         }
-        if (bean.group == null) {
+        if (bean.rule == null) {
             return -1;
         }
         return this.operation.compareTo(bean.operation);

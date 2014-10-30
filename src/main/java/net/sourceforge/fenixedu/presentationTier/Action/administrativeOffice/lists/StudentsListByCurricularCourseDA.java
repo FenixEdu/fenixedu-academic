@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -45,13 +46,12 @@ import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminListingsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -63,6 +63,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -108,8 +109,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         SearchStudentsByCurricularCourseParametersBean bean = getRenderedObject("searchBean");
         if (bean == null) {
             bean =
-                    new SearchStudentsByCurricularCourseParametersBean(AcademicAuthorizationGroup.getDegreesForOperation(
-                            AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS));
+                    new SearchStudentsByCurricularCourseParametersBean(AcademicAccessRule.getDegreesAccessibleToFunction(
+                            AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser()).collect(Collectors.toSet()));
         }
         return bean;
     }
@@ -285,8 +286,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ExecutionYear executionYear = getDomainObject(request, "executionYearId");
         Set<Degree> degreesToInclude =
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.STUDENT_LISTINGS);
+                AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
+                        .collect(Collectors.toSet());
 
         final String filename = getResourceMessage("label.statistics") + "_" + executionYear.getName().replace('/', '-');
         final Spreadsheet spreadsheet = new Spreadsheet(filename);
@@ -353,7 +354,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     protected Set<DegreeType> getAdministratedDegreeTypes() {
-        return AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.STUDENT_LISTINGS);
+        return AcademicAccessRule.getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS,
+                Authenticate.getUser()).collect(Collectors.toSet());
     }
 }

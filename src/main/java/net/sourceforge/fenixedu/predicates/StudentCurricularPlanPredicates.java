@@ -18,13 +18,14 @@
  */
 package net.sourceforge.fenixedu.predicates;
 
+import java.util.stream.Collectors;
+
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
@@ -120,8 +121,9 @@ public class StudentCurricularPlanPredicates {
 
             };
 
-    static private boolean hasAuthorization(Party party, AcademicOperationType operation, AcademicProgram program) {
-        return AcademicAuthorizationGroup.getProgramsForOperation(party, operation).contains(program);
+    static private boolean hasAuthorization(Person person, AcademicOperationType operation, AcademicProgram program) {
+        return AcademicAccessRule.getProgramsAccessibleToFunction(operation, person.getUser()).collect(Collectors.toSet())
+                .contains(program);
     }
 
 }

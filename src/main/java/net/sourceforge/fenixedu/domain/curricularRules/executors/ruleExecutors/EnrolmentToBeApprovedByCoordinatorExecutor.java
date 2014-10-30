@@ -19,7 +19,7 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -46,8 +46,9 @@ public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleEx
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 
         final Person responsiblePerson = enrolmentContext.getResponsiblePerson();
-        if (AcademicAuthorizationGroup.getProgramsForOperation(responsiblePerson, AcademicOperationType.STUDENT_ENROLMENTS)
-                .contains(enrolmentContext.getStudentCurricularPlan().getDegree()) || responsiblePerson.hasRole(RoleType.MANAGER)) {
+        if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, enrolmentContext
+                .getStudentCurricularPlan().getDegree(), responsiblePerson.getUser())
+                || responsiblePerson.hasRole(RoleType.MANAGER)) {
             return RuleResult
                     .createWarning(
                             sourceDegreeModuleToEvaluate.getDegreeModule(),

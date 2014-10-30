@@ -20,19 +20,16 @@ package pt.utl.ist.codeGenerator.database;
 
 import static java.util.Collections.singletonList;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
-import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
@@ -352,10 +349,8 @@ public class FenixBootstrapper {
             partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
         }
         Authenticate.mock(adminUser);
-        new PersistentAcademicAuthorizationGroup(AcademicOperationType.MANAGE_AUTHORIZATIONS, new HashSet<AcademicProgram>(),
-                new HashSet<AdministrativeOffice>()).addMember(person);
-        new PersistentAcademicAuthorizationGroup(AcademicOperationType.MANAGE_ACADEMIC_CALENDARS, new HashSet<AcademicProgram>(),
-                new HashSet<AdministrativeOffice>()).addMember(person);
+        AcademicOperationType.MANAGE_AUTHORIZATIONS.grant(adminUser);
+        AcademicOperationType.MANAGE_ACADEMIC_CALENDARS.grant(adminUser);
     }
 
     private static void createPartyTypeEnums() {

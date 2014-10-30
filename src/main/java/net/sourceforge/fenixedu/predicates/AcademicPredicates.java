@@ -22,12 +22,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
@@ -68,8 +70,7 @@ public class AcademicPredicates {
         @Override
         public boolean evaluate(final Object degree) {
             Set<Degree> allowedDegrees = new HashSet<Degree>();
-            allowedDegrees.addAll(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                    AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS));
+            allowedDegrees.addAll(AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS, Authenticate.getUser()).collect(Collectors.toSet()));
             return allowedDegrees.contains(degree);
         };
     };
@@ -77,20 +78,16 @@ public class AcademicPredicates {
     public static final AccessControlPredicate<Object> MANAGE_EXECUTION_COURSES = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object program) {
-            Set<AcademicProgram> allowedPrograms = new HashSet<AcademicProgram>();
-            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                    AcademicOperationType.MANAGE_EXECUTION_COURSES));
-            return allowedPrograms.contains(program);
+            return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES,
+                    (AcademicProgram) program, Authenticate.getUser());
         };
     };
 
     public static final AccessControlPredicate<Object> MANAGE_EXECUTION_COURSES_ADV = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object program) {
-            Set<AcademicProgram> allowedPrograms = new HashSet<AcademicProgram>();
-            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                    AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV));
-            return allowedPrograms.contains(program);
+            return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV,
+                    (AcademicProgram) program, Authenticate.getUser());
         };
     };
 
@@ -161,8 +158,7 @@ public class AcademicPredicates {
             new AccessControlPredicate<AcademicServiceRequest>() {
                 @Override
                 public boolean evaluate(final AcademicServiceRequest request) {
-                    return AcademicAuthorizationGroup.isAuthorized(AccessControl.getPerson(), request,
-                            AcademicOperationType.REPEAT_CONCLUSION_PROCESS);
+                    return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS, request.getAcademicProgram(), Authenticate.getUser());
                 };
             };
 
@@ -192,9 +188,9 @@ public class AcademicPredicates {
     public static final AccessControlPredicate<Object> MANAGE_STUDENT_PAYMENTS_ADV = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object personToBeViewed) {
-            Set<AcademicProgram> allowedPrograms = new HashSet<AcademicProgram>();
-            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                    AcademicOperationType.MANAGE_STUDENT_PAYMENTS_ADV));
+            Set<AcademicProgram> allowedPrograms =
+                    AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_STUDENT_PAYMENTS_ADV,
+                            Authenticate.getUser()).collect(Collectors.toSet());
             Person person = (Person) personToBeViewed;
             // logic:
             //  if target person is student
@@ -241,8 +237,7 @@ public class AcademicPredicates {
     public static final AccessControlPredicate<Object> MANAGE_ENROLMENT_PERIODS = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object degree) {
-            return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                    AcademicOperationType.MANAGE_ENROLMENT_PERIODS).contains(degree);
+            return AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_ENROLMENT_PERIODS, Authenticate.getUser()).collect(Collectors.toSet()).contains(degree);
         };
     };
 

@@ -31,8 +31,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -64,15 +62,15 @@ public class AuthorizationsManagementBean implements Serializable {
     public void setParty(Party party) {
         this.party = party;
         this.groups = new ArrayList<AuthorizationGroupBean>();
-        if (party != null) {
-            for (PersistentAccessGroup group : party.getPersistentAccessGroupSet()) {
-                if (group instanceof PersistentAcademicAuthorizationGroup && group.getDeletedRootDomainObject() == null) {
-                    AuthorizationGroupBean bean = new AuthorizationGroupBean((PersistentAcademicAuthorizationGroup) group);
-                    groups.add(bean);
-                }
-            }
-            Collections.sort(this.groups, AuthorizationGroupBean.COMPARATOR_BY_LOCALIZED_NAME);
-        }
+//        if (party != null) {
+//            for (PersistentAccessGroup group : party.getPersistentAccessGroupSet()) {
+//                if (group instanceof PersistentAcademicAuthorizationGroup && group.getDeletedRootDomainObject() == null) {
+//                    AuthorizationGroupBean bean = new AuthorizationGroupBean((PersistentAcademicAuthorizationGroup) group);
+//                    groups.add(bean);
+//                }
+//            }
+//            Collections.sort(this.groups, AuthorizationGroupBean.COMPARATOR_BY_LOCALIZED_NAME);
+//        }
     }
 
     public boolean getHasNewObject() {
@@ -118,7 +116,7 @@ public class AuthorizationsManagementBean implements Serializable {
     public void removeAuthorization(String parameter) {
         AuthorizationGroupBean bean = getBeanByOid(parameter);
         if (bean != null) {
-            if (bean.getGroup() != null) {
+            if (bean.getRule() != null) {
                 bean.delete(party);
             }
             getGroups().remove(bean);

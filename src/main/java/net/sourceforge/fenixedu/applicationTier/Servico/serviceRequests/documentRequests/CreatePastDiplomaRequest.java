@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PastDiplomaRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -90,8 +91,7 @@ public class CreatePastDiplomaRequest {
                     new PastDegreeDiplomaRequestEvent(request.getAdministrativeOffice(), request.getPerson(), request,
                             bean.getPastPaymentAmount());
 
-            event.depositAmount(AccessControl.getPerson().getUser(), bean.getPastPaymentAmount(),
-                    createTransactionDetailDTO(bean));
+            event.depositAmount(Authenticate.getUser(), bean.getPastPaymentAmount(), createTransactionDetailDTO(bean));
         }
     }
 

@@ -20,14 +20,15 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.LocalDate;
 
 public class EventReportQueueJobBean implements Serializable {
@@ -135,8 +136,8 @@ public class EventReportQueueJobBean implements Serializable {
     }
 
     public Set<AdministrativeOffice> getAvailableOffices() {
-        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_EVENT_REPORTS);
+        return AcademicAccessRule.getOfficesAccessibleToFunction(AcademicOperationType.MANAGE_EVENT_REPORTS,
+                Authenticate.getUser()).collect(Collectors.toSet());
     }
 
     public Set<AdministrativeOffice> getAvailableOfficesForManager() {

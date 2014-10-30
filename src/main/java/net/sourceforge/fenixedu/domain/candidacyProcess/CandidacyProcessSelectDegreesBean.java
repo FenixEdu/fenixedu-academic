@@ -23,13 +23,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
@@ -62,8 +64,8 @@ public class CandidacyProcessSelectDegreesBean implements Serializable {
 
     protected Collection<Degree> filterDegrees(Collection<Degree> degrees) {
         final Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.MANAGE_CANDIDACY_PROCESSES);
+                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_CANDIDACY_PROCESSES,
+                        Authenticate.getUser()).collect(Collectors.toSet());
         return Collections2.filter(degrees, new Predicate<Degree>() {
             @Override
             public boolean apply(Degree degree) {

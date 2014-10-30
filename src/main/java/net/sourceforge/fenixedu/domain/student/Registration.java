@@ -34,6 +34,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -68,7 +69,7 @@ import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
@@ -1732,8 +1733,8 @@ public class Registration extends Registration_Base {
     private void checkIfReachedAttendsLimit() {
         final User userView = Authenticate.getUser();
         if (userView == null
-                || !AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree())) {
+                || !AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getDegree(),
+                        userView.getPerson().getUser())) {
             if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
                 throw new DomainException("error.student.reached.attends.limit",
                         String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
@@ -1970,10 +1971,12 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isAllowedToManageRegistration() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree())
-                || AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).contains(getDegree());
+        return AcademicAccessRule
+                .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
+                .collect(Collectors.toSet()).contains(getDegree())
+                || AcademicAccessRule
+                        .getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM,
+                                Authenticate.getUser()).collect(Collectors.toSet()).contains(getDegree());
     }
 
     public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {
@@ -2672,8 +2675,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean canRepeatConclusionProcess(Person person) {
-        return AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.REPEAT_CONCLUSION_PROCESS)
-                .contains(this.getDegree());
+        return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS, getDegree(),
+                person.getUser());
     }
 
     public void editConclusionInformation(final Integer finalAverage, final YearMonthDay conclusion, final String notes) {
@@ -2735,9 +2738,11 @@ public class Registration extends Registration_Base {
 
         if (!isConcluded() && isRegistrationConclusionProcessed()) {
             if (isDEA() && getPhdIndividualProgramProcess() != null) {
-                RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.SCHOOLPARTCONCLUDED);
+                RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(),
+                        RegistrationStateType.SCHOOLPARTCONCLUDED);
             } else {
-                RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
+                RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(),
+                        RegistrationStateType.CONCLUDED);
             }
 
         }
@@ -3438,7 +3443,8 @@ public class Registration extends Registration_Base {
 
         for (final Registration registration : getTargetTransitionRegistrations()) {
             if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-                RegistrationState.createRegistrationState(registration, person, when, registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
+                RegistrationState.createRegistrationState(registration, person, when,
+                        registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
             } else {
                 RegistrationState.createRegistrationState(registration, person, when, RegistrationStateType.REGISTERED);
             }

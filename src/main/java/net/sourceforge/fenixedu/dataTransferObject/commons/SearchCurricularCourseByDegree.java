@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
@@ -31,10 +32,12 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
@@ -120,8 +123,8 @@ public class SearchCurricularCourseByDegree implements Serializable {
         public Object provide(Object source, Object currentValue) {
 
             Set<AcademicProgram> programs =
-                    AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+                    AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES,
+                            Authenticate.getUser()).collect(Collectors.toSet());
 
             final SearchCurricularCourseByDegree bean = (SearchCurricularCourseByDegree) source;
             final List<DegreeByExecutionYearBean> result = new ArrayList<DegreeByExecutionYearBean>();

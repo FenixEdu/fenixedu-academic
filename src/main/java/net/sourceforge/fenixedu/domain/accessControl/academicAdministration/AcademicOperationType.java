@@ -18,15 +18,32 @@
  */
 package net.sourceforge.fenixedu.domain.accessControl.academicAdministration;
 
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import net.sourceforge.fenixedu.domain.AcademicProgram;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule.AcademicAccessTarget;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule.AcademicProgramAccessTarget;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule.AdministrativeOfficeAccessTarget;
+import net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
-public enum AcademicOperationType implements IPresentableEnum {
+import com.google.common.collect.Sets;
+
+public enum AcademicOperationType implements IPresentableEnum, AccessOperation<AcademicAccessRule, AcademicAccessTarget> {
     MANAGE_AUTHORIZATIONS(false, false, Scope.ADMINISTRATION),
 
     MANAGE_EQUIVALENCES(true, true, Scope.ADMINISTRATION),  // Migrated from Manager
@@ -143,6 +160,13 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     public static enum Scope {
         OFFICE, ADMINISTRATION;
+
+        public boolean contains(AcademicOperationType function) {
+            if (function instanceof AcademicOperationType) {
+                return function.scope == this;
+            }
+            return false;
+        }
     }
 
     private boolean allowOffices;
@@ -182,5 +206,47 @@ public enum AcademicOperationType implements IPresentableEnum {
     @Override
     public String getLocalizedName() {
         return BundleUtil.getString(Bundle.ENUMERATION, getClass().getName() + "." + name());
+    }
+
+    @Override
+    public String exportAsString() {
+        return getClass().getName() + ":" + name();
+    }
+
+    @Override
+    public Optional<AcademicAccessRule> grant(Group whoCanAccess, Set<AcademicAccessTarget> whatCanAffect) {
+        if (whoCanAccess.equals(NobodyGroup.get())) {
+            return Optional.empty();
+        }
+        Optional<AcademicAccessRule> match =
+                AcademicAccessRule
+                        .accessRules()
+                        .filter(r -> r.getOperation().equals(this) && r.getWhoCanAccess().equals(whoCanAccess)
+                                && Sets.symmetricDifference(r.getWhatCanAffect(), whatCanAffect).isEmpty()).findAny();
+        return Optional.of(match.orElseGet(() -> new AcademicAccessRule(this, whoCanAccess, whatCanAffect)));
+    }
+
+    public Optional<AcademicAccessRule> grant(Group whoCanAccess, Set<AcademicProgram> programs, Set<AdministrativeOffice> offices) {
+        Set<AcademicAccessTarget> targets =
+                Stream.concat(programs.stream().map(AcademicProgramAccessTarget::new),
+                        offices.stream().map(AdministrativeOfficeAccessTarget::new)).collect(Collectors.toSet());
+        return grant(whoCanAccess, targets);
+    }
+
+    @Override
+    public Optional<AcademicAccessRule> grant(User user) {
+        Optional<AcademicAccessRule> match =
+                AcademicAccessRule.accessRules().filter(r -> r.getOperation().equals(this) && r.getWhatCanAffect().isEmpty())
+                        .findAny();
+        return match.map(r -> r.<AcademicAccessRule> grant(user)).orElseGet(
+                () -> Optional.of(new AcademicAccessRule(this, UserGroup.of(user), Collections.emptySet())));
+    }
+
+    @Override
+    public Optional<AcademicAccessRule> revoke(User user) {
+        Optional<AcademicAccessRule> match =
+                AcademicAccessRule.accessRules().filter(r -> r.getOperation().equals(this) && r.getWhatCanAffect().isEmpty())
+                        .findAny();
+        return match.map(r -> r.<AcademicAccessRule> revoke(user)).orElse(Optional.empty());
     }
 }

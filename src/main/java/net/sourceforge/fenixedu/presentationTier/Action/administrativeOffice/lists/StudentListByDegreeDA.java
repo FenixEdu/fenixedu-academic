@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
@@ -59,7 +60,6 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminListingsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -70,6 +70,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -113,12 +114,12 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         SearchStudentsByDegreeParametersBean bean = getRenderedObject("searchParametersBean");
         if (bean == null) {
             Set<DegreeType> degreeTypesForOperation =
-                    AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.STUDENT_LISTINGS);
+                    AcademicAccessRule.getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS,
+                            Authenticate.getUser()).collect(Collectors.toSet());
             bean =
-                    new SearchStudentsByDegreeParametersBean(degreeTypesForOperation,
-                            AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                                    AcademicOperationType.STUDENT_LISTINGS));
+                    new SearchStudentsByDegreeParametersBean(degreeTypesForOperation, AcademicAccessRule
+                            .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
+                            .collect(Collectors.toSet()));
         }
         return bean;
     }
@@ -667,8 +668,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
     protected Set<CycleType> getAdministratedCycleTypes() {
         Set<CycleType> cycles = new HashSet<CycleType>();
-        for (DegreeType degreeType : AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.STUDENT_LISTINGS)) {
+        for (DegreeType degreeType : AcademicAccessRule.getDegreeTypesAccessibleToFunction(
+                AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser()).collect(Collectors.toSet())) {
             cycles.addAll(degreeType.getCycleTypes());
         }
         return cycles;

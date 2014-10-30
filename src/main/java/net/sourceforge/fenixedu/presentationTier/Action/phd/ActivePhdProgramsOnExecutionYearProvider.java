@@ -21,13 +21,15 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class ActivePhdProgramsOnExecutionYearProvider extends AbstractDomainObjectProvider {
 
@@ -41,8 +43,8 @@ public class ActivePhdProgramsOnExecutionYearProvider extends AbstractDomainObje
 
         List<PhdProgram> phdProgramsList = new ArrayList<PhdProgram>();
 
-        for (PhdProgram phdProgram : AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_PHD_PROCESSES)) {
+        for (PhdProgram phdProgram : AcademicAccessRule.getPhdProgramsAccessibleToFunction(
+                AcademicOperationType.MANAGE_PHD_PROCESSES, Authenticate.getUser()).collect(Collectors.toSet())) {
             if (phdProgram.isActive(bean.getExecutionYear())) {
                 phdProgramsList.add(phdProgram);
             }

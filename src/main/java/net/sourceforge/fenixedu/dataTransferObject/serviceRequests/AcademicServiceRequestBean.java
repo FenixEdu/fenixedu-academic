@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -210,7 +209,7 @@ public class AcademicServiceRequestBean implements Serializable {
     }
 
     public Collection<AcademicServiceRequest> searchAcademicServiceRequests() {
-        return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear,
+        return AcademicServiceRequest.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear,
                 academicServiceRequestSituationType, null);
     }
 }

@@ -18,9 +18,13 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import java.util.stream.Collectors;
+
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -29,8 +33,8 @@ public class PhdProgramsMultipleProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object current) {
-        return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_PHD_PROCESSES);
+        return AcademicAccessRule.getPhdProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESSES,
+                Authenticate.getUser()).collect(Collectors.toSet());
     }
 
     @Override

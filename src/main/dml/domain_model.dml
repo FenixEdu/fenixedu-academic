@@ -470,6 +470,13 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     internalizeWith importFromString();
 }
 
+valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as AccessOperation {
+    externalizeWith {
+        String exportAsString();
+    }
+    internalizeWith importFromString();
+}
+
 /*
 *
 * Class definitions
@@ -4813,12 +4820,15 @@ class student.YearDelegate extends student.Delegate {
     
 }
 
-class accessControl.PersistentAccessGroup  {
-	DateTime created (REQUIRED);
+public class accessControl.rules.AccessRuleSystem;
+
+public class accessControl.rules.AccessRule {
+    protected DateTime created (REQUIRED);
+    protected DateTime revoked;
+    protected AccessOperation operation (REQUIRED);
 }
 
-class accessControl.academicAdministration.PersistentAcademicAuthorizationGroup extends accessControl.PersistentAccessGroup {
-	AcademicOperationType operation;
+public class accessControl.academicAdministration.AcademicAccessRule extends accessControl.rules.AccessRule {
 }
 
 class PublicCandidacyHashCode  {
@@ -9850,67 +9860,67 @@ relation PeriodNextPeriod {
     OccupationPeriod playsRole nextPeriod;
 }
 
-relation PersistentAccessGroupRoot {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 0..1;
-	}
-	accessControl.PersistentAccessGroup playsRole persistentAccessGroup {
-		multiplicity *;
-	}
+relation AccessRuleSystemRoot {
+    protected .org.fenixedu.bennu.core.domain.Bennu playsRole root {
+        multiplicity 1..1;
+    }
+    public accessControl.rules.AccessRuleSystem playsRole accessRuleSystem {
+        multiplicity 0..1;
+    }
 }
 
-relation PersistentAccessGroupDeletedRoot {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole deletedRootDomainObject {
-		multiplicity 0..1;
-	}
-	accessControl.PersistentAccessGroup playsRole deletedPersistentAccessGroup {
-		multiplicity *;
-	}
+relation AccessRules {
+    protected accessControl.rules.AccessRuleSystem playsRole ruleSystem {
+        multiplicity 0..1;
+    }
+    protected accessControl.rules.AccessRule playsRole accessRule {
+        multiplicity *;
+    }
 }
 
-relation PersistentAccessGroupMembers {
-	organizationalStructure.Party playsRole member {
-		multiplicity *;
-	}
-	accessControl.PersistentAccessGroup playsRole persistentAccessGroup {
-		multiplicity *;
-	}
+relation DeletedAccessRules {
+    protected accessControl.rules.AccessRuleSystem playsRole deletedFromRuleSystem {
+        multiplicity 0..1;
+    }
+    protected accessControl.rules.AccessRule playsRole deletedAccessRule {
+        multiplicity *;
+    }
 }
 
-relation PersistentAccessGroupCreator {
-	accessControl.PersistentAccessGroup playsRole createdGroup {
-		multiplicity *;
-	}
-	Person playsRole creator {
-		multiplicity 1..1;
-	}
+relation AccessRuleCreator {
+    protected accessControl.rules.AccessRule playsRole accessRule {
+        multiplicity *;
+    }
+    protected .org.fenixedu.bennu.core.domain.User playsRole creator {
+        multiplicity 1..1;
+    }
 }
 
-relation PersistentAccessGroupHistoric {
-	accessControl.PersistentAccessGroup playsRole oldGroup {
-		multiplicity 0..1;
-	}
-	accessControl.PersistentAccessGroup playsRole newGroup {
-		multiplicity 0..1;
-	}
+relation AccessRuleGroup {
+    protected accessControl.rules.AccessRule playsRole accessRule {
+        multiplicity *;
+    }
+    protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole persistentGroup {
+        multiplicity 1..1;
+    }
 }
 
-relation AcademicAuthorizationPrograms {
-	accessControl.academicAdministration.PersistentAcademicAuthorizationGroup playsRole academicGroup {
-		multiplicity *;
-	}
-	AcademicProgram playsRole program {
-		multiplicity *;
-	}
+relation AcademicAccessRuleAcademicPrograms {
+    protected accessControl.academicAdministration.AcademicAccessRule playsRole accessRule {
+        multiplicity *;
+    }
+    protected AcademicProgram playsRole program {
+        multiplicity *;
+    }
 }
 
-relation AcademicAuthorizationOffices {
-	accessControl.academicAdministration.PersistentAcademicAuthorizationGroup playsRole academicGroup {
-		multiplicity *;
-	}
-	administrativeOffice.AdministrativeOffice playsRole office {
-		multiplicity *;
-	}
+relation AcademicAccessRuleOffices {
+    protected accessControl.academicAdministration.AcademicAccessRule playsRole accessRule {
+        multiplicity *;
+    }
+    protected administrativeOffice.AdministrativeOffice playsRole office {
+        multiplicity *;
+    }
 }
 
 relation PersistentGroupMembersPerson {
@@ -15284,7 +15294,6 @@ relation RootDomainObjectTeacherEvaluationCoordinatorCouncil {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootFromTeacherEvaluationCouncil;
   	.org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole teacherEvaluationCoordinatorCouncil;
 }
-
 
 relation FenixPredicateGroupBennu {
     public accessControl.FenixPredicateGroup playsRole fenixPredicateGroup {

@@ -20,10 +20,13 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
@@ -31,7 +34,7 @@ import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
@@ -51,7 +54,9 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -184,13 +189,15 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     abstract public boolean isPayedUponCreation();
 
     public boolean isPaymentsAccessible() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_STUDENT_PAYMENTS).contains(getAcademicProgram());
+        return AcademicAccessRule
+                .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_STUDENT_PAYMENTS, Authenticate.getUser())
+                .collect(Collectors.toSet()).contains(getAcademicProgram());
     }
 
     public boolean isRegistrationAccessible() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_REGISTRATIONS).contains(getAcademicProgram());
+        return AcademicAccessRule
+                .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
+                .collect(Collectors.toSet()).contains(getAcademicProgram());
     }
 
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
@@ -661,8 +668,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     final public boolean getLoggedPersonCanCancel() {
         return isCancelledSituationAccepted()
                 && (!isPayable() || getEvent() == null || !isPayed())
-                && (createdByStudent() && !isConcluded() || AcademicAuthorizationGroup.isAuthorized(AccessControl.getPerson(),
-                        this));
+                && (createdByStudent() && !isConcluded() || AcademicAccessRule.isProgramAccessibleToFunction(
+                        AcademicOperationType.SERVICE_REQUESTS, this.getAcademicProgram(), Authenticate.getUser()));
     }
 
     final public DateTime getCreationDate() {
@@ -786,6 +793,33 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     public boolean hasRegistryCode() {
         return getRegistryCode() != null;
+    }
+
+    public static Set<AcademicServiceRequest> getAcademicServiceRequests(Person person, Integer year,
+            AcademicServiceRequestSituationType situation, Interval interval) {
+        Set<AcademicServiceRequest> serviceRequests = new HashSet<AcademicServiceRequest>();
+        Set<AcademicProgram> programs =
+                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS, person.getUser())
+                        .collect(Collectors.toSet());
+        Collection<AcademicServiceRequest> possible = null;
+        if (year != null) {
+            possible = AcademicServiceRequestYear.getAcademicServiceRequests(year);
+        } else {
+            possible = Bennu.getInstance().getAcademicServiceRequestsSet();
+        }
+        for (AcademicServiceRequest request : possible) {
+            if (!programs.contains(request.getAcademicProgram())) {
+                continue;
+            }
+            if (situation != null && !request.getAcademicServiceRequestSituationType().equals(situation)) {
+                continue;
+            }
+            if (interval != null && !interval.contains(request.getActiveSituationDate())) {
+                continue;
+            }
+            serviceRequests.add(request);
+        }
+        return serviceRequests;
     }
 
 }

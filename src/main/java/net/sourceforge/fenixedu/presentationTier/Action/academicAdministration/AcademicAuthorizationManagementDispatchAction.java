@@ -18,22 +18,26 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
 
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAccessRule;
+import net.sourceforge.fenixedu.domain.accessControl.rules.AccessRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -52,20 +56,9 @@ public class AcademicAuthorizationManagementDispatchAction extends FenixDispatch
     @EntryPoint
     public ActionForward authorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        SortedMap<Party, TreeSet<PersistentAcademicAuthorizationGroup>> groups =
-                new TreeMap<Party, TreeSet<PersistentAcademicAuthorizationGroup>>(Party.COMPARATOR_BY_SUBPARTY_AND_NAME_AND_ID);
-        for (PersistentAccessGroup group : rootDomainObject.getPersistentAccessGroupSet()) {
-            if (group instanceof PersistentAcademicAuthorizationGroup) {
-                for (Party member : group.getMemberSet()) {
-                    if (!groups.containsKey(member)) {
-                        groups.put(member, new TreeSet<PersistentAcademicAuthorizationGroup>(
-                                PersistentAcademicAuthorizationGroup.COMPARATOR_BY_LOCALIZED_NAME));
-                    }
-                    groups.get(member).add((PersistentAcademicAuthorizationGroup) group);
-                }
-            }
-        }
-
+        Map<Group, Set<AccessRule>> groups =
+                AcademicAccessRule.accessRules().sorted(AcademicAccessRule.COMPARATOR_BY_OPERATION)
+                        .collect(Collectors.groupingBy(AccessRule::getWhoCanAccess, Collectors.toSet()));
         request.setAttribute("groups", groups.entrySet());
         request.setAttribute("authorizationsBean", new AuthorizationsManagementBean());
         return mapping.findForward("listAuthorizations");
@@ -157,21 +150,20 @@ public class AcademicAuthorizationManagementDispatchAction extends FenixDispatch
     public ActionForward removePartyFromGroup(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        PersistentAcademicAuthorizationGroup group = getDomainObject(request, "groupId");
+        AcademicAccessRule rule = getDomainObject(request, "groupId");
         Party party = getDomainObject(request, "partyId");
 
-        revokePartyFromGroup(group, party);
+        revokePartyFromGroup(rule, party);
 
         return authorizations(mapping, actionForm, request, response);
     }
 
     @Atomic
-    private void revokePartyFromGroup(PersistentAcademicAuthorizationGroup group, Party party) {
-        if (group.getMemberSet().size() > 1) {
-            group.revoke(party);
+    private void revokePartyFromGroup(AcademicAccessRule rule, Party party) {
+        if (party instanceof Person) {
+            rule.revoke(((Person) party).getUser());
         } else {
-            group.delete();
+            rule.changeWhoCanAccess(rule.getWhoCanAccess().or(UnitGroup.recursiveWorkers((Unit) party)));
         }
     }
-
 }
