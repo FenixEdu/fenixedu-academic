@@ -211,10 +211,6 @@ public class InfoPerson extends InfoObject {
         return InfoTeacher.newInfoFromDomain(getPerson().getTeacher());
     }
 
-    public List<String> getMainRoles() {
-        return getPerson().getMainRoles();
-    }
-
     @Override
     public String getExternalId() {
         return getPerson().getExternalId();

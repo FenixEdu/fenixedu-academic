@@ -46,7 +46,7 @@ public class ConcludedState extends ConcludedState_Base {
         }
 
         init(registration, person, dateTime);
-        registration.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
+        RoleType.grant(RoleType.ALUMNI, registration.getPerson().getUser());
         // if (registration.getStudent().getRegistrationsCount() == 1) {
         // registration.getPerson().removeRoleByType(RoleType.STUDENT);
         // }

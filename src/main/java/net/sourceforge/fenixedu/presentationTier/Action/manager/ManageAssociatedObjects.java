@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.EmptyDegree;
 import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -223,7 +222,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     @Atomic
     private void createDepartment(AssociatedObjectsBean bean) {
         Department department = new Department();
-        department.setCompetenceCourseMembersGroup(RoleGroup.get(RoleType.MANAGER));
+        department.setCompetenceCourseMembersGroup(RoleType.MANAGER.actualGroup());
         department.setActive(bean.isActive());
         department.setCode(bean.getCode());
         department.setName(bean.getName());

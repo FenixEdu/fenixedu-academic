@@ -22,21 +22,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceRoleManagementBean;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.DynamicGroup;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
-
-import pt.ist.fenixframework.Atomic;
 
 @StrutsFunctionality(app = ResidenceManagerApplication.class, path = "role-management", titleKey = "title.role.management")
 @Mapping(path = "/residenceRoleManagement", module = "residenceManagement")
@@ -45,40 +44,30 @@ public class ResidenceRoleManagementDA extends FenixDispatchAction {
 
     public ActionForward addResidenceRoleManagemenToPerson(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        addPersonToRole(getResidenceRoleManagementBean().getPerson(), getResidenceRoleManagement());
+        DynamicGroup group = getResidenceRoleManagement();
+        group.changeGroup(group.underlyingGroup().grant(getResidenceRoleManagementBean().getPerson().getUser()));
         return residencePersonsManagement(mapping, actionForm, request, response);
-
     }
 
     public ActionForward removeResidenceRoleManagemenToPerson(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Role role = getResidenceRoleManagement();
-        Person person = Person.readPersonByUsername(request.getParameter("personUsername"));
-        removePersonFromRole(person, role);
+        User user = User.findByUsername(request.getParameter("userToRemove"));
+        DynamicGroup group = getResidenceRoleManagement();
+        group.changeGroup(group.underlyingGroup().revoke(user));
         return residencePersonsManagement(mapping, actionForm, request, response);
-    }
-
-    @Atomic
-    public void addPersonToRole(Person person, Role role) {
-        person.addPersonRoles(role);
-    }
-
-    @Atomic
-    public void removePersonFromRole(Person person, Role role) {
-        person.removePersonRoles(role);
     }
 
     @EntryPoint
     public ActionForward residencePersonsManagement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        Role role = getResidenceRoleManagement();
-        request.setAttribute("persons", role.getAssociatedPersonsSet());
+        Group role = getResidenceRoleManagement();
+        request.setAttribute("role", role);
         request.setAttribute("residenceRoleManagement", getResidenceRoleManagementBean());
         return mapping.findForward("residenceRoleManagement");
     }
 
-    private Role getResidenceRoleManagement() {
-        return Role.getRoleByRoleType(RoleType.RESIDENCE_MANAGER);
+    private DynamicGroup getResidenceRoleManagement() {
+        return (DynamicGroup) RoleType.RESIDENCE_MANAGER.actualGroup();
     }
 
     private ResidenceRoleManagementBean getResidenceRoleManagementBean() {

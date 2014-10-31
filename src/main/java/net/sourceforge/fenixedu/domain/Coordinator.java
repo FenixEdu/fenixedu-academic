@@ -20,39 +20,14 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Coordinator extends Coordinator_Base {
-
-    static {
-        Person.getRelationCoordinatorTeacher().addListener(new RelationAdapter<Person, Coordinator>() {
-
-            @Override
-            public void afterAdd(Person o1, Coordinator o2) {
-                if (o1 != null && o2 != null) {
-                    if (!o1.hasRole(RoleType.COORDINATOR)) {
-                        o1.addPersonRoleByRoleType(RoleType.COORDINATOR);
-                    }
-                }
-            }
-
-            @Override
-            public void afterRemove(Person o1, Coordinator o2) {
-                if (o1 != null && o2 != null) {
-                    if (o1.getCoordinatorsSet().size() == 0 && o1.getScientificCommissionsSet().isEmpty()) {
-                        o1.removeRoleByType(RoleType.COORDINATOR);
-                    }
-                }
-            }
-        });
-    }
 
     private Coordinator() {
         super();
@@ -70,7 +45,6 @@ public class Coordinator extends Coordinator_Base {
         }
 
         setExecutionDegree(executionDegree);
-        person.addPersonRoleByRoleType(RoleType.COORDINATOR);
         setPerson(person);
         setResponsible(responsible);
         // CoordinatorLog.createCoordinatorLog(new DateTime(),

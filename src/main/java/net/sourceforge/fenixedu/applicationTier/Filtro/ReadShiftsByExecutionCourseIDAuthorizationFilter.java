@@ -55,9 +55,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
     public void execute(String executionCourseID) throws NotAuthorizedException {
         User id = Authenticate.getUser();
-        if ((((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
-                || (id != null && id.getPerson().getPersonRolesSet() != null && !hasPrivilege(id, executionCourseID))
-                || (id == null) || (id.getPerson().getPersonRolesSet() == null)))
+        if ((((id != null && !containsRoleType(id)) || (id != null && !hasPrivilege(id, executionCourseID)) || (id == null)))
                 && (!lecturesExecutionCourse(id, executionCourseID))) {
             throw new NotAuthorizedException();
         }

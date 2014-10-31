@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain.student.importation;
 
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -35,7 +34,7 @@ public class DgesStudentImportationFile extends DgesStudentImportationFile_Base 
 
     protected DgesStudentImportationFile(byte[] contents, String filename) {
         this();
-        init(filename, filename, contents, RoleGroup.get(RoleType.MANAGER));
+        init(filename, filename, contents, RoleType.MANAGER.actualGroup());
     }
 
     @Atomic

@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCommissionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisReadersGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -34,9 +33,8 @@ public class MakeThesisDocumentsAvailable {
     @Atomic
     public static void run(Thesis thesis) {
         final ThesisFile thesisFile = thesis.getDissertation();
-        RoleType roleType = RoleType.SCIENTIFIC_COUNCIL;
 
-        Group scientificCouncil = RoleGroup.get(roleType);
+        Group scientificCouncil = RoleType.SCIENTIFIC_COUNCIL.actualGroup();
         Group commissionMembers = ScientificCommissionGroup.get(thesis.getDegree());
         Group student = thesis.getStudent().getPerson().getPersonGroup();
         Group thesisGroup = ThesisReadersGroup.get(thesis);

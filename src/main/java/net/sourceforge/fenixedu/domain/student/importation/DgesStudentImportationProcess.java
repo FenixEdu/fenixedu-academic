@@ -236,7 +236,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
                 logCandidateIsEmployee(LOG_WRITER, degreeCandidateDTO, person);
             }
 
-            person.addPersonRoleByRoleType(RoleType.CANDIDATE);
+            RoleType.grant(RoleType.CANDIDATE, person.getUser());
 
             if (person.getStudent() == null) {
                 // Ensure that the same student number is created

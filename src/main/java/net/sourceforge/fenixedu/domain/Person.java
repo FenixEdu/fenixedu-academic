@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -48,7 +47,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
@@ -121,7 +119,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
-import net.sourceforge.fenixedu.domain.research.Researcher;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.teacher.Career;
@@ -132,9 +129,6 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
@@ -148,15 +142,12 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.bennu.core.domain.UserProfile;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.Group;
@@ -175,7 +166,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Strings;
@@ -183,7 +173,6 @@ import com.google.common.collect.FluentIterable;
 
 public class Person extends Person_Base {
 
-    private static HashSet<Role> OPT_OUT_ROLES;
     private static final Integer MAX_VALIDATION_REQUESTS = 5;
     public static com.google.common.base.Function<User, Person> userToPerson =
             new com.google.common.base.Function<User, Person>() {
@@ -200,23 +189,6 @@ public class Person extends Person_Base {
                     return person.getUser();
                 }
             };
-
-    static {
-        Role.getRelationPersonRole().addListener(new PersonRoleListener());
-        Role.getRelationPersonRole().addListener(new EmailOptOutRoleListener());
-    }
-
-    public static Set<Role> getOptOutRoles() {
-        if (OPT_OUT_ROLES == null) {
-            OPT_OUT_ROLES = new HashSet<Role>();
-            OPT_OUT_ROLES.add(Role.getRoleByRoleType(RoleType.TEACHER));
-            OPT_OUT_ROLES.add(Role.getRoleByRoleType(RoleType.STUDENT));
-            OPT_OUT_ROLES.add(Role.getRoleByRoleType(RoleType.RESEARCHER));
-            OPT_OUT_ROLES.add(Role.getRoleByRoleType(RoleType.EMPLOYEE));
-            OPT_OUT_ROLES.add(Role.getRoleByRoleType(RoleType.GRANT_OWNER));
-        }
-        return OPT_OUT_ROLES;
-    }
 
     /***************************************************************************
      * BUSINESS SERVICES *
@@ -627,38 +599,8 @@ public class Person extends Person_Base {
         return user == null ? null : user.getUsername();
     }
 
-    public Role getPersonRole(final RoleType roleType) {
-        for (final Role role : this.getPersonRolesSet()) {
-            if (role.getRoleType().equals(roleType)) {
-                return role;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void addPersonRoles(final Role personRoles) {
-        if (!hasPersonRoles(personRoles)) {
-            super.addPersonRoles(personRoles);
-        }
-    }
-
-    @Atomic
-    public void addPersonRoleByRoleTypeService(final RoleType roleType) {
-        this.addPersonRoleByRoleType(roleType);
-    }
-
-    public void addPersonRoleByRoleType(final RoleType roleType) {
-        this.addPersonRoles(Role.getRoleByRoleType(roleType));
-    }
-
     public Boolean hasRole(final RoleType roleType) {
-        for (final Role role : this.getPersonRolesSet()) {
-            if (role.getRoleType() == roleType) {
-                return true;
-            }
-        }
-        return false;
+        return roleType.isMember(getUser());
     }
 
     public Registration getStudentByType(final DegreeType degreeType) {
@@ -743,7 +685,7 @@ public class Person extends Person_Base {
 
     @Atomic
     public void addExamCoordinator(final ExecutionYear executionYear, final Unit unit) {
-        this.addPersonRoleByRoleType(RoleType.EXAM_COORDINATOR);
+        RoleType.grant(RoleType.EXAM_COORDINATOR, this.getUser());
         new ExamCoordinator(this, executionYear, unit);
     }
 
@@ -963,23 +905,6 @@ public class Person extends Person_Base {
         return "/candidateDocuments/person/P" + getExternalId();
     }
 
-    @Atomic
-    public void removeRoleByTypeService(final RoleType roleType) {
-        removeRoleByType(roleType);
-    }
-
-    public void removeRoleByType(final RoleType roleType) {
-        final Role role = getPersonRole(roleType);
-        if (role != null) {
-            removePersonRoles(role);
-        }
-    }
-
-    public void indicatePrivledges(final Set<Role> roles) {
-        getPersonRolesSet().retainAll(roles);
-        getPersonRolesSet().addAll(roles);
-    }
-
     public List<PersonFunction> getActivePersonFunctions() {
         return getPersonFunctions(null, false, true, false);
     }
@@ -1195,17 +1120,12 @@ public class Person extends Person_Base {
             getAssociatedPersonAccount().delete();
         }
 
-        getPersonRolesSet().clear();
-
         /*
          * One does not simply delete a User...
          */
 //        if (hasUser()) {
 //            getUser().delete();
 //        }
-
-        getPersonRoleOperationLogSet().clear();
-        getGivenRoleOperationLogSet().clear();
 
         if (getStudent() != null) {
             getStudent().delete();
@@ -1278,222 +1198,6 @@ public class Person extends Person_Base {
 
     public boolean hasExternalResearchContract() {
         return getExternalResearchContract() != null;
-    }
-
-    private static class PersonRoleListener extends RelationAdapter<Role, Person> {
-
-        private static final Set<RoleType> LOGIN_GRANTING_ROLE_TYPES = EnumSet.of(RoleType.MANAGER, RoleType.TEACHER,
-                RoleType.RESEARCHER, RoleType.EMPLOYEE, RoleType.STUDENT, RoleType.ALUMNI, RoleType.CANDIDATE,
-                RoleType.GRANT_OWNER);
-
-        @Override
-        public void beforeAdd(final Role newRole, final Person person) {
-            if (newRole != null && person != null && !person.hasPersonRoles(newRole)) {
-                addRoleOperationLog(person, newRole, RoleOperationType.ADD);
-                if (newRole.getRoleType() == RoleType.MANAGER) {
-                    sendManagerRoleMembershipChangeNotification(person, "label.manager.add.subject", "label.manager.add.body");
-                }
-            }
-        }
-
-        @Override
-        public void afterAdd(final Role role, final Person person) {
-            if (person != null && role != null) {
-                addDependencies(role, person);
-                if (person.getUser() == null) {
-                    person.createUser();
-                }
-                if (LOGIN_GRANTING_ROLE_TYPES.contains(role.getRoleType())) {
-                    UserLoginPeriod.createOpenPeriod(person.getUser());
-                }
-            }
-        }
-
-        @Override
-        public void beforeRemove(final Role role, final Person person) {
-            if (person != null && role != null && person.hasRole(role.getRoleType())) {
-                if (role.getRoleType() == RoleType.MANAGER) {
-                    sendManagerRoleMembershipChangeNotification(person, "label.manager.remove.subject",
-                            "label.manager.remove.body");
-                }
-                removeDependencies(person, role);
-                addRoleOperationLog(person, role, RoleOperationType.REMOVE);
-            }
-        }
-
-        @Override
-        public void afterRemove(final Role removedRole, final Person person) {
-            if (person != null && removedRole != null) {
-                for (Role role : person.getPersonRolesSet()) {
-                    // User still has one login granting role
-                    if (LOGIN_GRANTING_ROLE_TYPES.contains(role.getRoleType())) {
-                        return;
-                    }
-                }
-                UserLoginPeriod.closeOpenPeriod(person.getUser());
-            }
-        }
-
-        private void addRoleOperationLog(final Person person, final Role role, final RoleOperationType operationType) {
-            final Person whoGranted = AccessControl.getPerson();
-            new RoleOperationLog(role, person, whoGranted, operationType);
-        }
-
-        private void addDependencies(final Role role, final Person person) {
-            switch (role.getRoleType()) {
-
-            case PERSON:
-                addRoleIfNotPresent(person, RoleType.MESSAGING);
-                break;
-
-            case TEACHER:
-                addRoleIfNotPresent(person, RoleType.PERSON);
-                addRoleIfNotPresent(person, RoleType.EMPLOYEE);
-                addRoleIfNotPresent(person, RoleType.RESEARCHER);
-                addRoleIfNotPresent(person, RoleType.DEPARTMENT_MEMBER);
-                break;
-
-            case EMPLOYEE:
-                addRoleIfNotPresent(person, RoleType.PERSON);
-                if (person.getCoordinatorsSet().size() != 0) {
-                    addRoleIfNotPresent(person, RoleType.COORDINATOR);
-                }
-                break;
-
-            case DELEGATE:
-            case OPERATOR:
-            case GEP:
-            case MANAGER:
-            case WEBSITE_MANAGER:
-            case RESOURCE_ALLOCATION_MANAGER:
-            case RESOURCE_MANAGER:
-            case STUDENT:
-            case ALUMNI:
-            case GRANT_OWNER:
-            case SPACE_MANAGER_SUPER_USER:
-            case SPACE_MANAGER:
-                addRoleIfNotPresent(person, RoleType.PERSON);
-                break;
-
-            case DIRECTIVE_COUNCIL:
-            case COORDINATOR:
-            case DEGREE_ADMINISTRATIVE_OFFICE:
-            case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
-            case MASTER_DEGREE_ADMINISTRATIVE_OFFICE:
-            case DEPARTMENT_CREDITS_MANAGER:
-            case CREDITS_MANAGER:
-            case EXAM_COORDINATOR:
-            case DEPARTMENT_ADMINISTRATIVE_OFFICE:
-            case PERSONNEL_SECTION:
-                addRoleIfNotPresent(person, RoleType.EMPLOYEE);
-                break;
-
-            case RESEARCHER:
-                addRoleIfNotPresent(person, RoleType.PERSON);
-                if (person.getResearcher() == null) {
-                    new Researcher(person);
-                }
-                break;
-
-            default:
-                break;
-            }
-        }
-
-        private static void removeDependencies(final Person person, final Role removedRole) {
-            switch (removedRole.getRoleType()) {
-            case PERSON:
-                removeRoleIfPresent(person, RoleType.TEACHER);
-                removeRoleIfPresent(person, RoleType.EMPLOYEE);
-                removeRoleIfPresent(person, RoleType.STUDENT);
-                removeRoleIfPresent(person, RoleType.GEP);
-                removeRoleIfPresent(person, RoleType.GRANT_OWNER);
-                removeRoleIfPresent(person, RoleType.MANAGER);
-                removeRoleIfPresent(person, RoleType.OPERATOR);
-                removeRoleIfPresent(person, RoleType.RESOURCE_ALLOCATION_MANAGER);
-                removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
-                removeRoleIfPresent(person, RoleType.MESSAGING);
-                removeRoleIfPresent(person, RoleType.ALUMNI);
-                removeRoleIfPresent(person, RoleType.SPACE_MANAGER);
-                removeRoleIfPresent(person, RoleType.SPACE_MANAGER_SUPER_USER);
-                break;
-
-            case TEACHER:
-                removeRoleIfPresent(person, RoleType.EMPLOYEE);
-                removeRoleIfPresent(person, RoleType.RESEARCHER);
-                removeRoleIfPresent(person, RoleType.DEPARTMENT_MEMBER);
-                break;
-
-            case EMPLOYEE:
-                removeRoleIfPresent(person, RoleType.RESEARCHER);
-                removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
-                removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
-                removeRoleIfPresent(person, RoleType.COORDINATOR);
-                removeRoleIfPresent(person, RoleType.CREDITS_MANAGER);
-                removeRoleIfPresent(person, RoleType.TREASURY);
-                removeRoleIfPresent(person, RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-                removeRoleIfPresent(person, RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-                removeRoleIfPresent(person, RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-                removeRoleIfPresent(person, RoleType.DEPARTMENT_CREDITS_MANAGER);
-                removeRoleIfPresent(person, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
-                removeRoleIfPresent(person, RoleType.PERSONNEL_SECTION);
-                break;
-
-            case STUDENT:
-                removeRoleIfPresent(person, RoleType.DELEGATE);
-                break;
-
-            default:
-                break;
-            }
-        }
-
-        private static void removeRoleIfPresent(final Person person, final RoleType roleType) {
-            if (person.hasRole(roleType)) {
-                person.removeRoleByType(roleType);
-            }
-        }
-
-        private static void addRoleIfNotPresent(final Person person, final RoleType roleType) {
-            if (!person.hasRole(roleType)) {
-                person.addPersonRoleByRoleType(roleType);
-            }
-        }
-
-        private void sendManagerRoleMembershipChangeNotification(final Person person, final String subjectKey,
-                final String bodyKey) {
-            final Sender sender = Bennu.getInstance().getSystemSender();
-
-            if (sender != null) {
-                final Recipient recipient = new Recipient(RoleGroup.get(RoleType.MANAGER));
-                new Message(sender, recipient, BundleUtil.getString(Bundle.APPLICATION, subjectKey), BundleUtil.getString(
-                        Bundle.APPLICATION, bodyKey, person.getPresentationName()));
-            }
-        }
-
-    }
-
-    public static class EmailOptOutRoleListener extends RelationAdapter<Role, Person> {
-        @Override
-        public void beforeAdd(final Role newRole, final Person person) {
-        }
-
-        @Override
-        public void afterAdd(final Role insertedRole, final Person person) {
-            if (person != null && insertedRole != null) {
-                if (getOptOutRoles().contains(insertedRole)) {
-                    person.setDisableSendEmails(false);
-                }
-            }
-        }
-
-        @Override
-        public void beforeRemove(final Role roleToBeRemoved, final Person person) {
-        }
-
-        @Override
-        public void afterRemove(final Role removedRole, final Person person) {
-        }
     }
 
     @Override
@@ -1758,10 +1462,6 @@ public class Person extends Person_Base {
             }
         }
         return allPersons;
-    }
-
-    public static List<Person> readPersonsByRoleType(final RoleType roleType) {
-        return new ArrayList<Person>(Role.getRoleByRoleType(roleType).getAssociatedPersonsSet());
     }
 
     public static Collection<Person> readPersonsByNameAndRoleType(final String name, final RoleType roleType) {
@@ -2594,53 +2294,6 @@ public class Person extends Person_Base {
         return name[0] + " " + name[name.length - 1];
     }
 
-    private List<Role> getImportantRoles(final List<Role> mainRoles) {
-
-        if (getPersonRolesSet().size() != 0) {
-            boolean teacher = false, employee = false, researcher = false;
-
-            final List<Role> roles = new ArrayList<Role>(getPersonRolesSet());
-            Collections.sort(roles, Role.COMPARATOR_BY_ROLE_TYPE);
-
-            for (final Role personRole : roles) {
-
-                if (personRole.getRoleType() == RoleType.TEACHER) {
-                    mainRoles.add(personRole);
-                    teacher = true;
-
-                } else if (personRole.getRoleType() == RoleType.STUDENT) {
-                    mainRoles.add(personRole);
-
-                } else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
-                    mainRoles.add(personRole);
-                } else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
-                    employee = true;
-                } else if (personRole.getRoleType() == RoleType.RESEARCHER) {
-                    mainRoles.add(personRole);
-                    researcher = true;
-                } else if (personRole.getRoleType() == RoleType.ALUMNI) {
-                    mainRoles.add(personRole);
-                }
-            }
-            if (employee && !teacher && !researcher) {
-                mainRoles.add(0, Role.getRoleByRoleType(RoleType.EMPLOYEE));
-            }
-        }
-        return mainRoles;
-    }
-
-    public List<String> getMainRoles() {
-        final List<String> result = new ArrayList<String>();
-        for (Role role : getImportantRoles(new ArrayList<Role>())) {
-            result.add(BundleUtil.getString(Bundle.ENUMERATION, role.getRoleType().toString()));
-        }
-        return result;
-    }
-
-    public Set<Role> getMainPersonRoles() {
-        return new HashSet<Role>(getImportantRoles(new ArrayList<Role>()));
-    }
-
     public static Collection<Person> findPerson(final String name) {
         return findPerson(name, Integer.MAX_VALUE);
     }
@@ -2651,18 +2304,6 @@ public class Person extends Person_Base {
 
     public static Collection<Person> findInternalPerson(final String name, int maxHits) {
         return findInternalPersonStream(name, maxHits).collect(Collectors.toSet());
-    }
-
-    public static Collection<Person> findInternalPersonByNameAndRole(final String name, final RoleType roleType) {
-        final Role role = Role.getRoleByRoleType(roleType);
-        return CollectionUtils.select(findInternalPerson(name), new Predicate() {
-
-            @Override
-            public boolean evaluate(final Object arg0) {
-                return ((Person) arg0).hasPersonRoles(role);
-            }
-
-        });
     }
 
     public static Collection<Person> findInternalPersonMatchingFirstAndLastName(final String completeName) {
@@ -2997,7 +2638,7 @@ public class Person extends Person_Base {
     }
 
     public boolean isPedagogicalCouncilMember() {
-        return getPersonRole(RoleType.PEDAGOGICAL_COUNCIL) != null;
+        return hasRole(RoleType.PEDAGOGICAL_COUNCIL);
     }
 
     public Collection<Forum> getForuns(final ExecutionSemester executionSemester) {
@@ -3520,73 +3161,6 @@ public class Person extends Person_Base {
         return null;
     }
 
-    public String readAllTeacherInformation() {
-        return readAllInformation(RoleType.TEACHER);
-    }
-
-    public String readAllResearcherInformation() {
-        return readAllInformation(RoleType.RESEARCHER, RoleType.TEACHER);
-    }
-
-    public String readAllEmployeeInformation() {
-        return readAllInformation(RoleType.EMPLOYEE, RoleType.RESEARCHER, RoleType.TEACHER);
-    }
-
-    public String readAllGrantOwnerInformation() {
-        return readAllInformation(RoleType.GRANT_OWNER, RoleType.EMPLOYEE, RoleType.RESEARCHER, RoleType.TEACHER);
-    }
-
-    public String readAllEmployerRelations() {
-        final StringBuilder result = new StringBuilder();
-        appendEmployerInfoFor(result, RoleType.TEACHER);
-        appendEmployerInfoFor(result, RoleType.RESEARCHER);
-        appendEmployerInfoFor(result, RoleType.EMPLOYEE);
-        appendEmployerInfoFor(result, RoleType.GRANT_OWNER);
-        return result.toString();
-    }
-
-    private static void appendEmployerInfoFor(final StringBuilder result, final RoleType roleType) {
-        final Role role = Role.getRoleByRoleType(roleType);
-        for (final Person person : role.getAssociatedPersonsSet()) {
-            final String institution = person.getEmployer(roleType);
-            if (institution != null) {
-                if (result.length() > 0) {
-                    result.append('|');
-                }
-                result.append(person.getUsername());
-                result.append(':');
-                result.append(institution);
-            }
-        }
-    }
-
-    protected static String readAllInformation(final StringBuilder result, final RoleType roleType,
-            final RoleType... exclusionRoleTypes) {
-        final Role role = Role.getRoleByRoleType(roleType);
-        for (final Person person : role.getAssociatedPersonsSet()) {
-            if (!person.hasAnyRoleHack(exclusionRoleTypes)) {
-                final String costCenter = person.getWorkingPlaceCostCenter();
-                if (costCenter != null && !costCenter.isEmpty()) {
-                    final String institution = person.getEmployer(roleType);
-                    if (result.length() > 0) {
-                        result.append('|');
-                    }
-                    result.append(person.getUsername());
-                    result.append(':');
-                    result.append(roleType.name());
-                    result.append(':');
-                    result.append(costCenter);
-                    result.append(':');
-                    result.append(institution);
-                }
-            }
-            if (!person.hasAnyRole(exclusionRoleTypes) || roleType != RoleType.RESEARCHER || person.getResearcher() != null
-                    && person.getResearcher().isActiveContractedResearcher()) {
-            }
-        }
-        return result.toString();
-    }
-
     private boolean hasAnyRoleHack(final RoleType[] roleTypes) {
         for (final RoleType roleType : roleTypes) {
             if (hasRole(roleType)
@@ -3596,45 +3170,6 @@ public class Person extends Person_Base {
             }
         }
         return false;
-    }
-
-    protected static String readAllInformation(final RoleType roleType, final RoleType... exclusionRoleTypes) {
-        final StringBuilder result = new StringBuilder();
-        return readAllInformation(result, roleType, exclusionRoleTypes);
-    }
-
-    public static String readAllExternalResearcherInformation() {
-        final RoleType roleType = RoleType.RESEARCHER;
-        final RoleType[] exclusionRoleTypes = new RoleType[] { RoleType.TEACHER };
-
-        final Role role = Role.getRoleByRoleType(roleType);
-        final StringBuilder result = new StringBuilder();
-        for (final Person person : role.getAssociatedPersonsSet()) {
-            if (!person.hasAnyRole(exclusionRoleTypes)) {
-                final Collection<? extends Accountability> accountabilities =
-                        person.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
-                final YearMonthDay currentDate = new YearMonthDay();
-                for (final Accountability accountability : accountabilities) {
-                    if (accountability.isActive(currentDate)) {
-                        final Unit unit = (Unit) accountability.getParentParty();
-                        final Integer costCenterCode = unit.getCostCenterCode();
-                        if (costCenterCode != null) {
-                            if (result.length() > 0) {
-                                result.append('|');
-                            }
-                            result.append(person.getUsername());
-                            result.append(':');
-                            result.append(roleType.name());
-                            result.append(':');
-                            result.append(costCenterCode);
-                            result.append(':');
-                            result.append(Unit.getInstitutionAcronym());
-                        }
-                    }
-                }
-            }
-        }
-        return result.toString();
     }
 
     public boolean hasAnyRole(final RoleType[] roleTypes) {
@@ -3696,21 +3231,6 @@ public class Person extends Person_Base {
                 familyName == null || familyName.isEmpty() ? getGivenNames() : getGivenNames() + " " + familyName;
 
         return fullName.equals(composedName);
-    }
-
-    public ArrayList<RoleOperationLog> getPersonRoleOperationLogArrayListOrderedByDate() {
-        return orderRoleOperationLogSetByValue(this.getPersonRoleOperationLogSet(), "logDate");
-    }
-
-    public ArrayList<RoleOperationLog> getGivenRoleOperationLogArrayListOrderedByDate() {
-        return orderRoleOperationLogSetByValue(this.getGivenRoleOperationLogSet(), "logDate");
-    }
-
-    private ArrayList<RoleOperationLog> orderRoleOperationLogSetByValue(final Set<RoleOperationLog> roleOperationLogSet,
-            final String value) {
-        final ArrayList<RoleOperationLog> roleOperationLogList = new ArrayList<RoleOperationLog>(roleOperationLogSet);
-        Collections.sort(roleOperationLogList, new ReverseComparator(new BeanComparator(value)));
-        return roleOperationLogList;
     }
 
     public boolean hasQucGlobalCommentsMadeBy(final Person person, final ExecutionSemester executionSemester,
@@ -3838,7 +3358,8 @@ public class Person extends Person_Base {
     }
 
     public boolean isOptOutAvailable() {
-        return !CollectionUtils.containsAny(getPersonRolesSet(), getOptOutRoles());
+        // TODO Properly implement this
+        return false;
     }
 
     @Deprecated
@@ -4180,10 +3701,6 @@ public class Person extends Person_Base {
                 return person.getUser() != null;
             }
         }).transform(personToUser).toSet();
-    }
-
-    public boolean hasPersonRoles(Role role) {
-        return getPersonRolesSet().contains(role);
     }
 
     public void ensureUserProfile() {

@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.domain.util.email;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.accessControl.CoordinatorGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -51,7 +50,7 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         addRecipients(createRecipient(current));
         addRecipients(createRecipient(teachers));
         addRecipients(createRecipient(students));
-        addRecipients(createRecipient(RoleGroup.get(RoleType.TEACHER)));
+        addRecipients(createRecipient(RoleType.TEACHER.actualGroup()));
         addRecipients(createRecipient(StudentGroup.get()));
         setFromName(createFromName());
     }

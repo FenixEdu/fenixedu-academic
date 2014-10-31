@@ -23,7 +23,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.fenixedu.bennu.core.groups.Group;
@@ -45,7 +44,7 @@ public class AnnualTeachingCreditsDocument extends AnnualTeachingCreditsDocument
                 groups.add(UserGroup.of(person.getUser()));
             }
         }
-        groups.add(RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL));
+        groups.add(RoleType.SCIENTIFIC_COUNCIL.actualGroup());
 
         init(filename, filename, content, UnionGroup.of(groups));
         setAnnualTeachingCredits(annualTeachingCredits);

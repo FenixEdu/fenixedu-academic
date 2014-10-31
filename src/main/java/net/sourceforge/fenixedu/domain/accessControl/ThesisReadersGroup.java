@@ -79,7 +79,7 @@ public class ThesisReadersGroup extends FenixGroup {
 
         switch (thesis.getVisibility()) {
         case INTRANET:
-            return PersistentRoleGroup.getInstance(RoleType.PERSON).getMembers(when);
+            return RoleType.PERSON.actualGroup().getMembers(when);
         case PUBLIC:
             return AnyoneGroup.get().getMembers(when);
         default:
@@ -108,7 +108,7 @@ public class ThesisReadersGroup extends FenixGroup {
 
         switch (thesis.getVisibility()) {
         case INTRANET:
-            return PersistentRoleGroup.getInstance(RoleType.PERSON).isMember(user, when);
+            return RoleType.PERSON.actualGroup().isMember(user, when);
         case PUBLIC:
             return AnyoneGroup.get().isMember(user, when);
         default:

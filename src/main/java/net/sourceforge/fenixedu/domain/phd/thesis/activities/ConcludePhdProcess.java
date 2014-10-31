@@ -57,7 +57,7 @@ public class ConcludePhdProcess extends PhdThesisActivity {
             individualProgramProcess.createState(PhdIndividualProgramProcessState.CONCLUDED, userView.getPerson(), "");
         }
 
-        process.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
+        RoleType.grant(RoleType.ALUMNI, process.getPerson().getUser());
 
         return process;
     }

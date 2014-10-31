@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
@@ -72,14 +71,13 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup {
         for (User user : Sets.difference(originalMembers, newMembers)) {
             Person person = user.getPerson();
             if (person.hasRole(RoleType.BOLONHA_MANAGER) && !belongsToOtherGroupsWithSameRole(department, person)) {
-                person.removeRoleByType(RoleType.BOLONHA_MANAGER);
+                RoleType.revoke(RoleType.BOLONHA_MANAGER, user);
             }
         }
-        Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER);
         for (User user : Sets.difference(newMembers, originalMembers)) {
             Person person = user.getPerson();
             if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
-                person.addPersonRoles(bolonhaRole);
+                RoleType.grant(RoleType.BOLONHA_MANAGER, user);
             }
         }
     }

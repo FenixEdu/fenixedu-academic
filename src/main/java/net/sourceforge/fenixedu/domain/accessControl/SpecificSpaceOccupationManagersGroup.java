@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 
@@ -27,7 +26,7 @@ public class SpecificSpaceOccupationManagersGroup extends FenixGroupStrategy {
     @Override
     public boolean isMember(User user) {
         Person person = user.getPerson();
-        if (person != null && person.hasPersonRoles(Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER))) {
+        if (person != null && person.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }
         for (Space space : SpaceUtils.allocatableSpaces().collect(Collectors.toSet())) {

@@ -27,9 +27,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -137,12 +135,9 @@ public class TeacherGroup extends FenixGroup {
         }
         //by campus
         if (campus != null) {
-            for (Person person : Role.getRoleByRoleType(RoleType.TEACHER).getAssociatedPersonsSet()) {
-                if (person.getTeacher().teachesAt(campus)) {
-                    User user = person.getUser();
-                    if (user != null) {
-                        users.add(user);
-                    }
+            for (User user : RoleType.TEACHER.actualGroup().getMembers()) {
+                if (user.getPerson() != null && user.getPerson().getTeacher().teachesAt(campus)) {
+                    users.add(user);
                 }
             }
         }

@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
@@ -49,9 +48,9 @@ import org.fenixedu.bennu.core.domain.Bennu;
  * 
  * <pre>
  * 
- * This attributes can be: 
- * - Deparment which belongs; 
- * - Name, descriptions, goals and bibliographic references; 
+ * This attributes can be:
+ * - Deparment which belongs;
+ * - Name, descriptions, goals and bibliographic references;
  * - Study and work load (number hours of theoretical or pratical classes)
  * 
  * </pre>
@@ -348,10 +347,10 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         if (isCompetenceCourseInformationChangeRequestDraftAvailable()) {
             return false;
         }
-        if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+        if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             return true;
         }
-        if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+        if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
             return false;
         }
         return getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);

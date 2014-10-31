@@ -18,7 +18,7 @@
  */
 /*
  * Created on 13/Mar/2003 by jpvl
- *  
+ * 
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
@@ -41,8 +41,7 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
 
     public void execute() throws NotAuthorizedException {
         User userView = Authenticate.getUser();
-        if (((userView != null && userView.getPerson().getPersonRolesSet() != null && !userView.getPerson()
-                .hasRole(getRoleType()))) || (userView == null) || (userView.getPerson().getPersonRolesSet() == null)) {
+        if (((userView != null && !userView.getPerson().hasRole(getRoleType()))) || (userView == null)) {
             throw new NotAuthorizedException();
         }
 

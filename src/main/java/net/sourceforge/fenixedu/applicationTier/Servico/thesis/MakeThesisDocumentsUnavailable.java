@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCommissionGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -33,9 +32,8 @@ public class MakeThesisDocumentsUnavailable {
     @Atomic
     public static void run(Thesis thesis) {
         final ThesisFile thesisFile = thesis.getDissertation();
-        RoleType roleType = RoleType.SCIENTIFIC_COUNCIL;
 
-        Group scientificCouncil = RoleGroup.get(roleType);
+        Group scientificCouncil = RoleType.SCIENTIFIC_COUNCIL.actualGroup();
         ScientificCommissionGroup commissionMembers = ScientificCommissionGroup.get(thesis.getDegree());
         Group student = thesis.getStudent().getPerson().getPersonGroup();
 

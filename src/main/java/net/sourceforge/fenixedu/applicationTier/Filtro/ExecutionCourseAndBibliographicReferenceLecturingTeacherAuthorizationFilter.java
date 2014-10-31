@@ -19,7 +19,7 @@
 /*
  * Created on 19/Mai/2003
  * 
- *  
+ * 
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
@@ -57,7 +57,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
 
     public void execute(String bibliographicReferenceID) throws NotAuthorizedException {
         User id = Authenticate.getUser();
-        if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
+        if ((id == null) || !id.getPerson().hasRole(getRoleType())
                 || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, bibliographicReferenceID)) {
             throw new NotAuthorizedException();
         }

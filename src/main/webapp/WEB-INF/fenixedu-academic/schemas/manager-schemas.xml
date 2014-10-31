@@ -931,15 +931,3 @@
 	<slot name="requestDate" key="label.queueJobs.list.date"/>
 	<slot name="person" schema="Person.name" layout="values" key="label.queueJobs.list.person"/>
 </schema>
-
-
-
-<!-- RoleOperationLogs -->
-<schema name="ListRoleOperationLogs" type="net.sourceforge.fenixedu.domain.RoleOperationLog" bundle="MANAGER_RESOURCES">
-	<slot name="role.roleType" key="label.roleType"/>
-	<slot name="operationType" key="label.operation"/>
-	<slot name="logDate" key="label.date"/>
-	<slot name="username" key="label.who.was.granted.role"/>
-	<slot name="whoGrantedUsername" key="label.who.granted.role"/>
-</schema>
-

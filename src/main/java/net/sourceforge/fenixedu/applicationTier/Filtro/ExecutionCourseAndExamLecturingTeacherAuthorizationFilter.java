@@ -18,7 +18,7 @@
  */
 /*
  * Created on Nov 12, 2003
- *  
+ * 
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
@@ -55,8 +55,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         User id = Authenticate.getUser();
 
         try {
-            if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
-                    || !lecturesExecutionCourse(id, executionCourseID)
+            if ((id == null) || !id.getPerson().hasRole(getRoleType()) || !lecturesExecutionCourse(id, executionCourseID)
                     || !examBelongsExecutionCourse(id, executionCourseID, evaluationID)) {
                 throw new NotAuthorizedException();
             }

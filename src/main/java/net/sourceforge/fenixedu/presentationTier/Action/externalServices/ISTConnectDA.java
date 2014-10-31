@@ -19,12 +19,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
 import java.io.IOException;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
@@ -83,9 +85,9 @@ public class ISTConnectDA extends ExternalInterfaceDispatchAction {
                 jsonObject.put("nickname", person.getNickname());
 
                 JSONArray jsonList = new JSONArray();
-                for (final net.sourceforge.fenixedu.domain.Role role : person.getPersonRolesSet()) {
-                    jsonList.add(role.getRoleType().getName());
-                }
+                Stream.of(RoleType.TEACHER, RoleType.RESEARCHER, RoleType.EMPLOYEE, RoleType.GRANT_OWNER, RoleType.STUDENT,
+                        RoleType.STUDENT).filter(role -> role.actualGroup().isMember(person.getUser()))
+                        .forEach(roleType -> jsonList.add(roleType.name()));
                 jsonObject.put("roles", jsonList);
             }
 

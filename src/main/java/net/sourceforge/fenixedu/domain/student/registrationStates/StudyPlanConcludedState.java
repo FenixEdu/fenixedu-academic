@@ -31,7 +31,7 @@ public class StudyPlanConcludedState extends StudyPlanConcludedState_Base {
     protected StudyPlanConcludedState(Registration registration, Person person, DateTime dateTime) {
         super();
         init(registration, person, dateTime);
-        registration.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
+        RoleType.grant(RoleType.ALUMNI, registration.getPerson().getUser());
 //	if (registration.getStudent().getRegistrationsCount() == 1) {
 //	    registration.getPerson().removeRoleByType(RoleType.STUDENT);
 //	}

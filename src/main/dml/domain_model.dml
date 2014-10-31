@@ -1347,17 +1347,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String conclusionGrade;
     }
     
-    class Role  {
-        protected RoleType roleType;
-    }
-    
-    class RoleOperationLog  {
-    	String username;
-    	String whoGrantedUsername;
-    	DateTime logDate;
-    	RoleOperationType operationType;
-    }  
-    
     class SchoolClass  {
         Integer anoCurricular;
         String nome;
@@ -5741,7 +5730,9 @@ class Installation {
 	String instituitionEmailDomain;
 }
 
-class accessControl.PersistentRoleGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+class accessControl.PersistentRoleGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
+    protected RoleType roleType;
+}
 
 class accessControl.FenixPredicateGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
@@ -9944,15 +9935,6 @@ relation PersistentGroupMembersUnit {
     }
 }
 
-relation PersistentRoleGroupRole {
-    public Role playsRole role {
-        multiplicity 1..1;
-    }
-    public accessControl.PersistentRoleGroup playsRole roleGroup {
-        multiplicity 0..1;
-    }
-}
-
 relation PersonAccountPerson {
     PersonAccount playsRole associatedPersonAccount;
     Person playsRole person;
@@ -10001,37 +9983,6 @@ relation PersonPersonName {
     Person playsRole person;
     person.PersonName playsRole personName;
 }
-
-relation PersonRole {
-    Person playsRole associatedPersons {
-        multiplicity *;
-    }
-    Role playsRole personRoles {
-        multiplicity *;
-    }
-}
-
-relation RoleRoleOperationLog {
-	Role playsRole role;
-	RoleOperationLog playsRole roleOperationLog {
-		multiplicity *;
-	}
-}
-
-relation PersonRoleOperationLog {
-	Person playsRole person;
-	RoleOperationLog playsRole personRoleOperationLog {
-		multiplicity *;
-	}
-}
-
-relation PersonGivesRoleOperationLog {
-	Person playsRole personWhoGranted;
-	RoleOperationLog playsRole givenRoleOperationLog {
-		multiplicity *;
-	}
-}
-
 
 relation PersonTeacher {
     Teacher playsRole teacher;
@@ -11511,15 +11462,6 @@ relation RootDomainObjectResidenceCandidacies {
         multiplicity *;
     }
 }
-
-
-relation RootDomainObjectRole {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Role playsRole roles {
-        multiplicity *;
-    }
-}
-
 
 relation RootDomainObjectSchoolClass {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;

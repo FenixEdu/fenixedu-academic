@@ -65,7 +65,6 @@ import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
@@ -75,7 +74,6 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
@@ -429,7 +427,7 @@ public class CreateTestData {
         }
 
         private org.fenixedu.bennu.core.groups.Group getCompetenceCourseMembersGroup() {
-            return RoleGroup.get(RoleType.TEACHER).or(RoleGroup.get(RoleType.MANAGER));
+            return RoleType.TEACHER.actualGroup().or(RoleType.MANAGER.actualGroup());
         }
 
         private String getDepartmentName(final int i) {
@@ -448,7 +446,7 @@ public class CreateTestData {
     }
 
     private static Group getRoleGroup(final RoleType roleType) {
-        return RoleGroup.get(roleType);
+        return roleType.actualGroup();
     }
 
     public static class CreateDegrees {
@@ -959,7 +957,7 @@ public class CreateTestData {
         public void doIt() {
             //final Person person = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).getAssociatedPersonsSet().iterator().next();
             final Person person = Bennu.getInstance().getUserSet().iterator().next().getPerson();
-            Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).addAssociatedPersons(person);
+            //Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).addAssociatedPersons(person);
             // final User userView = new Authenticate().mock(person, "://localhost");
             // UserView.setUser(userView);
 
@@ -1042,18 +1040,18 @@ public class CreateTestData {
         final Person person = createPerson("Guru Diplomado", "teacher", i);
         new Employee(person, Integer.valueOf(i));
         final Teacher teacher = new Teacher(person);
-        person.addPersonRoleByRoleType(RoleType.EMPLOYEE);
-        person.addPersonRoleByRoleType(RoleType.TEACHER);
+//        person.addPersonRoleByRoleType(RoleType.EMPLOYEE);
+//        person.addPersonRoleByRoleType(RoleType.TEACHER);
         // final Login login = Login.readUserLoginIdentification(person.getUser());
         // login.openLoginIfNecessary(RoleType.TEACHER);
         new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), Bennu.getInstance()
                 .getInstitutionUnit(), AccountabilityTypeEnum.WORKING_CONTRACT, true);
         new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), Bennu.getInstance()
                 .getInstitutionUnit(), AccountabilityTypeEnum.MAILING_CONTRACT, true);
-        person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
-        person.addPersonRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
-        person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-        person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+//        person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+//        person.addPersonRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
+//        person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+//        person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
         /*
          * final Vigilant vigilant = new Vigilant(person,
          * ExecutionYear.readCurrentExecutionYear());
@@ -1103,7 +1101,7 @@ public class CreateTestData {
         final StudentCurricularPlan studentCurricularPlan =
                 StudentCurricularPlan.createWithEmptyStructure(registration, degreeCurricularPlan,
                         new YearMonthDay().minusMonths(6));
-        person.addPersonRoleByRoleType(RoleType.STUDENT);
+//        person.addPersonRoleByRoleType(RoleType.STUDENT);
         // final Login login = Login.readUserLoginIdentification(person.getUser());
         // login.openLoginIfNecessary(RoleType.STUDENT);
         createStudentEnrolments(studentCurricularPlan);
@@ -1158,7 +1156,7 @@ public class CreateTestData {
 
             final Department department = new Department();
             department.setCode(degree.getSigla());
-            department.setCompetenceCourseMembersGroup(RoleGroup.get(RoleType.TEACHER));
+            department.setCompetenceCourseMembersGroup(RoleType.TEACHER.actualGroup());
 
             department.setName("Department " + degree.getName());
             department.setRealName("Department " + degree.getName());

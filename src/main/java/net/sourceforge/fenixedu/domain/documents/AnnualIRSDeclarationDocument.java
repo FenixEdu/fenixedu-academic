@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.domain.documents;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -45,7 +44,7 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
 
     @Override
     protected Group computePermittedGroup() {
-        return RoleGroup.get(RoleType.MANAGER);
+        return RoleType.MANAGER.actualGroup();
     }
 
     private void checkRulesToCreate(Person addressee, Integer year) {

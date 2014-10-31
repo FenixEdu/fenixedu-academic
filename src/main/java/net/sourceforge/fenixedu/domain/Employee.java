@@ -359,15 +359,15 @@ public class Employee extends Employee_Base {
     @Atomic
     public void assignPermission(final Department department) {
         this.getPerson().getManageableDepartmentCreditsSet().add(department);
-        this.getPerson().addPersonRoleByRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER);
-        this.getPerson().addPersonRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+        RoleType.grant(RoleType.DEPARTMENT_CREDITS_MANAGER, getPerson().getUser());
+        RoleType.grant(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE, getPerson().getUser());
     }
 
     @Atomic
     public void removePermission(Department department) {
         if (!this.hasMultipleDepartments()) {
-            this.getPerson().removeRoleByType(RoleType.DEPARTMENT_CREDITS_MANAGER);
-            this.getPerson().removeRoleByType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+            RoleType.revoke(RoleType.DEPARTMENT_CREDITS_MANAGER, getPerson().getUser());
+            RoleType.revoke(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE, getPerson().getUser());
         }
         this.getPerson().getManageableDepartmentCreditsSet().remove(department);
     }

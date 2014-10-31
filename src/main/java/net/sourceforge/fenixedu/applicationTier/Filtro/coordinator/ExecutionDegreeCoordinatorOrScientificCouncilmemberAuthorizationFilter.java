@@ -18,7 +18,7 @@
  */
 /*
  * Created on Dec 21, 2003
- *  
+ * 
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 
@@ -60,12 +60,11 @@ public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFil
             throw new NotAuthorizedException();
         }
 
-        if (userView == null || userView.getPerson().getPersonRolesSet() == null || !verifyCondition(userView, executionDegree)) {
+        if (userView == null || !verifyCondition(userView, executionDegree)) {
             throw new NotAuthorizedException();
         }
 
-        if (((userView != null && userView.getPerson().getPersonRolesSet() != null && !verifyCondition(userView, executionDegree)))
-                || (userView == null) || (userView.getPerson().getPersonRolesSet() == null)) {
+        if (((userView != null && !verifyCondition(userView, executionDegree))) || (userView == null)) {
             throw new NotAuthorizedException();
         }
 

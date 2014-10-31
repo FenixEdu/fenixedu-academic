@@ -27,7 +27,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
@@ -49,8 +48,8 @@ public class SaveCandidacyDocumentFiles {
     @Atomic
     public static void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {
 
-        Group masterDegreeOfficeEmployeesGroup = RoleGroup.get(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        Group coordinatorsGroup = RoleGroup.get(RoleType.COORDINATOR);
+        Group masterDegreeOfficeEmployeesGroup = RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE.actualGroup();
+        Group coordinatorsGroup = RoleType.COORDINATOR.actualGroup();
         Group permittedGroup = masterDegreeOfficeEmployeesGroup.or(coordinatorsGroup);
 
         for (CandidacyDocumentUploadBean candidacyDocumentUploadBean : candidacyDocuments) {

@@ -53,8 +53,8 @@ public class CreateCandidacy {
             new Student(person);
         }
 
-        person.addPersonRoleByRoleType(RoleType.CANDIDATE);
-        person.addPersonRoleByRoleType(RoleType.PERSON);
+        RoleType.grant(RoleType.CANDIDATE, person.getUser());
+        RoleType.grant(RoleType.PERSON, person.getUser());
 
         Candidacy candidacy = CandidacyFactory.newCandidacy(degreeType, person, executionDegree, startDate);
 

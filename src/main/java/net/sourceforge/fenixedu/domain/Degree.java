@@ -334,9 +334,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             if (creator == null) {
                 throw new DomainException("DEGREE.degree.curricular.plan.creator.cannot.be.null");
             }
-            final Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER);
-            if (!creator.hasPersonRoles(bolonhaRole)) {
-                creator.addPersonRoles(bolonhaRole);
+            if (!creator.hasRole(RoleType.BOLONHA_MANAGER)) {
+                RoleType.grant(RoleType.BOLONHA_MANAGER, creator.getUser());
             }
 
             CurricularPeriod curricularPeriod = new CurricularPeriod(this.getDegreeType().getAcademicPeriod());

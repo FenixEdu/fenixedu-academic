@@ -335,10 +335,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         if (isApproved()) {
             return true;
         }
-        if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+        if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             return true;
         }
-        if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+        if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
             return false;
         }
         return getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
@@ -346,10 +346,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public boolean isLoggedPersonAllowedToViewChangeRequests() {
         Person person = AccessControl.getPerson();
-        if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+        if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             return true;
         }
-        if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+        if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
             return false;
         }
         for (CompetenceCourseInformation information : getCompetenceCourseInformationsSet()) {
@@ -362,10 +362,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public boolean isLoggedPersonAllowedToCreateChangeRequests(ExecutionSemester semester) {
         Person person = AccessControl.getPerson();
-        if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+        if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             return true;
         }
-        if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+        if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
             return false;
         }
         return getDepartmentUnit(semester).getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);

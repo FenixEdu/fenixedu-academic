@@ -61,7 +61,7 @@ public class AddNewDelegate {
 
         try {
             PersonFunction personFunction = degreeUnit.addYearDelegatePersonFunction(student, curricularYear);
-            studentPerson.addPersonRoleByRoleType(RoleType.DELEGATE);
+            RoleType.grant(RoleType.DELEGATE, studentPerson.getUser());
 
             new YearDelegate(lastActiveRegistration, personFunction);
 
@@ -79,7 +79,7 @@ public class AddNewDelegate {
 
         try {
             degreeUnit.addDelegatePersonFunction(student, delegateFunctionType);
-            studentPerson.addPersonRoleByRoleType(RoleType.DELEGATE);
+            RoleType.grant(RoleType.DELEGATE, studentPerson.getUser());
 
         } catch (DomainException ex) {
             throw new FenixServiceException(ex.getMessage());
@@ -95,7 +95,7 @@ public class AddNewDelegate {
         try {
             unit.addDelegatePersonFunction(person, delegateFunction);
 
-            person.addPersonRoleByRoleType(RoleType.DELEGATE);
+            RoleType.grant(RoleType.DELEGATE, person.getUser());
 
         } catch (DomainException ex) {
             throw new FenixServiceException(ex.getMessage());

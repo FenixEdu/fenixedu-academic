@@ -22,7 +22,6 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
@@ -249,10 +248,10 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
     public boolean isLoggedPersonAllowedToEdit() {
         Person person = AccessControl.getPerson();
-        if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+        if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             return true;
         }
-        if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+        if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
             return false;
         }
         return getCompetenceCourse().getDepartmentUnit(getExecutionPeriod()).getDepartment()

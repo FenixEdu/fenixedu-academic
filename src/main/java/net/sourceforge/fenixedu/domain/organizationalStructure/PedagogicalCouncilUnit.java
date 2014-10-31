@@ -21,15 +21,15 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.YearMonthDay;
 
@@ -49,7 +49,7 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
     protected List<Group> getDefaultGroups() {
         List<Group> groups = super.getDefaultGroups();
 
-        groups.add(RoleGroup.get(RoleType.PEDAGOGICAL_COUNCIL));
+        groups.add(RoleType.PEDAGOGICAL_COUNCIL.actualGroup());
 
         /* For sending mail to all degrees delegates */
         groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_GGAE));
@@ -76,7 +76,7 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
 
     @Override
     public Collection<Person> getPossibleGroupMembers() {
-        return Role.getRoleByRoleType(RoleType.PEDAGOGICAL_COUNCIL).getAssociatedPersonsSet();
+        return RoleType.PEDAGOGICAL_COUNCIL.actualGroup().getMembers().stream().map(User::getPerson).collect(Collectors.toSet());
     }
 
     // TODO: controlo de acesso?

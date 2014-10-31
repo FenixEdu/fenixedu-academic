@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
@@ -59,7 +58,7 @@ public class SearchPerson implements Serializable {
 
         private String[] nameWords;
 
-        private Role role;
+        private RoleType role;
 
         private Degree degree;
 
@@ -109,7 +108,7 @@ public class SearchPerson implements Serializable {
             setPaymentCode(paymentCode);
 
             if (roleType != null && roleType.length() > 0) {
-                role = Role.getRoleByRoleType(RoleType.valueOf(roleType));
+                role = RoleType.valueOf(roleType);
             }
 
             if (!StringUtils.isEmpty(degreeId)) {
@@ -173,7 +172,7 @@ public class SearchPerson implements Serializable {
             return name;
         }
 
-        public Role getRole() {
+        public RoleType getRole() {
             return role;
         }
 
@@ -218,7 +217,7 @@ public class SearchPerson implements Serializable {
             this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
         }
 
-        public void setRole(Role role) {
+        public void setRole(RoleType role) {
             this.role = role;
         }
 
@@ -320,11 +319,11 @@ public class SearchPerson implements Serializable {
             if (searchParameters.getExternalPersons() == null || !searchParameters.getExternalPersons()) {
 
                 persons.addAll(Person.findInternalPerson(searchParameters.getName()));
-                final Role roleBd = searchParameters.getRole();
+                final RoleType roleBd = searchParameters.getRole();
                 if (roleBd != null) {
                     for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
                         final Person person = peopleIterator.next();
-                        if (!person.hasPersonRoles(roleBd)) {
+                        if (!person.hasRole(roleBd)) {
                             peopleIterator.remove();
                         }
                     }

@@ -105,21 +105,6 @@ public class RolePredicates {
         };
     };
 
-    public static final AccessControlPredicate<Object> CREDITS_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.CREDITS_MANAGER);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE =
-            new AccessControlPredicate<Object>() {
-                @Override
-                public boolean evaluate(Object domainObject) {
-                    return hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-                };
-            };
-
     public static final AccessControlPredicate<Object> DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_PREDICATE =
             new AccessControlPredicate<Object>() {
                 @Override
@@ -254,13 +239,6 @@ public class RolePredicates {
                 };
             };
 
-    public static final AccessControlPredicate<Object> RESOURCE_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.RESOURCE_MANAGER);
-        };
-    };
-
     public static final AccessControlPredicate<Object> SCIENTIFIC_COUNCIL_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
@@ -293,13 +271,6 @@ public class RolePredicates {
         @Override
         public boolean evaluate(Object domainObject) {
             return isTeacher() || hasRole(RoleType.STUDENT);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> WEBSITE_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.WEBSITE_MANAGER);
         };
     };
 

@@ -22,7 +22,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
@@ -70,12 +69,9 @@ public class CampusEmployeeGroup extends FenixGroup {
     @Override
     public Set<User> getMembers(DateTime when) {
         Set<User> users = new HashSet<>();
-        for (final Person person : Role.getRoleByRoleType(RoleType.EMPLOYEE).getAssociatedPersonsSet()) {
-            if (isMember(person, campus, when)) {
-                User user = person.getUser();
-                if (user != null) {
-                    users.add(user);
-                }
+        for (final User user : RoleType.EMPLOYEE.actualGroup().getMembers()) {
+            if (user.getPerson() != null && isMember(user.getPerson(), campus, when)) {
+                users.add(user);
             }
         }
         return users;

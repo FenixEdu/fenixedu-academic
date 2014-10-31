@@ -21,14 +21,14 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
@@ -54,7 +54,7 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     protected List<Group> getDefaultGroups() {
         List<Group> groups = super.getDefaultGroups();
 
-        groups.add(RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL));
+        groups.add(RoleType.SCIENTIFIC_COUNCIL.actualGroup());
 
         Function function = getCoordinationCommitteeMembersFunction();
         if (function != null) {
@@ -96,7 +96,7 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
 
     @Override
     public Collection<Person> getPossibleGroupMembers() {
-        return Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL).getAssociatedPersonsSet();
+        return RoleType.SCIENTIFIC_COUNCIL.actualGroup().getMembers().stream().map(User::getPerson).collect(Collectors.toSet());
     }
 
     public static ScientificCouncilUnit getScientificCouncilUnit() {

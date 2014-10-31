@@ -41,8 +41,7 @@ public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter exte
         User id = Authenticate.getUser();
 
         try {
-            if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
-                    || !lecturesExecutionCourse(id, bean)) {
+            if ((id == null) || !id.getPerson().hasRole(getRoleType()) || !lecturesExecutionCourse(id, bean)) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {

@@ -19,7 +19,7 @@
 /*
  * Created on 19/Mai/2003
  * 
- *  
+ * 
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
@@ -60,7 +60,7 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
     public void execute(String executionDegreeId) throws NotAuthorizedException {
         User id = Authenticate.getUser();
         try {
-            if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
+            if ((id == null) || !id.getPerson().hasRole(getRoleType())
                     || !isResponsibleCoordinatorOfExecutionDegree(id, executionDegreeId)) {
                 throw new NotAuthorizedException();
             }

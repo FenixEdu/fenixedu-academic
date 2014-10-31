@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -52,8 +51,7 @@ public class PublicRelationsPeopleManagementDA extends FenixDispatchAction {
     @EntryPoint
     public ActionForward managePeople(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        final Role role = Role.getRoleByRoleType(RoleType.PUBLIC_RELATIONS_OFFICE);
-        request.setAttribute("persons", role.getAssociatedPersonsSet());
+        request.setAttribute("role", RoleType.PUBLIC_RELATIONS_OFFICE.actualGroup());
         request.setAttribute("bean", new PersonBean());
         return mapping.findForward("managePeople");
     }
@@ -66,7 +64,7 @@ public class PublicRelationsPeopleManagementDA extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException {
         String id = request.getParameter("managerID");
         Person person = FenixFramework.getDomainObject(id);
-        person.removeRoleByTypeService(RoleType.PUBLIC_RELATIONS_OFFICE);
+        RoleType.revoke(RoleType.PUBLIC_RELATIONS_OFFICE, person.getUser());
         return managePeople(mapping, actionForm, request, response);
     }
 
@@ -80,10 +78,7 @@ public class PublicRelationsPeopleManagementDA extends FenixDispatchAction {
         String username = bean.getUsername();
         User user;
         if (username != null && (user = User.findByUsername(username)) != null) {
-            Person person = user.getPerson();
-            if (person != null) {
-                person.addPersonRoleByRoleTypeService(RoleType.PUBLIC_RELATIONS_OFFICE);
-            }
+            RoleType.grant(RoleType.PUBLIC_RELATIONS_OFFICE, user);
         } else {
             addActionMessage(request, "error.noUsername", (username.compareTo("") == 0 ? "(vazio)" : username));
         }

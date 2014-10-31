@@ -1907,11 +1907,11 @@ public class Student extends Student_Base {
         final RoleType roleType = RoleType.STUDENT;
         if (shouldHaveStudentRole()) {
             if (!person.hasRole(roleType)) {
-                person.addPersonRoleByRoleType(roleType);
+                RoleType.grant(roleType, person.getUser());
             }
         } else {
             if (person.hasRole(roleType)) {
-                person.removeRoleByType(roleType);
+                RoleType.revoke(roleType, person.getUser());
             }
         }
     }

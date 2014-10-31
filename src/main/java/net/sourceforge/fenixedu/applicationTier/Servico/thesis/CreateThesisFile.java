@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCommissionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisReadersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -51,9 +50,8 @@ public abstract class CreateThesisFile {
         if (bytes == null || fileName == null) {
             return null;
         }
-        RoleType roleType = RoleType.SCIENTIFIC_COUNCIL;
 
-        Group scientificCouncil = RoleGroup.get(roleType);
+        Group scientificCouncil = RoleType.SCIENTIFIC_COUNCIL.actualGroup();
         Group commissionMembers = ScientificCommissionGroup.get(thesis.getDegree());
         Group thesisGroup = ThesisReadersGroup.get(thesis);
         final Group permittedGroup = scientificCouncil.or(commissionMembers).or(thesisGroup);

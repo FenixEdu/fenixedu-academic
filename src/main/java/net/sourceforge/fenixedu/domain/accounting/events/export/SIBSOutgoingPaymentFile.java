@@ -30,7 +30,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
@@ -95,7 +94,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
             StringBuilder errorsBuilder = new StringBuilder();
             byte[] paymentFileContents = createPaymentFile(lastSuccessfulSentDateTime, errorsBuilder).getBytes("ASCII");
             setErrors(errorsBuilder.toString());
-            init(outgoingFilename(), outgoingFilename(), paymentFileContents, RoleGroup.get(RoleType.MANAGER));
+            init(outgoingFilename(), outgoingFilename(), paymentFileContents, RoleType.MANAGER.actualGroup());
         } catch (UnsupportedEncodingException e) {
             throw new DomainException(e.getMessage(), e);
         }

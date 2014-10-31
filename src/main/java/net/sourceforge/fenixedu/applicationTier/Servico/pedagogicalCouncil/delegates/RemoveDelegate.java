@@ -22,7 +22,6 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
@@ -61,7 +60,7 @@ public class RemoveDelegate {
                 throw new FenixServiceException(e.getMessage());
             }
             if (student.getAllActiveDelegateFunctions().isEmpty()) {
-                student.getPerson().removePersonRoles(Role.getRoleByRoleType(RoleType.DELEGATE));
+                RoleType.revoke(RoleType.DELEGATE, student.getPerson().getUser());
             }
         }
 
@@ -77,7 +76,7 @@ public class RemoveDelegate {
         } else {
             personFunction.setOccupationInterval(personFunction.getBeginDate(), yesterday);
             if (student.getAllActiveDelegateFunctions().isEmpty()) {
-                student.getPerson().removePersonRoles(Role.getRoleByRoleType(RoleType.DELEGATE));
+                RoleType.revoke(RoleType.DELEGATE, student.getPerson().getUser());
             }
         }
 
@@ -93,7 +92,7 @@ public class RemoveDelegate {
             degreeUnit.removeAllActiveDelegatePersonFunctionsFromStudent(student);
 
             /* Remove delegate role from this student */
-            student.getPerson().removePersonRoles(Role.getRoleByRoleType(RoleType.DELEGATE));
+            RoleType.revoke(RoleType.DELEGATE, student.getPerson().getUser());
 
             /*
              * Remove this student from the election in wich he was elected (if

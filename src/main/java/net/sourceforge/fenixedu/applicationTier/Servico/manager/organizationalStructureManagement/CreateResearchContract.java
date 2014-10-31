@@ -41,8 +41,8 @@ public class CreateResearchContract {
         }
         ResearchContract.createResearchContract(bean.getContractType(), person, bean.getBegin(), bean.getEnd(), bean.getUnit(),
                 bean.getExternalPerson());
-        if (person.getPersonRole(RoleType.RESEARCHER) == null) {
-            person.addPersonRoleByRoleType(RoleType.RESEARCHER);
+        if (!person.hasRole(RoleType.RESEARCHER)) {
+            RoleType.grant(RoleType.RESEARCHER, person.getUser());
         }
 
         // At this point it is guaranteed that the person has a user

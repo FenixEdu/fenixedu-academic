@@ -31,8 +31,7 @@ public class PersistentGroupMembersPredicates {
                 @Override
                 public boolean evaluate(PersistentGroupMembers persistentGroupMembers) {
                     Person person = AccessControl.getPerson();
-                    return person.hasRole(RoleType.MANAGER)
-                            || (person.hasRole(RoleType.RESEARCHER) && person.hasRole(RoleType.WEBSITE_MANAGER));
+                    return person.hasRole(RoleType.MANAGER) || person.hasRole(RoleType.RESEARCHER);
                 }
             };
 }

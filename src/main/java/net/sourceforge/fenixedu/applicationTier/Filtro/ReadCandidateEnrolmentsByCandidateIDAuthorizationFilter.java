@@ -47,9 +47,7 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
 
     public void execute(String candidateID) throws NotAuthorizedException {
         User id = Authenticate.getUser();
-        if ((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
-                || (id != null && id.getPerson().getPersonRolesSet() != null && !hasPrivilege(id, candidateID)) || (id == null)
-                || (id.getPerson().getPersonRolesSet() == null)) {
+        if ((id != null && !containsRoleType(id)) || (id != null && !hasPrivilege(id, candidateID)) || (id == null)) {
             throw new NotAuthorizedException();
         }
     }

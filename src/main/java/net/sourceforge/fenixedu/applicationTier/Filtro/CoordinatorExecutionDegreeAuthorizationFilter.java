@@ -45,9 +45,7 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
 
     public void execute(String executionDegreeId) throws NotAuthorizedException {
         User id = Authenticate.getUser();
-        if ((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
-                || (id != null && id.getPerson().getPersonRolesSet() != null && !hasPrivilege(id, executionDegreeId))
-                || (id == null) || (id.getPerson().getPersonRolesSet() == null)) {
+        if ((id != null && !containsRoleType(id)) || (id != null && !hasPrivilege(id, executionDegreeId)) || (id == null)) {
             throw new NotAuthorizedException();
         }
     }

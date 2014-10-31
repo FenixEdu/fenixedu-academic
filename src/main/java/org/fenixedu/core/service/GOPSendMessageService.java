@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
@@ -74,7 +73,7 @@ public class GOPSendMessageService implements NotificationService {
     private static Sender initGOPSender() {
         for (Sender sender : Sender.getAvailableSenders()) {
             final Group members = sender.getMembers();
-            if (members.equals(RoleGroup.get(RoleType.RESOURCE_ALLOCATION_MANAGER))) {
+            if (members.equals(RoleType.RESOURCE_ALLOCATION_MANAGER.actualGroup())) {
                 return sender;
             }
         }

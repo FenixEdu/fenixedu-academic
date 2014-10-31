@@ -30,8 +30,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -264,8 +262,8 @@ public class StudentGroup extends FenixGroup {
 
     private static FluentIterable<Registration> getRegistrations(DegreeType type) {
         Set<Registration> registrations = new HashSet<>();
-        for (Person person : Role.getRoleByRoleType(RoleType.STUDENT).getAssociatedPersonsSet()) {
-            Registration registration = person.getStudentByType(type);
+        for (User user : RoleType.STUDENT.actualGroup().getMembers()) {
+            Registration registration = user.getPerson().getStudentByType(type);
             if (registration != null && registration.isActive()) {
                 registrations.add(registration);
             }
@@ -287,8 +285,8 @@ public class StudentGroup extends FenixGroup {
 
     private static FluentIterable<Registration> getRegistrations() {
         Set<Registration> registrations = new HashSet<>();
-        for (Person person : Role.getRoleByRoleType(RoleType.STUDENT).getAssociatedPersonsSet()) {
-            registrations.addAll(person.getStudent().getActiveRegistrations());
+        for (User user : RoleType.STUDENT.actualGroup().getMembers()) {
+            registrations.addAll(user.getPerson().getStudent().getActiveRegistrations());
         }
         return FluentIterable.from(registrations);
     }

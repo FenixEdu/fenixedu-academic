@@ -51,9 +51,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
     public void execute(String executionDegreeID, List<SituationName> situationNames) throws NotAuthorizedException {
 
         User id = Authenticate.getUser();
-        if ((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
-                || (id != null && id.getPerson().getPersonRolesSet() != null && !hasPrivilege(id, executionDegreeID))
-                || (id == null) || (id.getPerson().getPersonRolesSet() == null)) {
+        if ((id != null && !containsRoleType(id)) || (id != null && !hasPrivilege(id, executionDegreeID)) || (id == null)) {
             throw new NotAuthorizedException();
         }
     }

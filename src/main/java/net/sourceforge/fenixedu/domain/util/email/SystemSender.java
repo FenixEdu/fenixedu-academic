@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.util.email;
 
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -31,7 +30,7 @@ public class SystemSender extends SystemSender_Base {
 
     public SystemSender() {
         super();
-        setMembers(RoleGroup.get(RoleType.MANAGER));
+        setMembers(RoleType.MANAGER.actualGroup());
         setFromAddress(Sender.getNoreplyMail());
         setSystemRootDomainObject(getRootDomainObject());
         setFromName(createFromName());
@@ -42,7 +41,7 @@ public class SystemSender extends SystemSender_Base {
     }
 
     public Recipient getRoleRecipient(RoleType roleType) {
-        final Group roleGroup = RoleGroup.get(roleType);
+        final Group roleGroup = roleType.actualGroup();
         for (Recipient recipient : getRecipientsSet()) {
             final Group members = recipient.getMembers();
             if (roleGroup.equals(members)) {

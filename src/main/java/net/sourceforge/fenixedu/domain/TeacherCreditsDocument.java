@@ -28,7 +28,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadAllTeacherCredits;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
@@ -80,7 +79,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
         if (department != null && department.getDepartmentUnit() != null) {
             groups.add(UnitGroup.get(department.getDepartmentUnit(), FunctionType.PRESIDENT, false));
         }
-        groups.add(RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL));
+        groups.add(RoleType.SCIENTIFIC_COUNCIL.actualGroup());
         init(filename, filename, content, UnionGroup.of(groups));
     }
 

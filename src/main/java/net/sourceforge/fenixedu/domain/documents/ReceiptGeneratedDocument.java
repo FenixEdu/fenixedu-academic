@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.domain.documents;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -41,7 +40,7 @@ public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
 
     @Override
     protected Group computePermittedGroup() {
-        return RoleGroup.get(RoleType.MANAGER);
+        return RoleType.MANAGER.actualGroup();
     }
 
     @Override

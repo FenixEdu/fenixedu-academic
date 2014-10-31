@@ -60,7 +60,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
             final User userView = Authenticate.getUser();
 
-            if (userView == null || userView.getPerson().getPersonRolesSet().isEmpty()) {
+            if (userView == null || userView.isLoginExpired()) {
                 return getAuthenticationFailedForward(mapping, request, "errors.noAuthorization", "errors.noAuthorization");
             }
 
@@ -188,10 +188,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
      */
     private boolean isAlumniWithNoData(User userView) {
         Person person = userView.getPerson();
-        if (person.getStudent() != null && person.getStudent().getAlumni() != null
-                && person.getPersonRole(RoleType.ALUMNI) != null) {
-            if ((person.getTeacher() != null && person.getTeacher().isActive())
-                    || person.getPersonRole(RoleType.EMPLOYEE) != null || person.getPersonRole(RoleType.RESEARCHER) != null) {
+        if (person.getStudent() != null && person.getStudent().getAlumni() != null && person.hasRole(RoleType.ALUMNI)) {
+            if ((person.getTeacher() != null && person.getTeacher().isActive()) || person.hasRole(RoleType.EMPLOYEE)
+                    || person.hasRole(RoleType.RESEARCHER)) {
                 return false;
             }
             return person.getFormations().isEmpty();

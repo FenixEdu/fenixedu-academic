@@ -52,7 +52,7 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
 
             boolean executionCourseResponsibleLogged = professorshipLogged.isResponsibleFor();
 
-            if (userViewLogged == null || userViewLogged.getPerson().getPersonRolesSet() == null || professorshipLogged == null) {
+            if (userViewLogged == null || professorshipLogged == null) {
                 throw new NotAuthorizedException("error.summary.not.authorized");
             }
             if (executionCourseResponsibleLogged

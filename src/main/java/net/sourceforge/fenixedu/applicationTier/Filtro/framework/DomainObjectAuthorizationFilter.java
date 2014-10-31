@@ -18,7 +18,7 @@
  */
 /*
  * Created on 14/Nov/2003
- *  
+ * 
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.framework;
 
@@ -56,8 +56,7 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
 
             boolean isNew = externalId == null;
 
-            if (((id != null && id.getPerson().getPersonRolesSet() != null && !id.getPerson().hasRole(getRoleType())))
-                    || (id == null) || (id.getPerson().getPersonRolesSet() == null)
+            if (((id != null && !id.getPerson().hasRole(getRoleType()))) || (id == null)
                     || ((!isNew) && (!verifyCondition(id, externalId)))) {
                 throw new NotAuthorizedException();
             }

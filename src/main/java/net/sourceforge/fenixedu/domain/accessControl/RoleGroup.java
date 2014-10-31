@@ -20,10 +20,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.fenixedu.bennu.core.annotation.GroupArgument;
@@ -32,39 +29,26 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.joda.time.DateTime;
 
+@Deprecated
 @GroupOperator("role")
 public class RoleGroup extends FenixGroup {
     private static final long serialVersionUID = -2312726475879576571L;
 
     @GroupArgument("")
-    private Role role;
+    private RoleType roleType;
 
     private RoleGroup() {
         super();
     }
 
-    private RoleGroup(Role role) {
-        this.role = role;
-    }
-
-    public static RoleGroup get(Role role) {
-        Objects.requireNonNull(role, "role");
-        return new RoleGroup(role);
-    }
-
-    public static RoleGroup get(RoleType roleType) {
-        return get(Role.getRoleByRoleType(roleType));
-    }
-
     @Override
     public String getPresentationName() {
-        return role.getRoleType().getLocalizedName();
+        return roleType.getLocalizedName();
     }
 
     @Override
     public Set<User> getMembers() {
-        return role.getAssociatedPersonsSet().stream().filter((person) -> person.getUser() != null).map(Person::getUser)
-                .collect(Collectors.toSet());
+        return roleType.actualGroup().getMembers();
     }
 
     /*
@@ -77,10 +61,7 @@ public class RoleGroup extends FenixGroup {
 
     @Override
     public boolean isMember(User user) {
-        if (user == null) {
-            return false;
-        }
-        return user.getPerson().hasPersonRoles(role);
+        return roleType.actualGroup().isMember(user);
     }
 
     /*
@@ -93,19 +74,19 @@ public class RoleGroup extends FenixGroup {
 
     @Override
     public PersistentGroup toPersistentGroup() {
-        return PersistentRoleGroup.getInstance(role);
+        return roleType.actualGroup().toPersistentGroup();
     }
 
     @Override
     public boolean equals(Object object) {
         if (object instanceof RoleGroup) {
-            return role.equals(((RoleGroup) object).role);
+            return roleType.equals(((RoleGroup) object).roleType);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(role);
+        return Objects.hashCode(roleType);
     }
 }

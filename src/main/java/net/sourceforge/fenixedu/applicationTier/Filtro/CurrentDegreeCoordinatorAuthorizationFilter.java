@@ -19,7 +19,7 @@
 /*
  * Created on 5/Nov/2003
  * 
- *  
+ * 
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
@@ -59,7 +59,7 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
     public void execute(String infoExecutionDegreeId) throws NotAuthorizedException {
         User id = Authenticate.getUser();
         try {
-            if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
+            if ((id == null) || !id.getPerson().hasRole(getRoleType())
                     || !isCoordinatorOfCurrentExecutionDegree(id, infoExecutionDegreeId)) {
                 throw new NotAuthorizedException();
             }

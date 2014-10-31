@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -140,7 +139,7 @@ public class GroupCheckService {
      */
     private static Boolean checkRoleGroup(Person person, GroupCheckQuery groupCheckQuery) throws NonExistingServiceException {
         if (groupCheckQuery.roleType == RoleType.TEACHER || groupCheckQuery.roleType == RoleType.EMPLOYEE) {
-            return RoleGroup.get(groupCheckQuery.roleType).isMember(person.getUser());
+            return groupCheckQuery.roleType.actualGroup().isMember(person.getUser());
         } else {
             throw new NonExistingServiceException();
         }

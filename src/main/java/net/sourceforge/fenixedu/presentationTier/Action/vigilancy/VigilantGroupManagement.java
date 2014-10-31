@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddInco
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddVigilantsToGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateVigilantGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteVigilantGroupByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExamCoordinatorRole;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExamCoordinatorsFromVigilantGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveIncompatiblePerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveVigilantsFromGroup;
@@ -425,19 +424,6 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         request.setAttribute("bean", bean);
         RenderUtils.invalidateViewState("addCoordinators");
         return mapping.findForward("editCoordinators");
-    }
-
-    public ActionForward checkExamCoordinatorPermissions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        Person person = getLoggedPerson(request);
-        ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
-
-        if (coordinator == null) {
-            RemoveExamCoordinatorRole.run(person);
-        }
-        return mapping.findForward("blank");
     }
 
     public ActionForward prepareAddIncompatiblePersonToVigilant(ActionMapping mapping, ActionForm form,

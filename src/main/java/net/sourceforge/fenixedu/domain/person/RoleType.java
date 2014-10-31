@@ -18,207 +18,152 @@
  */
 package net.sourceforge.fenixedu.domain.person;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sourceforge.fenixedu.util.Bundle;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.DynamicGroup;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 public enum RoleType implements IPresentableEnum {
 
-    MESSAGING("Messaging"),
+    MESSAGING("logged"),
 
-    PERSON("Person"),
+    PERSON("logged"),
 
-    STUDENT("Registration"),
+    STUDENT("activeStudents"),
 
-    TEACHER("Teacher"),
+    TEACHER("activeTeachers"),
 
-    RESEARCHER("Researcher"),
+    RESEARCHER("#researcher"),
 
-    DEPARTMENT_MEMBER("Department Member"),
+    DEPARTMENT_MEMBER("activeTeachers"),
 
-    RESOURCE_ALLOCATION_MANAGER("Rersource Allocation Management"),
-
-    RESOURCE_MANAGER("Resource Management"),
-
-    @Deprecated
-    MASTER_DEGREE_CANDIDATE("Master Degree Candidate"),
+    RESOURCE_ALLOCATION_MANAGER("#resourceAllocationManager"),
 
     /**
      * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead
      */
-    MASTER_DEGREE_ADMINISTRATIVE_OFFICE("Master Degree Administrative Office"),
+    MASTER_DEGREE_ADMINISTRATIVE_OFFICE("#masterDegreeAdmOffice"),
 
-    @Deprecated
-    TREASURY("Treasury"),
+    COORDINATOR("allCoordinators"),
 
-    COORDINATOR("Coordinator"),
+    EMPLOYEE("activeEmployees"),
 
-    EMPLOYEE("Employee"),
+    PERSONNEL_SECTION("#personnelSection"),
 
-    PERSONNEL_SECTION("Personnel Section"),
+    MANAGER("#managers"),
 
-    MANAGER("Management"),
-
-    /**
-     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead
-     */
-    DEGREE_ADMINISTRATIVE_OFFICE("Degree Administrative Office"),
-
-    CREDITS_MANAGER("Credits Management"),
-
-    DEPARTMENT_CREDITS_MANAGER("Department Credits Management"),
+    DEPARTMENT_CREDITS_MANAGER("#departmentCreditsManager"),
 
     /**
      * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead
      */
-    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER("Degree Administrative Office (Super User)"),
+    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER("#degreeAdmOfficeSudo"),
 
-    SCIENTIFIC_COUNCIL("Scientific Council"),
+    SCIENTIFIC_COUNCIL("#scientificCouncil"),
 
-    /**
-     * @deprecated Use {@link RoleType}.MANAGER instead
-     */
-    ADMINISTRATOR("Administration"),
+    OPERATOR("#operator"),
 
-    OPERATOR("Operator"),
+    GRANT_OWNER("#grantOwner"),
 
-    @Deprecated
-    SEMINARIES_COORDINATOR("Seminaries Coordination"),
+    DEPARTMENT_ADMINISTRATIVE_OFFICE("#departmentAdmOffice"),
 
-    @Deprecated
-    WEBSITE_MANAGER("Website Management"),
+    GEP("#gep"),
 
-    GRANT_OWNER("Grant Owner"),
+    DIRECTIVE_COUNCIL("#directiveCouncil"),
 
-    DEPARTMENT_ADMINISTRATIVE_OFFICE("Department Administrative Office"),
+    DELEGATE("#delegate"),
 
-    GEP("Planning and Studies Office"),
+    BOLONHA_MANAGER("#bolonhaManager"),
 
-    DIRECTIVE_COUNCIL("Directive Council"),
+    SPACE_MANAGER("#spaceManager"),
 
-    DELEGATE("Delegate"),
+    SPACE_MANAGER_SUPER_USER("#spaceManagerSudo"),
 
-    /**
-     * @deprecated This is discontinued, don't use it!
-     */
-    PROJECTS_MANAGER("Projects Management"),
+    ALUMNI("allAlumni"),
 
-    /**
-     * @deprecated This is discontinued, don't use it!
-     */
-    IT_PROJECTS_MANAGER("IT Projects Management"),
+    PEDAGOGICAL_COUNCIL("#pedagogicalCouncil"),
 
-    /**
-     * @deprecated This is discontinued, don't use it!
-     */
-    INSTITUCIONAL_PROJECTS_MANAGER("Institutional Projects Management"),
+    CANDIDATE("candidate"),
 
-    BOLONHA_MANAGER("Bolonha Process Management"),
+    EXAM_COORDINATOR("examCoordinator"),
 
-    CMS_MANAGER("Content Management"),
+    ACADEMIC_ADMINISTRATIVE_OFFICE("#academicAdmOffice"),
 
-    SPACE_MANAGER("Space Management"),
+    PARKING_MANAGER("#parkingManager"),
 
-    SPACE_MANAGER_SUPER_USER("Space Management (Super User)"),
+    LIBRARY("#library"),
 
-    ALUMNI("Alumni"),
+    INTERNATIONAL_RELATION_OFFICE("#internationalRelationsOffice"),
 
-    PEDAGOGICAL_COUNCIL("Pedagogical Council"),
+    IDENTIFICATION_CARD_MANAGER("#idCardManager"),
 
-    CANDIDATE("Candidate"),
+    TUTORSHIP("#tutorship"),
 
-    EXAM_COORDINATOR("Exam Coordinator"),
+    EXTERNAL_SUPERVISOR("externalSupervisor"),
 
-    ACADEMIC_ADMINISTRATIVE_OFFICE("Academic Administrative Office"),
+    PUBLIC_RELATIONS_OFFICE("#publicRelationsOffice"),
 
-    PARKING_MANAGER("Parking Manager"),
+    NAPE("#nape"),
 
-    LIBRARY("Library"),
+    RESIDENCE_MANAGER("#residenceManager"),
 
-    INTERNATIONAL_RELATION_OFFICE("International Relation Office"),
+    RECTORATE("#rectorate"),
 
-    IDENTIFICATION_CARD_MANAGER("Gestão de Cartões"),
+    HTML_CAPABLE_SENDER("#htmlCapableSender"),
 
-    TUTORSHIP("Tutorship"),
-
-    EXTERNAL_SUPERVISOR("External Supervisor"),
-
-    PUBLIC_RELATIONS_OFFICE("Public Relations Office"),
-
-    NAPE("NAPE"),
-
-    RESIDENCE_MANAGER("Residence Manager"),
-
-    RECTORATE("Rectorate"),
-
-    /**
-     * @deprecated This is discontinued, don't use it!
-     */
-    ISTID_PROJECTS_MANAGER("IST-ID Projects Management"),
-
-    /**
-     * @deprecated This is discontinued, don't use it!
-     */
-    ISTID_INSTITUCIONAL_PROJECTS_MANAGER("IST-ID Institutional Projects Management"),
-
-    /**
-     * @deprecated This is discontinued, don't use it!
-     */
-    ADIST_PROJECTS_MANAGER("ADIST Projects Management"),
-
-    /**
-     * @deprecated This is discontinued, don't use it!
-     */
-    ADIST_INSTITUCIONAL_PROJECTS_MANAGER("ADIST Institutional Projects Management"),
-
-    HTML_CAPABLE_SENDER("Html capable sender"),
-
-    CONTACT_ADMIN("Contact Admin"),
-
-    DEVELOPER("External Application Developer")
+    DEVELOPER("#developers")
 
     ;
+
+    private static final Logger logger = LoggerFactory.getLogger(RoleType.class);
 
     public String getName() {
         return name();
     }
 
-    public static List<RoleType> getRolesImportance() {
-        List<RoleType> rolesImportance = new ArrayList<RoleType>();
-        rolesImportance.add(RoleType.TEACHER);
-        rolesImportance.add(RoleType.EMPLOYEE);
-        rolesImportance.add(RoleType.STUDENT);
-        rolesImportance.add(RoleType.GRANT_OWNER);
-        rolesImportance.add(RoleType.ALUMNI);
-        rolesImportance.add(RoleType.CANDIDATE);
-        rolesImportance.add(RoleType.MESSAGING);
-        rolesImportance.add(RoleType.PERSON);
-        rolesImportance.add(RoleType.EXAM_COORDINATOR);
-        return rolesImportance;
+    private final Group actualGroup;
+
+    private RoleType(String underlyingGroup) {
+        this.actualGroup = Group.parse(underlyingGroup);
     }
 
-    private String defaultLabel = null;
-
-    private RoleType(String defaultLabel) {
-        setDefaultLabel(defaultLabel);
-    }
-
-    public String getDefaultLabel() {
-        return defaultLabel;
-    }
-
-    private void setDefaultLabel(String defaultLabel) {
-        this.defaultLabel = defaultLabel;
+    public Group actualGroup() {
+        return actualGroup;
     }
 
     @Override
     public String getLocalizedName() {
         return BundleUtil.getString(Bundle.ENUMERATION, name());
+    }
+
+    public static void grant(RoleType roleType, User user) {
+        Group group = roleType.actualGroup();
+        if (group instanceof DynamicGroup) {
+            DynamicGroup dynamic = (DynamicGroup) group;
+            dynamic.changeGroup(dynamic.underlyingGroup().grant(user));
+        } else {
+            logger.warn("RoleType '{}' is not manageable!", roleType.name());
+        }
+    }
+
+    public static void revoke(RoleType roleType, User user) {
+        Group group = roleType.actualGroup();
+        if (group instanceof DynamicGroup) {
+            DynamicGroup dynamic = (DynamicGroup) group;
+            dynamic.changeGroup(dynamic.underlyingGroup().revoke(user));
+        } else {
+            logger.warn("RoleType '{}' is not manageable!", roleType.name());
+        }
+    }
+
+    public boolean isMember(User user) {
+        return actualGroup.isMember(user);
     }
 
 }

@@ -45,7 +45,7 @@ public class ResearchAuthorGroup extends FenixGroup {
 
     @Override
     public Set<User> getMembers() {
-        return RoleGroup.get(RoleType.RESEARCHER).getMembers();
+        return RoleType.RESEARCHER.actualGroup().getMembers();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ResearchAuthorGroup extends FenixGroup {
 
     @Override
     public boolean isMember(User user) {
-        return RoleGroup.get(RoleType.RESEARCHER).isMember(user);
+        return RoleType.RESEARCHER.actualGroup().isMember(user);
     }
 
     @Override

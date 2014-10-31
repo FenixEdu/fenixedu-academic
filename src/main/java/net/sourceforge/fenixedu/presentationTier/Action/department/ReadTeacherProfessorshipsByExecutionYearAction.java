@@ -18,7 +18,7 @@
  */
 /*
  * Created on Nov 21, 2003 by jpvl
- *  
+ * 
  */
 package net.sourceforge.fenixedu.presentationTier.Action.department;
 
@@ -44,7 +44,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForSummariesManagement;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -175,14 +174,8 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends Action {
         Department department = infoTeacher.getTeacher().getCurrentWorkingDepartment();
         InfoDepartment teacherDepartment = InfoDepartment.newInfoFromDomain(department);
 
-        if (userView == null || !userView.getPerson().hasRole(RoleType.CREDITS_MANAGER)) {
-
-            final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCreditsSet();
-            request.setAttribute("isDepartmentManager", Boolean.valueOf(departmentList.contains(department)));
-
-        } else {
-            request.setAttribute("isDepartmentManager", Boolean.FALSE);
-        }
+        final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCreditsSet();
+        request.setAttribute("isDepartmentManager", Boolean.valueOf(departmentList.contains(department)));
 
         request.setAttribute("teacherDepartment", teacherDepartment);
         request.setAttribute("executionYear", infoExecutionYear);

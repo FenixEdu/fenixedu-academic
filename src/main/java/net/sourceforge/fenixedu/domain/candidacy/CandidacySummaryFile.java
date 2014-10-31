@@ -19,7 +19,6 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.fenixedu.bennu.core.groups.Group;
@@ -34,7 +33,7 @@ public class CandidacySummaryFile extends CandidacySummaryFile_Base {
     }
 
     private Group createPermittedGroup(Person candidacyStudent) {
-        return UserGroup.of(candidacyStudent.getUser()).or(RoleGroup.get(RoleType.MANAGER));
+        return UserGroup.of(candidacyStudent.getUser()).or(RoleType.MANAGER.actualGroup());
     }
 
 }

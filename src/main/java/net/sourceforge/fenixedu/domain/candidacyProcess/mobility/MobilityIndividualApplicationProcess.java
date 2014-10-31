@@ -780,8 +780,8 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 User userView, Object object) {
             if (process.getPersonalDetails().getPerson().getStudent() == null) {
                 new Student(process.getPersonalDetails().getPerson(), null);
-                process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.PERSON);
-                process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.CANDIDATE);
+                RoleType.grant(RoleType.PERSON, process.getPersonalDetails().getPerson().getUser());
+                RoleType.grant(RoleType.CANDIDATE, process.getPersonalDetails().getPerson().getUser());
 
                 if (StringUtils.isEmpty(process.getPersonalDetails().getPerson().getUsername())) {
                     throw new DomainException("error.erasmus.create.user", new String[] { null, "User not created" });

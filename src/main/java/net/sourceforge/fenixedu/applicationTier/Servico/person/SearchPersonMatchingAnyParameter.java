@@ -26,9 +26,9 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -92,11 +92,11 @@ public class SearchPersonMatchingAnyParameter extends SearchPerson {
             if (searchParameters.getName() != null) {
                 if (searchParameters.getExternalPersons() == null || !searchParameters.getExternalPersons()) {
                     persons.addAll(Person.findInternalPerson(searchParameters.getName()));
-                    final Role roleBd = searchParameters.getRole();
+                    final RoleType roleBd = searchParameters.getRole();
                     if (roleBd != null) {
                         for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
                             final Person person = peopleIterator.next();
-                            if (!person.hasPersonRoles(roleBd)) {
+                            if (!person.hasRole(roleBd)) {
                                 peopleIterator.remove();
                             }
                         }

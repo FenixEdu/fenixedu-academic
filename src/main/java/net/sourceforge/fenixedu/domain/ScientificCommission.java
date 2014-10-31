@@ -19,18 +19,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
 public class ScientificCommission extends ScientificCommission_Base {
-
-    static {
-        getRelationScientificCommissionPerson().addListener(new ManageCoordinatorRole());
-    }
 
     public ScientificCommission(ExecutionDegree executionDegree, Person person) {
         super();
@@ -75,44 +68,6 @@ public class ScientificCommission extends ScientificCommission_Base {
         setExecutionDegree(null);
         setRootDomainObject(null);
         deleteDomainObject();
-    }
-
-    /**
-     * Manage the role COORDINATOR associated with the person. The person
-     * becomes a COORDINATOR when it's added to a scientific commission. This
-     * listerner also removes the role from the person when it's removed from
-     * every scientific commissions and it's not in a coordination team.
-     * 
-     * @author cfgi
-     */
-    private static class ManageCoordinatorRole extends RelationAdapter<ScientificCommission, Person> {
-
-        @Override
-        public void afterAdd(ScientificCommission commission, Person person) {
-            super.afterAdd(commission, person);
-
-            if (person != null && commission != null) {
-                person.addPersonRoleByRoleType(RoleType.COORDINATOR);
-            }
-        }
-
-        @Override
-        public void afterRemove(ScientificCommission commission, Person person) {
-            super.afterRemove(commission, person);
-
-            if (person != null && commission != null) {
-                if (!person.getCoordinatorsSet().isEmpty()) {
-                    return;
-                }
-
-                if (!person.getScientificCommissionsSet().isEmpty()) {
-                    return;
-                }
-
-                person.removeRoleByType(RoleType.COORDINATOR);
-            }
-        }
-
     }
 
     public void changeContactStatus(Boolean contact) {

@@ -565,7 +565,7 @@ public class JerseyServices {
     public static Response addDeveloperRole(@PathParam("istid") String istid) {
         User user = User.findByUsername(istid);
         if (user != null && user.getPerson() != null) {
-            if (user.getPerson().getPersonRole(RoleType.DEVELOPER) == null) {
+            if (!user.getPerson().hasRole(RoleType.DEVELOPER)) {
                 addDeveloper(user);
             }
         }
@@ -574,7 +574,7 @@ public class JerseyServices {
 
     @Atomic(mode = TxMode.WRITE)
     public static void addDeveloper(User user) {
-        user.getPerson().addPersonRoleByRoleType(RoleType.DEVELOPER);
+        RoleType.grant(RoleType.DEVELOPER, user);
     }
 
     @GET

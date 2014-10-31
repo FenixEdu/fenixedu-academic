@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
@@ -124,7 +125,8 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
         int count = 0;
 
-        for (Person person : Person.readPersonsByRoleType(RoleType.ALUMNI)) {
+        for (User user : RoleType.ALUMNI.actualGroup().getMembers()) {
+            Person person = user.getPerson();
             if ((++count % 100) == 0) {
                 logger.info(String.format("Count %s persons", count));
             }

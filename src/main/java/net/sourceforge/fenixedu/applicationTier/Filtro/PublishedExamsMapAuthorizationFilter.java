@@ -34,8 +34,7 @@ public class PublishedExamsMapAuthorizationFilter {
     public static void execute(Object returnedObject) {
         User userView = Authenticate.getUser();
 
-        if (((userView != null && userView.getPerson().getPersonRolesSet() != null && !userView.getPerson()
-                .hasRole(getRoleType()))) || (userView == null) || (userView.getPerson().getPersonRolesSet() == null)) {
+        if (((userView != null && !userView.getPerson().hasRole(getRoleType()))) || (userView == null)) {
 
             if (returnedObject instanceof InfoExamsMap) {
 

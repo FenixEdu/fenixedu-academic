@@ -1,13 +1,12 @@
 package org.fenixedu.core.service;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.ui.services.UserInformationService;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,10 @@ public class FenixUserInformationService implements UserInformationService {
 
     @Override
     public Set<Group> getGroups(User user) {
-        Set<Role> personRolesSet = user.getPerson().getMainPersonRoles();
-        return personRolesSet.stream().map(Role::getRoleGroup).map(PersistentGroup::toGroup).collect(Collectors.toSet());
+        // TODO Implement this in a better way
+        return Collections.emptySet();
+//        Set<Role> personRolesSet = user.getPerson().getMainPersonRoles();
+//        return personRolesSet.stream().map(Role::getRoleGroup).map(PersistentGroup::toGroup).collect(Collectors.toSet());
     }
 
     @Override

@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.CoordinationTeamLog;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.Bundle;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -45,9 +44,6 @@ public class RemoveCoordinators {
                         .getPerson().getPresentationName(), coordinator.getExecutionDegree().getPresentationName());
 
                 coordinator.delete();
-                if (person.getCoordinatorsSet().isEmpty()) {
-                    person.removeRoleByType(RoleType.COORDINATOR);
-                }
             }
         }
     }

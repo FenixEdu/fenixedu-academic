@@ -47,7 +47,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForExecutionCourseAssociation;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -244,12 +243,8 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         if (person.getTeacher() != null) {
             Department department = person.getTeacher().getCurrentWorkingDepartment();
             teacherDepartment = InfoDepartment.newInfoFromDomain(department);
-            if (userView == null || !userView.getPerson().hasRole(RoleType.CREDITS_MANAGER)) {
-                final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCreditsSet();
-                request.setAttribute("isDepartmentManager", (departmentList.contains(department) || department == null));
-            } else {
-                request.setAttribute("isDepartmentManager", Boolean.FALSE);
-            }
+            final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCreditsSet();
+            request.setAttribute("isDepartmentManager", (departmentList.contains(department) || department == null));
         } else {
             request.setAttribute("isDepartmentManager", Boolean.TRUE);
         }

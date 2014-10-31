@@ -40,7 +40,7 @@ public class Invitation extends Invitation_Base {
         setChildParty(person);
         setParentParty(unit);
         setResponsible(responsible);
-        person.addPersonRoleByRoleType(RoleType.PERSON);
+        RoleType.grant(RoleType.PERSON, person.getUser());
         setInvitationInterval(begin, end);
     }
 

@@ -225,7 +225,7 @@ public class LibraryAttendance implements Serializable {
                 researcherUnit = person.getWorkingPlaceUnitForAnyRoleType();
             }
 
-            if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
+            if (person.hasRole(RoleType.GRANT_OWNER) && person.getEmployee() != null) {
                 PersonContractSituation currentGrantOwnerContractSituation =
                         person.getPersonProfessionalData() != null ? person.getPersonProfessionalData()
                                 .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;

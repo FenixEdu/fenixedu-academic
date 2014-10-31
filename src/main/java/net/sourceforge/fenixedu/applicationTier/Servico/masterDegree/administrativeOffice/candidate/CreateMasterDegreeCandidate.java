@@ -71,7 +71,7 @@ public class CreateMasterDegreeCandidate {
             }
         }
 
-        person.addPersonRoleByRoleType(RoleType.PERSON);
+        RoleType.grant(RoleType.PERSON, person.getUser());
 
         // Create the Candidate
         MasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();

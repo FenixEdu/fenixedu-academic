@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -36,7 +35,7 @@ public class QueueJobResultFile extends QueueJobResultFile_Base {
 
     @Override
     protected Group computePermittedGroup() {
-        return RoleGroup.get(RoleType.MANAGER);
+        return RoleType.MANAGER.actualGroup();
     }
 
     @Override

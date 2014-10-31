@@ -473,7 +473,7 @@ public class MergePersonsDA extends FenixDispatchAction {
         Unit ciistUnit = Unit.readByCostCenterCode(FenixConfigurationManager.getConfiguration().getCIISTCostCenterCode());
         Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
         if ((currentWorkingPlace != null && ciistUnit != null && !currentWorkingPlace.equals(ciistUnit))
-                || person.getPersonRole(RoleType.MANAGER) == null) {
+                || !person.hasRole(RoleType.MANAGER)) {
             throw new DomainException("What you want do do hein?!?!");
         }
         return person;

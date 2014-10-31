@@ -23,13 +23,13 @@ package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
@@ -80,14 +80,9 @@ public class PersonInformationBean {
         fillPersonalAndWorkContacts(person.getEmailAddresses(), getPersonalEmails(), getWorkEmails(), checkIfPublic);
 
         setPersonCategories(new ArrayList<String>());
-        for (Role role : person.getPersonRolesSet()) {
-            if (role.getRoleType().equals(RoleType.ALUMNI) || role.getRoleType().equals(RoleType.DELEGATE)
-                    || role.getRoleType().equals(RoleType.EMPLOYEE) || role.getRoleType().equals(RoleType.GRANT_OWNER)
-                    || role.getRoleType().equals(RoleType.RESEARCHER) || role.getRoleType().equals(RoleType.STUDENT)
-                    || role.getRoleType().equals(RoleType.TEACHER)) {
-                getPersonCategories().add(role.getRoleType().name());
-            }
-        }
+        Stream.of(RoleType.ALUMNI, RoleType.DELEGATE, RoleType.EMPLOYEE, RoleType.GRANT_OWNER, RoleType.RESEARCHER,
+                RoleType.STUDENT, RoleType.TEACHER).filter(roleType -> roleType.actualGroup().isMember(person.getUser()))
+                .forEach(role -> getPersonCategories().add(role.name()));
 
         setStudentDegrees(new ArrayList<String>());
         setStudentRegistrations(new ArrayList<Registration>());

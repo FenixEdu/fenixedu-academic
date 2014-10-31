@@ -31,8 +31,6 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
@@ -95,7 +93,6 @@ public class FenixBootstrapper {
                     Bundle.APPLICATION));
         }
 
-        createRoles();
         createManagerUser(adminSection, schoolSetupSection);
         createPartyTypeEnums();
         createAccountabilityTypeEnums();
@@ -223,7 +220,7 @@ public class FenixBootstrapper {
         }
 
         private org.fenixedu.bennu.core.groups.Group getCompetenceCourseMembersGroup() {
-            return RoleGroup.get(RoleType.TEACHER).or(RoleGroup.get(RoleType.MANAGER));
+            return RoleType.TEACHER.actualGroup().or(RoleType.MANAGER.actualGroup());
         }
 
         private String getDepartmentName(final int i) {
@@ -246,12 +243,6 @@ public class FenixBootstrapper {
 //        EmptyDegree.getInstance().setAdministrativeOffice(CreateTestData.administrativeOffice);
 //        EmptyDegreeCurricularPlan.init();
 
-    }
-
-    private static void createRoles() {
-        for (RoleType roleType : RoleType.values()) {
-            new Role(roleType);
-        }
     }
 
     private static void createCurricularYearsAndSemesters() {
@@ -343,15 +334,13 @@ public class FenixBootstrapper {
         Bennu bennu = Bennu.getInstance();
         User adminUser = User.findByUsername(adminSection.getAdminUsername());
         final Person person = new Person(adminUser);
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSONNEL_SECTION));
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE));
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.SPACE_MANAGER));
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.SPACE_MANAGER_SUPER_USER));
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE));
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER));
+        RoleType.grant(RoleType.SCIENTIFIC_COUNCIL, adminUser);
+        RoleType.grant(RoleType.PERSONNEL_SECTION, adminUser);
+        RoleType.grant(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE, adminUser);
+        RoleType.grant(RoleType.SPACE_MANAGER, adminUser);
+        RoleType.grant(RoleType.SPACE_MANAGER_SUPER_USER, adminUser);
+        RoleType.grant(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, adminUser);
+        RoleType.grant(RoleType.BOLONHA_MANAGER, adminUser);
         person.setRootDomainObject(bennu);
         person.setCountry(Country.readDefault());
         person.setCountryOfBirth(Country.readDefault());
