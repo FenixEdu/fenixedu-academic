@@ -49,7 +49,7 @@
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
-        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons"/>
         <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
@@ -62,7 +62,7 @@
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
-        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons"/>
         <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
@@ -75,7 +75,7 @@
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
-        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons"/>
         <property name="args" value="thesis=${thesis.externalId}"/>
         <property name="minChars" value="0"/>
     </slot>
@@ -88,7 +88,7 @@
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="name"/>
         <property name="indicatorShown" value="true"/>
-        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons"/>
         <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>

@@ -21,39 +21,29 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 
-import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.UserProfile;
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
 import pt.ist.fenixframework.Atomic;
 
-import com.google.common.base.Predicate;
-
-public class SearchTeachersByNameOrISTID implements AutoCompleteProvider<Teacher> {
+public class SearchTeachers implements AutoCompleteProvider<Teacher> {
 
     protected Collection<Teacher> search(final String value, final int size) {
-        final Predicate<Person> predicate = new Predicate<Person>() {
-            @Override
-            public boolean apply(final Person person) {
-                return person.getTeacher() != null;
-            }
-        };
-        final Collection<Person> people = Person.findPerson(value, size, predicate);
-        final Set<Teacher> teachers = new HashSet<Teacher>();
-        for (final Person person : people) {
-            teachers.add(person.getTeacher());
+        Set<Teacher> matches = new HashSet<>();
+        User user = User.findByUsername(value);
+        if (user != null && user.getProfile().getPerson() != null && user.getProfile().getPerson().getTeacher() != null) {
+            matches.add(user.getProfile().getPerson().getTeacher());
         }
-
-        for (Teacher teacher : Bennu.getInstance().getTeachersSet()) {
-            if (teacher.getTeacherId() != null && teacher.getTeacherId().indexOf(value) >= 0) {
-                teachers.add(teacher);
-            }
-        }
-        return teachers;
+        matches.addAll(UserProfile.searchByName(value, size).map(UserProfile::getPerson).filter(Objects::nonNull)
+                .map(p -> p.getTeacher()).filter(Objects::nonNull).collect(Collectors.toSet()));
+        return matches;
     }
 
     @Override

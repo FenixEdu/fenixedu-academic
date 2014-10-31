@@ -55,7 +55,7 @@
 			<fr:property name="format" value="${name} / ${username}"/>
 			<fr:property name="args" value="slot=name,size=30"/>
 			<fr:property name="minChars" value="3"/>
-			<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
+			<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersonss"/>
 			<fr:property name="indicatorShown" value="true"/>		
 			<fr:property name="errorStyleClass" value="error0"/>
 		</fr:slot>

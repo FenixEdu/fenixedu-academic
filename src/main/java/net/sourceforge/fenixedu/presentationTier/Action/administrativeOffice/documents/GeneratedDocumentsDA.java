@@ -18,15 +18,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.documents;
 
-import java.util.Collection;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.person.SimpleSearchPersonWithStudentBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -50,8 +45,6 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @StrutsFunctionality(app = AcademicAdminDocumentsApp.class, path = "generated-documents", titleKey = "label.documents",
         accessGroup = "academic(MANAGE_DOCUMENTS)")
@@ -86,25 +79,9 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
                 (SimpleSearchPersonWithStudentBean) getObjectFromViewState("searchPersonBean");
         request.setAttribute("searchPersonBean", searchPersonBean);
 
-        request.setAttribute("persons", searchPerson(request, searchPersonBean));
+        request.setAttribute("persons", searchPersonBean.search());
 
         return mapping.findForward("searchPerson");
-    }
-
-    @SuppressWarnings("unchecked")
-    private Collection<Person> searchPerson(HttpServletRequest request, SimpleSearchPersonWithStudentBean searchPersonBean)
-            throws FenixServiceException {
-        final SearchParameters searchParameters =
-                new SearchPerson.SearchParameters(searchPersonBean.getName(), null, searchPersonBean.getUsername(),
-                        searchPersonBean.getDocumentIdNumber(), searchPersonBean.getIdDocumentType() != null ? searchPersonBean
-                                .getIdDocumentType().toString() : null, null, null, null, null, null,
-                        searchPersonBean.getStudentNumber(), (String) null);
-
-        final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
-
-        final CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
-
-        return result.getCollection();
     }
 
     public ActionForward showAnnualIRSDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,

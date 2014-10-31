@@ -650,7 +650,7 @@
 				<property name="format" value="${name} / ${username}"/>
 				<property name="args" value="slot=name,size=20"/>
 				<property name="minChars" value="2"/>
-				<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID"/>
+				<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons"/>
 				<property name="indicatorShown" value="true"/>		
 		</slot>
 	</schema>

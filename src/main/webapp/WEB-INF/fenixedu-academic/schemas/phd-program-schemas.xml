@@ -532,7 +532,7 @@
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons"/>
 		<property name="args" value="size=50"/>
 		<property name="minChars" value="4"/>				
 	</slot>

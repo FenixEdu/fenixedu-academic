@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PossibleP
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.SocialSecurityNumberMismatchException;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.YearMonthDay;
 
 public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPersonalData_Base {
@@ -62,8 +61,7 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
         }
         // Get by identification number
         final Collection<Person> personSet = Person.readByDocumentIdNumber(getPersonalBean().getIdentificationNumber());
-        final Collection<Person> personNamesSet =
-                Person.readPersonsByName(StringNormalizer.normalize(getPersonalBean().getFullName()));
+        final Collection<Person> personNamesSet = Person.findPerson(getPersonalBean().getFullName());
 
         if (personSet.isEmpty() && personNamesSet.isEmpty()) {
             throw new PersonNotFoundException();

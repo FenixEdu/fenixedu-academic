@@ -32,9 +32,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.accounting.DepositAmount
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.OpenEvent;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.TransferPaymentsToOtherEventAndCancel;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AnnulAccountingTransactionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CancelEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.DepositAmountBean;
@@ -61,8 +58,6 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
-
-import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @StrutsFunctionality(app = AcademicAdminPaymentsApp.class, path = "manage-payments", titleKey = "label.payments.management",
         accessGroup = "academic(MANAGE_STUDENT_PAYMENTS_ADV)")
@@ -110,7 +105,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
                 (SimpleSearchPersonWithStudentBean) getObjectFromViewState("searchPersonBean");
         request.setAttribute("searchPersonBean", searchPersonBean);
 
-        final Collection<Person> persons = searchPerson(request, searchPersonBean);
+        final Collection<Person> persons = searchPersonBean.search();
         if (persons.size() == 1) {
             request.setAttribute("personId", persons.iterator().next().getExternalId());
 
@@ -148,22 +143,6 @@ public class PaymentsManagementDA extends FenixDispatchAction {
         }
 
         return mapping.findForward("showPaymentsForEvent");
-    }
-
-    protected Collection<Person> searchPerson(HttpServletRequest request, final SimpleSearchPersonWithStudentBean searchPersonBean)
-            throws FenixServiceException {
-        final SearchParameters searchParameters =
-                new SearchPerson.SearchParameters(searchPersonBean.getName(), null, searchPersonBean.getUsername(),
-                        searchPersonBean.getDocumentIdNumber(), searchPersonBean.getIdDocumentType() != null ? searchPersonBean
-                                .getIdDocumentType().toString() : null, null, null, null, null, null,
-                        searchPersonBean.getStudentNumber(), searchPersonBean.getPaymentCode());
-
-        final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
-
-        final CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
-
-        return result.getCollection();
-
     }
 
     public ActionForward prepareCancelEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -18,10 +18,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.PersonSearcher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
@@ -31,17 +33,8 @@ public class SearchAllActiveParties extends SearchParties<Party> {
 
     @Override
     protected Collection<Party> search(String value, int size) {
-        ArrayList<Party> result = new ArrayList<Party>();
-
-        if (value.length() > 3 && value.substring(0, 3).equals("ist")) {
-            Person person = Person.readPersonByUsername(value);
-            if (person != null) {
-                result.add(person);
-            }
-        } else {
-            result.addAll(Person.findPerson(value, size));
-        }
-
+        Set<Party> result = new HashSet<Party>();
+        result.addAll(new PersonSearcher().bestEffortQuery(value).search(size).collect(Collectors.toSet()));
         YearMonthDay currentDate = new YearMonthDay();
         for (UnitName unitName : UnitName.find(value, size)) {
             if (unitName.getUnit().isActive(currentDate)) {

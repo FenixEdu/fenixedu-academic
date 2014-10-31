@@ -77,7 +77,7 @@
 				<fr:property name="size" value="80"/>
 				<fr:property name="labelField" value="person.name"/>
 				<fr:property name="indicatorShown" value="true"/>
-				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachersByName"/>
+				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachers"/>
 				<fr:property name="args" value="slot=person.name"/>
 				<fr:property name="minChars" value="3"/>
 				<fr:property name="errorStyleClass" value="error0"/>

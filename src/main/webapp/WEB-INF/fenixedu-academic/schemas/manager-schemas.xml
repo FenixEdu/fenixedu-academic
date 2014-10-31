@@ -556,7 +556,7 @@
 		<property name="size" value="70"/>
 		<property name="rawSlotName" value="name"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons"/>
 		<property name="args" value="slot=name,size=30"/>
 		<property name="minChars" value="4"/>
 		<property name="labelField" value="name"/>

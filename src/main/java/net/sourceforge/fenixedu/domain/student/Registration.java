@@ -83,7 +83,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -1359,35 +1358,6 @@ public class Registration extends Registration_Base {
             }
         }
         return registrations;
-    }
-
-    final public static void readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
-            final Collection<Registration> result, String studentName, String docIdNumber, IDDocumentType idType,
-            Integer studentNumber) {
-
-        if (studentNumber != null && studentNumber > 0) {
-            result.addAll(Registration.readRegistrationsByNumberAndDegreeTypes(studentNumber, DegreeType.MASTER_DEGREE,
-                    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
-        }
-
-        if (!StringUtils.isEmpty(studentName)) {
-            for (Person person : Person.readPersonsByName(studentName)) {
-                if (person.getStudent() != null) {
-                    result.addAll(person.getStudent().getRegistrationsByDegreeTypes(DegreeType.MASTER_DEGREE,
-                            DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
-                }
-            }
-        }
-
-        if (!StringUtils.isEmpty(docIdNumber)) {
-            for (Person person : Person.readByDocumentIdNumber(docIdNumber)) {
-                if (person.getStudent() != null) {
-                    result.addAll(person.getStudent().getRegistrationsByDegreeTypes(DegreeType.MASTER_DEGREE,
-                            DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
-                }
-            }
-        }
-
     }
 
     final public static List<Registration> readAllStudentsBetweenNumbers(Integer fromNumber, Integer toNumber) {

@@ -18,33 +18,18 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.person.PersonSearcher;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
-import org.joda.time.YearMonthDay;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
-public class SearchAllActivePartiesByName extends SearchParties<Party> {
-
+public class SearchPersons implements AutoCompleteProvider<Person> {
     @Override
-    protected Collection<Party> search(String value, int size) {
-
-        Collection<Party> result = new ArrayList<Party>();
-        YearMonthDay currentDate = new YearMonthDay();
-
-        result.addAll(Person.findPerson(value, size));
-
-        Collection<UnitName> units = UnitName.find(value, size);
-        for (UnitName unitName : units) {
-            if (unitName.getUnit().isActive(currentDate)) {
-                result.add(unitName.getUnit());
-            }
-        }
-
-        return result;
+    public Collection<Person> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+        return new PersonSearcher().bestEffortQuery(value).search(maxCount).collect(Collectors.toSet());
     }
-
 }

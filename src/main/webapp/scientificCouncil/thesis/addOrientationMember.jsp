@@ -57,7 +57,7 @@
 				<fr:property name="labelField" value="presentationName" />
 				<fr:property name="args" value="slot=name,size=20" />
 				<fr:property name="minChars" value="3" />
-				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID" />
+				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPersons" />
 				<fr:property name="indicatorShown" value="true" />
 				<fr:property name="required" value="true"/>
 			</fr:slot>

@@ -979,32 +979,6 @@ public class Person extends Person_Base {
         return result;
     }
 
-    // used by grant owner
-    public static List<Person> readPersonsByName(final String name, final Integer startIndex, final Integer numberOfElementsInSpan) {
-        final Collection<Person> personsList = readPersonsByName(name, Integer.MAX_VALUE);
-        if (startIndex != null && numberOfElementsInSpan != null && !personsList.isEmpty()) {
-            final int finalIndex = Math.min(personsList.size(), startIndex + numberOfElementsInSpan);
-            final List<Person> result = new ArrayList<Person>(finalIndex - startIndex);
-            final Iterator<Person> iter = personsList.iterator();
-            for (int i = 0; i <= finalIndex && iter.hasNext(); i++) {
-                final Person person = iter.next();
-                if (i >= startIndex) {
-                    result.add(person);
-                }
-            }
-            return result;
-        }
-        return Collections.EMPTY_LIST;
-    }
-
-    public static Integer countAllByName(final String name) {
-        return readPersonsByName(name, Integer.MAX_VALUE).size();
-    }
-
-    public static Collection<Person> readPersonsByName(final String name, final int size) {
-        return findPerson(name.replace('%', ' '), size);
-    }
-
     public static Stream<Person> findPersonStream(final String name, final int size) {
         return Stream.concat(PersonName.findPersonStream(name, size).map(n -> n.getPerson()), UserProfile
                 .searchByName(name, size).map(p -> p.getPerson()).filter(Objects::nonNull));
@@ -1012,15 +986,6 @@ public class Person extends Person_Base {
 
     public static Collection<Person> findPerson(final String name, final int size) {
         return findPersonStream(name, size).collect(Collectors.toSet());
-    }
-
-    public static Collection<Person> findPerson(final String name, final int size,
-            final com.google.common.base.Predicate<Person> predicate) {
-        return findPersonStream(name, size).filter(p -> predicate.apply(p)).collect(Collectors.toSet());
-    }
-
-    public static Collection<Person> readPersonsByName(final String name) {
-        return findPerson(name.replace('%', ' '));
     }
 
     public static List<Person> readAllPersons() {
