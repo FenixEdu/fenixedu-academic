@@ -50,6 +50,8 @@ public class CreateReceiptBean implements Serializable {
 
     private String contributorName;
 
+    private String contributorAddress;
+
     private boolean usingContributorParty;
 
     public CreateReceiptBean() {
@@ -65,6 +67,14 @@ public class CreateReceiptBean implements Serializable {
 
     public void setContributorParty(Party contributorParty) {
         this.contributorParty = contributorParty;
+        if (contributorParty != null) {
+            this.contributorName = contributorParty.getName();
+            this.contributorNumber = contributorParty.getSocialSecurityNumber();
+            this.contributorAddress =
+                    contributorParty.getAddress()
+                            + (!StringUtils.isEmpty(contributorParty.getAreaCode()) ? contributorParty.getAreaCode() + " "
+                                    + contributorParty.getAreaOfAreaCode() : null);
+        }
     }
 
     public boolean isUsingContributorParty() {
@@ -121,6 +131,14 @@ public class CreateReceiptBean implements Serializable {
 
     public void setContributorName(String contributorName) {
         this.contributorName = contributorName;
+    }
+
+    public String getContributorAddress() {
+        return contributorAddress;
+    }
+
+    public void setContributorAddress(String contributorAddress) {
+        this.contributorAddress = contributorAddress;
     }
 
     public List<Entry> getSelectedEntries() {

@@ -51,6 +51,8 @@ import org.slf4j.LoggerFactory;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
+import com.google.common.base.Strings;
+
 public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 
     private static final Logger logger = LoggerFactory.getLogger(GratuityReportQueueJob.class);
@@ -364,15 +366,13 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 
             List<String> contributorsNames = new ArrayList<String>();
             for (Receipt receipt : transaction.getEntryFor(transaction.getFromAccount()).getReceiptsSet()) {
-                if (!org.apache.commons.lang.StringUtils.isEmpty(receipt.getContributorName())) {
+                if (!Strings.isNullOrEmpty(receipt.getContributorName())) {
                     contributorsNames.add(receipt.getContributorName());
                     continue;
                 }
-
-                if (receipt.getContributorParty() != transaction.getEvent().getPerson()) {
-                    contributorsNames.add(receipt.getContributorParty().getSocialSecurityNumber());
+                if (!Strings.isNullOrEmpty(receipt.getContributorNumber())) {
+                    contributorsNames.add(receipt.getContributorNumber());
                 }
-
             }
 
             return contributorsNames.toArray(new String[0]);

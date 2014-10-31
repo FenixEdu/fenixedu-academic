@@ -87,11 +87,6 @@
               <form-property type="java.lang.String" name="districtOfResidence"></form-property>
               <form-property type="java.lang.String" name="contributorId"></form-property>
         </form-bean>
-        <!-- Bean for The Choosing of a Contributor -->
-        <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseContributorForm">
-              <form-property type="java.lang.Integer" name="page"></form-property>
-              <form-property type="java.lang.String" name="contributorNumber"></form-property>
-        </form-bean>
         <!-- bolonhaStudentEnrollmentForm -->
         <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="bolonhaStudentEnrollmentForm">
               <form-property type="java.lang.String" name="method"></form-property>

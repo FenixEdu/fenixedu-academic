@@ -93,59 +93,6 @@
       </field>
     </form>
 
-
-    <!-- validation for the Create Contributor Form -->
-    <form name="createContributorForm">
-      <field property="contributorNumber" depends="required,integer" page="1">
-        <arg0 key="label.masterDegree.administrativeOffice.contributorNumber" />
-      </field>
-
-      <field property="contributorName" depends="required" page="1">
-        <arg0 key="label.masterDegree.administrativeOffice.contributorName" />
-      </field>
-
-      <field property="contributorAddress" depends="required" page="1">
-        <arg0 key="label.masterDegree.administrativeOffice.contributorAddress" />
-      </field>
-    </form>
-    
-
-    <!-- validation for the Create Guide Form -->
-    <form name="createGuideForm">
-      <!--<field property="degree" depends="required" page="1">
-        <arg0 key="label.masterDegree.administrativeOffice.degree" />
-      </field> -->
-
-      <field property="number" depends="required, integer" page="1">
-        <arg0 key="label.masterDegree.administrativeOffice.requesterNumber" />
-      </field>
-
-      <field property="requester" depends="required" page="1">
-        <arg0 key="label.masterDegree.administrativeOffice.requesterType" />
-      </field>
-
-      <field property="graduationType" depends="required" page="1">
-        <arg0 key="label.masterDegree.administrativeOffice.graduationType" />
-      </field>
-
-      <field property="contributorNumber" depends="integer" page="1">
-        <arg0 key="label.masterDegree.administrativeOffice.contributorNumber" />
-      </field>
-
-      <field property="contributorNumber" depends="required" page="2">
-        <arg0 key="label.masterDegree.administrativeOffice.contributorNumber" />
-      </field>
-
-      <field property="contributorName" depends="required" page="2">
-        <arg0 key="label.masterDegree.administrativeOffice.contributorName" />
-      </field>
-
-      <field property="contributorAddress" depends="required" page="2">
-        <arg0 key="label.masterDegree.administrativeOffice.contributorAddress" />
-      </field>
-    </form>
-    
-
    <!-- validation for the Final Step in a Guide Creation -->
     <form name="guideCreateReadyForm">
 	  <field property="guideSituation" depends="required" page="1">
@@ -160,14 +107,6 @@
         <arg0 key="label.candidate.candidateNumber" />
       </field>
      
-    </form>
-
-
-   <!-- validation for the Choose Contributor Form -->
-    <form name="chooseContributorForm">
-      <field property="contributorNumber" depends="integer" page="1">
-        <arg0 key="label.masterDegree.administrativeOffice.contributorNumber" />
-      </field>
     </form>
     
     <!-- validation for the Change Application Info Form-->

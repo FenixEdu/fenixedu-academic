@@ -47,9 +47,6 @@ import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.accessControl.MembersLinkGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
@@ -214,8 +211,7 @@ public class Unit extends Unit_Base {
                 && getChildsSet().isEmpty() && getFunctionsSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
-        if (!(getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty() && getUnitServiceAgreementTemplate() == null && getOwnedReceiptsSet()
-                .isEmpty())) {
+        if (!(getUnitServiceAgreementTemplate() == null && getOwnedReceiptsSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
 
@@ -853,16 +849,6 @@ public class Unit extends Unit_Base {
         return noOfficialExternalInstitutionUnit;
     }
 
-    public static Party createContributor(final String contributorName, final String contributorNumber,
-            final PhysicalAddressData data) {
-
-        final Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
-        contributor.setSocialSecurityNumber(contributorNumber);
-        final PhysicalAddress address = PhysicalAddress.createPhysicalAddress(contributor, data, PartyContactType.PERSONAL, true);
-        address.setValid();
-        return contributor;
-    }
-
     public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
 
         List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
@@ -1084,8 +1070,6 @@ public class Unit extends Unit_Base {
         Collection<? extends Accountability> externalContracts =
                 fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
         destinationUnit.getChildsSet().addAll(externalContracts);
-        destinationUnit.getPayedReceiptsSet().addAll(fromUnit.getPayedReceiptsSet());
-        destinationUnit.getPayedGuidesSet().addAll(fromUnit.getPayedGuidesSet());
         destinationUnit.getAssociatedNonAffiliatedTeachersSet().addAll(fromUnit.getAssociatedNonAffiliatedTeachersSet());
         destinationUnit.getPrecedentDegreeInformationsSet().addAll(fromUnit.getPrecedentDegreeInformationsSet());
 

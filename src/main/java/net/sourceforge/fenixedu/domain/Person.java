@@ -1246,9 +1246,8 @@ public class Person extends Person_Base {
                 && getAssociatedAlteredCurriculumsSet().isEmpty() && getEnrolmentEvaluationsSet().isEmpty()
                 && getExportGroupingSendersSet().isEmpty() && getResponsabilityTransactionsSet().isEmpty()
                 && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty() && getEmployee() == null
-                && getTeacher() == null && getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty()
-                && !hasAnyPersonFunctions() && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet()
-                .isEmpty())) {
+                && getTeacher() == null && !hasAnyPersonFunctions() && getInternalParticipantsSet().isEmpty()
+                && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.person.cannot.be.deleted"));
         }
     }
@@ -2258,20 +2257,6 @@ public class Person extends Person_Base {
         }
 
         return result;
-    }
-
-    static public Party createContributor(final String contributorName, final String contributorNumber,
-            final PhysicalAddressData data) {
-
-        final Person externalPerson =
-                createExternalPerson(contributorName, Gender.MALE, data, null, null, null, null,
-                        String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
-        externalPerson.getPendingOrValidPhysicalAddresses().iterator().next().setValid();
-        externalPerson.setSocialSecurityNumber(contributorNumber);
-
-        new ExternalContract(externalPerson, Bennu.getInstance().getExternalInstitutionUnit(), new YearMonthDay(), null);
-
-        return externalPerson;
     }
 
     @Override

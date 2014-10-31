@@ -25,19 +25,17 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateReceipt {
 
     @Atomic
-    public static Receipt run(final Person responsible, final Person person, final Party contributor,
-            final String contributorName, final Integer year, final List<Entry> entries) {
+    public static Receipt run(final Person responsible, final Person person, final String contributorName,
+            String contributorNumber, String contributorAddress, final Integer year, final List<Entry> entries) {
         check(AcademicPredicates.MANAGE_STUDENT_PAYMENTS);
 
-        return Receipt.createWithContributorPartyOrContributorName(responsible, person, contributor, contributorName, year,
-                entries);
+        return Receipt.create(responsible, person, contributorName, contributorNumber, contributorAddress, year, entries);
     }
 
 }

@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.CreditNoteEntryDTO
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
@@ -82,35 +81,38 @@ public class Receipt extends Receipt_Base {
         super();
     }
 
-    static public Receipt createWithContributorParty(Person responsible, Person person, Party contributor, Integer year,
-            List<Entry> entries) {
+    static public Receipt create(Person responsible, Person person, String contributorName, String contributorNumber,
+            String contributorAddress, Integer year, List<Entry> entries) {
         final Receipt result = new Receipt();
-        result.init(responsible, person, contributor, null, year, entries, NUMBER_SERIES_BY_YEAR.get(year));
-
-        return result;
-    }
-
-    static public Receipt createWithContributorName(Person responsible, Person person, String contributorName, Integer year,
-            List<Entry> entries) {
-        final Receipt result = new Receipt();
-        result.init(responsible, person, null, contributorName, year, entries, NUMBER_SERIES_BY_YEAR.get(year));
-
-        return result;
-    }
-
-    static public Receipt createWithContributorPartyOrContributorName(Person responsible, Person person, Party contributorParty,
-            String contributorName, Integer year, List<Entry> entries) {
-        final Receipt result = new Receipt();
-        result.init(responsible, person, contributorParty, contributorName, year, entries, NUMBER_SERIES_BY_YEAR.get(year));
+        result.init(responsible, person, contributorName, contributorNumber, contributorAddress, year, entries,
+                NUMBER_SERIES_BY_YEAR.get(year));
 
         return result;
 
     }
 
-    private void init(Person responsible, Person person, Party contributorParty, String contributorName, Integer year,
-            List<Entry> entries, String numberSeries) {
+    private void init(Person responsible, Person person, String contributorName, String contributorNumber,
+            String contributorAddress, Integer year, List<Entry> entries, String numberSeries) {
 
-        checkParameters(person, contributorParty, contributorName, year, entries);
+        if (person == null) {
+            throw new DomainException("error.accouting.Receipt.person.cannot.be.null");
+        }
+
+        if (StringUtils.isEmpty(contributorName)) {
+            throw new DomainException("error.accounting.Receipt.contributor.or.contributorName.must.be.not.null");
+        }
+
+        if (year == null) {
+            throw new DomainException("error.accounting.Receipt.year.cannot.be.null");
+        }
+
+        if (entries == null) {
+            throw new DomainException("error.accounting.Receipt.entries.cannot.be.null");
+        }
+
+        if (entries.isEmpty()) {
+            throw new DomainException("error.accounting.Receipt.entries.cannot.be.empty");
+        }
 
         checkRulesToCreate(person, year, entries);
 
@@ -119,8 +121,9 @@ public class Receipt extends Receipt_Base {
         super.setYear(year);
         super.setNumberSeries(numberSeries);
         super.setPerson(person);
-        super.setContributorParty(contributorParty);
-        super.setContributorName(contributorName);
+        setContributorName(contributorName);
+        setContributorNumber(contributorNumber);
+        setContributorAddress(contributorAddress);
         super.setWhenCreated(new DateTime());
         changeState(responsible, ReceiptState.ACTIVE);
         super.setReceiptDate(new YearMonthDay().getYear() != year.intValue() ? getLastDayOfYear(year) : new YearMonthDay());
@@ -150,38 +153,6 @@ public class Receipt extends Receipt_Base {
             if (!entry.getAccountingTransaction().isSourceAccountFromParty(person)) {
                 throw new DomainException("error.accounting.Receipt.entries.must.belong.to.person");
             }
-        }
-    }
-
-    private void checkParameters(Person person, Party contributor, String contributorName, Integer year, List<Entry> entries) {
-
-        if (person == null) {
-            throw new DomainException("error.accouting.Receipt.person.cannot.be.null");
-        }
-
-        checkContributorParameters(contributor, contributorName);
-
-        if (year == null) {
-            throw new DomainException("error.accounting.Receipt.year.cannot.be.null");
-        }
-
-        if (entries == null) {
-            throw new DomainException("error.accounting.Receipt.entries.cannot.be.null");
-        }
-
-        if (entries.isEmpty()) {
-            throw new DomainException("error.accounting.Receipt.entries.cannot.be.empty");
-        }
-
-    }
-
-    private void checkContributorParameters(Party contributor, String contributorName) {
-        if (contributor == null && StringUtils.isEmpty(contributorName)) {
-            throw new DomainException("error.accounting.Receipt.contributor.or.contributorName.must.be.not.null");
-        }
-
-        if (contributor != null && !StringUtils.isEmpty(contributorName)) {
-            throw new DomainException("error.accounting.Receipt.contributor.and.contributorName.are.exclusive");
         }
     }
 
@@ -243,11 +214,6 @@ public class Receipt extends Receipt_Base {
     @Override
     public void setResponsible(Person responsible) {
         throw new DomainException("error.accounting.Receipt.cannot.modify.responsible");
-    }
-
-    @Override
-    public void setContributorParty(Party contributorParty) {
-        throw new DomainException("error.accounting.Receipt.cannot.modify.contributorParty");
     }
 
     @Override
@@ -384,7 +350,6 @@ public class Receipt extends Receipt_Base {
 
         deleteReceiptPrintVersions();
 
-        super.setContributorParty(null);
         super.setResponsible(null);
         super.getEntriesSet().clear();
         super.setPerson(null);
@@ -420,11 +385,6 @@ public class Receipt extends Receipt_Base {
         return super.getNumber();
     }
 
-    public void changeContributor(final Party contributor) {
-        check(this, RolePredicates.MANAGER_PREDICATE);
-        super.setContributorParty(contributor);
-    }
-
     public List<CreditNote> getEmittedCreditNotes() {
         final List<CreditNote> result = new ArrayList<CreditNote>();
         for (final CreditNote creditNote : super.getCreditNotesSet()) {
@@ -437,12 +397,16 @@ public class Receipt extends Receipt_Base {
 
     }
 
-    public void edit(final Person responsible, final Party contributorParty, final String contributorName) {
+    public void edit(final Person responsible, final String contributorName, final String contributorNumber,
+            final String contributorAddress) {
         check(this, AcademicPredicates.MANAGE_STUDENT_PAYMENTS);
         markChange(responsible);
-        checkContributorParameters(contributorParty, contributorName);
-        super.setContributorParty(contributorParty);
-        super.setContributorName(contributorName);
+        if (StringUtils.isEmpty(contributorName)) {
+            throw new DomainException("error.accounting.Receipt.contributor.or.contributorName.must.be.not.null");
+        }
+        setContributorName(contributorName);
+        setContributorNumber(contributorNumber);
+        setContributorAddress(contributorAddress);
     }
 
     public void changeStateAndEntries(final ReceiptState state, final Set<Entry> newEntries) {

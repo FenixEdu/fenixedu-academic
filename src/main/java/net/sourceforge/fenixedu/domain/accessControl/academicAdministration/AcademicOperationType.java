@@ -119,8 +119,6 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     VIEW_FULL_STUDENT_CURRICULUM(true, true, Scope.OFFICE),
 
-    MANAGE_CONTRIBUTORS(true, true, Scope.ADMINISTRATION),
-
     MANAGE_DOCUMENTS(true, true, Scope.OFFICE),
 
     /* Phd Management */

@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
@@ -42,15 +41,15 @@ public class CreatePaymentsForEvents {
 
     @Atomic
     public static Receipt run(final User responsibleUser, final Collection<EntryDTO> entryDTOs, final PaymentMode paymentMode,
-            final boolean differedPayment, final DateTime whenRegistered, final Person person, final Party contributorParty,
-            final String contributorName) {
+            final boolean differedPayment, final DateTime whenRegistered, final Person person, final String contributorName,
+            final String contributorNumber, final String contributorAddress) {
 
         final DateTime dateToSet = differedPayment ? whenRegistered : new DateTime();
 
         final List<Entry> createdEntries = createEntries(responsibleUser, entryDTOs, paymentMode, dateToSet);
 
-        return Receipt.createWithContributorPartyOrContributorName(responsibleUser.getPerson(), person, contributorParty,
-                contributorName, dateToSet.getYear(), createdEntries);
+        return Receipt.create(responsibleUser.getPerson(), person, contributorName, contributorNumber, contributorAddress,
+                dateToSet.getYear(), createdEntries);
 
     }
 

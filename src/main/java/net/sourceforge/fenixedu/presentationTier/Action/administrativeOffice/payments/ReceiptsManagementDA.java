@@ -86,6 +86,8 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
 
         private String contributorName;
 
+        private String contributorAddress;
+
         private boolean usingContributorParty;
 
         public EditReceiptBean(final Receipt receipt, final Person responsible) {
@@ -109,6 +111,14 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
 
         public void setContributorParty(Party contributorParty) {
             this.contributorParty = contributorParty;
+            if (contributorParty != null) {
+                this.contributorName = contributorParty.getName();
+                this.contributorNumber = contributorParty.getSocialSecurityNumber();
+                this.contributorAddress =
+                        contributorParty.getAddress()
+                                + (!StringUtils.isEmpty(contributorParty.getAreaCode()) ? contributorParty.getAreaCode() + " "
+                                        + contributorParty.getAreaOfAreaCode() : null);
+            }
         }
 
         public void setContributorPartySocialSecurityNumber(PartySocialSecurityNumber partySocialSecurityNumber) {
@@ -141,6 +151,14 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
 
         public void setContributorName(String contributorName) {
             this.contributorName = contributorName;
+        }
+
+        public String getContributorAddress() {
+            return contributorAddress;
+        }
+
+        public void setContributorAddress(String contributorAddress) {
+            this.contributorAddress = contributorAddress;
         }
 
         public boolean isUsingContributorParty() {
@@ -209,8 +227,9 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
         try {
             final Receipt receipt =
                     CreateReceipt.run(getUserView(request).getPerson(), createReceiptBean.getPerson(),
-                            createReceiptBean.getContributorParty(), createReceiptBean.getContributorName(),
-                            createReceiptBean.getYear(), createReceiptBean.getSelectedEntries());
+                            createReceiptBean.getContributorName(), createReceiptBean.getContributorNumber(),
+                            createReceiptBean.getContributorAddress(), createReceiptBean.getYear(),
+                            createReceiptBean.getSelectedEntries());
 
             request.setAttribute("personId", receipt.getPerson().getExternalId());
             request.setAttribute("receiptID", receipt.getExternalId());
@@ -319,8 +338,8 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
         final EditReceiptBean editReceiptBean = (EditReceiptBean) getObjectFromViewState("editReceiptBean");
 
         try {
-            EditReceipt.run(editReceiptBean.getReceipt(), editReceiptBean.getResponsible(),
-                    editReceiptBean.getContributorParty(), editReceiptBean.getContributorName());
+            EditReceipt.run(editReceiptBean.getReceipt(), editReceiptBean.getResponsible(), editReceiptBean.getContributorName(),
+                    editReceiptBean.getContributorNumber(), editReceiptBean.getContributorAddress());
         } catch (DomainException e) {
             request.setAttribute("editReceiptBean", editReceiptBean);
             addActionMessage(request, e.getKey(), e.getArgs());

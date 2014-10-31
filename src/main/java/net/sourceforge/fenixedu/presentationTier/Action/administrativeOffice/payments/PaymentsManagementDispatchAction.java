@@ -156,8 +156,8 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
                     CreatePaymentsForEvents.run(getUserView(request).getPerson().getUser(),
                             paymentsManagementDTO.getSelectedEntries(), PaymentMode.CASH,
                             paymentsManagementDTO.isDifferedPayment(), paymentsManagementDTO.getPaymentDate(),
-                            paymentsManagementDTO.getPerson(), paymentsManagementDTO.getContributorParty(),
-                            paymentsManagementDTO.getContributorName());
+                            paymentsManagementDTO.getPerson(), paymentsManagementDTO.getContributorName(),
+                            paymentsManagementDTO.getContributorNumber(), paymentsManagementDTO.getContributorAddress());
 
             request.setAttribute("personId", paymentsManagementDTO.getPerson().getExternalId());
             request.setAttribute("receiptID", receipt.getExternalId());

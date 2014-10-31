@@ -113,20 +113,6 @@
                   <form-property type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="masterDegree"></form-property>
             </form-bean>
-            <!-- Bean for The Creation of a Guide -->
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createGuideForm">
-                  <form-property type="java.lang.Integer" name="page"></form-property>
-                  <!--<form-property name="degree" type="java.lang.String" /> -->
-                  <form-property type="java.lang.String" name="number"></form-property>
-                  <form-property type="java.lang.String" name="requester"></form-property>
-                  <form-property type="java.lang.String" name="graduationType"></form-property>
-                  <form-property type="java.lang.String" name="contributorNumber"></form-property>
-                  <form-property type="java.lang.String" name="contributorName"></form-property>
-                  <form-property type="java.lang.String" name="contributorAddress"></form-property>
-                  <form-property type="java.lang.String" name="contributorList"></form-property>
-                  <form-property type="java.lang.String" name="executionDegreeID"></form-property>
-                  <form-property type="java.lang.String" name="unexistingContributor"></form-property>
-            </form-bean>
             <!-- Bean for ready to create a guide  -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="guideCreateReadyForm">
                   <form-property type="java.lang.Integer" name="page"></form-property>

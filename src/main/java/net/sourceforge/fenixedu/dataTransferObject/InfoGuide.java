@@ -44,8 +44,6 @@ public class InfoGuide extends InfoObject {
 
     private InfoPerson infoPerson;
 
-    private InfoContributor infoContributor;
-
     private List<InfoGuideEntry> infoGuideEntries;
 
     private GuideRequester guideRequester;
@@ -70,14 +68,13 @@ public class InfoGuide extends InfoObject {
     }
 
     public InfoGuide(Integer number, Integer year, Double total, String remarks, InfoPerson infoPerson,
-            InfoContributor infoContributor, GuideRequester guideRequester, InfoExecutionDegree infoExecutionDegree,
-            PaymentType paymentType, Date creationDate, Integer version) {
+            GuideRequester guideRequester, InfoExecutionDegree infoExecutionDegree, PaymentType paymentType, Date creationDate,
+            Integer version) {
         this.number = number;
         this.year = year;
         this.total = total;
         this.remarks = remarks;
         this.infoPerson = infoPerson;
-        this.infoContributor = infoContributor;
         this.guideRequester = guideRequester;
         this.infoExecutionDegree = infoExecutionDegree;
         this.paymentType = paymentType;
@@ -103,7 +100,6 @@ public class InfoGuide extends InfoObject {
         result += ", number=" + number;
         result += ", year=" + year;
         result += ", person=" + infoPerson;
-        result += ", contributor=" + infoContributor;
         result += ", total=" + total;
         result += ", remarks=" + remarks;
         result += ", infoGuideEntries=" + infoGuideEntries;
@@ -123,13 +119,6 @@ public class InfoGuide extends InfoObject {
      */
     public GuideRequester getGuideRequester() {
         return guideRequester;
-    }
-
-    /**
-     * @return
-     */
-    public InfoContributor getInfoContributor() {
-        return infoContributor;
     }
 
     /**
@@ -186,13 +175,6 @@ public class InfoGuide extends InfoObject {
      */
     public void setGuideRequester(GuideRequester requester) {
         guideRequester = requester;
-    }
-
-    /**
-     * @param contributor
-     */
-    public void setInfoContributor(InfoContributor contributor) {
-        infoContributor = contributor;
     }
 
     /**

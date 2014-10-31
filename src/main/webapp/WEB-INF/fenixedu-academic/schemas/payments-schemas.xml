@@ -80,12 +80,16 @@
 	<slot name="state"/>
 </schema>
 
-<schema name="contributor.view" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party" bundle="APPLICATION_RESOURCES">
-	<slot name="name"/>
-	<slot name="socialSecurityNumber" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.socialSecurityNumber"/>
-	<slot name="address"/>
-	<slot name="areaCode" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.areaCode"/>
-	<slot name="areaOfAreaCode" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.areaOfAreaCode"/>
+<schema name="contributor.view" type="net.sourceforge.fenixedu.domain.accounting.Receipt" bundle="APPLICATION_RESOURCES">
+	<slot name="contributorName"/>
+	<slot name="contributorNumber"/>
+	<slot name="contributorAddress"/>
+</schema>
+
+<schema name="contributorBean.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
+    <slot name="contributorName"/>
+    <slot name="contributorNumber"/>
+    <slot name="contributorAddress"/>
 </schema>
 
 <schema name="receipt.view.contributorName" type="net.sourceforge.fenixedu.domain.accounting.Receipt" bundle="APPLICATION_RESOURCES">
@@ -141,6 +145,14 @@
 		<property name="size" value="70"/>
 		<property name="maxLength" value="255"/>
 	</slot>
+    <slot name="contributorNumber" key="label.contributorNumber">
+        <property name="size" value="70"/>
+        <property name="maxLength" value="255"/>
+    </slot>
+    <slot name="contributorAddress" key="label.contributorAddress">
+        <property name="size" value="70"/>
+        <property name="maxLength" value="255"/>
+    </slot>
 </schema>
 
 <schema name="createReceiptBean.create.notRequired" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
@@ -155,11 +167,6 @@
 		<property name="rawSlotName" value="contributorNumber" />
 	</slot>
 </schema>
-
-<schema name="createReceiptBean.view.contributorName" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean"  bundle="APPLICATION_RESOURCES">
-	<slot name="contributorName" />
-</schema>
-
 
 <schema name="paymentsManagementDTO.edit.with.contributorParty" type="net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="differedPayment" />
@@ -194,6 +201,14 @@
 		<property name="size" value="70"/>
 		<property name="maxLength" value="255"/>
 	</slot>
+    <slot name="contributorNumber">
+        <property name="size" value="70"/>
+        <property name="maxLength" value="255"/>
+    </slot>
+    <slot name="contributorAddress">
+        <property name="size" value="70"/>
+        <property name="maxLength" value="255"/>
+    </slot>
 </schema>
 
 <schema name="AccountingEvent.view" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES">
@@ -434,31 +449,6 @@
 	</slot>
 </schema>
 
-<schema name="CreateOtherPartyPaymentBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateOtherPartyPaymentBean" bundle="APPLICATION_RESOURCES">
-	<slot name="event.description" read-only="true" />
-	<slot name="contributorParty" layout="autoComplete"
-			validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.CreateOtherPartyPaymentBean.contributorParty.socialSecurityNumber">
-		<property name="size" value="70"/>
-		<property name="format" value="${socialSecurityNumber} - ${name}"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartiesBySocialSecurityNumber"/>
-		<property name="args" value="slot=socialSecurityNumber"/>
-		<property name="minChars" value="1"/>
-		<property name="maxCount" value="20"/>
-	</slot>
-	<slot name="amount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-    	<property name="size" value="10"/>
-		<property name="maxLength" value="10"/>
-	</slot>
-</schema>
-
-<schema name="CreateOtherPartyPaymentBean.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateOtherPartyPaymentBean" bundle="APPLICATION_RESOURCES">
-	<slot name="event.description" read-only="true" />
-	<slot name="contributorParty.name" read-only="true" />
-	<slot name="contributorParty.socialSecurityNumber" read-only="true" />
-	<slot name="amount" read-only="true" />
-</schema>
-
 <schema name="GratuityEvent.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent" bundle="APPLICATION_RESOURCES" extends="AccountingEvent.view">
 	<slot name="degree" layout="format">
 		<property name="format" value="${presentationName}" />
@@ -533,6 +523,14 @@
 		<property name="size" value="70"/>
 		<property name="maxLength" value="255"/>
 	</slot>
+    <slot name="contributorNumber" key="label.contributorNumber">
+        <property name="size" value="70"/>
+        <property name="maxLength" value="255"/>
+    </slot>
+    <slot name="contributorAddress" key="label.contributorAddress">
+        <property name="size" value="70"/>
+        <property name="maxLength" value="255"/>
+    </slot>
 </schema>
 
 

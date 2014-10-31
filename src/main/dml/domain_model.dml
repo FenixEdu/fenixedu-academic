@@ -564,12 +564,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         CompetenceCourseType type;
     }
 
-    class Contributor  {
-        String contributorAddress;
-        String contributorName;
-        Integer contributorNumber;
-    }
-
     class Coordinator  {
         Boolean responsible;
     }
@@ -2227,6 +2221,8 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         DateTime whenUpdated;
         Integer year;
         String contributorName;
+        String contributorNumber;
+        String contributorAddress;
     }
 
     class accounting.ReceiptPrintVersion  {
@@ -10307,20 +10303,6 @@ relation GroupingAttends {
     }
 }
 
-relation GuideContributor {
-    Guide playsRole guides {
-        multiplicity *;
-    }
-    Contributor playsRole contributor;
-}
-
-relation GuideContributorParty {
-    Guide playsRole payedGuides {
-        multiplicity *;
-    }
-    organizationalStructure.Party playsRole contributorParty;
-}
-
 relation GuideEntryGuide {
     GuideEntry playsRole guideEntries {
         multiplicity *;
@@ -11376,13 +11358,6 @@ relation QuestionsFromTest {
     onlineTests.Test playsRole test;
 }
 
-relation ReceiptContributorParty {
-    organizationalStructure.Party playsRole contributorParty;
-    accounting.Receipt playsRole payedReceipts {
-        multiplicity *;
-    }
-}
-
 relation ReceiptCreditNote {
     accounting.Receipt playsRole receipt;
     accounting.CreditNote playsRole creditNotes {
@@ -11831,13 +11806,6 @@ relation RootDomainObjectConnectionRule {
 relation RootDomainObjectContext {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     degreeStructure.Context playsRole contexts {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectContributor {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Contributor playsRole contributors {
         multiplicity *;
     }
 }

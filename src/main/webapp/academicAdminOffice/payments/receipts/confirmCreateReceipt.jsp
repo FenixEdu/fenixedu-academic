@@ -53,21 +53,11 @@
 
 
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.contributor" /></strong></p>
-<logic:present name="createReceiptBean" property="contributorParty">
-	<fr:view name="createReceiptBean" property="contributorParty" schema="contributor.view">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
-		</fr:layout>
-	</fr:view>
-</logic:present>
-<logic:notPresent name="createReceiptBean" property="contributorParty">
-	<fr:view name="createReceiptBean" schema="createReceiptBean.view.contributorName">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
-		</fr:layout>
-	</fr:view>
-</logic:notPresent>
-
+<fr:view name="createReceiptBean" schema="contributorBean.view">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+	</fr:layout>
+</fr:view>
 
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments" /></strong></p>
 <fr:view name="createReceiptBean" property="selectedEntries" schema="entry.view">

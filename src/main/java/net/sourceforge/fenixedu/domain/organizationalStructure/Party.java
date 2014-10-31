@@ -46,12 +46,10 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
 
@@ -446,14 +444,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         deleteDomainObject();
     }
 
-    @Override
-    protected void checkForDeletionBlockers(Collection<String> blockers) {
-        super.checkForDeletionBlockers(blockers);
-        if (!getPayedReceiptsSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.party.cannot.be.deleted"));
-        }
-    }
-
     public static Party readByContributorNumber(String contributorNumber) {
         return PartySocialSecurityNumber.readPartyBySocialSecurityNumber(contributorNumber);
     }
@@ -481,15 +471,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
                 }
             }
         }
-    }
-
-    public void editContributor(String contributorName, String contributorNumber, String contributorAddress, String areaCode,
-            String areaOfAreaCode, String area, String parishOfResidence, String districtSubdivisionOfResidence,
-            String districtOfResidence) {
-        setName(contributorName);
-        setSocialSecurityNumber(contributorNumber);
-        setDefaultPhysicalAddressData(new PhysicalAddressData(contributorAddress, areaCode, areaOfAreaCode, area,
-                parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, null));
     }
 
     public boolean isPerson() {

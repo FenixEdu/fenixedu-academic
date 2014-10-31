@@ -218,14 +218,6 @@ public abstract class PresentationConstants {
 
     public static final String ACTION = "action";
 
-    public static final String CONTRIBUTOR_LIST = "contributor_list";
-
-    public static final String UNEXISTING_CONTRIBUTOR = "unexisting_contributor";
-
-    public static final String CONTRIBUTOR = "contributor";
-
-    public static final String CONTRIBUTOR_ACTION = "contributor_action";
-
     public static final String GUIDE = "guide";
 
     public static final String GUIDE_YEAR = "guide_year";

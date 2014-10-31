@@ -27,11 +27,12 @@ import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
+
+import com.google.common.base.Strings;
 
 public class ReceiptDocument extends FenixReport {
 
@@ -99,17 +100,12 @@ public class ReceiptDocument extends FenixReport {
         addParameter("total", this.receipt.getTotalAmount().toPlainString());
 
         addParameter("original", this.original);
-        if (this.receipt.getContributorParty() != null) {
-            addParameter("contributorName", this.receipt.getContributorParty().getName());
-            addParameter("contributorSocialSecurityNumber", this.receipt.getContributorParty().getSocialSecurityNumber());
-            addParameter("contributorAddress", this.receipt.getContributorParty().getAddress());
-            addParameter("contributorArea",
-                    !StringUtils.isEmpty(this.receipt.getContributorParty().getAreaCode()) ? this.receipt.getContributorParty()
-                            .getAreaCode() + SINGLE_SPACE + this.receipt.getContributorParty().getAreaOfAreaCode() : null);
-        } else {
-            addParameter("contributorName", this.receipt.getContributorName());
-            addParameter("contributorSocialSecurityNumber", Receipt.GENERIC_CONTRIBUTOR_PARTY_NUMBER);
-        }
+        addParameter("contributorName", this.receipt.getContributorName());
+        addParameter(
+                "contributorSocialSecurityNumber",
+                Strings.isNullOrEmpty(this.receipt.getContributorNumber()) ? Receipt.GENERIC_CONTRIBUTOR_PARTY_NUMBER : this.receipt
+                        .getContributorNumber());
+        addParameter("contributorAddress", this.receipt.getContributorAddress());
 
         addParameter("studentNumber", this.receipt.getPerson().getStudent() != null ? this.receipt.getPerson().getStudent()
                 .getNumber().toString() : null);

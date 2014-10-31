@@ -52,6 +52,8 @@ public class PaymentsManagementDTO implements Serializable {
 
     private String contributorNumber;
 
+    private String contributorAddress;
+
     private String contributorName;
 
     private boolean usingContributorParty;
@@ -128,6 +130,14 @@ public class PaymentsManagementDTO implements Serializable {
 
     public void setContributorParty(Party contributorParty) {
         this.contributorParty = contributorParty;
+        if (contributorParty != null) {
+            this.contributorName = contributorParty.getName();
+            this.contributorNumber = contributorParty.getSocialSecurityNumber();
+            this.contributorAddress =
+                    contributorParty.getAddress()
+                            + (!StringUtils.isEmpty(contributorParty.getAreaCode()) ? contributorParty.getAreaCode() + " "
+                                    + contributorParty.getAreaOfAreaCode() : null);
+        }
     }
 
     public PartySocialSecurityNumber getContributorPartySocialSecurityNumber() {
@@ -152,6 +162,14 @@ public class PaymentsManagementDTO implements Serializable {
 
     public void setContributorNumber(String contributorNumber) {
         this.contributorNumber = contributorNumber;
+    }
+
+    public String getContributorAddress() {
+        return contributorAddress;
+    }
+
+    public void setContributorAddress(String contributorAddress) {
+        this.contributorAddress = contributorAddress;
     }
 
     public boolean isUsingContributorParty() {

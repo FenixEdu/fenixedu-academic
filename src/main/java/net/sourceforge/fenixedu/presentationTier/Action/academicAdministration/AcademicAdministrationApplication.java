@@ -122,11 +122,6 @@ public class AcademicAdministrationApplication extends ForwardAction {
     public static class AcademicAdminEquivalencesApp {
     }
 
-    @StrutsApplication(bundle = "ApplicationResources", path = "contributors", hint = HINT,
-            titleKey = "label.masterDegree.administrativeOffice.contributor", accessGroup = "academic(MANAGE_CONTRIBUTORS)")
-    public static class AcademicAdminContributorsApp {
-    }
-
     @StrutsApplication(
             bundle = BUNDLE,
             path = "payments",
