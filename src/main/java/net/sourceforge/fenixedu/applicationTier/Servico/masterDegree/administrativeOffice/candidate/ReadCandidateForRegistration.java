@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.SituationName;
 import pt.ist.fenixframework.Atomic;
@@ -56,7 +57,7 @@ public class ReadCandidateForRegistration {
                         SituationName.ADMITED_SPECIALIZATION_OBJ });
 
         ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeCode);
-        List<CandidateSituation> result = executionDegree.getCandidateSituationsInSituation(situationNames);
+        List<CandidateSituation> result = MasterDegreeCandidate.getCandidateSituationsInSituation(executionDegree, situationNames);
 
         if (result.isEmpty()) {
             throw new NonExistingServiceException();

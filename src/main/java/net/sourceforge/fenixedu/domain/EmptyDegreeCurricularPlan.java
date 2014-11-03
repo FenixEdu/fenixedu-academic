@@ -39,9 +39,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.MarkType;
-import net.sourceforge.fenixedu.util.SituationName;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
@@ -316,11 +314,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public boolean isGradeValid(Grade grade) {
-        throw new DomainException("EmptyDegreeCurricularPlan.not.available");
-    }
-
-    @Override
     public CurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
             CurricularStage curricularStage) {
         throw new DomainException("EmptyDegreeCurricularPlan.not.available");
@@ -389,31 +382,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     @Override
     public void setName(String name) {
         throw new DomainException("EmptyDegreeCurricularPlan.not.available");
-    }
-
-    @Override
-    public Set<MasterDegreeCandidate> readMasterDegreeCandidates() {
-        return Collections.emptySet();
-    }
-
-    @Override
-    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySpecialization(final Specialization specialization) {
-        return Collections.emptySet();
-    }
-
-    @Override
-    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySituatioName(final SituationName situationName) {
-        return Collections.emptySet();
-    }
-
-    @Override
-    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesByCourseAssistant(boolean courseAssistant) {
-        return Collections.emptySet();
-    }
-
-    @Override
-    public List<MasterDegreeThesisDataVersion> readActiveMasterDegreeThesisDataVersions() {
-        return Collections.emptyList();
     }
 
     @Override

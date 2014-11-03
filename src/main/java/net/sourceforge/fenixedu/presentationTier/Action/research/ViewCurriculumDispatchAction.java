@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYear
 import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -110,7 +109,6 @@ public class ViewCurriculumDispatchAction extends FenixAction {
             ExecutionYear finaltExecutionYear, Person person, HttpServletRequest request) {
 
         Set<Advise> final_works = new HashSet<Advise>();
-        Set<MasterDegreeThesisDataVersion> guidances = new HashSet<MasterDegreeThesisDataVersion>();
         SortedSet<ExecutionCourse> lectures =
                 new TreeSet<ExecutionCourse>(new ReverseComparator(
                         ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME));
@@ -127,7 +125,6 @@ public class ViewCurriculumDispatchAction extends FenixAction {
             if (teacher != null) {
                 final_works.addAll(teacher.getAdvisesByAdviseTypeAndExecutionYear(AdviseType.FINAL_WORK_DEGREE, iteratorYear));
 
-                guidances.addAll(teacher.getGuidedMasterDegreeThesisByExecutionYear(iteratorYear));
                 lectures.addAll(teacher.getLecturedExecutionCoursesByExecutionYear(iteratorYear));
             }
 
@@ -149,10 +146,9 @@ public class ViewCurriculumDispatchAction extends FenixAction {
         Collections.sort(final_worksList, new BeanComparator("student.number"));
 
         request.setAttribute("final_works", final_worksList);
-        request.setAttribute("guidances", guidances);
         request.setAttribute("lectures", lectures);
         request.setAttribute("orientedThesis", orientedThesis);
-        if (!(guidances.isEmpty() && orientedThesis.isEmpty())) {
+        if (!(orientedThesis.isEmpty())) {
             request.setAttribute("secondCycleThesis", true);
         }
         request.setAttribute("career", career);

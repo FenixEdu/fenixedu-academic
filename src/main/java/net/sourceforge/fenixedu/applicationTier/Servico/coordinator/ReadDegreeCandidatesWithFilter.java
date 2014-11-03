@@ -51,16 +51,16 @@ public class ReadDegreeCandidatesWithFilter {
 
         switch (filterBy) {
         case FILTERBY_SPECIALIZATION_VALUE:
-            return degreeCurricularPlan.readMasterDegreeCandidatesBySpecialization(Specialization.valueOf(filterValue));
+            return MasterDegreeCandidate.readMasterDegreeCandidatesBySpecialization(degreeCurricularPlan, Specialization.valueOf(filterValue));
 
         case FILTERBY_SITUATION_VALUE:
-            return degreeCurricularPlan.readMasterDegreeCandidatesBySituatioName(new SituationName(filterValue));
+            return MasterDegreeCandidate.readMasterDegreeCandidatesBySituatioName(degreeCurricularPlan, new SituationName(filterValue));
 
         case FILTERBY_GIVESCLASSES_VALUE:
-            return degreeCurricularPlan.readMasterDegreeCandidatesByCourseAssistant(true);
+            return MasterDegreeCandidate.readMasterDegreeCandidatesByCourseAssistant(degreeCurricularPlan, true);
 
         case FILTERBY_DOESNTGIVESCLASSES_VALUE:
-            return degreeCurricularPlan.readMasterDegreeCandidatesByCourseAssistant(false);
+            return MasterDegreeCandidate.readMasterDegreeCandidatesByCourseAssistant(degreeCurricularPlan, false);
 
         default:
             return null;

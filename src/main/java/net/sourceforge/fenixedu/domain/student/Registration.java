@@ -56,7 +56,6 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -2467,7 +2466,7 @@ public class Registration extends Registration_Base {
             }
 
             if (getDegreeType() == DegreeType.MASTER_DEGREE) {
-                final LocalDate date = getDissertationThesisDiscussedDate();
+                final LocalDate date = this.getDissertationThesisDiscussedDate();
                 if (date != null && (result == null || result.isBefore(date))) {
                     result = new YearMonthDay(date);
                 }
@@ -3287,24 +3286,14 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasDissertationThesis() {
-        if (getDegreeType() == DegreeType.MASTER_DEGREE) {
-            return getLastStudentCurricularPlan().getMasterDegreeThesis() != null;
-        } else {
-            return getDissertationEnrolment() != null && getDissertationEnrolment().getThesis() != null;
-        }
+        return getDissertationEnrolment() != null && getDissertationEnrolment().getThesis() != null;
     }
 
     final public String getDissertationThesisTitle() {
         String result = null;
 
         if (hasDissertationThesis()) {
-            if (getDegreeType() == DegreeType.MASTER_DEGREE) {
-                result = getMasterDegreeThesis().getDissertationTitle();
-            } else {
-                result = getDissertationEnrolment().getThesis().getFinalFullTitle().getContent();
-            }
-
-            result = result.trim();
+            result = getDissertationEnrolment().getThesis().getFinalFullTitle().getContent().trim();
         }
 
         return result;
@@ -3312,33 +3301,11 @@ public class Registration extends Registration_Base {
 
     final public LocalDate getDissertationThesisDiscussedDate() {
         if (hasDissertationThesis()) {
-            if (getDegreeType() == DegreeType.MASTER_DEGREE) {
-                final YearMonthDay proofDateYearMonthDay = getMasterDegreeThesis().getProofDateYearMonthDay();
-                return proofDateYearMonthDay != null ? proofDateYearMonthDay.toLocalDate() : null;
-            } else {
-                final Thesis thesis = getDissertationEnrolment().getThesis();
-                return thesis.hasCurrentDiscussedDate() ? thesis.getCurrentDiscussedDate().toLocalDate() : null;
-            }
+            final Thesis thesis = getDissertationEnrolment().getThesis();
+            return thesis.hasCurrentDiscussedDate() ? thesis.getCurrentDiscussedDate().toLocalDate() : null;
         }
 
         return null;
-    }
-
-    public MasterDegreeThesis getMasterDegreeThesis() {
-        MasterDegreeThesis result = null;
-
-        for (final StudentCurricularPlan plan : getSortedStudentCurricularPlans()) {
-            final MasterDegreeThesis thesis = plan.getMasterDegreeThesis();
-            if (result != null && result.isConcluded() && thesis.isConcluded()) {
-                throw new DomainException("error.Registration.more.than.one.concluded.thesis");
-            }
-
-            if (result == null || !result.isConcluded()) {
-                result = thesis;
-            }
-        }
-
-        return result;
     }
 
     final public Enrolment getDissertationEnrolment() {

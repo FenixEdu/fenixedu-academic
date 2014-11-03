@@ -83,11 +83,6 @@
 	<logic:notEmpty  name="final_works">	
 		<li><%=GenericChecksumRewriter.NO_CHECKSUM_PREFIX%><a href="#guidancesTitle"><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></a></li>
 	</logic:notEmpty>
-	<logic:empty  name="final_works">	
-    	<logic:notEmpty  name="guidances">	
-			<li><%=GenericChecksumRewriter.NO_CHECKSUM_PREFIX%><a href="#guidancesTitle"><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></a></li>
-		</logic:notEmpty>
-	</logic:empty>
 	<logic:notEmpty name="functions">
 	<li><%=GenericChecksumRewriter.NO_CHECKSUM_PREFIX%><a href="#functionsTitle"><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.functionsInformation"/></a></li>
 	</logic:notEmpty>
@@ -172,18 +167,6 @@
 <logic:notEmpty name="secondCycleThesis">
 <p class="indent1 mtop15"><em><bean:message key="label.common.masterDegree" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em></p>
 <ul>
-<logic:notEmpty name="guidances">
-<logic:iterate id="guidance" name="guidances">
-	<li><fr:view name="guidance" property="dissertationTitle"/>, <fr:view name="guidance" property="masterDegreeThesis.studentCurricularPlan.student.person.name"/> (<bean:message key="label.teacher.details.orientationInformation.masterDegreeProofDate" bundle="DEPARTMENT_MEMBER_RESOURCES"/>:
-	<logic:present name="guidance" property="masterDegreeThesis.activeMasterDegreeProofVersion">
-	  <fr:view name="guidance" property="masterDegreeThesis.activeMasterDegreeProofVersion.proofDate" type="java.lang.String"/>)
-	</logic:present>
-	<logic:notPresent name="guidance" property="masterDegreeThesis.activeMasterDegreeProofVersion">
-	  <bean:message bundle="RESEARCHER_RESOURCES" key="label.researcher.thesis.notEvaluated"/>)
-	</logic:notPresent>
-	</li>
-</logic:iterate>
-</logic:notEmpty>
 
 <logic:notEmpty name="orientedThesis">
 <logic:iterate id="thesis" name="orientedThesis">

@@ -33,9 +33,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
@@ -59,7 +56,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
@@ -72,7 +68,6 @@ import net.sourceforge.fenixedu.predicates.DegreeCurricularPlanPredicates;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -1071,20 +1066,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    public boolean isGradeValid(Grade grade) {
-
-        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
-                DegreeCurricularPlanStrategyFactory.getInstance();
-        IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy =
-                degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(this);
-
-        if (grade.isEmpty()) {
-            return false;
-        }
-
-        return degreeCurricularPlanStrategy.checkMark(grade.getValue());
-    }
-
     /**
      * Used to create a CurricularCourse to non box structure
      */
@@ -1242,56 +1223,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
         return getDegree().getPresentationName(executionYear, locale) + " - " + getName();
-    }
-
-    public Set<MasterDegreeCandidate> readMasterDegreeCandidates() {
-        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
-        for (final ExecutionDegree executionDegree : this.getExecutionDegreesSet()) {
-            result.addAll(executionDegree.getMasterDegreeCandidatesSet());
-        }
-        return result;
-    }
-
-    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySpecialization(final Specialization specialization) {
-        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
-        for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates()) {
-            if (masterDegreeCandidate.getSpecialization() == specialization) {
-                result.add(masterDegreeCandidate);
-            }
-        }
-        return result;
-    }
-
-    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySituatioName(final SituationName situationName) {
-        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
-        for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates()) {
-            if (masterDegreeCandidate.hasCandidateSituationWith(situationName)) {
-                result.add(masterDegreeCandidate);
-            }
-        }
-        return result;
-    }
-
-    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesByCourseAssistant(boolean courseAssistant) {
-        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
-        for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates()) {
-            if (masterDegreeCandidate.getCourseAssistant() == courseAssistant) {
-                result.add(masterDegreeCandidate);
-            }
-        }
-        return result;
-    }
-
-    public List<MasterDegreeThesisDataVersion> readActiveMasterDegreeThesisDataVersions() {
-        List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = new ArrayList<MasterDegreeThesisDataVersion>();
-        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlansSet()) {
-            MasterDegreeThesisDataVersion masterDegreeThesisDataVersion =
-                    studentCurricularPlan.readActiveMasterDegreeThesisDataVersion();
-            if (masterDegreeThesisDataVersion != null) {
-                masterDegreeThesisDataVersions.add(masterDegreeThesisDataVersion);
-            }
-        }
-        return masterDegreeThesisDataVersions;
     }
 
     // -------------------------------------------------------------

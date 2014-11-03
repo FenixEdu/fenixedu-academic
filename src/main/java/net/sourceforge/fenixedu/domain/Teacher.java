@@ -61,7 +61,6 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -456,41 +455,6 @@ public class Teacher extends Teacher_Base {
     /***************************************************************************
      * PRIVATE METHODS *
      **************************************************************************/
-
-    public List<MasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(ExecutionYear executionYear) {
-        List<MasterDegreeThesisDataVersion> guidedThesis = new ArrayList<MasterDegreeThesisDataVersion>();
-
-        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : this.getMasterDegreeThesisGuiderSet()) {
-
-            if (masterDegreeThesisDataVersion.getCurrentState().getState() == State.ACTIVE) {
-
-                Collection<ExecutionDegree> executionDegrees =
-                        masterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan()
-                                .getDegreeCurricularPlan().getExecutionDegreesSet();
-
-                for (ExecutionDegree executionDegree : executionDegrees) {
-                    if (executionDegree.getExecutionYear().equals(executionYear)) {
-                        guidedThesis.add(masterDegreeThesisDataVersion);
-                    }
-                }
-
-            }
-        }
-
-        return guidedThesis;
-    }
-
-    public List<MasterDegreeThesisDataVersion> getAllGuidedMasterDegreeThesis() {
-        List<MasterDegreeThesisDataVersion> guidedThesis = new ArrayList<MasterDegreeThesisDataVersion>();
-
-        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisGuiderSet()) {
-            if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
-                guidedThesis.add(masterDegreeThesisDataVersion);
-            }
-        }
-
-        return guidedThesis;
-    }
 
     public List<PersonFunction> getPersonFuntions(YearMonthDay beginDate, YearMonthDay endDate) {
         return getPerson().getPersonFuntions(beginDate, endDate);

@@ -18,11 +18,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.servlets.startup;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Properties;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -32,7 +28,6 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
@@ -72,8 +67,6 @@ public class FenixInitializer implements ServletContextListener {
         try {
             InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
             event.getServletContext().setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
-
-            setScheduleForGratuitySituationCreation();
 
         } catch (Throwable e) {
             throw new Error("Error reading actual execution period!", e);
@@ -156,54 +149,6 @@ public class FenixInitializer implements ServletContextListener {
         UnitNamePart.find("...PlaceANonExistingUnitNameHere...");
         long end = System.currentTimeMillis();
         logger.info("Load of all unit names took: " + (end - start) + "ms.");
-    }
-
-    private void setScheduleForGratuitySituationCreation() {
-
-        TimerTask gratuitySituationCreatorTask = new TimerTask() {
-
-            @Override
-            public void run() {
-                try {
-                    CreateGratuitySituationsForCurrentExecutionYear.runCreateGratuitySituationsForCurrentExecutionYear("");
-                } catch (Exception e) {
-                }
-
-                // temporary
-                try {
-                    CreateGratuitySituationsForCurrentExecutionYear
-                            .runCreateGratuitySituationsForCurrentExecutionYear("2003/2004");
-                } catch (Exception e) {
-                }
-            }
-        };
-
-        try {
-            Calendar calendar = Calendar.getInstance();
-            String hourString = FenixConfigurationManager.getConfiguration().getGratuitySituationCreatorTaskHour();
-            int scheduledHour = Integer.parseInt(hourString);
-            if (scheduledHour == -1) {
-                return;
-            }
-            int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-
-            calendar.set(Calendar.HOUR_OF_DAY, scheduledHour);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-
-            if (currentHour >= scheduledHour) {
-                calendar.add(Calendar.DAY_OF_MONTH, 1);
-            }
-            Date firstTimeDate = calendar.getTime();
-
-            Timer timer = new Timer();
-
-            timer.schedule(gratuitySituationCreatorTask, firstTimeDate, 3600 * 24 * 1000);
-
-        } catch (Exception e) {
-        }
-
     }
 
     private void registerChecksumFilterRules() {

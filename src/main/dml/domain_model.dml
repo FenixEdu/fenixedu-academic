@@ -541,16 +541,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
         Integer specializationCredits;
     }
 
-    class CandidateEnrolment  {
-    }
-
-    class CandidateSituation  {
-        YearMonthDay dateYearMonthDay;
-        String remarks;
-        SituationName situation;
-        State validation;
-    }
-
     class CompetenceCourse  {
         String code;
         YearMonthDay creationDateYearMonthDay;
@@ -1223,40 +1213,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
         class OldMarkSheet extends MarkSheet {
         }
 
-
-    class MasterDegreeCandidate  {
-        Double average;
-        Integer candidateNumber;
-        Boolean courseAssistant;
-        String coursesToAssist;
-        Double givenCredits;
-        String givenCreditsRemarks;
-        Boolean hasGuider;
-        String majorDegree;
-        String majorDegreeSchool;
-        Integer majorDegreeYear;
-        Specialization specialization;
-        String specializationArea;
-        Integer substituteOrder;
-    }
-
-    class MasterDegreeProofVersion  {
-        Integer attachedCopiesNumber;
-        State currentState;
-        MasterDegreeClassification finalResult;
-        DateTime lastModificationDateTime;
-        YearMonthDay proofDateYearMonthDay;
-        YearMonthDay thesisDeliveryDateYearMonthDay;
-    }
-
-    class MasterDegreeThesis  {
-    }
-
-    class MasterDegreeThesisDataVersion  {
-        State currentState;
-        String dissertationTitle;
-        DateTime lastModificationDateTime;
-    }
 
     class NonAffiliatedTeacher  {
         String name;
@@ -8005,27 +7961,6 @@ relation CandidacySituationPerson {
     }
 }
 
-relation CandidateEnrolmentCurricularCourse {
-    CandidateEnrolment playsRole candidateEnrolments {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
-}
-
-relation CandidateEnrolmentMasterDegreeCandidate {
-    CandidateEnrolment playsRole candidateEnrolments {
-        multiplicity *;
-    }
-    MasterDegreeCandidate playsRole masterDegreeCandidate;
-}
-
-relation CandidateSituationMasterDegreeCandidate {
-    CandidateSituation playsRole situations {
-        multiplicity *;
-    }
-    MasterDegreeCandidate playsRole masterDegreeCandidate;
-}
-
 relation CareerTeacher {
     teacher.Career playsRole associatedCareers {
         multiplicity *;
@@ -9532,121 +9467,6 @@ relation MarkSheetTeacher {
     Teacher playsRole responsibleTeacher;
 }
 
-relation MasterDegreeCandidateExecutionDegree {
-    MasterDegreeCandidate playsRole masterDegreeCandidates {
-        multiplicity *;
-    }
-    ExecutionDegree playsRole executionDegree;
-}
-
-relation MasterDegreeCandidateGuider {
-    MasterDegreeCandidate playsRole masterDegreeCandidates {
-        multiplicity *;
-    }
-    Teacher playsRole guider;
-}
-
-relation MasterDegreeCandidatePerson {
-    MasterDegreeCandidate playsRole masterDegreeCandidates {
-        multiplicity *;
-    }
-    Person playsRole person;
-}
-
-relation MasterDegreeProofVersionEmployee {
-    MasterDegreeProofVersion playsRole masterDegreeProofVersions {
-        multiplicity *;
-    }
-    Employee playsRole responsibleEmployee;
-}
-
-relation MasterDegreeProofVersionExternalJury {
-    MasterDegreeProofVersion playsRole masterDegreeProofsExternalJury {
-        multiplicity *;
-    }
-    organizationalStructure.ExternalContract playsRole externalJuries {
-        multiplicity *;
-    }
-}
-
-relation MasterDegreeProofVersionJury {
-    MasterDegreeProofVersion playsRole masterDegreeProofsJury {
-        multiplicity *;
-    }
-    Teacher playsRole juries {
-        multiplicity *;
-    }
-}
-
-relation MasterDegreeProofVersionMasterDegreeThesis {
-    MasterDegreeProofVersion playsRole masterDegreeProofVersions {
-        multiplicity *;
-    }
-    MasterDegreeThesis playsRole masterDegreeThesis;
-}
-
-relation MasterDegreeThesisConclusionProcess {
-    MasterDegreeThesis playsRole masterDegreeThesis;
-    student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
-        multiplicity *; 
-    }
-}
-
-relation MasterDegreeThesisDataVersionAssistentGuider {
-    MasterDegreeThesisDataVersion playsRole masterDegreeThesisAssistentGuider {
-        multiplicity *;
-    }
-    Teacher playsRole assistentGuiders {
-        multiplicity *;
-    }
-}
-
-relation MasterDegreeThesisDataVersionEmployee {
-    MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
-        multiplicity *;
-    }
-    Employee playsRole responsibleEmployee;
-}
-
-relation MasterDegreeThesisDataVersionExternalAssistentGuider {
-    MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalAssistentGuider {
-        multiplicity *;
-    }
-    organizationalStructure.ExternalContract playsRole externalAssistentGuiders {
-        multiplicity *;
-    }
-}
-
-relation MasterDegreeThesisDataVersionExternalGuider {
-    MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalGuider {
-        multiplicity *;
-    }
-    organizationalStructure.ExternalContract playsRole externalGuiders {
-        multiplicity *;
-    }
-}
-
-relation MasterDegreeThesisDataVersionGuider {
-    MasterDegreeThesisDataVersion playsRole masterDegreeThesisGuider {
-        multiplicity *;
-    }
-    Teacher playsRole guiders {
-        multiplicity *;
-    }
-}
-
-relation MasterDegreeThesisDataVersionMasterDegreeThesis {
-    MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
-        multiplicity *;
-    }
-    MasterDegreeThesis playsRole masterDegreeThesis;
-}
-
-relation MasterDegreeThesisStudentCurricularPlan {
-    MasterDegreeThesis playsRole masterDegreeThesis;
-    StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
 relation MetadataFromExecutionCourse {
     onlineTests.Metadata playsRole metadatas {
         multiplicity *;
@@ -10590,20 +10410,6 @@ relation RootDomainObjectCandidacySituation {
     }
 }
 
-relation RootDomainObjectCandidateEnrolment {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    CandidateEnrolment playsRole candidateEnrolments {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCandidateSituation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    CandidateSituation playsRole candidateSituations {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectCareer {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.Career playsRole careers {
@@ -11147,34 +10953,6 @@ relation RootDomainObjectLocality {
 relation RootDomainObjectMark {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Mark playsRole marks {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectMasterDegreeCandidate {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    MasterDegreeCandidate playsRole masterDegreeCandidates {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectMasterDegreeProofVersion {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    MasterDegreeProofVersion playsRole masterDegreeProofVersions {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectMasterDegreeThesis {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    MasterDegreeThesis playsRole masterDegreeThesiss {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectMasterDegreeThesisDataVersion {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
         multiplicity *;
     }
 }

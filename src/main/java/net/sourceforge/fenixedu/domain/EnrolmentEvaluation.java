@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -525,44 +524,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setGradeAvailableDateYearMonthDay(null);
 
         setMarkSheet(null);
-    }
-
-    public void insertStudentFinalEvaluationForMasterDegree(String gradeValue, Person responsibleFor, Date examDate)
-            throws DomainException {
-
-        DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan();
-
-        final Grade grade = Grade.createGrade(gradeValue, getGradeScale());
-        if (!grade.isEmpty() && degreeCurricularPlan.isGradeValid(grade)) {
-            edit(responsibleFor, gradeValue, Calendar.getInstance().getTime(), examDate);
-        } else {
-            throw new DomainException("error.invalid.grade");
-        }
-    }
-
-    public void alterStudentEnrolmentEvaluationForMasterDegree(String gradeValue, Person person, Person responsibleFor,
-            EnrolmentEvaluationType evaluationType, Date evaluationAvailableDate, Date examDate, String observation)
-            throws DomainException {
-
-        Enrolment enrolment = getEnrolment();
-        DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan();
-
-        final Grade grade = Grade.createGrade(gradeValue, getGradeScale());
-        if (grade.isEmpty()) {
-            EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, getEnrolmentEvaluationType());
-            enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, person, observation);
-            enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
-        } else {
-            if (degreeCurricularPlan.isGradeValid(grade)) {
-                EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, evaluationType);
-                enrolmentEvaluation.edit(responsibleFor, grade, evaluationAvailableDate, examDate);
-                enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ); // temporary
-                // hack
-                enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, person, observation);
-            } else {
-                throw new DomainException("error.invalid.grade");
-            }
-        }
     }
 
     protected void generateCheckSum() {

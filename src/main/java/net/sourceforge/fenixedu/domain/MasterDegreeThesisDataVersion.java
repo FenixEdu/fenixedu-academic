@@ -24,6 +24,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
@@ -33,6 +34,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
@@ -103,6 +105,53 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
         } else {
             setLastModificationDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    public static MasterDegreeThesisDataVersion readActiveMasterDegreeThesisDataVersion(
+            StudentCurricularPlan studentCurricularPlan) {
+        MasterDegreeThesis masterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
+        if (masterDegreeThesis != null) {
+            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
+                    .getMasterDegreeThesisDataVersionsSet()) {
+                if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
+                    return masterDegreeThesisDataVersion;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static List<MasterDegreeThesisDataVersion> readNotActiveMasterDegreeThesisDataVersions(
+            StudentCurricularPlan studentCurricularPlan) {
+        MasterDegreeThesis masterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
+        List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = new ArrayList<MasterDegreeThesisDataVersion>();
+        if (masterDegreeThesis != null) {
+            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
+                    .getMasterDegreeThesisDataVersionsSet()) {
+                if (!masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
+                    masterDegreeThesisDataVersions.add(masterDegreeThesisDataVersion);
+                }
+            }
+        }
+        Collections.sort(masterDegreeThesisDataVersions, new ReverseComparator(
+                MasterDegreeThesisDataVersion.LAST_MODIFICATION_COMPARATOR));
+        return masterDegreeThesisDataVersions;
+    }
+
+    public static List<MasterDegreeThesisDataVersion> readActiveMasterDegreeThesisDataVersions(
+            DegreeCurricularPlan degreeCurricularPlan) {
+        if (degreeCurricularPlan instanceof EmptyDegreeCurricularPlan) {
+            return Collections.emptyList();
+        }
+        List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = new ArrayList<MasterDegreeThesisDataVersion>();
+        for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
+            MasterDegreeThesisDataVersion masterDegreeThesisDataVersion =
+                    MasterDegreeThesisDataVersion.readActiveMasterDegreeThesisDataVersion(studentCurricularPlan);
+            if (masterDegreeThesisDataVersion != null) {
+                masterDegreeThesisDataVersions.add(masterDegreeThesisDataVersion);
+            }
+        }
+        return masterDegreeThesisDataVersions;
     }
 
 }

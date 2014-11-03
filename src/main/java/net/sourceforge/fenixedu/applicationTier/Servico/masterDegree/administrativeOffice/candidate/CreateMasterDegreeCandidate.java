@@ -65,7 +65,7 @@ public class CreateMasterDegreeCandidate {
             person = new Person(name, identificationDocumentNumber, identificationDocumentType, Gender.MALE);
         } else {
             MasterDegreeCandidate existingMasterDegreeCandidate =
-                    person.getMasterDegreeCandidateByExecutionDegree(executionDegree);
+                    MasterDegreeCandidate.getMasterDegreeCandidateByExecutionDegree(person, executionDegree);
             if (existingMasterDegreeCandidate != null) {
                 throw new ExistingServiceException();
             }
@@ -82,7 +82,7 @@ public class CreateMasterDegreeCandidate {
 
         masterDegreeCandidate.setSpecialization(degreeType);
         masterDegreeCandidate.setExecutionDegree(executionDegree);
-        masterDegreeCandidate.setCandidateNumber(executionDegree.generateCandidateNumberForSpecialization(degreeType));
+        masterDegreeCandidate.setCandidateNumber(MasterDegreeCandidate.generateCandidateNumberForSpecialization(executionDegree, degreeType));
 
         masterDegreeCandidate.setPerson(person);
 

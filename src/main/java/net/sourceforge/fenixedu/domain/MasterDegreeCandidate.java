@@ -31,9 +31,13 @@
 
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
@@ -128,6 +132,120 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
             description.append(getMajorDegreeSchool());
         }
         return description.toString();
+    }
+
+    public static Integer generateCandidateNumberForSpecialization(ExecutionDegree executionDegree, Specialization specialization) {
+        int maxCandidateNumber = 0;
+        for (final MasterDegreeCandidate masterDegreeCandidate : executionDegree.getMasterDegreeCandidatesSet()) {
+            if (masterDegreeCandidate.getSpecialization() == specialization && masterDegreeCandidate.getCandidateNumber() != null) {
+                maxCandidateNumber = Math.max(maxCandidateNumber, masterDegreeCandidate.getCandidateNumber());
+            }
+        }
+        return Integer.valueOf(++maxCandidateNumber);
+    }
+
+    public static List<CandidateSituation> getCandidateSituationsInSituation(ExecutionDegree executionDegree,
+            List<SituationName> situationNames) {
+        List<CandidateSituation> result = new ArrayList<CandidateSituation>();
+
+        for (MasterDegreeCandidate candidate : executionDegree.getMasterDegreeCandidatesSet()) {
+            for (CandidateSituation situation : candidate.getSituationsSet()) {
+
+                if (situation.getValidation().getState() == null || situation.getValidation().getState() != State.ACTIVE) {
+                    continue;
+                }
+
+                if (situationNames != null && !situationNames.contains(situation.getSituation())) {
+                    continue;
+                }
+
+                result.add(situation);
+            }
+        }
+
+        return result;
+    }
+
+    public static MasterDegreeCandidate getMasterDegreeCandidateBySpecializationAndCandidateNumber(
+            ExecutionDegree executionDegree, Specialization specialization, Integer candidateNumber) {
+        for (final MasterDegreeCandidate masterDegreeCandidate : executionDegree.getMasterDegreeCandidatesSet()) {
+            if (masterDegreeCandidate.getSpecialization() == specialization
+                    && masterDegreeCandidate.getCandidateNumber().equals(candidateNumber)) {
+                return masterDegreeCandidate;
+            }
+        }
+        return null;
+    }
+
+    public static Set<MasterDegreeCandidate> readMasterDegreeCandidates(DegreeCurricularPlan degreeCurricularPlan) {
+        if (degreeCurricularPlan instanceof EmptyDegreeCurricularPlan) {
+            return Collections.emptySet();
+        }
+        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
+        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+            result.addAll(executionDegree.getMasterDegreeCandidatesSet());
+        }
+        return result;
+    }
+
+    public static Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySpecialization(
+            DegreeCurricularPlan degreeCurricularPlan, Specialization specialization) {
+        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
+        for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates(degreeCurricularPlan)) {
+            if (masterDegreeCandidate.getSpecialization() == specialization) {
+                result.add(masterDegreeCandidate);
+            }
+        }
+        return result;
+    }
+
+    public static Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySituatioName(DegreeCurricularPlan degreeCurricularPlan,
+            SituationName situationName) {
+        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
+        for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates(degreeCurricularPlan)) {
+            if (masterDegreeCandidate.hasCandidateSituationWith(situationName)) {
+                result.add(masterDegreeCandidate);
+            }
+        }
+        return result;
+    }
+
+    public static Set<MasterDegreeCandidate> readMasterDegreeCandidatesByCourseAssistant(
+            DegreeCurricularPlan degreeCurricularPlan, boolean courseAssistant) {
+        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
+        for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates(degreeCurricularPlan)) {
+            if (masterDegreeCandidate.getCourseAssistant() == courseAssistant) {
+                result.add(masterDegreeCandidate);
+            }
+        }
+        return result;
+    }
+
+    public static MasterDegreeCandidate getMasterDegreeCandidate(StudentCurricularPlan studentCurricularPlan) {
+        if (studentCurricularPlan.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+            if (studentCurricularPlan.getEnrolmentsSet().size() > 0) {
+                ExecutionDegree firstExecutionDegree =
+                        studentCurricularPlan.getDegreeCurricularPlan().getExecutionDegreeByYear(
+                                studentCurricularPlan.getFirstExecutionPeriod().getExecutionYear());
+                for (final MasterDegreeCandidate candidate : studentCurricularPlan.getPerson().getMasterDegreeCandidatesSet()) {
+                    if (candidate.getExecutionDegree() == firstExecutionDegree) {
+                        return candidate;
+                    }
+                }
+            } else if (studentCurricularPlan.getPerson().getMasterDegreeCandidatesSet().size() == 1) {
+                return studentCurricularPlan.getPerson().getMasterDegreeCandidatesSet().iterator().next();
+            }
+        }
+        return null;
+    }
+
+    public static MasterDegreeCandidate getMasterDegreeCandidateByExecutionDegree(Person person, ExecutionDegree executionDegree) {
+        for (final MasterDegreeCandidate masterDegreeCandidate : person.getMasterDegreeCandidatesSet()) {
+            if (masterDegreeCandidate.getExecutionDegree() == executionDegree) {
+                return masterDegreeCandidate;
+            }
+        }
+        return null;
     }
 
 }

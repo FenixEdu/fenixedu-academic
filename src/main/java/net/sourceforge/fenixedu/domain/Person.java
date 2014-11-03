@@ -1158,10 +1158,9 @@ public class Person extends Person_Base {
                 && getExportGroupingReceiversSet().isEmpty() && getPersistentGroupsSet().isEmpty()
                 && getAssociatedQualificationsSet().isEmpty() && getAssociatedAlteredCurriculumsSet().isEmpty()
                 && getEnrolmentEvaluationsSet().isEmpty() && getExportGroupingSendersSet().isEmpty()
-                && getResponsabilityTransactionsSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty()
-                && getGuidesSet().isEmpty() && getEmployee() == null && getTeacher() == null && !hasAnyPersonFunctions()
-                && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet()
-                .isEmpty())) {
+                && getResponsabilityTransactionsSet().isEmpty() && getGuidesSet().isEmpty() && getEmployee() == null
+                && getTeacher() == null && !hasAnyPersonFunctions() && getInternalParticipantsSet().isEmpty()
+                && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.person.cannot.be.deleted"));
         }
     }
@@ -1217,15 +1216,6 @@ public class Person extends Person_Base {
 
     public Registration readRegistrationByDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
         return getStudent().readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
-    }
-
-    public MasterDegreeCandidate getMasterDegreeCandidateByExecutionDegree(final ExecutionDegree executionDegree) {
-        for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
-            if (masterDegreeCandidate.getExecutionDegree() == executionDegree) {
-                return masterDegreeCandidate;
-            }
-        }
-        return null;
     }
 
     public DFACandidacy getDFACandidacyByExecutionDegree(final ExecutionDegree executionDegree) {

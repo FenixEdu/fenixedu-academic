@@ -23,6 +23,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
@@ -133,6 +135,33 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         } else {
             setThesisDeliveryDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
+    }
+
+    public static MasterDegreeProofVersion readActiveMasterDegreeProofVersion(StudentCurricularPlan studentCurricularPlan) {
+        MasterDegreeThesis masterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
+        if (masterDegreeThesis != null) {
+            for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis.getMasterDegreeProofVersionsSet()) {
+                if (masterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
+                    return masterDegreeProofVersion;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static List<MasterDegreeProofVersion> readNotActiveMasterDegreeProofVersions(
+            StudentCurricularPlan studentCurricularPlan) {
+        MasterDegreeThesis masterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
+        List<MasterDegreeProofVersion> masterDegreeProofVersions = new ArrayList<MasterDegreeProofVersion>();
+        if (masterDegreeThesis != null) {
+            for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis.getMasterDegreeProofVersionsSet()) {
+                if (!masterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
+                    masterDegreeProofVersions.add(masterDegreeProofVersion);
+                }
+            }
+        }
+        Collections.sort(masterDegreeProofVersions, new ReverseComparator(MasterDegreeProofVersion.LAST_MODIFICATION_COMPARATOR));
+        return masterDegreeProofVersions;
     }
 
 }

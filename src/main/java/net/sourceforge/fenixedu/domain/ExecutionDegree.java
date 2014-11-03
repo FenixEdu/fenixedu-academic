@@ -53,8 +53,6 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
-import net.sourceforge.fenixedu.util.SituationName;
-import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -159,8 +157,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-        if (!(getSchoolClassesSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty()
-                && getStudentCandidaciesSet().isEmpty() && getShiftDistributionEntriesSet().isEmpty())) {
+        if (!(getSchoolClassesSet().isEmpty() && getGuidesSet().isEmpty() && getStudentCandidaciesSet().isEmpty() && getShiftDistributionEntriesSet()
+                .isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "execution.degree.cannot.be.deleted"));
         }
     }
@@ -337,27 +335,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return null;
     }
 
-    public List<CandidateSituation> getCandidateSituationsInSituation(List<SituationName> situationNames) {
-        List<CandidateSituation> result = new ArrayList<CandidateSituation>();
-
-        for (MasterDegreeCandidate candidate : getMasterDegreeCandidatesSet()) {
-            for (CandidateSituation situation : candidate.getSituationsSet()) {
-
-                if (situation.getValidation().getState() == null || situation.getValidation().getState() != State.ACTIVE) {
-                    continue;
-                }
-
-                if (situationNames != null && !situationNames.contains(situation.getSituation())) {
-                    continue;
-                }
-
-                result.add(situation);
-            }
-        }
-
-        return result;
-    }
-
     public Coordinator getCoordinatorByTeacher(Person person) {
         for (Coordinator coordinator : getCoordinatorsListSet()) {
             if (coordinator.getPerson() == person) {
@@ -366,28 +343,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         }
 
         return null;
-    }
-
-    public MasterDegreeCandidate getMasterDegreeCandidateBySpecializationAndCandidateNumber(Specialization specialization,
-            Integer candidateNumber) {
-
-        for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
-            if (masterDegreeCandidate.getSpecialization() == specialization
-                    && masterDegreeCandidate.getCandidateNumber().equals(candidateNumber)) {
-                return masterDegreeCandidate;
-            }
-        }
-        return null;
-    }
-
-    public Integer generateCandidateNumberForSpecialization(Specialization specialization) {
-        int maxCandidateNumber = 0;
-        for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
-            if (masterDegreeCandidate.getSpecialization() == specialization && masterDegreeCandidate.getCandidateNumber() != null) {
-                maxCandidateNumber = Math.max(maxCandidateNumber, masterDegreeCandidate.getCandidateNumber());
-            }
-        }
-        return Integer.valueOf(++maxCandidateNumber);
     }
 
     private static Comparator<ExecutionDegree> COMPARATOR_BY_DEGREE_CURRICULAR_PLAN_ID_INTERNAL_DESC =

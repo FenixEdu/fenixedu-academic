@@ -42,7 +42,7 @@ public class ReadDegreeCandidates {
 
     public static List run(String degreeCurricularPlanId) {
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
-        return createInfoMasterDegreeCandidates(degreeCurricularPlan.readMasterDegreeCandidates());
+        return createInfoMasterDegreeCandidates(MasterDegreeCandidate.readMasterDegreeCandidates(degreeCurricularPlan));
     }
 
     private static List createInfoMasterDegreeCandidates(final Set<MasterDegreeCandidate> masterDegreeCandidates) {

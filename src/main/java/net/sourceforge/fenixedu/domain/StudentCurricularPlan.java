@@ -103,11 +103,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -305,7 +303,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         setDegreeCurricularPlan(null);
         setBranch(null);
         setEmployee(null);
-        setMasterDegreeThesis(null);
 
         for (; !getEnrolmentsSet().isEmpty(); getEnrolmentsSet().iterator().next().delete()) {
             ;
@@ -1800,61 +1797,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    final public MasterDegreeProofVersion readActiveMasterDegreeProofVersion() {
-        MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
-        if (masterDegreeThesis != null) {
-            for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis.getMasterDegreeProofVersionsSet()) {
-                if (masterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
-                    return masterDegreeProofVersion;
-                }
-            }
-        }
-        return null;
-    }
-
-    final public List<MasterDegreeProofVersion> readNotActiveMasterDegreeProofVersions() {
-        MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
-        List<MasterDegreeProofVersion> masterDegreeProofVersions = new ArrayList<MasterDegreeProofVersion>();
-        if (masterDegreeThesis != null) {
-            for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis.getMasterDegreeProofVersionsSet()) {
-                if (!masterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
-                    masterDegreeProofVersions.add(masterDegreeProofVersion);
-                }
-            }
-        }
-        Collections.sort(masterDegreeProofVersions, new ReverseComparator(MasterDegreeProofVersion.LAST_MODIFICATION_COMPARATOR));
-        return masterDegreeProofVersions;
-    }
-
-    final public MasterDegreeThesisDataVersion readActiveMasterDegreeThesisDataVersion() {
-        MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
-        if (masterDegreeThesis != null) {
-            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
-                    .getMasterDegreeThesisDataVersionsSet()) {
-                if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
-                    return masterDegreeThesisDataVersion;
-                }
-            }
-        }
-        return null;
-    }
-
-    final public List<MasterDegreeThesisDataVersion> readNotActiveMasterDegreeThesisDataVersions() {
-        MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
-        List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = new ArrayList<MasterDegreeThesisDataVersion>();
-        if (masterDegreeThesis != null) {
-            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
-                    .getMasterDegreeThesisDataVersionsSet()) {
-                if (!masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
-                    masterDegreeThesisDataVersions.add(masterDegreeThesisDataVersion);
-                }
-            }
-        }
-        Collections.sort(masterDegreeThesisDataVersions, new ReverseComparator(
-                MasterDegreeThesisDataVersion.LAST_MODIFICATION_COMPARATOR));
-        return masterDegreeThesisDataVersions;
-    }
-
     final public boolean approvedInAllCurricularCoursesUntilInclusiveCurricularYear(final Integer curricularYearInteger) {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
@@ -2430,24 +2372,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return isBoxStructure() ? getRoot().hasConcluded(degreeModule, executionYear) : false;
     }
 
-    final public MasterDegreeCandidate getMasterDegreeCandidate() {
-        if (getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-            if (this.getEnrolmentsSet().size() > 0) {
-                ExecutionDegree firstExecutionDegree =
-                        this.getDegreeCurricularPlan()
-                                .getExecutionDegreeByYear(this.getFirstExecutionPeriod().getExecutionYear());
-                for (final MasterDegreeCandidate candidate : this.getPerson().getMasterDegreeCandidatesSet()) {
-                    if (candidate.getExecutionDegree() == firstExecutionDegree) {
-                        return candidate;
-                    }
-                }
-            } else if (this.getPerson().getMasterDegreeCandidatesSet().size() == 1) {
-                return this.getPerson().getMasterDegreeCandidatesSet().iterator().next();
-            }
-        }
-        return null;
-    }
-
     final public Double getCreditsConcludedForCourseGroup(final CourseGroup courseGroup) {
         final CurriculumGroup curriculumGroup = findCurriculumGroupFor(courseGroup);
         return (curriculumGroup == null) ? Double.valueOf(0d) : curriculumGroup.getCreditsConcluded();
@@ -2757,9 +2681,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             return false;
         }
         if (!getGratuitySituationsSet().isEmpty()) {
-            return false;
-        }
-        if (getMasterDegreeThesis() != null) {
             return false;
         }
         if (!getCreditsSet().isEmpty()) {

@@ -23,7 +23,9 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeThesisState;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.State;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -105,6 +107,23 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
         setStudentCurricularPlan(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    public static MasterDegreeThesis getMasterDegreeThesis(Registration registration) {
+        MasterDegreeThesis result = null;
+
+        for (final StudentCurricularPlan plan : registration.getSortedStudentCurricularPlans()) {
+            final MasterDegreeThesis thesis = plan.getMasterDegreeThesis();
+            if (result != null && result.isConcluded() && thesis.isConcluded()) {
+                throw new DomainException("error.Registration.more.than.one.concluded.thesis");
+            }
+
+            if (result == null || !result.isConcluded()) {
+                result = thesis;
+            }
+        }
+
+        return result;
     }
 
 }

@@ -122,7 +122,6 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 
     @Override
     protected void addSpecificVersionInfo() {
-        getLastVersion().setMasterDegreeThesis(getRegistration().getMasterDegreeThesis());
     }
 
     @Override

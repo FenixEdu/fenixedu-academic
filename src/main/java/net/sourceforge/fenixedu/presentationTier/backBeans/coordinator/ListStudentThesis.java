@@ -83,7 +83,7 @@ public class ListStudentThesis {
 
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        List masterDegreeThesisDataVersions = degreeCurricularPlan.readActiveMasterDegreeThesisDataVersions();
+        List masterDegreeThesisDataVersions = MasterDegreeThesisDataVersion.readActiveMasterDegreeThesisDataVersions(degreeCurricularPlan);
 
         if (masterDegreeThesisDataVersions == null || masterDegreeThesisDataVersions.isEmpty()) {
             throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesis");

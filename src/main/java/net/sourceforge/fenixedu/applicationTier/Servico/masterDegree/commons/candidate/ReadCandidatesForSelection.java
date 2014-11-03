@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.SituationName;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -44,7 +45,7 @@ public class ReadCandidatesForSelection {
 
         ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
 
-        List<CandidateSituation> resultTemp = executionDegree.getCandidateSituationsInSituation(situationNames);
+        List<CandidateSituation> resultTemp = MasterDegreeCandidate.getCandidateSituationsInSituation(executionDegree, situationNames);
 
         if (resultTemp.isEmpty()) {
             throw new NonExistingServiceException();

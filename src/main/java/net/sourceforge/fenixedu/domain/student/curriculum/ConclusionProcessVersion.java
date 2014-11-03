@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusio
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -127,15 +126,6 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
     public void setDissertationEnrolment(final Enrolment dissertationEnrolment) {
         if (getConclusionProcess().isCycleConclusionProcess()) {
             super.setDissertationEnrolment(dissertationEnrolment);
-        } else {
-            throw new DomainException("error.ConclusionProcessVersion.wrong.method.usage");
-        }
-    }
-
-    @Override
-    public void setMasterDegreeThesis(MasterDegreeThesis masterDegreeThesis) {
-        if (getConclusionProcess().isRegistrationConclusionProcess()) {
-            super.setMasterDegreeThesis(masterDegreeThesis);
         } else {
             throw new DomainException("error.ConclusionProcessVersion.wrong.method.usage");
         }

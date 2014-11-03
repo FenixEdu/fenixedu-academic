@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExe
 import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentTeachersByDepartmentIDAndExecutionYearID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.function.ReadPersonFunctionsByPersonIDAndExecutionYearID;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.advise.ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID;
@@ -45,7 +44,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -78,8 +76,6 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     private List<ExecutionCourse> lecturedMasterDegreeExecutionCourses;
 
     private Map<String, String> lecturedMasterDegreeExecutionCourseDegreeNames;
-
-    private List<MasterDegreeThesisDataVersion> guidedMasterDegreeThesisList;
 
     private List<SelectItem> executionYearItems;
 
@@ -293,18 +289,6 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         return this.finalDegreeWorkAdvises;
     }
 
-    public List<MasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisList() throws FenixServiceException {
-        if (this.guidedMasterDegreeThesisList == null && this.getSelectedExecutionYearID() != null) {
-            String executionYearID = this.getSelectedExecutionYearID();
-
-            this.guidedMasterDegreeThesisList =
-                    ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID
-                            .runReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID(getSelectedTeacherID(), executionYearID);
-        }
-
-        return this.guidedMasterDegreeThesisList;
-    }
-
     public List<PersonFunction> getTeacherFunctions() throws FenixServiceException {
         if (this.teacherFunctions == null && this.getSelectedExecutionYearID() != null) {
             String executionYearID = this.getSelectedExecutionYearID();
@@ -334,7 +318,6 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         this.lecturedDegreeExecutionCourses = null;
         this.lecturedMasterDegreeExecutionCourses = null;
         this.finalDegreeWorkAdvises = null;
-        this.guidedMasterDegreeThesisList = null;
         this.teacherFunctions = null;
     }
 
