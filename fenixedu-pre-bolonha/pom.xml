@@ -1,0 +1,94 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.fenixedu</groupId>
+        <artifactId>fenix-framework-project</artifactId>
+        <version>2.1.0</version>
+    </parent>
+
+    <groupId>org.fenixedu</groupId>
+    <artifactId>fenixedu-pre-bolonha</artifactId>
+    <packaging>jar</packaging>
+    <version>4.0.0-SNAPSHOT</version>
+
+    <name>FenixEdu Pre Bolonha</name>
+    <url>http://fenixedu.org</url>
+    <inceptionYear>2002</inceptionYear>
+
+    <properties>
+        <skipTests>true</skipTests>
+
+        <version.pt.ist.fenix.framework>2.6.0-SNAPSHOT</version.pt.ist.fenix.framework>
+        <version.org.fenixedu.bennu>3.4.0-SNAPSHOT</version.org.fenixedu.bennu>
+    </properties>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/FenixEdu/fenix/issues/</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License v3.0</name>
+            <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/FenixEdu/fenix</url>
+    </ciManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com:fenixedu/fenix.git</connection>
+        <developerConnection>scm:git:git@github.com:fenixedu/fenix.git</developerConnection>
+        <url>http://fenixedu.org</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <maxmem>2048</maxmem>
+                    <meminitial>1536</meminitial>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/*.js</exclude>
+                        <exclude>**/*.css</exclude>
+                        <exclude>**/*.htm</exclude>
+                        <exclude>**/*.txt</exclude>
+                        <exclude>**/*.dtd</exclude>
+                        <exclude>src/main/java/org/apache/**/*.*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>pt.ist</groupId>
+            <artifactId>fenix</artifactId>
+            <version>4.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>fenix-ashes-maven-repository</id>
+            <url>https://fenix-ashes.ist.utl.pt/nexus/content/groups/fenix-ashes-maven-repository</url>
+        </repository>
+    </repositories>
+
+</project>
