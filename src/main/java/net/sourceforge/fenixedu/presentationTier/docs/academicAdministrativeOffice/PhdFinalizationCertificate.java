@@ -25,7 +25,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.certificates.PhdFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
@@ -121,12 +120,11 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
         super.fillReport();
-        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        Person coordinator = getAdministrativeOffice().getCoordinator().getPerson();
 
         String coordinatorTitle = getCoordinatorGender(coordinator);
 
-        fillFirstParagraph(coordinator, adminOfficeUnit, coordinatorTitle);
+        fillFirstParagraph(coordinator, coordinatorTitle);
 
         addPersonalInfo();
         setFooter(getDocumentRequest());
@@ -162,9 +160,9 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
     }
 
-    protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
+    protected void fillFirstParagraph(Person coordinator, String coordinatorTitle) {
 
-        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
+        String adminOfficeName = getI18NText(getAdministrativeOffice().getName());
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
 

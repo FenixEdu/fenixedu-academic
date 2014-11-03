@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
@@ -56,11 +57,11 @@ public class Under23TransportsDeclarationDocument extends AdministrativeOfficeDo
         addParameter("executionYear", getExecutionYear().getQualifiedName());
         addParameter("institutionName", UnitUtils.readInstitutionUnit().getName());
 
-        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+        Unit institutionUnit = Bennu.getInstance().getInstitutionUnit();
 
         addAddressInformation("person", getDocumentRequest().getPerson());
-        addAddressInformation("institution", adminOfficeUnit);
-        addParameter("institutionPhone", adminOfficeUnit.getDefaultPhone().getNumber());
+        addAddressInformation("institution", institutionUnit);
+        addParameter("institutionPhone", institutionUnit.getDefaultPhone().getNumber());
 
         addParameter("reportDate", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", I18N.getLocale()));
     }

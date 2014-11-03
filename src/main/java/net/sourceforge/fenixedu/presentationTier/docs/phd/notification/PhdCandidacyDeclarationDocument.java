@@ -68,7 +68,7 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
         addParameter("candidacyNumber", getCandidacyProcess().getProcessNumber());
 
         addParameter("administrativeOfficeCoordinator", getCandidacyProcess().getIndividualProgramProcess().getPhdProgram()
-                .getAdministrativeOffice().getUnit().getActiveUnitCoordinator().getFirstAndLastName());
+                .getAdministrativeOffice().getCoordinator().getProfile().getDisplayName());
 
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getPartyName().getContent());
         addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());

@@ -2266,6 +2266,7 @@ valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as
         }
 
     class administrativeOffice.AdministrativeOffice  {
+        LocalizedString name;
         AdministrativeOfficeType administrativeOfficeType;
     }
 
@@ -7494,6 +7495,24 @@ relation AdministrativeOfficeManagedAcademicPrograms {
     }
     AcademicProgram playsRole managedAcademicProgram {
     	multiplicity *;
+    }
+}
+
+relation AdministrativeOfficeResponsible {
+    protected administrativeOffice.AdministrativeOffice playsRole coordinatedAdministrativeOffice {
+        multiplicity *;
+    }
+    public .org.fenixedu.bennu.core.domain.User playsRole coordinator {
+        multiplicity 1..1;
+    }
+}
+
+relation AdministrativeOfficeCampus {
+    protected administrativeOffice.AdministrativeOffice playsRole administrativeOfficeOfCampus {
+        multiplicity *;
+    }
+    public .org.fenixedu.spaces.domain.Space playsRole campus {
+        multiplicity 1..1;
     }
 }
 

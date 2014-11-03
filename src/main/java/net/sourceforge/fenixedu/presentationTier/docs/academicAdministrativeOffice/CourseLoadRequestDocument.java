@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -67,8 +66,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
     private void addParametersInformation() {
 
         AdministrativeOffice administrativeOffice = getAdministrativeOffice();
-        Unit adminOfficeUnit = administrativeOffice.getUnit();
-        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        Person coordinator = administrativeOffice.getCoordinator().getPerson();
         Person student = getDocumentRequest().getPerson();
         final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
 
@@ -82,7 +80,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
         }
 
         String coordinatorName = coordinator.getName();
-        String adminOfficeUnitName = getMLSTextContent(adminOfficeUnit.getPartyName()).toUpperCase();
+        String adminOfficeUnitName = getI18NText(administrativeOffice.getName()).toUpperCase();
         String universityName = getMLSTextContent(university.getPartyName()).toUpperCase();
 
         String institutionName = getInstitutionName().toUpperCase();

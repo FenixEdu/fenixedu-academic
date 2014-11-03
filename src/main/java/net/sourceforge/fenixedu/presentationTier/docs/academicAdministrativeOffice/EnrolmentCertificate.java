@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -49,8 +48,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     protected void fillReport() {
         super.fillReport();
 
-        final Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        final Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        final Person coordinator = getAdministrativeOffice().getCoordinator().getPerson();
         final EnrolmentCertificateRequest request = getDocumentRequest();
         final Registration registration = getDocumentRequest().getRegistration();
 
@@ -68,7 +66,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
         }
 
         addParameter("enrolmentsInfo", getEnrolmentsInfo());
-        fillFirstParagraph(coordinator, adminOfficeUnit, coordinatorTitle);
+        fillFirstParagraph(coordinator, coordinatorTitle);
         fillthirdthParagraph(registration, request, student);
         fillEmployeeFields();
         setFooter(getDocumentRequest());
@@ -103,9 +101,9 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
         }
     }
 
-    protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
+    protected void fillFirstParagraph(Person coordinator, String coordinatorTitle) {
         String institutionName = getInstitutionName();
-        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
+        String adminOfficeName = getI18NText(getAdministrativeOffice().getName());
         String universityName = getUniversityName(new DateTime());
         String stringTemplate =
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.firstParagraph");

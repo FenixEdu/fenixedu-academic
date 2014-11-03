@@ -70,10 +70,13 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.base.Strings;
 
 public class AdministrativeOfficeDocument extends FenixReport {
 
@@ -296,11 +299,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected void addIntroParameters() {
-        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
-        addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
+        addParameter("administrativeOfficeCoordinator", getAdministrativeOffice().getCoordinator().getPerson());
+        addParameter("administrativeOfficeName", getI18NText(getAdministrativeOffice().getName()));
 
-        final Locality locality = adminOfficeUnit.getCampus().getLocality();
+        final Locality locality = getAdministrativeOffice().getCampus().getLocality();
         addParameter("employeeLocation", locality != null ? locality.getName() : null);
         addParameter("supervisingUnit",
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.direcaoAcademica"));
@@ -438,6 +440,18 @@ public class AdministrativeOfficeDocument extends FenixReport {
         // return convert(content);
     }
 
+    protected String getI18NText(LocalizedString localized) {
+        return getI18NText(localized, getLocale());
+    }
+
+    protected String getI18NText(LocalizedString localized, Locale language) {
+        if (localized == null) {
+            return "";
+        }
+        String result = localized.getContent(language);
+        return !Strings.isNullOrEmpty(result) ? result : localized.getContent();
+    }
+
     protected String convert(final String content) {
         return HtmlToTextConverterUtil.convertToText(content).replace("\n\n", "\t").replace(LINE_BREAK, EMPTY_STR)
                 .replace("\t", "\n\n").trim();
@@ -545,24 +559,23 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected void fillEmployeeFields() {
-        final Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
         final String institutionName = getInstitutionName();
-        final Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        final Person coordinator = getAdministrativeOffice().getCoordinator().getPerson();
 
         String coordinatorTitle;
         coordinatorTitle = getCoordinatorGender(coordinator);
         String stringTemplate =
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.signer");
         addParameter("signer",
-                MessageFormat.format(stringTemplate, coordinatorTitle, getMLSTextContent(adminOfficeUnit.getPartyName())));
+                MessageFormat.format(stringTemplate, coordinatorTitle, getI18NText(getAdministrativeOffice().getName())));
 
         String departmentAndInstitute =
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.signer");
         addParameter("departmentAndInstitute",
-                MessageFormat.format(departmentAndInstitute, getMLSTextContent(adminOfficeUnit.getPartyName()), institutionName));
+                MessageFormat.format(departmentAndInstitute, getI18NText(getAdministrativeOffice().getName()), institutionName));
 
         addParameter("administrativeOfficeCoordinator", coordinator);
-        final Locality locality = adminOfficeUnit.getCampus().getLocality();
+        final Locality locality = getAdministrativeOffice().getCampus().getLocality();
         String location = locality != null ? locality.getName() : null;
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());

@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -55,11 +54,10 @@ public class ExternalProgramCertificateRequestDocument extends AdministrativeOff
         addParameter("degreeDescription", getDegreeDescription());
 
         AdministrativeOffice administrativeOffice = getAdministrativeOffice();
-        Unit adminOfficeUnit = administrativeOffice.getUnit();
-        Person activeUnitCoordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        Person activeUnitCoordinator = administrativeOffice.getCoordinator().getPerson();
 
         addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator.getName());
-        addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
+        addParameter("administrativeOfficeName", getI18NText(administrativeOffice.getName()));
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
         addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
 

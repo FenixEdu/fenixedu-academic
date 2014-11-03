@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest;
@@ -48,8 +47,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
     protected void fillReport() {
         super.fillReport();
         Registration registration = getDocumentRequest().getRegistration();
-        final Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        final Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        final Person coordinator = getAdministrativeOffice().getCoordinator().getPerson();
 
         final List<Enrolment> enrolments =
                 (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(getExecutionYear());
@@ -73,7 +71,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
         addParameter("documentTitle",
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.title.declaration"));
         addParameter("documentPurpose", getDocumentPurpose());
-        fillFirstParagraph(adminOfficeUnit, coordinatorTitle, coordinator);
+        fillFirstParagraph(coordinatorTitle, coordinator);
         fillSecondParagraph(registration, student);
         fillthirdthParagraph(registration, numberEnrolments, studentEnrolment);
         fillEmployeeFields();
@@ -98,9 +96,9 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
     }
 
-    protected void fillFirstParagraph(Unit adminOfficeUnit, String coordinatorTitle, Person coordinator) {
+    protected void fillFirstParagraph(String coordinatorTitle, Person coordinator) {
 
-        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
+        String adminOfficeName = getI18NText(getAdministrativeOffice().getName());
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
         String stringTemplate =

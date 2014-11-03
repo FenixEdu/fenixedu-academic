@@ -82,7 +82,7 @@ public class PhdNotificationDocument extends FenixReport {
         final PhdIndividualProgramProcess individualProgramProcess = candidacyProcess.getIndividualProgramProcess();
 
         addParameter("administrativeOfficeCoordinator", individualProgramProcess.getPhdProgram().getAdministrativeOffice()
-                .getUnit().getActiveUnitCoordinator().getFirstAndLastName());
+                .getCoordinator().getProfile().getDisplayName());
 
         addParameter("name", person.getName());
         addParameter("address", person.getAddress());

@@ -21,7 +21,7 @@ package net.sourceforge.fenixedu.presentationTier.docs.phd.thesis;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
@@ -48,11 +48,11 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 
         addJuryElementsInformation();
 
-        Unit adminOfficeUnit = process.getIndividualProgramProcess().getPhdProgram().getAdministrativeOffice().getUnit();
+        AdministrativeOffice adminOffice = process.getIndividualProgramProcess().getPhdProgram().getAdministrativeOffice();
 
         addParameter("presidentTitle", this.process.getPresidentTitle().getContent(getLanguage()));
-        addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator().getPartyName().getContent());
-        addParameter("administrativeOfficeName", adminOfficeUnit.getPartyName().getContent());
+        addParameter("administrativeOfficeCoordinator", adminOffice.getCoordinator().getProfile().getDisplayName());
+        addParameter("administrativeOfficeName", adminOffice.getName().getContent());
         addParameter("ratificationEntityMessage",
                 process.getPhdJuryElementsRatificationEntity().getRatificationEntityMessage(process, getLocale()));
     }

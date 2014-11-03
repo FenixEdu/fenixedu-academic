@@ -22,14 +22,12 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Locality;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.FenixStringTools;
 
@@ -63,24 +61,23 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
 
     @Override
     protected void newFillReport() {
-        Employee loggedEmployee = AccessControl.getPerson().getEmployee();
         Registration registration = getDocumentRequest().getRegistration();
 
-        fillFirstParagraph(loggedEmployee);
+        fillFirstParagraph();
 
         fillSecondParagraph();
 
         fillSeventhParagraph();
 
-        fillTrailer(loggedEmployee, registration);
+        fillTrailer(registration);
 
         fillPriceTags();
     }
 
-    protected void fillFirstParagraph(Employee loggedEmployee) {
+    protected void fillFirstParagraph() {
 
-        Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
-        String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
+        Person coordinator = getAdministrativeOffice().getCoordinator().getPerson();
+        String adminOfficeName = getI18NText(getAdministrativeOffice().getName());
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
 
@@ -129,12 +126,12 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
         return result.toString();
     }
 
-    protected void fillTrailer(Employee loggedEmployee, Registration registration) {
+    protected void fillTrailer(Registration registration) {
 
-        Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
-        String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
+        Person coordinator = getAdministrativeOffice().getCoordinator().getPerson();
+        String adminOfficeName = getI18NText(getAdministrativeOffice().getName());
         String institutionName = getInstitutionName();
-        final Locality locality = loggedEmployee.getCurrentCampus().getLocality();
+        final Locality locality = getAdministrativeOffice().getCampus().getLocality();
         String location = locality != null ? locality.getName() : null;
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());

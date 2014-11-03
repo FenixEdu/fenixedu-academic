@@ -83,7 +83,7 @@ public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAct
         for (AdministrativeOffice office : Bennu.getInstance().getAdministrativeOfficesSet()) {
             JsonObject json = new JsonObject();
             json.addProperty("id", office.getExternalId());
-            json.addProperty("name", office.getUnit().getName());
+            json.addProperty("name", office.getName().getContent());
             json.addProperty("acronym", acronym(office.getUnit().getName()));
             json.addProperty("idx", i++);
             offices.add(json);

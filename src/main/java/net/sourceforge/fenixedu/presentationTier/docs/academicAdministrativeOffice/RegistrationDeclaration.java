@@ -23,7 +23,6 @@ import java.text.MessageFormat;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -65,8 +64,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
     @Override
     protected void newFillReport() {
-        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        Person coordinator = getAdministrativeOffice().getCoordinator().getPerson();
         Registration registration = getDocumentRequest().getRegistration();
 
         String coordinatorTitle = getCoordinatorGender(coordinator);
@@ -80,7 +78,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
                     BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.femaleRegistered");
         }
 
-        fillFirstParagraph(coordinator, adminOfficeUnit, coordinatorTitle);
+        fillFirstParagraph(coordinator, coordinatorTitle);
 
         fillSecondParagraph(registration);
 
@@ -90,9 +88,9 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
         fillEmployeeFields();
     }
 
-    protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
+    protected void fillFirstParagraph(Person coordinator, String coordinatorTitle) {
 
-        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
+        String adminOfficeName = getI18NText(getAdministrativeOffice().getName());
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
 

@@ -113,12 +113,11 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
     protected void fillFirstParagraph() {
 
-        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        Person coordinator = getAdministrativeOffice().getCoordinator().getPerson();
 
         String coordinatorTitle = getCoordinatorGender(coordinator);
 
-        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
+        String adminOfficeName = getI18NText(getAdministrativeOffice().getName());
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
 

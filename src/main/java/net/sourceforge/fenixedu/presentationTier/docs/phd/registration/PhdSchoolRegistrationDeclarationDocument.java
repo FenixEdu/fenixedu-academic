@@ -19,7 +19,7 @@
 package net.sourceforge.fenixedu.presentationTier.docs.phd.registration;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -47,10 +47,10 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-        final Unit unit = process.getPhdProgram().getAdministrativeOffice().getUnit();
+        final AdministrativeOffice administrativeOffice = process.getPhdProgram().getAdministrativeOffice();
 
-        addParameter("administrativeOfficeName", unit.getName());
-        addParameter("administrativeOfficeCoordinator", unit.getActiveUnitCoordinator().getName());
+        addParameter("administrativeOfficeName", administrativeOffice.getName());
+        addParameter("administrativeOfficeCoordinator", administrativeOffice.getCoordinator().getProfile().getDisplayName());
 
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getPartyName().getContent());
         addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());

@@ -230,7 +230,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         result.add(new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
 
         for (AdministrativeOffice administrativeOffice : rootDomainObject.getAdministrativeOfficesSet()) {
-            result.add(new SelectItem(administrativeOffice.getExternalId(), administrativeOffice.getUnit().getName()));
+            result.add(new SelectItem(administrativeOffice.getExternalId(), administrativeOffice.getName().getContent()));
         }
 
         return result;
