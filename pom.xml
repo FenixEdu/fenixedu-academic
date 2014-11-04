@@ -142,25 +142,9 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>rome</groupId>
-            <artifactId>rome</artifactId>
-            <version>0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>informa</groupId>
-            <artifactId>informa</artifactId>
-            <!--<version>0.7.0-alpha2</version> -->
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.mnode.ical4j</groupId>
             <artifactId>ical4j</artifactId>
             <version>1.0.5.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>com.twilio.sdk</groupId>
@@ -181,11 +165,6 @@
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
             <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>pt.ist</groupId>
-            <artifactId>html-entities</artifactId>
-            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>pt.ist</groupId>
@@ -242,11 +221,6 @@
             <groupId>org.fenixedu</groupId>
             <artifactId>bennu-core</artifactId>
             <version>${version.org.fenixedu.bennu}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.fenixedu</groupId>
-            <artifactId>bennu-user-management</artifactId>
-            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
