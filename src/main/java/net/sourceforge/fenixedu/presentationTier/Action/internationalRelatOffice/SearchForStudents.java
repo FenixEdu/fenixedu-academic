@@ -33,7 +33,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.struts.portal.EntryPoint;
 
 import pt.ist.fenixframework.FenixFramework;
 

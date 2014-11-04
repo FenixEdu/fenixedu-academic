@@ -34,11 +34,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.nape.NapeApplication.Nap
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = NapeCandidaciesApp.class, path = "second-cycle", titleKey = "title.application.name.secondCycle.short")
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "nape",

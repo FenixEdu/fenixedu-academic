@@ -34,10 +34,9 @@ import net.sourceforge.fenixedu.util.HostAccessControl;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "external", path = "/consultRoles", scope = "request", parameter = "method")
 public class ConsultRolesAction extends FenixAction {

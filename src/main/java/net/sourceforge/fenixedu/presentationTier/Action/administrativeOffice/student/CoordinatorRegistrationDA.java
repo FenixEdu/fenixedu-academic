@@ -26,10 +26,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordi
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(module = "coordinator", path = "/registration", functionality = DegreeCoordinatorIndex.class)
 @Forwards({

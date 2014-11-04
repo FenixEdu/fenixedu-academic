@@ -41,7 +41,7 @@
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping"></action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
+      <controller processorClass="org.fenixedu.bennu.struts.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" parameter="resources.LibraryResources"></message-resources>
       <message-resources null="false" key="LIBRARY_RESOURCES" parameter="resources.LibraryResources"></message-resources>
@@ -58,5 +58,5 @@
       <message-resources null="false" key="RENDERER_RESOURCES" parameter="resources.RendererResources"></message-resources>
       <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
-      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+      <plug-in className="org.fenixedu.bennu.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

@@ -28,8 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/respondToTeachingInquiriesQuestion")
 public class RespondToTeachingInquiriesQuestion extends FenixDispatchAction {

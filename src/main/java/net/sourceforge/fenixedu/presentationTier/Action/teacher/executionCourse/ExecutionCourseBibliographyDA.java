@@ -38,9 +38,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-import pt.ist.fenixWebFramework.struts.annotations.Input;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Input;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/manageBibliographicReference", module = "teacher", functionality = ManageExecutionCourseDA.class,
         formBean = "bibliographicReferenceForm")

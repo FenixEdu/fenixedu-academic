@@ -108,7 +108,7 @@ public class TagInputCloudRenderer extends InputRenderer {
 
                 PresentationContext newContext = getContext().createSubContext(getContext().getMetaObject());
                 newContext.setProperties(new Properties());
-                newContext.setRenderMode(RenderMode.getMode("output"));
+                newContext.setRenderMode(RenderMode.OUTPUT);
 
                 container.addChild(getScript());
                 container.addChild(input);

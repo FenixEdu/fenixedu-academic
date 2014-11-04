@@ -41,14 +41,13 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.portal.EntryPoint;
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.ExceptionHandling;
+import org.fenixedu.bennu.struts.annotations.Exceptions;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.EntryPoint;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 /**
  * 
@@ -58,7 +57,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @StrutsFunctionality(app = AcademicAdminContributorsApp.class, path = "create",
         titleKey = "link.masterDegree.administrativeOffice.createContributor", accessGroup = "academic(MANAGE_CONTRIBUTORS)")
 @Mapping(module = "academicAdministration", path = "/createContributorDispatchAction", input = "contributor.createContributor",
-        attribute = "createContributorForm", formBean = "createContributorForm", scope = "request", parameter = "method")
+        formBean = "createContributorForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "PrepareReady", path = "/academicAdminOffice/contributor/createContributor.jsp"),
         @Forward(name = "CreateSuccess", path = "/academicAdminOffice/contributor/createContributorSuccess.jsp") })
 @Exceptions(value = { @ExceptionHandling(

@@ -104,7 +104,12 @@
         <dependency>
             <groupId>org.fenixedu</groupId>
             <artifactId>bennu-renderers</artifactId>
-            <version>4.2.1</version>
+            <version>5.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-struts</artifactId>
+            <version>5.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>

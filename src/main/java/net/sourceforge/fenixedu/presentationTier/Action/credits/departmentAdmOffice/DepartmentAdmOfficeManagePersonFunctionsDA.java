@@ -19,7 +19,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice;
 
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManagePersonFunctionsDA;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/managePersonFunctionsShared", module = "departmentAdmOffice",
         functionality = DepartmentAdmOfficeViewTeacherCreditsDA.class)

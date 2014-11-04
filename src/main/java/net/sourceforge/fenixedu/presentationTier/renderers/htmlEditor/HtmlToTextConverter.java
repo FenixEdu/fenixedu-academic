@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +34,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
 
-import pt.ist.fenixWebFramework.rendererExtensions.htmlEditor.EmoticonMap;
 import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
 
 import com.tecnick.htmlutils.htmlentities.HTMLEntities;
@@ -183,6 +184,28 @@ public class HtmlToTextConverter extends TidyConverter {
         }
     }
 
+    private static final Map<String, String> emoticons;
+
+    static {
+        emoticons = new HashMap<String, String>();
+
+        emoticons.put("cool", "B-)");
+        emoticons.put("cry", ":'-(");
+        emoticons.put("embarassed", ":-$");
+        emoticons.put("foot-in-mouth", ":-!");
+        emoticons.put("frown", ":-(");
+        emoticons.put("innocent", "O:-)");
+        emoticons.put("kiss", ":-*");
+        emoticons.put("laughing", ":-D");
+        emoticons.put("money-mouth", ":-$");
+        emoticons.put("sealed", ":-x");
+        emoticons.put("suprised", ":-o");
+        emoticons.put("tongue-out", ":-P");
+        emoticons.put("undecided", ":-/");
+        emoticons.put("wink", ";-)");
+        emoticons.put("yell", ":-O");
+    }
+
     private void parseSmile(Tidy tidy, Element element, String indent) {
         String source = element.getAttribute("src");
 
@@ -199,7 +222,7 @@ public class HtmlToTextConverter extends TidyConverter {
         int indexEnd = source.lastIndexOf(".");
 
         String smiley = source.substring(indexStart, indexEnd);
-        String emoticon = EmoticonMap.getEmoticon(smiley);
+        String emoticon = emoticons.get(smiley);
 
         if (emoticon != null) {
             addText(emoticon, indent);

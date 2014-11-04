@@ -21,9 +21,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FacesEntryPoint;
 import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = StudentViewApp.class, path = "calendar", titleKey = "link.title.calendar")
 @Mapping(path = "/studentCalendar", module = "student")

@@ -33,7 +33,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
+import org.fenixedu.bennu.struts.servlet.RequestWrapperFilter;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

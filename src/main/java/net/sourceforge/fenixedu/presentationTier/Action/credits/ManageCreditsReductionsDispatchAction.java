@@ -31,15 +31,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.credits.departmentMember
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentMember", path = "/membersCreditsReductions",
         functionality = DepartmentMemberViewTeacherCreditsDA.class)
-@Forwards(@Forward(name = "editReductionService", path = "/credits/degreeTeachingService/editCreditsReduction.jsp"))
+@Forward(name = "editReductionService", path = "/credits/degreeTeachingService/editCreditsReduction.jsp")
 public class ManageCreditsReductionsDispatchAction extends FenixDispatchAction {
 
     public ActionForward editCreditsReduction(ActionMapping mapping, ActionForm form, HttpServletRequest request,

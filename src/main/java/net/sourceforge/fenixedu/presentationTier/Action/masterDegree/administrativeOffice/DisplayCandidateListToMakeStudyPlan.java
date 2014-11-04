@@ -19,9 +19,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice;
 
 import net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearToCandidateStudyPlanDA;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/displayCandidateListToMakeStudyPlan", module = "masterDegreeAdministrativeOffice",
         input = "/candidate/displayCandidateListToMakeStudyPlan_bd.jsp", formBean = "chooseSecondMasterDegreeForm",

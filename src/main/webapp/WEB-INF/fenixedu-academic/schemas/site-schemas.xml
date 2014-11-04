@@ -134,7 +134,7 @@
 </schema>
 
 <schema name="site.functions.create.function" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="SITE_RESOURCES">
-	<slot name="MLString" key="label.function.name" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="MLString" key="label.function.name" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 		<property name="size" value="60"/>
 	</slot>
 </schema>

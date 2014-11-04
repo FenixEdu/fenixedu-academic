@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderMode;
 
 public class UnitStructureUsingPersonalCardRenderer extends UnitStructureRenderer {
 
-    private Map<String, String> properties = new HashMap<String, String>();
+    private final Map<String, String> properties = new HashMap<String, String>();
 
     public void setCardProperty(String name, String value) {
         properties.put(name, value);
@@ -52,7 +52,7 @@ public class UnitStructureUsingPersonalCardRenderer extends UnitStructureRendere
     protected HtmlComponent generatePerson(Person person) {
         PresentationContext newContext = getContext().createSubContext(getContext().getMetaObject());
         newContext.setProperties(getPropertyMap());
-        newContext.setRenderMode(RenderMode.getMode("output"));
+        newContext.setRenderMode(RenderMode.OUTPUT);
 
         return RenderKit.getInstance().renderUsing(new PersonalCardRenderer(), newContext, person, Person.class);
     }

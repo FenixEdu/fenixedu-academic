@@ -19,7 +19,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.resourceAllocationManager;
 
 import net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(module = "resourceAllocationManager", path = "/showCurriculumHistoric",
         functionality = DegreeCurricularPlanExecutionYearDispacthActionForResourceAllocationManager.class)

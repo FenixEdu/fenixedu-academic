@@ -28,10 +28,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherIns
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.ExceptionHandling;
+import org.fenixedu.bennu.struts.annotations.Exceptions;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(module = "scientificCouncil", path = "/institutionWorkingTimeManagement",
         input = "/institutionWorkingTimeManagement.do?method=prepareEdit&page=0", formBean = "teacherInstitutionWorkingTimeForm",

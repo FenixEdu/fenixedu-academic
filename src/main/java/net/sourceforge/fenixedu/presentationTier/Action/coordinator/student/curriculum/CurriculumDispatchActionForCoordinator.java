@@ -20,9 +20,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.student.cur
 
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.CurriculumDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/viewStudentCurriculum", module = "coordinator", formBean = "studentCurricularPlanAndEnrollmentsSelectionForm",
         functionality = DegreeCoordinatorIndex.class)

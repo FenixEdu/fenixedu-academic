@@ -21,11 +21,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.scientificC
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencyPlanDA;
 import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificBolonhaProcessApp;
 
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = ScientificBolonhaProcessApp.class, path = "equivalency-plan", titleKey = "link.equivalency.plan",
         bundle = "ApplicationResources")

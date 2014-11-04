@@ -19,9 +19,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.library;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.bennu.portal.StrutsApplication;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 @StrutsApplication(bundle = "LibraryResources", path = "library", titleKey = "label.library", hint = "Library",
         accessGroup = "role(LIBRARY)")

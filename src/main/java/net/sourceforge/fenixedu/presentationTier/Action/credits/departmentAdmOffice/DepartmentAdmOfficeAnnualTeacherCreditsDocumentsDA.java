@@ -28,8 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.credits.AnnualTeacherCre
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(module = "departmentAdmOffice", path = "/annualTeachingCreditsDocument",
         functionality = DepartmentAdmOfficeViewTeacherCreditsDA.class)

@@ -21,11 +21,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffic
 import net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.InternationalRelationsApplication.InternRelationsConsultApp;
 import net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.SearchForStudents;
 
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = InternRelationsConsultApp.class, path = "search-for-students",
         titleKey = "link.studentOperations.viewStudents")

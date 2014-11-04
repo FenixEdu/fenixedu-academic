@@ -20,9 +20,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.seminar.coordinator
 
 import net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.PhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.seminar.CommonPublicPresentationSeminarDA;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/publicPresentationSeminarProcess", module = "coordinator", functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({ @Forward(name = "submitComission", path = "/phd/seminar/coordinator/submitComission.jsp"),

@@ -29,10 +29,9 @@ import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.struts.action.ActionMessages;
-
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/editOldMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
         input = "/markSheetManagement.do?method=prepareSearchMarkSheet", functionality = OldMarkSheetSearchDispatchAction.class)

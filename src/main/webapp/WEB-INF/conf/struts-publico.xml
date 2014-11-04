@@ -299,7 +299,7 @@
             <!-- =================== Alumni Registration  =================== -->
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
+      <controller processorClass="org.fenixedu.bennu.struts.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>
@@ -335,5 +335,5 @@
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-publico.xml" property="pathnames"></set-property>
       </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+      <plug-in className="org.fenixedu.bennu.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

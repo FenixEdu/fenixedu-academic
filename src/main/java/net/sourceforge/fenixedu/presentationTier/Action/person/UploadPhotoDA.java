@@ -44,20 +44,20 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * Action to upload personal photographs.
  * 
  * @author Pedro Santos (pmrsa)
  */
-@Mapping(module = "person", path = "/uploadPhoto", attribute = "voidForm", formBean = "voidForm", scope = "request",
-        parameter = "method", functionality = VisualizePersonalInfo.class)
+@Mapping(module = "person", path = "/uploadPhoto", formBean = "voidForm", scope = "request", parameter = "method",
+        functionality = VisualizePersonalInfo.class)
 @Forwards({ @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp"),
         @Forward(name = "confirm", path = "/person/uploadPhoto.jsp"), @Forward(name = "upload", path = "/person/uploadPhoto.jsp") })
 public class UploadPhotoDA extends FenixDispatchAction {

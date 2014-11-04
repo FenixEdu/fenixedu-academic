@@ -19,9 +19,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.bennu.portal.StrutsApplication;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 @StrutsApplication(bundle = "ApplicationResources", path = "directive-council", titleKey = "role.directiveCouncil",
         hint = DirectiveCouncilApplication.HINT, accessGroup = DirectiveCouncilApplication.ACCESS_GROUP)

@@ -52,11 +52,11 @@
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThreadAndMessage.create" type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean">
-   	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+   	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 		<property name="size" value="50"/>
 		<property name="maxLength" value="255" />
    	</slot>
-   	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+   	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
@@ -65,7 +65,7 @@
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationMessage.create" type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean">
-   	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+   	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 	   	<property name="safe" value="true" />
 	   	<property name="columns" value="70"/>
    		<property name="rows" value="15"/>

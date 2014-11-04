@@ -18,7 +18,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.alumni;
 
-import org.fenixedu.bennu.portal.StrutsApplication;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 public class AlumniApplication {
 

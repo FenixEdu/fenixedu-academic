@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import org.fenixedu.bennu.portal.StrutsApplication;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 @StrutsApplication(bundle = "ApplicationResources", path = "public", titleKey = "title.public", hint = "Public")
 public class PublicApplication {

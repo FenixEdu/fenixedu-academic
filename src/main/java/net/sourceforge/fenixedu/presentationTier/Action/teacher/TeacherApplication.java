@@ -18,7 +18,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import org.fenixedu.bennu.portal.StrutsApplication;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 public class TeacherApplication {
 

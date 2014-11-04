@@ -26,10 +26,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "external", path = "/degreesList", scope = "request", parameter = "method")
 public class DegreesListDA extends ExternalInterfaceDispatchAction {

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.fenixedu.bennu.portal.StrutsPortalBackend;
+import org.fenixedu.bennu.struts.portal.StrutsPortalBackend;
 
 public class PortalJSFTag extends TagSupport {
 

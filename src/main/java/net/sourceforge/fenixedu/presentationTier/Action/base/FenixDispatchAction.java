@@ -53,6 +53,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.bennu.struts.base.ExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +61,6 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
 import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
-import pt.ist.fenixWebFramework.renderers.plugin.ExceptionHandler;
 import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.DomainObject;
@@ -215,7 +215,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
             ViewDestination destination = viewState.getDestination("exception");
 
             if (destination != null) {
-                return destination.getActionForward();
+                return forwardForDestination(destination);
             }
         }
 
@@ -223,6 +223,14 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         // messages are not shown in page
         logger.error(e.getMessage(), e);
         return input;
+    }
+
+    private ActionForward forwardForDestination(ViewDestination destination) {
+        ActionForward forward = new ActionForward();
+        forward.setModule(destination.getModule());
+        forward.setPath(destination.getPath());
+        forward.setRedirect(destination.getRedirect());
+        return forward;
     }
 
     protected Object executeFactoryMethod() throws FenixServiceException {

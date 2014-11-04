@@ -45,19 +45,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
  */
-@Mapping(module = "publico", path = "/viewClassesNew", attribute = "chooseSearchContextForm",
-        formBean = "chooseSearchContextForm", scope = "request", validate = false)
+@Mapping(module = "publico", path = "/viewClassesNew", formBean = "chooseSearchContextForm", scope = "request", validate = false)
 @Forwards(value = { @Forward(name = "Sucess", path = "viewClasses") })
 public class ViewClassesActionNew extends FenixContextAction {
 

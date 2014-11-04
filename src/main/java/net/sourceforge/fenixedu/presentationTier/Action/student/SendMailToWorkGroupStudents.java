@@ -41,8 +41,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "teacher", path = "/sendMailToWorkGroupStudents", functionality = ManageExecutionCourseDA.class)

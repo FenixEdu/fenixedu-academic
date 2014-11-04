@@ -45,7 +45,7 @@
 		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$ThesisSubjectBean">
 			<fr:slot name="name" key="label.phd.name" >
 				<fr:property name="size" value="80" />
-				<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator" />
+				<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator" />
 			</fr:slot>
 			<fr:slot name="teacher" key="label.phd.guiding" layout="autoComplete">
 				<fr:property name="size" value="80"/>

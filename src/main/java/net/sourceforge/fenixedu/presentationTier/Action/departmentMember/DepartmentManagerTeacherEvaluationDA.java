@@ -27,10 +27,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation.Teach
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.portal.EntryPoint;
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.EntryPoint;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = DepartmentMemberPresidentApp.class, path = "teacher-evaluation",
         titleKey = "label.teacher.evaluation.title", bundle = "ResearcherResources")

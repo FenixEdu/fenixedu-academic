@@ -19,9 +19,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
 
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.inquiries.ViewQucAuditProcessDA;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/auditResult", module = "departmentMember", functionality = QUCTeacherAuditorDA.class)
 @Forwards({ @Forward(name = "viewProcessDetails", path = "/pedagogicalCouncil/inquiries/viewProcessDetailsNoAction.jsp") })

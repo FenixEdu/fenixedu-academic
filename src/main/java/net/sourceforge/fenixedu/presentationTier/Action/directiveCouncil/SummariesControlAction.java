@@ -66,7 +66,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;

@@ -38,20 +38,20 @@ import net.sourceforge.fenixedu.presentationTier.Action.candidate.CandidateAppli
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.portal.EntryPoint;
-import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.EntryPoint;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 @StrutsFunctionality(app = CandidateCandidaciesApp.class, titleKey = "link.candidacies", path = "view-candidacies")
-@Mapping(module = "candidate", path = "/viewCandidacies", attribute = "candidacyForm", formBean = "candidacyForm")
+@Mapping(module = "candidate", path = "/viewCandidacies", formBean = "candidacyForm")
 @Forwards(value = { @Forward(name = "uploadDocuments", path = "/candidate/uploadDocuments.jsp"),
         @Forward(name = "viewDetail", path = "/candidate/viewCandidacyDetails.jsp"),
         @Forward(name = "view", path = "/candidate/viewCandidacies.jsp") })

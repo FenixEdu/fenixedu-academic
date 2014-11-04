@@ -20,9 +20,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.teacher.f
 
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.teacher.PhdIndividualProgramProcessDA;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/phdCandidacyFeedbackRequest", module = "teacher", functionality = PhdIndividualProgramProcessDA.class)
 @Forwards(@Forward(name = "uploadCandidacyFeedback", path = "/phd/candidacy/teacher/feedbackRequest/uploadCandidacyFeedback.jsp"))

@@ -70,10 +70,6 @@
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixAPILanguageFilter</filter-class>
 	</filter>
 	<!-- Filter Mapping -->
-    <filter-mapping>
-        <filter-name>ExceptionHandlerFilter</filter-name>
-        <url-pattern>*.faces</url-pattern>
-    </filter-mapping>
 	<filter-mapping>
 		<filter-name>ManagerFilter</filter-name>
 		<url-pattern>/manager/*</url-pattern>

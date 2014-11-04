@@ -215,7 +215,7 @@ public class MultiplePersonalCardRenderer extends OutputRenderer {
 
             PresentationContext newContext = getContext().createSubContext(getContext().getMetaObject());
             newContext.setProperties(new Properties());
-            newContext.setRenderMode(RenderMode.getMode("output"));
+            newContext.setRenderMode(RenderMode.OUTPUT);
             PersonalCardRenderer renderer = getCardRenderer();
 
             for (Person person : people) {

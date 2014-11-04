@@ -48,10 +48,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Reso
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "teacher", path = "/projectSubmissionsManagement", functionality = ManageExecutionCourseDA.class)

@@ -20,9 +20,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHisto
 
 import net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.DegreeCurricularPlanExecutionYearDispacthActionForTeacher;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(module = "teacher", path = "/showCurriculumHistoric",
         functionality = DegreeCurricularPlanExecutionYearDispacthActionForTeacher.class)

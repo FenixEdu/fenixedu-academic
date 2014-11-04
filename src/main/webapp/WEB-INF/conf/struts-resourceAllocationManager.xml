@@ -270,7 +270,7 @@
       <action-mappings type="org.apache.struts.action.ActionMapping">
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
+      <controller processorClass="org.fenixedu.bennu.struts.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources parameter="resources.ResourceAllocationManagerResources" null="false"></message-resources>
       <message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"></message-resources>
@@ -287,5 +287,5 @@
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-resourceAllocationManager.xml"></set-property>
       </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+      <plug-in className="org.fenixedu.bennu.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

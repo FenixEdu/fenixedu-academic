@@ -18,7 +18,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.research;
 
-import org.fenixedu.bennu.portal.StrutsApplication;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 public class ResearcherApplication {
 

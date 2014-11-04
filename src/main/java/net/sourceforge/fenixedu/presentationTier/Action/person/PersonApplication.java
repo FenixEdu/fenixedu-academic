@@ -19,10 +19,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.bennu.portal.StrutsApplication;
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 public class PersonApplication {
 

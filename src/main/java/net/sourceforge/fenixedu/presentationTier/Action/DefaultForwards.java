@@ -19,8 +19,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
 import org.apache.struts.actions.ForwardAction;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 /**
  * Contains General forwards, previously in struts-default.xml

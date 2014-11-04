@@ -18,7 +18,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action;
 
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Deprecated
 @Mapping(path = "/login")

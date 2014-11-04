@@ -38,7 +38,7 @@
 </p>
 
 <fr:edit id="enrolmentInstructions" name="executionSemester" property="enrolmentInstructions" slot="tempInstructions" layout="area"
-		validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator"
+		validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator"
 		action='<%="/manageEnrolementPeriods.do?method=prepare&semester=" + semester%>'>
 	<fr:layout name="rich-text">
 		<fr:property name="safe" value="true" />

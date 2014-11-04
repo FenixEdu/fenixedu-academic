@@ -21,9 +21,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewEquivalenceDismissal;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/studentEquivalences", module = "academicAdministration", formBean = "studentDismissalForm",
         functionality = SearchForStudentsDA.class)

@@ -23,10 +23,10 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesToCreateLessonPlanningProvider"/>		
 		<property name="eachLayout" value=""/>
 	</slot>				
-	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="planning" key="label.lessonPlanning.planning" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="planning" key="label.lessonPlanning.planning" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
@@ -38,10 +38,10 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesToEditLessonPlanningProvider"/>				
 		<property name="eachLayout" value=""/>		
 	</slot>				
-	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 		<property name="size" value="50"/>
 	</slot>	
-	<slot name="planning" key="label.lessonPlanning.planning" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="planning" key="label.lessonPlanning.planning" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
@@ -239,10 +239,10 @@
 	<slot name="taught" key="label.taught.class" layout="option-select-postback">
 		<property name="destination" value="changeSummaryType"/>
 	</slot>
-	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 		<property name="size" value="50"/>	
 	</slot>
-	<slot name="summaryText" key="message.summaryText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="summaryText" key="message.summaryText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
    		<property name="rows" value="20"/>
@@ -253,7 +253,7 @@
 	<slot name="taught" key="label.taught.class" layout="option-select-postback">
 		<property name="destination" value="changeSummaryType"/>
 	</slot>
-	<slot name="summaryText" key="message.motiveText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="summaryText" key="message.motiveText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
    		<property name="rows" value="20"/>
@@ -267,10 +267,10 @@
 	<slot name="studentsNumber" key="property.number.students.attending.course">
 		<property name="size" value="4"/>	
 	</slot>	
-	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 		<property name="size" value="50"/>	
 	</slot>
-	<slot name="summaryText" key="message.summaryText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="summaryText" key="message.summaryText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
    		<property name="rows" value="20"/>
@@ -284,7 +284,7 @@
 	<slot name="studentsNumber" key="property.number.students.attending.course">
 		<property name="size" value="4"/>	
 	</slot>	
-	<slot name="summaryText" key="message.motiveText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="summaryText" key="message.motiveText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
    		<property name="rows" value="20"/>
@@ -304,10 +304,10 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.RoomsForEducationProvider" />
 		<property name="format" value="${completeIdentification}" />
 	</slot>	
-	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 		<property name="size" value="50"/>	
 	</slot>
-	<slot name="summaryText" key="message.summaryText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="summaryText" key="message.summaryText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
    		<property name="rows" value="20"/>
@@ -328,7 +328,7 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.RoomsForEducationProvider" />
 		<property name="format" value="${completeIdentification}" />
 	</slot>	
-	<slot name="summaryText" key="message.motiveText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+	<slot name="summaryText" key="message.motiveText" layout="rich-text" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
    		<property name="rows" value="20"/>

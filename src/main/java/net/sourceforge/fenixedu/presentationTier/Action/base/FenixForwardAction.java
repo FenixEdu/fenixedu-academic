@@ -29,11 +29,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.ForwardAction;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
-@Mapping(module = "publico", path = "/degreeSite/showCourseSite", attribute = "chooseContextDegreeForm",
-        formBean = "chooseContextDegreeForm", scope = "request",
+@Mapping(module = "publico", path = "/degreeSite/showCourseSite", formBean = "chooseContextDegreeForm", scope = "request",
         parameter = "/publico/showCourseSite.do?method=showCurricularCourseSite")
 public class FenixForwardAction extends ForwardAction {
 

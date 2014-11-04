@@ -38,7 +38,7 @@ import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
-import pt.utl.ist.fenix.tools.util.Pair;
+import pt.ist.fenixWebFramework.renderers.validators.ValidatorProperties;
 
 public class CaptchaRenderer extends InputRenderer {
 
@@ -113,8 +113,7 @@ public class CaptchaRenderer extends InputRenderer {
                     final MetaSlot metaSlot = (MetaSlot) metaObject;
                     final Class defaultValidator = CaptchaValidator.class;
                     final Properties properties = new Properties();
-                    metaSlot.setValidators(Collections.singletonList(new Pair<Class<HtmlValidator>, Properties>(defaultValidator,
-                            properties)));
+                    metaSlot.setValidators(Collections.singletonList(new ValidatorProperties(defaultValidator, properties)));
                 }
             }
         };

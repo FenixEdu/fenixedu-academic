@@ -41,8 +41,7 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.core.util.CoreConfiguration.CasConfig;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/logoff")
 public class LogOffAction extends Action {

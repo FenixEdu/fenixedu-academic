@@ -45,7 +45,7 @@
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
 		</th>
 		<td>
-			<fr:edit id="announcement-subject-validated" name="announcement" slot="subject" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+			<fr:edit id="announcement-subject-validated" name="announcement" slot="subject" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 				<fr:layout>
 					<fr:property name="size" value="50"/>
 				</fr:layout>
@@ -60,7 +60,7 @@
 		</th>
 		<td>
 			<fr:edit id="announcement-body-validated" name="announcement" slot="body" layout="area" 
-					validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+					validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 				<fr:layout name="rich-text">
 					<fr:property name="safe" value="true" />
 			   		<fr:property name="columns" value="70"/>

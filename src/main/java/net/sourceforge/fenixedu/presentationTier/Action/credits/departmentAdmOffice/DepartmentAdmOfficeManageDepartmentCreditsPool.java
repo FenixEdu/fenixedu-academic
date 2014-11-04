@@ -27,9 +27,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.Depa
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = DepartmentAdmOfficeCreditsApp.class, path = "credits-pool", titleKey = "label.departmentCreditsPool")
 @Mapping(module = "departmentAdmOffice", path = "/creditsPool")

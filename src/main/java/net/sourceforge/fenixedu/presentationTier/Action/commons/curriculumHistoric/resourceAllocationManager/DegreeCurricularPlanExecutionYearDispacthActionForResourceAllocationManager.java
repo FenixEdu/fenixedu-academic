@@ -21,9 +21,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHisto
 import net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMCurriculumHistoricApp;
 
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = RAMCurriculumHistoricApp.class, path = "view", titleKey = "link.visualize")
 @Mapping(module = "resourceAllocationManager", path = "/chooseExecutionYearAndDegreeCurricularPlan",

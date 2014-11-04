@@ -19,9 +19,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.residenceManagement;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.bennu.portal.StrutsApplication;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 @StrutsApplication(bundle = "ResidenceManagementResources", path = "residence", titleKey = "label.residenceManagement",
         hint = "Residence", accessGroup = "role(RESIDENCE_MANAGER)")

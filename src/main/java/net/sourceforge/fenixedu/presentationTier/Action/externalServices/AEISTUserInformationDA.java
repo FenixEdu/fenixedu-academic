@@ -31,9 +31,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.json.simple.JSONObject;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "external", path = "/userForAEIST", scope = "request", parameter = "method")
 public class AEISTUserInformationDA extends ExternalInterfaceDispatchAction {

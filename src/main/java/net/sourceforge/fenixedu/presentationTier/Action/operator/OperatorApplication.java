@@ -19,9 +19,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.operator;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.bennu.portal.StrutsApplication;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 @StrutsApplication(bundle = "ApplicationResources", path = "operator", titleKey = "title.account.manager", hint = "Operator",
         accessGroup = "(role(OPERATOR) | #managers)")

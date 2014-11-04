@@ -21,11 +21,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.student;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.CurriculumDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = StudentViewApp.class, path = "curriculum", titleKey = "link.student.curriculum")
 @Mapping(path = "/viewStudentCurriculum", module = "student", formBean = "studentCurricularPlanAndEnrollmentsSelectionForm")

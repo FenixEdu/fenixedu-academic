@@ -19,9 +19,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCouncil;
 
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherServiceCommentsDispatchAction;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(module = "scientificCouncil", path = "/teacherServiceComments",
         functionality = ScientificCouncilViewTeacherCreditsDA.class)

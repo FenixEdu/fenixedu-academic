@@ -33,16 +33,15 @@ import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplicati
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.portal.EntryPoint;
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.EntryPoint;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = ManagerBolonhaTransitionApp.class, path = "student-curriculum", titleKey = "title.student.curriculum")
-@Mapping(module = "manager", path = "/bolonhaTransitionManagement", attribute = "bolonhaTransitionManagementForm",
-        formBean = "bolonhaTransitionManagementForm", scope = "request", parameter = "method")
+@Mapping(module = "manager", path = "/bolonhaTransitionManagement", formBean = "bolonhaTransitionManagementForm",
+        scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "chooseStudent", path = "/manager/transition/bolonha/chooseStudent.jsp"),
         @Forward(name = "showStudentCurricularPlan", path = "/manager/transition/bolonha/showStudentCurricularPlan.jsp"),
         @Forward(name = "chooseRegistration", path = "/manager/transition/bolonha/chooseRegistration.jsp") })

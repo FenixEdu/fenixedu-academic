@@ -21,10 +21,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FacesEntryPoint;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.bennu.portal.StrutsApplication;
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsApplication(bundle = "AcademicAdminOffice", path = "academic-administration", titleKey = "portal.academicAdministration",
         hint = "Academic Administration", accessGroup = "academic(scope=ADMINISTRATION)")

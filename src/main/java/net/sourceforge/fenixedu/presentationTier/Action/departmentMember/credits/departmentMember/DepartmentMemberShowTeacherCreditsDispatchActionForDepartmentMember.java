@@ -20,9 +20,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.departmentMember.credit
 
 import net.sourceforge.fenixedu.presentationTier.Action.credits.departmentMember.DepartmentMemberViewTeacherCreditsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.credits.DepartmentMemberShowTeacherCreditsDispatchAction;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(module = "departmentMember", path = "/showFullTeacherCreditsSheet", formBean = "teacherCreditsForm",
         functionality = DepartmentMemberViewTeacherCreditsDA.class)

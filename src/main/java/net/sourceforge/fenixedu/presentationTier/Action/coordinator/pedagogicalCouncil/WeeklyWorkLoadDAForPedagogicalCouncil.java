@@ -21,11 +21,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.pedagogical
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.WeeklyWorkLoadDA;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
 
-import org.fenixedu.bennu.portal.StrutsFunctionality;
-
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Forward;
+import org.fenixedu.bennu.struts.annotations.Forwards;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = PedagogicalControlApp.class, path = "weekly-work-load", titleKey = "link.weekly.work.load",
         bundle = "ApplicationResources")

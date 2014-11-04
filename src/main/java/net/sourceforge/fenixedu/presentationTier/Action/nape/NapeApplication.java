@@ -19,9 +19,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.nape;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.bennu.portal.StrutsApplication;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 @StrutsApplication(bundle = "PortalResources", path = "nape", titleKey = "portal.nape.name", hint = "NAPE",
         accessGroup = "role(NAPE)")

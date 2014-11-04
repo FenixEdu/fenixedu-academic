@@ -32,9 +32,8 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.joda.time.DateTime;
-
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.util.Config;
