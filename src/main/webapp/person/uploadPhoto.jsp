@@ -151,7 +151,7 @@
         <fr:edit id="photoUpload" name="photo" schema="party.photo.upload.clean" />
 		<bean:define id="tempfile" name="photo" property="tempCompressedFile.absolutePath" />
 		<div class="mvert1"><html:img align="middle"
-			src="<%=request.getContextPath() + "/person/uploadPhoto.do?method=preview&amp;file=" + tempfile%>"
+			src="${fr:checksum('/person/uploadPhoto.do?method=preview&file='.concat(tempfile))}"
 			altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showPhoto" /></div>
 		<p class="mtop15 mbottom1">
 			<bean:message key="message.person.uploadPhoto.confirm"/>

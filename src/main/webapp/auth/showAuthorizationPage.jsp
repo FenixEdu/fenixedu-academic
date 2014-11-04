@@ -61,7 +61,7 @@
 				</div>
 			</div>
 			<div class="auth-app-info">
-				<img class="app-thumbnail" src="<%= request.getContextPath() + "/person/externalApps.do?method=appLogo&amp;contentContextPath_PATH=/pessoal/pessoal&amp;appOid=" + appOid %>" />
+				<img class="app-thumbnail" src="${fr:checksum('/person/externalApps.do?method=appLogo&appOid='.concat(appOid))}" />
 				
 				<h2><bean:write name="application" property="name"/></h2>
 				

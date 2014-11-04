@@ -43,7 +43,7 @@
                            <bean:define id="username" name="userHistory" property="person.username"/>
                            <bean:define id="name" name="userHistory" property="person.name"/>
 	    				   <html:img align="middle"
-							         src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoId %>"
+							         src="${fr:checksum('/person/retrievePersonalPhoto.do?method=retrievePendingByID&photoCode='.concat(photoId))}"
 	        				         altKey="personPhoto" bundle="IMAGE_RESOURCES"
 	        				         title="<%= username + " - " + name %>"
 	        	 					 style="border: 1px solid #aaa; padding: 4px; margin: 4px;" />

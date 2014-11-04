@@ -63,7 +63,7 @@
 	            <tr>
 		            <td>
 						<html:img align="middle"
-						    src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoId %>"
+						    src="${fr:checksum('/person/retrievePersonalPhoto.do?method=retrievePendingByID&photoCode='.concat(photoId))}"
 						altKey="personPhoto" bundle="IMAGE_RESOURCES"
 						style="border: 1px solid #aaa; padding: 3px;" />
 		            </td>

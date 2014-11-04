@@ -65,7 +65,7 @@
 			<tr>
 				<td>
 				    <html:img align="middle"
-					src='<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto"%>'
+					src="${fr:checksum('/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto')}"
 					altKey="personPhoto" bundle="IMAGE_RESOURCES"
 					style="border: 1px solid #aaa; padding: 3px;" />
 			    </td>

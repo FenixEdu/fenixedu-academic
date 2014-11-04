@@ -33,7 +33,7 @@
 	
 	<logic:notEmpty name="senior">
 			 	
-		<p><html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></p>
+		<p><html:img align="middle" src="${fr:checksum('/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto')}" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></p>
 		  	   			
 		<fr:view name="senior" schema="ViewSeniorInfo">			
 			<fr:layout name="tabular">

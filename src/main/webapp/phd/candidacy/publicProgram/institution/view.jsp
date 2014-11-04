@@ -282,7 +282,7 @@ max-width: 231px;
 <logic:notEmpty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
 	<div>
 		<bean:define id="photoCode" name="individualProgramProcess" property="person.personalPhotoEvenIfPending.externalId" />
-		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoCode.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+		<html:img align="middle" src="${fr:checksum('/person/retrievePersonalPhoto.do?method=retrievePendingByID&photoCode='.concat(photoCode.toString()))}" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 	</div>
 </logic:notEmpty>
 
