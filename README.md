@@ -10,9 +10,6 @@ FenixEdu is a modular software platform for academic and administrative manageme
 - [Compiling](#compiling)
 - [Bootstrapping](#bootstrapping)
 - [Generate Fenix DML Zip](#generate-fenix-dml-zip)
-- [Troubleshooting](#troubleshooting)
-	- [Error compiling JasperReports](#error-compiling-jasperreports)
-
 
 ##Issue Tracking
 
@@ -43,11 +40,3 @@ creates `target/fenix_dmls.zip`
 
 It can be used to upload in [Fenix Domain Browser](https://fenix-ashes.ist.utl.pt/fdb)
 
-	
-## Troubleshooting
-
-### Error compiling JasperReports
-
-This is due to a race condition in the Reports compilation process. If this is happenning, try compiling with: 
-
-    mvn -Djasper.threads=1 clean install
