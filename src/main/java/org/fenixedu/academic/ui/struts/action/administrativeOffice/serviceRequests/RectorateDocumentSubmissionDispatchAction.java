@@ -35,7 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
@@ -76,7 +75,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Set<AdministrativeOffice> offices =
-                AcademicAccessRule.getOfficesAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING, getLoggedPerson(request).getUser()).collect(Collectors.toSet());
+                AcademicAccessRule.getOfficesAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING,
+                        getLoggedPerson(request).getUser()).collect(Collectors.toSet());
 
         request.setAttribute("unsent",
                 RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(offices, RectorateSubmissionState.UNSENT));

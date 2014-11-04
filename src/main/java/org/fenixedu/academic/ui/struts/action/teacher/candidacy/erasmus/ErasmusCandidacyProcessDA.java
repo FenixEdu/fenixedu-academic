@@ -55,8 +55,7 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "teacher",
         formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
 @Forwards({ @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp") })
-public class ErasmusCandidacyProcessDA extends
-        org.fenixedu.academic.ui.struts.action.candidacy.erasmus.ErasmusCandidacyProcessDA {
+public class ErasmusCandidacyProcessDA extends org.fenixedu.academic.ui.struts.action.candidacy.erasmus.ErasmusCandidacyProcessDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

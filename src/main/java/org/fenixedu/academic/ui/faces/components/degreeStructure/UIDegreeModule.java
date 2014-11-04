@@ -39,11 +39,9 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
 public class UIDegreeModule extends UIInput {
-    public static final String COMPONENT_TYPE =
-            "org.fenixedu.academic.ui.faces.components.degreeStructure.UIDegreeModule";
+    public static final String COMPONENT_TYPE = "org.fenixedu.academic.ui.faces.components.degreeStructure.UIDegreeModule";
 
-    public static final String COMPONENT_FAMILY =
-            "org.fenixedu.academic.ui.faces.components.degreeStructure.UIDegreeModule";
+    public static final String COMPONENT_FAMILY = "org.fenixedu.academic.ui.faces.components.degreeStructure.UIDegreeModule";
 
     protected DegreeModule degreeModule;
     protected Context previousContext;

@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
 import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
 import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess;
-import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.RejectComission;
 import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.RejectReport;
 import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.SchedulePresentationDate;
@@ -36,6 +35,7 @@ import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess
 import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.UploadReport;
 import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.ValidateComission;
 import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcess.ValidateReport;
+import org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
 import org.fenixedu.academic.ui.struts.action.phd.PhdProcessDA;
 

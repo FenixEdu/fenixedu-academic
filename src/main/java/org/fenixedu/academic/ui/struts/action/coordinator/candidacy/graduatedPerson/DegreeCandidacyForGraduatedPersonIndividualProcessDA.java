@@ -43,8 +43,7 @@ import pt.ist.fenixframework.FenixFramework;
                 path = "/coordinator/candidacy/graduatedPerson/introduceCandidacyResult.jsp"),
         @Forward(name = "list-allowed-activities",
                 path = "/coordinator/candidacy/graduatedPerson/listIndividualCandidacyActivities.jsp") })
-public class DegreeCandidacyForGraduatedPersonIndividualProcessDA
-        extends
+public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends
         org.fenixedu.academic.ui.struts.action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcessDA {
 
     @Override

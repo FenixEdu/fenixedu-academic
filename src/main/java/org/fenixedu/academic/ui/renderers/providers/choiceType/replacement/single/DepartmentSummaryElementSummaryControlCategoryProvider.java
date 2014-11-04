@@ -28,9 +28,7 @@ public class DepartmentSummaryElementSummaryControlCategoryProvider implements D
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Arrays
-                .asList(org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory
-                        .values());
+        return Arrays.asList(org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory.values());
     }
 
     @Override

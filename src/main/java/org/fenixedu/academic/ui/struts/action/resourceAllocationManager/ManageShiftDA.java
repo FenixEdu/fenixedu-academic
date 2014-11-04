@@ -49,6 +49,7 @@ import org.fenixedu.academic.dto.InfoStudent;
 import org.fenixedu.academic.dto.ShiftKey;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceMultipleException;
 import org.fenixedu.academic.service.services.resourceAllocationManager.ChangeStudentsShift;
+import org.fenixedu.academic.service.services.resourceAllocationManager.ChangeStudentsShift.UnableToTransferStudentsException;
 import org.fenixedu.academic.service.services.resourceAllocationManager.DeleteLessons;
 import org.fenixedu.academic.service.services.resourceAllocationManager.EditarTurno;
 import org.fenixedu.academic.service.services.resourceAllocationManager.LerAlunosDeTurno;
@@ -56,7 +57,6 @@ import org.fenixedu.academic.service.services.resourceAllocationManager.LerDisci
 import org.fenixedu.academic.service.services.resourceAllocationManager.LerTurnosDeDisciplinaExecucao;
 import org.fenixedu.academic.service.services.resourceAllocationManager.RemoveClasses;
 import org.fenixedu.academic.service.services.resourceAllocationManager.RemoverTurno;
-import org.fenixedu.academic.service.services.resourceAllocationManager.ChangeStudentsShift.UnableToTransferStudentsException;
 import org.fenixedu.academic.ui.struts.action.exceptions.ExistingActionException;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;

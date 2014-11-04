@@ -51,8 +51,8 @@ import org.fenixedu.academic.service.services.exceptions.NonValidChangeServiceEx
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.academic.service.services.student.ReadExportGroupingsByGrouping;
 import org.fenixedu.academic.service.services.student.ReadStudentsWithoutGroup;
-import org.fenixedu.academic.service.services.student.VerifyStudentGroupAtributes;
 import org.fenixedu.academic.service.services.student.ReadStudentsWithoutGroup.NewStudentGroupAlreadyExists;
+import org.fenixedu.academic.service.services.student.VerifyStudentGroupAtributes;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.bennu.core.domain.User;

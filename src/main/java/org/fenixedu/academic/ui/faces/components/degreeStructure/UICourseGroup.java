@@ -31,11 +31,9 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class UICourseGroup extends UIDegreeModule {
 
-    public static final String COMPONENT_TYPE =
-            "org.fenixedu.academic.ui.faces.components.degreeStructure.UICourseGroup";
+    public static final String COMPONENT_TYPE = "org.fenixedu.academic.ui.faces.components.degreeStructure.UICourseGroup";
 
-    public static final String COMPONENT_FAMILY =
-            "org.fenixedu.academic.ui.faces.components.degreeStructure.UICourseGroup";
+    public static final String COMPONENT_FAMILY = "org.fenixedu.academic.ui.faces.components.degreeStructure.UICourseGroup";
 
     private final CourseGroup courseGroup;
     private Boolean onlyStructure;

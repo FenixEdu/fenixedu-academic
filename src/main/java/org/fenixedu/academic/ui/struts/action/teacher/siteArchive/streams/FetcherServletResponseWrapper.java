@@ -39,8 +39,8 @@ import org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource;
  * The {@link #getOutputStream() ServletOutputStream} and {@link #getWriter()
  * PrinterWriter} returned by the response will write to the provided stream ratter than to the wrapped response. If the response
  * is of type <tt>"text/html"</tt> then an intermediary
- * {@link org.fenixedu.academic.ui.struts.action.teacher.siteArchive.streams.TransformUrlsStream} is used to ensure that
- * the content is transfomed using the target resource's rules.
+ * {@link org.fenixedu.academic.ui.struts.action.teacher.siteArchive.streams.TransformUrlsStream} is used to ensure that the
+ * content is transfomed using the target resource's rules.
  * 
  * @author cfgi
  */

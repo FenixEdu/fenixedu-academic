@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.person.RoleType;
@@ -61,7 +60,8 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         Person person = user.getPerson();
 
         // Academic Administration Permissions
-        for (AcademicProgram program : AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_CANDIDACY_PROCESSES, person.getUser()).collect(Collectors.toSet())) {
+        for (AcademicProgram program : AcademicAccessRule.getProgramsAccessibleToFunction(
+                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES, person.getUser()).collect(Collectors.toSet())) {
             for (IndividualCandidacy individualCandidacy : getIndividualCandidacySet()) {
                 if (individualCandidacy.getAllDegrees().contains(program)) {
                     return true;

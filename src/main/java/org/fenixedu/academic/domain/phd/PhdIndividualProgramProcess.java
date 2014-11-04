@@ -40,7 +40,6 @@ import org.fenixedu.academic.domain.JobBean;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.QualificationBean;
-import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
@@ -220,7 +219,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public boolean isAllowedToManageProcess(User userView) {
         if (userView != null) {
             Set<AcademicProgram> programs =
-                    AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESSES, userView.getPerson().getUser()).collect(Collectors.toSet());
+                    AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESSES,
+                            userView.getPerson().getUser()).collect(Collectors.toSet());
 
             return programs.contains(this.getPhdProgram());
         } else {
@@ -242,7 +242,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         }
 
         Set<AcademicProgram> programs =
-                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESS_STATE, userView.getPerson().getUser()).collect(Collectors.toSet());
+                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_PHD_PROCESS_STATE,
+                        userView.getPerson().getUser()).collect(Collectors.toSet());
 
         return programs.contains(this.getPhdProgram());
     }
@@ -772,7 +773,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean isRegistrationAvailable() {
         return getRegistration() != null
-                && AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser()).collect(Collectors.toSet()).contains(getRegistration().getDegree());
+                && AcademicAccessRule
+                        .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
+                        .collect(Collectors.toSet()).contains(getRegistration().getDegree());
     }
 
     @Override

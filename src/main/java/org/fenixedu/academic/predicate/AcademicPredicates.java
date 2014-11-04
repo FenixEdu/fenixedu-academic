@@ -67,7 +67,8 @@ public class AcademicPredicates {
         @Override
         public boolean evaluate(final Object degree) {
             Set<Degree> allowedDegrees = new HashSet<Degree>();
-            allowedDegrees.addAll(AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS, Authenticate.getUser()).collect(Collectors.toSet()));
+            allowedDegrees.addAll(AcademicAccessRule.getDegreesAccessibleToFunction(
+                    AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS, Authenticate.getUser()).collect(Collectors.toSet()));
             return allowedDegrees.contains(degree);
         };
     };
@@ -155,7 +156,8 @@ public class AcademicPredicates {
             new AccessControlPredicate<AcademicServiceRequest>() {
                 @Override
                 public boolean evaluate(final AcademicServiceRequest request) {
-                    return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS, request.getAcademicProgram(), Authenticate.getUser());
+                    return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS,
+                            request.getAcademicProgram(), Authenticate.getUser());
                 };
             };
 
@@ -234,7 +236,9 @@ public class AcademicPredicates {
     public static final AccessControlPredicate<Object> MANAGE_ENROLMENT_PERIODS = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object degree) {
-            return AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_ENROLMENT_PERIODS, Authenticate.getUser()).collect(Collectors.toSet()).contains(degree);
+            return AcademicAccessRule
+                    .getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_ENROLMENT_PERIODS, Authenticate.getUser())
+                    .collect(Collectors.toSet()).contains(degree);
         };
     };
 

@@ -83,9 +83,9 @@ import org.fenixedu.academic.service.services.teacher.EditWrittenEvaluationEnrol
 import org.fenixedu.academic.service.services.teacher.PublishMarks;
 import org.fenixedu.academic.service.services.teacher.TeacherEditWrittenTestRooms;
 import org.fenixedu.academic.service.services.teacher.WriteMarks;
-import org.fenixedu.academic.service.services.teacher.WrittenEvaluationRoomDistribution;
 import org.fenixedu.academic.service.services.teacher.WriteMarks.AttendsMark;
 import org.fenixedu.academic.service.services.teacher.WriteMarks.StudentMark;
+import org.fenixedu.academic.service.services.teacher.WrittenEvaluationRoomDistribution;
 import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
 import org.fenixedu.academic.util.Bundle;

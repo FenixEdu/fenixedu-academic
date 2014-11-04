@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.candidacy.Ingression;
@@ -165,7 +164,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     static private boolean isAllowedToManageProcess(Over23IndividualCandidacyProcess process, User userView) {
         Set<AcademicProgram> programs =
-                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES, userView.getPerson().getUser()).collect(Collectors.toSet());
+                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES,
+                        userView.getPerson().getUser()).collect(Collectors.toSet());
 
         if (process == null || process.getCandidacy() == null) {
             return false;

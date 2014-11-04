@@ -1065,8 +1065,8 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
         }
 
         final ActionForward result =
-                executeActivity(org.fenixedu.academic.domain.phd.thesis.activities.UploadDocuments.class,
-                        getDocumentsToUpload(), request, mapping, "manageThesisDocuments", "manageThesisDocuments",
+                executeActivity(org.fenixedu.academic.domain.phd.thesis.activities.UploadDocuments.class, getDocumentsToUpload(),
+                        request, mapping, "manageThesisDocuments", "manageThesisDocuments",
                         "message.documents.uploaded.with.success");
 
         RenderUtils.invalidateViewState("documentsToUpload");

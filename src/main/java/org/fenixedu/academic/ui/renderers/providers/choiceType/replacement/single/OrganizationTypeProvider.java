@@ -28,9 +28,8 @@ public class OrganizationTypeProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Arrays
-                .asList(org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType
-                        .values());
+        return Arrays.asList(org.fenixedu.academic.ui.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType
+                .values());
     }
 
     @Override

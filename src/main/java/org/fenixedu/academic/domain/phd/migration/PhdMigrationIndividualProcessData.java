@@ -26,11 +26,11 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramCollaborationType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean.QualificationExamsResult;
 import org.fenixedu.academic.domain.phd.PhdParticipantBean;
 import org.fenixedu.academic.domain.phd.PhdProgramCandidacyProcessState;
 import org.fenixedu.academic.domain.phd.PhdStudyPlanBean;
 import org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean.QualificationExamsResult;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
@@ -466,10 +466,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
                 new PhdProgramCandidacyProcessStateBean(candidacyProcess.getIndividualProgramProcess());
         reviewBean.setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
         reviewBean.setGenerateAlert(false);
-        ExecuteProcessActivity
-                .run(candidacyProcess,
-                        org.fenixedu.academic.domain.phd.candidacy.activities.RequestCandidacyReview.class.getSimpleName(),
-                        reviewBean);
+        ExecuteProcessActivity.run(candidacyProcess,
+                org.fenixedu.academic.domain.phd.candidacy.activities.RequestCandidacyReview.class.getSimpleName(), reviewBean);
 
         final PhdProgramCandidacyProcessStateBean requestRatifyBean = new PhdProgramCandidacyProcessStateBean(individualProcess);
         requestRatifyBean.setGenerateAlert(false);

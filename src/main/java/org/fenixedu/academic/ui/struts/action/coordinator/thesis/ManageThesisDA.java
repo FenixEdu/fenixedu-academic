@@ -46,12 +46,12 @@ import org.fenixedu.academic.report.thesis.ThesisJuryReportDocument;
 import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisProposal;
 import org.fenixedu.academic.service.services.thesis.CancelSubmitThesis;
 import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson;
+import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonChange;
+import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonTarget;
 import org.fenixedu.academic.service.services.thesis.CreateThesisProposal;
 import org.fenixedu.academic.service.services.thesis.DeleteThesis;
 import org.fenixedu.academic.service.services.thesis.ReviseThesis;
 import org.fenixedu.academic.service.services.thesis.SubmitThesis;
-import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonChange;
-import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonTarget;
 import org.fenixedu.academic.ui.struts.action.commons.AbstractManageThesisDA;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
 import org.fenixedu.academic.util.report.ReportsUtils;
@@ -193,8 +193,8 @@ public class ManageThesisDA extends AbstractManageThesisDA {
                     Thesis thesis = enrolment.getThesis();
 
                     if (thesis == null) {
-                            request.setAttribute("proposeStartProcess", true);
-                            return mapping.findForward("search-student");
+                        request.setAttribute("proposeStartProcess", true);
+                        return mapping.findForward("search-student");
                     } else {
                         request.setAttribute("hasThesis", true);
                         request.setAttribute("thesis", thesis);

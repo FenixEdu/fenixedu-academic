@@ -129,7 +129,8 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
     static private boolean isAllowedToManageProcess(StandaloneIndividualCandidacyProcess process, User userView) {
         Set<AcademicProgram> programs =
-                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES, userView.getPerson().getUser()).collect(Collectors.toSet());
+                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES,
+                        userView.getPerson().getUser()).collect(Collectors.toSet());
 
         if (process == null || process.getCandidacy() == null) {
             return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES).isMember(userView);

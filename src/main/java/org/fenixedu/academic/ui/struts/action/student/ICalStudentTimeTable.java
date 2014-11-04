@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.UserPrivateKey;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.messaging.RegistrationsBean;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentViewApp;
 import org.fenixedu.bennu.core.domain.User;

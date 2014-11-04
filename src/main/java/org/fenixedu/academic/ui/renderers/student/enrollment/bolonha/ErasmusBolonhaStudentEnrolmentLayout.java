@@ -36,8 +36,8 @@ import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGro
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentBean;
-import org.fenixedu.academic.dto.student.enrollment.bolonha.StudentCurriculumGroupBean;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentBean.ErasmusExtraCurricularEnrolmentBean;
+import org.fenixedu.academic.dto.student.enrollment.bolonha.StudentCurriculumGroupBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;

@@ -41,8 +41,8 @@ import org.fenixedu.bennu.io.servlets.FileDownloadServlet;
 import com.google.common.io.ByteStreams;
 
 /**
- * The <tt>Fetcher</tt> manages a queue of {@link org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource}
- * and it's responsible for retrieving and transforming each resource in the
+ * The <tt>Fetcher</tt> manages a queue of {@link org.fenixedu.academic.ui.struts.action.teacher.siteArchive.Resource} and it's
+ * responsible for retrieving and transforming each resource in the
  * queue.
  * 
  * <p>

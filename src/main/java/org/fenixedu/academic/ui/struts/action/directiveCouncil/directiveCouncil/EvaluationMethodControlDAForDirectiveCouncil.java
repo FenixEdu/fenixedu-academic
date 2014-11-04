@@ -18,8 +18,8 @@
  */
 package org.fenixedu.academic.ui.struts.action.directiveCouncil.directiveCouncil;
 
-import org.fenixedu.academic.ui.struts.action.directiveCouncil.EvaluationMethodControlDA;
 import org.fenixedu.academic.ui.struts.action.directiveCouncil.DirectiveCouncilApplication.DirectiveCouncilControlApp;
+import org.fenixedu.academic.ui.struts.action.directiveCouncil.EvaluationMethodControlDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

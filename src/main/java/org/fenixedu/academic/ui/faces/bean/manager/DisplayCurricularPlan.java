@@ -27,8 +27,8 @@ import javax.faces.model.SelectItem;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
+import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.dto.CurricularCourseScopesForPrintDTO;
 import org.fenixedu.academic.dto.InfoCurricularCourseScope;
@@ -98,7 +98,8 @@ public class DisplayCurricularPlan extends FenixBackingBean {
 
         for (String degreeCurricularPlanID : this.getChoosenDegreeCurricularPlansIDs()) {
             Collection<DegreeModuleScope> degreeModuleScopes =
-                    ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear.run(degreeCurricularPlanID, this.choosenExecutionYearID);
+                    ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear.run(degreeCurricularPlanID,
+                            this.choosenExecutionYearID);
 
             for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
                 if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {

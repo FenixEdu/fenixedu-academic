@@ -41,8 +41,7 @@ public class MarkSheetDocument extends FenixReport {
             addParameter("rectification", rectification);
             addParameter("rectified", rectification.getRectified());
         } else {
-            List<EnrolmentEvaluation> evaluations =
-                    new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluationsSet());
+            List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluationsSet());
             Collections.sort(evaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
             addDataSourceElements(evaluations);
         }

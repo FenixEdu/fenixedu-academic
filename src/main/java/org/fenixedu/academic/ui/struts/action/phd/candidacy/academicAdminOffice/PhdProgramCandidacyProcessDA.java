@@ -308,9 +308,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
         prepareDocumentsToUpload(request);
 
-        return executeActivity(org.fenixedu.academic.domain.phd.candidacy.activities.DeleteDocument.class,
-                getDocument(request), request, mapping, "manageCandidacyDocuments", "manageCandidacyDocuments",
-                "message.document.deleted.successfuly");
+        return executeActivity(org.fenixedu.academic.domain.phd.candidacy.activities.DeleteDocument.class, getDocument(request),
+                request, mapping, "manageCandidacyDocuments", "manageCandidacyDocuments", "message.document.deleted.successfuly");
     }
 
     public ActionForward prepareRatifyCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -563,8 +562,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         try {
             PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
-            ExecuteProcessActivity.run(getProcess(request),
-                    org.fenixedu.academic.domain.phd.candidacy.activities.AddState.class, bean);
+            ExecuteProcessActivity.run(getProcess(request), org.fenixedu.academic.domain.phd.candidacy.activities.AddState.class,
+                    bean);
         } catch (PhdDomainOperationException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());
         }

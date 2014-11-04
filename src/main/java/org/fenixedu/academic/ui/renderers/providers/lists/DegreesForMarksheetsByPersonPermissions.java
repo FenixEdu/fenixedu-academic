@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.predicate.AccessControl;
@@ -42,7 +41,8 @@ public class DegreesForMarksheetsByPersonPermissions implements DataProvider {
 
         Person person = AccessControl.getPerson();
         Set<Degree> degreesForOperation =
-                AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, person.getUser()).collect(Collectors.toSet());
+                AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, person.getUser())
+                        .collect(Collectors.toSet());
         if (!degreesForOperation.isEmpty()) {
             return degreesForOperation;
         }

@@ -18,8 +18,8 @@
  */
 package org.fenixedu.academic.ui.struts.action.internationalRelatOffice.students;
 
-import org.fenixedu.academic.ui.struts.action.internationalRelatOffice.SearchForStudents;
 import org.fenixedu.academic.ui.struts.action.internationalRelatOffice.InternationalRelationsApplication.InternRelationsConsultApp;
+import org.fenixedu.academic.ui.struts.action.internationalRelatOffice.SearchForStudents;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;

@@ -36,7 +36,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.QueueJobResult;
-import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
@@ -131,7 +130,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         }
 
         final Set<AdministrativeOffice> offices =
-                AcademicAccessRule.getOfficesAccessibleToFunction(AcademicOperationType.MANAGE_EVENT_REPORTS, loggedPerson.getUser()).collect(Collectors.toSet());
+                AcademicAccessRule.getOfficesAccessibleToFunction(AcademicOperationType.MANAGE_EVENT_REPORTS,
+                        loggedPerson.getUser()).collect(Collectors.toSet());
 
         if (!offices.contains(bean.getAdministrativeOffice())) {
             throw new DomainException("error.EventReportQueueJob.permission.denied");

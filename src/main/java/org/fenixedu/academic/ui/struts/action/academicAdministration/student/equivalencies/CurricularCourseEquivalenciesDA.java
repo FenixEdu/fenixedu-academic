@@ -37,14 +37,12 @@ import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.CurricularCourseEquivalence;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoCurricularCourse;
 import org.fenixedu.academic.dto.InfoDegreeCurricularPlan;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.manager.CreateCurricularCourseEquivalency;
 import org.fenixedu.academic.service.services.manager.DeleteCurricularCourseEquivalency;
@@ -174,7 +172,8 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     private void setInfoDegreesToManage(final HttpServletRequest request, final User userView) throws FenixServiceException {
 
         final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        degrees.addAll(AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_EQUIVALENCES, Authenticate.getUser()).collect(Collectors.toSet()));
+        degrees.addAll(AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_EQUIVALENCES,
+                Authenticate.getUser()).collect(Collectors.toSet()));
         request.setAttribute("infoDegrees", degrees);
     }
 

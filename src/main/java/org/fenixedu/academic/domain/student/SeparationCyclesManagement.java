@@ -569,7 +569,8 @@ public class SeparationCyclesManagement {
         }
 
         final RegistrationState state =
-                RegistrationState.createRegistrationState(oldStudentCurricularPlan.getRegistration(), null, stateDate.toDateTimeAtStartOfDay(), RegistrationStateType.CONCLUDED);
+                RegistrationState.createRegistrationState(oldStudentCurricularPlan.getRegistration(), null,
+                        stateDate.toDateTimeAtStartOfDay(), RegistrationStateType.CONCLUDED);
         state.setResponsiblePerson(null);
     }
 

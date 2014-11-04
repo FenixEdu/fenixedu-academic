@@ -24,8 +24,8 @@ import java.util.Collection;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionCourseLog;
-import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.ExecutionCourseLog.ExecutionCourseLogTypes;
+import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Month;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
