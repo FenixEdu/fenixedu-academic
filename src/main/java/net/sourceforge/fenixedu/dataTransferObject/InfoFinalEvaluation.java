@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  * @author Tânia Pousão
  * 
  */
-public class InfoFinalEvaluation extends InfoEvaluation implements ISiteComponent {
+public class InfoFinalEvaluation extends InfoEvaluation {
 
     public void copyFromDomain(FinalEvaluation finalEvaluation) {
         super.copyFromDomain(finalEvaluation);

@@ -1434,12 +1434,10 @@ public class FenixAPIv1 {
 
     private FenixSpace.Room getFenixRoom(Space room, java.util.Calendar rightNow) {
 
-        InfoSiteRoomTimeTable bodyComponent = new InfoSiteRoomTimeTable();
-        RoomSiteComponentBuilder builder = new RoomSiteComponentBuilder();
+        InfoSiteRoomTimeTable bodyComponent = RoomSiteComponentBuilder.getInfoSiteRoomTimeTable(rightNow, room, null);
         List<FenixRoomEvent> roomEvents = new ArrayList<FenixRoomEvent>();
 
         try {
-            builder.getComponent(bodyComponent, rightNow, room, null);
             for (Object occupation : bodyComponent.getInfoShowOccupation()) {
                 InfoShowOccupation showOccupation = (InfoShowOccupation) occupation;
                 DateTime date = new DateTime(rightNow);

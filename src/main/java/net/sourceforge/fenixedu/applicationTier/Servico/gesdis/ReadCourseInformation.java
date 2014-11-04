@@ -22,14 +22,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
-import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import pt.ist.fenixframework.Atomic;
@@ -42,16 +39,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadCourseInformation {
 
-    protected TeacherAdministrationSiteView run(final String executionCourseOID) throws FenixServiceException {
+    protected InfoSiteCourseInformation run(final String executionCourseOID) throws FenixServiceException {
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseOID);
-        final InfoSiteCourseInformation resultComponent = new InfoSiteCourseInformation(executionCourse);
-
-        final TeacherAdministrationSiteView result = new TeacherAdministrationSiteView();
-        result.setCommonComponent(TeacherAdministrationSiteComponentBuilder.getInfoSiteCommon(new InfoSiteCommon(),
-                executionCourse));
-        result.setComponent(resultComponent);
-
-        return result;
+        return new InfoSiteCourseInformation(executionCourse);
     }
 
     // Service Invokers migrated from Berserk
@@ -59,7 +49,7 @@ public class ReadCourseInformation {
     private static final ReadCourseInformation serviceInstance = new ReadCourseInformation();
 
     @Atomic
-    public static TeacherAdministrationSiteView runReadCourseInformation(String executionCourseOID) throws FenixServiceException,
+    public static InfoSiteCourseInformation runReadCourseInformation(String executionCourseOID) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ReadCourseInformationAuthorizationFilter.instance.execute(executionCourseOID);

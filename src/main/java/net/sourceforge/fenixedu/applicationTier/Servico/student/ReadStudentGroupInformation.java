@@ -32,7 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
@@ -53,7 +52,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadStudentGroupInformation {
 
     @Atomic
-    public static ISiteComponent run(String studentGroupCode) throws FenixServiceException {
+    public static InfoSiteStudentGroup run(String studentGroupCode) throws FenixServiceException {
         check(RolePredicates.STUDENT_PREDICATE);
 
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();

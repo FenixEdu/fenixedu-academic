@@ -20,14 +20,14 @@
 --%>
 <%@ page language="java" %>
 <%@ page import="java.lang.Math" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 <h2><bean:message key="title.teachingReport"/></h2>
 
-<logic:present name="siteView">
-<bean:define id="infoSiteCourseInformation" name="siteView" property="component"/>
+<bean:define id="infoSiteCourseInformation" name="info"/>
 <bean:define id="executionCourse" name="infoSiteCourseInformation" property="infoExecutionCourse"/>
 <bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 <bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
@@ -199,5 +199,4 @@
 <bean:message key="message.teachingReport.thanks"/>
 <br />
 <br />
-</logic:present>
 

@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExecutionCourseProjects;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -76,12 +75,13 @@ public class ViewExecutionCourseProjectsAction extends FenixAction {
             return mapping.findForward("insucess");
         }
 
-        ISiteComponent viewProjectsComponent = ReadExecutionCourseProjects.run(executionCourseCodeString, userView.getUsername());
+        InfoSiteProjects viewProjectsComponent =
+                ReadExecutionCourseProjects.run(executionCourseCodeString, userView.getUsername());
 
         InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourseCodeString);
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-        InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;
+        InfoSiteProjects infoSiteProjects = viewProjectsComponent;
         List infoGroupPropertiesList = new ArrayList();
         if (infoSiteProjects != null) {
             infoGroupPropertiesList = infoSiteProjects.getInfoGroupPropertiesList();

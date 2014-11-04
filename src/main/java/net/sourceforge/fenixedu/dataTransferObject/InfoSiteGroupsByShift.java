@@ -30,7 +30,7 @@ import java.util.ListIterator;
  * 
  */
 
-public class InfoSiteGroupsByShift extends DataTranferObject implements ISiteComponent {
+public class InfoSiteGroupsByShift extends DataTranferObject {
 
     private List infoSiteStudentGroupsList;
 

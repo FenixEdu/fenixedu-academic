@@ -33,7 +33,7 @@ import pt.ist.fenixframework.FenixFramework;
 /**
  * @author João Mota
  */
-public class InfoCurriculum extends InfoObject implements ISiteComponent {
+public class InfoCurriculum extends InfoObject {
 
     protected String generalObjectives;
 

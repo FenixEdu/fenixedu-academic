@@ -24,7 +24,6 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
@@ -35,7 +34,7 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  * 
  */
 
-public class InfoOnlineTest extends InfoEvaluation implements ISiteComponent {
+public class InfoOnlineTest extends InfoEvaluation {
 
     private InfoDistributedTest infoDistributedTest;
 

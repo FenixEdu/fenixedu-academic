@@ -30,7 +30,7 @@ import java.util.List;
  * 
  * 
  */
-public class InfoSiteTimetable extends DataTranferObject implements ISiteComponent {
+public class InfoSiteTimetable extends DataTranferObject {
 
     private List lessons;
 

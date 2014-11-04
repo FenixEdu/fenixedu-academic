@@ -24,18 +24,23 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.publico.ClassSiteComponentService;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -119,23 +124,33 @@ public class ViewClassTimeTableActionNew extends FenixAction {
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
         request.setAttribute(PresentationConstants.INFO_DEGREE_CURRICULAR_PLAN, infoDegreeCurricularPlan);
 
-        InfoSiteTimetable component = new InfoSiteTimetable();
+        InfoSiteTimetable component = getInfoSiteTimetable(schoolClass);
 
-        SiteView siteView = null;
-
-        try {
-            siteView =
-                    (SiteView) ClassSiteComponentService.run(component, infoExecutionPeriod.getInfoExecutionYear().getYear(),
-                            infoExecutionPeriod.getName(), null, null, className, null, classIdString);
-        } catch (FenixServiceException e1) {
-            throw new FenixActionException(e1);
-        }
-
-        request.setAttribute("siteView", siteView);
+        request.setAttribute("component", component);
         request.setAttribute("className", className);
         request.setAttribute("schoolClass", schoolClass);
         return mapping.findForward("Sucess");
+    }
 
+    private static InfoSiteTimetable getInfoSiteTimetable(SchoolClass domainClass) {
+        InfoSiteTimetable component = new InfoSiteTimetable();
+        List infoLessonList = null;
+
+        Collection<Shift> shiftList = domainClass.getAssociatedShiftsSet();
+        infoLessonList = new ArrayList();
+
+        ExecutionSemester executionSemester = domainClass.getExecutionPeriod();
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionSemester);
+
+        for (Object element : shiftList) {
+            Shift shift = (Shift) element;
+            infoLessonList.addAll(InfoLessonInstanceAggregation.getAggregations(shift));
+        }
+        component.setInfoExecutionPeriod(infoExecutionPeriod);
+
+        component.setLessons(infoLessonList);
+
+        return component;
     }
 
 }

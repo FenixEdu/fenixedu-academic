@@ -26,7 +26,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<bean:define id="component" name="siteView" property="component"/>
 <bean:define id="infoRoom" name="component" property="infoRoom" />
 <bean:define id="lessonList" name="component" property="infoShowOccupation" />
 

@@ -25,14 +25,13 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject implements ISiteComponent {
+public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject {
 
     private List correctAnswersPercentage;
 

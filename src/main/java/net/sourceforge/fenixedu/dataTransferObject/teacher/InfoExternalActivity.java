@@ -24,7 +24,6 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
@@ -34,7 +33,7 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
  * @author Sergio Montelobo
  * 
  */
-public class InfoExternalActivity extends InfoObject implements ISiteComponent {
+public class InfoExternalActivity extends InfoObject {
 
     private InfoTeacher infoTeacher;
 

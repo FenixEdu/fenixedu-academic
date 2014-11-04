@@ -26,7 +26,6 @@
 
 <html:xhtml/>
 
-<bean:define id="component" name="siteView" property="component" />
 <bean:define id="lessonList" name="component" property="lessons" />
 <bean:define id="executionPeriod" name="component" property="infoExecutionPeriod" />
 <bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear" />

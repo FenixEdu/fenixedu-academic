@@ -30,7 +30,7 @@ import java.util.List;
  * 
  * 
  */
-public class InfoSiteShifts extends DataTranferObject implements ISiteComponent {
+public class InfoSiteShifts extends DataTranferObject {
 
     private String infoExecutionPeriodName;
 

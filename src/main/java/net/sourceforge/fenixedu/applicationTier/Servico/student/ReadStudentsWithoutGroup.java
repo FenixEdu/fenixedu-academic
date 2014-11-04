@@ -33,7 +33,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -57,7 +56,8 @@ public class ReadStudentsWithoutGroup {
     }
 
     @Atomic
-    public static ISiteComponent run(final String groupPropertiesCode, final String username) throws FenixServiceException {
+    public static InfoSiteStudentsWithoutGroup run(final String groupPropertiesCode, final String username)
+            throws FenixServiceException {
         check(RolePredicates.STUDENT_PREDICATE);
 
         final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();

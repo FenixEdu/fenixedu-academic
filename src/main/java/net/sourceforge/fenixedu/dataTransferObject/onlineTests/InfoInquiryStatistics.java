@@ -25,7 +25,6 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 
 /**
@@ -33,7 +32,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
  * @author Susana Fernandes
  * 
  */
-public class InfoInquiryStatistics extends DataTranferObject implements ISiteComponent {
+public class InfoInquiryStatistics extends DataTranferObject {
     private StudentTestQuestion infoStudentTestQuestion;
 
     private List optionStatistics;

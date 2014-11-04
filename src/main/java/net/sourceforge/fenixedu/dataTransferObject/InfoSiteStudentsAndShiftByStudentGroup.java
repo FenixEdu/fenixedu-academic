@@ -29,7 +29,7 @@ import java.util.List;
  * @author joaosa & rmalo
  * 
  */
-public class InfoSiteStudentsAndShiftByStudentGroup extends DataTranferObject implements ISiteComponent {
+public class InfoSiteStudentsAndShiftByStudentGroup extends DataTranferObject {
 
     public static final Comparator<InfoSiteStudentsAndShiftByStudentGroup> COMPARATOR_BY_NUMBER =
             new Comparator<InfoSiteStudentsAndShiftByStudentGroup>() {

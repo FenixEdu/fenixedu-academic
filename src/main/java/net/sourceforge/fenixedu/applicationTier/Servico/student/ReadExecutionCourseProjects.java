@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
@@ -46,7 +45,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadExecutionCourseProjects {
 
     @Atomic
-    public static ISiteComponent run(String executionCourseID, String userName) throws FenixServiceException {
+    public static InfoSiteProjects run(String executionCourseID, String userName) throws FenixServiceException {
 
         InfoSiteProjects infoSiteProjects = null;
 

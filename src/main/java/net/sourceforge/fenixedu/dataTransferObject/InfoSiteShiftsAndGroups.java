@@ -29,7 +29,7 @@ import java.util.ListIterator;
  * @author asnr and scpo
  * 
  */
-public class InfoSiteShiftsAndGroups extends DataTranferObject implements ISiteComponent {
+public class InfoSiteShiftsAndGroups extends DataTranferObject {
 
     private List infoSiteGroupsByShiftList;
     private InfoGrouping infoGrouping;

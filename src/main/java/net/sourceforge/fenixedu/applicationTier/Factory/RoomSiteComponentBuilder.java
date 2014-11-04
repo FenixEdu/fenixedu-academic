@@ -29,7 +29,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
@@ -58,38 +57,10 @@ import org.joda.time.YearMonthDay;
  *
  *
  */
+@Deprecated
 public class RoomSiteComponentBuilder {
 
-    private static RoomSiteComponentBuilder instance = null;
-
-    public RoomSiteComponentBuilder() {
-    }
-
-    public static RoomSiteComponentBuilder getInstance() {
-        if (instance == null) {
-            instance = new RoomSiteComponentBuilder();
-        }
-        return instance;
-    }
-
-    public ISiteComponent getComponent(ISiteComponent component, Calendar day, Space room, ExecutionSemester executionSemester)
-            throws Exception {
-
-        if (component instanceof InfoSiteRoomTimeTable) {
-            return getInfoSiteRoomTimeTable((InfoSiteRoomTimeTable) component, day, room, executionSemester);
-        }
-
-        return null;
-    }
-
-    // private boolean isCurrentUserRoomManager(AllocatableSpace room) {
-    // User view = (User) Authenticate.getUser();
-    // Person person = view == null ? null : view.getPerson();
-    // return person != null ? room.isActiveManager(person) : false;
-    // }
-
-    private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day, Space room,
-            ExecutionSemester executionSemester) throws Exception {
+    public static InfoSiteRoomTimeTable getInfoSiteRoomTimeTable(Calendar day, Space room, ExecutionSemester executionSemester) {
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
@@ -132,6 +103,7 @@ public class RoomSiteComponentBuilder {
                 }
             }
         }
+        InfoSiteRoomTimeTable component = new InfoSiteRoomTimeTable();
 
         component.setInfoShowOccupation(infoShowOccupations);
         component.setInfoRoom(InfoRoom.newInfoFromDomain(room));
@@ -139,7 +111,7 @@ public class RoomSiteComponentBuilder {
         return component;
     }
 
-    private void getLessonOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
+    private static void getLessonOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
             YearMonthDay weekEndYearMonthDay, Lesson lesson) {
 
         if (lesson != null
@@ -150,7 +122,7 @@ public class RoomSiteComponentBuilder {
         }
     }
 
-    private void getLessonInstanceOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
+    private static void getLessonInstanceOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
             YearMonthDay weekEndYearMonthDay, Collection<LessonInstance> lessonInstances) {
 
         if (lessonInstances != null) {
@@ -164,7 +136,7 @@ public class RoomSiteComponentBuilder {
         }
     }
 
-    private void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations,
+    private static void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations,
             final YearMonthDay weekStartYearMonthDay, final YearMonthDay weekEndYearMonthDay,
             final Collection<WrittenEvaluation> writtenEvaluations) {
 

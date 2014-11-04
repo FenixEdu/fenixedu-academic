@@ -30,7 +30,7 @@ import java.util.ListIterator;
  * @author asnr and scpo
  * 
  */
-public class InfoSiteStudentGroup extends DataTranferObject implements ISiteComponent {
+public class InfoSiteStudentGroup extends DataTranferObject {
 
     public static final Comparator<InfoSiteStudentGroup> COMPARATOR_BY_NUMBER = new Comparator<InfoSiteStudentGroup>() {
 

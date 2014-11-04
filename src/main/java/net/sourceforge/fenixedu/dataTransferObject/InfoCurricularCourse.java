@@ -44,7 +44,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 /**
  * @author tfc130
  */
-public class InfoCurricularCourse extends InfoObject implements Comparable, ISiteComponent {
+public class InfoCurricularCourse extends InfoObject implements Comparable {
 
     static final public Comparator<InfoCurricularCourse> COMPARATOR_BY_NAME_AND_ID = new Comparator<InfoCurricularCourse>() {
         @Override

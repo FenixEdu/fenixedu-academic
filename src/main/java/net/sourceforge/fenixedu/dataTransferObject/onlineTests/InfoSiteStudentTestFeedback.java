@@ -24,13 +24,12 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 
 /**
  * @author Susana Fernandes
  */
-public class InfoSiteStudentTestFeedback extends DataTranferObject implements ISiteComponent {
+public class InfoSiteStudentTestFeedback extends DataTranferObject {
 
     private Integer responseNumber;
 

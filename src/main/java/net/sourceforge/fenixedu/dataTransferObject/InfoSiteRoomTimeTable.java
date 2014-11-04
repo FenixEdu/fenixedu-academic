@@ -29,7 +29,7 @@ import java.util.List;
  * @author João Mota
  * 
  */
-public class InfoSiteRoomTimeTable extends DataTranferObject implements ISiteComponent {
+public class InfoSiteRoomTimeTable extends DataTranferObject {
 
     // private List infoLessons;
     private List infoShowOccupation;

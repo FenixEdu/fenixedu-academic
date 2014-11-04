@@ -32,7 +32,7 @@ import org.fenixedu.spaces.domain.Space;
  *         19/7/2004
  */
 
-public abstract class InfoShowOccupation extends InfoObject implements ISiteComponent {
+public abstract class InfoShowOccupation extends InfoObject {
 
     public abstract InfoShift getInfoShift();
 

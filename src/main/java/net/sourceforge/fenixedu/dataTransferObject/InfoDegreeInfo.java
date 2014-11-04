@@ -27,7 +27,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 /**
  * @author T�nia Pous�o Created on 30/Out/2003
  */
-public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
+public class InfoDegreeInfo extends InfoObject {
 
     private InfoDegree infoDegree;
     private ExecutionYear executionYearDomainReference;

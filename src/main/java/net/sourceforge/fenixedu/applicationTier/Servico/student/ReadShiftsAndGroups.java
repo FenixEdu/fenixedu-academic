@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGroupsByShift;
@@ -55,7 +54,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadShiftsAndGroups {
 
     @Atomic
-    public static ISiteComponent run(String groupingCode, String username) throws FenixServiceException {
+    public static InfoSiteShiftsAndGroups run(String groupingCode, String username) throws FenixServiceException {
 
         final Grouping grouping = FenixFramework.getDomainObject(groupingCode);
         if (grouping == null) {

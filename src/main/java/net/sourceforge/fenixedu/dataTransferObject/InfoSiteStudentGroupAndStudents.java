@@ -28,7 +28,7 @@ import java.util.List;
  * @author joaosa & rmalo
  * 
  */
-public class InfoSiteStudentGroupAndStudents extends DataTranferObject implements ISiteComponent {
+public class InfoSiteStudentGroupAndStudents extends DataTranferObject {
 
     private List infoSiteStudentsAndShiftByStudentGroupList;
     private InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;

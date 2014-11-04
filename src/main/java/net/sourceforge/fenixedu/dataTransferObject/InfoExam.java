@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.util.Season;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
+public class InfoExam extends InfoWrittenEvaluation {
 
     protected Season season;
     private List infoExecutionCourses;

@@ -18,10 +18,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Calendar;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -80,15 +78,6 @@ public class Qualification extends Qualification_Base {
         }
         setLastModificationDateDateTime(new DateTime());
         setWhenCreated(new LocalDate());
-    }
-
-    public Qualification(Person person, Country country, InfoQualification infoQualification) {
-        this();
-        setPerson(person);
-        if (country != null) {
-            setCountry(country);
-        }
-        setBasicProperties(infoQualification);
     }
 
     public Qualification(Person person, PrecedentDegreeInformation precedentDegreeInformation) {
@@ -150,15 +139,6 @@ public class Qualification extends Qualification_Base {
         super.deleteDomainObject();
     }
 
-    public void edit(InfoQualification infoQualification, Country country) {
-        setBasicProperties(infoQualification);
-        if (country == null) {
-            setCountry(null);
-        } else {
-            setCountry(country);
-        }
-    }
-
     public void edit(Person person, Country country, String branch, YearMonthDay dateYearMonthDay, String degree,
             String degreeRecognition, YearMonthDay equivalenceDateYearMonthDay, String equivalenceSchool, String mark,
             String school, String specializationArea, String title, QualificationType type, String year, String designation,
@@ -186,26 +166,6 @@ public class Qualification extends Qualification_Base {
         setPerson(person);
         setCountry(country);
 
-    }
-
-    private void setBasicProperties(InfoQualification infoQualification) {
-        setBranch(infoQualification.getBranch());
-        setDate(infoQualification.getDate());
-        if (getDate() != null && !getDate().equals("")) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(getDate());
-            setYear(String.valueOf(calendar.get(Calendar.YEAR)));
-        } else {
-            setYear(null);
-        }
-        setDegree(infoQualification.getDegree());
-        setDegreeRecognition(infoQualification.getDegreeRecognition());
-        setEquivalenceDate(infoQualification.getEquivalenceDate());
-        setEquivalenceSchool(infoQualification.getEquivalenceSchool());
-        setMark(infoQualification.getMark());
-        setSchool(infoQualification.getSchool());
-        setSpecializationArea(infoQualification.getSpecializationArea());
-        setTitle(infoQualification.getTitle());
     }
 
     @Deprecated

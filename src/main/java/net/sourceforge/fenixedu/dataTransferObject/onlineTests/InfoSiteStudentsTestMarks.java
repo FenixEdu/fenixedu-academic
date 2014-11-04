@@ -25,14 +25,13 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class InfoSiteStudentsTestMarks extends DataTranferObject implements ISiteComponent {
+public class InfoSiteStudentsTestMarks extends DataTranferObject {
 
     private List infoStudentTestQuestionList;
 

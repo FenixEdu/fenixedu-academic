@@ -31,8 +31,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarksStatistics;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -46,7 +44,8 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadDistributedTestMarksStatistics {
 
-    protected SiteView run(String executionCourseId, String distributedTestId) throws FenixServiceException {
+    protected InfoSiteStudentsTestMarksStatistics run(String executionCourseId, String distributedTestId)
+            throws FenixServiceException {
 
         InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
 
@@ -97,8 +96,7 @@ public class ReadDistributedTestMarksStatistics {
         infoSiteStudentsTestMarksStatistics.setNotAnsweredPercentage(notAnsweredPercentageList);
         infoSiteStudentsTestMarksStatistics.setAnsweredPercentage(answeredPercentageList);
         infoSiteStudentsTestMarksStatistics.setDistributedTest(distributedTest);
-        SiteView siteView = new ExecutionCourseSiteView(infoSiteStudentsTestMarksStatistics, infoSiteStudentsTestMarksStatistics);
-        return siteView;
+        return infoSiteStudentsTestMarksStatistics;
     }
 
     // Service Invokers migrated from Berserk
@@ -106,8 +104,8 @@ public class ReadDistributedTestMarksStatistics {
     private static final ReadDistributedTestMarksStatistics serviceInstance = new ReadDistributedTestMarksStatistics();
 
     @Atomic
-    public static SiteView runReadDistributedTestMarksStatistics(String executionCourseId, String distributedTestId)
-            throws FenixServiceException, NotAuthorizedException {
+    public static InfoSiteStudentsTestMarksStatistics runReadDistributedTestMarksStatistics(String executionCourseId,
+            String distributedTestId) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId);
     }

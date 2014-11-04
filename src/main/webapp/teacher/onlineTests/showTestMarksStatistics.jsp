@@ -25,9 +25,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <jsp:include page="/includeMathJax.jsp" />
 
-
-<logic:present name="siteView">	
-	<bean:define id="component" name="siteView" property="component"/>
+	<bean:define id="component" name="stats"/>
 	<bean:define id="distributedTest" name="component" property="infoDistributedTest"/>
 	<h2><bean:write name="distributedTest" property="title"/></h2>
 	<br/>
@@ -116,10 +114,3 @@
 	</tr>
 	</table>
 	</html:form>
-	
-</logic:present>
-<logic:notPresent name="siteView">
-<center>
-	<h2><bean:message key="message.testMark.no.Available"/></h2>
-</center>
-</logic:notPresent>

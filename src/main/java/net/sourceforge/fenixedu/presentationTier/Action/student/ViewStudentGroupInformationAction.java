@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentGroupInformation;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyGroupingAndStudentGroupWithoutShift;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -72,7 +71,7 @@ public class ViewStudentGroupInformationAction extends FenixAction {
         String shiftCodeString = request.getParameter("shiftCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
-        ISiteComponent viewStudentGroup;
+        InfoSiteStudentGroup viewStudentGroup;
         try {
             Integer type =
                     VerifyGroupingAndStudentGroupWithoutShift.run(studentGroupCodeString, groupPropertiesCodeString,
@@ -104,7 +103,7 @@ public class ViewStudentGroupInformationAction extends FenixAction {
             throw new FenixActionException(e);
         }
 
-        InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
+        InfoSiteStudentGroup infoSiteStudentGroup = viewStudentGroup;
         request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
 
         List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCodeString);

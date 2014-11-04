@@ -63,13 +63,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.Read
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadStudentsByIdArray;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.SimulateTest;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.MetadataComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarks;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarksStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -983,16 +983,16 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
     public ActionForward showTestMarksStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
-        SiteView siteView = null;
+        InfoSiteStudentsTestMarksStatistics stats = null;
         try {
-            siteView =
+            stats =
                     ReadDistributedTestMarksStatistics.runReadDistributedTestMarksStatistics(getExecutionCourse(request)
                             .getExternalId(), distributedTestCode);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
         request.setAttribute("distributedTestCode", distributedTestCode);
-        request.setAttribute("siteView", siteView);
+        request.setAttribute("stats", stats);
         return doForward(request, "showTestMarksStatistics");
     }
 

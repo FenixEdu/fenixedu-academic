@@ -24,7 +24,6 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CareerType;
@@ -37,7 +36,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
  * @author Sergio Montelobo
  * 
  */
-public abstract class InfoCareer extends InfoObject implements ISiteComponent {
+public abstract class InfoCareer extends InfoObject {
 
     private Integer beginYear;
     private Integer endYear;

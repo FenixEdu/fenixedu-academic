@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
@@ -68,7 +67,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * @author Leonor Almeida
  * @author Sergio Montelobo
  */
-public class InfoSiteCourseInformation extends DataTranferObject implements ISiteComponent {
+public class InfoSiteCourseInformation extends DataTranferObject {
 
     private final ExecutionCourse executionCourseDomainReference;
 

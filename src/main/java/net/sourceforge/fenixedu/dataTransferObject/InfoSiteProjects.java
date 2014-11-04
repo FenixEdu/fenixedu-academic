@@ -30,7 +30,7 @@ import java.util.ListIterator;
  * 
  */
 
-public class InfoSiteProjects extends DataTranferObject implements ISiteComponent {
+public class InfoSiteProjects extends DataTranferObject {
 
     private InfoExecutionCourse infoExecutionCourse;
 

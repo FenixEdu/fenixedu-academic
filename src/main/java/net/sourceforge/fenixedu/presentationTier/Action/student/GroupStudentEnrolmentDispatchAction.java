@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.student.GroupStudentEnrolment;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentGroupInformation;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -110,7 +109,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
         }
 
-        ISiteComponent viewStudentGroup = null;
+        InfoSiteStudentGroup viewStudentGroup = null;
         try {
             viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCodeString);
 
@@ -126,7 +125,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
             throw new FenixActionException(e);
         }
 
-        InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
+        InfoSiteStudentGroup infoSiteStudentGroup = viewStudentGroup;
 
         request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
 

@@ -126,9 +126,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
         InfoSiteStudentsWithoutGroup studentsNotEnroled = null;
 
         try {
-            studentsNotEnroled =
-                    (InfoSiteStudentsWithoutGroup) ReadStudentsWithoutGroup
-                            .run(groupPropertiesCodeString, userView.getUsername());
+            studentsNotEnroled = ReadStudentsWithoutGroup.run(groupPropertiesCodeString, userView.getUsername());
 
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors1 = new ActionErrors();

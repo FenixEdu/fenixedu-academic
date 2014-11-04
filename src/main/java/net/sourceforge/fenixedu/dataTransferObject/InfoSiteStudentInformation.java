@@ -28,7 +28,7 @@ import java.util.Comparator;
  * @author asnr and scpo
  * 
  */
-public class InfoSiteStudentInformation extends DataTranferObject implements ISiteComponent {
+public class InfoSiteStudentInformation extends DataTranferObject {
 
     public static final Comparator<InfoSiteStudentInformation> COMPARATOR_BY_NUMBER =
             new Comparator<InfoSiteStudentInformation>() {

@@ -22,10 +22,6 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
@@ -39,28 +35,6 @@ public class WeeklyOcupation extends WeeklyOcupation_Base {
     public WeeklyOcupation() {
         super();
         setRootDomainObject(Bennu.getInstance());
-    }
-
-    public WeeklyOcupation(Teacher teacher, InfoWeeklyOcupation infoWeeklyOcupation) {
-        this();
-        if (teacher == null) {
-            throw new DomainException("The teacher should not be null!");
-        }
-        setTeacher(teacher);
-        setBasicProperties(infoWeeklyOcupation);
-    }
-
-    public void edit(InfoWeeklyOcupation infoWeeklyOcupation) {
-        setBasicProperties(infoWeeklyOcupation);
-    }
-
-    private void setBasicProperties(InfoWeeklyOcupation infoWeeklyOcupation) {
-        this.setOther(infoWeeklyOcupation.getOther());
-        this.setLecture(infoWeeklyOcupation.getLecture());
-        this.setManagement(infoWeeklyOcupation.getManagement());
-        this.setResearch(infoWeeklyOcupation.getResearch());
-        this.setSupport(infoWeeklyOcupation.getSupport());
-
     }
 
     @Deprecated

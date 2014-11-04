@@ -28,7 +28,7 @@ import java.util.Comparator;
  * @author joaosa & rmalo
  * 
  */
-public class InfoSiteStudentAndGroup extends DataTranferObject implements ISiteComponent {
+public class InfoSiteStudentAndGroup extends DataTranferObject {
 
     public static final Comparator<InfoSiteStudentAndGroup> COMPARATOR_BY_NUMBER = new Comparator<InfoSiteStudentAndGroup>() {
 

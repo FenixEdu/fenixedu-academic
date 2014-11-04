@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCourseInformation;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -65,9 +65,9 @@ public class ViewCourseInformationAction extends FenixAction {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
-        SiteView siteView = null;
         try {
-            siteView = ReadCourseInformation.runReadCourseInformation(executionCourseId);
+            InfoSiteCourseInformation info = ReadCourseInformation.runReadCourseInformation(executionCourseId);
+            request.setAttribute("info", info);
         } catch (NotAuthorizedException e) {
             errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
             saveErrors(request, errors);
@@ -77,7 +77,6 @@ public class ViewCourseInformationAction extends FenixAction {
             throw new FenixActionException(e);
         }
 
-        request.setAttribute("siteView", siteView);
         return mapping.findForward("successfull-read");
     }
 

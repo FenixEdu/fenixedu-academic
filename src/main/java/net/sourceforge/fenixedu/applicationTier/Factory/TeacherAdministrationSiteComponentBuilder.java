@@ -30,10 +30,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGroupsByShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
@@ -45,7 +42,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndShiftByStu
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -58,31 +54,6 @@ import pt.ist.fenixframework.FenixFramework;
  */
 @Deprecated
 public class TeacherAdministrationSiteComponentBuilder {
-
-    /**
-     * @param common
-     * @param site
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-    public static InfoSiteCommon getInfoSiteCommon(InfoSiteCommon component, ExecutionCourse executionCourse)
-            throws FenixServiceException {
-
-        component.setTitle(executionCourse.getNome());
-        component.setMail(executionCourse.getEmail());
-
-        final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
-        component.setExecutionCourse(infoExecutionCourse);
-
-        final Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCoursesSet();
-        final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());
-        for (final CurricularCourse curricularCourse : curricularCourses) {
-            infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
-        }
-        component.setAssociatedDegrees(infoCurricularCourses);
-
-        return component;
-    }
 
     public InfoSiteStudentGroup getInfoSiteStudentGroup(InfoSiteStudentGroup component, String studentGroupID)
             throws FenixServiceException {

@@ -26,8 +26,8 @@
 
 <h2><bean:message key="title.courseInformation"/></h2>
 
-<logic:present name="siteView"> 
-	<bean:define id="siteCourseInformation" name="siteView" property="component"/>
+<logic:present name="info"> 
+	<bean:define id="siteCourseInformation" name="info"/>
 	<bean:define id="executionCourse" name="siteCourseInformation" property="infoExecutionCourse" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse"/>
 	<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 	<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
@@ -296,5 +296,5 @@
 			<em><bean:message key="message.courseInformation.notYetAvailable"/></em>
 		</p>
 	</logic:empty>
-	
+
 </logic:present>

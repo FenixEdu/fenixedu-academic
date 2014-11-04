@@ -26,17 +26,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.publico.RoomSiteComponentServiceByExecutionPeriodID;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -50,11 +49,15 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewRoom", module = "publico", formBean = "indexForm", functionality = FindSpacesDA.class)
 @Forwards(@Forward(name = "roomViewer", path = "/publico/viewRoom_bd.jsp"))
@@ -73,7 +76,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
         if (roomName != null) {
             roomKey = new RoomKey(roomName);
 
-            ISiteComponent bodyComponent = new InfoSiteRoomTimeTable();
+            InfoSiteRoomTimeTable bodyComponent = new InfoSiteRoomTimeTable();
             DynaActionForm indexForm = (DynaActionForm) form;
             Integer indexWeek = (Integer) indexForm.get("indexWeek");
             // Integer executionPeriodID = (Integer)
@@ -155,12 +158,8 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
             }
 
             try {
-                SiteView siteView =
-                        (SiteView) RoomSiteComponentServiceByExecutionPeriodID.run(bodyComponent, roomKey, today,
-                                executionPeriodID);
-
-                request.setAttribute("siteView", siteView);
-
+                InfoSiteRoomTimeTable component = run(roomKey, today, executionPeriodID);
+                request.setAttribute("component", component);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException(e);
             } catch (FenixServiceException e) {
@@ -170,6 +169,14 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
         }
         throw new FenixActionException();
 
+    }
+
+    private static InfoSiteRoomTimeTable run(RoomKey roomKey, Calendar someDay, String executionPeriodID) throws Exception {
+        final Calendar day = new DateTime(someDay.getTimeInMillis()).withField(DateTimeFieldType.dayOfWeek(), 1).toCalendar(null);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
+        Space room = SpaceUtils.findAllocatableSpaceForEducationByName(roomKey.getNomeSala());
+        return RoomSiteComponentBuilder.getInfoSiteRoomTimeTable(day, room,
+                executionSemester != null ? executionSemester : ExecutionSemester.readActualExecutionSemester());
     }
 
 }
