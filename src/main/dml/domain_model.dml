@@ -12153,32 +12153,3 @@ relation RegistrationProtocolMobilityProgram {
 	} 
 }
 
-/**
- * Former Remote Plugin
- */
-
-package pt.ist.fenixframework.plugins.remote.domain;
-
-class RemoteSystem {
-}
-
-class RemoteHost {
-    String name;
-    Strings url;
-    String username;
-    String password;
-    Boolean allowInvocationAccess;
-}
-
-relation RemoteSystemRemoteHost {
-    RemoteSystem playsRole remoteSystem;
-    RemoteHost playsRole remoteHosts {
-        multiplicity *;
-    }
-}
-
-relation RemoteSystemDomainRoot {
-    RemoteSystem playsRole remoteSystem;
-    .pt.ist.fenixframework.DomainRoot playsRole domainRoot;
-}
-

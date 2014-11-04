@@ -46,7 +46,6 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumF
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 
 import com.sun.mail.smtp.SMTPTransport;
 
@@ -60,8 +59,6 @@ public class FenixInitializer implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
 
         logger.info("Initializing Fenix");
-
-        RemoteSystem.init();
 
         try {
             InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
