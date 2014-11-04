@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.User.UserPresentationStrategy;
@@ -90,7 +89,6 @@ public class FenixInitializer implements ServletContextListener {
 
         registerChecksumFilterRules();
 
-        initializeFenixAPI();
         registerPresentationStrategy();
 
         registerHealthchecks();
@@ -161,10 +159,6 @@ public class FenixInitializer implements ServletContextListener {
                 }
             }
         });
-    }
-
-    private void initializeFenixAPI() {
-        FenixJerseyAPIConfig.initialize();
     }
 
     @Override

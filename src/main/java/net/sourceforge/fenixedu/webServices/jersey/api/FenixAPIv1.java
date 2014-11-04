@@ -113,7 +113,6 @@ import net.sourceforge.fenixedu.domain.util.icalendar.ClassEventBean;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
-import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.ContentType;
@@ -167,6 +166,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -772,12 +772,16 @@ public class FenixAPIv1 {
         return false;
     }
 
-    private <T extends DomainObject> T getDomainObject(String externalId, Class<T> clazz) {
-        T domainObject = OAuthUtils.getDomainObject(externalId, clazz);
-        if (domainObject == null) {
+    private final <T extends DomainObject> T getDomainObject(final String externalId, final Class<T> clazz) {
+        try {
+            T domainObject = FenixFramework.getDomainObject(externalId);
+            if (!FenixFramework.isDomainObjectValid(domainObject) || !clazz.isAssignableFrom(domainObject.getClass())) {
+                throw newApplicationError(Status.NOT_FOUND, "id not found", "id not found");
+            }
+            return domainObject;
+        } catch (Exception nfe) {
             throw newApplicationError(Status.NOT_FOUND, "id not found", "id not found");
         }
-        return domainObject;
     }
 
     private WebApplicationException newApplicationError(Status status, String error, String description) {
