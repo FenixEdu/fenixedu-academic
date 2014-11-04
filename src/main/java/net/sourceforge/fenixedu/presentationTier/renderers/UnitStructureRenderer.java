@@ -43,6 +43,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
+import com.google.common.base.Strings;
+
 public class UnitStructureRenderer extends OutputRenderer {
 
     private String rootUnitClasses;
@@ -480,9 +482,9 @@ public class UnitStructureRenderer extends OutputRenderer {
     protected HtmlComponent generatePerson(Person person) {
         HtmlComponent name = generatePersonName(person);
 
-        if (person.isHomePageAvailable()) {
+        if (!Strings.isNullOrEmpty(person.getHomepageWebAddress())) {
             HtmlLink link = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            link.setUrl(String.format(getHomepageLocation(), person.getIstUsername()));
+            link.setUrl(person.getHomepageWebAddress());
             link.setModuleRelative(false);
             link.setIndented(false);
             link.setBody(name);

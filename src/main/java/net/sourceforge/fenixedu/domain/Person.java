@@ -90,7 +90,6 @@ import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
@@ -98,7 +97,6 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
-import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
@@ -165,9 +163,11 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.bennu.core.domain.UserProfile;
+import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -1204,9 +1204,6 @@ public class Person extends Person_Base {
         if (getAssociatedPersonAccount() != null) {
             getAssociatedPersonAccount().delete();
         }
-        if (getHomepage() != null) {
-            getHomepage().delete();
-        }
 
         getPersonRolesSet().clear();
 
@@ -1227,7 +1224,6 @@ public class Person extends Person_Base {
             getPersonName().delete();
         }
 
-        getBookmarkedBoardsSet().clear();
         getManageableDepartmentCreditsSet().clear();
         getThesisEvaluationParticipantsSet().clear();
 
@@ -1257,8 +1253,7 @@ public class Person extends Person_Base {
                 && getExportGroupingSendersSet().isEmpty() && getResponsabilityTransactionsSet().isEmpty()
                 && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty() && getEmployee() == null
                 && getTeacher() == null && getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty()
-                && !hasAnyPersonFunctions() && (getHomepage() == null || getHomepage().isDeletable())
-                && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet()
+                && !hasAnyPersonFunctions() && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet()
                 .isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.person.cannot.be.deleted"));
         }
@@ -2285,47 +2280,6 @@ public class Person extends Person_Base {
         return externalPerson;
     }
 
-    public Collection<AnnouncementBoard> getCurrentExecutionCoursesAnnouncementBoards() {
-        final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
-        result.addAll(getTeacherCurrentExecutionCourseAnnouncementBoards());
-        result.addAll(getStudentCurrentExecutionCourseAnnouncementBoards());
-        return result;
-    }
-
-    private Collection<AnnouncementBoard> getTeacherCurrentExecutionCourseAnnouncementBoards() {
-        if (getTeacher() == null) {
-            return Collections.emptyList();
-        }
-        final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
-        for (final Professorship professorship : getTeacher().getProfessorships()) {
-            if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionSemester.readActualExecutionSemester()) {
-                final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
-                if (board != null && board.hasReaderOrWriter(this)) {
-                    result.add(board);
-                }
-            }
-        }
-        return result;
-    }
-
-    private Collection<AnnouncementBoard> getStudentCurrentExecutionCourseAnnouncementBoards() {
-        if (getStudent() == null) {
-            return Collections.emptyList();
-        }
-        final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
-        for (final Registration registration : getStudent().getRegistrationsSet()) {
-            for (final Attends attends : registration.getAssociatedAttendsSet()) {
-                if (attends.getExecutionCourse().isLecturedIn(ExecutionSemester.readActualExecutionSemester())) {
-                    final AnnouncementBoard board = attends.getExecutionCourse().getBoard();
-                    if (board != null && board.hasReaderOrWriter(this)) {
-                        result.add(board);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
     @Override
     final public boolean isPerson() {
         return true;
@@ -2613,9 +2567,6 @@ public class Person extends Person_Base {
     }
 
     public String getHomepageWebAddress() {
-        if (getHomepage() != null && getHomepage().isHomepageActivated()) {
-            return getHomepage().getFullPath();
-        }
         if (isDefaultWebAddressVisible() && getDefaultWebAddress().hasUrl()) {
             return getDefaultWebAddress().getUrl();
         }
@@ -2694,10 +2645,6 @@ public class Person extends Person_Base {
 
     public boolean hasServiceAgreementFor(final ServiceAgreementTemplate serviceAgreementTemplate) {
         return getServiceAgreementFor(serviceAgreementTemplate) != null;
-    }
-
-    public boolean isHomePageAvailable() {
-        return getHomepage() != null && getHomepage().getActivated();
     }
 
     public String getFirstAndLastName() {
@@ -3040,12 +2987,7 @@ public class Person extends Person_Base {
     }
 
     public boolean isPhotoPubliclyAvailable() {
-        if (!isHomePageAvailable()) {
-            return false;
-        }
-
-        final Boolean showPhotoInHomepage = getHomepage().getShowPhoto();
-        return showPhotoInHomepage != null && showPhotoInHomepage;
+        return getPhotoAvailable();
     }
 
     public boolean isDefaultEmailVisible() {
@@ -3098,21 +3040,6 @@ public class Person extends Person_Base {
     @Override
     public String getPartyPresentationName() {
         return getPresentationName();
-    }
-
-    @Override
-    public Homepage getSite() {
-        return getHomepage();
-    }
-
-    @Override
-    protected Homepage createSite() {
-        return new Homepage(this);
-    }
-
-    @Override
-    public Homepage initializeSite() {
-        return (Homepage) super.initializeSite();
     }
 
     public PersonFunction getActiveGGAEDelegatePersonFunction() {
@@ -3616,11 +3543,8 @@ public class Person extends Person_Base {
     }
 
     public boolean isTeacherEvaluationCoordinatorCouncilMember() {
-        final UnitSite unitSite = Bennu.getInstance().getTeacherEvaluationCoordinatorCouncil();
-        if (unitSite != null) {
-            return unitSite.getManagersSet().contains(AccessControl.getPerson());
-        }
-        return false;
+        PersistentGroup group = Bennu.getInstance().getTeacherEvaluationCoordinatorCouncil();
+        return group != null ? group.isMember(Authenticate.getUser()) : false;
     }
 
     public EmailAddress getEmailAddressForSendingEmails() {

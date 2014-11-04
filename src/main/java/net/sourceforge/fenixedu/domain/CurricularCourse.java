@@ -789,18 +789,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return curriculum;
     }
 
-    public List<ExecutionCourse> getExecutionCoursesWithPublicSites() {
-        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-
-        for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
-            if (executionCourse.getSite() != null) {
-                result.add(executionCourse);
-            }
-        }
-
-        return result;
-    }
-
     @SuppressWarnings("unchecked")
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
         return (List<ExecutionCourse>) CollectionUtils.select(getAssociatedExecutionCoursesSet(), new Predicate() {

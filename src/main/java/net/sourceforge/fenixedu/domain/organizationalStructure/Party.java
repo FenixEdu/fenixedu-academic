@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
@@ -1126,31 +1125,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public void setCountryOfResidence(Country countryOfResidence) {
         getOrCreateDefaultPhysicalAddress().setCountryOfResidence(countryOfResidence);
-    }
-
-    //
-    // Site
-    //
-
-    public abstract Site getSite();
-
-    protected abstract Site createSite();
-
-    /**
-     * Initializes the party's site. This method ensures that if the party has a site then no other is created and that site is
-     * returned. Nevertheless if the party does not have a site, it is asked to create one by calling {@link #createSite()}. This
-     * allows each specific party to create the appropriate site.
-     * 
-     * @return the newly created site or, if this party already contains a site, the currently existing one(publication.getYear())
-     */
-    public Site initializeSite() {
-        Site site = getSite();
-
-        if (site != null) {
-            return site;
-        } else {
-            return createSite();
-        }
     }
 
     @Override

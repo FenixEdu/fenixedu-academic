@@ -67,19 +67,14 @@ public class ExpandExecutionCourseMailAlias {
             ExecutionCourse course = FenixFramework.getDomainObject(id);
             if (course != null) {
                 List<String> addresses = new ArrayList<String>();
-                if (course.getSite() != null) {
-                    if (course.getSite().getDynamicMailDistribution()) {
-                        for (Professorship professorship : course.getProfessorshipsSet()) {
-                            addresses.add(professorship.getPerson().getEmail());
-                        }
-                        report.status = AliasExpandingStatus.OK;
-                        report.expandedAddresses = addresses;
-                    } else {
-                        report.status = AliasExpandingStatus.DYNAMIC_MAIL_DELIVERY_DISABLE;
+                if (course.getDynamicMailDistribution()) {
+                    for (Professorship professorship : course.getProfessorshipsSet()) {
+                        addresses.add(professorship.getPerson().getEmail());
                     }
+                    report.status = AliasExpandingStatus.OK;
+                    report.expandedAddresses = addresses;
                 } else {
-
-                    report.status = AliasExpandingStatus.EC_SITE_NOT_AVAILABLE;
+                    report.status = AliasExpandingStatus.DYNAMIC_MAIL_DELIVERY_DISABLE;
                 }
             } else {
                 report.status = AliasExpandingStatus.UNKNOWN_EXECUTION_COURSE;

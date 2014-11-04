@@ -26,7 +26,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * @author João Mota
@@ -40,8 +39,6 @@ public class InfoSiteCommon extends DataTranferObject implements ISiteComponent 
     private String mail;
 
     private InfoExecutionCourse executionCourse;
-
-    private List sections;
 
     private List associatedDegrees;
 
@@ -65,26 +62,6 @@ public class InfoSiteCommon extends DataTranferObject implements ISiteComponent 
 
             result = true;
         }
-
-        if (((InfoSiteCommon) objectToCompare).getSections() == null && this.getSections() == null && result == true) {
-            return true;
-        }
-        if (((InfoSiteCommon) objectToCompare).getSections() == null || this.getSections() == null
-                || ((InfoSiteCommon) objectToCompare).getSections().size() != this.getSections().size()) {
-            return false;
-        }
-
-        ListIterator iter1 = ((InfoSiteCommon) objectToCompare).getSections().listIterator();
-        ListIterator iter2 = this.getSections().listIterator();
-        while (result && iter1.hasNext()) {
-            InfoSection infoSection1 = (InfoSection) iter1.next();
-            InfoSection infoSection2 = (InfoSection) iter2.next();
-            if (!infoSection1.equals(infoSection2)) {
-                result = false;
-                break;
-            }
-        }
-
         return result;
     }
 
@@ -123,13 +100,6 @@ public class InfoSiteCommon extends DataTranferObject implements ISiteComponent 
     /**
      * @return
      */
-    public List getSections() {
-        return sections;
-    }
-
-    /**
-     * @return
-     */
     public String getTitle() {
         return title;
     }
@@ -146,13 +116,6 @@ public class InfoSiteCommon extends DataTranferObject implements ISiteComponent 
      */
     public void setMail(String string) {
         mail = string;
-    }
-
-    /**
-     * @param list
-     */
-    public void setSections(List list) {
-        sections = list;
     }
 
     /**

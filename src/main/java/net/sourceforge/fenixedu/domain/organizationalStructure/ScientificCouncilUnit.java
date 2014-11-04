@@ -24,8 +24,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.ScientificCouncilSite;
-import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -57,7 +55,6 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
         List<Group> groups = super.getDefaultGroups();
 
         groups.add(RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL));
-        groups.add(ManagersOfUnitSiteGroup.get(getSite()));
 
         Function function = getCoordinationCommitteeMembersFunction();
         if (function != null) {
@@ -100,11 +97,6 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     @Override
     public Collection<Person> getPossibleGroupMembers() {
         return Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL).getAssociatedPersonsSet();
-    }
-
-    @Override
-    protected ScientificCouncilSite createSite() {
-        return new ScientificCouncilSite(this);
     }
 
     public static ScientificCouncilUnit getScientificCouncilUnit() {

@@ -25,13 +25,11 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.rendere
 import java.util.Calendar;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;
@@ -135,10 +133,11 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
                 } else if (typeUser.equals("public")) {
 
-                    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+                    String siteUrl = infoExecutionCourse.getExecutionCourse().getSiteUrl();
+                    siteUrl = siteUrl == null ? "#" : siteUrl;
                     strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-                    strBuffer.append("<a href=\"").append(((HttpServletRequest) pageContext.getRequest()).getContextPath());
-                    strBuffer.append(site.getReversePath());
+                    strBuffer.append("<a href=\"");
+                    strBuffer.append(siteUrl);
                     strBuffer.append("\">");
                     strBuffer.append(courseInitials);
                 }

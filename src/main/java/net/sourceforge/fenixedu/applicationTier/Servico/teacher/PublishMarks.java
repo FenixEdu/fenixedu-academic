@@ -24,12 +24,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author Fernanda Quitério
@@ -48,18 +45,12 @@ public class PublishMarks {
             String announcementTitle) throws ExcepcaoInexistente, FenixServiceException {
 
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
-        final ExecutionCourseSite site = executionCourse.getSite();
         final Evaluation evaluation = FenixFramework.getDomainObject(evaluationCode);
 
         if (publishmentMessage == null || publishmentMessage.length() == 0) {
             evaluation.setPublishmentMessage(" ");
         } else {
             evaluation.setPublishmentMessage(publishmentMessage);
-            Announcement announcement = new Announcement();
-            announcement.setSubject(new MultiLanguageString(announcementTitle));
-            announcement.setBody(new MultiLanguageString(publishmentMessage));
-            announcement.setVisible(true);
-            site.getExecutionCourse().getBoard().addAnnouncement(announcement);
         }
 
         for (Mark mark : evaluation.getMarksSet()) {

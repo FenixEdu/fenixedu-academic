@@ -946,7 +946,7 @@ public class FenixAPIv1 {
 
         String type = degree.getDegreeTypeName();
         String typeName = degree.getDegreeType().getFilteredName();
-        String degreeUrl = CoreConfiguration.getConfiguration().applicationUrl() + degree.getSite().getReversePath();
+        String degreeUrl = degree.getSiteUrl();
 
         for (Space campus : degree.getCampus(executionYear)) {
             degreeCampus.add(FenixSpace.getSimpleSpace(campus));
@@ -1095,7 +1095,7 @@ public class FenixAPIv1 {
         String name = executionCourse.getName();
         String evaluationMethod = executionCourse.getEvaluationMethodText();
         String academicTerm = executionCourse.getExecutionPeriod().getQualifiedName();
-        String courseUrl = CoreConfiguration.getConfiguration().applicationUrl() + executionCourse.getSite().getReversePath();
+        String courseUrl = executionCourse.getSiteUrl();
 
         Map<CompetenceCourse, Set<CurricularCourse>> curricularCourses =
                 executionCourse.getCurricularCoursesIndexedByCompetenceCourse();
@@ -1147,15 +1147,11 @@ public class FenixAPIv1 {
             teachers.add(new FenixTeacher(tname, istid, mail, url));
         }
 
-        String annoucementLink =
-                getServerLink().concat("/external/announcementsRSS.do?announcementBoardId=").concat(
-                        executionCourse.getBoard().getExternalId().toString());
-
         String summaryLink =
                 getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getExternalId().toString());
 
-        return new FenixCourseExtended(acronym, name, evaluationMethod, academicTerm, numberOfStudents, annoucementLink,
-                summaryLink, courseUrl, moreInfo, teachers);
+        return new FenixCourseExtended(acronym, name, evaluationMethod, academicTerm, numberOfStudents, summaryLink, courseUrl,
+                moreInfo, teachers);
     }
 
     /**

@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionDegree;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionSemester;
-import net.sourceforge.fenixedu.domain.messaging.Announcement;
 
 public class ExecutionCourseBean implements Serializable, HasExecutionSemester, HasExecutionDegree {
 
@@ -40,7 +39,6 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
     private CurricularYear curricularYear;
     private ExecutionCourse sourceExecutionCourse;
     private ExecutionCourse destinationExecutionCourse;
-    private List<Announcement> announcements;
     private ExecutionSemester executionSemester;
     private Boolean chooseNotLinked;
 
@@ -88,14 +86,6 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
 
     public void setDestinationExecutionCourse(ExecutionCourse destinationExecutionCourse) {
         this.destinationExecutionCourse = destinationExecutionCourse;
-    }
-
-    public List<Announcement> getAnnouncements() {
-        return announcements;
-    }
-
-    public void setAnnouncements(List<Announcement> announcements) {
-        this.announcements = announcements;
     }
 
     public Boolean getChooseNotLinked() {

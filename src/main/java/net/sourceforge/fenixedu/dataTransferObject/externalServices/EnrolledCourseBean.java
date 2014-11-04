@@ -40,7 +40,7 @@ public class EnrolledCourseBean {
     public EnrolledCourseBean(final Attends attend) {
         setName(attend.getExecutionCourse().getName());
         setAcronym(attend.getExecutionCourse().getSigla());
-        setPageURL("http://fenix.ist.utl.pt" + attend.getExecutionCourse().getSite().getReversePath());
+        setPageURL(attend.getExecutionCourse().getSiteUrl());
         //grupos
         for (StudentGroup studentGroup : attend.getAllStudentGroups()) {
             getEnrolledGroups().add(new EnrolledGroupBean(studentGroup, attend));

@@ -46,9 +46,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.DegreeSite;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
@@ -57,7 +55,6 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecial
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -108,8 +105,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
-import net.sourceforge.fenixedu.domain.messaging.Announcement;
-import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
@@ -415,8 +410,6 @@ public class CreateTestData {
             department.setDepartmentUnit(departmentUnit);
 
             createCompetenceCourseGroupUnit(departmentUnit);
-
-            new DepartmentSite(department);
         }
 
         private int areaCounter = 0;
@@ -481,7 +474,6 @@ public class CreateTestData {
 
                         createExecutionDegrees(degreeCurricularPlan, getCampus());
                         degree.setAdministrativeOffice(administrativeOffice);
-                        final DegreeSite degreeSite = degree.getSite();
 
                         DegreeUnit.createNewInternalDegreeUnit(new MultiLanguageString(Locale.getDefault(), degree.getName()),
                                 null, null, degree.getSigla(), new YearMonthDay(), null, unit,
@@ -880,12 +872,10 @@ public class CreateTestData {
         }
 
         private static void createAnnouncementsAndPlanning(final ExecutionCourse executionCourse) {
-            final AnnouncementBoard announcementBoard = executionCourse.getBoard();
             final ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
             final YearMonthDay start = executionPeriod.getBeginDateYearMonthDay();
             final YearMonthDay end = executionPeriod.getEndDateYearMonthDay();
             for (YearMonthDay day = start; day.compareTo(end) < 0; day = day.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK)) {
-                createAnnouncements(announcementBoard, day);
                 createPlanning(executionCourse, ShiftType.TEORICA);
                 createPlanning(executionCourse, ShiftType.TEORICA);
                 createPlanning(executionCourse, ShiftType.PRATICA);
@@ -898,29 +888,6 @@ public class CreateTestData {
                             MultiLanguageString.en, "Title of the planning."), new MultiLanguageString(MultiLanguageString.pt,
                             "Corpo do Planeamento").with(MultiLanguageString.en, "Planning contents."), shiftType,
                             executionCourse);
-        }
-
-        private static void createAnnouncements(final AnnouncementBoard announcementBoard, final YearMonthDay day) {
-            final Announcement announcement = new Announcement();
-            announcement.setAuthor("Autor do anuncio");
-            announcement.setAuthorEmail("http://www.google.com/");
-            announcement.setBody(new MultiLanguageString(MultiLanguageString.pt, "Corpo do anuncio. Bla bla bla bla.").with(
-                    MultiLanguageString.en, "Content of the announcement. Blur blur blur blur."));
-            announcement.setCreationDate(day.toDateTimeAtMidnight());
-            announcement.setCreator(null);
-            announcement.setExcerpt(new MultiLanguageString(MultiLanguageString.pt, "Bla ...").with(MultiLanguageString.en,
-                    "Blur ..."));
-            announcement.setKeywords(new MultiLanguageString(MultiLanguageString.pt, "Bla").with(MultiLanguageString.en, "Blur"));
-            announcement.setLastModification(day.toDateTimeAtCurrentTime());
-            announcement.setPlace("Here.");
-            // announcement.setPublicationBegin();
-            // announcement.setPublicationEnd();
-            // announcement.setReferedSubjectBegin();
-            // announcement.setReferedSubjectEnd();
-            announcement.setSubject(new MultiLanguageString(MultiLanguageString.pt, "Assunto Bla.").with(MultiLanguageString.en,
-                    "Subject blur."));
-            announcement.setVisible(Boolean.TRUE);
-            announcement.setAnnouncementBoard(announcementBoard);
         }
 
         private static void createEvaluationMethod(final ExecutionCourse executionCourse) {
@@ -1283,12 +1250,6 @@ public class CreateTestData {
                 new ExecutionCourse(curricularCourse.getName(), curricularCourse.getAcronym(), executionPeriod, null);
         executionCourse.addAssociatedCurricularCourses(curricularCourse);
         executionCourse.setAvailableForInquiries(Boolean.TRUE);
-
-        final ExecutionCourseSite executionCourseSite = executionCourse.getSite();
-        executionCourseSite.setInitialStatement("Bla bla bla bla bla bla bla.");
-        executionCourseSite.setAlternativeSite("http://www.google.com/");
-        executionCourseSite.setIntroduction("Blur blur bla blur ble blur bla.");
-        executionCourseSite.setLessonPlanningAvailable(Boolean.TRUE);
 
         createProfessorship(executionCourse, Boolean.TRUE);
         createProfessorship(executionCourse, Boolean.FALSE);

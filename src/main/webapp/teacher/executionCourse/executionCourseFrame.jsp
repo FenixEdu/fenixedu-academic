@@ -45,9 +45,9 @@
 			<li class="navheader">
 				<strong>${executionCourse.prettyAcronym}</strong>
 			</li>
-			<c:if test="${not empty executionCourse.site}">
+			<c:if test="${not empty executionCourse.siteUrl}">
 				<li>
-				<!-- NO_CHECKSUM --><a href="${fr:checksumLink(req, executionCourse.site.fullPath)}" target="_blank">
+				    <!-- NO_CHECKSUM --><a href="${executionCourse.siteUrl}" target="_blank">
 						<bean:message key="link.executionCourseManagement.menu.view.course.page"/>
 					</a>
 				</li>

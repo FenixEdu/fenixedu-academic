@@ -118,27 +118,6 @@ Documentation:
  	<renderer type="net.sourceforge.fenixedu.domain.Lesson" layout="lesson-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.LessonPlainRenderer"/>
 
 	<renderer type="net.sourceforge.fenixedu.domain.Summary" layout="summary-plain-to-create-summary" class="net.sourceforge.fenixedu.presentationTier.renderers.SummaryPlainRenderer"/>
-
-	<renderer type="java.util.List" layout="announcements-board-table" class="net.sourceforge.fenixedu.presentationTier.renderers.AnnoucementBoardsRenderer">
-		<property name="sortBy" value="name"/>
-		<property name="rssImage" value="/images/rss_ico.png"/>
-		<property name="configurationVisible" value="true"/>
-	</renderer>
-	
-	<renderer type="net.sourceforge.fenixedu.domain.messaging.Announcement" layout="view-announcement" class="net.sourceforge.fenixedu.presentationTier.renderers.AnnouncementRenderer">
-			<property name="bundle" value="MESSAGING_RESOURCES"/>
-			<property name="viewMoreLabel" value="label.messaging.viewMore"/>
-			<property name="fromLabel" value="label.messaging.from"/>
-			<property name="toLabel" value="label.messaging.until"/>
-			<property name="inLabel" value="label.messaging.in"/>
-			<property name="placeSeparator" value=" / "/>
-			<property name="authorShown" value="false"/>
-			<property name="authorLabel" value="label.messaging.author"/>
-			<property name="dateFormat" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
-			<property name="soonMarkerInDays" value="6"/>
-			<property name="soonMarkerClasses" value="event_soon"/>
-			<property name="soonMarkerLabel" value="label.events.soon"/>
-	</renderer>
 		
     <!-- @ Boolean renderer aimed to allow a graphical view of a boolean value through the presentation of an icon
     	 	By default: True=GreenCheck /  / False=EmptyDash -->
@@ -270,14 +249,6 @@ Documentation:
     	<property name="nullLabel" value="-"/>
     </renderer>
 
-    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SiteMenuRenderer">
-        <property name="depthStyle" value="margin-left: 1em;"/>
-    </renderer>
-    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteSideMenuRenderer" >
-        <property name="depthStyle" value="margin-left: 1em;"/>
-    </renderer>
-    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteTopMenuRenderer"/>
-
 	<!--@ File displayed as an html picture -->
     <renderer type="net.sourceforge.fenixedu.domain.File"
               class="net.sourceforge.fenixedu.presentationTier.renderers.FileAsPictureRenderer"
@@ -286,22 +257,6 @@ Documentation:
     <!--@ Money output -->
     <renderer type="net.sourceforge.fenixedu.util.Money" class="net.sourceforge.fenixedu.presentationTier.renderers.MoneyRenderer"/>
 
-	<!--@ Linkable Unit Renderer -->
-	<renderer type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteRenderer" layout="unit-link">
-		<property name="moduleRelative" value="false"/>
-		<property name="contextRelative" value="true"/>
-		<property name="separator" value="-"/>
-	</renderer>
-
-	<renderer type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" layout="unit-with-parent-and-links" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteRenderer">
-		<property name="moduleRelative" value="false"/>
-		<property name="contextRelative" value="true"/>
-		<property name="separator" value="-"/>
-		<property name="unitLayout" value="values"/>
-		<property name="unitSchema" value="unit.name"/>
-		<property name="targetBlank" value="true"/>
-		<property name="parenteShown" value="true"/>
-	</renderer>
     <!-- input -->
     
     <renderer mode="input" type="net.sourceforge.fenixedu.util.Money" class="net.sourceforge.fenixedu.presentationTier.renderers.MoneyInputRenderer"/>
@@ -357,9 +312,7 @@ Documentation:
     <renderer type="java.util.List" layout="list-link" class="net.sourceforge.fenixedu.presentationTier.renderers.ListLinkRenderer" />
     
     <renderer mode="input" layout="pages" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean" class="net.sourceforge.fenixedu.presentationTier.renderers.PagesRenderer" />
-    
-    <renderer layout="banner-weight" type="java.lang.Integer" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteBannerWeightRenderer" />
-	
+
     <renderer type="net.sourceforge.fenixedu.domain.Grade"
               class="net.sourceforge.fenixedu.presentationTier.renderers.GradeInputRenderer"
               mode="input" layout="grade-input"/>
@@ -443,8 +396,6 @@ Documentation:
     	<property name="notApprovedAnotherYear" value="notApprovedAnotherYear"/> <!-- span with #CCCC66 border and #FFFFFF color  -->
     	<property name="performanceGridBundle" value="APPLICATION_RESOURCES"/>
     </renderer>
-
-	<renderer type="java.util.Collection" layout="unit-sites-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSitesTreeRenderer"/>
 
 	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="delegate-election-period-link" class="net.sourceforge.fenixedu.presentationTier.renderers.DelegateElectionPeriodLinkRenderer"/>
 	

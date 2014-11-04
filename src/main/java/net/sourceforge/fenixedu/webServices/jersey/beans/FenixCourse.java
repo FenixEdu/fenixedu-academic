@@ -20,8 +20,6 @@ package net.sourceforge.fenixedu.webServices.jersey.beans;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
-import org.fenixedu.bennu.core.util.CoreConfiguration;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -37,7 +35,7 @@ public class FenixCourse {
         setAcronym(course.getSigla());
         setName(course.getName());
         setAcademicTerm(course.getExecutionPeriod().getQualifiedName());
-        setUrl(CoreConfiguration.getConfiguration().applicationUrl() + course.getSite().getReversePath());
+        setUrl(course.getSiteUrl());
     }
 
     public FenixCourse(String id, String acronym, String name) {

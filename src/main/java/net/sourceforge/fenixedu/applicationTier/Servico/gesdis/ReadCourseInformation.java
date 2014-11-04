@@ -48,7 +48,7 @@ public class ReadCourseInformation {
 
         final TeacherAdministrationSiteView result = new TeacherAdministrationSiteView();
         result.setCommonComponent(TeacherAdministrationSiteComponentBuilder.getInfoSiteCommon(new InfoSiteCommon(),
-                executionCourse.getSite()));
+                executionCourse));
         result.setComponent(resultComponent);
 
         return result;

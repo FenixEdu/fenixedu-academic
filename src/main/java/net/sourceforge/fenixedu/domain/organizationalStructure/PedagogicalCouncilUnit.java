@@ -23,11 +23,9 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.PedagogicalCouncilSite;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -52,7 +50,6 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
         List<Group> groups = super.getDefaultGroups();
 
         groups.add(RoleGroup.get(RoleType.PEDAGOGICAL_COUNCIL));
-        groups.add(ManagersOfUnitSiteGroup.get(getSite()));
 
         /* For sending mail to all degrees delegates */
         groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_GGAE));
@@ -80,11 +77,6 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
     @Override
     public Collection<Person> getPossibleGroupMembers() {
         return Role.getRoleByRoleType(RoleType.PEDAGOGICAL_COUNCIL).getAssociatedPersonsSet();
-    }
-
-    @Override
-    protected PedagogicalCouncilSite createSite() {
-        return new PedagogicalCouncilSite(this);
     }
 
     // TODO: controlo de acesso?

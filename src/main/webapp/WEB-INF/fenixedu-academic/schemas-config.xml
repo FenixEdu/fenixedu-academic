@@ -50,7 +50,6 @@
     <!ENTITY operator SYSTEM "schemas/operator-schemas.xml">
     <!ENTITY scientificCouncil SYSTEM "schemas/scientificCouncil-schemas.xml">
     <!ENTITY partyContacts SYSTEM "schemas/partyContacts-schemas.xml">
-    <!ENTITY boardSchemas SYSTEM "schemas/board-schemas.xml">
     <!ENTITY inquirySchemas SYSTEM "schemas/inquiry-schemas.xml">
     <!ENTITY librarySchemas SYSTEM "schemas/library-schemas.xml">
     <!ENTITY bolonhaManagerSchemas SYSTEM "schemas/bolonhaManager-schemas.xml">
@@ -370,17 +369,6 @@
 		<slot name="status"/>
 	</schema>
 
-	<schema name="person.homepage.manage" type="net.sourceforge.fenixedu.domain.homepage.Homepage">
-		<slot name="activated"/>
-		<slot name="name"/>
-		<slot name="showUnit"/>
-		<slot name="showPhoto"/>
-		<slot name="showEmail"/>
-		<slot name="showTelephone"/>
-		<slot name="showAlternativeHomepage"/>
-		<slot name="showResearchUnitHomepage"/>
-	</schema>
-
 	<schema name="student.curricular.plan.start.date" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan">
 		<slot name="startDate"/>
 	</schema>
@@ -684,15 +672,6 @@
     <schema name="AdministrativeOffice.view" type="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice" bundle="APPLICATION_RESOURCES">
 	    	<slot name="administrativeOfficeType" />
     </schema>
-		
-	<schema name="showFooterLink" type="net.sourceforge.fenixedu.domain.UnitSiteLink">
-		<slot name="label" layout="link">
-			<property name="useParent" value="true"/>
-			<property name="linkFormat" value="${url}"/>
-			<property name="moduleRelative" value="false"/>
-			<property name="contextRelative" value="false"/> 
-		</slot>
-	</schema>
 
     <schema name="Degree.name.and.sigla" type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
 		<slot name="name" key="label.degree.name" />
@@ -760,7 +739,6 @@
     &operator;
     &scientificCouncil;
     &partyContacts;
-    &boardSchemas;
     &inquirySchemas;
     &librarySchemas;
     &bolonhaManagerSchemas;

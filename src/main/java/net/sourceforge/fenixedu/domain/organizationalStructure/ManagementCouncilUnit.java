@@ -18,7 +18,6 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import net.sourceforge.fenixedu.domain.ManagementCouncilSite;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
@@ -32,7 +31,6 @@ public class ManagementCouncilUnit extends ManagementCouncilUnit_Base {
     private ManagementCouncilUnit() {
         super();
         super.setType(PartyTypeEnum.MANAGEMENT_COUNCIL);
-        new ManagementCouncilSite(this);
     }
 
     public static ManagementCouncilUnit createManagementCouncilUnit(MultiLanguageString name, String unitNameCard,

@@ -20,7 +20,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.ManageUnitPersistentGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
@@ -46,7 +45,6 @@ public class CreatePersistentGroup {
     @Atomic
     public static void runCreatePersistentGroup(Unit unit, String name, List<Person> people, PersistentGroupMembersType type)
             throws NotAuthorizedException {
-        ManageUnitPersistentGroup.instance.execute(unit);
         serviceInstance.run(unit, name, people, type);
     }
 }

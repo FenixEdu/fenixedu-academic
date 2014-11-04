@@ -51,7 +51,6 @@ import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -1134,7 +1133,7 @@ public class Lesson extends Lesson_Base {
             EventBean bean;
             Set<Space> location = new HashSet<>();
 
-            String url = CoreConfiguration.getConfiguration().applicationUrl() + getExecutionCourse().getSite().getReversePath();
+            String url = getExecutionCourse().getSiteUrl();
 
             if (lessonInstance != null) {
 

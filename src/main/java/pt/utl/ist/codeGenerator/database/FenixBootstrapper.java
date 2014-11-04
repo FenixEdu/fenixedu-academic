@@ -28,22 +28,34 @@ import java.util.MissingResourceException;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.Bundle;
 
@@ -62,7 +74,6 @@ import org.fenixedu.bennu.portal.domain.PortalBootstrapper.PortalSection;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.standards.geographic.Planet;
-import pt.utl.ist.codeGenerator.database.CreateTestData.CreateOrganizationalStructure;
 import pt.utl.ist.codeGenerator.database.FenixBootstrapper.SchoolSetupSection;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -110,6 +121,124 @@ public class FenixBootstrapper {
         installation.setInstituitionURL(schoolSetupSection.getSchoolURL());
 
         return Lists.newArrayList();
+    }
+
+    public static class CreateOrganizationalStructure {
+        public void doIt(PortalSection portalSection, SchoolSetupSection schoolSetupSection) {
+            final CountryUnit countryUnit = getCountryUnit(Country.readDefault().getName());
+            final UniversityUnit universityUnit =
+                    createUniversityUnit(countryUnit, schoolSetupSection.getUniversityName(),
+                            schoolSetupSection.getUniversityAcronym());
+            final SchoolUnit institutionUnit =
+                    createSchoolUnit(universityUnit, portalSection.getOrganizationName(), schoolSetupSection.getSchoolAcronym());
+            Bennu.getInstance().setInstitutionUnit(institutionUnit);
+            final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
+            //createServiceUnits(serviceUnits);
+            final AggregateUnit departmentUnits = createAggregateUnit(institutionUnit, "Departments");
+            //createDepartmentUnits(departmentUnits);
+            final AggregateUnit degreeUnits = createAggregateUnit(institutionUnit, "Degrees");
+            //createDegreeUnits(degreeUnits);
+        }
+
+        private CountryUnit getCountryUnit(final String countryUnitName) {
+            for (final Party party : Bennu.getInstance().getPartysSet()) {
+                if (party.isCountryUnit()) {
+                    final CountryUnit countryUnit = (CountryUnit) party;
+                    if (countryUnit.getName().equalsIgnoreCase(countryUnitName)) {
+                        return countryUnit;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private UniversityUnit createUniversityUnit(final CountryUnit countryUnit, final String universityName,
+                final String universityAcronym) {
+            return UniversityUnit.createNewUniversityUnit(new MultiLanguageString(Locale.getDefault(), universityName), null,
+                    null, universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
+        }
+
+        private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
+            return AggregateUnit.createNewAggregateUnit(new MultiLanguageString(Locale.getDefault(), unitName), null, null, null,
+                    new YearMonthDay(), null, parentUnit,
+                    AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null, Boolean.FALSE,
+                    null);
+        }
+
+        private SchoolUnit createSchoolUnit(final UniversityUnit universityUnit, final String universityName,
+                final String universityAcronym) {
+            return SchoolUnit.createNewSchoolUnit(new MultiLanguageString(Locale.getDefault(), universityName), null, null,
+                    universityAcronym, new YearMonthDay(), null, universityUnit, null, null, Boolean.FALSE, null);
+        }
+
+        private void createServiceUnits(final AggregateUnit serviceUnits) {
+            AdministrativeOffice administrativeOffice = new AdministrativeOffice();
+            Unit.createNewUnit(new MultiLanguageString(Locale.getDefault(), "Office"), null, null, null, new YearMonthDay(),
+                    null, serviceUnits, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null,
+                    null, administrativeOffice, Boolean.FALSE, null);
+            new AdministrativeOfficeServiceAgreementTemplate(administrativeOffice);
+        }
+
+        private void createDepartmentUnits(final AggregateUnit departmentUnits) {
+            for (int i = 0; i < 5; i++) {
+                createDepartment(departmentUnits, i);
+            }
+        }
+
+        private void createDepartment(final AggregateUnit departmentUnits, final int i) {
+            final Department department = new Department();
+            department.setCode(getDepartmentCode(i));
+            final String departmentName = getDepartmentName(i);
+            department.setName(departmentName);
+            department.setRealName(departmentName);
+            department.setCompetenceCourseMembersGroup(getCompetenceCourseMembersGroup());
+
+            final DepartmentUnit departmentUnit = createDepartmentUnut(departmentUnits, 3020 + i, department);
+            department.setDepartmentUnit(departmentUnit);
+
+            createCompetenceCourseGroupUnit(departmentUnit);
+        }
+
+        private int areaCounter = 0;
+
+        private void createCompetenceCourseGroupUnit(final DepartmentUnit departmentUnit) {
+            final ScientificAreaUnit scientificAreaUnit =
+                    ScientificAreaUnit.createNewInternalScientificArea(new MultiLanguageString(Locale.getDefault(),
+                            "Scientific Area"), null, null, "Code" + areaCounter++, new YearMonthDay(), null, departmentUnit,
+                            AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE,
+                            null);
+
+            CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(new MultiLanguageString(Locale.getDefault(),
+                    "Competence Courses"), null, null, null, new YearMonthDay(), null, scientificAreaUnit, AccountabilityType
+                    .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE, null);
+        }
+
+        private DepartmentUnit createDepartmentUnut(final AggregateUnit departmentUnits, final int someNumber,
+                final Department department) {
+            return DepartmentUnit.createNewInternalDepartmentUnit(new MultiLanguageString(Locale.getDefault(), "Department Name "
+                    + someNumber), null, Integer.valueOf(2100 + someNumber), "DU" + someNumber,
+                    new YearMonthDay().minusMonths(1), null, departmentUnits,
+                    AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null,
+                    Boolean.FALSE, null);
+        }
+
+        private org.fenixedu.bennu.core.groups.Group getCompetenceCourseMembersGroup() {
+            return RoleGroup.get(RoleType.TEACHER).or(RoleGroup.get(RoleType.MANAGER));
+        }
+
+        private String getDepartmentName(final int i) {
+            return "Department " + i;
+        }
+
+        private String getDepartmentCode(final int i) {
+            return "DEP" + i;
+        }
+
+        private void createDegreeUnits(final AggregateUnit degreeUnits) {
+            for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
+                createAggregateUnit(degreeUnits, degreeType.getName());
+            }
+        }
     }
 
     private static void createEmptyDegreeAndEmptyDegreeCurricularPlan() {

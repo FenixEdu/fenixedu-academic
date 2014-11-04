@@ -208,7 +208,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
         Lesson li = lis.getLesson();
 
-        return li.getShift().getExecutionCourse().getSite().getFullPath();
+        return li.getShift().getExecutionCourse().getSiteUrl();
     }
 
     @Override

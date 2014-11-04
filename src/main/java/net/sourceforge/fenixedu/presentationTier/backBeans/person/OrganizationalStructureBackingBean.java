@@ -353,11 +353,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private String getHomePageUrl(Person person) {
-        StringBuilder buffer = new StringBuilder();
-        if (person.getHomepage() != null && person.getHomepage().getActivated()) {
-            buffer.append(person.getHomepage().getFullPath());
-        }
-        return buffer.toString();
+        return person.getHomepageWebAddress();
     }
 
     private void printPersonHomePage(Person person, StringBuilder buffer) {

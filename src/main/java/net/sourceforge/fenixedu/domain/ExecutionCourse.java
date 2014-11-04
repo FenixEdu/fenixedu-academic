@@ -43,8 +43,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
-import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
@@ -60,14 +58,12 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
@@ -83,7 +79,6 @@ import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.AnyoneGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.I18N;
@@ -202,10 +197,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         setSigla(sigla);
         setComment("");
 
-        createSite();
-
-        createExecutionCourseAnnouncementBoard(nome);
-
         if (entryPhase == null) {
             entryPhase = EntryPhase.FIRST_PHASE;
         }
@@ -315,19 +306,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return false;
-    }
-
-    public ExecutionCourseSite createSite() {
-        return new ExecutionCourseSite(this);
-    }
-
-    public void copySectionsAndItemsFrom(final ExecutionCourse executionCourseFrom) {
-        this.getSite().copySectionsAndItemsFrom(executionCourseFrom.getSite());
-        String ecFrom = executionCourseFrom.getName();
-        String ecFromPresentation = executionCourseFrom.getDegreePresentationString();
-
-        ContentManagementLog.createLog(this, Bundle.MESSAGING, "log.executionCourse.content.section.import", ecFrom,
-                ecFromPresentation, this.getName(), this.getDegreePresentationString());
     }
 
     public void createEvaluationMethod(final MultiLanguageString evaluationElements) {
@@ -501,14 +479,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             setSender(null);
         }
 
-        if (getSite() != null) {
-            getSite().delete();
-        }
-
-        if (getBoard() != null) {
-            getBoard().delete();
-        }
-
         for (; !getMetadatasSet().isEmpty(); getMetadatasSet().iterator().next().delete()) {
             ;
         }
@@ -586,12 +556,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
         }
         if (!getAttendsSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
-        }
-        if (getSite() != null && !getSite().isDeletable()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
-        }
-        if (getBoard() != null && !getBoard().isDeletable()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
         }
 
@@ -1216,13 +1180,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return visibleMetadata;
-    }
-
-    public ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
-        RoleType roleType = RoleType.MANAGER;
-        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), AnyoneGroup.get(),
-                RoleGroup.get(roleType), ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
-                ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC, ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
     }
 
     public void createForum(MultiLanguageString name, MultiLanguageString description) {
@@ -2692,14 +2649,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             result.add(executionDegree.getPeriodLessons(getExecutionPeriod()));
         }
         return result;
-    }
-
-    public boolean getHasAnnouncements() {
-        ExecutionCourseAnnouncementBoard board = getBoard();
-        if (board != null) {
-            return !board.getAnnouncementSet().isEmpty();
-        }
-        return false;
     }
 
 //  TODO in the new version of the framework, this bug (when creating an object the relations come allwats empty) 

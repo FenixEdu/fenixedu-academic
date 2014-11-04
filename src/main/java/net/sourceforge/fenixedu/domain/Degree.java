@@ -144,7 +144,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         super();
 
         setRootDomainObject(Bennu.getInstance());
-        new DegreeSite(this);
     }
 
     public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
@@ -238,10 +237,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.has.degree.curricular.plans"));
         }
 
-        if (getSite() != null && !getSite().isDeletable()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.has.site.undeletable"));
-        }
-
         if (!getStudentGroupSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.degree.cannotDeleteDegreeUsedInAccessControl"));
         }
@@ -315,10 +310,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         for (; !getDelegateElectionsSet().isEmpty(); getDelegateElectionsSet().iterator().next().delete()) {
             ;
-        }
-
-        if (getSite() != null) {
-            getSite().delete();
         }
 
         // checkDeletion assures that site is deletable

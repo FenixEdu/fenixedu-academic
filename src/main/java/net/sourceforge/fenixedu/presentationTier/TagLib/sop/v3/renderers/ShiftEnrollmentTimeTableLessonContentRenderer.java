@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRendererShift;
 import net.sourceforge.fenixedu.util.Bundle;
@@ -38,6 +37,8 @@ import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+
+import com.google.common.base.Strings;
 
 /**
  * @author Ricardo Rodrigues
@@ -73,15 +74,19 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
             InfoLesson lesson = (InfoLesson) showOccupation;
 
             final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+            final String siteUrl = infoExecutionCourse.getExecutionCourse().getSiteUrl();
 
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
-            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            strBuffer.append("<a href=\"").append(context);
-            strBuffer.append(site.getReversePath());
-            strBuffer.append("\">");
-            strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+            if (Strings.isNullOrEmpty(siteUrl)) {
+                strBuffer.append(infoExecutionCourse.getSigla());
+            } else {
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+                strBuffer.append("<a href=\"").append(context);
+                strBuffer.append(siteUrl);
+                strBuffer.append("\">");
+                strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+            }
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 
@@ -94,14 +99,19 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
 
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
             final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+            final String siteUrl = infoExecutionCourse.getExecutionCourse().getSiteUrl();
 
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
-            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            strBuffer.append("<a href=\"").append(context);
-            strBuffer.append(site.getReversePath());
-            strBuffer.append("\">");
+            if (Strings.isNullOrEmpty(siteUrl)) {
+                strBuffer.append(infoExecutionCourse.getSigla());
+            } else {
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+                strBuffer.append("<a href=\"").append(context);
+                strBuffer.append(siteUrl);
+                strBuffer.append("\">");
+                strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+            }
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 
             if (lesson.getInfoRoomOccupation() != null) {
@@ -112,15 +122,19 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
             final InfoLessonInstanceAggregation infoLessonInstanceAggregation = (InfoLessonInstanceAggregation) showOccupation;
 
             final ExecutionCourse executionCourse = infoLessonInstanceAggregation.getShift().getExecutionCourse();
-            final Site site = executionCourse.getSite();
+            final String siteUrl = executionCourse.getSiteUrl();
 
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
-            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            strBuffer.append("<a href=\"").append(context);
-            strBuffer.append(site.getReversePath());
-            strBuffer.append("\">");
-            strBuffer.append(executionCourse.getSigla()).append("</a>");
+            if (Strings.isNullOrEmpty(siteUrl)) {
+                strBuffer.append(executionCourse.getSigla());
+            } else {
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+                strBuffer.append("<a href=\"").append(context);
+                strBuffer.append(siteUrl);
+                strBuffer.append("\">");
+                strBuffer.append(executionCourse.getSigla()).append("</a>");
+            }
             strBuffer.append("&nbsp;").append("&nbsp;(")
                     .append(infoLessonInstanceAggregation.getShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 

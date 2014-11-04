@@ -18,177 +18,6 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="site.section.name" type="net.sourceforge.fenixedu.domain.Section">
-    <slot name="name" layout="link">
-        <property name="useParent" value="true"/>
-        <property name="destination" value="section.view"/>
-    </slot>
-</schema>
-
-<schema name="site.item.name" type="net.sourceforge.fenixedu.domain.Item">
-    <slot name="name" layout="link">
-        <property name="useParent" value="true"/>
-        <property name="destination" value="item.view"/>
-    </slot>
-</schema>
-
-<schema name="site.section.name.plain" type="net.sourceforge.fenixedu.domain.Section">
-    <slot name="name"/>
-</schema>
-
-<schema name="site.template.name" type="net.sourceforge.fenixedu.domain.cms.TemplatedSectionInstance">
-    <slot name="name" layout="link">
-        <property name="useParent" value="true"/>
-        <property name="destination" value="functionality.view"/>
-    </slot>
-</schema>
-
-<!--  
-<schema name="site.functionalitySection.name" type="net.sourceforge.fenixedu.domain.FunctionalitySection">
-    <slot name="name" layout="link">
-        <property name="useParent" value="true"/>
-        <property name="destination" value="functionalitySection.view"/>
-    </slot>
-</schema>
--->
-
-<schema name="site.functionalitySection.simpleDetails" type="net.sourceforge.fenixedu.domain.Section">
-    <slot name="name" layout="link">
-        <property name="useParent" value="true"/>
-        <property name="destination" value="functionality.view"/>
-    </slot>
-    <slot name="functionality.publicPath" key="label.publicPath" bundle="SITE_RESOURCES"/>
-</schema>
-
-<schema name="websiteManagement.site.choose" type="net.sourceforge.fenixedu.domain.UnitSite">
-    <slot name="unit.nameWithAcronym" layout="link" key="label.site.name">
-		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/manage${class.simpleName}.do?method=prepare&amp;oid=${externalId}"/>
-		<property name="moduleRelative" value="true"/>
-		<property name="contextRelative" value="true"/>
-    </slot>
-</schema>
-	
-<schema name="custom.unitSite.visualization" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="showBanner" layout="radio" key="label.site.showBanner">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-    <slot name="showIntroduction" layout="radio" key="label.site.showIntroduction">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-    <slot name="showAnnouncements" layout="radio" key="label.site.showAnnouncements">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-    <slot name="showEvents" layout="radio" key="label.site.showEvents">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-</schema>
-
-<schema name="site.banner.create" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.BannerBean" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="mainImage.file" key="label.site.banner.mainImage">
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-            <property name="required" value="true"/>
-            <property name="acceptedTypes" value="image/gif,image/jpeg,image/pjpeg,image/png,image/x-png"/>
-            <property name="typeMessage" value="message.site.image.type.validation"/>
-            <property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
-        </validator>
-    
-        <property name="size" value="40"/>
-        <property name="fileNameSlot" value="mainImage.name"/>
-        <property name="fileSizeSlot" value="mainImage.size"/>
-        <property name="fileContentTypeSlot" value="mainImage.contentType"/>
-    </slot>
-    <slot name="backgroundImage.file" key="label.site.banner.backgroundImage">
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-            <property name="acceptedTypes" value="image/gif,image/jpeg,image/png"/>
-            <property name="typeMessage" value="message.site.image.type.validation"/>
-            <property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
-        </validator>
-    
-        <property name="size" value="40"/>
-        <property name="fileNameSlot" value="backgroundImage.name"/>
-        <property name="fileSizeSlot" value="backgroundImage.size"/>
-        <property name="fileContentTypeSlot" value="backgroundImage.contentType"/>
-    </slot>
-    <slot name="repeat" key="label.site.banner.repeat" layout="radio">
-    	<property name="classes" value="liinline nobullet"/>
-    </slot>
-    <slot name="color" key="label.site.banner.color" /> <!-- layout="webcolor" disable, IE generates an error -->
-    <slot name="link" key="label.site.banner.link" layout="input-with-comment">
-        <property name="subProperty(size)" value="40"/>
-		<property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
-		<property name="comment" value="label.url.explanation"/>
-		<property name="commentClasses" value="smalltxt color555"/>
-    </slot>
-    <slot name="weight" key="label.site.banner.weight">
-    	<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
-    		<property name="lowerBound" value="0"/>
-    	</validator>
-        <property name="size" value="10"/>
-    </slot>
-</schema>
-
-<schema name="site.banner.view" type="net.sourceforge.fenixedu.domain.UnitSiteBanner" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="mainImage" key="label.site.banner.mainImage" layout="null-as-label">
-        <property name="label" value="-"/>
-        <property name="subLayout" value="values"/>
-        <property name="subSchema" value="site.banner.file.view"/>
-    </slot>
-    <slot name="backgroundImage" key="label.site.banner.backgroundImage" layout="null-as-label">
-        <property name="label" value="-"/>
-        <property name="subLayout" value="values"/>
-        <property name="subSchema" value="site.banner.file.view"/>
-    </slot>
-    <slot name="repeatType" key="label.site.banner.repeat"/>
-    <slot name="color" key="label.site.banner.color" layout="null-as-label">
-        <property name="label" value="-"/>
-        <property name="subLayout" value="webcolor"/>
-    </slot>
-    <slot name="link" key="label.site.banner.link" layout="null-as-label">
-        <property name="label" value="-"/>
-    </slot>
-    <slot name="weight" key="label.site.banner.weight" layout="banner-weight">
-    	<property name="percentClass" value="mleft1"/>
-    </slot>
-</schema>
-
-<schema name="site.banner.file.view" type="net.sourceforge.fenixedu.domain.UnitSiteBannerFile" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="filename" layout="link">
-        <property name="useParent" value="true"/>
-        <property name="linkFormat" value="${downloadUrl}"/>
-    </slot>
-</schema>
-
-<schema name="site.customLink.view" type="net.sourceforge.fenixedu.domain.UnitSiteLink" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="url" key="label.site.link.url"/>
-    <slot name="label" key="label.site.link.label"/>
-</schema>
-
-<schema name="site.customLink.edit" type="net.sourceforge.fenixedu.domain.UnitSiteLink" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="url" key="label.site.link.url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="size" value="70"/>
-    </slot>
-    <slot name="label" key="label.site.link.label"  validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
-        <property name="size" value="40"/>
-    </slot>
-</schema>
-
-<schema name="site.customLink.label" type="net.sourceforge.fenixedu.domain.UnitSiteLink" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="label"/>
-</schema>
-
-<schema name="custom.unitSite.i18n" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="showFlags" layout="radio" key="label.site.showFlags">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-</schema>
-
-<schema name="custom.unitSite.istLogo" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="showInstitutionLogo" layout="radio" key="label.site.showInstitutionLogo">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-</schema>
-
 <schema name="create.researchContract.internal" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean" bundle="WEBSITEMANAGER_RESOURCES">
   	<slot name="externalPerson" layout="radio-postback" key="label.person">
 		<property name="classes" value="liinline nobullet"/>
@@ -291,17 +120,6 @@
 	<slot name="documentIDNumber" read-only="true"/>
 </schema>	
 
-<schema name="unitSite.choose.introductionContent" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="WEBSITEMANAGER_RESOURCES">
-	<slot name="initialContent" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnitSiteInitialSectionProvider"/>
-		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="site.section.name.plain"/>
-		<property name="defaultText" value="label.unitSite.choose.introductionSections.none"/>
-		<property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
-		<property name="key" value="true"/>
-	</slot>
-</schema>
-
 <schema name="site.functions.tree.unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="SITE_RESOURCES">
 	<slot name="nameI18n"/>
 </schema>
@@ -375,11 +193,6 @@
 	<setter signature="setOccupationInterval(beginDate, endDate)"/>
 </schema>
 
-<schema name="unitSite.managers.add" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.UnitSiteManagerBean" bundle="SITE_RESOURCES">
-    <slot name="alias"/>
-    <slot name="idNumber"/>
-</schema>
-
 <schema name="unitSite.manager" type="net.sourceforge.fenixedu.domain.Person" bundle="SITE_RESOURCES">
     <slot name="username" key="label.alias"/>
     <slot name="name" key="label.name"/>
@@ -387,12 +200,6 @@
 
 <schema name="unitSite.tree.unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
     <slot name="nameWithAcronym"/>
-</schema>
-
-<schema name="unitSite.analytics.code" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="SITE_RESOURCES">
-    <slot name="googleAnalyticsCode" key="label.analytics">
-    	<property name="size" value="30"/>
-    </slot>
 </schema>
 
 <schema name="degree.thesis.list.filter" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ThesisFilterBean">

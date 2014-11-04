@@ -90,6 +90,7 @@ public enum RoleType implements IPresentableEnum {
     @Deprecated
     SEMINARIES_COORDINATOR("Seminaries Coordination"),
 
+    @Deprecated
     WEBSITE_MANAGER("Website Management"),
 
     GRANT_OWNER("Grant Owner"),

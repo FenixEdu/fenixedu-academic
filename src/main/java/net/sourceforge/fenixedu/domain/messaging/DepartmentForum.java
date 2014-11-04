@@ -20,6 +20,7 @@ package net.sourceforge.fenixedu.domain.messaging;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,7 +75,8 @@ public class DepartmentForum extends DepartmentForum_Base {
     }
 
     private Collection<Person> getDepartmentManagers() {
-        return getDepartment().getDepartmentUnit().getSite().getManagersSet();
+        // TODO Implement this correctly!
+        return Collections.emptySet();
     }
 
     private List<Person> getPersonsFromTeachers(Department department) {

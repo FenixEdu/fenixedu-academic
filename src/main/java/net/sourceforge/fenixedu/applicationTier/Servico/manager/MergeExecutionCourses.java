@@ -23,7 +23,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,25 +39,19 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseLog;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
-import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
-import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
-import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse;
@@ -67,16 +60,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import net.sourceforge.fenixedu.util.Bundle;
-
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UnionGroup;
-import org.fenixedu.bennu.core.groups.UserGroup;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
-
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -139,10 +122,8 @@ public class MergeExecutionCourses {
 
         copySummaries(executionCourseFrom, executionCourseTo);
         copyGroupPropertiesExecutionCourse(executionCourseFrom, executionCourseTo);
-        copySite(executionCourseFrom, executionCourseTo);
         removeEvaluations(executionCourseFrom, executionCourseTo);
         copyForuns(executionCourseFrom, executionCourseTo);
-        copyBoard(executionCourseFrom, executionCourseTo);
         copyInquiries(executionCourseFrom, executionCourseTo);
         copyDistributedTestStuff(executionCourseFrom, executionCourseTo);
         copyVigilantGroups(executionCourseFrom, executionCourseTo);
@@ -188,23 +169,6 @@ public class MergeExecutionCourses {
         for (final InquiryCourseAnswer inquiryCourseAnswer : executionCourseFrom.getInquiryCourseAnswersSet()) {
             inquiryCourseAnswer.setExecutionCourse(executionCourseTo);
         }
-    }
-
-    private void copyBoard(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
-        final ExecutionCourseAnnouncementBoard executionCourseAnnouncementBoardFrom = executionCourseFrom.getBoard();
-        final ExecutionCourseAnnouncementBoard executionCourseAnnouncementBoardTo = executionCourseTo.getBoard();
-
-        for (final Iterator<Person> iterator = executionCourseAnnouncementBoardFrom.getBookmarkOwnerSet().iterator(); iterator
-                .hasNext(); iterator.remove()) {
-            final Person bookmarkOwner = iterator.next();
-            executionCourseAnnouncementBoardTo.addBookmarkOwner(bookmarkOwner);
-        }
-
-        for (final Announcement announcement : executionCourseAnnouncementBoardFrom.getAnnouncementSet()) {
-            executionCourseAnnouncementBoardTo.addAnnouncement(announcement);
-        }
-
-        executionCourseAnnouncementBoardFrom.delete();
     }
 
     private boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
@@ -353,78 +317,6 @@ public class MergeExecutionCourses {
                 attend.setDisciplinaExecucao(executionCourseTo);
             }
         }
-    }
-
-    private void copySite(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
-        final Site siteFrom = executionCourseFrom.getSite();
-        final Site siteTo = executionCourseTo.getSite();
-
-        if (siteFrom != null) {
-            copyContents(executionCourseTo, siteTo, siteFrom);
-            siteFrom.delete();
-        }
-    }
-
-    private void copyContents(final ExecutionCourse executionCourseTo, final Site siteTo, Site siteFrom) {
-        final Set<CmsContent> transferedContents = new HashSet<>();
-
-        for (final Section section : siteFrom.getAssociatedSectionSet()) {
-            section.setSite(siteTo);
-            changeGroups(executionCourseTo, section, transferedContents);
-        }
-
-        if (transferedContents.size() > 0) {
-            final Set<String> bccs = createListOfEmailAddresses(executionCourseTo);
-            final StringBuilder message = new StringBuilder();
-            message.append(BundleUtil.getString(Bundle.GLOBAL, "mergeExecutionCourses.email.body"));
-
-            for (final CmsContent content : transferedContents) {
-                message.append("\n\t");
-                message.append(content.getName());
-            }
-
-            message.append(BundleUtil.getString(Bundle.GLOBAL, "mergeExecutionCourses.email.greetings"));
-            SystemSender systemSender = Bennu.getInstance().getSystemSender();
-            new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, BundleUtil.getString(
-                    Bundle.GLOBAL, "mergeExecutionCourses.email.subject", new String[] { executionCourseTo.getNome() }),
-                    message.toString(), bccs);
-        }
-    }
-
-    private void changeGroups(final ExecutionCourse executionCourseTo, final CmsContent content,
-            final Set<CmsContent> transferedContents) {
-        content.setPermittedGroup(createExecutionCourseResponsibleTeachersGroup(executionCourseTo));
-        transferedContents.add(content);
-        if (content instanceof Section) {
-            final Section container = (Section) content;
-            for (final CmsContent node : container.getChildSet()) {
-                changeGroups(executionCourseTo, node, transferedContents);
-            }
-        }
-
-        for (FileContent file : content.getFileContentSet()) {
-            if (file.isPrivate()) {
-                file.setPermittedGroup(createExecutionCourseResponsibleTeachersGroup(executionCourseTo));
-            }
-        }
-    }
-
-    private Set<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
-        final Set<String> emails = new HashSet<String>();
-        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
-            emails.add(professorship.getPerson().getEmail());
-        }
-        return emails;
-    }
-
-    private Group createExecutionCourseResponsibleTeachersGroup(final ExecutionCourse executionCourseTo) {
-        final Set<Group> groups = new HashSet<Group>();
-        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
-            if (professorship.isResponsibleFor()) {
-                groups.add(UserGroup.of(professorship.getPerson().getUser()));
-            }
-        }
-        return groups.isEmpty() ? null : UnionGroup.of(groups);
     }
 
     private void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {

@@ -25,11 +25,10 @@ import java.util.Set;
 import java.util.Vector;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UnionGroup;
 import org.fenixedu.bennu.core.groups.UserGroup;
@@ -51,9 +50,9 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
         final TeacherEvaluationProcess process = teacherEvaluation.getTeacherEvaluationProcess();
         groups.add(UserGroup.of(process.getEvaluator().getUser()));
         groups.add(UserGroup.of(process.getEvaluee().getUser()));
-        final UnitSite unitSite = Bennu.getInstance().getTeacherEvaluationCoordinatorCouncil();
-        if (unitSite != null) {
-            groups.add(ManagersOfUnitSiteGroup.get(unitSite));
+        PersistentGroup group = Bennu.getInstance().getTeacherEvaluationCoordinatorCouncil();
+        if (group != null) {
+            groups.add(group.toGroup());
         }
 
         init(filename, filename, content, UnionGroup.of(groups));

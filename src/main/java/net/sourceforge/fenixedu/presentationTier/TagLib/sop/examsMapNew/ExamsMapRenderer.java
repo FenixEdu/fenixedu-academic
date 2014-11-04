@@ -35,7 +35,6 @@ import javax.servlet.jsp.PageContext;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers.ExamsMapSlotContentRenderer;
 import net.sourceforge.fenixedu.util.Season;
@@ -264,10 +263,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                         strBuffer.append("<tr valign='top'>");
                         strBuffer.append("<td class='" + rowClass + "'>");
 
-                        final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+                        String siteUrl = infoExecutionCourse.getExecutionCourse().getSiteUrl();
+                        siteUrl = siteUrl == null ? "" : siteUrl;
                         strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-                        strBuffer.append("<a href=\"").append(((HttpServletRequest) pageContext.getRequest()).getContextPath());
-                        strBuffer.append(site.getReversePath());
+                        strBuffer.append("<a href=\"");
+                        strBuffer.append(siteUrl);
                         strBuffer.append("\">");
 
                     } else if (showCreateExamLink && user.equals("sop")) {

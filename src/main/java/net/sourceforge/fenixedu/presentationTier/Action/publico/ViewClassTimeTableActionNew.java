@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -132,7 +131,6 @@ public class ViewClassTimeTableActionNew extends FenixAction {
             throw new FenixActionException(e1);
         }
 
-        OldCmsSemanticURLHandler.selectSite(request, schoolClass.getExecutionDegree().getDegree().getSite());
         request.setAttribute("siteView", siteView);
         request.setAttribute("className", className);
         request.setAttribute("schoolClass", schoolClass);

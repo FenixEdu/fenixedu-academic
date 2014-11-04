@@ -29,13 +29,13 @@ public class ExecutionCourseReplyTo extends ExecutionCourseReplyTo_Base {
     @Override
     public String getReplyToAddress(final Person person) {
         ExecutionCourseSender executionCourseSender = (ExecutionCourseSender) getSender();
-        return executionCourseSender.getCourse().getSite().getMail();
+        return executionCourseSender.getCourse().getEmail();
     }
 
     @Override
     public String getReplyToAddress() {
         ExecutionCourseSender executionCourseSender = (ExecutionCourseSender) getSender();
-        return executionCourseSender.getCourse().getSite().getMail();
+        return executionCourseSender.getCourse().getEmail();
     }
 
 }

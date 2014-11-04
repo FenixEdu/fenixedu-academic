@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteLessonPlan
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportBibliographicReferences;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportEvaluationMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportLessonPlannings;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportSections;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.MoveLessonPlanning;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -116,8 +115,6 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
             } else if (importContentService.equals("ImportEvaluationMethod")) {
                 ImportEvaluationMethod.runImportEvaluationMethod(executionCourseTo.getExternalId(), executionCourseTo,
                         executionCourseFrom, null);
-            } else if (importContentService.equals("ImportSections")) {
-                ImportSections.runImportSections(executionCourseTo.getExternalId(), executionCourseTo, executionCourseFrom, null);
             } else {
                 throw new UnsupportedOperationException("Sorry, cannot import using " + importContentService);
             }

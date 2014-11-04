@@ -28,7 +28,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -212,11 +211,6 @@ public class ResearchUnit extends ResearchUnit_Base {
     public void setPublicationCollaborators(List<Person> collaborators) {
         getPublicationCollaboratorsSet().clear();
         getPublicationCollaboratorsSet().addAll(collaborators);
-    }
-
-    @Override
-    protected ResearchUnitSite createSite() {
-        return new ResearchUnitSite(this);
     }
 
     @Override

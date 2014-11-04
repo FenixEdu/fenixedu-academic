@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -356,12 +355,6 @@ public class DegreeUnit extends DegreeUnit_Base {
                 }
             }
         }
-    }
-
-    @Override
-    public UnitSite getSite() {
-        final Degree degree = getDegree();
-        return degree == null ? null : getDegree().getSite();
     }
 
     public SchoolUnit getSchoolUnit() {

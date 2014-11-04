@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.domain.thesis.ThesisSite;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -49,12 +48,6 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
     @Override
     public void process(Thesis thesis) {
         thesis.approveEvaluation();
-
-        if (thesis.isFinalAndApprovedThesis()) {
-            // Evaluated thesis have a public page in
-            // ../dissertacoes/<id_internal>
-            new ThesisSite(thesis);
-        }
     }
 
     public static byte[] readStream(final InputStream inputStream) {

@@ -22,7 +22,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <html:xhtml/>
 
 <style>
@@ -62,10 +61,10 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 	<logic:iterate id="studentPortalBean" name="studentPortalBeans">
 		<h3 class="mtop15 mbottom05">
 			<bean:write name="studentPortalBean" property="degree.presentationName"/> - <bean:write name="executionSemester"/>
-			<logic:notEmpty name="studentPortalBean" property="degree.site">
-			<app:contentLink name="studentPortalBean" property="degree.site" target="_blank">
+			<logic:notEmpty name="studentPortalBean" property="degree.siteUrl">
+			<a href="${studentPortalBean.degree.siteUrl}" target="_blank">
 				<span style="font-size: 12px; font-weight: normal;"><bean:message key="link.appearance" bundle="STUDENT_RESOURCES"/></span>
-			</app:contentLink>
+			</a>
 			</logic:notEmpty>
 		</h3>
 		
@@ -79,7 +78,7 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 
 				<th rowspan="<%= rowNumber %>" style="vertical-align: top; padding-right: 2em; text-align: left;">
 					<h4 class="mtop025">
-					<a href="${executionCoursesAnnouncement.executionCourse.site.fullPath}" target="_blank">
+					<a href="${executionCoursesAnnouncement.executionCourse.siteUrl}" target="_blank">
 							<bean:write name="executionCoursesAnnouncement" property="executionCourse.nome"/>
 					</a>
 					</h4>

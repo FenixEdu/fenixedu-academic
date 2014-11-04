@@ -28,8 +28,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.ScientificAreaSite;
-import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -157,11 +155,6 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
                 }
             }
         }
-    }
-
-    @Override
-    protected UnitSite createSite() {
-        return new ScientificAreaSite(this);
     }
 
     public boolean isUserMemberOfScientificArea(Person person) {

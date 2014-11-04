@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrat
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
-import net.sourceforge.fenixedu.domain.cms.OldCmsPortalBackend;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
@@ -50,7 +49,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.User.UserPresentationStrategy;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.fenixedu.bennu.core.rest.SystemResource;
-import org.fenixedu.bennu.portal.servlet.PortalBackendRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,8 +94,6 @@ public class FenixInitializer implements ServletContextListener {
         registerPresentationStrategy();
 
         registerHealthchecks();
-
-        PortalBackendRegistry.registerPortalBackend(new OldCmsPortalBackend());
 
         transferRegistrationAgreementsToProtocols();
 

@@ -43,13 +43,10 @@ import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
@@ -433,10 +430,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String getSelectedDepartmentUnitID() {
         if (selectedDepartmentUnitID == null) {
-            Site site = SiteMapper.getSite(getRequest());
-            if (site != null && site instanceof DepartmentSite) {
-                selectedDepartmentUnitID = ((DepartmentSite) site).getDepartment().getDepartmentUnit().getExternalId();
-            } else if (getAndHoldStringParameter("selectedDepartmentUnitID") != null) {
+            if (getAndHoldStringParameter("selectedDepartmentUnitID") != null) {
                 selectedDepartmentUnitID = getAndHoldStringParameter("selectedDepartmentUnitID");
             } else if (getPersonDepartment() != null) {
                 selectedDepartmentUnitID = getPersonDepartment().getDepartmentUnit().getExternalId();

@@ -167,13 +167,14 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
         }
         inlineContainer.addChild(new HtmlText(")</span> ", false));
 
-        HtmlLink ucPublicPageLink = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-        ucPublicPageLink.setUrl(executionCourse.getSite().getReversePath());
-        ucPublicPageLink.setText("Site");
-        ucPublicPageLink.setModule("");
-        ucPublicPageLink.setTarget("_blank");
-
-        inlineContainer.addChild(ucPublicPageLink);
+        if (executionCourse.getSiteUrl() != null) {
+            HtmlLink ucPublicPageLink = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+            ucPublicPageLink.setUrl(executionCourse.getSiteUrl());
+            ucPublicPageLink.setText("Site");
+            ucPublicPageLink.setModule("");
+            ucPublicPageLink.setTarget("_blank");
+            inlineContainer.addChild(ucPublicPageLink);
+        }
 
         competenceCell.setBody(inlineContainer);
     }

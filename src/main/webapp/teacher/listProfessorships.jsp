@@ -75,7 +75,7 @@
 					
 		            <p class="mtop05 mbottom0">
 			            <span class="smalltxt breakword color888" style="word-wrap: break-word !important;">
-			            	<a href="${executionCourse.site.fullPath}">${executionCourse.site.fullPath}</a>
+			            	<a href="${executionCourse.siteUrl}">${executionCourse.siteUrl}</a>
 		                </span>
 	                </p>
 				</td>

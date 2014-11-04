@@ -32,8 +32,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGroupsByShift;
@@ -49,9 +47,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAn
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixframework.FenixFramework;
@@ -69,21 +65,12 @@ public class TeacherAdministrationSiteComponentBuilder {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    public static InfoSiteCommon getInfoSiteCommon(InfoSiteCommon component, ExecutionCourseSite site)
+    public static InfoSiteCommon getInfoSiteCommon(InfoSiteCommon component, ExecutionCourse executionCourse)
             throws FenixServiceException {
 
-        final Set<Section> allSections = site.getAssociatedSectionSet();
-        final List<InfoSection> infoSectionsList = new ArrayList<InfoSection>(allSections.size());
-        for (final Section section : allSections) {
-            infoSectionsList.add(InfoSectionWithAll.newInfoFromDomain(section));
-        }
-        Collections.sort(infoSectionsList);
+        component.setTitle(executionCourse.getNome());
+        component.setMail(executionCourse.getEmail());
 
-        component.setTitle(site.getExecutionCourse().getNome());
-        component.setMail(site.getMail());
-        component.setSections(infoSectionsList);
-
-        final ExecutionCourse executionCourse = site.getExecutionCourse();
         final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
         component.setExecutionCourse(infoExecutionCourse);
 

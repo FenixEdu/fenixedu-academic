@@ -29,12 +29,10 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
@@ -246,11 +244,6 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         }
 
         return groups;
-    }
-
-    @Override
-    protected UnitSite createSite() {
-        return new DepartmentSite(this);
     }
 
     public static List<DepartmentUnit> readAllDepartmentUnits() {

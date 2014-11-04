@@ -882,7 +882,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
 
         result.add(new EvaluationEventBean(description, this.getBeginningDateTime(), this.getEndDateTime(), false, rooms, url
-                + executionCourses.iterator().next().getSite().getReversePath(), null, executionCourses));
+                + executionCourses.iterator().next().getSiteUrl(), null, executionCourses));
 
         return result;
     }

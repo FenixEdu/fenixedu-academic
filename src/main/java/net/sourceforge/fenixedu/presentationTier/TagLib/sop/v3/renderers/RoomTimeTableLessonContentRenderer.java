@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
@@ -35,6 +34,8 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+
+import com.google.common.base.Strings;
 
 /**
  * @author jpvl
@@ -53,13 +54,17 @@ public class RoomTimeTableLessonContentRenderer extends LessonSlotContentRendere
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
 
-            final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+            String siteUrl = infoExecutionCourse.getExecutionCourse().getSiteUrl();
 
-            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            strBuffer.append("<a href=\"").append(context);
-            strBuffer.append(site.getReversePath());
-            strBuffer.append("\">");
-            strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+            if (Strings.isNullOrEmpty(siteUrl)) {
+                strBuffer.append(infoExecutionCourse.getSigla());
+            } else {
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+                strBuffer.append("<a href=\"").append(context);
+                strBuffer.append(siteUrl);
+                strBuffer.append("\">");
+                strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+            }
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 
@@ -72,13 +77,18 @@ public class RoomTimeTableLessonContentRenderer extends LessonSlotContentRendere
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            strBuffer.append("<a href=\"").append(context);
-            strBuffer.append(site.getReversePath());
-            strBuffer.append("\">");
-            strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+            final String siteUrl = infoExecutionCourse.getExecutionCourse().getSiteUrl();
+
+            if (Strings.isNullOrEmpty(siteUrl)) {
+                strBuffer.append(infoExecutionCourse.getSigla());
+            } else {
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+                strBuffer.append("<a href=\"").append(context);
+                strBuffer.append(siteUrl);
+                strBuffer.append("\">");
+                strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+            }
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 

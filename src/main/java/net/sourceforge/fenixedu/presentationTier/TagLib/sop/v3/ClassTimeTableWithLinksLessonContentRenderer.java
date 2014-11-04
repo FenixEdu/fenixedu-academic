@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -37,6 +36,8 @@ import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+
+import com.google.common.base.Strings;
 
 /**
  * @author gedl@rnl.ist.utl.pt
@@ -61,14 +62,18 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
 
             InfoLesson lesson = (InfoLesson) showOccupation;
             final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+            String siteUrl = infoExecutionCourse.getExecutionCourse().getSiteUrl();
 
-            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+            if (Strings.isNullOrEmpty(siteUrl)) {
+                strBuffer.append(infoExecutionCourse.getSigla());
+            } else {
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+                strBuffer.append("<a href=\"").append(context);
+                strBuffer.append(siteUrl);
+                strBuffer.append("\">");
+                strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+            }
 
-            strBuffer.append("<a href=\"").append(context);
-            strBuffer.append(site.getReversePath());
-            strBuffer.append("\">");
-            strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 
@@ -83,13 +88,17 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
 
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
             final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+            String siteUrl = infoExecutionCourse.getExecutionCourse().getSiteUrl();
 
-            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            strBuffer.append("<a href=\"").append(context);
-            strBuffer.append(infoExecutionCourse.getExecutionCourse().getSite().getReversePath());
-            strBuffer.append("\">");
-            strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+            if (Strings.isNullOrEmpty(siteUrl)) {
+                strBuffer.append(infoExecutionCourse.getSigla());
+            } else {
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+                strBuffer.append("<a href=\"").append(context);
+                strBuffer.append(siteUrl);
+                strBuffer.append("\">");
+                strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+            }
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 
             if (lesson.getInfoRoomOccupation() != null) {
@@ -102,13 +111,16 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             final InfoLessonInstanceAggregation aggregation = (InfoLessonInstanceAggregation) showOccupation;
 
             final ExecutionCourse executionCourse = aggregation.getShift().getExecutionCourse();
-            final Site site = executionCourse.getSite();
-
-            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            strBuffer.append("<a href=\"").append(context);
-            strBuffer.append(site.getReversePath());
-            strBuffer.append("\">");
-            strBuffer.append(executionCourse.getSigla()).append("</a>");
+            String siteUrl = executionCourse.getSiteUrl();
+            if (Strings.isNullOrEmpty(siteUrl)) {
+                strBuffer.append(executionCourse.getSigla());
+            } else {
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+                strBuffer.append("<a href=\"").append(context);
+                strBuffer.append(siteUrl);
+                strBuffer.append("\">");
+                strBuffer.append(executionCourse.getSigla()).append("</a>");
+            }
             strBuffer.append("&nbsp;").append("&nbsp;(").append(aggregation.getShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 

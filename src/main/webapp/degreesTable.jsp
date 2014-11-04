@@ -57,7 +57,7 @@
 				<bean:define id="degreeCode" name="degree" property="sigla"/>
 				<bean:define id="degreeName" name="degree" property="presentationName"/>
 				<tr>
-					<bean:define id="degreeSitePath" name="degree" property="site.reversePath"/>
+					<bean:define id="degreeSitePath" name="degree" property="siteUrl"/>
 					<td>
 						<!-- NO_CHECKSUM --><html:link href="<%= request.getContextPath() + degreeSitePath.toString() %>" title="<%= degreeName.toString() %>"><bean:write name="degree" property="sigla"/></html:link>
 					</td>

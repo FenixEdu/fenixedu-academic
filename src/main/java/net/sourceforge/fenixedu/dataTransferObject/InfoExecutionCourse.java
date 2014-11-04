@@ -134,10 +134,6 @@ public class InfoExecutionCourse extends InfoObject {
         return getExecutionCourse().getComment();
     }
 
-    public Boolean getHasSite() {
-        return getExecutionCourse().getSite() != null;
-    }
-
     public Integer getNumberOfAttendingStudents() {
         return getExecutionCourse().getAttendsSet().size();
     }

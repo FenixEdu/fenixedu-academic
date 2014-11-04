@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
@@ -340,11 +339,8 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     }
 
     private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse) {
-        final Site site = executionCourse.getSite();
-
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("method", "evaluations");
-        linkParameters.put("objectCode", (site != null) ? site.getExternalId().toString() : null);
         linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getExternalId().toString());
         linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
         return linkParameters;

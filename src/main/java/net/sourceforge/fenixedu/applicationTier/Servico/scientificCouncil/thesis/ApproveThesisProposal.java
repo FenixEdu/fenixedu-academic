@@ -27,9 +27,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
-import net.sourceforge.fenixedu.domain.messaging.Announcement;
-import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisState;
@@ -37,12 +34,10 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 
@@ -56,12 +51,9 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     private static final String COORDINATOR_SENDER = "thesis.proposal.jury.approve.body.sender.coordinator";
     private static final String COUNCIL_MEMBER_SENDER = "thesis.proposal.jury.approve.body.sender.council";
 
-    private static final String DEGREE_ANNOUNCEMENTS_BOARD_NAME = "Anúncios";
-
     @Override
     void process(Thesis thesis) {
         if (thesis.getState() != ThesisState.APPROVED) {
-            createAnnouncement(thesis);
             thesis.approveProposal();
         }
     }
@@ -179,97 +171,6 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         } else {
             return null;
         }
-    }
-
-    private void createAnnouncement(Thesis thesis) {
-        if (thesis.getProposedDiscussed() == null) {
-            return;
-        }
-
-        AnnouncementBoard board = getBoard(DEGREE_ANNOUNCEMENTS_BOARD_NAME, thesis.getDegree().getUnit());
-
-        if (board == null) {
-            return;
-        }
-
-        DateTime now = new DateTime();
-
-        Announcement announcement = new Announcement();
-        announcement.setAnnouncementBoard(board);
-        announcement.setCreator(AccessControl.getPerson());
-        announcement.setCreationDate(now);
-        announcement.setPlace(thesis.getProposedPlace());
-        announcement.setVisible(true);
-
-        announcement.setAuthor(getMessage(I18N.getLocale(), "system.public.name"));
-        announcement.setAuthorEmail(getMessage(I18N.getLocale(), "system.public.email"));
-        announcement.setPublicationBegin(now);
-        announcement.setReferedSubjectBegin(thesis.getProposedDiscussed());
-
-        MultiLanguageString subject =
-                new MultiLanguageString().with(MultiLanguageString.pt,
-                        getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.pt)).with(
-                        MultiLanguageString.en,
-                        getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.en));
-
-        MultiLanguageString body =
-                new MultiLanguageString().with(MultiLanguageString.pt,
-                        getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.pt)).with(
-                        MultiLanguageString.en, getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.en));
-
-        announcement.setSubject(subject);
-        announcement.setBody(body);
-    }
-
-    private String getAnnouncementSubject(Thesis thesis, String key, Locale locale) {
-        return getMessage(locale, key, thesis.getStudent().getPerson().getName());
-    }
-
-    private String getAnnouncementBody(Thesis thesis, String key, Locale locale) {
-        return getMessage(locale, key, thesis.getStudent().getPerson().getName(), getDate(thesis.getProposedDiscussed()),
-                hasPlace(thesis), thesis.getProposedPlace(), hasTime(thesis.getProposedDiscussed()),
-                getTime(thesis.getProposedDiscussed()), getString(thesis.getTitle(), locale));
-    }
-
-    private int hasPlace(Thesis thesis) {
-        String place = thesis.getProposedPlace();
-        return place == null || place.trim().length() == 0 ? 0 : 1;
-    }
-
-    private String getTime(DateTime dateTime) {
-        return String.format(new Locale("pt"), "%tR", dateTime.toDate());
-    }
-
-    private int hasTime(DateTime proposedDiscussed) {
-        if (proposedDiscussed.getHourOfDay() == 0 && proposedDiscussed.getMinuteOfHour() == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
-    private String getDate(DateTime dateTime) {
-        return String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", dateTime.toDate());
-    }
-
-    private String getString(MultiLanguageString mls, Locale language) {
-        String value = mls.getContent(language);
-
-        if (value == null) {
-            value = mls.getContent();
-        }
-
-        return value;
-    }
-
-    private AnnouncementBoard getBoard(String name, Unit unit) {
-        for (AnnouncementBoard board : unit.getBoardsSet()) {
-            if (board.getName().equalInAnyLanguage(name)) {
-                return board;
-            }
-        }
-
-        return null;
     }
 
     // Service Invokers migrated from Berserk

@@ -204,7 +204,7 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
             return "";
         }
 
-        return li.getShift().getExecutionCourse().getSite().getFullPath();
+        return li.getShift().getExecutionCourse().getSiteUrl();
     }
 
     @Override

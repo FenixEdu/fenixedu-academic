@@ -169,7 +169,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
             emails.add(groupEmail);
         }
         for (ExecutionCourse course : getWrittenEvaluation().getAssociatedExecutionCoursesSet()) {
-            String mail = course.getSite().getMail();
+            String mail = course.getEmail();
             if (mail != null) {
                 emails.add(mail);
             }

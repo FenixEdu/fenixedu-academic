@@ -98,61 +98,6 @@
 	<slot name="body" layout="html" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body"/>	
 </schema>
 
-<schema bundle="MESSAGING_RESOURCES" name="announcementBoard.view-with-name-and-active-announcements-count-and-announcements-count" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
-	<slot name="name" key="messaging.name.label"/>
-	<slot name="announcementsCount" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.announcementsCount"/>
-	<slot name="activeAnnouncementsCount" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.activeAnnouncementsCount"/>
-</schema>
-
-<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-creationDate-subject-body" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
-	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate">
-		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
-	</slot>
-	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
-	<slot name="body" key="net.sourceforge.fenixedu.domain.messaging.Announcement.body.label"/>	
-</schema>
-
-<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-subject" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
-	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label">
-		<property name="classes" value="bold"/>
-	</slot>
-	<slot name="author" key="net.sourceforge.fenixedu.domain.messaging.Announcement.author"/>
-	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>
-</schema>
-
-<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-creationDate-subject-online" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
-	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
-	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>
-	<slot name="online" key="net.sourceforge.fenixedu.domain.messaging.Announcement.online.label"/>	
-	<slot name="visible" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>
-</schema>
-
-<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-creationDate-subject-online-sticky" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
-	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
-	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>
-	<slot name="online" key="net.sourceforge.fenixedu.domain.messaging.Announcement.online.label"/>	
-	<slot name="visible" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>
-	<slot name="sticky" key="net.sourceforge.fenixedu.domain.messaging.Announcement.sticky.label"/>
-</schema>
-
-<schema bundle="MESSAGING_RESOURCES" name="unitAnnouncementBoard.create" type="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard">
-	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
-	<slot name="body" key="net.sourceforge.fenixedu.domain.messaging.Announcement.body.label"/>	
-</schema>
-
-<schema name="announcementBoard.coordinator.view" type="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard" bundle="MESSAGING_RESOURCES">
-    <slot name="name" layout="link">
-        <property name="userParent" value="true"/>
-        <property name="destination" value="board.view"/>
-    </slot>
-    <slot name="fullName"/>
-    <slot name="publicToRead">
-        <property name="trueLabel" value="label.public"/>
-        <property name="falseLabel" value="label.private"/>
-        <property name="bundle" value="MESSAGING_RESOURCES"/>
-    </slot>
-</schema>
-
 <schema name="researchUnitGroupDescription" type="org.fenixedu.bennu.core.groups.Group" bundle="MESSAGING_RESOURCES">
 	<slot name="presentationName"/>
 </schema>
@@ -176,19 +121,6 @@
 
 <schema name="delegatesGroupDescription" type="org.fenixedu.bennu.core.groups.Group" bundle="MESSAGING_RESOURCES">
 	<slot name="presentationName"/>
-</schema>
-
-
-<schema name="viewAnnoucementBoard" bundle="MESSAGING_RESOURCES"  type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
-	<slot name="name"/>
-	<slot name="fullName"/>
-	<slot name="readers"/>
-</schema>
-
-<schema name="messaging.announcementBoards.view.approvers" bundle="MESSAGING_RESOURCES"  type="net.sourceforge.fenixedu.dataTransferObject.messaging.AnnouncementBoardApproversBean">
-	<slot name="approver" key="label.empty"/>
-	<slot name="person.username" read-only="true" key="label.username"/>
-	<slot name="person.name" read-only="true" key="messaging.name.label"/>
 </schema>
 
 <schema name="net.sourceforge.fenixedu.domain.util.email.EmailBean.Create" type="net.sourceforge.fenixedu.domain.util.email.EmailBean" bundle="MESSAGING_RESOURCES">
@@ -313,40 +245,6 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RegistrationProvider"/>
 		<property name="format" value="${degreeNameWithDegreeCurricularPlanName}" />
 	</slot>
-</schema>
-
-<schema name="announcement.category.name.content"
-        type="net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory">
-	<slot name="name.content" />
-</schema>
-
-<schema name="announcement.categories"
-        type="net.sourceforge.fenixedu.domain.messaging.Announcement"
-        bundle="MESSAGING_RESOURCES">
-        <slot name="categories" layout="option-select">
-                <property name="label" value="" />
-                <property name="providerClass"
-                        value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AnnouncementCategoryProvider" />
-                <property name="eachSchema" value="announcement.category.name.content" />
-                <property name="eachLayout" value="values" />
-                <property name="classes" value="nobullet noindent" />
-        </slot>
-</schema>
-
-<schema name="announcement.campus" type="net.sourceforge.fenixedu.domain.messaging.Announcement" bundle="MESSAGING_RESOURCES">
-	<slot name="campus" layout="menu-select">	
-		<property name="size" value="30"/>
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
-		<property name="format"	value="${spaceInformation.presentationName}" />
-	</slot>
-</schema>
-
-<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-priority-subject" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
-	<slot name="priority" key="net.sourceforge.fenixedu.domain.messaging.Announcement.priority.label"/>
-	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label">
-		<property name="classes" value="bold"/>
-	</slot>
-	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="email.sent.resume" type="net.sourceforge.fenixedu.domain.util.email.Message">

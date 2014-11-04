@@ -38,14 +38,12 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
-import net.sourceforge.fenixedu.domain.InstitutionSite;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
-import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.MembersLinkGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -192,10 +190,6 @@ public class Unit extends Unit_Base {
             getParentsSet().iterator().next().delete();
         }
 
-        if (getSite() != null) {
-            getSite().delete();
-        }
-
         for (; !getUnitFileTagsSet().isEmpty(); getUnitFileTagsSet().iterator().next().delete()) {
             ;
         }
@@ -230,7 +224,6 @@ public class Unit extends Unit_Base {
         }
 
         if (!(getAssociatedNonAffiliatedTeachersSet().isEmpty() && getExternalCurricularCoursesSet().isEmpty()
-                && getBoardsSet().isEmpty() && (getSite() == null || getSite().isDeletable())
                 && getPrecedentDegreeInformationsSet().isEmpty() && getCandidacyPrecedentDegreeInformationsSet().isEmpty()
                 && getExternalRegistrationDatasSet().isEmpty() && getFilesSet().isEmpty() && getPersistentGroupsSet().isEmpty()
                 && getExternalCourseLoadRequestsSet().isEmpty() && getExternalProgramCertificateRequestsSet().isEmpty() && getUnitGroupSet()
@@ -1108,10 +1101,6 @@ public class Unit extends Unit_Base {
         return new String[0];
     }
 
-    public boolean isSiteAvailable() {
-        return getSite() != null;
-    }
-
     public List<UnitFile> getAccessibileFiles(Person person) {
         List<UnitFile> files = new ArrayList<UnitFile>();
         for (UnitFile file : getFilesSet()) {
@@ -1215,15 +1204,6 @@ public class Unit extends Unit_Base {
         return new ArrayList<Group>();
     }
 
-    public boolean isUserAbleToDefineGroups(Person person) {
-        UnitSite site = getSite();
-        return (site == null) ? false : site.getManagersSet().contains(person);
-    }
-
-    public boolean isCurrentUserAbleToDefineGroups() {
-        return isUserAbleToDefineGroups(AccessControl.getPerson());
-    }
-
     /**
      * Used by UnitBasedSender as sender group members
      * 
@@ -1281,17 +1261,6 @@ public class Unit extends Unit_Base {
         return functions;
     }
 
-    @Override
-    protected UnitSite createSite() {
-        if (this == Bennu.getInstance().getInstitutionUnit()) {
-            // TODO: to be removed if institution unit becomes a specific
-            // class
-            return InstitutionSite.initialize();
-        } else {
-            return new UnitSite(this);
-        }
-    }
-
     static public MultiLanguageString getInstitutionName() {
         final Bennu root = Bennu.getInstance();
         MultiLanguageString result = new MultiLanguageString();
@@ -1322,11 +1291,6 @@ public class Unit extends Unit_Base {
         }
 
         return result;
-    }
-
-    @Override
-    public UnitSite initializeSite() {
-        return (UnitSite) super.initializeSite();
     }
 
     @Override
