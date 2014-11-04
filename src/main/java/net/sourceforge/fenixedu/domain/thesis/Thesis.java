@@ -1296,7 +1296,7 @@ public class Thesis extends Thesis_Base {
         if (president == null) {
             conditions.add(new ThesisCondition("thesis.condition.president.required"));
         } else {
-            if (president.hasExternalContract()) {
+            if (president.isExternalPerson()) {
                 conditions.add(new ThesisCondition("thesis.condition.president.notInternal"));
             } else {
                 boolean isMember = false;
@@ -1576,7 +1576,7 @@ public class Thesis extends Thesis_Base {
     }
 
     private boolean isInternalPerson(Person person) {
-        return person != null && !person.hasExternalContract() && person.getTeacher() != null;
+        return person != null && !person.isExternalPerson();
     }
 
     @Override
