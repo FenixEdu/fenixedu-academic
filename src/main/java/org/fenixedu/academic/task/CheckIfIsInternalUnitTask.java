@@ -16,22 +16,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pt.utl.ist.scripts.process.updateData.phd;
+package org.fenixedu.academic.task;
 
-import net.sourceforge.fenixedu.domain.Alert;
+import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 
-@Task(englishTitle = "FireAlerts")
-public class FireAlerts extends CronTask {
+import pt.ist.fenixframework.Atomic;
+
+@Task(englishTitle = "Check if an Unit is internal and is marked as external")
+public class CheckIfIsInternalUnitTask extends CronTask {
 
     @Override
-    public void runTask() {
-        for (final Alert alert : Bennu.getInstance().getActiveAlertsSet()) {
-            alert.fire();
+    @Atomic
+    public void runTask() throws Exception {
+        Set<UnitName> units = Bennu.getInstance().getUnitNameSet();
+        int count = 0;
+        for (UnitName unitName : units) {
+            if (unitName.getIsExternalUnit() && unitName.getUnit().isInternal()) {
+                taskLog(unitName.getExternalId() + " -> " + unitName.getName());
+                count++;
+                unitName.setIsExternalUnit(false);
+            }
         }
+        taskLog(count + " changes.");
     }
 
 }

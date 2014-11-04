@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pt.utl.ist.codeGenerator.database;
+package org.fenixedu.academic.bootstrap;
 
 import static java.util.Collections.singletonList;
 
@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.Bundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.bootstrap.FenixBootstrapper.SchoolSetupSection;
 import org.fenixedu.bennu.core.bootstrap.AdminUserBootstrapper.AdminUserSection;
 import org.fenixedu.bennu.core.bootstrap.BootstrapError;
 import org.fenixedu.bennu.core.bootstrap.annotations.Bootstrap;
@@ -69,7 +70,6 @@ import org.fenixedu.bennu.portal.domain.PortalBootstrapper.PortalSection;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.standards.geographic.Planet;
-import pt.utl.ist.codeGenerator.database.FenixBootstrapper.SchoolSetupSection;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.Lists;

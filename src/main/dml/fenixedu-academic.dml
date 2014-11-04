@@ -5,13 +5,13 @@
 
 /*
  * The Fenix domain classes are all in the
- * net.sourceforge.fenixedu.domain package or some sub-package of
+ * org.fenixedu.academic.domain package or some sub-package of
  * this package.
  * 
  * Note that this package declaration applies only to the
  */
 
-package net.sourceforge.fenixedu.domain;
+package org.fenixedu.academic.domain;
 
 
 
@@ -23,147 +23,147 @@ package net.sourceforge.fenixedu.domain;
 /*
  * Enums first
  */
-enum net.sourceforge.fenixedu.domain.AlumniRequestType                                                                    as AlumniRequestType;
-enum net.sourceforge.fenixedu.domain.CompetenceCourseType                                                                 as CompetenceCourseType;
-enum net.sourceforge.fenixedu.domain.ContractType                                                                         as ContractType;
-enum net.sourceforge.fenixedu.domain.DocumentType                                                                         as DocumentType;
-enum net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType                                               as ExecutionCourseBoardPermittedGroupType;
-enum net.sourceforge.fenixedu.domain.FormationType                                                                        as FormationType;
-enum net.sourceforge.fenixedu.domain.FrequencyType                                                                        as FrequencyType;
-enum net.sourceforge.fenixedu.domain.GradeScale                                                                           as GradeScale;
-enum net.sourceforge.fenixedu.domain.GraduationType                                                                       as GraduationType;
-enum net.sourceforge.fenixedu.domain.GrantOwnerType                                                                       as GrantOwnerType;
-enum net.sourceforge.fenixedu.domain.GuideState                                                                           as GuideState;
-enum net.sourceforge.fenixedu.domain.JobApplicationType                                                                   as JobApplicationType;
-enum net.sourceforge.fenixedu.domain.Level                                                                                as Level;
-enum net.sourceforge.fenixedu.domain.MarkSheetState                                                                       as MarkSheetState;
-enum net.sourceforge.fenixedu.domain.MarkSheetType                                                                        as MarkSheetType;
-enum net.sourceforge.fenixedu.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
-enum net.sourceforge.fenixedu.domain.Option                                                                               as Option;
-enum net.sourceforge.fenixedu.domain.PhotoState                                                                           as PhotoState;
-enum net.sourceforge.fenixedu.domain.PhotoType                                                                            as PhotoType;
-enum net.sourceforge.fenixedu.domain.photograph.AspectRatio																  as AspectRatio;
-enum net.sourceforge.fenixedu.domain.photograph.PictureMode																  as PictureMode;
-enum net.sourceforge.fenixedu.domain.photograph.PictureSize																  as PictureSize;
-enum net.sourceforge.fenixedu.domain.PrescriptionEnum                                                                     as PrescriptionEnum;
-enum net.sourceforge.fenixedu.domain.ProfessionType                                                                       as ProfessionType;
-enum net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType                                                   as ProfessionalSituationConditionType;
-enum net.sourceforge.fenixedu.domain.QualificationType                                                                    as QualificationType;
-enum net.sourceforge.fenixedu.domain.RequestState                                                                         as RequestState;
-enum net.sourceforge.fenixedu.domain.RoleOperationType																	  as RoleOperationType;
-enum net.sourceforge.fenixedu.domain.SalaryType                                                                           as SalaryType;
-enum net.sourceforge.fenixedu.domain.SchoolLevelType                                                                      as SchoolLevelType;
-enum net.sourceforge.fenixedu.domain.ShiftType                                                                            as ShiftType;
-enum net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType                                                          as UnitBoardPermittedGroupType;
-enum net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType                                             as PersistentGroupMembersType;
-enum net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType				  			  as AcademicOperationType;
-enum net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType.Scope                     as AcademicOperationTypeScope;
-enum net.sourceforge.fenixedu.domain.accounting.AccountType                                                               as AccountType;
-enum net.sourceforge.fenixedu.domain.accounting.CreditNoteState                                                           as CreditNoteState;
-enum net.sourceforge.fenixedu.domain.accounting.EntryType                                                                 as EntryType;
-enum net.sourceforge.fenixedu.domain.accounting.EventState                                                                as EventState;
-enum net.sourceforge.fenixedu.domain.accounting.EventType                                                                 as EventType;
-enum net.sourceforge.fenixedu.domain.accounting.PaymentCodeState                                                          as PaymentCodeState;
-enum net.sourceforge.fenixedu.domain.accounting.PaymentCodeType                                                           as PaymentCodeType;
-enum net.sourceforge.fenixedu.domain.accounting.PaymentMode                                                               as PaymentMode;
-enum net.sourceforge.fenixedu.domain.accounting.ReceiptState                                                              as ReceiptState;
-enum net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType      as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
-enum net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemptionJustificationType      						  as InsuranceExemptionJustificationType;
-enum net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType                                  as PenaltyExemptionJustificationType;
-enum net.sourceforge.fenixedu.domain.accounting.events.candidacy.CandidacyExemptionJustificationType                      as CandidacyExemptionJustificationType;
-enum net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType                        as GratuityExemptionJustificationType;
-enum net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType                                        as AdministrativeOfficeType;
-enum net.sourceforge.fenixedu.domain.branch.BranchType                                                                    as OldBranchType;
-enum net.sourceforge.fenixedu.domain.candidacy.Ingression                                                                 as Ingression;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState                                            as IndividualCandidacyState;
-enum net.sourceforge.fenixedu.domain.contacts.PartyContactType                                                            as PartyContactType;
-enum net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType                                                as CurricularPeriodType;
-enum net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType                                                   as CurricularRuleType;
-enum net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                                                      as CurricularCourseType;
-enum net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition                                                       as EnrollmentCondition;
-enum net.sourceforge.fenixedu.domain.curriculum.EnrollmentState                                                           as EnrollmentState;
-enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType                                                   as EnrolmentEvaluationType;
-enum net.sourceforge.fenixedu.domain.degree.DegreeType                                                                    as DegreeType;
-enum net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState                                as DegreeCurricularPlanState;
-enum net.sourceforge.fenixedu.domain.degreeStructure.BranchType                                                           as BranchType;
-enum net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel                                                as CompetenceCourseLevel;
-enum net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage                                                      as CurricularStage;
-enum net.sourceforge.fenixedu.domain.degreeStructure.CycleType                                                            as CycleType;
-enum net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                                                           as degreeStructure.RegimeType;
-enum net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType                                                      as GeneratedDocumentType;
-enum net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                                                       as ExemptionGratuityType;
-enum net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                                                     as ReimbursementGuideState;
-enum net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus                                                           as SibsPaymentStatus;
-enum net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType                                                             as SibsPaymentType;
-enum net.sourceforge.fenixedu.domain.masterDegree.GuideRequester                                                          as GuideRequester;
-enum net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification                                              as MasterDegreeClassification;
-enum net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType                                    as AcademicalInstitutionType;
-enum net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum                                       as AccountabilityTypeEnum;
-enum net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                                                 as FunctionType;
-enum net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum                                                as PartyTypeEnum;
-enum net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification                                           as UnitClassification;
-enum net.sourceforge.fenixedu.domain.person.Gender                                                                        as Gender;
-enum net.sourceforge.fenixedu.domain.person.IDDocumentType                                                                as IDDocumentType;
-enum net.sourceforge.fenixedu.domain.person.MaritalStatus                                                                 as MaritalStatus;
-enum net.sourceforge.fenixedu.domain.person.RoleType                                                                      as RoleType;
-enum net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType                                  as AcademicServiceRequestSituationType;
-enum net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType                                 as DocumentPurposeType;
-enum net.sourceforge.fenixedu.domain.student.EnrolmentModel                                                               as EnrolmentModel;
-enum net.sourceforge.fenixedu.domain.student.MobilityProgram                                                              as MobilityProgram;
-enum net.sourceforge.fenixedu.domain.student.RegistrationRegimeType                                                       as RegistrationRegimeType;
-enum net.sourceforge.fenixedu.domain.student.StudentStatuteType                                                           as StudentStatuteType;
-enum net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                                                 as Specialization;
-enum net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState                                     as StudentCurricularPlanState;
-enum net.sourceforge.fenixedu.domain.teacher.CategoryType                                                                 as CategoryType;
-enum net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType                                                       as ThesisParticipationType;
-enum net.sourceforge.fenixedu.domain.thesis.ThesisState                                                                   as ThesisState;
-enum net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType                                                          as ThesisVisibilityType;
-enum net.sourceforge.fenixedu.domain.transactions.PaymentType                                                             as PaymentType;
-enum net.sourceforge.fenixedu.domain.transactions.TransactionType                                                         as TransactionType;
-enum net.sourceforge.fenixedu.domain.util.LogicOperator                                                                   as LogicOperator;
+enum org.fenixedu.academic.domain.AlumniRequestType                                                                    as AlumniRequestType;
+enum org.fenixedu.academic.domain.CompetenceCourseType                                                                 as CompetenceCourseType;
+enum org.fenixedu.academic.domain.ContractType                                                                         as ContractType;
+enum org.fenixedu.academic.domain.DocumentType                                                                         as DocumentType;
+enum org.fenixedu.academic.domain.ExecutionCourseBoardPermittedGroupType                                               as ExecutionCourseBoardPermittedGroupType;
+enum org.fenixedu.academic.domain.FormationType                                                                        as FormationType;
+enum org.fenixedu.academic.domain.FrequencyType                                                                        as FrequencyType;
+enum org.fenixedu.academic.domain.GradeScale                                                                           as GradeScale;
+enum org.fenixedu.academic.domain.GraduationType                                                                       as GraduationType;
+enum org.fenixedu.academic.domain.GrantOwnerType                                                                       as GrantOwnerType;
+enum org.fenixedu.academic.domain.GuideState                                                                           as GuideState;
+enum org.fenixedu.academic.domain.JobApplicationType                                                                   as JobApplicationType;
+enum org.fenixedu.academic.domain.Level                                                                                as Level;
+enum org.fenixedu.academic.domain.MarkSheetState                                                                       as MarkSheetState;
+enum org.fenixedu.academic.domain.MarkSheetType                                                                        as MarkSheetType;
+enum org.fenixedu.academic.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
+enum org.fenixedu.academic.domain.Option                                                                               as Option;
+enum org.fenixedu.academic.domain.PhotoState                                                                           as PhotoState;
+enum org.fenixedu.academic.domain.PhotoType                                                                            as PhotoType;
+enum org.fenixedu.academic.domain.photograph.AspectRatio																  as AspectRatio;
+enum org.fenixedu.academic.domain.photograph.PictureMode																  as PictureMode;
+enum org.fenixedu.academic.domain.photograph.PictureSize																  as PictureSize;
+enum org.fenixedu.academic.domain.PrescriptionEnum                                                                     as PrescriptionEnum;
+enum org.fenixedu.academic.domain.ProfessionType                                                                       as ProfessionType;
+enum org.fenixedu.academic.domain.ProfessionalSituationConditionType                                                   as ProfessionalSituationConditionType;
+enum org.fenixedu.academic.domain.QualificationType                                                                    as QualificationType;
+enum org.fenixedu.academic.domain.RequestState                                                                         as RequestState;
+enum org.fenixedu.academic.domain.RoleOperationType																	  as RoleOperationType;
+enum org.fenixedu.academic.domain.SalaryType                                                                           as SalaryType;
+enum org.fenixedu.academic.domain.SchoolLevelType                                                                      as SchoolLevelType;
+enum org.fenixedu.academic.domain.ShiftType                                                                            as ShiftType;
+enum org.fenixedu.academic.domain.UnitBoardPermittedGroupType                                                          as UnitBoardPermittedGroupType;
+enum org.fenixedu.academic.domain.accessControl.PersistentGroupMembersType                                             as PersistentGroupMembersType;
+enum org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType				  			  as AcademicOperationType;
+enum org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType.Scope                     as AcademicOperationTypeScope;
+enum org.fenixedu.academic.domain.accounting.AccountType                                                               as AccountType;
+enum org.fenixedu.academic.domain.accounting.CreditNoteState                                                           as CreditNoteState;
+enum org.fenixedu.academic.domain.accounting.EntryType                                                                 as EntryType;
+enum org.fenixedu.academic.domain.accounting.EventState                                                                as EventState;
+enum org.fenixedu.academic.domain.accounting.EventType                                                                 as EventType;
+enum org.fenixedu.academic.domain.accounting.PaymentCodeState                                                          as PaymentCodeState;
+enum org.fenixedu.academic.domain.accounting.PaymentCodeType                                                           as PaymentCodeType;
+enum org.fenixedu.academic.domain.accounting.PaymentMode                                                               as PaymentMode;
+enum org.fenixedu.academic.domain.accounting.ReceiptState                                                              as ReceiptState;
+enum org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType      as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
+enum org.fenixedu.academic.domain.accounting.events.InsuranceExemptionJustificationType      						  as InsuranceExemptionJustificationType;
+enum org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType                                  as PenaltyExemptionJustificationType;
+enum org.fenixedu.academic.domain.accounting.events.candidacy.CandidacyExemptionJustificationType                      as CandidacyExemptionJustificationType;
+enum org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemptionJustificationType                        as GratuityExemptionJustificationType;
+enum org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType                                        as AdministrativeOfficeType;
+enum org.fenixedu.academic.domain.branch.BranchType                                                                    as OldBranchType;
+enum org.fenixedu.academic.domain.candidacy.Ingression                                                                 as Ingression;
+enum org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
+enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyState                                            as IndividualCandidacyState;
+enum org.fenixedu.academic.domain.contacts.PartyContactType                                                            as PartyContactType;
+enum org.fenixedu.academic.domain.curricularPeriod.CurricularPeriodType                                                as CurricularPeriodType;
+enum org.fenixedu.academic.domain.curricularRules.CurricularRuleType                                                   as CurricularRuleType;
+enum org.fenixedu.academic.domain.curriculum.CurricularCourseType                                                      as CurricularCourseType;
+enum org.fenixedu.academic.domain.curriculum.EnrollmentCondition                                                       as EnrollmentCondition;
+enum org.fenixedu.academic.domain.curriculum.EnrollmentState                                                           as EnrollmentState;
+enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationType                                                   as EnrolmentEvaluationType;
+enum org.fenixedu.academic.domain.degree.DegreeType                                                                    as DegreeType;
+enum org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState                                as DegreeCurricularPlanState;
+enum org.fenixedu.academic.domain.degreeStructure.BranchType                                                           as BranchType;
+enum org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel                                                as CompetenceCourseLevel;
+enum org.fenixedu.academic.domain.degreeStructure.CurricularStage                                                      as CurricularStage;
+enum org.fenixedu.academic.domain.degreeStructure.CycleType                                                            as CycleType;
+enum org.fenixedu.academic.domain.degreeStructure.RegimeType                                                           as degreeStructure.RegimeType;
+enum org.fenixedu.academic.domain.documents.GeneratedDocumentType                                                      as GeneratedDocumentType;
+enum org.fenixedu.academic.domain.gratuity.ExemptionGratuityType                                                       as ExemptionGratuityType;
+enum org.fenixedu.academic.domain.gratuity.ReimbursementGuideState                                                     as ReimbursementGuideState;
+enum org.fenixedu.academic.domain.gratuity.SibsPaymentStatus                                                           as SibsPaymentStatus;
+enum org.fenixedu.academic.domain.gratuity.SibsPaymentType                                                             as SibsPaymentType;
+enum org.fenixedu.academic.domain.masterDegree.GuideRequester                                                          as GuideRequester;
+enum org.fenixedu.academic.domain.masterDegree.MasterDegreeClassification                                              as MasterDegreeClassification;
+enum org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType                                    as AcademicalInstitutionType;
+enum org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum                                       as AccountabilityTypeEnum;
+enum org.fenixedu.academic.domain.organizationalStructure.FunctionType                                                 as FunctionType;
+enum org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum                                                as PartyTypeEnum;
+enum org.fenixedu.academic.domain.organizationalStructure.UnitClassification                                           as UnitClassification;
+enum org.fenixedu.academic.domain.person.Gender                                                                        as Gender;
+enum org.fenixedu.academic.domain.person.IDDocumentType                                                                as IDDocumentType;
+enum org.fenixedu.academic.domain.person.MaritalStatus                                                                 as MaritalStatus;
+enum org.fenixedu.academic.domain.person.RoleType                                                                      as RoleType;
+enum org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType                                  as AcademicServiceRequestSituationType;
+enum org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeType                                 as DocumentPurposeType;
+enum org.fenixedu.academic.domain.student.EnrolmentModel                                                               as EnrolmentModel;
+enum org.fenixedu.academic.domain.student.MobilityProgram                                                              as MobilityProgram;
+enum org.fenixedu.academic.domain.student.RegistrationRegimeType                                                       as RegistrationRegimeType;
+enum org.fenixedu.academic.domain.student.StudentStatuteType                                                           as StudentStatuteType;
+enum org.fenixedu.academic.domain.studentCurricularPlan.Specialization                                                 as Specialization;
+enum org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState                                     as StudentCurricularPlanState;
+enum org.fenixedu.academic.domain.teacher.CategoryType                                                                 as CategoryType;
+enum org.fenixedu.academic.domain.thesis.ThesisParticipationType                                                       as ThesisParticipationType;
+enum org.fenixedu.academic.domain.thesis.ThesisState                                                                   as ThesisState;
+enum org.fenixedu.academic.domain.thesis.ThesisVisibilityType                                                          as ThesisVisibilityType;
+enum org.fenixedu.academic.domain.transactions.PaymentType                                                             as PaymentType;
+enum org.fenixedu.academic.domain.transactions.TransactionType                                                         as TransactionType;
+enum org.fenixedu.academic.domain.util.LogicOperator                                                                   as LogicOperator;
 enum net.sourceforge.fenixedu.util.ContentType                                                                            as ContentType;
 enum net.sourceforge.fenixedu.util.Month                                                                                  as Month;
 enum net.sourceforge.fenixedu.util.RegimeType                                                                             as RegimeType;
 enum net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice                                                 as StudentPersonalDataAuthorizationChoice;
 enum net.sourceforge.fenixedu.util.WeekDay                                                                                as WeekDay;
-enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState                                                 as PhdIndividualProgramProcessState;
-enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType                                            as PhdIndividualProgramCollaborationType;
-enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType                                                 as PhdIndividualProgramDocumentType;
-enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
-enum net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType                                as PublicPresentationSeminarProcessStateType;
-enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType                                                 as PhdThesisProcessStateType;
-enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantOverallPromise                                                as ApplicantOverallPromise;
-enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType                                                            as PhdStudyPlanEntryType;
-enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType                                                 as PhdNotificationType;
-enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState                                                as PhdNotificationState;
-enum net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType                                              		  as PhdProcessAccessType;
-enum net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackStateType						  as PhdCandidacyFeedbackStateType;
-enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade														  as PhdThesisFinalGrade;
-enum net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType							  as PhdMeetingSchedulingProcessStateType;
-enum net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcessStateType											  as PhdMigrationProcessStateType;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
-enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
-enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType                     as AcademicEventJustificationType;
-enum net.sourceforge.fenixedu.domain.EntryPhase                                                                           as EntryPhase;
-enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
-enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase                                       as CurriculumValidationEvaluationPhase;
-enum net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
-enum net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlertEntityType                                      as ErasmusAlertEntityType;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType								  as ErasmusApplyForSemesterType;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ExecutedActionType										  as ExecutedActionType;
-enum net.sourceforge.fenixedu.domain.OperationType																		  as OperationType;
-enum net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobType                                         as GratuityReportQueueJobType;
-enum net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodType												  as PhdCandidacyPeriodType;
-enum net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
-enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
+enum org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState                                                 as PhdIndividualProgramProcessState;
+enum org.fenixedu.academic.domain.phd.PhdIndividualProgramCollaborationType                                            as PhdIndividualProgramCollaborationType;
+enum org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType                                                 as PhdIndividualProgramDocumentType;
+enum org.fenixedu.academic.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
+enum org.fenixedu.academic.domain.phd.seminar.PublicPresentationSeminarProcessStateType                                as PublicPresentationSeminarProcessStateType;
+enum org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessStateType                                                 as PhdThesisProcessStateType;
+enum org.fenixedu.academic.domain.phd.candidacy.ApplicantOverallPromise                                                as ApplicantOverallPromise;
+enum org.fenixedu.academic.domain.phd.PhdStudyPlanEntryType                                                            as PhdStudyPlanEntryType;
+enum org.fenixedu.academic.domain.phd.notification.PhdNotificationType                                                 as PhdNotificationType;
+enum org.fenixedu.academic.domain.phd.notification.PhdNotificationState                                                as PhdNotificationState;
+enum org.fenixedu.academic.domain.phd.access.PhdProcessAccessType                                              		  as PhdProcessAccessType;
+enum org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackStateType						  as PhdCandidacyFeedbackStateType;
+enum org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade														  as PhdThesisFinalGrade;
+enum org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType							  as PhdMeetingSchedulingProcessStateType;
+enum org.fenixedu.academic.domain.phd.migration.PhdMigrationProcessStateType											  as PhdMigrationProcessStateType;
+enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
+enum org.fenixedu.academic.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
+enum org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicEventJustificationType                     as AcademicEventJustificationType;
+enum org.fenixedu.academic.domain.EntryPhase                                                                           as EntryPhase;
+enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
+enum org.fenixedu.academic.domain.curriculum.CurriculumValidationEvaluationPhase                                       as CurriculumValidationEvaluationPhase;
+enum org.fenixedu.academic.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
+enum org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
+enum org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusAlertEntityType                                      as ErasmusAlertEntityType;
+enum org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType								  as ErasmusApplyForSemesterType;
+enum org.fenixedu.academic.domain.candidacyProcess.erasmus.ExecutedActionType										  as ExecutedActionType;
+enum org.fenixedu.academic.domain.OperationType																		  as OperationType;
+enum org.fenixedu.academic.domain.accounting.report.GratuityReportQueueJobType                                         as GratuityReportQueueJobType;
+enum org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriodType												  as PhdCandidacyPeriodType;
+enum org.fenixedu.academic.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
+enum org.fenixedu.academic.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
+enum org.fenixedu.academic.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
 enum net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance                                                       as BackendInstance;
-enum net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
-enum net.sourceforge.fenixedu.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType                                  as MobilityEmailTemplateType;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGradeState                                 as IndividualCandidacySeriesGradeState;
+enum org.fenixedu.academic.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
+enum org.fenixedu.academic.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
+enum org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType                                  as MobilityEmailTemplateType;
+enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacySeriesGradeState                                 as IndividualCandidacySeriesGradeState;
 
 /*
  * Value types that need special externalization
@@ -191,7 +191,7 @@ valueType pt.utl.ist.fenix.tools.util.Strings as Strings {
     internalizeWith importFromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.Grade as Grade {
+valueType org.fenixedu.academic.domain.Grade as Grade {
     externalizeWith {
         String exportAsString();
     }
@@ -199,23 +199,15 @@ valueType net.sourceforge.fenixedu.domain.Grade as Grade {
     internalizeWith importFromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences as BibliographicReferences {
+valueType org.fenixedu.academic.domain.degreeStructure.BibliographicReferences as BibliographicReferences {
     externalizeWith {
-        String net.sourceforge.fenixedu.domain.degreeStructure.Externalization.externalizeBibliographicReferences();
+        String org.fenixedu.academic.domain.degreeStructure.Externalization.externalizeBibliographicReferences();
     }
 
-    internalizeWith net.sourceforge.fenixedu.domain.degreeStructure.Externalization.internalizeBibliographicReferences();
+    internalizeWith org.fenixedu.academic.domain.degreeStructure.Externalization.internalizeBibliographicReferences();
 }
 
-valueType net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable as EctsComparabilityTable {
-    externalizeWith {
-        String toString();
-    }
-
-    internalizeWith fromString();
-}
-
-valueType net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages as EctsComparabilityPercentages {
+valueType org.fenixedu.academic.domain.degreeStructure.EctsComparabilityTable as EctsComparabilityTable {
     externalizeWith {
         String toString();
     }
@@ -223,7 +215,15 @@ valueType net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPerce
     internalizeWith fromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval as AcademicInterval {
+valueType org.fenixedu.academic.domain.degreeStructure.EctsComparabilityPercentages as EctsComparabilityPercentages {
+    externalizeWith {
+        String toString();
+    }
+
+    internalizeWith fromString();
+}
+
+valueType org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval as AcademicInterval {
     externalizeWith {
         String getRepresentationInStringFormat();
     }
@@ -231,7 +231,7 @@ valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterva
     internalizeWith getAcademicIntervalFromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod as AcademicPeriod {
+valueType org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod as AcademicPeriod {
     externalizeWith {
         String getRepresentationInStringFormat();
     }
@@ -239,7 +239,7 @@ valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod 
     internalizeWith getAcademicPeriodFromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.CurricularYearList as CurricularYearList {
+valueType org.fenixedu.academic.domain.CurricularYearList as CurricularYearList {
     externalizeWith {
         String toString();
     }
@@ -247,7 +247,7 @@ valueType net.sourceforge.fenixedu.domain.CurricularYearList as CurricularYearLi
     internalizeWith internalize();
 }
 
-valueType net.sourceforge.fenixedu.domain.util.EmailAddressList as EmailAddressList {
+valueType org.fenixedu.academic.domain.util.EmailAddressList as EmailAddressList {
     externalizeWith {
         String toString();
     }
@@ -404,7 +404,7 @@ valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageS
     internalizeWith importFromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgrammeList as erasmus.TypeOfProgrammeList {
+valueType org.fenixedu.academic.domain.candidacyProcess.erasmus.TypeOfProgrammeList as erasmus.TypeOfProgrammeList {
     externalizeWith {
         String toString();
     }
@@ -413,7 +413,7 @@ valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgram
 }
 
 
-valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributesList as erasmus.StorkAttributesList {
+valueType org.fenixedu.academic.domain.candidacyProcess.erasmus.StorkAttributesList as erasmus.StorkAttributesList {
     externalizeWith {
         String toString();
     }
@@ -422,7 +422,7 @@ valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttribut
 }
 
 /* Phd Module */
-valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as PhdProcessAccessTypeList {
+valueType org.fenixedu.academic.domain.phd.access.PhdProcessAccessTypeList as PhdProcessAccessTypeList {
 	externalizeWith {
 		String toString();
 	}
@@ -430,14 +430,14 @@ valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as
 	internalizeWith importFromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacySharedDocumentsList as PhdCandidacySharedDocumentsList {
+valueType org.fenixedu.academic.domain.phd.candidacy.feedbackRequest.PhdCandidacySharedDocumentsList as PhdCandidacySharedDocumentsList {
     externalizeWith { String toString(); }
     internalizeWith importFromString();
 }
 
 /* End of Phd Module */
 
-valueType net.sourceforge.fenixedu.domain.accessControl.rules.AccessOperation as AccessOperation {
+valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as AccessOperation {
     externalizeWith {
         String exportAsString();
     }

@@ -1,4 +1,4 @@
-package pt.utl.ist.scripts.process.updateData.student;
+package org.fenixedu.academic.task;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PhotoState;

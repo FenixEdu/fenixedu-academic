@@ -39,11 +39,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramC
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Bundle;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
+import net.sourceforge.fenixedu.util.NumberToWordsConverter;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.ist.utl.fenix.utils.NumberToWordsConverter;
 
 public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocument {
 
