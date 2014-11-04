@@ -211,7 +211,7 @@ public class DelegateInquiryBean implements Serializable {
                             if (inquiryResultComment == null) {
                                 inquiryResultComment =
                                         new InquiryResultComment(questionResult, person, delegate, questionResultsSummaryBean
-                                        .getQuestionResult().getInquiryResultCommentsSet().size() + 1);
+                                                .getQuestionResult().getInquiryResultCommentsSet().size() + 1);
                             }
                             inquiryResultComment.setComment(questionResultsSummaryBean.getEditableComment());
                         }

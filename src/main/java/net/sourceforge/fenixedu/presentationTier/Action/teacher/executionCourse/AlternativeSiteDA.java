@@ -141,9 +141,8 @@ public class AlternativeSiteDA extends ExecutionCourseBaseAction {
         site.setIntroduction(introduction);
         site.setDynamicMailDistribution(dynamicMailDistribution);
 
-        ContentManagementLog.createLog(executionCourse, Bundle.MESSAGING,
-                "log.executionCourse.content.customization.edited", executionCourse.getNome(),
-                executionCourse.getDegreePresentationString());
+        ContentManagementLog.createLog(executionCourse, Bundle.MESSAGING, "log.executionCourse.content.customization.edited",
+                executionCourse.getNome(), executionCourse.getDegreePresentationString());
     }
 
 }

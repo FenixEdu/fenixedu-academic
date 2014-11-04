@@ -27,7 +27,6 @@ import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.common.base.Joiner;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurno;
@@ -70,11 +69,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  *
  */
 @Mapping(path = "/manageShifts", module = "resourceAllocationManager", input = "/manageShifts.do?method=listShifts",
-formBean = "createShiftForm", functionality = ExecutionPeriodDA.class)
+        formBean = "createShiftForm", functionality = ExecutionPeriodDA.class)
 @Forwards({ @Forward(name = "ShowShiftList", path = "/resourceAllocationManager/manageShifts_bd.jsp"),
-    @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift") })
+        @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift") })
 @Exceptions(@ExceptionHandling(handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class,
-key = "resources.Action.exceptions.ExistingActionException", scope = "request"))
+        key = "resources.Action.exceptions.ExistingActionException", scope = "request"))
 public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
     @Mapping(path = "/deleteShifts", module = "resourceAllocationManager", input = "/manageShifts.do?method=listShifts&page=0",
@@ -86,11 +85,13 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
         }
 
         private ActionForward redirectToShiftsList(HttpServletRequest request) {
-            String url = Stream.of("/manageShifts.do?method=listShifts&page=0" , getQueryParam(request, PresentationConstants.ACADEMIC_INTERVAL),
-                    getQueryParam(request, PresentationConstants.CURRICULAR_YEAR_OID),
-                    getQueryParam(request, PresentationConstants.EXECUTION_DEGREE_OID)).collect(Collectors.joining("&"));
+            String url =
+                    Stream.of("/manageShifts.do?method=listShifts&page=0",
+                            getQueryParam(request, PresentationConstants.ACADEMIC_INTERVAL),
+                            getQueryParam(request, PresentationConstants.CURRICULAR_YEAR_OID),
+                            getQueryParam(request, PresentationConstants.EXECUTION_DEGREE_OID)).collect(Collectors.joining("&"));
 
-            return redirect(url , request);
+            return redirect(url, request);
         }
 
         public ActionForward deleteShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,

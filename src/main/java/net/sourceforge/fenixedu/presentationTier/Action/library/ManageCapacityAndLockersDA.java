@@ -43,7 +43,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 
 @StrutsFunctionality(app = LibraryApplication.class, path = "manage-capacity-and-lockers",
-titleKey = "label.manage.capacity.lockers")
+        titleKey = "label.manage.capacity.lockers")
 @Mapping(path = "/manageCapacityAndLockers", module = "library")
 @Forwards(@Forward(name = "libraryUpdateCapacityAndLockers", path = "/library/operator/libraryUpdateCapacityAndLockers.jsp"))
 public class ManageCapacityAndLockersDA extends FenixDispatchAction {
@@ -128,9 +128,9 @@ public class ManageCapacityAndLockersDA extends FenixDispatchAction {
             for (int i = highestLocker + 1; i <= lockers; i++) {
                 final InformationBean bean =
                         Information.builder()
-                        .name(StringUtils.leftPad(Integer.toString(i), String.valueOf(lockers).length(), '0'))
-                        .classification(SpaceClassification.getByName(SpaceUtils.ROOM_SUBDIVISION)).validFrom(today)
-                        .allocatableCapacity(1).bean();
+                                .name(StringUtils.leftPad(Integer.toString(i), String.valueOf(lockers).length(), '0'))
+                                .classification(SpaceClassification.getByName(SpaceUtils.ROOM_SUBDIVISION)).validFrom(today)
+                                .allocatableCapacity(1).bean();
                 new Space(library, bean);
             }
         }

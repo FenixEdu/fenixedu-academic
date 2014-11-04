@@ -52,7 +52,8 @@ public class PhdProgramInformationDA extends FenixDispatchAction {
     public ActionForward listPhdPrograms(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        request.setAttribute("phdPrograms", AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES));
+        request.setAttribute("phdPrograms", AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_PHD_PROCESSES));
         return mapping.findForward("listPhdPrograms");
     }
 

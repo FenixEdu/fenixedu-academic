@@ -47,7 +47,8 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup {
             Scheduleing scheduleing = group.getExecutionDegree().getScheduling();
             if (scheduleing == null || scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup() == null) {
                 throw new MaximumNumberOfProposalCandidaciesPerGroupUndefinedException();
-            } else if (scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup().intValue() <= group.getGroupProposalsSet().size()) {
+            } else if (scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup().intValue() <= group.getGroupProposalsSet()
+                    .size()) {
                 throw new MaximumNumberOfProposalCandidaciesPerGroupReachedException(scheduleing
                         .getMaximumNumberOfProposalCandidaciesPerGroup().toString());
             }

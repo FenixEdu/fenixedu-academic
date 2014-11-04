@@ -54,7 +54,8 @@ public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProces
 
     @Override
     protected Sender getSender() {
-        return this.getPhdIndividualProgramProcess().getAdministrativeOffice().getUnit().getUnitBasedSenderSet().iterator().next();
+        return this.getPhdIndividualProgramProcess().getAdministrativeOffice().getUnit().getUnitBasedSenderSet().iterator()
+                .next();
     }
 
     @Override

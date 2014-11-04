@@ -288,7 +288,7 @@ public class LibraryAttendance implements Serializable {
 
     public Collection<GiafProfessionalData> getGiafProfessionalDataSet() {
         return getPerson().getPersonProfessionalData() == null ? new ArrayList<GiafProfessionalData>() : getPerson()
-        .getPersonProfessionalData().getGiafProfessionalDatasSet();
+                .getPersonProfessionalData().getGiafProfessionalDatasSet();
     }
 
     public Registration getStudentRegistration() {

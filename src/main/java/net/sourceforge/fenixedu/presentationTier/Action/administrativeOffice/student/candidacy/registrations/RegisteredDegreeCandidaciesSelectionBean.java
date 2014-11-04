@@ -55,13 +55,13 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
             if (result == 0) {
                 result =
                         o1.getActiveCandidacySituation().getSituationDate()
-                        .compareTo(o2.getActiveCandidacySituation().getSituationDate());
+                                .compareTo(o2.getActiveCandidacySituation().getSituationDate());
             }
             if (result == 0) {
                 final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
                 result =
                         o1.getExecutionDegree().getDegree().getNameFor(executionYear)
-                        .compareTo(o2.getExecutionDegree().getDegree().getNameFor(executionYear));
+                                .compareTo(o2.getExecutionDegree().getDegree().getNameFor(executionYear));
             }
             if (result == 0) {
                 result = o1.getRegistration().getNumber().compareTo(o2.getRegistration().getNumber());

@@ -75,7 +75,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Set<AdministrativeOffice> offices =
-                AcademicAuthorizationGroup.getOfficesForOperation(getLoggedPerson(request), AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING);
+                AcademicAuthorizationGroup.getOfficesForOperation(getLoggedPerson(request),
+                        AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING);
 
         request.setAttribute("unsent",
                 RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(offices, RectorateSubmissionState.UNSENT));
@@ -208,21 +209,24 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
                 addCell("Tipo de Documento", BundleUtil.getString(Bundle.ENUMERATION, document.getDocumentRequestType().name()));
                 switch (document.getDocumentRequestType()) {
                 case REGISTRY_DIPLOMA_REQUEST:
-                    addCell("Ciclo", BundleUtil.getString(Bundle.ENUMERATION, ((IRegistryDiplomaRequest) document).getRequestedCycle().name()));
+                    addCell("Ciclo", BundleUtil.getString(Bundle.ENUMERATION, ((IRegistryDiplomaRequest) document)
+                            .getRequestedCycle().name()));
                     break;
                 case DIPLOMA_REQUEST:
                     CycleType cycle = ((IDiplomaRequest) document).getWhatShouldBeRequestedCycle();
                     addCell("Ciclo", cycle != null ? BundleUtil.getString(Bundle.ENUMERATION, cycle.name()) : null);
                     break;
                 case DIPLOMA_SUPPLEMENT_REQUEST:
-                    addCell("Ciclo", BundleUtil.getString(Bundle.ENUMERATION, ((IDiplomaSupplementRequest) document).getRequestedCycle().name()));
+                    addCell("Ciclo", BundleUtil.getString(Bundle.ENUMERATION, ((IDiplomaSupplementRequest) document)
+                            .getRequestedCycle().name()));
                     break;
                 default:
                     addCell("Ciclo", null);
                 }
 
                 if (document.isRequestForRegistration()) {
-                    addCell("Tipo de Curso", BundleUtil.getString(Bundle.ENUMERATION, ((DocumentRequest) document).getDegreeType().name()));
+                    addCell("Tipo de Curso",
+                            BundleUtil.getString(Bundle.ENUMERATION, ((DocumentRequest) document).getDegreeType().name()));
                 } else if (document.isRequestForPhd()) {
                     addCell("Tipo de Curso", BundleUtil.getString(Bundle.PHD, "label.php.program"));
                 }

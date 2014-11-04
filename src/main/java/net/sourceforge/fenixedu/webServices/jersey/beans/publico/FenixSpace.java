@@ -36,9 +36,9 @@ import com.google.common.collect.FluentIterable;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @JsonSubTypes.Type(value = FenixSpace.Campus.class, name = "CAMPUS"),
-    @JsonSubTypes.Type(value = FenixSpace.Building.class, name = "BUILDING"),
-    @JsonSubTypes.Type(value = FenixSpace.Floor.class, name = "FLOOR"),
-    @JsonSubTypes.Type(value = FenixSpace.Room.class, name = "ROOM") })
+        @JsonSubTypes.Type(value = FenixSpace.Building.class, name = "BUILDING"),
+        @JsonSubTypes.Type(value = FenixSpace.Floor.class, name = "FLOOR"),
+        @JsonSubTypes.Type(value = FenixSpace.Room.class, name = "ROOM") })
 public class FenixSpace {
 
     public static class Campus extends FenixSpace {

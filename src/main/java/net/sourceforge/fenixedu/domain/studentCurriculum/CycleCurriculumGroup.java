@@ -180,7 +180,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
         if (isFirstCycle()) {
             if (getRegistration().getIngression() == Ingression.DA1C || getRegistration().getIngression() == Ingression.CIA2C) {
                 final User userView = Authenticate.getUser();
-                if (AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(getRegistration().getDegree())
+                if (AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                        AcademicOperationType.STUDENT_ENROLMENTS).contains(getRegistration().getDegree())
                         || userView.getPerson().hasRole(RoleType.MANAGER)) {
                     return;
                 }

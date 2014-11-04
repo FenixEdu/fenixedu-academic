@@ -325,7 +325,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public List<CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequest() {
         final List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<CompetenceCourseInformationChangeRequest>();
-        for (final CompetenceCourseInformationChangeRequest request : this.getCompetenceCourse().getCompetenceCourseInformationChangeRequestsSet()) {
+        for (final CompetenceCourseInformationChangeRequest request : this.getCompetenceCourse()
+                .getCompetenceCourseInformationChangeRequestsSet()) {
             if (request.getExecutionPeriod().equals(this.getExecutionPeriod())) {
                 requests.add(request);
             }

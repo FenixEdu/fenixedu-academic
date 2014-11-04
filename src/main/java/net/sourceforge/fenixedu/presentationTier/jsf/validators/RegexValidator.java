@@ -48,7 +48,8 @@ public class RegexValidator implements Validator, StateHolder {
             val = _value.toString();
         }
         if (!val.matches(regex)) {
-            throw new ValidatorException(new FacesMessage(BundleUtil.getString(Bundle.APPLICATION, INVALID_INPUT)));        }
+            throw new ValidatorException(new FacesMessage(BundleUtil.getString(Bundle.APPLICATION, INVALID_INPUT)));
+        }
     }
 
     public String getRegex() {

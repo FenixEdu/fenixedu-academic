@@ -59,9 +59,9 @@ public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotCo
 
             InfoExam infoExam = (InfoExam) showOccupation;
 
-            strBuffer.append(BundleUtil.getString(Bundle.SPACE , "label.written.exam")).append(" ");
+            strBuffer.append(BundleUtil.getString(Bundle.SPACE, "label.written.exam")).append(" ");
             strBuffer.append(infoExam.getSeason().getSeason());
-            strBuffer.append(BundleUtil.getString(Bundle.SPACE , "label.written.exam.season")).append(" - ");
+            strBuffer.append(BundleUtil.getString(Bundle.SPACE, "label.written.exam.season")).append(" - ");
 
             for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
                 InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
@@ -77,7 +77,7 @@ public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotCo
             InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
 
             strBuffer.append("<span title=\"").append(infoWrittenTest.getDescription()).append("\">");
-            strBuffer.append(BundleUtil.getString(Bundle.SPACE , "label.written.test")).append(" - ");
+            strBuffer.append(BundleUtil.getString(Bundle.SPACE, "label.written.test")).append(" - ");
 
             for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
                 InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
@@ -93,7 +93,7 @@ public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotCo
 
             InfoOccupation infoGenericEvent = (InfoOccupation) showOccupation;
             strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
-            strBuffer.append(BundleUtil.getString(Bundle.SPACE , "label.punctual.occupation")).append(" - ");
+            strBuffer.append(BundleUtil.getString(Bundle.SPACE, "label.punctual.occupation")).append(" - ");
             strBuffer.append(infoGenericEvent.getTitle());
             strBuffer.append("</span>");
         }

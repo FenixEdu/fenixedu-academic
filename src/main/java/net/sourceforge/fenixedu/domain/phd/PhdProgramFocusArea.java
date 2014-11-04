@@ -112,13 +112,13 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
     }
 
     public static Set<PhdProgramFocusArea> getActivePhdProgramFocusAreas() {
-    	final Set<PhdProgramFocusArea> result = new HashSet<PhdProgramFocusArea>();
-    	for (final PhdProgramFocusArea area : Bennu.getInstance().getPhdProgramFocusAreasSet()) {
-    		if (area.getActive() != null && area.getActive().booleanValue()) {
-    			result.add(area);
-    		}
-    	}
-    	return result;
+        final Set<PhdProgramFocusArea> result = new HashSet<PhdProgramFocusArea>();
+        for (final PhdProgramFocusArea area : Bennu.getInstance().getPhdProgramFocusAreasSet()) {
+            if (area.getActive() != null && area.getActive().booleanValue()) {
+                result.add(area);
+            }
+        }
+        return result;
     }
 
 }

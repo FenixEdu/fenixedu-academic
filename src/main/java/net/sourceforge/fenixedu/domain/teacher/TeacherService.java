@@ -33,11 +33,11 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -322,15 +322,15 @@ public class TeacherService extends TeacherService_Base {
     @Atomic
     public void lockTeacherCredits() {
         setTeacherServiceLock(new DateTime());
-        new TeacherServiceLog(this, BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                "label.teacher.lockTeacherCredits", getExecutionPeriod().getQualifiedName()));
+        new TeacherServiceLog(this, BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.teacher.lockTeacherCredits",
+                getExecutionPeriod().getQualifiedName()));
     }
 
     @Atomic
     public void unlockTeacherCredits() {
         setTeacherServiceLock(null);
-        new TeacherServiceLog(this, BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                "label.teacher.unlockTeacherCredits", getExecutionPeriod().getQualifiedName()));
+        new TeacherServiceLog(this, BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.teacher.unlockTeacherCredits",
+                getExecutionPeriod().getQualifiedName()));
     }
 
 }

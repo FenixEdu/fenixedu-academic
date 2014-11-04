@@ -155,7 +155,8 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 
     static private boolean isAllowedToManageProcess(DegreeChangeIndividualCandidacyProcess process, User userView) {
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
         if (process == null || process.getCandidacy() == null) {
             return false;

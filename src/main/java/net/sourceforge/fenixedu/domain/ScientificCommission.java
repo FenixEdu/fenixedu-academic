@@ -46,8 +46,8 @@ public class ScientificCommission extends ScientificCommission_Base {
         setPerson(person);
 
         ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
-                Bundle.MESSAGING, "log.degree.scientificcomission.addmember", this.getPerson()
-                        .getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
+                Bundle.MESSAGING, "log.degree.scientificcomission.addmember", this.getPerson().getPresentationName(), this
+                        .getExecutionDegree().getDegree().getPresentationName());
     }
 
     public Coordinator getCoordinator() {
@@ -69,8 +69,8 @@ public class ScientificCommission extends ScientificCommission_Base {
 
     public void delete() {
         ScientificCommissionLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
-                Bundle.MESSAGING, "log.degree.scientificcomission.removemember", this.getPerson().getName(), this
-                        .getPerson().getIstUsername(), this.getExecutionDegree().getDegree().getPresentationName());
+                Bundle.MESSAGING, "log.degree.scientificcomission.removemember", this.getPerson().getName(), this.getPerson()
+                        .getIstUsername(), this.getExecutionDegree().getDegree().getPresentationName());
         setPerson(null);
         setExecutionDegree(null);
         setRootDomainObject(null);
@@ -124,8 +124,8 @@ public class ScientificCommission extends ScientificCommission_Base {
 
     public void logEditMember() {
         ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
-                Bundle.MESSAGING, "log.degree.scientificcomission.editmember", this.getPerson()
-                        .getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
+                Bundle.MESSAGING, "log.degree.scientificcomission.editmember", this.getPerson().getPresentationName(), this
+                        .getExecutionDegree().getDegree().getPresentationName());
     }
 
 }

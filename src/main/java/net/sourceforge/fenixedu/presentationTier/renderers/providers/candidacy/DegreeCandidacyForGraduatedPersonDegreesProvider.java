@@ -39,7 +39,8 @@ public class DegreeCandidacyForGraduatedPersonDegreesProvider implements DataPro
     public Object provide(Object source, Object currentValue) {
 
         final Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
         return Collections2.filter(getDegrees(source), new Predicate<Degree>() {
             @Override

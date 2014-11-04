@@ -61,9 +61,11 @@ public class PhdGuidersReport extends PhdReport {
     }
 
     private void fillProcess(PhdIndividualProgramProcess process, HSSFSheet sheet) {
-        String guiderRole = BundleUtil.getString(Bundle.PHD, "label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.guider");
+        String guiderRole =
+                BundleUtil.getString(Bundle.PHD, "label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.guider");
         String assistantGuiderRole =
-                BundleUtil.getString(Bundle.PHD, "label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.assistantGuider");
+                BundleUtil.getString(Bundle.PHD,
+                        "label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.assistantGuider");
 
         for (PhdParticipant phdParticipant : process.getGuidingsSet()) {
             HSSFRow row = sheet.createRow(this.rowCounter++);

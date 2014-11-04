@@ -84,9 +84,9 @@ public class Summary extends Summary_Base {
         fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
                 lesson, date, room, hour, type, taught);
 
-        ContentManagementLog.createLog(shift.getExecutionCourse(), Bundle.MESSAGING,
-                "log.executionCourse.content.summary.added", title.getContent(), shift.getPresentationName(), shift
-                        .getExecutionCourse().getNome(), shift.getExecutionCourse().getDegreePresentationString());
+        ContentManagementLog.createLog(shift.getExecutionCourse(), Bundle.MESSAGING, "log.executionCourse.content.summary.added",
+                title.getContent(), shift.getPresentationName(), shift.getExecutionCourse().getNome(), shift.getExecutionCourse()
+                        .getDegreePresentationString());
     }
 
     public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,

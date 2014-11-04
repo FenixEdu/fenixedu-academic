@@ -29,10 +29,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.CreateCourseRepor
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * 

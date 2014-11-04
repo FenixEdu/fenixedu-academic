@@ -172,7 +172,8 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
     protected boolean hasTeachingResultsToImproove(final ExecutionDegree executionDegree, final ExecutionCourse executionCourse) {
         for (Professorship otherTeacherProfessorship : executionCourse.getProfessorshipsSet()) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
+                    .getStudentInquiriesTeachingResultsSet()) {
                 if (studentInquiriesTeachingResult.getExecutionDegree() == executionDegree
                         && studentInquiriesTeachingResult.isUnsatisfactory()) {
                     return true;
@@ -184,7 +185,8 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
     protected boolean hasExcellentTeachingResults(final ExecutionDegree executionDegree, final ExecutionCourse executionCourse) {
         for (Professorship otherTeacherProfessorship : executionCourse.getProfessorshipsSet()) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
+                    .getStudentInquiriesTeachingResultsSet()) {
                 if (studentInquiriesTeachingResult.getExecutionDegree() == executionDegree
                         && studentInquiriesTeachingResult.isExcellent()) {
                     return true;
@@ -241,7 +243,8 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
                 new StudentInquiriesCourseResultBean(getStudentInquiriesCourseResult(executionCourse, executionDegree));
 
         for (Professorship otherTeacherProfessorship : executionCourse.getProfessorshipsSet()) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
+                    .getStudentInquiriesTeachingResultsSet()) {
                 if (studentInquiriesTeachingResult.getExecutionDegree() == executionDegree
                         && studentInquiriesTeachingResult.getInternalDegreeDisclosure()) {
                     resultBean.addStudentInquiriesTeachingResult(studentInquiriesTeachingResult);

@@ -44,7 +44,8 @@ public class CurriculumGroupsProviderForOptionalEnrolmentsLocationManagement imp
                 new TreeSet<CurriculumGroup>(CurriculumGroup.COMPARATOR_BY_FULL_PATH_NAME_AND_ID);
 
         final Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS);
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.STUDENT_ENROLMENTS);
 
         for (final Registration registration : bean.getStudent().getRegistrationsSet()) {
 

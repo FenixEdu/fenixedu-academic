@@ -248,7 +248,8 @@ public class SearchExecutionCourses {
                     infoExecutionCourse.setOccupancy(Double.valueOf(-1));
                 } else {
                     infoExecutionCourse.setOccupancy(NumberUtils.formatNumber(
-                            Double.valueOf((Double.valueOf(executionCourse.getAttendsSet().size()).floatValue() * 100 / total)), 1));
+                            Double.valueOf((Double.valueOf(executionCourse.getAttendsSet().size()).floatValue() * 100 / total)),
+                            1));
                 }
                 return infoExecutionCourse;
             }

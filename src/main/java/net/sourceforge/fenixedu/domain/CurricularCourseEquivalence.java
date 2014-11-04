@@ -77,7 +77,8 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
     private void checkIfEquivalenceAlreadyExists(CurricularCourse curricularCourse,
             Collection<CurricularCourse> oldCurricularCourses) {
         int size = oldCurricularCourses.size();
-        for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalencesSet()) {
+        for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse
+                .getCurricularCourseEquivalencesSet()) {
             int sizeOld = curricularCourseEquivalence.getOldCurricularCoursesSet().size();
             if ((size == sizeOld)
                     && CollectionUtils.intersection(oldCurricularCourses,

@@ -134,7 +134,8 @@ public class DepartmentCourseDA extends FenixDispatchAction {
         try {
             String filename =
                     String.format("%s_%s_%s.xls", new DateTime().toString("dd-MM-yyyy_HH:mm"),
-                            BundleUtil.getString(Bundle.APPLICATION, "label.students"), curricularCourse.getName().replaceAll(" ", "_"));
+                            BundleUtil.getString(Bundle.APPLICATION, "label.students"),
+                            curricularCourse.getName().replaceAll(" ", "_"));
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-disposition", "attachment; filename=" + filename);
             ServletOutputStream outputStream = response.getOutputStream();

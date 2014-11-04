@@ -34,10 +34,10 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class QuestionResultsSummaryBean implements Serializable {
 
@@ -166,8 +166,8 @@ public class QuestionResultsSummaryBean implements Serializable {
             }
             return BundleUtil.getString(Bundle.INQUIRIES, teacherHeaderLabel);
         case REGENT:
-            return BundleUtil.getString(Bundle.INQUIRIES, "label.commentHeader.responsible",
-                    new String[] { inquiryResultComment.getPerson().getName() });
+            return BundleUtil.getString(Bundle.INQUIRIES, "label.commentHeader.responsible", new String[] { inquiryResultComment
+                    .getPerson().getName() });
         default:
             break;
         }

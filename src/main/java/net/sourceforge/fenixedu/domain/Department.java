@@ -376,7 +376,8 @@ public class Department extends Department_Base {
      *         the department's name
      */
     public MultiLanguageString getNameI18n() {
-        return new MultiLanguageString().with(MultiLanguageString.pt, getRealName()).with(MultiLanguageString.en, getRealNameEn());
+        return new MultiLanguageString().with(MultiLanguageString.pt, getRealName())
+                .with(MultiLanguageString.en, getRealNameEn());
     }
 
     public Integer getCompetenceCourseInformationChangeRequestsCount() {

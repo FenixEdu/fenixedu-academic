@@ -154,8 +154,8 @@ public class CollectionPagerTag extends TagSupport {
 
     private String getMessageFromBundle(String key) throws JspException {
         return (getBundle() != null) ? ((TagUtils.getInstance().present(this.pageContext, getBundle(), I18N.getLocale()
-                .toString(), key)) ? TagUtils.getInstance().message(this.pageContext, getBundle(),
-                I18N.getLocale().toString(), key) : null) : null;
+                .toString(), key)) ? TagUtils.getInstance().message(this.pageContext, getBundle(), I18N.getLocale().toString(),
+                key) : null) : null;
     }
 
     private Boolean hasModule() {

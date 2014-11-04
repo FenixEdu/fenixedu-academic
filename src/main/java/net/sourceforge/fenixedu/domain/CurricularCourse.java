@@ -173,8 +173,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         dcp.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.YEAR)).append("Y,");
         dcp.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.SEMESTER)).append("S]\t");
         dcp.append("[B:").append(previousContext.getBeginExecutionPeriod().getBeginDateYearMonthDay());
-        dcp.append(" E:")
-                .append(previousContext.getEndExecutionPeriod() != null ? previousContext.getEndExecutionPeriod()
+        dcp.append(" E:").append(
+                previousContext.getEndExecutionPeriod() != null ? previousContext.getEndExecutionPeriod()
                         .getEndDateYearMonthDay() : "          ");
         dcp.append("]\t");
         dcp.append(getName()).append("\n");
@@ -1424,7 +1424,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public String getName(ExecutionSemester period) {
         final String superName = super.getName();
-        return ((superName == null || superName.length() == 0) && getCompetenceCourse() != null) ? getCompetenceCourse().getName(period) : superName;
+        return ((superName == null || superName.length() == 0) && getCompetenceCourse() != null) ? getCompetenceCourse().getName(
+                period) : superName;
     }
 
     @Override
@@ -1435,8 +1436,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public String getNameEn(ExecutionSemester period) {
         final String superNameEn = super.getNameEn();
-        return ((superNameEn == null || superNameEn.length() == 0) && getCompetenceCourse() != null) ? getCompetenceCourse().getNameEn(
-                period) : superNameEn;
+        return ((superNameEn == null || superNameEn.length() == 0) && getCompetenceCourse() != null) ? getCompetenceCourse()
+                .getNameEn(period) : superNameEn;
     }
 
     @Override
@@ -1463,7 +1464,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public Boolean getBasic(ExecutionSemester period) {
-        return ((super.getBasic() == null) && getCompetenceCourse() != null) ? getCompetenceCourse().isBasic(period) : super.getBasic();
+        return ((super.getBasic() == null) && getCompetenceCourse() != null) ? getCompetenceCourse().isBasic(period) : super
+                .getBasic();
     }
 
     @Override

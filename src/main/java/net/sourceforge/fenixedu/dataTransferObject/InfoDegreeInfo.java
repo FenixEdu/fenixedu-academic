@@ -123,19 +123,22 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
             setOperationalRegime((degreeInfo.getOperationalRegime() != null) ? degreeInfo.getOperationalRegime().getContent(
                     MultiLanguageString.pt) : null);
             setGratuity((degreeInfo.getGratuity() != null) ? degreeInfo.getGratuity().getContent(MultiLanguageString.pt) : null);
-            setSchoolCalendar((degreeInfo.getSchoolCalendar() != null) ? degreeInfo.getSchoolCalendar().getContent(MultiLanguageString.pt) : null);
-            setCandidacyPeriod((degreeInfo.getCandidacyPeriod() != null) ? degreeInfo.getCandidacyPeriod()
-                    .getContent(MultiLanguageString.pt) : null);
+            setSchoolCalendar((degreeInfo.getSchoolCalendar() != null) ? degreeInfo.getSchoolCalendar().getContent(
+                    MultiLanguageString.pt) : null);
+            setCandidacyPeriod((degreeInfo.getCandidacyPeriod() != null) ? degreeInfo.getCandidacyPeriod().getContent(
+                    MultiLanguageString.pt) : null);
             setSelectionResultDeadline((degreeInfo.getSelectionResultDeadline() != null) ? degreeInfo
                     .getSelectionResultDeadline().getContent(MultiLanguageString.pt) : null);
-            setEnrolmentPeriod((degreeInfo.getEnrolmentPeriod() != null) ? degreeInfo.getEnrolmentPeriod()
-                    .getContent(MultiLanguageString.pt) : null);
-            setAdditionalInfo((degreeInfo.getAdditionalInfo() != null) ? degreeInfo.getAdditionalInfo().getContent(MultiLanguageString.pt) : null);
+            setEnrolmentPeriod((degreeInfo.getEnrolmentPeriod() != null) ? degreeInfo.getEnrolmentPeriod().getContent(
+                    MultiLanguageString.pt) : null);
+            setAdditionalInfo((degreeInfo.getAdditionalInfo() != null) ? degreeInfo.getAdditionalInfo().getContent(
+                    MultiLanguageString.pt) : null);
             setLinks((degreeInfo.getLinks() != null) ? degreeInfo.getLinks().getContent(MultiLanguageString.pt) : null);
 
-            setTestIngression((degreeInfo.getTestIngression() != null) ? degreeInfo.getTestIngression().getContent(MultiLanguageString.pt) : null);
-            setClassifications((degreeInfo.getClassifications() != null) ? degreeInfo.getClassifications()
-                    .getContent(MultiLanguageString.pt) : null);
+            setTestIngression((degreeInfo.getTestIngression() != null) ? degreeInfo.getTestIngression().getContent(
+                    MultiLanguageString.pt) : null);
+            setClassifications((degreeInfo.getClassifications() != null) ? degreeInfo.getClassifications().getContent(
+                    MultiLanguageString.pt) : null);
             setAccessRequisites((degreeInfo.getAccessRequisites() != null) ? degreeInfo.getAccessRequisites().getContent(
                     MultiLanguageString.pt) : null);
             setCandidacyDocuments((degreeInfo.getCandidacyDocuments() != null) ? degreeInfo.getCandidacyDocuments().getContent(
@@ -149,29 +152,35 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
 
             setQualificationLevel((degreeInfo.getQualificationLevel() != null) ? degreeInfo.getQualificationLevel().getContent(
                     MultiLanguageString.pt) : null);
-            setRecognitions((degreeInfo.getRecognitions() != null) ? degreeInfo.getRecognitions().getContent(MultiLanguageString.pt) : null);
+            setRecognitions((degreeInfo.getRecognitions() != null) ? degreeInfo.getRecognitions().getContent(
+                    MultiLanguageString.pt) : null);
 
             // in english
-            setDescriptionEn((degreeInfo.getDescription() != null) ? degreeInfo.getDescription().getContent(MultiLanguageString.en) : null);
+            setDescriptionEn((degreeInfo.getDescription() != null) ? degreeInfo.getDescription().getContent(
+                    MultiLanguageString.en) : null);
             setHistoryEn((degreeInfo.getHistory() != null) ? degreeInfo.getHistory().getContent(MultiLanguageString.en) : null);
             setObjectivesEn((degreeInfo.getObjectives() != null) ? degreeInfo.getObjectives().getContent(MultiLanguageString.en) : null);
-            setDesignedForEn((degreeInfo.getDesignedFor() != null) ? degreeInfo.getDesignedFor().getContent(MultiLanguageString.en) : null);
+            setDesignedForEn((degreeInfo.getDesignedFor() != null) ? degreeInfo.getDesignedFor().getContent(
+                    MultiLanguageString.en) : null);
             setProfessionalExitsEn((degreeInfo.getProfessionalExits() != null) ? degreeInfo.getProfessionalExits().getContent(
                     MultiLanguageString.en) : null);
             setOperationalRegimeEn((degreeInfo.getOperationalRegime() != null) ? degreeInfo.getOperationalRegime().getContent(
                     MultiLanguageString.en) : null);
             setGratuityEn((degreeInfo.getGratuity() != null) ? degreeInfo.getGratuity().getContent(MultiLanguageString.en) : null);
-            setSchoolCalendarEn((degreeInfo.getSchoolCalendar() != null) ? degreeInfo.getSchoolCalendar().getContent(MultiLanguageString.en) : null);
+            setSchoolCalendarEn((degreeInfo.getSchoolCalendar() != null) ? degreeInfo.getSchoolCalendar().getContent(
+                    MultiLanguageString.en) : null);
             setCandidacyPeriodEn((degreeInfo.getCandidacyPeriod() != null) ? degreeInfo.getCandidacyPeriod().getContent(
                     MultiLanguageString.en) : null);
             setSelectionResultDeadlineEn((degreeInfo.getSelectionResultDeadline() != null) ? degreeInfo
                     .getSelectionResultDeadline().getContent(MultiLanguageString.en) : null);
             setEnrolmentPeriodEn((degreeInfo.getEnrolmentPeriod() != null) ? degreeInfo.getEnrolmentPeriod().getContent(
                     MultiLanguageString.en) : null);
-            setAdditionalInfoEn((degreeInfo.getAdditionalInfo() != null) ? degreeInfo.getAdditionalInfo().getContent(MultiLanguageString.en) : null);
+            setAdditionalInfoEn((degreeInfo.getAdditionalInfo() != null) ? degreeInfo.getAdditionalInfo().getContent(
+                    MultiLanguageString.en) : null);
             setLinksEn((degreeInfo.getLinks() != null) ? degreeInfo.getLinks().getContent(MultiLanguageString.en) : null);
 
-            setTestIngressionEn((degreeInfo.getTestIngression() != null) ? degreeInfo.getTestIngression().getContent(MultiLanguageString.en) : null);
+            setTestIngressionEn((degreeInfo.getTestIngression() != null) ? degreeInfo.getTestIngression().getContent(
+                    MultiLanguageString.en) : null);
             setClassificationsEn((degreeInfo.getClassifications() != null) ? degreeInfo.getClassifications().getContent(
                     MultiLanguageString.en) : null);
             setAccessRequisitesEn((degreeInfo.getAccessRequisites() != null) ? degreeInfo.getAccessRequisites().getContent(
@@ -181,7 +190,8 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
 
             setQualificationLevelEn((degreeInfo.getQualificationLevel() != null) ? degreeInfo.getQualificationLevel().getContent(
                     MultiLanguageString.en) : null);
-            setRecognitionsEn((degreeInfo.getRecognitions() != null) ? degreeInfo.getRecognitions().getContent(MultiLanguageString.en) : null);
+            setRecognitionsEn((degreeInfo.getRecognitions() != null) ? degreeInfo.getRecognitions().getContent(
+                    MultiLanguageString.en) : null);
         }
     }
 

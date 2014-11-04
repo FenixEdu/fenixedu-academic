@@ -47,7 +47,7 @@ public class DegreeCurricularPlanBean implements Serializable {
         this.sourceDegreeCurricularPlan = sourceDegreeCurricularPlan;
     }
 
-    @Atomic(mode=TxMode.WRITE)
+    @Atomic(mode = TxMode.WRITE)
     public DegreeCurricularPlanEquivalencePlan createEquivalencePlan(final DegreeCurricularPlan sourceDegreeCurricularPlan) {
         return new DegreeCurricularPlanEquivalencePlan(degreeCurricularPlan, sourceDegreeCurricularPlan);
     }

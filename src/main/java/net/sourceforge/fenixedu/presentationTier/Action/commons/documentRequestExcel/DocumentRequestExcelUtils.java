@@ -127,8 +127,8 @@ public class DocumentRequestExcelUtils {
                 addCell("Ciclo", cycle != null ? BundleUtil.getString(Bundle.ENUMERATION, cycle.name()) : null);
 
                 if (document.isRequestForRegistration()) {
-                    addCell("Tipo de Curso",
-                            BundleUtil.getString(Bundle.ENUMERATION, ((RegistrationAcademicServiceRequest) document).getDegreeType().name()));
+                    addCell("Tipo de Curso", BundleUtil.getString(Bundle.ENUMERATION,
+                            ((RegistrationAcademicServiceRequest) document).getDegreeType().name()));
                 } else if (document.isRequestForPhd()) {
                     addCell("Tipo de Estudos", "Programa doutoral");
                 }

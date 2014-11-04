@@ -18,9 +18,8 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
-import org.fenixedu.bennu.core.i18n.BundleUtil;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class RegistrationStateLog extends RegistrationStateLog_Base {
 

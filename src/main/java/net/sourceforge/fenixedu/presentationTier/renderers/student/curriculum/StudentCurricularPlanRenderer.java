@@ -907,8 +907,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (evaluation.getExecutionPeriod() != null) {
                 generateCellWithText(enrolmentRow, evaluation.getExecutionPeriod().getExecutionYear().getYear(),
                         getEnrolmentExecutionYearCellClass());
-                generateCellWithText(enrolmentRow, evaluation.getExecutionPeriod().getSemester().toString() + " "
-                        + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short"), getEnrolmentSemesterCellClass());
+                generateCellWithText(
+                        enrolmentRow,
+                        evaluation.getExecutionPeriod().getSemester().toString() + " "
+                                + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short"),
+                        getEnrolmentSemesterCellClass());
             } else {
                 generateCellWithText(enrolmentRow, EMPTY_INFO, getEnrolmentSemesterCellClass());
                 generateCellWithText(enrolmentRow, EMPTY_INFO, getEnrolmentSemesterCellClass());
@@ -924,8 +927,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (evaluation.getPersonResponsibleForGrade() != null) {
                 final Person person = evaluation.getPersonResponsibleForGrade();
                 final String username = getUsername(person);
-                generateCellWithSpan(enrolmentRow, username, BundleUtil.getString(Bundle.APPLICATION, "label.grade.responsiblePerson"),
-                        getCreatorCellClass());
+                generateCellWithSpan(enrolmentRow, username,
+                        BundleUtil.getString(Bundle.APPLICATION, "label.grade.responsiblePerson"), getCreatorCellClass());
             } else {
                 generateCellWithText(enrolmentRow, EMPTY_INFO, getCreatorCellClass());
             }
@@ -960,8 +963,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
                     final Person person = lastEnrolmentEvaluation.getPersonResponsibleForGrade();
                     final String username = getUsername(person);
-                    generateCellWithSpan(enrolmentRow, username, BundleUtil.getString(Bundle.APPLICATION, "label.grade.responsiblePerson"),
-                            getCreatorCellClass());
+                    generateCellWithSpan(enrolmentRow, username,
+                            BundleUtil.getString(Bundle.APPLICATION, "label.grade.responsiblePerson"), getCreatorCellClass());
 
                 } else {
                     generateCellWithText(enrolmentRow, EMPTY_INFO, getCreatorCellClass());
@@ -1050,7 +1053,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         private void generateEnrolmentEvaluationTypeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
             final EnrolmentEvaluationType enrolmentEvaluationType = enrolment.getEnrolmentEvaluationType();
             if (enrolmentEvaluationType != null) {
-                generateCellWithSpan(enrolmentRow, BundleUtil.getString(Bundle.ENUMERATION, enrolmentEvaluationType.getAcronym()),
+                generateCellWithSpan(enrolmentRow,
+                        BundleUtil.getString(Bundle.ENUMERATION, enrolmentEvaluationType.getAcronym()),
                         getLastEnrolmentEvaluationTypeCellClass());
             } else {
                 generateCellWithText(enrolmentRow, EMPTY_INFO, getLastEnrolmentEvaluationTypeCellClass());
@@ -1093,8 +1097,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         private void generateEnrolmentTypeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
             generateCellWithText(
                     enrolmentRow,
-                    enrolment.isEnrolmentTypeNormal() ? EMPTY_INFO : BundleUtil.getString(Bundle.ENUMERATION, enrolment
-                            .getEnrolmentTypeName()), getEnrolmentTypeCellClass());
+                    enrolment.isEnrolmentTypeNormal() ? EMPTY_INFO : BundleUtil.getString(Bundle.ENUMERATION,
+                            enrolment.getEnrolmentTypeName()), getEnrolmentTypeCellClass());
         }
 
         private void generateDegreeCurricularPlanCell(final HtmlTableRow enrolmentRow, final Enrolment enrolment) {

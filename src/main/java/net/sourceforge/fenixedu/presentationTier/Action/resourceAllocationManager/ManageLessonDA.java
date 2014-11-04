@@ -81,20 +81,20 @@ import pt.ist.fenixframework.FenixFramework;
  */
 
 @Mapping(path = "/manageLesson", module = "resourceAllocationManager", input = "/manageLesson.do?method=findInput&page=0",
-formBean = "manageLessonForm", functionality = ExecutionPeriodDA.class)
+        formBean = "manageLessonForm", functionality = ExecutionPeriodDA.class)
 @Forwards({ @Forward(name = "ShowLessonForm", path = "/resourceAllocationManager/manageLesson_bd.jsp"),
-    @Forward(name = "ShowChooseRoomForm", path = "/resourceAllocationManager/chooseRoomForLesson_bd.jsp"),
-    @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
-    @Forward(name = "LessonDeleted", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
-    @Forward(name = "ViewAllLessonDates", path = "/resourceAllocationManager/showAllLessonDates.jsp"),
-    @Forward(name = "ChangeRoom", path = "/resourceAllocationManager/changeRoom_bd.jsp") })
+        @Forward(name = "ShowChooseRoomForm", path = "/resourceAllocationManager/chooseRoomForLesson_bd.jsp"),
+        @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
+        @Forward(name = "LessonDeleted", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
+        @Forward(name = "ViewAllLessonDates", path = "/resourceAllocationManager/showAllLessonDates.jsp"),
+        @Forward(name = "ChangeRoom", path = "/resourceAllocationManager/changeRoom_bd.jsp") })
 @Exceptions({
-    @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
-            handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class),
-            @ExceptionHandling(key = "resources.Action.exceptions.InterceptingActionException",
-            handler = FenixErrorExceptionHandler.class, type = InterceptingActionException.class),
-            @ExceptionHandling(key = "resources.Action.exceptions.InvalidTimeIntervalActionException",
-            handler = FenixErrorExceptionHandler.class, type = InvalidTimeIntervalActionException.class) })
+        @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
+                handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.InterceptingActionException",
+                handler = FenixErrorExceptionHandler.class, type = InterceptingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.InvalidTimeIntervalActionException",
+                handler = FenixErrorExceptionHandler.class, type = InvalidTimeIntervalActionException.class) })
 public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     @Override

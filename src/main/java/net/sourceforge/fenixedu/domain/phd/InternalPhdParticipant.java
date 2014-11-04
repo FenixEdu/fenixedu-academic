@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
 import net.sourceforge.fenixedu.util.Bundle;
 
 import org.fenixedu.bennu.core.i18n.BundleUtil;

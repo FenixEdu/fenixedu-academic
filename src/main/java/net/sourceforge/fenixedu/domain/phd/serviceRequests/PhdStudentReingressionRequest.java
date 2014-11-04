@@ -117,7 +117,9 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
             PhdProgramProcessState lastActiveState = process.getLastActiveState();
             String remarks =
                     String.format(
-                            BundleUtil.getString(Bundle.PHD, "message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
+                            BundleUtil
+                                    .getString(Bundle.PHD,
+                                            "message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
                             getServiceRequestNumberYear());
 
             process.createState(lastActiveState.getType(), AccessControl.getPerson(), remarks);

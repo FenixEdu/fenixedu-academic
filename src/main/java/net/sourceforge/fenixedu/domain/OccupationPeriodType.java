@@ -19,7 +19,9 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.util.Bundle;
+
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 /**

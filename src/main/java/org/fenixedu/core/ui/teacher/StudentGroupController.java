@@ -87,7 +87,7 @@ public class StudentGroupController extends ExecutionCourseController {
                 .stream()
                 .filter(attends -> grouping.getStudentGroupsSet().stream()
                         .noneMatch(sg -> sg.getAttendsSet().stream().anyMatch(at -> at.equals(attends))))
-                        .collect(Collectors.toList()));
+                .collect(Collectors.toList()));
 
         model.addAttribute("newShift", studentGroup.getShift());
         model.addAttribute("shifts", shiftList);

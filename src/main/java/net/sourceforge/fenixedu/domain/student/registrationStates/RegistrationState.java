@@ -249,9 +249,9 @@ public abstract class RegistrationState extends RegistrationState_Base implement
                 responsablePersonName = "-";
             }
 
-            net.sourceforge.fenixedu.domain.student.RegistrationStateLog.createRegistrationStateLog(getRegistration(),
-                    Bundle.MESSAGING, "log.registration.registrationstate.removed",
-                    getStateType().getDescription(), getRemarks());
+            net.sourceforge.fenixedu.domain.student.RegistrationStateLog
+                    .createRegistrationStateLog(getRegistration(), Bundle.MESSAGING,
+                            "log.registration.registrationstate.removed", getStateType().getDescription(), getRemarks());
             setRegistration(null);
             setResponsiblePerson(null);
             setRootDomainObject(null);
@@ -352,8 +352,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
                 throw new DomainException("error.cannot.add.registrationState.incoherentState");
             }
             net.sourceforge.fenixedu.domain.student.RegistrationStateLog.createRegistrationStateLog(getRegistration(),
-                    Bundle.MESSAGING, "log.registration.registrationstate.added", getStateType().getDescription(),
-                    getRemarks());
+                    Bundle.MESSAGING, "log.registration.registrationstate.added", getStateType().getDescription(), getRemarks());
             return createdState;
         }
     }

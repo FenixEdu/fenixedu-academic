@@ -55,7 +55,8 @@ public class DegreeChangeCandidacyPeriod extends DegreeChangeCandidacyPeriod_Bas
     }
 
     public DegreeChangeCandidacyProcess getDegreeChangeCandidacyProcess() {
-        return (DegreeChangeCandidacyProcess) (!getCandidacyProcessesSet().isEmpty() ? getCandidacyProcessesSet().iterator().next() : null);
+        return (DegreeChangeCandidacyProcess) (!getCandidacyProcessesSet().isEmpty() ? getCandidacyProcessesSet().iterator()
+                .next() : null);
     }
 
     @Override

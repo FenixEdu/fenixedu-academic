@@ -103,12 +103,11 @@ public class GOPSendMessageService implements NotificationService {
         final String degreesString = StringUtils.join(degreeNames, ",");
         final String coursesString = StringUtils.join(courseNames, ",");
         final String subject =
-                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.subject",
-                        coursesString, test.getDescription());
+                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.subject", coursesString, test.getDescription());
 
         final String body =
-                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.body",
-                        test.getDescription(), coursesString, date, time, degreesString, endTime);
+                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.body", test.getDescription(), coursesString, date,
+                        time, degreesString, endTime);
         for (String email : getGOPEmail(degrees)) {
             new Message(getGOPSender(), email, subject, body);
         }
@@ -139,16 +138,15 @@ public class GOPSendMessageService implements NotificationService {
         String degreesString = StringUtils.join(degreeNames, ",");
 
         final String subject =
-                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.subject.edit",
-                        coursesString, test.getDescription());
+                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.subject.edit", coursesString, test.getDescription());
 
         // O pedido de requisição de sala para {0} da disciplina {1} do(s)
         // cursos(s) {2} efecuado em {3} para o dia {4} das {5} às {6} foi
         // alterado para o dia {7} das {8} às {9}
         final String body =
-                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.body.edit",
-                        test.getDescription(), coursesString, degreesString, test.getRequestRoomSentDateString(), oldDate,
-                        oldStartTime, oldEndTime, date, startTime, endTime);
+                BundleUtil.getString(Bundle.APPLICATION, "email.request.room.body.edit", test.getDescription(), coursesString,
+                        degreesString, test.getRequestRoomSentDateString(), oldDate, oldStartTime, oldEndTime, date, startTime,
+                        endTime);
         for (String email : getGOPEmail(degrees)) {
             new Message(getGOPSender(), email, subject, body);
         }
@@ -159,8 +157,7 @@ public class GOPSendMessageService implements NotificationService {
         Set<String> emails = new HashSet<String>();
         for (ExecutionDegree executionDegree : degrees) {
             String emailFromApplicationResources =
-                    BundleUtil.getString(Bundle.APPLICATION, "email.gop."
-                            + executionDegree.getCampus().getName());
+                    BundleUtil.getString(Bundle.APPLICATION, "email.gop." + executionDegree.getCampus().getName());
             if (!StringUtils.isEmpty(emailFromApplicationResources)) {
                 emails.add(emailFromApplicationResources);
             }
@@ -183,7 +180,9 @@ public class GOPSendMessageService implements NotificationService {
         }
         body += "\n\n" + messages.getMessage("label.rooms.reserve.periods") + ":";
         for (Occupation occupation : request.getOccupationSet()) {
-            body += "\n\t" + occupation.getSummary() + " - " + occupation.getSpaces().stream().map(Space::getName).collect(Collectors.joining(" "));
+            body +=
+                    "\n\t" + occupation.getSummary() + " - "
+                            + occupation.getSpaces().stream().map(Space::getName).collect(Collectors.joining(" "));
         }
         if (request.getOccupationSet().isEmpty()) {
             body += "\n" + messages.getMessage("label.rooms.reserve.periods.none");
@@ -219,5 +218,3 @@ public class GOPSendMessageService implements NotificationService {
         return false;
     }
 }
-
-

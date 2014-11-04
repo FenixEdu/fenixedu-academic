@@ -90,7 +90,8 @@ public class GratuityValues extends GratuityValues_Base {
     }
 
     public PaymentPhase getLastPaymentPhase() {
-        return !getPaymentPhaseListSet().isEmpty() ? Collections.max(getPaymentPhaseListSet(), PaymentPhase.COMPARATOR_BY_END_DATE) : null;
+        return !getPaymentPhaseListSet().isEmpty() ? Collections.max(getPaymentPhaseListSet(),
+                PaymentPhase.COMPARATOR_BY_END_DATE) : null;
     }
 
     public boolean isPenaltyApplicable() {

@@ -41,7 +41,7 @@ public class InsertTestAsNewTest {
             throw new InvalidArgumentsServiceException();
         }
 
-        String title = BundleUtil.getString(Bundle.APPLICATION, "label.testTitle.duplicated", oldTest.getTitle() );
+        String title = BundleUtil.getString(Bundle.APPLICATION, "label.testTitle.duplicated", oldTest.getTitle());
         Test test = new Test(title, oldTest.getInformation(), oldTest.getTestScope());
 
         Collection<TestQuestion> testQuestionList = oldTest.getTestQuestionsSet();

@@ -320,7 +320,8 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
             label.append(", ").append(studentCurricularPlan.getDegreeCurricularPlan().getName());
 
             if (studentCurricularPlan.getSpecialization() != null) {
-                label.append(" - ").append(BundleUtil.getString(Bundle.ENUMERATION, studentCurricularPlan.getSpecialization().name()));
+                label.append(" - ").append(
+                        BundleUtil.getString(Bundle.ENUMERATION, studentCurricularPlan.getSpecialization().name()));
             }
 
             label.append(" - ").append(studentCurricularPlan.getStartDateYearMonthDay());

@@ -100,7 +100,8 @@ public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
             HtmlTableRow row2 = htmlTable.createRow();
             HtmlTableCell photoCell = row2.createCell();
             photoCell.setColspan(headerRow.getCells().size());
-            HtmlCheckBox checkBox = new HtmlCheckBox(BundleUtil.getString(Bundle.APPLICATION, "label.viewPhoto"), bean.getViewPhoto());
+            HtmlCheckBox checkBox =
+                    new HtmlCheckBox(BundleUtil.getString(Bundle.APPLICATION, "label.viewPhoto"), bean.getViewPhoto());
             checkBox.bind(getInputContext().getMetaObject(), "viewPhoto");
             photoCell.setBody(checkBox);
 
@@ -119,8 +120,8 @@ public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
             for (WorkingStudentSelectionType workingStudentSelectionType : WorkingStudentSelectionType.values()) {
                 HtmlCheckBox option =
                         workingStudentCheckBoxList.addOption(
-                                new HtmlLabel(BundleUtil.getString(Bundle.ENUMERATION, workingStudentSelectionType.getQualifiedName())),
-                                workingStudentSelectionType.name());
+                                new HtmlLabel(BundleUtil.getString(Bundle.ENUMERATION,
+                                        workingStudentSelectionType.getQualifiedName())), workingStudentSelectionType.name());
                 option.setChecked(bean.getWorkingStudentTypes().contains(workingStudentSelectionType));
             }
             row.createCell().setBody(workingStudentCheckBoxList);

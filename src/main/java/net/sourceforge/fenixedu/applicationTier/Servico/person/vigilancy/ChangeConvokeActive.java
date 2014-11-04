@@ -32,8 +32,8 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -46,9 +46,8 @@ public class ChangeConvokeActive {
         convoke.setActive(bool);
         sendEmailNotification(bool, person, convoke);
         for (ExecutionCourse ec : convoke.getAssociatedExecutionCourses()) {
-            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
-                    "log.executionCourse.evaluation.generic.edited.vigilancy", convoke.getWrittenEvaluation()
-                            .getPresentationName(), ec.getName(), ec.getDegreePresentationString());
+            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.evaluation.generic.edited.vigilancy",
+                    convoke.getWrittenEvaluation().getPresentationName(), ec.getName(), ec.getDegreePresentationString());
         }
     }
 
@@ -73,8 +72,8 @@ public class ChangeConvokeActive {
         String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
 
         String subject =
-                BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.subject", new String[] {
-                        writtenEvaluation.getName(), group.getName(), beginDateString, time });
+                BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.subject",
+                        new String[] { writtenEvaluation.getName(), group.getName(), beginDateString, time });
 
         new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(
                 VigilancyGroup.get(convoke)).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
@@ -93,9 +92,8 @@ public class ChangeConvokeActive {
                 "email.convoke.active.body",
                 new String[] {
                         convoke.getVigilantWrapper().getPerson().getName(),
-                        (bool) ? BundleUtil.getString(Bundle.VIGILANCY,
-                                "email.convoke.convokedAgain") : BundleUtil.getString(
-                                Bundle.VIGILANCY, "email.convoke.uncovoked"), writtenEvaluation.getFullName(),
-                        date, writtenEvaluation.getBeginningDateHourMinuteSecond().toString() });
+                        (bool) ? BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.convokedAgain") : BundleUtil.getString(
+                                Bundle.VIGILANCY, "email.convoke.uncovoked"), writtenEvaluation.getFullName(), date,
+                        writtenEvaluation.getBeginningDateHourMinuteSecond().toString() });
     }
 }

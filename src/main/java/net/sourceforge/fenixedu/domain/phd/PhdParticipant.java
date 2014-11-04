@@ -131,8 +131,8 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     protected boolean canBeDeleted() {
-        return !(!getThesisJuryElementsSet().isEmpty() || getProcessForGuiding() != null || getProcessForAssistantGuiding() != null
-                || !getCandidacyFeedbackRequestElementsSet().isEmpty() || isParticipantCoordinator());
+        return !(!getThesisJuryElementsSet().isEmpty() || getProcessForGuiding() != null
+                || getProcessForAssistantGuiding() != null || !getCandidacyFeedbackRequestElementsSet().isEmpty() || isParticipantCoordinator());
     }
 
     private boolean isParticipantCoordinator() {

@@ -436,8 +436,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         }
 
         public String getLocalizedName() {
-            return BundleUtil.getString(Bundle.ENUMERATION, 
-                    ConclusionValue.class.getSimpleName() + "." + name());
+            return BundleUtil.getString(Bundle.ENUMERATION, ConclusionValue.class.getSimpleName() + "." + name());
         }
     }
 

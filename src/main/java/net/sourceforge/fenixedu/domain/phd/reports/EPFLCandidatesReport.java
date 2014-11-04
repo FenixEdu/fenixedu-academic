@@ -132,8 +132,8 @@ public class EPFLCandidatesReport extends PhdReport {
     }
 
     private String getHeaderInBundle(String field) {
-        return BundleUtil.getString(Bundle.PHD, "label.net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport."
-                + field);
+        return BundleUtil.getString(Bundle.PHD,
+                "label.net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport." + field);
     }
 
 }

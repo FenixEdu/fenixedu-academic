@@ -63,7 +63,8 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     protected void fillReport() {
 
         addParameter("certification", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.certification").toUpperCase());
-        addParameter("certificationMessage", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.certification"));
+        addParameter("certificationMessage",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.certification"));
         setPersonFields();
         addParametersInformation();
         fillEmployeeFields();
@@ -140,7 +141,8 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         if (getDocumentRequest().getEnrolmentsSet().size() == 1) {
             return BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.program");
         } else {
-            return MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.programs"), numberOfPrograms());
+            return MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.programs"),
+                    numberOfPrograms());
         }
     }
 
@@ -181,7 +183,8 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     private void addLabelsToMultiLanguage() {
         addParameter("enrolment", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.serviceRequests.enrolment"));
         addParameter("degreeLabel", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.degree"));
-        addParameter("degreeCurricularPlanLabel", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.degreeCurricularPlan"));
+        addParameter("degreeCurricularPlanLabel",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.degreeCurricularPlan"));
         addParameter("weightLabel", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.set.evaluation.enrolment.weight"));
         addParameter("contexts", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.contexts"));
         addParameter("prerequisites", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.prerequisites"));

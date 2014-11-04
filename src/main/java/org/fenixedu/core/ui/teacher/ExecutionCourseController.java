@@ -24,7 +24,7 @@ public abstract class ExecutionCourseController extends StrutsFunctionalityContr
         if (person != null) {
             Optional<Professorship> professorshipOpt =
                     person.getProfessorshipsSet().stream()
-                    .filter(professorship -> professorship.getExecutionCourse().equals(executionCourse)).findFirst();
+                            .filter(professorship -> professorship.getExecutionCourse().equals(executionCourse)).findFirst();
             if (professorshipOpt.isPresent()) {
                 Professorship prof = professorshipOpt.get();
                 if (!prof.getPermissions().getGroups()) {

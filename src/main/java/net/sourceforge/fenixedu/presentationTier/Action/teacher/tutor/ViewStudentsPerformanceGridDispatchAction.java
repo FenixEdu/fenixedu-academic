@@ -144,7 +144,8 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
         StudentsPerformanceInfoBean bean = generateStudentsPerformanceBeanFromRequest(request, getLoggedPerson(request));
         if (!bean.getTutorships().isEmpty()) {
 
-            List<DegreeCurricularPlan> plans = new ArrayList<DegreeCurricularPlan>(bean.getDegree().getDegreeCurricularPlansSet());
+            List<DegreeCurricularPlan> plans =
+                    new ArrayList<DegreeCurricularPlan>(bean.getDegree().getDegreeCurricularPlansSet());
             Collections.sort(plans,
                     DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
 

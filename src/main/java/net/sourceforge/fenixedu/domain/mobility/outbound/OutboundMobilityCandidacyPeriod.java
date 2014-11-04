@@ -200,13 +200,11 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
 
     public Spreadsheet getSelectedCandidateSpreadSheet(final OutboundMobilityCandidacyPeriod period) {
         final String filename =
-                BundleUtil.getString(Bundle.ACADEMIC,
-                        "label.mobility.outbound.period.export.selected.candiadates.filename");
+                BundleUtil.getString(Bundle.ACADEMIC, "label.mobility.outbound.period.export.selected.candiadates.filename");
 
         final Spreadsheet spreadsheetCandidates = new Spreadsheet(filename);
         final Spreadsheet spreadsheetOtherCurricularInfo =
-                spreadsheetCandidates.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC,
-                        "label.other.curricular.info"));
+                spreadsheetCandidates.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC, "label.other.curricular.info"));
         for (final OutboundMobilityCandidacySubmission submission : getOutboundMobilityCandidacySubmissionSet()) {
             final OutboundMobilityCandidacy candidacy = submission.getSelectedCandidacy();
             if (candidacy != null) {

@@ -120,7 +120,8 @@ public class SearchCurricularCourseByDegree implements Serializable {
         public Object provide(Object source, Object currentValue) {
 
             Set<AcademicProgram> programs =
-                    AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+                    AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                            AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
             final SearchCurricularCourseByDegree bean = (SearchCurricularCourseByDegree) source;
             final List<DegreeByExecutionYearBean> result = new ArrayList<DegreeByExecutionYearBean>();

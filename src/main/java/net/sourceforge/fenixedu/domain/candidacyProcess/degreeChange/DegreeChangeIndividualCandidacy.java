@@ -296,7 +296,8 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 
     @Override
     public String getDescription() {
-        return getCandidacyProcess().getDisplayName() + (getSelectedDegree() != null ? ": " + getSelectedDegree().getNameI18N() : "");
+        return getCandidacyProcess().getDisplayName()
+                + (getSelectedDegree() != null ? ": " + getSelectedDegree().getNameI18N() : "");
     }
 
     @Override

@@ -117,7 +117,7 @@ public abstract class FenixCourseEvaluation {
 
                                 @Override
                                 public FenixSpace.Room apply(Space input) {
-                                    return new FenixSpace.Room(input,false, true, null);
+                                    return new FenixSpace.Room(input, false, true, null);
                                 }
                             }).toSet());
         }

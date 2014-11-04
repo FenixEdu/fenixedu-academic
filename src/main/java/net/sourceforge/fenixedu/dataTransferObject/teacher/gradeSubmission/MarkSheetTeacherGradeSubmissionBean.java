@@ -75,7 +75,8 @@ public class MarkSheetTeacherGradeSubmissionBean extends DataTranferObject {
     }
 
     public Collection<CurricularCourse> getAllCurricularCourses() {
-        return (getSelectedCurricularCourse() != null) ? Collections.singletonList(getSelectedCurricularCourse()) : getExecutionCourse().getAssociatedCurricularCoursesSet();
+        return (getSelectedCurricularCourse() != null) ? Collections.singletonList(getSelectedCurricularCourse()) : getExecutionCourse()
+                .getAssociatedCurricularCoursesSet();
     }
 
     public Collection<MarkSheetTeacherMarkBean> getSelectedMarksToSubmit() {

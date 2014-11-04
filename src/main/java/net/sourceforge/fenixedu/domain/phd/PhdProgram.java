@@ -131,7 +131,8 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     private String getPrefix(final Locale locale) {
-        return BundleUtil.getString(Bundle.PHD, locale, "label.php.program") + " " + BundleUtil.getString(Bundle.APPLICATION, "label.in") + " ";
+        return BundleUtil.getString(Bundle.PHD, locale, "label.php.program") + " "
+                + BundleUtil.getString(Bundle.APPLICATION, "label.in") + " ";
     }
 
     @Override

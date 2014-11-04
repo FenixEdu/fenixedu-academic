@@ -374,7 +374,8 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
     }
 
     protected Set<AdministrativeOffice> getAdministrativeOffices() {
-        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_STUDENT_PAYMENTS);
+        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_STUDENT_PAYMENTS);
     }
 
 }

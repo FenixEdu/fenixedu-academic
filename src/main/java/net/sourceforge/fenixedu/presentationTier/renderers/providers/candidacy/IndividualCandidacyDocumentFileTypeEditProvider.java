@@ -366,7 +366,8 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
                 fileTypesList.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
             }
 
-            if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.PORTUGUES_LEVEL_DECLARATION).size() < 3) {
+            if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.PORTUGUES_LEVEL_DECLARATION)
+                    .size() < 3) {
                 fileTypesList.add(IndividualCandidacyDocumentFileType.PORTUGUES_LEVEL_DECLARATION);
             }
 
@@ -376,4 +377,3 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
     }
 
 }
-

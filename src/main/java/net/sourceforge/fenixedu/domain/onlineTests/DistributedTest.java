@@ -64,9 +64,8 @@ public class DistributedTest extends DistributedTest_Base {
 
     public void delete() {
         ExecutionCourse ec = getTestScope().getExecutionCourse();
-        EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
-                "log.executionCourse.evaluation.tests.distribution.removed", getEvaluationTitle(), getBeginDateTimeFormatted(),
-                ec.getName(), ec.getDegreePresentationString());
+        EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.evaluation.tests.distribution.removed",
+                getEvaluationTitle(), getBeginDateTimeFormatted(), ec.getName(), ec.getDegreePresentationString());
 
         for (; !getDistributedTestQuestionsSet().isEmpty(); getDistributedTestQuestionsSet().iterator().next().delete()) {
             ;

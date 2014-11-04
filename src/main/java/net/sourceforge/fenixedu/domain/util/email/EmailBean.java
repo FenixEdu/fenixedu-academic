@@ -162,7 +162,8 @@ public class EmailBean implements Serializable {
             for (String emailString : emails) {
                 final String email = emailString.trim();
                 if (!email.matches(EMail.W3C_EMAIL_SINTAX_VALIDATOR)) {
-                    StringBuilder builder = new StringBuilder(BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.bcc.invalid"));
+                    StringBuilder builder =
+                            new StringBuilder(BundleUtil.getString(Bundle.APPLICATION, "error.email.validation.bcc.invalid"));
                     builder.append(email);
                     return builder.toString();
                 }

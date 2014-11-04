@@ -45,6 +45,6 @@ public class PersistentProfessorshipsGroup extends PersistentProfessorshipsGroup
     private static Optional<PersistentProfessorshipsGroup> select(final Boolean externalAuthorization, final AcademicPeriod period) {
         return filter(PersistentProfessorshipsGroup.class).filter(
                 group -> group.getExternalAuthorizations().equals(externalAuthorization)
-                && group.getOnCurrentPeriod().equals(period)).findAny();
+                        && group.getOnCurrentPeriod().equals(period)).findAny();
     }
 }

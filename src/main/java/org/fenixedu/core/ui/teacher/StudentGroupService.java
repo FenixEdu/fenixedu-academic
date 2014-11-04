@@ -56,26 +56,26 @@ public class StudentGroupService {
         EnrolmentGroupPolicyType enrolmentPolicyType =
                 bean.getAtomicEnrolmentPolicy() != null && bean.getAtomicEnrolmentPolicy() ? new EnrolmentGroupPolicyType(1) : new EnrolmentGroupPolicyType(
                         2);
-                Grouping grouping;
-                ShiftType shiftType =
-                        bean.getShiftType() == null || bean.getShiftType().isEmpty() ? null : ShiftType.valueOf(bean.getShiftType());
-                if (executionCourse.getGroupingByName(bean.getName()) == null) {
-                    grouping =
-                            Grouping.create(bean.getName(), bean.getEnrolmentBeginDay().toDate(), bean.getEnrolmentEndDay().toDate(),
-                                    enrolmentPolicyType, bean.getMaxGroupNumber(), bean.getIdealGroupCapacity(),
-                                    bean.getMaximumGroupCapacity(), bean.getMinimumGroupCapacity(), bean.getProjectDescription(),
-                                    shiftType, bean.getAutomaticEnrolment(), bean.getDifferentiatedCapacity(), executionCourse,
-                                    bean.getDifferentiatedCapacityShifts());
+        Grouping grouping;
+        ShiftType shiftType =
+                bean.getShiftType() == null || bean.getShiftType().isEmpty() ? null : ShiftType.valueOf(bean.getShiftType());
+        if (executionCourse.getGroupingByName(bean.getName()) == null) {
+            grouping =
+                    Grouping.create(bean.getName(), bean.getEnrolmentBeginDay().toDate(), bean.getEnrolmentEndDay().toDate(),
+                            enrolmentPolicyType, bean.getMaxGroupNumber(), bean.getIdealGroupCapacity(),
+                            bean.getMaximumGroupCapacity(), bean.getMinimumGroupCapacity(), bean.getProjectDescription(),
+                            shiftType, bean.getAutomaticEnrolment(), bean.getDifferentiatedCapacity(), executionCourse,
+                            bean.getDifferentiatedCapacityShifts());
 
-                } else {
-                    grouping = executionCourse.getGroupingByName(bean.getName());
-                    grouping.edit(bean.getName(), bean.getEnrolmentBeginDay().toDate(), bean.getEnrolmentEndDay().toDate(),
-                            enrolmentPolicyType, bean.getMaxGroupNumber(), bean.getIdealGroupCapacity(), bean.getMaximumGroupCapacity(),
-                            bean.getMinimumGroupCapacity(), bean.getProjectDescription(), shiftType, bean.getAutomaticEnrolment(),
-                            bean.getDifferentiatedCapacity(), bean.getDifferentiatedCapacityShifts());
-                }
+        } else {
+            grouping = executionCourse.getGroupingByName(bean.getName());
+            grouping.edit(bean.getName(), bean.getEnrolmentBeginDay().toDate(), bean.getEnrolmentEndDay().toDate(),
+                    enrolmentPolicyType, bean.getMaxGroupNumber(), bean.getIdealGroupCapacity(), bean.getMaximumGroupCapacity(),
+                    bean.getMinimumGroupCapacity(), bean.getProjectDescription(), shiftType, bean.getAutomaticEnrolment(),
+                    bean.getDifferentiatedCapacity(), bean.getDifferentiatedCapacityShifts());
+        }
 
-                return grouping;
+        return grouping;
     }
 
     @Atomic
@@ -97,8 +97,8 @@ public class StudentGroupService {
                 if (grouping.getAttendsSet().stream().noneMatch(attends -> attends.getRegistration().equals(registration))) {
                     Optional<Attends> opt =
                             registration.getAssociatedAttendsSet().stream()
-                            .filter(attends -> grouping.getExecutionCourses().stream().anyMatch(ec -> attends.isFor(ec)))
-                            .findAny();
+                                    .filter(attends -> grouping.getExecutionCourses().stream().anyMatch(ec -> attends.isFor(ec)))
+                                    .findAny();
                     if (opt.isPresent()) {
                         grouping.addAttends(opt.get());
                     }

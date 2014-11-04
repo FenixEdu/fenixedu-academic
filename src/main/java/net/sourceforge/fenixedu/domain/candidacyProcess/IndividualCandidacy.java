@@ -475,12 +475,14 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     public void exportValues(final StringBuilder result) {
         Formatter formatter = new Formatter(result);
 
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.candidacy"), getCandidacyExecutionInterval()
-                .getName());
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.state"), getState().getLocalizedName());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.candidacy"),
+                getCandidacyExecutionInterval().getName());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.state"), getState()
+                .getLocalizedName());
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.whenCreated"),
                 getWhenCreated().toString("yyy-MM-dd"));
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.candidacyDate"), getCandidacyDate().toString());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.candidacyDate"),
+                getCandidacyDate().toString());
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.responsible"),
                 StringUtils.isEmpty(getResponsible()) ? StringUtils.EMPTY : getResponsible());
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.notes"),

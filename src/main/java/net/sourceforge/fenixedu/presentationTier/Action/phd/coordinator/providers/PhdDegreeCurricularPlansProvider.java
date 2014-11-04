@@ -47,7 +47,8 @@ public class PhdDegreeCurricularPlansProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_ENROLMENT_PERIODS);
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.MANAGE_PHD_ENROLMENT_PERIODS);
 
         final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) source;
 

@@ -66,12 +66,11 @@ public class MergeExternalUnits {
                     // Foi efectuado um merge de unidades externas por {0}[{1}]
                     // : Unidade Origem -> {2} [{3}] Unidade Destino -> {4}[{5}]
                     final Person person = AccessControl.getPerson();
-                    final String subject =
-                            BundleUtil.getString(Bundle.GLOBAL, "mergeExternalUnits.email.subject");
+                    final String subject = BundleUtil.getString(Bundle.GLOBAL, "mergeExternalUnits.email.subject");
                     final String body =
-                            BundleUtil.getString(Bundle.GLOBAL, "mergeExternalUnits.email.body",
-                                    new String[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID,
-                                            destinationUnit.getName(), destinationUnit.getExternalId().toString() });
+                            BundleUtil.getString(Bundle.GLOBAL, "mergeExternalUnits.email.body", new String[] { person.getName(),
+                                    person.getUsername(), fromUnitName, fromUnitID, destinationUnit.getName(),
+                                    destinationUnit.getExternalId().toString() });
 
                     SystemSender systemSender = Bennu.getInstance().getSystemSender();
                     new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body,

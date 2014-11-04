@@ -153,7 +153,8 @@ public class Shift extends Shift_Base {
             for (; !getAssociatedLessonsSet().isEmpty(); getAssociatedLessonsSet().iterator().next().delete()) {
                 ;
             }
-            for (; !getAssociatedShiftProfessorshipSet().isEmpty(); getAssociatedShiftProfessorshipSet().iterator().next().delete()) {
+            for (; !getAssociatedShiftProfessorshipSet().isEmpty(); getAssociatedShiftProfessorshipSet().iterator().next()
+                    .delete()) {
                 ;
             }
             for (; !getShiftDistributionEntriesSet().isEmpty(); getShiftDistributionEntriesSet().iterator().next().delete()) {
@@ -545,10 +546,8 @@ public class Shift extends Shift_Base {
         ExecutionCourseSender sender = ExecutionCourseSender.newInstance(executionCourse);
         Collection<Recipient> recipients =
                 Collections.singletonList(new Recipient(UserGroup.of(registration.getPerson().getUser())));
-        final String subject =
-                BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.subject");
-        final String body =
-                BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.body", getNome());
+        final String subject = BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.subject");
+        final String body = BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.body", getNome());
 
         new Message(sender, sender.getConcreteReplyTos(), recipients, subject, body, "");
     }

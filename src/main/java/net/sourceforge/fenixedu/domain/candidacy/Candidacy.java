@@ -59,7 +59,8 @@ public abstract class Candidacy extends Candidacy_Base {
     }
 
     public CandidacySituation getActiveCandidacySituation() {
-        return !getCandidacySituationsSet().isEmpty() ? Collections.max(getCandidacySituationsSet(), CandidacySituation.DATE_COMPARATOR) : null;
+        return !getCandidacySituationsSet().isEmpty() ? Collections.max(getCandidacySituationsSet(),
+                CandidacySituation.DATE_COMPARATOR) : null;
     }
 
     public CandidacySituationType getActiveCandidacySituationType() {

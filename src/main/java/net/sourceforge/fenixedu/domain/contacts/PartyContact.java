@@ -33,9 +33,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -365,8 +365,8 @@ public abstract class PartyContact extends PartyContact_Base {
             descriptionKey = "log.personInformation.contact.generic.create";
         }
 
-        PersonInformationLog.createLog(person, Bundle.MESSAGING, descriptionKey, infoLabel,
-                this.getPresentationValue(), personViewed);
+        PersonInformationLog.createLog(person, Bundle.MESSAGING, descriptionKey, infoLabel, this.getPresentationValue(),
+                personViewed);
     }
 
     public void logEdit(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact, String newValue) {
@@ -394,8 +394,8 @@ public abstract class PartyContact extends PartyContact_Base {
             } else {
                 // editing an existing contact with no pending changes
                 if (isValid()) {
-                    PersonInformationLog.createLog(person, Bundle.MESSAGING,
-                            "log.personInformation.contact.generic.edit", infoLabel, this.getPresentationValue(), personViewed);
+                    PersonInformationLog.createLog(person, Bundle.MESSAGING, "log.personInformation.contact.generic.edit",
+                            infoLabel, this.getPresentationValue(), personViewed);
 
                 } else {
                     // editing an existing pending contact (creation)
@@ -455,8 +455,8 @@ public abstract class PartyContact extends PartyContact_Base {
 
         if (isValid()) {
             // it is valid, so it is not a pending change or creation
-            PersonInformationLog.createLog(person, Bundle.MESSAGING,
-                    "log.personInformation.contact.generic.remove", infoLabel, this.getPresentationValue(), personViewed);
+            PersonInformationLog.createLog(person, Bundle.MESSAGING, "log.personInformation.contact.generic.remove", infoLabel,
+                    this.getPresentationValue(), personViewed);
         } else {
             if (getPrevPartyContact() == null) {
                 // no previous contact = new contact being created

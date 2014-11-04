@@ -57,7 +57,9 @@ public class SearchDiplomasBySituationParametersBean extends AcademicServiceRequ
 
     @Override
     public Collection<AcademicServiceRequest> searchAcademicServiceRequests() {
-        return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear, academicServiceRequestSituationType, new Interval(searchBegin.toDateTimeAtStartOfDay(), searchEnd.toDateTimeAtStartOfDay()));
+        return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear,
+                academicServiceRequestSituationType,
+                new Interval(searchBegin.toDateTimeAtStartOfDay(), searchEnd.toDateTimeAtStartOfDay()));
     }
 
 }

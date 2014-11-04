@@ -1377,10 +1377,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         spreadsheet.setHeader("Localiza��o da realiza��o do TFC");
     }
 
-    private static final MessageResources applicationResources = MessageResources
-            .getMessageResources(Bundle.APPLICATION);
-    private static final MessageResources enumerationResources = MessageResources
-            .getMessageResources(Bundle.ENUMERATION);
+    private static final MessageResources applicationResources = MessageResources.getMessageResources(Bundle.APPLICATION);
+    private static final MessageResources enumerationResources = MessageResources.getMessageResources(Bundle.ENUMERATION);
 
     private void fillProposalsSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
         int maxNumberStudentsPerGroup = 0;

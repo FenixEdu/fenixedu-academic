@@ -60,6 +60,7 @@ public class DegreeTransferCandidacyPeriod extends DegreeTransferCandidacyPeriod
     }
 
     public DegreeTransferCandidacyProcess getDegreeTransferCandidacyProcess() {
-        return (DegreeTransferCandidacyProcess) (!getCandidacyProcessesSet().isEmpty() ? getCandidacyProcessesSet().iterator().next() : null);
+        return (DegreeTransferCandidacyProcess) (!getCandidacyProcessesSet().isEmpty() ? getCandidacyProcessesSet().iterator()
+                .next() : null);
     }
 }

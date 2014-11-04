@@ -55,7 +55,8 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
 
     private MultiLanguageString generateSubject(final PhdProgramPublicCandidacyHashCode candidacyHashCode) {
         // TODO: if collaboration type change, then message must be different
-        return new MultiLanguageString().with(MultiLanguageString.en, BundleUtil.getString(Bundle.PHD, "message.phd.email.subject.missing.candidacy"));
+        return new MultiLanguageString().with(MultiLanguageString.en,
+                BundleUtil.getString(Bundle.PHD, "message.phd.email.subject.missing.candidacy"));
     }
 
     private MultiLanguageString generateBody(final PhdProgramPublicCandidacyHashCode hashCode) {

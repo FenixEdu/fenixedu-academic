@@ -58,7 +58,8 @@ public class PhdMeeting extends PhdMeeting_Base {
     }
 
     public PhdMeetingMinutesDocument getLatestDocumentVersion() {
-        return !getDocumentsSet().isEmpty() ? Collections.max(getDocumentsSet(), PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
+        return !getDocumentsSet().isEmpty() ? Collections.max(getDocumentsSet(),
+                PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
     }
 
     public boolean isDocumentsAvailable() {

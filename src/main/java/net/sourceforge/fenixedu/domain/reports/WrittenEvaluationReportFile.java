@@ -80,7 +80,8 @@ public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Bas
                         final StringBuilder rooms = new StringBuilder();
                         int examVacancy = 0;
                         int normalVacancy = 0;
-                        for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) {
+                        for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation
+                                .getWrittenEvaluationSpaceOccupationsSet()) {
                             final Space room = roomOccupation.getRoom();
                             if (rooms.length() > 0) {
                                 rooms.append(", ");

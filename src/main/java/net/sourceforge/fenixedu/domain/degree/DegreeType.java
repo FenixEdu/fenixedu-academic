@@ -892,8 +892,8 @@ public enum DegreeType {
                 throw new DomainException("DegreeType.doesnt.have.such.cycle.type");
             }
 
-            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName() + (isComposite() ? "." + cycleType.name() : StringUtils.EMPTY)
-                    + GRADUATE_TITLE_SUFFIX);
+            return BundleUtil.getString(Bundle.ENUMERATION, locale, qualifiedName()
+                    + (isComposite() ? "." + cycleType.name() : StringUtils.EMPTY) + GRADUATE_TITLE_SUFFIX);
         }
 
         return StringUtils.EMPTY;

@@ -123,7 +123,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
                 }
 
 //                if (phdHashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate()) {
-                    addCandidate(unfocusAreaCandidates, candidates, phdHashCode);
+                addCandidate(unfocusAreaCandidates, candidates, phdHashCode);
 //                }
             }
         }
@@ -222,7 +222,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         page.rowStart().header(Unit.getInstitutionAcronym() + " Phd Program:")
                 .column(process.getPhdProgram().getName().getContent(MultiLanguageString.en)).rowEnd();
         if (process.getExternalPhdProgram() != null) {
-            page.rowStart().header("EPFL Phd Program:").column(process.getExternalPhdProgram().getName().getContent(MultiLanguageString.en));
+            page.rowStart().header("EPFL Phd Program:")
+                    .column(process.getExternalPhdProgram().getName().getContent(MultiLanguageString.en));
         }
         page.rowStart().header("Title:").column(string(process.getThesisTitle())).rowEnd();
         page.rowStart().header("Collaboration:").column(process.getCollaborationTypeName()).rowEnd();
@@ -277,8 +278,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
             page.rowStart();
             page.column(thesisSubjectOrder.getSubjectOrder().toString());
             page.column(thesisSubjectOrder.getThesisSubject().getName().getContent());
-            page.column(thesisSubjectOrder.getThesisSubject().getTeacher() != null ? thesisSubjectOrder.getThesisSubject().getTeacher()
-                    .getPerson().getName() : "");
+            page.column(thesisSubjectOrder.getThesisSubject().getTeacher() != null ? thesisSubjectOrder.getThesisSubject()
+                    .getTeacher().getPerson().getName() : "");
             page.rowEnd();
         }
 

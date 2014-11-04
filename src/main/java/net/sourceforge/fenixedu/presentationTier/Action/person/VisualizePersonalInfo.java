@@ -37,7 +37,7 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @StrutsFunctionality(app = PersonalAreaApp.class, descriptionKey = "label.person.visualizeInformation", path = "information",
-titleKey = "label.person.visualizeInformation")
+        titleKey = "label.person.visualizeInformation")
 @Mapping(path = "/visualizePersonalInfo", module = "person", parameter = "/person/visualizePersonalInfo.jsp")
 public class VisualizePersonalInfo extends ForwardAction {
 

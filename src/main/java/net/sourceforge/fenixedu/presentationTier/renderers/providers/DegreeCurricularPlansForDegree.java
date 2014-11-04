@@ -44,7 +44,8 @@ public class DegreeCurricularPlansForDegree implements DataProvider {
         if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getExecutionPeriod() != null) {
 
             Set<Degree> availableDegrees =
-                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_MARKSHEETS);
+                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                            AcademicOperationType.MANAGE_MARKSHEETS);
 
             for (final DegreeCurricularPlan dcp : markSheetManagementBean.getDegree().getDegreeCurricularPlansSet()) {
                 if (availableDegrees.contains(dcp.getDegree())) {

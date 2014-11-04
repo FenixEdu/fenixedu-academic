@@ -251,7 +251,8 @@ public class DepartmentCreditsPoolBean implements Serializable {
                     }
                     this.totalEffectiveLoad = this.totalEffectiveLoad.add(new BigDecimal(efectiveLoad));
                 }
-                for (DegreeTeachingServiceCorrection degreeTeachingServiceCorrection : professorship.getDegreeTeachingServiceCorrectionsSet()) {
+                for (DegreeTeachingServiceCorrection degreeTeachingServiceCorrection : professorship
+                        .getDegreeTeachingServiceCorrectionsSet()) {
                     BigDecimal efectiveLoad = degreeTeachingServiceCorrection.getCorrection();
                     if (lastWorkingDepartment != null && lastWorkingDepartment.equals(getDepartment())) {
                         this.departmentEffectiveLoad = this.departmentEffectiveLoad.add(efectiveLoad);

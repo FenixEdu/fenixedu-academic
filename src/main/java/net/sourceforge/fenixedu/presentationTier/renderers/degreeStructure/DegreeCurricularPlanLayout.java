@@ -254,13 +254,17 @@ abstract class DegreeCurricularPlanLayout extends Layout {
         } else {
             final StringBuilder builder = new StringBuilder();
 
-            builder.append(BundleUtil.getString(Bundle.APPLICATION, "label.degreeCurricularPlan.renderer.acronym.contact.load")).append("-");
+            builder.append(BundleUtil.getString(Bundle.APPLICATION, "label.degreeCurricularPlan.renderer.acronym.contact.load"))
+                    .append("-");
             builder.append(roundValue(course.getContactLoad(period, getExecutionInterval()))).append(" ");
 
-            builder.append(BundleUtil.getString(Bundle.APPLICATION, "label.degreeCurricularPlan.renderer.acronym.autonomous.work")).append("-");
+            builder.append(
+                    BundleUtil.getString(Bundle.APPLICATION, "label.degreeCurricularPlan.renderer.acronym.autonomous.work"))
+                    .append("-");
             builder.append(course.getAutonomousWorkHours(period, getExecutionInterval()).toString()).append(" ");
 
-            builder.append(BundleUtil.getString(Bundle.APPLICATION, "label.degreeCurricularPlan.renderer.acronym.total.load")).append("-");
+            builder.append(BundleUtil.getString(Bundle.APPLICATION, "label.degreeCurricularPlan.renderer.acronym.total.load"))
+                    .append("-");
             builder.append(course.getTotalLoad(period, getExecutionInterval()));
 
             cell.setText(builder.toString());

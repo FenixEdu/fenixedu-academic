@@ -168,7 +168,8 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
             DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
     static private boolean isAllowedToManageProcess(User userView) {
-        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
             if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
                 return true;
             }

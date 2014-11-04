@@ -201,7 +201,8 @@ public class Diploma extends AdministrativeOfficeDocument {
         if (degreeType.hasAnyCycleTypes()) {
             result.append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), diplomaRequest.getWhatShouldBeRequestedCycle()
                     .getQualifiedName()));
-            result.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "of.masculine")).append(SINGLE_SPACE);
+            result.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "of.masculine"))
+                    .append(SINGLE_SPACE);
         }
 
         result.append(degreeType.getPrefix(getLocale())).append(degreeType.getFilteredName(getLocale()));
@@ -212,7 +213,8 @@ public class Diploma extends AdministrativeOfficeDocument {
 
         result.append(degreeType.getPrefix()).append(degreeType.getFilteredName());
         if (degreeType.hasExactlyOneCycleType()) {
-            result.append(" (").append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), degreeType.getCycleType().getQualifiedName()))
+            result.append(" (")
+                    .append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), degreeType.getCycleType().getQualifiedName()))
                     .append(")");
         }
     }

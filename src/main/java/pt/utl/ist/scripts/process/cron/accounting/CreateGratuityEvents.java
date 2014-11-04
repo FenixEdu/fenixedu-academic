@@ -40,7 +40,8 @@ public class CreateGratuityEvents extends CronTask {
 
     private void generateGratuityEventsForAllStudents(final ExecutionYear executionYear) {
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-            for (final StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan().getStudentCurricularPlansSet()) {
+            for (final StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan()
+                    .getStudentCurricularPlansSet()) {
                 generateGratuityEvents(executionYear, studentCurricularPlan);
             }
         }

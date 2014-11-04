@@ -45,7 +45,8 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
     @Deprecated
     public RegisteredCandidacySituation(Candidacy candidacy, RegistrationAgreement registrationAgreement, CycleType cycleType,
             Ingression ingression, EntryPhase entryPhase, Integer studentNumber) {
-        this(candidacy, RegistrationProtocol.serveRegistrationProtocol(registrationAgreement), cycleType, ingression, entryPhase, studentNumber);
+        this(candidacy, RegistrationProtocol.serveRegistrationProtocol(registrationAgreement), cycleType, ingression, entryPhase,
+                studentNumber);
     }
 
     public RegisteredCandidacySituation(Candidacy candidacy, RegistrationProtocol registrationProtocol, CycleType cycleType,

@@ -50,7 +50,8 @@ public class PhdProgramDA extends PhdDA {
 
     public ActionForward listPhdProgramForPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("phdPrograms", AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES));
+        request.setAttribute("phdPrograms", AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_PHD_PROCESSES));
         return mapping.findForward("listPhdProgramForPeriods");
     }
 

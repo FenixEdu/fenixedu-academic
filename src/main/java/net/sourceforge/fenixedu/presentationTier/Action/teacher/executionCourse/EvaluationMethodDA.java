@@ -67,7 +67,8 @@ public class EvaluationMethodDA extends ManageExecutionCourseDA {
                 final String pt = competenceCourse.getEvaluationMethod();
                 final String en = competenceCourse.getEvaluationMethodEn();
                 evaluationMethodMls =
-                        evaluationMethodMls.with(MultiLanguageString.pt, pt == null ? "" : pt).with(MultiLanguageString.en, en == null ? "" : en);
+                        evaluationMethodMls.with(MultiLanguageString.pt, pt == null ? "" : pt).with(MultiLanguageString.en,
+                                en == null ? "" : en);
             }
             EditEvaluation.runEditEvaluation(executionCourse, evaluationMethodMls);
             evaluationMethod = executionCourse.getEvaluationMethod();

@@ -59,7 +59,7 @@ import pt.ist.fenixframework.FenixFramework;
 @StrutsFunctionality(app = RAMEvaluationsApp.class, path = "room-search", titleKey = "link.exams.searchAvailableRooms")
 @Mapping(module = "resourceAllocationManager", path = "/roomSearch", formBean = "roomSearchForm")
 @Forwards({ @Forward(name = "showRooms", path = "/resourceAllocationManager/exams/showRooms.jsp"),
-    @Forward(name = "roomSearch", path = "/resourceAllocationManager/exams/roomSearch.jsp") })
+        @Forward(name = "roomSearch", path = "/resourceAllocationManager/exams/roomSearch.jsp") })
 public class RoomSearchDA extends FenixDispatchAction {
 
     @EntryPoint

@@ -96,9 +96,7 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
             final Recipient ccRecipient = new Recipient(Collections.singletonList(evaluator));
             final FacultyEvaluationProcess facultyEvaluationProcess = teacherEvaluationProcess.getFacultyEvaluationProcess();
             final String title = facultyEvaluationProcess.getTitle().getContent();
-            final String body =
-                    BundleUtil.getString(Bundle.APPLICATION,
-                            "message.email.stamp.teacher.evaluation.process", title);
+            final String body = BundleUtil.getString(Bundle.APPLICATION, "message.email.stamp.teacher.evaluation.process", title);
             final SystemSender systemSender = Bennu.getInstance().getSystemSender();
             final Message message =
                     new Message(systemSender, Collections.EMPTY_LIST, Collections.EMPTY_LIST, title, body, new EmailAddressList(

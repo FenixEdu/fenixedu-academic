@@ -79,7 +79,8 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         final DegreeFinalizationCertificateRequest req = getDocumentRequest();
         final StringBuilder result = new StringBuilder();
 
-        result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "conclusion.document.concluded.lowercase"));
+        result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
+                "conclusion.document.concluded.lowercase"));
         result.append(" ");
         result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.the.male"));
         result.append(" ");
@@ -121,7 +122,9 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         String institutionName = getInstitutionName();
         String universityName = getUniversityName(new DateTime());
 
-        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.academicDocument.declaration.firstParagraph");
+        String stringTemplate =
+                BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
+                        "label.academicDocument.declaration.firstParagraph");
 
         addParameter(
                 "firstParagraph",
@@ -130,8 +133,8 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
                                 adminOfficeName.toUpperCase(getLocale()), institutionName.toUpperCase(getLocale()),
                                 universityName.toUpperCase(getLocale())));
 
-        addParameter("certificate",
-                BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.academicDocument.standaloneEnrolmentCertificate.secondParagraph"));
+        addParameter("certificate", BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
+                "label.academicDocument.standaloneEnrolmentCertificate.secondParagraph"));
     }
 
     private void setBranchField() {
@@ -165,7 +168,8 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         final StringBuilder result = new StringBuilder();
 
         if (!request.mustHideConclusionDate()) {
-            result.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.onThe"));
+            result.append(SINGLE_SPACE).append(
+                    BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.onThe"));
             result.append(SINGLE_SPACE).append(request.getConclusionDate().toString(DD_MMMM_YYYY, getLocale()));
         }
 
@@ -178,29 +182,31 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         if (request.hasExceptionalConclusionInfo()) {
             if (request.getTechnicalEngineer()) {
                 result.append(SINGLE_SPACE);
-                result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), 
+                result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                         "documents.DegreeFinalizationCertificate.exceptionalConclusionInfo.technicalEngineer"));
             } else {
                 final String date = request.getExceptionalConclusionDate().toString(DD_MMMM_YYYY, getLocale());
                 if (request.getInternshipAbolished()) {
-                    result.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.in"));
+                    result.append(SINGLE_SPACE).append(
+                            BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.in"));
                     result.append(SINGLE_SPACE).append(date);
                     result.append(", ");
-                    result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), 
+                    result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                             "documents.DegreeFinalizationCertificate.exceptionalConclusionInfo.internshipAbolished"));
                 } else if (request.getInternshipApproved()) {
-                    result.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.in"));
+                    result.append(SINGLE_SPACE).append(
+                            BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "label.in"));
                     result.append(SINGLE_SPACE).append(date);
                     result.append(", ");
-                    result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), 
+                    result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                             "documents.DegreeFinalizationCertificate.exceptionalConclusionInfo.internshipApproved"));
                 } else if (request.getStudyPlan()) {
                     result.append(SINGLE_SPACE);
-                    result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), 
+                    result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                             "documents.DegreeFinalizationCertificate.exceptionalConclusionInfo.studyPlan.one"));
                     result.append(SINGLE_SPACE).append(date);
                     result.append(SINGLE_SPACE);
-                    result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), 
+                    result.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
                             "documents.DegreeFinalizationCertificate.exceptionalConclusionInfo.studyPlan.two"));
                 }
             }
@@ -229,7 +235,9 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         final StringBuilder res = new StringBuilder();
 
         if (getDocumentRequest().isToShowCredits()) {
-            res.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "documents.DegreeFinalizationCertificate.creditsInfo"));
+            res.append(SINGLE_SPACE).append(
+                    BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
+                            "documents.DegreeFinalizationCertificate.creditsInfo"));
             res.append(SINGLE_SPACE).append(String.valueOf(request.getEctsCredits())).append(getCreditsDescription());
         }
 
@@ -241,7 +249,9 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
         final DegreeType degreeType = getDocumentRequest().getDegreeType();
         if (degreeType.getQualifiesForGraduateTitle()) {
-            res.append(", ").append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "documents.DegreeFinalizationCertificate.graduateTitleInfo"));
+            res.append(", ").append(
+                    BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
+                            "documents.DegreeFinalizationCertificate.graduateTitleInfo"));
             res.append(SINGLE_SPACE).append(registration.getGraduateTitle(requestedCycle, getLocale()));
         }
 
@@ -256,21 +266,25 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         if (degreeType.getQualifiesForGraduateTitle()) {
             res.append(", ");
             if (getDocumentRequest().getRegistryCode() != null) {
-                res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "documents.DegreeFinalizationCertificate.registryNumber"));
+                res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
+                        "documents.DegreeFinalizationCertificate.registryNumber"));
                 res.append(SINGLE_SPACE);
                 res.append(getDocumentRequest().getRegistryCode().getCode());
             } else {
-                res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "documents.DegreeFinalizationCertificate.diplomaDescription.one"));
+                res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
+                        "documents.DegreeFinalizationCertificate.diplomaDescription.one"));
                 switch (degreeType) {
                 case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
                     break;
                 case BOLONHA_SPECIALIZATION_DEGREE:
                     res.append(SINGLE_SPACE);
-                    res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "documents.DegreeFinalizationCertificate.diplomaDescription.diploma"));
+                    res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
+                            "documents.DegreeFinalizationCertificate.diplomaDescription.diploma"));
                     break;
                 default:
                     res.append(SINGLE_SPACE);
-                    res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "documents.DegreeFinalizationCertificate.diplomaDescription.letter"));
+                    res.append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
+                            "documents.DegreeFinalizationCertificate.diplomaDescription.letter"));
                     break;
                 }
             }
@@ -284,8 +298,8 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
         if (request.getDetailed()) {
             res.append(SINGLE_SPACE)
-                    .append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "documents.DegreeFinalizationCertificate.detailedInfoIntro"))
-                    .append(":");
+                    .append(BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(),
+                            "documents.DegreeFinalizationCertificate.detailedInfoIntro")).append(":");
         } else {
             res.append(".");
         }
@@ -341,7 +355,9 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
         final Grade grade = entry.getGrade();
         result.append(SINGLE_SPACE).append(grade.getValue());
-        result.append(StringUtils.rightPad("(" + BundleUtil.getString(Bundle.ENUMERATION, getDocumentRequest().getLanguage(), grade.getValue()) + ")", SUFFIX_LENGTH, ' '));
+        result.append(StringUtils.rightPad(
+                "(" + BundleUtil.getString(Bundle.ENUMERATION, getDocumentRequest().getLanguage(), grade.getValue()) + ")",
+                SUFFIX_LENGTH, ' '));
         String values = BundleUtil.getString(Bundle.ACADEMIC, getDocumentRequest().getLanguage(), "values");
         result.append(grade.isNumeric() ? values : StringUtils.rightPad(EMPTY_STR, values.length(), ' '));
 

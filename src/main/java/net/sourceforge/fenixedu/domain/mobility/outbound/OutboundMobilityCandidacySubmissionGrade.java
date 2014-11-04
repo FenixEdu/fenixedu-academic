@@ -26,7 +26,8 @@ public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCa
         Comparable<OutboundMobilityCandidacySubmissionGrade> {
 
     public OutboundMobilityCandidacySubmissionGrade(final OutboundMobilityCandidacySubmission submission,
-            final OutboundMobilityCandidacyContestGroup mobilityGroup, final BigDecimal grade, final BigDecimal gradeForSerialization) {
+            final OutboundMobilityCandidacyContestGroup mobilityGroup, final BigDecimal grade,
+            final BigDecimal gradeForSerialization) {
         super();
         setRootDomainObject(Bennu.getInstance());
         setOutboundMobilityCandidacySubmission(submission);

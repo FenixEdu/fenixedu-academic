@@ -50,9 +50,9 @@ public class LessonPlanning extends LessonPlanning_Base {
         setLessonType(lessonType);
         setExecutionCourse(executionCourse);
 
-        CurricularManagementLog.createLog(executionCourse, Bundle.MESSAGING,
-                "log.executionCourse.curricular.planning.added", title.getContent(), lessonType.getFullNameTipoAula(),
-                executionCourse.getNome(), executionCourse.getDegreePresentationString());
+        CurricularManagementLog.createLog(executionCourse, Bundle.MESSAGING, "log.executionCourse.curricular.planning.added",
+                title.getContent(), lessonType.getFullNameTipoAula(), executionCourse.getNome(),
+                executionCourse.getDegreePresentationString());
     }
 
     public void delete() {
@@ -147,8 +147,7 @@ public class LessonPlanning extends LessonPlanning_Base {
         StringBuilder builder = new StringBuilder();
         builder.append(BundleUtil.getString(Bundle.APPLICATION, "label.lesson")).append(" ");
         builder.append(getOrderOfPlanning()).append(" (");
-        builder.append(BundleUtil.getString(Bundle.ENUMERATION, getLessonType().getName()))
-                .append(") - ");
+        builder.append(BundleUtil.getString(Bundle.ENUMERATION, getLessonType().getName())).append(") - ");
         builder.append(getTitle().getContent());
         return builder.toString();
     }

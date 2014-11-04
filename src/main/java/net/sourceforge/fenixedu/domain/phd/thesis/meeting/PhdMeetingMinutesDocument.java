@@ -59,8 +59,7 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
         super.setUploader(uploader);
         super.setDocumentAccepted(true);
 
-        final Group roleGroup =
-                AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES);
+        final Group roleGroup = AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES);
 
         final PhdIndividualProgramProcess individualProgramProcess =
                 meeting.getMeetingProcess().getThesisProcess().getIndividualProgramProcess();

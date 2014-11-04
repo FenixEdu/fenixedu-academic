@@ -108,7 +108,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         SearchStudentsByCurricularCourseParametersBean bean = getRenderedObject("searchBean");
         if (bean == null) {
             bean =
-                    new SearchStudentsByCurricularCourseParametersBean(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS));
+                    new SearchStudentsByCurricularCourseParametersBean(AcademicAuthorizationGroup.getDegreesForOperation(
+                            AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS));
         }
         return bean;
     }
@@ -284,7 +285,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ExecutionYear executionYear = getDomainObject(request, "executionYearId");
         Set<Degree> degreesToInclude =
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS);
+                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.STUDENT_LISTINGS);
 
         final String filename = getResourceMessage("label.statistics") + "_" + executionYear.getName().replace('/', '-');
         final Spreadsheet spreadsheet = new Spreadsheet(filename);
@@ -351,6 +353,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     protected Set<DegreeType> getAdministratedDegreeTypes() {
-        return AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS);
+        return AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.STUDENT_LISTINGS);
     }
 }

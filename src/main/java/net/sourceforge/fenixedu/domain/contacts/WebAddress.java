@@ -25,9 +25,9 @@ import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class WebAddress extends WebAddress_Base {
 
@@ -151,14 +151,14 @@ public class WebAddress extends WebAddress_Base {
 
         if (propertiesChanged && !valueChanged) {
             // only properties were changed
-            PersonInformationLog.createLog(person, Bundle.MESSAGING, "log.personInformation.contact.generic.edit",
-                    infoLabel, this.getPresentationValue(), person.getIstUsername());
+            PersonInformationLog.createLog(person, Bundle.MESSAGING, "log.personInformation.contact.generic.edit", infoLabel,
+                    this.getPresentationValue(), person.getIstUsername());
         } else if (valueChanged) {
             if (oldValueDiffersFromNew) {
                 // value was changed
-                PersonInformationLog.createLog(person, Bundle.MESSAGING,
-                        "log.personInformation.contact.generic.edit.values", infoLabel, getPrevPartyContact()
-                                .getPresentationValue(), this.getPresentationValue(), person.getIstUsername());
+                PersonInformationLog.createLog(person, Bundle.MESSAGING, "log.personInformation.contact.generic.edit.values",
+                        infoLabel, getPrevPartyContact().getPresentationValue(), this.getPresentationValue(),
+                        person.getIstUsername());
             }
         }
     }

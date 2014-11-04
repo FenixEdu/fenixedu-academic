@@ -92,8 +92,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 
         final Map<CurricularCourse, Enrolment> enrolmentsMap = new HashMap<CurricularCourse, Enrolment>();
         boolean isServices =
-                AcademicAuthorizationGroup.get(AcademicOperationType.STUDENT_ENROLMENTS).isMember(
-                        Authenticate.getUser());
+                AcademicAuthorizationGroup.get(AcademicOperationType.STUDENT_ENROLMENTS).isMember(Authenticate.getUser());
 
         for (final CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {

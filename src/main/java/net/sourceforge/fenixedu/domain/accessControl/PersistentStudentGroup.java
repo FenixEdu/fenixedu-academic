@@ -91,18 +91,19 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
     }
 
     public static PersistentStudentGroup getInstance(ExecutionCourse executionCourse) {
-        return getInstance(() -> executionCourse.getStudentGroupSet().stream(), null, null, null, null, executionCourse, null, null);
+        return getInstance(() -> executionCourse.getStudentGroupSet().stream(), null, null, null, null, executionCourse, null,
+                null);
     }
 
     public static PersistentStudentGroup getInstance(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
             ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear) {
         if (curricularYear != null) {
-            return getInstance(() -> curricularYear.getStudentGroupSet().stream(), degreeType, degree, cycle, campus, executionCourse,
-                    curricularYear, executionYear);
+            return getInstance(() -> curricularYear.getStudentGroupSet().stream(), degreeType, degree, cycle, campus,
+                    executionCourse, curricularYear, executionYear);
         }
         if (executionCourse != null) {
-            return getInstance(() -> executionCourse.getStudentGroupSet().stream(), degreeType, degree, cycle, campus, executionCourse,
-                    curricularYear, executionYear);
+            return getInstance(() -> executionCourse.getStudentGroupSet().stream(), degreeType, degree, cycle, campus,
+                    executionCourse, curricularYear, executionYear);
         }
         if (campus != null) {
             return getInstance(() -> campus.getStudentGroupSet().stream(), degreeType, degree, cycle, campus, executionCourse,
@@ -125,14 +126,15 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
                         executionYear));
     }
 
-    private static Optional<PersistentStudentGroup> select(Supplier<Stream<PersistentStudentGroup>> options, final DegreeType degreeType,
-            final Degree degree, final CycleType cycle, final Space campus, final ExecutionCourse executionCourse,
-            final CurricularYear curricularYear, final ExecutionYear executionYear) {
-        return options.get().filter(
-                group -> Objects.equals(group.getDegreeType(), degreeType) && Objects.equals(group.getDegree(), degree)
-                && Objects.equals(group.getCycle(), cycle) && Objects.equals(group.getCampus(), campus)
-                && Objects.equals(group.getExecutionCourse(), executionCourse)
-                && Objects.equals(group.getCurricularYear(), curricularYear)
-                && Objects.equals(group.getExecutionYear(), executionYear)).findAny();
+    private static Optional<PersistentStudentGroup> select(Supplier<Stream<PersistentStudentGroup>> options,
+            final DegreeType degreeType, final Degree degree, final CycleType cycle, final Space campus,
+            final ExecutionCourse executionCourse, final CurricularYear curricularYear, final ExecutionYear executionYear) {
+        return options
+                .get()
+                .filter(group -> Objects.equals(group.getDegreeType(), degreeType) && Objects.equals(group.getDegree(), degree)
+                        && Objects.equals(group.getCycle(), cycle) && Objects.equals(group.getCampus(), campus)
+                        && Objects.equals(group.getExecutionCourse(), executionCourse)
+                        && Objects.equals(group.getCurricularYear(), curricularYear)
+                        && Objects.equals(group.getExecutionYear(), executionYear)).findAny();
     }
 }

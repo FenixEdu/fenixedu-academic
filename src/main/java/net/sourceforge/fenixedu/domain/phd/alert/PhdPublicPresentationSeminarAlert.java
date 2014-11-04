@@ -155,12 +155,13 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
     private void generateMessageForCoodinator() {
         generateMessage(UserGroup.of(Person.convertToUsers(getProcess().getPhdProgram().getCoordinatorsFor(
-        ExecutionYear.readCurrentExecutionYear()))));
+                ExecutionYear.readCurrentExecutionYear()))));
 
     }
 
     private void generateMessageForAcademicOffice() {
-        generateMessage(AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram()));
+        generateMessage(AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess()
+                .getPhdProgram()));
     }
 
     private void generateMessageForStudent() {

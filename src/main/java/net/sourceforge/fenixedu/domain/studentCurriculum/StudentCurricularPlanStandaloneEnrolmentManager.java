@@ -57,7 +57,8 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
         }
 
-        if (!AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(), AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree())) {
+        if (!AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
+                AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree())) {
             checkRegistrationRegime();
         }
 

@@ -36,7 +36,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.Bundle;
+
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixframework.Atomic;
 
 public class PersonFunctionBean implements Serializable {
@@ -165,9 +167,9 @@ public class PersonFunctionBean implements Serializable {
             } else {
                 thisPersonFunctionShared.setPercentage(getPercentage());
             }
-            log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                    "label.teacher.personFunction.createOrEdit", getFunction().getName(), getUnit().getPresentationName(),
-                    getTeacher().getPerson().getNickname(), getPercentage().toString()));
+            log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.teacher.personFunction.createOrEdit", getFunction()
+                    .getName(), getUnit().getPresentationName(), getTeacher().getPerson().getNickname(), getPercentage()
+                    .toString()));
         } else {
             if (thisPersonFunction == null) {
                 new PersonFunction(getUnit(), getTeacher().getPerson(), getFunction(), getExecutionSemester(), getCredits()
@@ -175,9 +177,8 @@ public class PersonFunctionBean implements Serializable {
             } else {
                 thisPersonFunction.setCredits(getCredits().doubleValue());
             }
-            log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                    "label.teacher.personFunction.createOrEdit", getFunction().getName(), getUnit().getPresentationName(),
-                    getTeacher().getPerson().getNickname(), getCredits().toString()));
+            log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.teacher.personFunction.createOrEdit", getFunction()
+                    .getName(), getUnit().getPresentationName(), getTeacher().getPerson().getNickname(), getCredits().toString()));
 
         }
         TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(getExecutionSemester());
@@ -210,13 +211,13 @@ public class PersonFunctionBean implements Serializable {
             teacherService = new TeacherService(getTeacher(), getExecutionSemester());
         }
         if (getFunction() instanceof SharedFunction) {
-            new TeacherServiceLog(teacherService, BundleUtil.getString(
-                    Bundle.TEACHER_CREDITS, "label.teacher.personFunction.delete", getFunction().getName(),
-                    getUnit().getPresentationName(), getTeacher().getPerson().getNickname(), getPercentage().toString()));
+            new TeacherServiceLog(teacherService, BundleUtil.getString(Bundle.TEACHER_CREDITS,
+                    "label.teacher.personFunction.delete", getFunction().getName(), getUnit().getPresentationName(), getTeacher()
+                            .getPerson().getNickname(), getPercentage().toString()));
         } else {
-            new TeacherServiceLog(teacherService, BundleUtil.getString(
-                    Bundle.TEACHER_CREDITS, "label.teacher.personFunction.delete", getFunction().getName(),
-                    getUnit().getPresentationName(), getTeacher().getPerson().getNickname(), getCredits().toString()));
+            new TeacherServiceLog(teacherService, BundleUtil.getString(Bundle.TEACHER_CREDITS,
+                    "label.teacher.personFunction.delete", getFunction().getName(), getUnit().getPresentationName(), getTeacher()
+                            .getPerson().getNickname(), getCredits().toString()));
         }
     }
 

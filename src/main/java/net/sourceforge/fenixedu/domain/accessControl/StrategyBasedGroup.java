@@ -42,8 +42,7 @@ public final class StrategyBasedGroup extends StrategyBasedGroup_Base {
     }
 
     static PersistentGroup getInstance(final GroupStrategy strategy) {
-        return singleton(
-                () -> filter(StrategyBasedGroup.class).filter(group -> group.getStrategy().equals(strategy)).findAny(),
+        return singleton(() -> filter(StrategyBasedGroup.class).filter(group -> group.getStrategy().equals(strategy)).findAny(),
                 () -> new StrategyBasedGroup(strategy));
     }
 }

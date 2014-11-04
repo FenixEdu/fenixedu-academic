@@ -991,7 +991,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         request.setAttribute("hasSchoolPartConcluded", process.hasSchoolPartConcluded());
         request.setAttribute("hasQualificationExamsToPerform", process.hasQualificationExamsToPerform());
 
-        if (process.getRegistration() != null && process.getStudyPlan() != null && process.getStudyPlan().hasAnyPropaeudeuticsOrExtraEntries()) {
+        if (process.getRegistration() != null && process.getStudyPlan() != null
+                && process.getStudyPlan().hasAnyPropaeudeuticsOrExtraEntries()) {
             request.setAttribute("hasPropaeudeuticsOrExtraEntriesApproved", process.hasPropaeudeuticsOrExtraEntriesApproved());
         }
     }
@@ -1395,7 +1396,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         predicate.add(new Predicate<PhdMigrationIndividualProcessData>() {
             @Override
             public boolean eval(PhdMigrationIndividualProcessData process) {
-                return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES).contains(process.getProcessBean().getPhdProgram());
+                return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.MANAGE_PHD_PROCESSES).contains(process.getProcessBean().getPhdProgram());
 
             }
         });

@@ -159,7 +159,8 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
                             }
                         });
                 executionCoursesByCurricularYearByExecutionDegree.put(executionDegree, executionCoursesByCurricularYear);
-                for (final CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCoursesSet()) {
+                for (final CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan()
+                        .getCurricularCoursesSet()) {
                     for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
                         if (degreeModuleScope.isActiveForAcademicInterval(academicInterval)) {
                             final Integer curricularSemester = degreeModuleScope.getCurricularSemester();

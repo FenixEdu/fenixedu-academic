@@ -52,7 +52,6 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMSchedulesApp;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -60,6 +59,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.commons.i18n.I18N;
@@ -372,8 +372,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.curricular.year"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.shift"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.shift.schedule"));
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION,
-                "label.shift.schedule.hasAllocatedRooms"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.shift.schedule.hasAllocatedRooms"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.teacher.emails"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.comments"));
 
@@ -444,8 +443,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.executionDegree"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.shift.schedule"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.lesson.room"));
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION,
-                "label.number.students.enrolled"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.number.students.enrolled"));
 
         for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
             final StringBuilder executionDegreeBuilder = new StringBuilder();

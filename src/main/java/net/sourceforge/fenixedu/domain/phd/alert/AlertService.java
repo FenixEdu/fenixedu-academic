@@ -195,7 +195,8 @@ public class AlertService {
         alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
         alertBean.setBody(getBodyText(process, bodyKey));
         alertBean.setFireDate(new LocalDate());
-        alertBean.setTargetGroup(AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, process.getPhdProgram()));
+        alertBean.setTargetGroup(AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES,
+                process.getPhdProgram()));
 
         new PhdCustomAlert(alertBean);
     }

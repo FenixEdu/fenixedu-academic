@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMEvaluationsApp;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.struts.action.ActionForm;
@@ -43,6 +42,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
@@ -146,9 +146,10 @@ public class SearchWrittenEvaluationsByDate extends FenixDispatchAction {
                 }
             }
         }
-        request.setAttribute("availableRoomIndicationMsg", BundleUtil.getString(Bundle.RESOURCE_ALLOCATION,
-                "info.total.students.vs.available.seats", totalOfStudents.toString(), SpaceUtils.countAllAvailableSeatsForExams()
-                        .toString()));
+        request.setAttribute(
+                "availableRoomIndicationMsg",
+                BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "info.total.students.vs.available.seats",
+                        totalOfStudents.toString(), SpaceUtils.countAllAvailableSeatsForExams().toString()));
         request.setAttribute("writtenEvaluations", writtenEvaluations);
         return mapping.findForward("show");
     }

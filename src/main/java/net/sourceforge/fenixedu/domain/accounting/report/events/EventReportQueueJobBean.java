@@ -135,7 +135,8 @@ public class EventReportQueueJobBean implements Serializable {
     }
 
     public Set<AdministrativeOffice> getAvailableOffices() {
-        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_EVENT_REPORTS);
+        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_EVENT_REPORTS);
     }
 
     public Set<AdministrativeOffice> getAvailableOfficesForManager() {

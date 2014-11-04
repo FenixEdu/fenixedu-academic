@@ -122,7 +122,8 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     public double calculatePayedValue(final YearMonthDay date) {
-        final Collection<GratuityTransaction> transactions = (date == null ? getTransactionListSet() : getTransactionsUntil(date));
+        final Collection<GratuityTransaction> transactions =
+                (date == null ? getTransactionListSet() : getTransactionsUntil(date));
         BigDecimal result = BigDecimal.ZERO;
         for (final GratuityTransaction transaction : transactions) {
             result = result.add(transaction.getValueWithAdjustment());

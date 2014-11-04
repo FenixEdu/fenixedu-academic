@@ -62,8 +62,7 @@ public class OnlineTest extends OnlineTest_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getString(Bundle.APPLICATION, "label.online.test") + " "
-                + getDistributedTest().getEvaluationTitle();
+        return BundleUtil.getString(Bundle.APPLICATION, "label.online.test") + " " + getDistributedTest().getEvaluationTitle();
     }
 
 }

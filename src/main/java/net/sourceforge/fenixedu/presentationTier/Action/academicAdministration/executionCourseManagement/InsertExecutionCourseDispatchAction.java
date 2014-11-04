@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -53,6 +52,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -209,8 +209,6 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     private String errorStringBuilder(String property) {
-        return BundleUtil.getString(Bundle.MANAGER, "errors.required",
-                BundleUtil.getString(Bundle.APPLICATION, property))
-                + " ";
+        return BundleUtil.getString(Bundle.MANAGER, "errors.required", BundleUtil.getString(Bundle.APPLICATION, property)) + " ";
     }
 }

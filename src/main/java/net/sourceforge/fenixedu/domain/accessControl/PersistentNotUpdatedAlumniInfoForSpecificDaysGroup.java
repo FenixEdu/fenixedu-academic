@@ -40,8 +40,7 @@ public class PersistentNotUpdatedAlumniInfoForSpecificDaysGroup extends Persiste
 
     public static PersistentNotUpdatedAlumniInfoForSpecificDaysGroup getInstance(final Integer daysNotUpdated,
             final Boolean checkJobNotUpdated, final Boolean checkFormationNotUpdated, final Boolean checkPersonalDataNotUpdated) {
-        return singleton(
-                () -> select(daysNotUpdated, checkJobNotUpdated, checkFormationNotUpdated, checkPersonalDataNotUpdated),
+        return singleton(() -> select(daysNotUpdated, checkJobNotUpdated, checkFormationNotUpdated, checkPersonalDataNotUpdated),
                 () -> new PersistentNotUpdatedAlumniInfoForSpecificDaysGroup(daysNotUpdated, checkJobNotUpdated,
                         checkFormationNotUpdated, checkPersonalDataNotUpdated));
     }
@@ -50,7 +49,7 @@ public class PersistentNotUpdatedAlumniInfoForSpecificDaysGroup extends Persiste
             final Boolean checkJobNotUpdated, final Boolean checkFormationNotUpdated, final Boolean checkPersonalDataNotUpdated) {
         return filter(PersistentNotUpdatedAlumniInfoForSpecificDaysGroup.class).filter(
                 group -> group.getDaysNotUpdated() == daysNotUpdated && group.getCheckJobNotUpdated() == checkJobNotUpdated
-                && group.getCheckFormationNotUpdated() == checkFormationNotUpdated
-                && group.getCheckPersonalDataNotUpdated() == checkPersonalDataNotUpdated).findAny();
+                        && group.getCheckFormationNotUpdated() == checkFormationNotUpdated
+                        && group.getCheckPersonalDataNotUpdated() == checkPersonalDataNotUpdated).findAny();
     }
 }

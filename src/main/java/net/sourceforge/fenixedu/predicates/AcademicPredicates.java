@@ -45,24 +45,22 @@ public class AcademicPredicates {
     public static final AccessControlPredicate<Object> MANAGE_AUTHORIZATIONS = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_AUTHORIZATIONS)
-                    .isMember(Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_AUTHORIZATIONS).isMember(Authenticate.getUser());
         };
     };
 
     public static final AccessControlPredicate<Object> MANAGE_EQUIVALENCES = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_EQUIVALENCES)
-                    .isMember(Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_EQUIVALENCES).isMember(Authenticate.getUser());
         };
     };
 
     public static final AccessControlPredicate<Object> MANAGE_ACADEMIC_CALENDARS = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_ACADEMIC_CALENDARS)
-                    .isMember(Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_ACADEMIC_CALENDARS).isMember(
+                    Authenticate.getUser());
         };
     };
 
@@ -70,7 +68,8 @@ public class AcademicPredicates {
         @Override
         public boolean evaluate(final Object degree) {
             Set<Degree> allowedDegrees = new HashSet<Degree>();
-            allowedDegrees.addAll(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS));
+            allowedDegrees.addAll(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                    AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS));
             return allowedDegrees.contains(degree);
         };
     };
@@ -79,7 +78,8 @@ public class AcademicPredicates {
         @Override
         public boolean evaluate(final Object program) {
             Set<AcademicProgram> allowedPrograms = new HashSet<AcademicProgram>();
-            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_EXECUTION_COURSES));
+            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                    AcademicOperationType.MANAGE_EXECUTION_COURSES));
             return allowedPrograms.contains(program);
         };
     };
@@ -88,7 +88,8 @@ public class AcademicPredicates {
         @Override
         public boolean evaluate(final Object program) {
             Set<AcademicProgram> allowedPrograms = new HashSet<AcademicProgram>();
-            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV));
+            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                    AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV));
             return allowedPrograms.contains(program);
         };
     };
@@ -96,24 +97,21 @@ public class AcademicPredicates {
     public static final AccessControlPredicate<Object> CREATE_REGISTRATION = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.CREATE_REGISTRATION)
-                    .isMember(Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.CREATE_REGISTRATION).isMember(Authenticate.getUser());
         };
     };
 
     public static final AccessControlPredicate<Object> MANAGE_MARKSHEETS = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_MARKSHEETS).isMember(
-                    Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_MARKSHEETS).isMember(Authenticate.getUser());
         };
     };
 
     public static final AccessControlPredicate<Object> DISSERTATION_MARKSHEETS = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.DISSERTATION_MARKSHEETS)
-                    .isMember(Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.DISSERTATION_MARKSHEETS).isMember(Authenticate.getUser());
         };
     };
 
@@ -155,8 +153,7 @@ public class AcademicPredicates {
     public static final AccessControlPredicate<Object> SERVICE_REQUESTS = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.SERVICE_REQUESTS).isMember(
-                    Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.SERVICE_REQUESTS).isMember(Authenticate.getUser());
         };
     };
 
@@ -164,15 +161,16 @@ public class AcademicPredicates {
             new AccessControlPredicate<AcademicServiceRequest>() {
                 @Override
                 public boolean evaluate(final AcademicServiceRequest request) {
-                    return AcademicAuthorizationGroup.isAuthorized(AccessControl.getPerson(), request, AcademicOperationType.REPEAT_CONCLUSION_PROCESS);
+                    return AcademicAuthorizationGroup.isAuthorized(AccessControl.getPerson(), request,
+                            AcademicOperationType.REPEAT_CONCLUSION_PROCESS);
                 };
             };
 
     public static final AccessControlPredicate<Object> EDIT_STUDENT_PERSONAL_DATA = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA)
-                    .isMember(Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(
+                    Authenticate.getUser());
         };
     };
 
@@ -187,8 +185,7 @@ public class AcademicPredicates {
     public static final AccessControlPredicate<Object> MANAGE_STUDENT_PAYMENTS = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_STUDENT_PAYMENTS)
-                    .isMember(Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_STUDENT_PAYMENTS).isMember(Authenticate.getUser());
         };
     };
 
@@ -196,7 +193,8 @@ public class AcademicPredicates {
         @Override
         public boolean evaluate(final Object personToBeViewed) {
             Set<AcademicProgram> allowedPrograms = new HashSet<AcademicProgram>();
-            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_STUDENT_PAYMENTS_ADV));
+            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                    AcademicOperationType.MANAGE_STUDENT_PAYMENTS_ADV));
             Person person = (Person) personToBeViewed;
             // logic:
             //  if target person is student
@@ -243,23 +241,23 @@ public class AcademicPredicates {
     public static final AccessControlPredicate<Object> MANAGE_ENROLMENT_PERIODS = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object degree) {
-            return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_ENROLMENT_PERIODS).contains(degree);
+            return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                    AcademicOperationType.MANAGE_ENROLMENT_PERIODS).contains(degree);
         };
     };
 
     public static final AccessControlPredicate<Object> CREATE_SIBS_PAYMENTS_REPORT = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.CREATE_SIBS_PAYMENTS_REPORT)
-                    .isMember(Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.CREATE_SIBS_PAYMENTS_REPORT).isMember(
+                    Authenticate.getUser());
         };
     };
 
     public static final AccessControlPredicate<Object> MANAGE_PHD_PROCESSES = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES)
-                    .isMember(Authenticate.getUser());
+            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(Authenticate.getUser());
         };
     };
 
@@ -267,7 +265,7 @@ public class AcademicPredicates {
         @Override
         public boolean evaluate(final Object unused) {
             return AcademicAuthorizationGroup.get(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).isMember(
-                            Authenticate.getUser());
+                    Authenticate.getUser());
         };
     };
 }

@@ -89,7 +89,8 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
     }
 
     private String getMobilityProgramDescription() {
-        return isMobility() ? getDocumentRequest().getRegistration().getRegistrationProtocol().getDescription().getContent(getLocale()) : "";
+        return isMobility() ? getDocumentRequest().getRegistration().getRegistrationProtocol().getDescription()
+                .getContent(getLocale()) : "";
     }
 
     final private void mapCycles(final SortedSet<ICurriculumEntry> entries) {
@@ -159,11 +160,13 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
             final StringBuilder unit = new StringBuilder();
 
             unit.append(academicUnitId.getValue());
-            unit.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.external.curricular.courses.one"));
+            unit.append(SINGLE_SPACE).append(
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.external.curricular.courses.one"));
             unit.append(SINGLE_SPACE).append(getMLSTextContent(academicUnitId.getKey().getPartyName()).toUpperCase());
 
             if (description.length() > 0) {
-                unit.append(SINGLE_SPACE).append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.external.curricular.courses.two"));
+                unit.append(SINGLE_SPACE).append(
+                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.external.curricular.courses.two"));
                 unit.append(SINGLE_SPACE).append(description);
             }
             result.append(unit.toString());
@@ -224,8 +227,8 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
             getCreditsInfo(result, entry);
         }
         result.append(entry.getGradeValue());
-        result.append(StringUtils.rightPad("(" + BundleUtil.getString(Bundle.ENUMERATION, getLocale(), entry.getGradeValue()) + ")", SUFFIX_LENGTH,
-                ' '));
+        result.append(StringUtils.rightPad("(" + BundleUtil.getString(Bundle.ENUMERATION, getLocale(), entry.getGradeValue())
+                + ")", SUFFIX_LENGTH, ' '));
 
         result.append(", ");
 

@@ -232,7 +232,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(candidacy.getAvailablePaymentCodesSet()));
             request.setAttribute(
                     "firstInstallmentEndDate",
-                    calculateFirstInstallmentEndDate(candidacy.getRegistration(), getCandidacy(request).getAvailablePaymentCodesSet()));
+                    calculateFirstInstallmentEndDate(candidacy.getRegistration(), getCandidacy(request)
+                            .getAvailablePaymentCodesSet()));
             request.setAttribute("sibsEntityCode", FenixConfigurationManager.getConfiguration().getSibsEntityCode());
 
             final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration(), null);
@@ -261,12 +262,15 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             request.setAttribute("sibsEntityCode", FenixConfigurationManager.getConfiguration().getSibsEntityCode());
             request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
                     administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodesSet()));
-            request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request).getAvailablePaymentCodesSet()));
-            request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request).getAvailablePaymentCodesSet()));
+            request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)
+                    .getAvailablePaymentCodesSet()));
+            request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
+                    .getAvailablePaymentCodesSet()));
 
             request.setAttribute(
                     "firstInstallmentEndDate",
-                    calculateFirstInstallmentEndDate(getCandidacy(request).getRegistration(), getCandidacy(request).getAvailablePaymentCodesSet()));
+                    calculateFirstInstallmentEndDate(getCandidacy(request).getRegistration(), getCandidacy(request)
+                            .getAvailablePaymentCodesSet()));
 
             return mapping.findForward("printGratuityPaymentCodes");
 

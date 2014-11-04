@@ -63,8 +63,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.number"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.name"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.degree.code"));
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION,
-                "label.attends.enrollmentState"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.attends.enrollmentState"));
         final List<Evaluation> evaluations = executionCourse.getOrderedAssociatedEvaluations();
         for (final Evaluation evaluation : evaluations) {
             if (evaluation instanceof AdHocEvaluation) {
@@ -72,8 +71,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
                 spreadsheet.setHeader(adHocEvaluation.getName());
             } else if (evaluation instanceof FinalEvaluation) {
                 final FinalEvaluation finalEvaluation = (FinalEvaluation) evaluation;
-                spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION,
-                        "label.final.evaluation"));
+                spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, "label.final.evaluation"));
             } else if (evaluation instanceof OnlineTest) {
                 final OnlineTest onlineTest = (OnlineTest) evaluation;
                 spreadsheet.setHeader(onlineTest.getDistributedTest().getTitle());
@@ -82,8 +80,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
                 spreadsheet.setHeader(project.getName());
             } else if (evaluation instanceof Exam) {
                 final Exam exam = (Exam) evaluation;
-                spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, exam.getSeason()
-                        .getKey()));
+                spreadsheet.setHeader(BundleUtil.getString(Bundle.APPLICATION, exam.getSeason().getKey()));
             } else if (evaluation instanceof WrittenTest) {
                 final WrittenTest writtenTest = (WrittenTest) evaluation;
                 spreadsheet.setHeader(writtenTest.getDescription());
@@ -103,8 +100,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListWithGradesActionFor
                 final EnrolmentEvaluationType enrolmentEvaluationType = attends.getEnrolmentEvaluationType();
                 row.setCell(enrolmentEvaluationType.getDescription());
             } else {
-                row.setCell(BundleUtil.getString(Bundle.APPLICATION,
-                        "label.attends.enrollmentState.notEnrolled"));
+                row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.attends.enrollmentState.notEnrolled"));
             }
             for (final Evaluation evaluation : evaluations) {
                 final Mark mark = findMark(attends, evaluation);

@@ -192,27 +192,33 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 
         Formatter formatter = new Formatter(result);
 
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.process.id"), getCandidacyProcess().getProcessCode());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.process.id"), getCandidacyProcess()
+                .getProcessCode());
         PrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess().getPrecedentDegreeInformation();
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.previous.degree"),
+        formatter.format("%s: %s\n",
+                BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.previous.degree"),
                 precedentDegreeInformation.getDegreeDesignation());
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.conclusionDate"), precedentDegreeInformation.getConclusionDate());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.conclusionDate"),
+                precedentDegreeInformation.getConclusionDate());
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.institution"),
                 precedentDegreeInformation.getInstitution().getName());
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.conclusionGrade"), precedentDegreeInformation.getConclusionGrade());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.conclusionGrade"),
+                precedentDegreeInformation.getConclusionGrade());
         formatter.format("\n");
         formatter.format("%s: %f\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.affinity"),
                 getAffinity() != null ? getAffinity() : BigDecimal.ZERO);
         formatter.format("%s: %d\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.degreeNature"),
                 getDegreeNature() != null ? getDegreeNature() : 0);
-        formatter.format("%s: %f\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.candidacyGrade"),
+        formatter.format("%s: %f\n",
+                BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.candidacyGrade"),
                 getCandidacyGrade() != null ? getCandidacyGrade() : BigDecimal.ZERO);
         formatter.close();
     }
 
     @Override
     public String getDescription() {
-        return getCandidacyProcess().getDisplayName() + (getSelectedDegree() != null ? ": " + getSelectedDegree().getNameI18N() : "");
+        return getCandidacyProcess().getDisplayName()
+                + (getSelectedDegree() != null ? ": " + getSelectedDegree().getNameI18N() : "");
     }
 
     @Override

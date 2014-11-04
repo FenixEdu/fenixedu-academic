@@ -216,15 +216,16 @@ public class Unit extends Unit_Base {
     }
 
     private boolean canBeDeleted() {
-        return (getParentsSet().isEmpty() || (getParentsSet().size() == 1 && getParentUnits().size() == 1)) && getChildsSet().isEmpty()
-                && getFunctionsSet().isEmpty() && getVigilantGroupsSet().isEmpty() && getAssociatedNonAffiliatedTeachersSet().isEmpty()
-                && getPayedGuidesSet().isEmpty() && getPayedReceiptsSet().isEmpty() && getExternalCurricularCoursesSet().isEmpty()
-                && getUnitServiceAgreementTemplate() == null && getBoardsSet().isEmpty() && (getSite() == null || getSite().isDeletable())
-                && getOwnedReceiptsSet().isEmpty() && getPrecedentDegreeInformationsSet().isEmpty()
-                && getCandidacyPrecedentDegreeInformationsSet().isEmpty() && getExamCoordinatorsSet().isEmpty()
-                && getExternalRegistrationDatasSet().isEmpty() && getFilesSet().isEmpty() && getPersistentGroupsSet().isEmpty()
-                && getExternalCourseLoadRequestsSet().isEmpty() && getExternalProgramCertificateRequestsSet().isEmpty()
-                && getUnitGroupSet().isEmpty();
+        return (getParentsSet().isEmpty() || (getParentsSet().size() == 1 && getParentUnits().size() == 1))
+                && getChildsSet().isEmpty() && getFunctionsSet().isEmpty() && getVigilantGroupsSet().isEmpty()
+                && getAssociatedNonAffiliatedTeachersSet().isEmpty() && getPayedGuidesSet().isEmpty()
+                && getPayedReceiptsSet().isEmpty() && getExternalCurricularCoursesSet().isEmpty()
+                && getUnitServiceAgreementTemplate() == null && getBoardsSet().isEmpty()
+                && (getSite() == null || getSite().isDeletable()) && getOwnedReceiptsSet().isEmpty()
+                && getPrecedentDegreeInformationsSet().isEmpty() && getCandidacyPrecedentDegreeInformationsSet().isEmpty()
+                && getExamCoordinatorsSet().isEmpty() && getExternalRegistrationDatasSet().isEmpty() && getFilesSet().isEmpty()
+                && getPersistentGroupsSet().isEmpty() && getExternalCourseLoadRequestsSet().isEmpty()
+                && getExternalProgramCertificateRequestsSet().isEmpty() && getUnitGroupSet().isEmpty();
     }
 
     @Override

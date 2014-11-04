@@ -32,7 +32,8 @@ public class EnrolmentToBeApprovedByCoordinatorVerifier extends VerifyRuleExecut
     protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
             DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
 
-        if (AcademicAuthorizationGroup.getProgramsForOperation(enrolmentContext.getResponsiblePerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(enrolmentContext.getStudentCurricularPlan().getDegree())) {
+        if (AcademicAuthorizationGroup.getProgramsForOperation(enrolmentContext.getResponsiblePerson(),
+                AcademicOperationType.STUDENT_ENROLMENTS).contains(enrolmentContext.getStudentCurricularPlan().getDegree())) {
             return RuleResult.createTrue(degreeModuleToVerify);
         }
 

@@ -43,7 +43,8 @@ public class RegistrationPredicates {
                         return true;
                     }
 
-                    return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_CONCLUSION).contains(registration.getDegree());
+                    return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                            AcademicOperationType.MANAGE_CONCLUSION).contains(registration.getDegree());
                 }
             };
 

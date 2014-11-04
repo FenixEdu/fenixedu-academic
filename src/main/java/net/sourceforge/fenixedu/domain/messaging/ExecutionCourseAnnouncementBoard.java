@@ -178,9 +178,8 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 
     @Override
     public void logAddFile(FileContent attachment) {
-        ContentManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
-                "log.executionCourse.content.file.added", attachment.getDisplayName(), getExecutionCourse().getNome(),
-                getExecutionCourse().getDegreePresentationString());
+        ContentManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING, "log.executionCourse.content.file.added",
+                attachment.getDisplayName(), getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
     }
 
 }

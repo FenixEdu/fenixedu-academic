@@ -395,12 +395,14 @@ public class SearchPerson implements Serializable {
         }
 
         protected boolean verifyStudentNumber(Integer studentNumber, Person person) {
-            return (studentNumber == null || (person.getStudent() != null && person.getStudent().getNumber().equals(studentNumber)));
+            return (studentNumber == null || (person.getStudent() != null && person.getStudent().getNumber()
+                    .equals(studentNumber)));
         }
 
         protected boolean verifyMechanoGraphicalNumber(Integer mechanoGraphicalNumber, Person person) {
             return (mechanoGraphicalNumber == null
-                    || (person.getStudent() != null && person.getStudent().getNumber().equals(mechanoGraphicalNumber)) || (person.getEmployee() != null && person.getEmployee().getEmployeeNumber().equals(mechanoGraphicalNumber)));
+                    || (person.getStudent() != null && person.getStudent().getNumber().equals(mechanoGraphicalNumber)) || (person
+                    .getEmployee() != null && person.getEmployee().getEmployeeNumber().equals(mechanoGraphicalNumber)));
         }
 
         protected boolean verifyActiveState(Boolean activePersons, Person person) {

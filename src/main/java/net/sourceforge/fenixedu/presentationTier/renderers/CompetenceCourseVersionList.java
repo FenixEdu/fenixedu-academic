@@ -703,47 +703,37 @@ public class CompetenceCourseVersionList extends OutputRenderer {
                 if (isOldDepartmentMessageShown()) {
                     HtmlListItem item = list.createItem();
                     HtmlInlineContainer messageLine = new HtmlInlineContainer();
-                    HtmlText message =
-                            new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "current.department")
-                                    + ":");
+                    HtmlText message = new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "current.department") + ":");
                     message.setFace(Face.EMPHASIS);
                     messageLine.addChild(message);
-                    messageLine.addChild(new HtmlText(BundleUtil.getString(Bundle.BOLONHA,
-                            "current.department.caption")));
+                    messageLine.addChild(new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "current.department.caption")));
                     item.addChild(messageLine);
                 }
                 if (isFutureDepartmentMessageShown()) {
                     HtmlListItem item = list.createItem();
                     HtmlInlineContainer messageLine = new HtmlInlineContainer();
-                    HtmlText message =
-                            new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.department")
-                                    + ":");
+                    HtmlText message = new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.department") + ":");
                     message.setFace(Face.EMPHASIS);
                     messageLine.addChild(message);
-                    messageLine.addChild(new HtmlText(BundleUtil.getString(Bundle.BOLONHA,
-                            "future.department.caption")));
+                    messageLine.addChild(new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.department.caption")));
                     item.addChild(messageLine);
                 }
                 if (isFutureGroupMessageShown()) {
                     HtmlListItem item = list.createItem();
                     HtmlInlineContainer messageLine = new HtmlInlineContainer();
-                    HtmlText message =
-                            new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.group") + ":");
+                    HtmlText message = new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.group") + ":");
                     message.setFace(Face.EMPHASIS);
                     messageLine.addChild(message);
-                    messageLine.addChild(new HtmlText(BundleUtil.getString(Bundle.BOLONHA,
-                            "future.group.caption")));
+                    messageLine.addChild(new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.group.caption")));
                     item.addChild(messageLine);
                 }
                 if (isFutureTransferMessageShown()) {
                     HtmlListItem item = list.createItem();
                     HtmlInlineContainer messageLine = new HtmlInlineContainer();
-                    HtmlText message =
-                            new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.transfer") + ":");
+                    HtmlText message = new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.transfer") + ":");
                     message.setFace(Face.EMPHASIS);
                     messageLine.addChild(message);
-                    messageLine.addChild(new HtmlText(BundleUtil.getString(Bundle.BOLONHA,
-                            "future.transfer.caption")));
+                    messageLine.addChild(new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.transfer.caption")));
                     item.addChild(messageLine);
                 }
                 container.addChild(list);

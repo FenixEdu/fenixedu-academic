@@ -51,7 +51,6 @@ public class DeleteQualification extends PhdIndividualProgramProcessActivity {
         }
         final Person creator = qualification.getCreator();
         return creator == person
-                || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESS_STATE)
-                        .isMember(creator.getUser());
+                || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESS_STATE).isMember(creator.getUser());
     }
 }

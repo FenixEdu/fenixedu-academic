@@ -100,13 +100,14 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
         addParameter(
                 "secondParagraph",
                 "      "
-                        + BundleUtil.getString(Bundle.ACADEMIC, getLocale(), 
+                        + BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                                 "label.academicDocument.standaloneEnrolmentCertificate.secondParagraph"));
     }
 
     protected void fillSeventhParagraph() {
         String stringTemplate =
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.standaloneEnrolmentCertificate.seventhParagraph");
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                        "label.academicDocument.standaloneEnrolmentCertificate.seventhParagraph");
         addParameter("seventhParagraph", MessageFormat.format(stringTemplate, getDegreeDescription()));
     }
 
@@ -154,18 +155,21 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
         addParameter("signerLocation",
                 MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
 
-        stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.studentNumber");
+        stringTemplate =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.studentNumber");
         addParameter("studentNumber", MessageFormat.format(stringTemplate, student, registration.getNumber().toString()));
 
-        stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.documentNumber");
+        stringTemplate =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.documentNumber");
         addParameter("documentNumber",
                 MessageFormat.format(stringTemplate, getDocumentRequest().getServiceRequestNumber().toString().trim()));
 
         addParameter("page", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.page"));
-        addParameter("pageOf", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.pageOf"));
+        addParameter("pageOf",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.pageOf"));
 
-        addParameter("checkedBy",
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.standaloneEnrolmentCertificate.checkedBy"));
+        addParameter("checkedBy", BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                "label.academicDocument.standaloneEnrolmentCertificate.checkedBy"));
     }
 
     protected void fillPriceTags() {

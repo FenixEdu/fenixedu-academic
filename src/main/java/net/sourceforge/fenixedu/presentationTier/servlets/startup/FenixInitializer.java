@@ -121,7 +121,8 @@ public class FenixInitializer implements ServletContextListener {
                     long start = System.currentTimeMillis();
                     InquiryCourseAnswer.connectToRegistrationProtocols();
                     long end = System.currentTimeMillis();
-                    logger.info("Transfer registration agreements to protocols for all InquiryCourseAnswer objects took: " + (end - start) + "ms.");
+                    logger.info("Transfer registration agreements to protocols for all InquiryCourseAnswer objects took: "
+                            + (end - start) + "ms.");
                 }
             };
             t.start();

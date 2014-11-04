@@ -72,7 +72,8 @@ public class ViewFilesDA extends UnitFunctionalities {
         List<PersonFileSource> result = new ArrayList<PersonFileSource>();
 
         MultiLanguageString departmentsName =
-                new MultiLanguageString().with(MultiLanguageString.pt, "Departamentos").with(MultiLanguageString.en, "Departments");
+                new MultiLanguageString().with(MultiLanguageString.pt, "Departamentos").with(MultiLanguageString.en,
+                        "Departments");
         PersonFileSourceGroupBean departmentsGroup = new PersonFileSourceGroupBean(departmentsName);
 
         SortedSet<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
@@ -82,7 +83,8 @@ public class ViewFilesDA extends UnitFunctionalities {
         }
 
         MultiLanguageString researchUnitsName =
-                new MultiLanguageString().with(MultiLanguageString.pt, "Unidades de Investigação").with(MultiLanguageString.en, "Research Units");
+                new MultiLanguageString().with(MultiLanguageString.pt, "Unidades de Investigação").with(MultiLanguageString.en,
+                        "Research Units");
         PersonFileSourceGroupBean researchUnitsGroup = new PersonFileSourceGroupBean(researchUnitsName);
 
         SortedSet<Unit> researchUnits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
@@ -92,7 +94,8 @@ public class ViewFilesDA extends UnitFunctionalities {
         }
 
         MultiLanguageString scientificAreaName =
-                new MultiLanguageString().with(MultiLanguageString.pt, "Áreas Ciêntificas").with(MultiLanguageString.en, "Scientific Areas");
+                new MultiLanguageString().with(MultiLanguageString.pt, "Áreas Ciêntificas").with(MultiLanguageString.en,
+                        "Scientific Areas");
         PersonFileSourceGroupBean scientificAreaUnits = new PersonFileSourceGroupBean(scientificAreaName);
 
         SortedSet<Unit> scientificAreas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);

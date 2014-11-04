@@ -329,7 +329,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected void disconnect() {
-        for (; !getAcademicServiceRequestSituationsSet().isEmpty(); getAcademicServiceRequestSituationsSet().iterator().next().delete()) {
+        for (; !getAcademicServiceRequestSituationsSet().isEmpty(); getAcademicServiceRequestSituationsSet().iterator().next()
+                .delete()) {
             ;
         }
         super.setAdministrativeOffice(null);

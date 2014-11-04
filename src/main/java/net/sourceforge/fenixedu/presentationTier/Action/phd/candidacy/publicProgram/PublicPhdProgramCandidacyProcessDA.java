@@ -81,7 +81,8 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
     }
 
     protected boolean isValidatedByCandidate(final PhdProgramPublicCandidacyHashCode hashCode) {
-        return hashCode.getPhdProgramCandidacyProcess() != null && hashCode.getIndividualProgramProcess().isValidatedByCandidate();
+        return hashCode.getPhdProgramCandidacyProcess() != null
+                && hashCode.getIndividualProgramProcess().isValidatedByCandidate();
     }
 
     protected void canEditPersonalInformation(final HttpServletRequest request, final Person person) {

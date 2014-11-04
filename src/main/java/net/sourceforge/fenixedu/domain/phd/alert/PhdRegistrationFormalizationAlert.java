@@ -87,8 +87,7 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
     @Override
     protected void generateMessage() {
         final Group group =
-                AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this
-        .getProcess().getPhdProgram());
+                AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram());
 
         Set<Person> members = FluentIterable.from(group.getMembers()).transform(Person.userToPerson).toSet();
         new PhdAlertMessage(getProcess(), members, getFormattedSubject(), getFormattedBody());

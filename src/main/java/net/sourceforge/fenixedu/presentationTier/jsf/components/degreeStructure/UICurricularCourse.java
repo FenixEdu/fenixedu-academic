@@ -169,8 +169,8 @@ public class UICurricularCourse extends UIDegreeModule {
             writer.writeAttribute("class", "highlight2 smalltxt", null);
             writer.writeAttribute("align", "center", null);
             writer.writeAttribute("style", "width: 1em;", null);
-            writer.append(BundleUtil.getString(Bundle.ENUMERATION,  this.curricularCourse.getRegime(this.executionYear)
-                    .toString() + ".ACRONYM"));
+            writer.append(BundleUtil.getString(Bundle.ENUMERATION, this.curricularCourse.getRegime(this.executionYear).toString()
+                    + ".ACRONYM"));
         } else {
             writer.append("&nbsp;");
         }

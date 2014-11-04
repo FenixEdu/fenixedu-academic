@@ -76,7 +76,8 @@ public class InquiryTeachersResultsResumeRenderer extends OutputRenderer {
                 }
                 teacherId = " (" + teacherId + ") - ";
 
-                labelCell.setBody(new HtmlText(BundleUtil.getString(Bundle.ENUMERATION, summaryBean.getQuestionResult().getShiftType().name())
+                labelCell.setBody(new HtmlText(BundleUtil.getString(Bundle.ENUMERATION, summaryBean.getQuestionResult()
+                        .getShiftType().name())
                         + person.getName() + teacherId));
             }
             return mainTable;

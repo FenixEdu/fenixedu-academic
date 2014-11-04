@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
@@ -87,8 +87,7 @@ public class NotUpdatedAlumniInfoForSpecificDaysGroup extends FenixGroup {
             iter++;
         }
         if (checkPersonalDataNotUpdated) {
-            args[iter] =
-                    BundleUtil.getString(getPresentationNameBundle(), "label.name.alumni.personalDataInfo");
+            args[iter] = BundleUtil.getString(getPresentationNameBundle(), "label.name.alumni.personalDataInfo");
             iter++;
         }
         if (iter == 2) {

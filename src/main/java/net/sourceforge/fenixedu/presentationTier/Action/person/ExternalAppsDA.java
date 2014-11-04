@@ -266,14 +266,12 @@ public class ExternalAppsDA extends FenixDispatchAction {
     private String getServiceAgreementHtml() {
         final InputStream resourceAsStream = getClass().getResourceAsStream("/api/serviceAgreement.html");
         if (resourceAsStream == null) {
-            return BundleUtil
-                    .getString(Bundle.APPLICATION, "oauthapps.default.service.agreement");
+            return BundleUtil.getString(Bundle.APPLICATION, "oauthapps.default.service.agreement");
         }
         try {
             return new String(ByteStreams.toByteArray(resourceAsStream));
         } catch (IOException e) {
-            return BundleUtil
-                    .getString(Bundle.APPLICATION, "oauthapps.default.service.agreement");
+            return BundleUtil.getString(Bundle.APPLICATION, "oauthapps.default.service.agreement");
         }
     }
 

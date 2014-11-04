@@ -62,7 +62,8 @@ public class CandidacyProcessSelectDegreesBean implements Serializable {
 
     protected Collection<Degree> filterDegrees(Collection<Degree> degrees) {
         final Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_CANDIDACY_PROCESSES);
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.MANAGE_CANDIDACY_PROCESSES);
         return Collections2.filter(degrees, new Predicate<Degree>() {
             @Override
             public boolean apply(Degree degree) {

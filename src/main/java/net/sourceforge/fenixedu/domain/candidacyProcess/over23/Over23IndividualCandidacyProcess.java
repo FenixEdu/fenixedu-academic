@@ -164,7 +164,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     static private boolean isAllowedToManageProcess(Over23IndividualCandidacyProcess process, User userView) {
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
         if (process == null || process.getCandidacy() == null) {
             return false;
@@ -575,7 +576,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     }
 
     private boolean requireFiscalIdDoc() {
-        final Boolean doNotRequireFiscalIdDocument = getCandidacy().getCandidacyProcess().getCandidacyProcess().getDoNotRequireFiscalIdDocument();
+        final Boolean doNotRequireFiscalIdDocument =
+                getCandidacy().getCandidacyProcess().getCandidacyProcess().getDoNotRequireFiscalIdDocument();
         return doNotRequireFiscalIdDocument == null || !doNotRequireFiscalIdDocument.booleanValue();
     }
 

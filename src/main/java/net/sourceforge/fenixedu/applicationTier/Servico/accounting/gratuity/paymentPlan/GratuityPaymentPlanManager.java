@@ -57,7 +57,7 @@ public class GratuityPaymentPlanManager {
 
         if (paymentPlanBean.isForAlien()) {
             return new FullGratuityPaymentPlanForAliens(paymentPlanBean.getExecutionYear(),
-                    degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());            
+                    degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
         }
 
         if (paymentPlanBean.isForPartialRegime()) {

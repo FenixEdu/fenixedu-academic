@@ -37,7 +37,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
 
 @Mapping(module = "publico", path = "/findSpaces", attribute = "findSpacesForm", formBean = "findSpacesForm", scope = "request",
-parameter = "method")
+        parameter = "method")
 @Forwards(value = { @Forward(name = "listFoundSpaces", path = "list-found-spaces"),
         @Forward(name = "viewSelectedSpace", path = "view-selected-space") })
 public class FindSpacesDA extends FenixDispatchAction {

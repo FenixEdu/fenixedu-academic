@@ -46,7 +46,7 @@ public class PersistentDelegateStudentsGroup extends PersistentDelegateStudentsG
     public static PersistentDelegateStudentsGroup getInstance(PersonFunction delegateFunction, FunctionType type) {
         return singleton(
                 () -> delegateFunction.getDelegateStudentsGroupSet().stream()
-                .filter(group -> Objects.equals(group.getType(), type)).findAny(),
+                        .filter(group -> Objects.equals(group.getType(), type)).findAny(),
                 () -> new PersistentDelegateStudentsGroup(delegateFunction, type));
     }
 }

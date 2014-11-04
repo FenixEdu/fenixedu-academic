@@ -34,12 +34,12 @@ import net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean.De
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.portal.EntryPoint;
 
@@ -62,7 +62,8 @@ public class ManageDepartmentCreditsPool extends FenixDispatchAction {
     protected DepartmentCreditsBean getDepartmentCreditsBean() {
         User userView = Authenticate.getUser();
         DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
-        departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(userView.getPerson().getManageableDepartmentCreditsSet()));
+        departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(userView.getPerson()
+                .getManageableDepartmentCreditsSet()));
         return departmentCreditsBean;
     }
 
@@ -144,19 +145,13 @@ public class ManageDepartmentCreditsPool extends FenixDispatchAction {
             String sheetname) {
         spreadsheet.getSheet(sheetname);
         spreadsheet.newHeaderRow();
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.course"),
-                10000);
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.course"), 10000);
         spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.degrees"));
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                "label.execution-period"));
-        spreadsheet.addHeader(BundleUtil
-                .getString(Bundle.TEACHER_CREDITS, "label.effortRate"));
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                "label.departmentEffectiveLoad"));
-        spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                "label.totalEffectiveLoad"));
-        spreadsheet.addHeader(BundleUtil
-                .getString(Bundle.TEACHER_CREDITS, "label.unitCredit"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.execution-period"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.effortRate"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.departmentEffectiveLoad"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.totalEffectiveLoad"));
+        spreadsheet.addHeader(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.unitCredit"));
         for (DepartmentExecutionCourse departmentExecutionCourse : executionCourses) {
             spreadsheet.newRow();
             spreadsheet.addCell(departmentExecutionCourse.getExecutionCourse().getName());

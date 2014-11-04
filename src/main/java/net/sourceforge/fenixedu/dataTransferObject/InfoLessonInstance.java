@@ -48,8 +48,8 @@ public class InfoLessonInstance extends InfoShowOccupation {
 
     @Override
     public InfoRoomOccupation getInfoRoomOccupation() {
-        return getLessonInstance().getLessonInstanceSpaceOccupation() != null ? InfoRoomOccupation.newInfoFromDomain(getLessonInstance()
-                .getLessonInstanceSpaceOccupation()) : null;
+        return getLessonInstance().getLessonInstanceSpaceOccupation() != null ? InfoRoomOccupation
+                .newInfoFromDomain(getLessonInstance().getLessonInstanceSpaceOccupation()) : null;
     }
 
     @Override
@@ -87,8 +87,7 @@ public class InfoLessonInstance extends InfoShowOccupation {
 
     public String getShiftTypesPrettyPrint() {
         if (getLessonInstance().getCourseLoad() != null) {
-            return BundleUtil.getString(Bundle.ENUMERATION, getLessonInstance().getCourseLoad()
-                    .getType().getName());
+            return BundleUtil.getString(Bundle.ENUMERATION, getLessonInstance().getCourseLoad().getType().getName());
         } else {
             return getLessonInstance().getLesson().getShift().getShiftTypesPrettyPrint();
         }

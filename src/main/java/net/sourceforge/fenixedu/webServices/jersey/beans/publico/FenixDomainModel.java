@@ -102,24 +102,25 @@ public class FenixDomainModel {
     private static void addDomainRelation(final JsonArray array, final DomainRelation domainRelation) {
         final JsonObject object = new JsonObject();
         object.addProperty("name", domainRelation.getFullName());
-        
+
         final JsonArray roles = new JsonArray();
         for (final Role role : domainRelation.getRoles()) {
             final JsonObject roleObject = new JsonObject();
             roleObject.addProperty("type", role.getType().getFullName());
             final String name = role.getName();
             if (name != null) {
-                roleObject.addProperty("name", name);    
+                roleObject.addProperty("name", name);
             }
             final JsonArray modifiers = new JsonArray();
             for (final Modifier modifier : role.getModifiers()) {
                 modifiers.add(new JsonPrimitive(modifier.name()));
             }
-            roleObject.add("modifiers", modifiers); 
+            roleObject.add("modifiers", modifiers);
             final int multiplicityLower = role.getMultiplicityLower();
             roleObject.add("multiplicityLower", new JsonPrimitive(Integer.toString(multiplicityLower)));
             final int multiplicityUpper = role.getMultiplicityUpper();
-            roleObject.add("multiplicityUpper", new JsonPrimitive(multiplicityUpper < 0 ? "*" : Integer.toString(multiplicityUpper)));
+            roleObject.add("multiplicityUpper",
+                    new JsonPrimitive(multiplicityUpper < 0 ? "*" : Integer.toString(multiplicityUpper)));
 
             roles.add(roleObject);
         }

@@ -33,7 +33,8 @@ public class CreditsPredicates {
         public boolean evaluate(final Credits credits) {
 
             boolean authorizedIfConcluded =
-                    AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(
+                    AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                            AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(
                             credits.getStudentCurricularPlan().getDegree());
 
             for (final Dismissal dismissal : credits.getDismissalsSet()) {

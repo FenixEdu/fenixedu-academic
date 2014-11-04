@@ -106,8 +106,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
 
             /* A student can have a GGAE delegate role too */
             if (person.getActiveGGAEDelegatePersonFunction() != null) {
-                groups.add(DelegatesGroup.get(person.getActiveGGAEDelegatePersonFunction().getFunction()
-                .getFunctionType()));
+                groups.add(DelegatesGroup.get(person.getActiveGGAEDelegatePersonFunction().getFunction().getFunctionType()));
             }
         } else {
             delegateFunction = person.getActiveGGAEDelegatePersonFunction();

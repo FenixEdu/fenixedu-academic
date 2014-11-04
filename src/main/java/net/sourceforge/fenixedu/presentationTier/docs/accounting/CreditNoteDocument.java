@@ -99,8 +99,8 @@ public class CreditNoteDocument extends FenixReport {
         addParameter("total", this.creditNote.getTotalAmount().toPlainString());
 
         addParameter("original", this.original);
-        addParameter("studentNumber", this.creditNote.getReceipt().getPerson().getStudent() != null ? this.creditNote.getReceipt()
-                .getPerson().getStudent().getNumber().toString() : null);
+        addParameter("studentNumber", this.creditNote.getReceipt().getPerson().getStudent() != null ? this.creditNote
+                .getReceipt().getPerson().getStudent().getNumber().toString() : null);
 
         addDataSourceElements(buildEntries());
 

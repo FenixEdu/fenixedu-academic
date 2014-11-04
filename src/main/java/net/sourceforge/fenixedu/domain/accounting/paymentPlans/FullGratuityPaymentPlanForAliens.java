@@ -50,11 +50,9 @@ public class FullGratuityPaymentPlanForAliens extends FullGratuityPaymentPlanFor
 
     @Override
     protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
-        return Arrays.asList(
-                PaymentPlanRuleFactory.create(IsAlienRule.class),
+        return Arrays.asList(PaymentPlanRuleFactory.create(IsAlienRule.class),
                 PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class),
-                PaymentPlanRuleFactory.create(FirstTimeInstitutionStudentsPaymentPlanRule.class)
-        );
+                PaymentPlanRuleFactory.create(FirstTimeInstitutionStudentsPaymentPlanRule.class));
     }
 
     @Override

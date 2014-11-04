@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Bundle;
+
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class DegreeTeachingServiceCorrection extends DegreeTeachingServiceCorrection_Base {
@@ -44,10 +45,9 @@ public class DegreeTeachingServiceCorrection extends DegreeTeachingServiceCorrec
         }
         setCorrectedExecutionSemester(correctedExecutionSemester != null ? correctedExecutionSemester : teacherService
                 .getExecutionPeriod());
-        new TeacherServiceLog(getTeacherService(), BundleUtil.getString(
-                Bundle.TEACHER_CREDITS, "label.teacher.schedule.correction", getProfessorship()
-                        .getExecutionCourse().getName(), getProfessorship().getExecutionCourse().getDegreePresentationString(),
-                getReason(), correctionString));
+        new TeacherServiceLog(getTeacherService(), BundleUtil.getString(Bundle.TEACHER_CREDITS,
+                "label.teacher.schedule.correction", getProfessorship().getExecutionCourse().getName(), getProfessorship()
+                        .getExecutionCourse().getDegreePresentationString(), getReason(), correctionString));
     }
 
     @Override

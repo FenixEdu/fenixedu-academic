@@ -125,10 +125,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
                 new ArrayList<ShiftType>(executionCourseAttendsBean.getExecutionCourse().getShiftTypes());
         Collections.sort(shiftTypes);
         for (final ShiftType shiftType : shiftTypes) {
-            fileContents +=
-                    SHIFT
-                            + BundleUtil.getString(Bundle.ENUMERATION, 
-                                    shiftType.getName()) + SEPARATOR;
+            fileContents += SHIFT + BundleUtil.getString(Bundle.ENUMERATION, shiftType.getName()) + SEPARATOR;
         }
 
         fileContents += NEWLINE;
@@ -145,9 +142,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
                                 .getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionPeriod()) + SEPARATOR;
             }
             fileContents +=
-                    BundleUtil.getString(Bundle.ENUMERATION, 
-                            attends.getAttendsStateType().getQualifiedName())
-                            + SEPARATOR;
+                    BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()) + SEPARATOR;
             fileContents += attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getName() + SEPARATOR;
             fileContents += attends.getRegistration().getStudent().getPerson().getName() + SEPARATOR;
             for (final Grouping grouping : groupings) {

@@ -31,8 +31,10 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -54,12 +56,10 @@ public class EditSupportLesson {
         SupportLesson supportLesson = FenixFramework.getDomainObject(supportLessonDTO.getExternalId());
         if (supportLesson == null) {
             supportLesson = new SupportLesson(supportLessonDTO, professorship, roleType);
-            log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                    "label.teacher.schedule.supportLessons.create"));
+            log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.teacher.schedule.supportLessons.create"));
         } else {
             supportLesson.update(supportLessonDTO, roleType);
-            log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                    "label.teacher.schedule.supportLessons.change"));
+            log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.teacher.schedule.supportLessons.change"));
         }
 
         log.append(WeekDay.getWeekDay(supportLessonDTO.getWeekDay()).getLabel());

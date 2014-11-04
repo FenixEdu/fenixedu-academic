@@ -502,7 +502,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
             }
             registration = bean.getRegistration();
         } else {
-            registration = new Registration(getPerson(), dcp, getCandidacy(), RegistrationProtocol.getDefault(), null, executionYear);
+            registration =
+                    new Registration(getPerson(), dcp, getCandidacy(), RegistrationProtocol.getDefault(), null, executionYear);
         }
 
         return registration;

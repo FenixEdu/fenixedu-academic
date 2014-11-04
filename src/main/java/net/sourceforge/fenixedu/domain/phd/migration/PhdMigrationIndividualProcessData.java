@@ -453,7 +453,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
         candidacyBean.setExecutionYear(getExecutionYear());
         candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasSet().size() == 1) ? getProcessBean()
-        .getPhdProgram().getPhdProgramFocusAreasSet().iterator().next() : null);
+                .getPhdProgram().getPhdProgramFocusAreasSet().iterator().next() : null);
 
         final PhdIndividualProgramProcess individualProcess =
                 (PhdIndividualProgramProcess) CreateNewProcess.run(PhdIndividualProgramProcess.class, candidacyBean);

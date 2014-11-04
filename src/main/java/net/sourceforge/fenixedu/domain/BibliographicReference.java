@@ -21,12 +21,12 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class BibliographicReference extends BibliographicReference_Base {
 
@@ -67,13 +67,9 @@ public class BibliographicReference extends BibliographicReference_Base {
         ExecutionCourse executionCourse = getExecutionCourse();
         final String type;
         if (optional) {
-            type =
-                    BundleUtil.getString(Bundle.APPLICATION,
-                            "option.bibliographicReference.optional");
+            type = BundleUtil.getString(Bundle.APPLICATION, "option.bibliographicReference.optional");
         } else {
-            type =
-                    BundleUtil.getString(Bundle.APPLICATION,
-                            "option.bibliographicReference.recommended");
+            type = BundleUtil.getString(Bundle.APPLICATION, "option.bibliographicReference.recommended");
         }
         CurricularManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.curricular.bibliographic.edited", type, title, executionCourse.getName(),
@@ -87,13 +83,9 @@ public class BibliographicReference extends BibliographicReference_Base {
 
         final String type;
         if (optional) {
-            type =
-                    BundleUtil.getString(Bundle.APPLICATION,
-                            "option.bibliographicReference.optional");
+            type = BundleUtil.getString(Bundle.APPLICATION, "option.bibliographicReference.optional");
         } else {
-            type =
-                    BundleUtil.getString(Bundle.APPLICATION,
-                            "option.bibliographicReference.recommended");
+            type = BundleUtil.getString(Bundle.APPLICATION, "option.bibliographicReference.recommended");
         }
 
         CurricularManagementLog.createLog(executionCourse, Bundle.MESSAGING,

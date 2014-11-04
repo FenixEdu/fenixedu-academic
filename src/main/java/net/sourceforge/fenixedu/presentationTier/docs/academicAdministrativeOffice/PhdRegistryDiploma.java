@@ -64,13 +64,15 @@ public class PhdRegistryDiploma extends RegistryDiploma {
 
         String dateWord[] = getDateByWords(request.getConclusionDate());
 
-        String fourthParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdfourthParagraph");
+        String fourthParagraph =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdfourthParagraph");
 
         addParameter("fourthParagraph", MessageFormat.format(fourthParagraph, dateWord[0], dateWord[1], dateWord[2]));
 
         String fifthParagraph;
         if (getUniversity(new DateTime()) != getUniversity(getDocumentRequest().getConclusionDate().toDateTimeAtCurrentTime())) {
-            fifthParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdFifthParagraph.UTL");
+            fifthParagraph =
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdFifthParagraph.UTL");
             addParameter("by", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.by.university"));
         } else {
             fifthParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdFifthParagraph");
@@ -89,8 +91,9 @@ public class PhdRegistryDiploma extends RegistryDiploma {
     }
 
     private MultiLanguageString getThesisTitleI18N() {
-        return new MultiLanguageString(MultiLanguageString.pt, getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitle()).with(
-                MultiLanguageString.en, getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitleEn());
+        return new MultiLanguageString(MultiLanguageString.pt, getDocumentRequest().getPhdIndividualProgramProcess()
+                .getThesisTitle()).with(MultiLanguageString.en, getDocumentRequest().getPhdIndividualProgramProcess()
+                .getThesisTitleEn());
     }
 
     @Override
@@ -113,10 +116,14 @@ public class PhdRegistryDiploma extends RegistryDiploma {
 
         PhdRegistryDiplomaRequest phdRequest = getDocumentRequest();
 
-        String secondParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdSecondParagraph");
-        addParameter("secondParagraph", MessageFormat.format(secondParagraph, studentGender,
-                BundleUtil.getString(Bundle.ENUMERATION, getLocale(), person.getIdDocumentType().getName()), person.getDocumentIdNumber(), country,
-                phdRequest.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(getLanguage())));
+        String secondParagraph =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdSecondParagraph");
+        addParameter(
+                "secondParagraph",
+                MessageFormat.format(secondParagraph, studentGender,
+                        BundleUtil.getString(Bundle.ENUMERATION, getLocale(), person.getIdDocumentType().getName()),
+                        person.getDocumentIdNumber(), country, phdRequest.getPhdIndividualProgramProcess().getPhdProgram()
+                                .getName().getContent(getLanguage())));
     }
 
 }

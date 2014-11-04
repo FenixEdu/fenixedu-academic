@@ -41,10 +41,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.predicates.WrittenTestPredicates;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -253,9 +253,8 @@ public class WrittenTest extends WrittenTest_Base {
         }
 
         for (ExecutionCourse ec : getAssociatedExecutionCoursesSet()) {
-            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
-                    "log.executionCourse.evaluation.generic.edited.rooms", getPresentationName(), ec.getName(),
-                    ec.getDegreePresentationString());
+            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.evaluation.generic.edited.rooms",
+                    getPresentationName(), ec.getName(), ec.getDegreePresentationString());
         }
 
     }
@@ -296,8 +295,7 @@ public class WrittenTest extends WrittenTest_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getString(Bundle.APPLICATION, "label.written.test") + " "
-                + getDescription();
+        return BundleUtil.getString(Bundle.APPLICATION, "label.written.test") + " " + getDescription();
     }
 
 }

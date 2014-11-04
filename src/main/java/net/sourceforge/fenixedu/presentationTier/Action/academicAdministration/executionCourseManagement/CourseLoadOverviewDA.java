@@ -28,11 +28,11 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExecutionsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -70,11 +70,9 @@ public class CourseLoadOverviewDA extends FenixDispatchAction {
         final StyledExcelSpreadsheet spreadsheet = bean.getInconsistencySpreadsheet();
 
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader(
-                "Content-disposition",
-                "attachment; filename="
-                        + BundleUtil.getString(Bundle.ACADEMIC,
-                                "label.course.load.inconsistency.filename") + ".xls");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" + BundleUtil.getString(Bundle.ACADEMIC, "label.course.load.inconsistency.filename")
+                        + ".xls");
 
         try {
             final ServletOutputStream writer = response.getOutputStream();

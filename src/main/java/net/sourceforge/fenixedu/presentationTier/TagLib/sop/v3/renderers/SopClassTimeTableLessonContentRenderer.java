@@ -35,8 +35,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 
@@ -72,13 +72,13 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
             strBuffer.append("&nbsp;(");
             strBuffer.append("<a href='");
             strBuffer.append(context).append("/resourceAllocationManager/")
-            .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
-            .append(infoShift.getExternalId()).append("&amp;execution_course_oid=")
-            .append(infoExecutionCourse.getExternalId()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
-            .append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
-            .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
-            .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
-            .append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
+                    .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
+                    .append(infoShift.getExternalId()).append("&amp;execution_course_oid=")
+                    .append(infoExecutionCourse.getExternalId()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
+                    .append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
+                    .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
+                    .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
+                    .append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
 
             final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
@@ -105,13 +105,13 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
             strBuffer.append("&nbsp;(");
             strBuffer.append("<a href='");
             strBuffer.append(context).append("/resourceAllocationManager/")
-            .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
-            .append(infoShift.getExternalId()).append("&amp;execution_course_oid=")
-            .append(infoExecutionCourse.getExternalId()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
-            .append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
-            .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
-            .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
-            .append(lesson.getShiftTypeCodesPrettyPrint()).append("</a>").append(")&nbsp;");
+                    .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
+                    .append(infoShift.getExternalId()).append("&amp;execution_course_oid=")
+                    .append(infoExecutionCourse.getExternalId()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
+                    .append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
+                    .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
+                    .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
+                    .append(lesson.getShiftTypeCodesPrettyPrint()).append("</a>").append(")&nbsp;");
 
             if (lesson.getInfoRoomOccupation() != null) {
                 /*strBuffer.append(" <a href='");
@@ -131,13 +131,13 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
             strBuffer.append("&nbsp;(");
             strBuffer.append("<a href='");
             strBuffer.append(context).append("/resourceAllocationManager/")
-            .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
-            .append(shift.getExternalId()).append("&amp;execution_course_oid=").append(executionCourse.getExternalId())
-            .append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
-            .append(executionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
-            .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
-            .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
-            .append(shift.getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
+                    .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
+                    .append(shift.getExternalId()).append("&amp;execution_course_oid=").append(executionCourse.getExternalId())
+                    .append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
+                    .append(executionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
+                    .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
+                    .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
+                    .append(shift.getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
 
             final Space allocatableSpace = aggregation.getAllocatableSpace();
             if (allocatableSpace != null) {

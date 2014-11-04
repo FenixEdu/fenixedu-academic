@@ -1129,7 +1129,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return result;
     }
 
-    public boolean hasEnrolmentInCurricularCourseBefore(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+    public boolean hasEnrolmentInCurricularCourseBefore(final CurricularCourse curricularCourse,
+            final ExecutionSemester executionSemester) {
         for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
@@ -1155,7 +1156,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
                 if (!enrolment.isAnnulled()
                         && enrolment.getExecutionPeriod().isBefore(executionSemester)
                         && enrolment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment()
-                        .equalsIgnoreCase(curricularCourse.getCurricularCourseUniqueKeyForEnrollment())) {
+                                .equalsIgnoreCase(curricularCourse.getCurricularCourseUniqueKeyForEnrollment())) {
                     result++;
                 }
             } else if (curriculumModule instanceof CurriculumGroup) {

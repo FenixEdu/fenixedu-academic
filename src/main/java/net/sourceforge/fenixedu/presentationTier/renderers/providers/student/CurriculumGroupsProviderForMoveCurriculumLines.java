@@ -68,7 +68,8 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
         }
 
         final Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS);
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.STUDENT_ENROLMENTS);
 
         return Collections2.filter(result, new Predicate<CurriculumGroup>() {
             @Override

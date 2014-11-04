@@ -674,7 +674,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     public void setBolonhaStudentEnrollmentBean(BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
         this.bolonhaStudentEnrollmentBean = bolonhaStudentEnrollmentBean;
         this.canPerformStudentEnrolments =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.STUDENT_ENROLMENTS).contains(
                         bolonhaStudentEnrollmentBean.getStudentCurricularPlan().getDegree());
     }
 

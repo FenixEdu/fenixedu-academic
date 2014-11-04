@@ -18,13 +18,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
+import java.util.Base64;
+
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Base64;
 
 import com.google.common.base.Joiner;
 

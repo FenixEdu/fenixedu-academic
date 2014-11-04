@@ -406,8 +406,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         SelectItem selectItem = null;
         for (UnitClassification classification : UnitClassification.values()) {
             selectItem = new SelectItem();
-            selectItem
-                    .setLabel(BundleUtil.getString(Bundle.ENUMERATION, classification.getName()));
+            selectItem.setLabel(BundleUtil.getString(Bundle.ENUMERATION, classification.getName()));
             selectItem.setValue(classification.getName());
             list.add(selectItem);
         }
@@ -1016,9 +1015,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             for (Accountability accountability : unit.getParentsSet()) {
                 String accountabilityTypeName = accountability.getAccountabilityType().getType().getName();
                 if (accountability.getParentParty().isUnit()) {
-                    getUnitRelationsAccountabilityTypes()
-                            .put(accountability.getExternalId(),
-                                    BundleUtil.getString(Bundle.ENUMERATION, accountabilityTypeName));
+                    getUnitRelationsAccountabilityTypes().put(accountability.getExternalId(),
+                            BundleUtil.getString(Bundle.ENUMERATION, accountabilityTypeName));
                 }
             }
         }
@@ -1035,12 +1033,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                         getUnitRelationsAccountabilityTypes().put(
                                 subUnitExternalId,
                                 getUnitRelationsAccountabilityTypes().get(subUnitExternalId).concat(
-                                        ", "
-                                                + BundleUtil.getString(Bundle.ENUMERATION, accountabilityTypeName)));
+                                        ", " + BundleUtil.getString(Bundle.ENUMERATION, accountabilityTypeName)));
                     } else {
-                        getUnitRelationsAccountabilityTypes()
-                                .put(subUnitExternalId,
-                                        (BundleUtil.getString(Bundle.ENUMERATION, accountabilityTypeName)));
+                        getUnitRelationsAccountabilityTypes().put(subUnitExternalId,
+                                (BundleUtil.getString(Bundle.ENUMERATION, accountabilityTypeName)));
                     }
                 }
             }

@@ -44,7 +44,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -55,6 +54,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -203,10 +203,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         });
 
         Collections.sort(executionDegreeList, new BeanComparator("label"));
-        executionDegreeList.add(
-                0,
-                new LabelValueBean(BundleUtil.getString(Bundle.RENDERER,
-                        "renderers.menu.default.title"), ""));
+        executionDegreeList.add(0, new LabelValueBean(BundleUtil.getString(Bundle.RENDERER, "renderers.menu.default.title"), ""));
     }
 
     public ActionForward changeDestinationContext(ActionMapping mapping, ActionForm form, HttpServletRequest request,

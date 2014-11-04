@@ -76,7 +76,8 @@ public class CoordinatorProjectsInformationBackingBean extends CoordinatorEvalua
                     linkLabel = new StringBuilder(20);
                     linkLabel.append(executionCourse.getSigla());
                     linkLabel.append(" (").append(sdf.format(project.getBegin())).append(")");
-                    linkLabel.append("<br/>").append(BundleUtil.getString(Bundle.APPLICATION, "label.coordinator.enrolmentBegin"));
+                    linkLabel.append("<br/>")
+                            .append(BundleUtil.getString(Bundle.APPLICATION, "label.coordinator.enrolmentBegin"));
                     calendarLinkBegin.setObjectLinkLabel(linkLabel.toString());
 
                     final CalendarLink calendarLinkEnd = new CalendarLink();

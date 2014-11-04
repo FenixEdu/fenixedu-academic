@@ -77,7 +77,8 @@ public class ThesisPredicates {
                 public boolean evaluate(Thesis thesis) {
                     Person person = AccessControl.getPerson();
                     return (person.getStudent() == thesis.getStudent() && thesis.isWaitingConfirmation())
-                            || (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_MARKSHEETS).contains(thesis.getDegree()))
+                            || (AcademicAuthorizationGroup.getProgramsForOperation(person,
+                                    AcademicOperationType.MANAGE_MARKSHEETS).contains(thesis.getDegree()))
                             || person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
                 }
 

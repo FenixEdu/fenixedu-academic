@@ -196,8 +196,8 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
         @Override
         public int hashCode() {
             if (!isRegistration()) {
-                return getPhdIndividualProgramProcess().getRegistration() != null ? getPhdIndividualProgramProcess().getRegistration()
-                        .hashCode() : getPhdIndividualProgramProcess().hashCode();
+                return getPhdIndividualProgramProcess().getRegistration() != null ? getPhdIndividualProgramProcess()
+                        .getRegistration().hashCode() : getPhdIndividualProgramProcess().hashCode();
             } else {
                 return getRegistration().hashCode();
             }

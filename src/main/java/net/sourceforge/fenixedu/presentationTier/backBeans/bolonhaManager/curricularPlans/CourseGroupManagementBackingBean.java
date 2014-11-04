@@ -201,10 +201,9 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 
     public String getIfBranchShowType() {
         if (isBranch()) {
-            return "<p class=\"mtop25\">" + BundleUtil.getString(Bundle.BOLONHA, "branchType") + ": "
-                    + "<em><strong>"
-                    + ((BranchCourseGroup) getCourseGroup()).getBranchType().getDescription(I18N.getLocale())
-                    + "</strong></em>" + "</p>";
+            return "<p class=\"mtop25\">" + BundleUtil.getString(Bundle.BOLONHA, "branchType") + ": " + "<em><strong>"
+                    + ((BranchCourseGroup) getCourseGroup()).getBranchType().getDescription(I18N.getLocale()) + "</strong></em>"
+                    + "</p>";
         }
         return "";
     }

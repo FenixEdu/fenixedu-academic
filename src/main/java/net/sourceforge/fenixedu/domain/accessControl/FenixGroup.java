@@ -19,9 +19,9 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.groups.CustomGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public abstract class FenixGroup extends CustomGroup {
     private static final long serialVersionUID = 4626331181392986508L;
@@ -29,8 +29,7 @@ public abstract class FenixGroup extends CustomGroup {
     @Override
     public String getPresentationName() {
         final String name =
-                BundleUtil.getString(getPresentationNameBundle(), getPresentationNameKey(),
-                        getPresentationNameKeyArgs());
+                BundleUtil.getString(getPresentationNameBundle(), getPresentationNameKey(), getPresentationNameKeyArgs());
         return name != null ? name : getExpression();
     }
 

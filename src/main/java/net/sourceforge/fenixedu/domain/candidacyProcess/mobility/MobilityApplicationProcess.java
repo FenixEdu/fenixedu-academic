@@ -784,13 +784,14 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
                 for (MobilityProgram mobilityProgram : candidacyPeriod.getMobilityPrograms()) {
                     for (MobilityEmailTemplate mobilityEmailTemplate : mobilityProgram.getEmailTemplatesSet()) {
                         if (mobilityEmailTemplate.getType().equals(MobilityEmailTemplateType.MISSING_SHIFTS)) {
-                            throw new DomainException("error.missing.shifts.template.not.found", mobilityProgram.getName().getContent());
+                            throw new DomainException("error.missing.shifts.template.not.found", mobilityProgram.getName()
+                                    .getContent());
                         }
                     }
                 }
             }
 
-            emailTemplateFor.sendMultiEmailFor(process.getProcessesMissingShifts());            
+            emailTemplateFor.sendMultiEmailFor(process.getProcessesMissingShifts());
             return process;
         }
 

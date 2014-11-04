@@ -130,7 +130,8 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
         final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         Set<Degree> degreesForMarksheets =
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_MARKSHEETS);
+                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.MANAGE_MARKSHEETS);
 
         for (final DegreeCurricularPlan dcp : dcps) {
             if (degreesForMarksheets.contains(dcp.getDegree())) {

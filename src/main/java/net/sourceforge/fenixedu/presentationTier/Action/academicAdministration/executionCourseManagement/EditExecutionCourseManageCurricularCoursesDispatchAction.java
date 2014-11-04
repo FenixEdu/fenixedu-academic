@@ -49,7 +49,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -59,6 +58,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -145,8 +145,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         }
 
         List<LabelValueBean> degrees = new ArrayList<LabelValueBean>();
-        degrees.add(new LabelValueBean(BundleUtil.getString(Bundle.RENDERER,
-                "renderers.menu.default.title"), ""));
+        degrees.add(new LabelValueBean(BundleUtil.getString(Bundle.RENDERER, "renderers.menu.default.title"), ""));
 
         Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
         buildExecutionDegreeLabelValueBean(executionDegreeList, degrees);

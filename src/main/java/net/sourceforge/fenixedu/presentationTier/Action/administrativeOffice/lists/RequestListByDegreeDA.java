@@ -97,8 +97,10 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private DegreeByExecutionYearBean getOrCreateDegreeSearchBean() {
         DegreeByExecutionYearBean bean = getRenderedObject("degreeByExecutionYearBean");
-        return (bean != null) ? bean : new DegreeByExecutionYearBean(AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS),
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS));
+        return (bean != null) ? bean : new DegreeByExecutionYearBean(AcademicAuthorizationGroup.getDegreeTypesForOperation(
+                AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS),
+                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.SERVICE_REQUESTS));
     }
 
     private DocumentRequestSearchBean getOrCreateRequestSearchBean() {
@@ -139,9 +141,11 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
             final DocumentRequestSearchBean requestSearchBean, Set<RegistrationAcademicServiceRequest> resultList,
             final ArrayList<AcademicServiceRequest> requestList) {
         Set<AcademicProgram> accessiblePrograms =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS);
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.SERVICE_REQUESTS);
         Set<DegreeType> accessibleDegreeTypes =
-                AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS);
+                AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.SERVICE_REQUESTS);
 
         final Degree chosenDegree = degreeSearchBean.getDegree();
         final DegreeType chosenDegreeType = degreeSearchBean.getDegreeType();

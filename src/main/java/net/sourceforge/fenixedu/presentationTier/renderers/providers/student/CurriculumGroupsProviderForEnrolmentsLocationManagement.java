@@ -49,7 +49,8 @@ public class CurriculumGroupsProviderForEnrolmentsLocationManagement implements 
         final Set<DegreeModule> result = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
 
         final Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS);
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.STUDENT_ENROLMENTS);
 
         for (final Registration registration : bean.getStudent().getRegistrationsSet()) {
 

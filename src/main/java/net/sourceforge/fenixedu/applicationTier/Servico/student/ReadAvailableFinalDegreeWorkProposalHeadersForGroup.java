@@ -57,7 +57,8 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup {
             final Set<Proposal> finalDegreeWorkProposals = group.getExecutionDegree().getScheduling().findPublishedProposals();
 
             for (final Proposal proposal : finalDegreeWorkProposals) {
-                if (!CollectionUtils.exists(group.getGroupProposalsSet(), new PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(proposal))) {
+                if (!CollectionUtils
+                        .exists(group.getGroupProposalsSet(), new PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(proposal))) {
                     result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal));
                 }
             }

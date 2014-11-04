@@ -316,8 +316,10 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
                     protected void makeLine(IEctsConversionTable table) {
                         CompetenceCourse competence = (CompetenceCourse) table.getTargetEntity();
                         addCell(BundleUtil.getString(Bundle.GEP, "label.externalId"), competence.getExternalId());
-                        addCell(BundleUtil.getString(Bundle.GEP, "label.departmentUnit.name"), competence.getDepartmentUnit().getName());
-                        addCell(BundleUtil.getString(Bundle.GEP, "label.competenceCourse.name"), competence.getName(querySemester));
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.departmentUnit.name"), competence.getDepartmentUnit()
+                                .getName());
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.competenceCourse.name"),
+                                competence.getName(querySemester));
                         addCell(BundleUtil.getString(Bundle.GEP, "label.acronym"), competence.getAcronym(querySemester));
                         addCell(BundleUtil.getString(Bundle.GEP, "label.externalId"), competence.getExternalId());
                         Set<String> ids = new HashSet<String>();
@@ -329,7 +331,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
                                 }
                             }
                         }
-                        addCell(BundleUtil.getString(Bundle.GEP, "label.competenceCourse.executionCodes"), StringUtils.join(ids, ", "));
+                        addCell(BundleUtil.getString(Bundle.GEP, "label.competenceCourse.executionCodes"),
+                                StringUtils.join(ids, ", "));
                         EctsComparabilityTable ects = table.getEctsTable();
                         for (int i = 10; i <= 20; i++) {
                             addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
@@ -571,7 +574,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
                 addCell(BundleUtil.getString(Bundle.GEP, "label.externalId"), degree.getExternalId());
                 addCell(BundleUtil.getString(Bundle.GEP, "label.degreeType"), degree.getDegreeType().getLocalizedName());
                 addCell(BundleUtil.getString(Bundle.GEP, "label.name"), degree.getName());
-                addCell(BundleUtil.getString(Bundle.GEP, "label.cycle"), table.getCycle() != null ? table.getCycle().ordinal() + 1 : null);
+                addCell(BundleUtil.getString(Bundle.GEP, "label.cycle"),
+                        table.getCycle() != null ? table.getCycle().ordinal() + 1 : null);
                 EctsComparabilityTable ects = table.getEctsTable();
                 for (int i = 10; i <= 20; i++) {
                     addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);

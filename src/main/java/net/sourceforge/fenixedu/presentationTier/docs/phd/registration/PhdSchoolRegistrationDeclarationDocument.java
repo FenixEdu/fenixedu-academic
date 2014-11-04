@@ -74,7 +74,9 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
     private String getRegistrationStateLabel() {
         final Gender gender = getPerson().getGender();
-        return gender == Gender.MALE ? BundleUtil.getString(Bundle.PHD, "label.phd.schoolRegistrationDeclaration.registered.male") : BundleUtil.getString(Bundle.PHD, "label.phd.schoolRegistrationDeclaration.registered.female");
+        return gender == Gender.MALE ? BundleUtil
+                .getString(Bundle.PHD, "label.phd.schoolRegistrationDeclaration.registered.male") : BundleUtil.getString(
+                Bundle.PHD, "label.phd.schoolRegistrationDeclaration.registered.female");
     }
 
     private Person getPerson() {

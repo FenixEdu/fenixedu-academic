@@ -38,7 +38,7 @@ public class CurricularPeriodLabelFormatter {
         StringBuilder result = new StringBuilder();
         while (curricularPeriod.getParent() != null) {
             buildLabel(curricularPeriod, result, abbreviated, locale);
-            
+
             curricularPeriod = curricularPeriod.getParent();
             if (curricularPeriod.getParent() != null) {
                 result.insert(0, ", ");

@@ -88,13 +88,15 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
             builder.append(element.getCategory());
 
             if (!StringUtils.isEmpty(element.getWorkLocation())) {
-                builder.append(" ").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.keyword.of")).append(" ")
-                        .append(element.getWorkLocation());
+                builder.append(" ")
+                        .append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.keyword.of"))
+                        .append(" ").append(element.getWorkLocation());
             }
 
             if (!StringUtils.isEmpty(element.getInstitution())) {
-                builder.append(" ").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.keyword.of")).append(" ")
-                        .append(element.getInstitution());
+                builder.append(" ")
+                        .append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.keyword.of"))
+                        .append(" ").append(element.getInstitution());
             }
 
             if (element.getExpert()) {
@@ -104,11 +106,15 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
             builder.append(";");
 
             if (element.isAssistantGuiding()) {
-                builder.append(" (").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.assistantGuiding")).append(")");
+                builder.append(" (")
+                        .append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.assistantGuiding"))
+                        .append(")");
             } else if (element.isMainGuiding()) {
-                builder.append(" (").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.guiding")).append(")");
+                builder.append(" (").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.guiding"))
+                        .append(")");
             } else if (element.getReporter()) {
-                builder.append(" - ").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.reporter"));
+                builder.append(" - ")
+                        .append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.reporter"));
             }
 
             return builder.toString();

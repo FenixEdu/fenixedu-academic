@@ -304,19 +304,23 @@ public class YearDelegateElection extends YearDelegateElection_Base {
                     DelegateElectionVotingPeriod votingPeriod = election.getLastVotingPeriod();
                     spreadsheet.newHeaderRow();
                     int fistHeaderRow = spreadsheet.getRow().getRowNum();
-                    spreadsheet.addHeader(String.format("%s - %s (%s)", BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.curricularYear"),
-                            election.getCurricularYear().getYear(), votingPeriod.getPeriod()), 10000);
+                    spreadsheet.addHeader(String.format("%s - %s (%s)", BundleUtil.getString(Bundle.PEDAGOGICAL,
+                            "label.elections.excel.curricularYear"), election.getCurricularYear().getYear(), votingPeriod
+                            .getPeriod()), 10000);
                     spreadsheet.getSheet().addMergedRegion(new Region(fistHeaderRow, (short) 0, fistHeaderRow, (short) 5));
                     spreadsheet.newRow();
                     if (votingPeriod.getVotesSet().size() == 0) {
                         spreadsheet.addCell(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.not.have.votes"));
                     } else {
-                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.studentNumber"), 6000);
-                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.studentName"), 10000);
+                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.studentNumber"),
+                                6000);
+                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.studentName"),
+                                10000);
                         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.phone"), 4000);
                         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.email"), 6000);
                         spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.address"), 12000);
-                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.nrTotalVotes"), 5000);
+                        spreadsheet.addHeader(BundleUtil.getString(Bundle.PEDAGOGICAL, "label.elections.excel.nrTotalVotes"),
+                                5000);
                         List<DelegateElectionResultsByStudentDTO> resultsByStudent =
                                 sortByResults(votingPeriod.getDelegateElectionResults());
                         for (DelegateElectionResultsByStudentDTO resultByStudent : resultsByStudent) {

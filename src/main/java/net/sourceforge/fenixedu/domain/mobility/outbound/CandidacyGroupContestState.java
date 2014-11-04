@@ -19,8 +19,8 @@
 package net.sourceforge.fenixedu.domain.mobility.outbound;
 
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.Interval;
 
 public enum CandidacyGroupContestState {

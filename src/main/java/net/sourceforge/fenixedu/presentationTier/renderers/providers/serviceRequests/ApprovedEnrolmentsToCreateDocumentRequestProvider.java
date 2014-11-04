@@ -50,7 +50,8 @@ public class ApprovedEnrolmentsToCreateDocumentRequestProvider implements DataPr
         final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
 
         Set<Degree> degrees =
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS);
+                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.SERVICE_REQUESTS);
         SortedSet<Enrolment> aprovedEnrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_NAME_AND_ID);
         for (Degree degree : degrees) {
             for (final Registration registration : documentRequestCreateBean.getStudent().getRegistrationsFor(degree)) {

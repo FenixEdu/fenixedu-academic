@@ -27,7 +27,9 @@ import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeacherResponsibleOfExecutionCourseGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.Bundle;
+
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ExecutionCourseSender extends ExecutionCourseSender_Base {

@@ -83,8 +83,10 @@ public class Formation extends Formation_Base {
     public void exportValues(StringBuilder result) {
         Formatter formatter = new Formatter(result);
         formatter.format("\n%s:\n", BundleUtil.getString(Bundle.CANDIDATE, "title.other.academic.titles"));
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.other.academic.titles.program.name"), getDesignation());
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.other.academic.titles.institution"), getInstitution().getName());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.other.academic.titles.program.name"),
+                getDesignation());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.other.academic.titles.institution"),
+                getInstitution().getName());
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.other.academic.titles.conclusion.date"),
                 StringUtils.isEmpty(getYear()) ? StringUtils.EMPTY : getYear());
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.other.academic.titles.conclusion.grade"),

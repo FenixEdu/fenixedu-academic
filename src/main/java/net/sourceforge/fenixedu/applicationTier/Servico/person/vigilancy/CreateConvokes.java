@@ -33,9 +33,9 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -72,12 +72,12 @@ public class CreateConvokes {
             String beginDateString = date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear();
 
             String subject =
-                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.subject", new String[] {
-                            group.getEmailSubjectPrefix(), writtenEvaluation.getName(), group.getName(), beginDateString });
+                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.subject", new String[] { group.getEmailSubjectPrefix(),
+                            writtenEvaluation.getName(), group.getName(), beginDateString });
 
             new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(
-                    UserGroup.of(Person.convertToUsers(recievers))).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
-                    emailMessage, bccs);
+                    UserGroup.of(Person.convertToUsers(recievers))).asCollection(), Collections.EMPTY_LIST,
+                    Collections.EMPTY_LIST, subject, emailMessage, bccs);
         }
     }
 }

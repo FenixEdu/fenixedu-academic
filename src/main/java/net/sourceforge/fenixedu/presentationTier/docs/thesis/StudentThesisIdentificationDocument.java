@@ -137,7 +137,7 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
         private static LineProcessor instance = new LineProcessor();
 
         private static String[][] FIELD_LINE_MAP = { { "textField-title", "13", "line-title-2" },
-            { "textField-subtitle", "13", "line-subtitle-2" } };
+                { "textField-subtitle", "13", "line-subtitle-2" } };
 
         private static float LINE_DISTANCE = 11.5f;
 

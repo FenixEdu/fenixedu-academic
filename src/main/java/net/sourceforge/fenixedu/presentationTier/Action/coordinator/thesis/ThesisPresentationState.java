@@ -78,8 +78,8 @@ public enum ThesisPresentationState {
     }
 
     private static boolean areAllDocumentsSubmitted(final Thesis thesis) {
-        return thesis.isThesisAbstractInBothLanguages() && thesis.isKeywordsInBothLanguages() && thesis.getExtendedAbstract() != null
-                && thesis.getDissertation() != null && thesis.getDiscussed() != null;
+        return thesis.isThesisAbstractInBothLanguages() && thesis.isKeywordsInBothLanguages()
+                && thesis.getExtendedAbstract() != null && thesis.getDissertation() != null && thesis.getDiscussed() != null;
     }
 
     public String getName() {

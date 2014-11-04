@@ -58,9 +58,13 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
         String student;
         if (registration.getStudent().getPerson().isMale()) {
-            student = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.enrolment.declaration.maleEnrolment");
+            student =
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                            "label.academicDocument.enrolment.declaration.maleEnrolment");
         } else {
-            student = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.enrolment.declaration.femaleEnrolment");
+            student =
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                            "label.academicDocument.enrolment.declaration.femaleEnrolment");
         }
 
         addParameter("enrolmentsInfo", getEnrolmentsInfo());
@@ -82,10 +86,14 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
         if (postingRule instanceof EnrolmentCertificateRequestPR) {
             final EnrolmentCertificateRequestPR requestPR = (EnrolmentCertificateRequestPR) postingRule;
-            addParameter("printed", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.printingPriceLabel"));
-            addParameter("printPriceLabel", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.issuingPriceLabel"));
-            addParameter("urgency", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.fastDeliveryPriceLabel"));
-            addParameter("total", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.totalsPriceLabel"));
+            addParameter("printed",
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.printingPriceLabel"));
+            addParameter("printPriceLabel",
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.issuingPriceLabel"));
+            addParameter("urgency", BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                    "label.academicDocument.certificate.fastDeliveryPriceLabel"));
+            addParameter("total",
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.totalsPriceLabel"));
             addParameter("amountPerPage", requestPR.getAmountPerPage());
             addParameter("baseAmountPlusAmountForUnits", calculateAmountToPayPlusUnits(request, requestPR));
             addParameter("urgencyAmount", request.getUrgentRequest() ? requestPR.getBaseAmount() : Money.ZERO);
@@ -99,7 +107,8 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
         String institutionName = getInstitutionName();
         String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
         String universityName = getUniversityName(new DateTime());
-        String stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.firstParagraph");
+        String stringTemplate =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.firstParagraph");
 
         addParameter(
                 "firstParagraph",
@@ -108,21 +117,26 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
                                 adminOfficeName.toUpperCase(getLocale()), institutionName.toUpperCase(getLocale()),
                                 universityName.toUpperCase(getLocale())));
 
-        addParameter("certificate",
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.standaloneEnrolmentCertificate.secondParagraph"));
+        addParameter("certificate", BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                "label.academicDocument.standaloneEnrolmentCertificate.secondParagraph"));
     }
 
     private void fillthirdthParagraph(Registration registration, EnrolmentCertificateRequest request, String student) {
         String situation = "";
         if (request.getExecutionYear() != null) {
-            situation = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");
+            situation =
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                            getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");
 
         }
 
         String detailed =
-                request.getDetailed() ? BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.enrolmentCertificate.detailed") : ".";
-        String executionYear = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "message.declaration.registration.execution.year.prefix");
-        String stringTemplate1 = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "message.academicDocument.enrolmentCertificate");
+                request.getDetailed() ? BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                        "label.academicDocument.enrolmentCertificate.detailed") : ".";
+        String executionYear =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "message.declaration.registration.execution.year.prefix");
+        String stringTemplate1 =
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "message.academicDocument.enrolmentCertificate");
         addParameter(
                 "secondParagraph",
                 MessageFormat.format(stringTemplate1, situation, student, executionYear, getDocumentRequest().getExecutionYear()
@@ -170,8 +184,10 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
             final Integer curricularYear =
                     Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(getExecutionYear()));
 
-            result.append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), curricularYear.toString() + ".ordinal").toUpperCase());
-            result.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.enrolment.declaration.curricularYear"));
+            result.append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), curricularYear.toString() + ".ordinal")
+                    .toUpperCase());
+            result.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                    "label.academicDocument.enrolment.declaration.curricularYear"));
         }
 
         return result.toString();

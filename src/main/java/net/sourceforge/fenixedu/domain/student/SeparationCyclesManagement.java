@@ -158,7 +158,8 @@ public class SeparationCyclesManagement {
     private void moveInquiriesRegistries(final StudentCurricularPlan oldStudentCurricularPlan, final Registration newRegistration) {
         Set<ExecutionCourse> oldExecutionCourses = oldStudentCurricularPlan.getRegistration().getAttendingExecutionCoursesFor();
         Set<ExecutionCourse> newExecutionCourses = newRegistration.getAttendingExecutionCoursesFor();
-        for (InquiriesRegistry inquiriesRegistry : oldStudentCurricularPlan.getRegistration().getAssociatedInquiriesRegistriesSet()) {
+        for (InquiriesRegistry inquiriesRegistry : oldStudentCurricularPlan.getRegistration()
+                .getAssociatedInquiriesRegistriesSet()) {
             if (!oldExecutionCourses.contains(inquiriesRegistry.getExecutionCourse())
                     && newExecutionCourses.contains(inquiriesRegistry.getExecutionCourse())
                     && !newRegistration.hasInquiryResponseFor(inquiriesRegistry.getExecutionCourse())) {

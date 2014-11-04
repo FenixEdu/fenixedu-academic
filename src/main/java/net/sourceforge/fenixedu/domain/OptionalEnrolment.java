@@ -107,8 +107,9 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     @Override
     public MultiLanguageString getName() {
         final ExecutionSemester executionSemester = getExecutionPeriod();
-        return new MultiLanguageString().with(MultiLanguageString.pt, this.getOptionalCurricularCourse().getName(executionSemester)).with(
-                MultiLanguageString.en, this.getOptionalCurricularCourse().getNameEn(executionSemester));
+        return new MultiLanguageString().with(MultiLanguageString.pt,
+                this.getOptionalCurricularCourse().getName(executionSemester)).with(MultiLanguageString.en,
+                this.getOptionalCurricularCourse().getNameEn(executionSemester));
     }
 
     @Override

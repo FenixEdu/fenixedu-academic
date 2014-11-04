@@ -31,9 +31,8 @@ public class ChangeConvokeStatus {
     public static void run(Vigilancy vigilancy, AttendingStatus status) {
         vigilancy.setStatus(status);
         for (ExecutionCourse ec : vigilancy.getAssociatedExecutionCourses()) {
-            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
-                    "log.executionCourse.evaluation.generic.edited.vigilancy", vigilancy.getWrittenEvaluation()
-                            .getPresentationName(), ec.getName(), ec.getDegreePresentationString());
+            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.evaluation.generic.edited.vigilancy",
+                    vigilancy.getWrittenEvaluation().getPresentationName(), ec.getName(), ec.getDegreePresentationString());
         }
     }
 }

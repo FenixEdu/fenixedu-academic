@@ -38,10 +38,10 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -71,7 +71,7 @@ public class DeleteWrittenEvaluation {
 
     private void disconnectExamCertificateRequests(WrittenEvaluation writtenEvaluationToDelete) {
         Exam examToDelete = (Exam) writtenEvaluationToDelete;
-        for(ExamDateCertificateRequest examDateCertificateRequest : examToDelete.getExamDateCertificateRequestsSet()){
+        for (ExamDateCertificateRequest examDateCertificateRequest : examToDelete.getExamDateCertificateRequestsSet()) {
             examDateCertificateRequest.removeExams(examToDelete);
         }
     }
@@ -87,19 +87,18 @@ public class DeleteWrittenEvaluation {
             String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
 
             String subject =
-                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.subject", new String[] {
-                            writtenEvaluation.getName(), group.getName(), beginDateString, time });
+                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.subject", new String[] { writtenEvaluation.getName(),
+                            group.getName(), beginDateString, time });
             String body =
-                    BundleUtil.getString(Bundle.VIGILANCY,
-                            "label.writtenEvaluationDeletedMessage", new String[] { writtenEvaluation.getName(), beginDateString,
-                                    time });
+                    BundleUtil.getString(Bundle.VIGILANCY, "label.writtenEvaluationDeletedMessage", new String[] {
+                            writtenEvaluation.getName(), beginDateString, time });
             for (Vigilancy vigilancy : writtenEvaluation.getVigilanciesSet()) {
                 Person person = vigilancy.getVigilantWrapper().getPerson();
                 tos.add(person);
             }
             Sender sender = Bennu.getInstance().getSystemSender();
-            new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(),
-                    new Recipient(UserGroup.of(Person.convertToUsers(tos))).asCollection(), subject, body, "");
+            new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(), new Recipient(UserGroup.of(Person
+                    .convertToUsers(tos))).asCollection(), subject, body, "");
 
         }
     }

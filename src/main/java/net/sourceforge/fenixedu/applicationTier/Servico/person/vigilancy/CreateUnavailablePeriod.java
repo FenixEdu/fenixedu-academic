@@ -29,9 +29,9 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -63,12 +63,12 @@ public class CreateUnavailablePeriod {
                             + String.format("%02d", end.getHourOfDay()) + ":" + String.format("%02d", end.getMinuteOfHour())
                             + "h";;
             String message =
-                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.unavailablePeriod",
-                            new String[] { person.getName(), beginDate, endDate, justification });
+                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.unavailablePeriod", new String[] { person.getName(),
+                            beginDate, endDate, justification });
 
             String subject =
-                    BundleUtil.getString(Bundle.VIGILANCY,
-                            "email.convoke.unavailablePeriod.subject", new String[] { group.getName() });
+                    BundleUtil.getString(Bundle.VIGILANCY, "email.convoke.unavailablePeriod.subject",
+                            new String[] { group.getName() });
 
             Sender sender = Bennu.getInstance().getSystemSender();
             new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(), Collections.EMPTY_LIST, subject,

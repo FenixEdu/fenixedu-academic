@@ -396,7 +396,8 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
                     ExecutionCourse executionCourse = executionCourseMap.getFirst().getKey();
                     final Row row = spreadsheet.addRow();
                     row.setCell(masterDegreeCreditsDTO.getCurricularCourse().getName());
-                    row.setCell(BundleUtil.getString(Bundle.ENUMERATION, masterDegreeCreditsDTO.getCurricularCourse().getType().name()));
+                    row.setCell(BundleUtil.getString(Bundle.ENUMERATION, masterDegreeCreditsDTO.getCurricularCourse().getType()
+                            .name()));
                     row.setCell(masterDegreeCreditsDTO.getCurricularCourse().getCredits().toString());
                     row.setCell(String.valueOf(executionCourseMap.getSecond()));
                     row.setCell(String.valueOf(executionCourseMap.getThird()));

@@ -173,7 +173,8 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     private void setInfoDegreesToManage(final HttpServletRequest request, final User userView) throws FenixServiceException {
 
         final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        degrees.addAll(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_EQUIVALENCES));
+        degrees.addAll(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_EQUIVALENCES));
         request.setAttribute("infoDegrees", degrees);
     }
 

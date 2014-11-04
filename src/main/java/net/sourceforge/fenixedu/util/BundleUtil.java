@@ -34,22 +34,27 @@ public class BundleUtil {
     private static final String APPLICATION_MODULE = "Application";
     private static final String ENUMERATION_MODULE = "Enumeration";
 
-    @Deprecated // remove on move to major version 4.0.0
+    @Deprecated
+    // remove on move to major version 4.0.0
     public static final String ENUMERATION_BUNDLE = Bundle.ENUMERATION;
-    @Deprecated // remove on move to major version 4.0.0
+    @Deprecated
+    // remove on move to major version 4.0.0
     public static final String APPLICATION_BUNDLE = Bundle.APPLICATION;
 
-    @Deprecated // remove on move to major version 4.0.0
+    @Deprecated
+    // remove on move to major version 4.0.0
     public static String getStringFromResourceBundle(final String bundle, final String key, String... args) {
         return org.fenixedu.bennu.core.i18n.BundleUtil.getString(bundle, key, args);
     }
 
-    @Deprecated // remove on move to major version 4.0.0
+    @Deprecated
+    // remove on move to major version 4.0.0
     public static String getStringFromResourceBundle(final String bundle, final Locale locale, final String key, String... args) {
         return org.fenixedu.bennu.core.i18n.BundleUtil.getString(bundle, locale, key, args);
     }
 
-    @Deprecated // remove on move to major version 4.0.0
+    @Deprecated
+    // remove on move to major version 4.0.0
     public static String getMessageFromModuleOrApplication(final String moduleName, final String key, final String... arguments) {
         try {
             return MessageFormat.format(getResourceBundleByModuleName(moduleName).getString(key), (Object[]) arguments);
@@ -63,12 +68,14 @@ public class BundleUtil {
         }
     }
 
-    @Deprecated // remove on move to major version 4.0.0
+    @Deprecated
+    // remove on move to major version 4.0.0
     public static String getEnumName(final Enum<?> enumeration) {
         return getEnumName(enumeration, ENUMERATION_MODULE);
     }
 
-    @Deprecated // remove on move to major version 4.0.0
+    @Deprecated
+    // remove on move to major version 4.0.0
     public static String getEnumName(final Enum<?> enumeration, final String moduleName) {
         String enumFullName = enumeration.getClass().getName();
         if (enumFullName.indexOf('$') > -1) {

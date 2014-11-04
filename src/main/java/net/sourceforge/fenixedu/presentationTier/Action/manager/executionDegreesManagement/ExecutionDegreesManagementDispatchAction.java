@@ -303,8 +303,8 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     private void readAndSetDegrees(HttpServletRequest request) {
         final List<LabelValueBean> degreeTypes = new ArrayList<LabelValueBean>();
         for (final DegreeType bolonhaDegreeType : DegreeType.values()) {
-            degreeTypes
-                    .add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, bolonhaDegreeType.name()), bolonhaDegreeType.name()));
+            degreeTypes.add(new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, bolonhaDegreeType.name()),
+                    bolonhaDegreeType.name()));
         }
         degreeTypes.add(0, new LabelValueBean(BundleUtil.getString(Bundle.ENUMERATION, "dropDown.Default"), ""));
         request.setAttribute("degreeTypes", degreeTypes);

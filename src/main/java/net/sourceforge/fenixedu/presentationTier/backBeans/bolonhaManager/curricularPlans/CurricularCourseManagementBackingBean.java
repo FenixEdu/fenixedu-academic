@@ -678,7 +678,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,  e.getKey(), e.getArgs()));
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getKey(), e.getArgs()));
         }
         setContextID(null); // resetContextID
     }

@@ -27,7 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @StrutsFunctionality(app = RAMCurriculumHistoricApp.class, path = "view", titleKey = "link.visualize")
 @Mapping(module = "resourceAllocationManager", path = "/chooseExecutionYearAndDegreeCurricularPlan",
-formBean = "executionYearDegreeCurricularPlanForm")
+        formBean = "executionYearDegreeCurricularPlanForm")
 public class DegreeCurricularPlanExecutionYearDispacthActionForResourceAllocationManager extends
         DegreeCurricularPlanExecutionYearDispacthAction {
 }

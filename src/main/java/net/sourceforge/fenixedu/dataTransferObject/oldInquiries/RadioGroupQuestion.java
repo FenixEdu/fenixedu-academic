@@ -53,8 +53,7 @@ public class RadioGroupQuestion extends InquiriesQuestion {
     public RadioGroupQuestion(String label, Class enumClass, boolean showValues, QuestionHeader header) {
         this(label, showValues, header);
         for (Enum enumConstant : (Enum[]) enumClass.getEnumConstants()) {
-            addChoice(enumConstant.name(),
-                    BundleUtil.getString(Bundle.ENUMERATION, enumConstant.name()));
+            addChoice(enumConstant.name(), BundleUtil.getString(Bundle.ENUMERATION, enumConstant.name()));
         }
     }
 

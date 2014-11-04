@@ -96,13 +96,16 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
                 addCell("Semestre", summary.getSemester().getSemester() + " - "
                         + summary.getSemester().getExecutionYear().getYear());
                 addCell("Curso", summary.getDegree().getSigla());
-                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.relationsSize"), summary.getTutorshipSummaryRelationsSet()
-                        .size());
-                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyReunionsGroup"), summary.getHowManyReunionsGroup());
+                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.relationsSize"), summary
+                        .getTutorshipSummaryRelationsSet().size());
+                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyReunionsGroup"),
+                        summary.getHowManyReunionsGroup());
                 addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyReunionsIndividual"),
                         summary.getHowManyReunionsIndividual());
-                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyContactsPhone"), summary.getHowManyContactsPhone());
-                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyContactsEmail"), summary.getHowManyContactsEmail());
+                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyContactsPhone"),
+                        summary.getHowManyContactsPhone());
+                addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.howManyContactsEmail"),
+                        summary.getHowManyContactsEmail());
 
                 addCell("Problemas:", "");
                 addCell("Horários/Inscrições", convertBoolean(summary.getProblemsR1()));
@@ -132,7 +135,8 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
                 addCell("Outro", summary.getGainsOther());
 
                 if (summary.getTutorshipSummaryProgramAssessment() != null) {
-                    addCell("Apreciação Global", BundleUtil.getString(Bundle.ENUMERATION, summary.getTutorshipSummaryProgramAssessment().getName()));
+                    addCell("Apreciação Global",
+                            BundleUtil.getString(Bundle.ENUMERATION, summary.getTutorshipSummaryProgramAssessment().getName()));
                 } else {
                     addCell("Apreciação Global", "");
                 }
@@ -159,24 +163,24 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
                         addCell("Curso", line.getKey().getDegree().getSigla());
                         addCell("Aluno", line.getValue().getTutorship().getStudent().getName() + "("
                                 + line.getValue().getTutorship().getStudent().getNumber() + ")");
-                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.withoutEnrolments"), convertBoolean(line.getValue()
-                                .getWithoutEnrolments()));
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.withoutEnrolments"),
+                                convertBoolean(line.getValue().getWithoutEnrolments()));
                         if (line.getValue().getParticipationType() == null) {
                             addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.participationType"), "");
                         } else {
                             addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.participationType"),
                                     BundleUtil.getString(Bundle.ENUMERATION, line.getValue().getParticipationType().getName()));
                         }
-                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.participationRegularly"), convertBoolean(line
-                                .getValue().getParticipationRegularly()));
-                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.participationNone"), convertBoolean(line.getValue()
-                                .getParticipationNone()));
-                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.outOfTouch"), convertBoolean(line.getValue()
-                                .getOutOfTouch()));
-                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.highPerformance"), convertBoolean(line.getValue()
-                                .getHighPerformance()));
-                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.lowPerformance"), convertBoolean(line.getValue()
-                                .getLowPerformance()));
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.participationRegularly"),
+                                convertBoolean(line.getValue().getParticipationRegularly()));
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.participationNone"),
+                                convertBoolean(line.getValue().getParticipationNone()));
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.outOfTouch"),
+                                convertBoolean(line.getValue().getOutOfTouch()));
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.highPerformance"),
+                                convertBoolean(line.getValue().getHighPerformance()));
+                        addCell(BundleUtil.getString(Bundle.APPLICATION, "label.tutorshipSummary.form.lowPerformance"),
+                                convertBoolean(line.getValue().getLowPerformance()));
                     }
                 };
 

@@ -128,7 +128,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
             if (pastDiplomaRequest == null) {
                 checkForRegistryRequest(registration, requestedCycle);
             }
-        } else if (diplomaRequest.isPayedUponCreation() && diplomaRequest.getEvent() != null && !diplomaRequest.getEvent().isPayed()) {
+        } else if (diplomaRequest.isPayedUponCreation() && diplomaRequest.getEvent() != null
+                && !diplomaRequest.getEvent().isPayed()) {
             throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedDiplomaRequest");
         }
     }
@@ -137,7 +138,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
         final RegistryDiplomaRequest registryRequest = registration.getRegistryDiplomaRequest(requestedCycle);
         if (registryRequest == null) {
             throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutRegistryRequest");
-        } else if (registryRequest.isPayedUponCreation() && registryRequest.getEvent() != null && !registryRequest.getEvent().isPayed()) {
+        } else if (registryRequest.isPayedUponCreation() && registryRequest.getEvent() != null
+                && !registryRequest.getEvent().isPayed()) {
             throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedRegistryRequest");
         }
     }

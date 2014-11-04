@@ -33,9 +33,9 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -52,8 +52,8 @@ public class NotifyStudentGroup {
         }
 
         final String groupName =
-                BundleUtil.getString(Bundle.GLOBAL, "label.group", new String[] { submission
-                        .getStudentGroup().getGroupNumber().toString() });
+                BundleUtil.getString(Bundle.GLOBAL, "label.group", new String[] { submission.getStudentGroup().getGroupNumber()
+                        .toString() });
         Sender sender = ExecutionCourseSender.newInstance(course);
         Recipient recipient = new Recipient(groupName, UserGroup.of(Person.convertToUsers(recievers)));
         new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), submission.getProject().getName(),

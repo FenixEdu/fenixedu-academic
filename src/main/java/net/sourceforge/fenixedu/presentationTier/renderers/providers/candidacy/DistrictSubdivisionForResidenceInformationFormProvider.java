@@ -43,7 +43,8 @@ public class DistrictSubdivisionForResidenceInformationFormProvider implements D
         final ResidenceInformationForm residenceInformationForm = (ResidenceInformationForm) source;
         if (residenceInformationForm.getDistrictOfResidence() != null) {
             List<DistrictSubdivision> result =
-                    new ArrayList<DistrictSubdivision>(residenceInformationForm.getDistrictOfResidence().getDistrictSubdivisionsSet());
+                    new ArrayList<DistrictSubdivision>(residenceInformationForm.getDistrictOfResidence()
+                            .getDistrictSubdivisionsSet());
             Collections.sort(result, new BeanComparator("name"));
             return result;
         }

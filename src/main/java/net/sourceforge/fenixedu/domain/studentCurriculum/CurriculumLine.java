@@ -226,7 +226,8 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     public MultiLanguageString getName() {
         ExecutionSemester period = getExecutionPeriod();
         CurricularCourse course = getCurricularCourse();
-        return new MultiLanguageString().with(MultiLanguageString.pt, course.getName(period)).with(MultiLanguageString.en, course.getNameEn(period));
+        return new MultiLanguageString().with(MultiLanguageString.pt, course.getName(period)).with(MultiLanguageString.en,
+                course.getNameEn(period));
     }
 
     public boolean hasExecutionPeriod() {

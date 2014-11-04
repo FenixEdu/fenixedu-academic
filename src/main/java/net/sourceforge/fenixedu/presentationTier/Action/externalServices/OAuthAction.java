@@ -87,9 +87,7 @@ public class OAuthAction extends FenixDispatchAction {
             UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
             String browserName = userAgent.getBrowser().getName();
             String osName = userAgent.getOperatingSystem().getName();
-            deviceId =
-                    BundleUtil.getString(Bundle.APPLICATION, "oauthapps.label.device.type",
-                            browserName, osName);
+            deviceId = BundleUtil.getString(Bundle.APPLICATION, "oauthapps.label.device.type", browserName, osName);
         }
         return deviceId;
     }

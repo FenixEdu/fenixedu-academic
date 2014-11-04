@@ -200,7 +200,8 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     @Override
     public void setTemplateEntry(AcademicCalendarEntry templateEntry) {
-        if (templateEntry != null && (!templateEntry.getClass().equals(getClass()) || getBasedEntriesSet().contains(templateEntry))) {
+        if (templateEntry != null
+                && (!templateEntry.getClass().equals(getClass()) || getBasedEntriesSet().contains(templateEntry))) {
             throw new DomainException("error.AcademicCalendarEntry.invalid.template.entry");
         }
         if (!isRoot()) {

@@ -549,7 +549,8 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
         }
 
         for (Professorship otherTeacherProfessorship : executionCourse.getProfessorshipsSet()) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
+                    .getStudentInquiriesTeachingResultsSet()) {
                 final boolean publicDisclosure =
                         studentInquiriesTeachingResult.getPublicDegreeDisclosure() != null
                                 && studentInquiriesTeachingResult.getPublicDegreeDisclosure();
@@ -578,7 +579,8 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
         }
 
         for (Professorship otherTeacherProfessorship : executionCourse.getProfessorshipsSet()) {
-            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship.getStudentInquiriesTeachingResultsSet()) {
+            for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
+                    .getStudentInquiriesTeachingResultsSet()) {
                 if (studentInquiriesTeachingResult.getPublicDegreeDisclosure() != null
                         && studentInquiriesTeachingResult.getPublicDegreeDisclosure()) {
                     final StudentInquiriesCourseResultBean studentInquiriesCourseResultBean =

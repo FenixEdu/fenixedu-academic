@@ -18,8 +18,8 @@
  */
 package net.sourceforge.fenixedu.domain.institutionalRelations.academic;
 
-
-@Deprecated // TODO : delete this class on next major version of fenix
+@Deprecated
+// TODO : delete this class on next major version of fenix
 public class Program extends Program_Base {
 
     public Program() {

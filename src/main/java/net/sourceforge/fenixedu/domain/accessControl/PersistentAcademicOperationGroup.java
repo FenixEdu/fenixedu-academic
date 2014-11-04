@@ -72,7 +72,7 @@ public class PersistentAcademicOperationGroup extends PersistentAcademicOperatio
             final Set<AcademicProgram> programs, final Set<AdministrativeOffice> offices, final Scope scope) {
         return filter(PersistentAcademicOperationGroup.class).filter(
                 group -> Objects.equals(group.getOperation(), operation) && collectionEquals(group.getProgramSet(), programs)
-                && collectionEquals(group.getOfficeSet(), offices) && Objects.equals(group.getScope(), scope)).findAny();
+                        && collectionEquals(group.getOfficeSet(), offices) && Objects.equals(group.getScope(), scope)).findAny();
     }
 
     private static boolean collectionEquals(Set<?> one, Set<?> another) {

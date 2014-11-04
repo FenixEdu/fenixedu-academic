@@ -216,8 +216,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
             for (; !getCurricularRulesSet().isEmpty(); getCurricularRulesSet().iterator().next().delete()) {
                 ;
             }
-            for (; !getParticipatingPrecedenceCurricularRulesSet().isEmpty(); getParticipatingPrecedenceCurricularRulesSet().iterator()
-                    .next().delete()) {
+            for (; !getParticipatingPrecedenceCurricularRulesSet().isEmpty(); getParticipatingPrecedenceCurricularRulesSet()
+                    .iterator().next().delete()) {
                 ;
             }
             for (; !getParticipatingExclusivenessCurricularRulesSet().isEmpty(); getParticipatingExclusivenessCurricularRulesSet()

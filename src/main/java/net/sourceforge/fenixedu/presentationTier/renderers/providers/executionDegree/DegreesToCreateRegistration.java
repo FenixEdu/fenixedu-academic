@@ -29,7 +29,8 @@ public class DegreesToCreateRegistration extends DegreesByEmployeeUnit {
 
     @Override
     protected Collection<Degree> getDegrees() {
-        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.CREATE_REGISTRATION);
+        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.CREATE_REGISTRATION);
     }
 
 }

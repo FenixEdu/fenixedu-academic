@@ -109,7 +109,8 @@ public class ExportEPFLPhdProgramCandidacies {
         writer.println(addTabs(3)
                 + String.format(
                         "<lieuPersonne action=\"AUTO\" type=\"LIEUNAI\" identificationLieu=\"iso\" iso=\"%s\" typeLieu=\"PAYS\">%s</lieuPersonne>",
-                        person.getCountry().getCode(), person.getCountry().getCountryNationality().getContent(MultiLanguageString.en)));
+                        person.getCountry().getCode(),
+                        person.getCountry().getCountryNationality().getContent(MultiLanguageString.en)));
 
         writer.println(addTabs(3)
                 + String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUNAIETRA\" "
@@ -155,7 +156,8 @@ public class ExportEPFLPhdProgramCandidacies {
         writer.println(addTabs(3) + "</gps>");
 
         writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL\">%s</detail>", getUrlForProcess(process)));
-        writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL_DOCUMENTS\">%s</detail>", getUrlForProcessDocs(process)));
+        writer.println(addTabs(3)
+                + String.format(" <detail type=\"URL_IST-EPFL_DOCUMENTS\">%s</detail>", getUrlForProcessDocs(process)));
         final Photograph photo = person.getPersonalPhotoEvenIfPending();
         if (photo != null) {
             writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL_PHOTO\">%s</detail>", getUrlForPhoto(photo)));
@@ -163,8 +165,8 @@ public class ExportEPFLPhdProgramCandidacies {
 
         if (process.getExternalPhdProgram() != null) {
             writer.println(addTabs(3)
-                    + String.format("<detail type=\"PDOC_AT_EPFL\" format=\"COURTU\">%s</detail>", process.getExternalPhdProgram()
-                            .getAcronym()));
+                    + String.format("<detail type=\"PDOC_AT_EPFL\" format=\"COURTU\">%s</detail>", process
+                            .getExternalPhdProgram().getAcronym()));
         }
 
         writer.println(addTabs(3)

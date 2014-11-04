@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import org.fenixedu.bennu.core.groups.Group;
 
 public class PersistentStudentSharingDegreeOfCompetenceOfExecutionCourseGroup extends
-PersistentStudentSharingDegreeOfCompetenceOfExecutionCourseGroup_Base {
+        PersistentStudentSharingDegreeOfCompetenceOfExecutionCourseGroup_Base {
     protected PersistentStudentSharingDegreeOfCompetenceOfExecutionCourseGroup(ExecutionCourse executionCourse) {
         super();
         init(executionCourse);

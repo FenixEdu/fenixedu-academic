@@ -47,8 +47,7 @@ public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     }
 
     public static PersistentAlumniGroup getInstance(Degree degree) {
-        return singleton(
-                () -> degree == null ? find(PersistentAlumniGroup.class) : Optional.ofNullable(degree.getAlumniGroup()),
-                        () -> new PersistentAlumniGroup(degree));
+        return singleton(() -> degree == null ? find(PersistentAlumniGroup.class) : Optional.ofNullable(degree.getAlumniGroup()),
+                () -> new PersistentAlumniGroup(degree));
     }
 }

@@ -290,8 +290,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             } else {
                 if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)
                         || !bean.getPersonBean().getPerson().getPersonRolesSet().isEmpty()
-                        || bean.getPersonBean().getPerson().getUser() != null || bean.getPersonBean().getPerson().getStudent() != null
-                        || bean.hasInstitutionId()) {
+                        || bean.getPersonBean().getPerson().getUser() != null
+                        || bean.getPersonBean().getPerson().getStudent() != null || bean.hasInstitutionId()) {
                     result = bean.getPersonBean().getPerson();
                 } else {
                     /*
@@ -808,7 +808,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean hasSchoolPartConcluded() {
-        boolean concluded = getRegistration() != null && (getRegistration().isSchoolPartConcluded() || getRegistration().isConcluded());
+        boolean concluded =
+                getRegistration() != null && (getRegistration().isSchoolPartConcluded() || getRegistration().isConcluded());
         return (getStudyPlan() != null && getStudyPlan().isExempted()) || concluded;
     }
 
@@ -1053,8 +1054,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                 } else {
                     if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)
                             || !bean.getPersonBean().getPerson().getPersonRolesSet().isEmpty()
-                            || bean.getPersonBean().getPerson().getUser() != null || bean.getPersonBean().getPerson().getStudent() != null
-                            || bean.hasInstitutionId()) {
+                            || bean.getPersonBean().getPerson().getUser() != null
+                            || bean.getPersonBean().getPerson().getStudent() != null || bean.hasInstitutionId()) {
                         result = bean.getPersonBean().getPerson();
                     } else {
                         /*

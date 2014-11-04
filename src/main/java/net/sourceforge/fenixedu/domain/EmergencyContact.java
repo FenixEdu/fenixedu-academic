@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.presentationTier.Action.person.UpdateEmergencyContactDA.EmergencyContactBean;
 import pt.ist.fenixframework.Atomic;
 
-
 public class EmergencyContact extends EmergencyContact_Base {
 
     protected EmergencyContact() {

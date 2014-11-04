@@ -52,8 +52,7 @@ public class OutboundMobilityCandidacyGroupProvider implements DataProvider {
     public SortedSet<OutboundMobilityCandidacyContestGroup> getCandidacyContestGroupSet(
             final OutboundMobilityCandidacyPeriod period) {
         final User user = Authenticate.getUser();
-        if (AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_MOBILITY_OUTBOUND).isMember(
-                user)) {
+        if (AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_MOBILITY_OUTBOUND).isMember(user)) {
             return period.getOutboundMobilityCandidacyContestGroupSet();
         }
         final SortedSet<OutboundMobilityCandidacyContestGroup> result = new TreeSet<OutboundMobilityCandidacyContestGroup>();

@@ -206,7 +206,8 @@ public class TutorSummaryBean extends TutorSearchBean {
             final TutorSummaryBean chooseDegreeBean = (TutorSummaryBean) source;
 
             if (chooseDegreeBean.getExecutionSemester() != null) {
-                for (final ExecutionDegree executionDegree : chooseDegreeBean.getExecutionSemester().getExecutionYear().getExecutionDegreesSet()) {
+                for (final ExecutionDegree executionDegree : chooseDegreeBean.getExecutionSemester().getExecutionYear()
+                        .getExecutionDegreesSet()) {
                     if (executionDegree.getDegreeType().isFirstCycle()) {
                         result.add(executionDegree.getDegree());
                     }

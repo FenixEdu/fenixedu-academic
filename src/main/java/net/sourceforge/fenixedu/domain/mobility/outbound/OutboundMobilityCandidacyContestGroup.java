@@ -163,20 +163,16 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     }
 
     public Spreadsheet getCandidatesInformationSpreadSheet(final OutboundMobilityCandidacyPeriod period) {
-        final String filename =
-                BundleUtil.getString(Bundle.ACADEMIC,
-                        "label.mobility.candidates.information.filename");
+        final String filename = BundleUtil.getString(Bundle.ACADEMIC, "label.mobility.candidates.information.filename");
 
         final Spreadsheet spreadsheetCurricularInfo = new Spreadsheet(filename);
         final Spreadsheet spreadsheetOptions =
                 spreadsheetCurricularInfo.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC,
                         "label.mobility.candidates.options"));
         final Spreadsheet spreadsheetContactInformation =
-                spreadsheetOptions.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC,
-                        "label.contact.information"));
+                spreadsheetOptions.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC, "label.contact.information"));
         final Spreadsheet spreadsheetOtherCurricularInfo =
-                spreadsheetOptions.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC,
-                        "label.other.curricular.info"));
+                spreadsheetOptions.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC, "label.other.curricular.info"));
 
         final Set<Registration> processed = new HashSet<Registration>();
         for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
@@ -199,7 +195,8 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
 
                     row.setCell(getString("label.ects.first.cycle"), calculator.completedECTSCycle1.toString());
                     row.setCell(getString("label.ects.average"), calculator.getEctsAverage().toString());
-                    row.setCell(getString("label.ects.average.first.and.second.cycle"), calculator.getEctsEverateFirstAndSecondCycle().toString());
+                    row.setCell(getString("label.ects.average.first.and.second.cycle"), calculator
+                            .getEctsEverateFirstAndSecondCycle().toString());
                     row.setCell(getString("label.ects.completed"), calculator.completedECTS.toString());
                     //row.setCell(getString("label.ects.pending"), calculator.getPendingEcts().toString());
                     row.setCell(getString("label.ects.enrolled"), calculator.enrolledECTS.toString());

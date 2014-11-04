@@ -34,8 +34,10 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
+
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -54,8 +56,7 @@ public class DeleteSupportLesson {
 
     private void log(final SupportLesson supportLesson) {
         final StringBuilder log = new StringBuilder();
-        log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS,
-                "label.teacher.schedule.supportLessons.delete"));
+        log.append(BundleUtil.getString(Bundle.TEACHER_CREDITS, "label.teacher.schedule.supportLessons.delete"));
         log.append(WeekDay.getWeekDay(supportLesson.getWeekDay()).getLabel());
         log.append(" ");
         log.append(supportLesson.getStartTime().getHours());

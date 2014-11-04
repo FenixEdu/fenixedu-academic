@@ -59,7 +59,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @StrutsFunctionality(app = RAMExecutionCoursesApp.class, path = "manage", titleKey = "link.management")
 @Mapping(path = "/manageExecutionCourses", module = "resourceAllocationManager")
 @Forwards({ @Forward(name = "ShowSearchForm", path = "/resourceAllocationManager/manageExecutionCourses_bd.jsp"),
-    @Forward(name = "showOccupancy", path = "/resourceAllocationManager/showOccupancyLevels_bd.jsp"),
+        @Forward(name = "showOccupancy", path = "/resourceAllocationManager/showOccupancyLevels_bd.jsp"),
         @Forward(name = "showLoads", path = "/resourceAllocationManager/showLoads_bd.jsp") })
 public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 

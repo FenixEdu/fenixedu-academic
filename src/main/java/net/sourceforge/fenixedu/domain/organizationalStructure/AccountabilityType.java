@@ -92,8 +92,7 @@ public class AccountabilityType extends AccountabilityType_Base {
 
         MultiLanguageString typeName = getTypeName();
         typeName =
-                typeName == null ? new MultiLanguageString(Locale.getDefault(), name) : typeName.with(
-                        Locale.getDefault(), name);
+                typeName == null ? new MultiLanguageString(Locale.getDefault(), name) : typeName.with(Locale.getDefault(), name);
 
         setTypeName(typeName);
     }

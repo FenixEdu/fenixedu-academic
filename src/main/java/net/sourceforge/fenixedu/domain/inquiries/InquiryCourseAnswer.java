@@ -117,8 +117,9 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
                             for (final InquiryCourseAnswer inquiryCourseAnswer : course.getInquiryCourseAnswersSet()) {
                                 final RegistrationAgreement studentType = inquiryCourseAnswer.getStudentType();
                                 if (studentType != null && inquiryCourseAnswer.getRegistrationProtocol() == null) {
-                                    inquiryCourseAnswer.setRegistrationProtocol(RegistrationProtocol.serveRegistrationProtocol(studentType));
-                                }                
+                                    inquiryCourseAnswer.setRegistrationProtocol(RegistrationProtocol
+                                            .serveRegistrationProtocol(studentType));
+                                }
                             }
                         }
                     }

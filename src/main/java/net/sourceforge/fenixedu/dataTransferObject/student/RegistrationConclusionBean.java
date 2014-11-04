@@ -220,10 +220,11 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public String getConclusionDegreeDescription() {
-        return isByCycle() ? getRegistration().getDegreeDescription(getConclusionYear(), getCycleCurriculumGroup().getCycleType()) : getRegistration()
+        return isByCycle() ? getRegistration()
+                .getDegreeDescription(getConclusionYear(), getCycleCurriculumGroup().getCycleType()) : getRegistration()
                 .getDegreeDescription();
     }
-    
+
     public boolean isConcluded() {
         return isByCycle() ? getCycleCurriculumGroup().isConcluded() : hasConcludedRegistration();
     }

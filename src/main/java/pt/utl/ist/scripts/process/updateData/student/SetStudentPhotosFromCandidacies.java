@@ -44,7 +44,8 @@ public class SetStudentPhotosFromCandidacies extends CronTask {
                                 if (contentType != null) {
                                     withContentType++;
                                     if (chew(content)) {
-                                        final Photograph p = new Photograph(PhotoType.INSTITUTIONAL, contentType, new ByteArray(content));
+                                        final Photograph p =
+                                                new Photograph(PhotoType.INSTITUTIONAL, contentType, new ByteArray(content));
                                         p.setState(PhotoState.APPROVED);
                                         person.setPersonalPhoto(p);
                                         fixed++;

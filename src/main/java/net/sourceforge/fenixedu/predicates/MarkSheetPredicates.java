@@ -63,16 +63,19 @@ public class MarkSheetPredicates {
 
         @Override
         public boolean evaluate(final MarkSheet markSheet) {
-            return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.REMOVE_GRADES).contains(markSheet.getCurricularCourse().getDegree());
+            return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                    AcademicOperationType.REMOVE_GRADES).contains(markSheet.getCurricularCourse().getDegree());
         }
     };
 
     static public boolean checkRectification(Degree degree) {
-        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.RECTIFICATION_MARKSHEETS).contains(degree);
+        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.RECTIFICATION_MARKSHEETS).contains(degree);
     }
 
     static public boolean checkDissertation(Degree degree) {
-        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.DISSERTATION_MARKSHEETS).contains(degree);
+        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.DISSERTATION_MARKSHEETS).contains(degree);
     }
 
     private static boolean hasScientificCouncilRole() {

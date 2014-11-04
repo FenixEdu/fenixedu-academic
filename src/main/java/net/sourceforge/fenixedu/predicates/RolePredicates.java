@@ -50,7 +50,8 @@ public class RolePredicates {
 
             if (contactPerson.getStudent() != null && !contactPerson.hasRole(RoleType.GRANT_OWNER)
                     && !contactPerson.hasRole(RoleType.EMPLOYEE)) {
-                return AcademicAuthorizationGroup.get(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(Authenticate.getUser());
+                return AcademicAuthorizationGroup.get(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(
+                        Authenticate.getUser());
             }
 
             return false;

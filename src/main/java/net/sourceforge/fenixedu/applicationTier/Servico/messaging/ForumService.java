@@ -42,8 +42,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
-import pt.ist.fenixframework.FenixFramework;
-
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
  *         Created on May 23, 2006, 3:48:23 PM

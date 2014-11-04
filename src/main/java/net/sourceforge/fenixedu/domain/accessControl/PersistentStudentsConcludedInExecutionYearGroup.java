@@ -47,7 +47,7 @@ public class PersistentStudentsConcludedInExecutionYearGroup extends PersistentS
     public static PersistentStudentsConcludedInExecutionYearGroup getInstance(Degree degree, ExecutionYear conclusionYear) {
         return singleton(
                 () -> conclusionYear.getStudentsConcludedInExecutionYearGroupSet().stream()
-                .filter(group -> Objects.equals(group.getDegree(), degree)).findAny(),
+                        .filter(group -> Objects.equals(group.getDegree(), degree)).findAny(),
                 () -> new PersistentStudentsConcludedInExecutionYearGroup(degree, conclusionYear));
     }
 }

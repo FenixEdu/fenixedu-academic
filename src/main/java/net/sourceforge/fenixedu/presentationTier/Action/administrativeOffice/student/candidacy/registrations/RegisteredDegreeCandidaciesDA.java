@@ -102,6 +102,7 @@ public class RegisteredDegreeCandidaciesDA extends FenixDispatchAction {
     }
 
     protected Set<Degree> getDegreesToSearch() {
-        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_REGISTERED_DEGREE_CANDIDACIES);
+        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_REGISTERED_DEGREE_CANDIDACIES);
     }
 }

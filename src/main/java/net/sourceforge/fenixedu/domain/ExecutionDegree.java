@@ -159,10 +159,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public boolean canBeDeleted() {
-        return getSchoolClassesSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty() && getScheduling() == null
-                && getAssociatedFinalDegreeWorkGroupsSet().isEmpty() && getAssociatedInquiriesCoursesByCourseSet().isEmpty()
-                && getAssociatedInquiriesCoursesByStudentSet().isEmpty() && getStudentCandidaciesSet().isEmpty()
-                && getShiftDistributionEntriesSet().isEmpty();
+        return getSchoolClassesSet().isEmpty() && getMasterDegreeCandidatesSet().isEmpty() && getGuidesSet().isEmpty()
+                && getScheduling() == null && getAssociatedFinalDegreeWorkGroupsSet().isEmpty()
+                && getAssociatedInquiriesCoursesByCourseSet().isEmpty() && getAssociatedInquiriesCoursesByStudentSet().isEmpty()
+                && getStudentCandidaciesSet().isEmpty() && getShiftDistributionEntriesSet().isEmpty();
     }
 
     public void delete() {

@@ -651,8 +651,7 @@ public class MarkSheet extends MarkSheet_Base {
         parameters.put("rectification", rectification);
         parameters.put("rectified", rectification.getRectified());
 
-        boolean result =
-                ReportsUtils.printReport("markSheetRectification", parameters, Collections.emptyList(), printerName);
+        boolean result = ReportsUtils.printReport("markSheetRectification", parameters, Collections.emptyList(), printerName);
         if (!result) {
             throw new UnableToPrintServiceException("error.print.failed");
         }

@@ -126,10 +126,10 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
 
     @Override
     public String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee) {
-        return String.format(BundleUtil.getString(Bundle.PHD, "message.phd.epfl.email.body.referee"), referee.getPhdProgramCandidacyProcess()
-                .getIndividualProgramProcess().getPhdProgramFocusArea().getName().getContent(), EPFLPhdCandidacyProcessProperties
-                .getConfiguration().getPublicCandidacyRefereeFormLink(), referee.getValue(), referee
-                .getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().getEnd().toString("yyyy-MM-dd HH:mm"));
+        return String.format(BundleUtil.getString(Bundle.PHD, "message.phd.epfl.email.body.referee"), referee
+                .getPhdProgramCandidacyProcess().getIndividualProgramProcess().getPhdProgramFocusArea().getName().getContent(),
+                EPFLPhdCandidacyProcessProperties.getConfiguration().getPublicCandidacyRefereeFormLink(), referee.getValue(),
+                referee.getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().getEnd().toString("yyyy-MM-dd HH:mm"));
     }
 
     @Override

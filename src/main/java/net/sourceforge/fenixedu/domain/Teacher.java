@@ -507,7 +507,7 @@ public class Teacher extends Teacher_Base {
 
                 Collection<ExecutionDegree> executionDegrees =
                         masterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan()
-                .getDegreeCurricularPlan().getExecutionDegreesSet();
+                                .getDegreeCurricularPlan().getExecutionDegreesSet();
 
                 for (ExecutionDegree executionDegree : executionDegrees) {
                     if (executionDegree.getExecutionYear().equals(executionYear)) {

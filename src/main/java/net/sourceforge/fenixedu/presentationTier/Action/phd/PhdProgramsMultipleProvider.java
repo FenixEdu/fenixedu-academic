@@ -29,7 +29,8 @@ public class PhdProgramsMultipleProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object current) {
-        return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES);
+        return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_PHD_PROCESSES);
     }
 
     @Override

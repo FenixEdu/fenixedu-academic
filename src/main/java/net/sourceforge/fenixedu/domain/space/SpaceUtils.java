@@ -211,7 +211,8 @@ public class SpaceUtils {
         return Space.getSpaces().filter(space -> name.equals(space.getName())).findAny().get();
     }
 
-    @Deprecated // TODO : remove this stuff in fenix v4 
+    @Deprecated
+    // TODO : remove this stuff in fenix v4 
     public static Occupation getFirstOccurrenceOfResourceAllocationByClass(Space space, Class<? extends Occupation> clazz) {
         if (clazz != null) {
             for (Occupation resourceAllocation : space.getOccupationSet()) {

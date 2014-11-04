@@ -141,7 +141,8 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     private Spreadsheet buildReport(final List<Over23IndividualCandidacyProcess> over23IndividualCandidacies) {
         final Spreadsheet result = new CandidacyReport("candidacies");
 
-        result.setHeaders(new String[] { BundleUtil.getString(Bundle.APPLICATION, "label.name"), BundleUtil.getString(Bundle.APPLICATION, "label.identificationNumber"),
+        result.setHeaders(new String[] { BundleUtil.getString(Bundle.APPLICATION, "label.name"),
+                BundleUtil.getString(Bundle.APPLICATION, "label.identificationNumber"),
                 BundleUtil.getString(Bundle.APPLICATION, "label.degrees") });
 
         for (final Over23IndividualCandidacyProcess candidacy : over23IndividualCandidacies) {

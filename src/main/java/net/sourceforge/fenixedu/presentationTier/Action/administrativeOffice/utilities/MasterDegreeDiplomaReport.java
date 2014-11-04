@@ -46,8 +46,8 @@ public class MasterDegreeDiplomaReport extends DiplomaReport {
                 "curso de " + BundleUtil.getString(Bundle.ENUMERATION, DegreeType.MASTER_DEGREE.getQualifiedName()).toLowerCase());
 
         addParameter("graduateTitle",
-                BundleUtil.getString(Bundle.ENUMERATION, DegreeType.MASTER_DEGREE.getQualifiedName() + ".graduate.title") + " em "
-                        + StringFormatter.prettyPrint(this.studentDiplomaInformation.getDegreeName()));
+                BundleUtil.getString(Bundle.ENUMERATION, DegreeType.MASTER_DEGREE.getQualifiedName() + ".graduate.title")
+                        + " em " + StringFormatter.prettyPrint(this.studentDiplomaInformation.getDegreeName()));
 
     }
 

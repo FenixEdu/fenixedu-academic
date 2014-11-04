@@ -267,7 +267,8 @@ public class MergeExecutionCourses {
     }
 
     private void copyBibliographicReference(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
-        for (; !executionCourseFrom.getAssociatedBibliographicReferencesSet().isEmpty(); executionCourseTo.getAssociatedBibliographicReferencesSet().add(
+        for (; !executionCourseFrom.getAssociatedBibliographicReferencesSet().isEmpty(); executionCourseTo
+                .getAssociatedBibliographicReferencesSet().add(
                         executionCourseFrom.getAssociatedBibliographicReferencesSet().iterator().next())) {
             ;
         }
@@ -433,14 +434,16 @@ public class MergeExecutionCourses {
             if (otherProfessorship == null) {
                 professorship.setExecutionCourse(executionCourseTo);
             } else {
-                for (; !professorship.getAssociatedSummariesSet().isEmpty(); otherProfessorship.addAssociatedSummaries(professorship.getAssociatedSummariesSet().iterator().next())) {
+                for (; !professorship.getAssociatedSummariesSet().isEmpty(); otherProfessorship
+                        .addAssociatedSummaries(professorship.getAssociatedSummariesSet().iterator().next())) {
                     ;
                 }
                 for (; !professorship.getAssociatedShiftProfessorshipSet().isEmpty(); otherProfessorship
                         .addAssociatedShiftProfessorship(professorship.getAssociatedShiftProfessorshipSet().iterator().next())) {
                     ;
                 }
-                for (; !professorship.getSupportLessonsSet().isEmpty(); otherProfessorship.addSupportLessons(professorship.getSupportLessonsSet().iterator().next())) {
+                for (; !professorship.getSupportLessonsSet().isEmpty(); otherProfessorship.addSupportLessons(professorship
+                        .getSupportLessonsSet().iterator().next())) {
                     ;
                 }
                 for (; !professorship.getDegreeTeachingServicesSet().isEmpty(); otherProfessorship
