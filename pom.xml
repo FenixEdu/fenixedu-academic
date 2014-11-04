@@ -19,7 +19,7 @@
     <properties>
         <skipTests>true</skipTests>
 
-        <version.org.fenixedu.bennu>3.3.4</version.org.fenixedu.bennu>
+        <version.org.fenixedu.bennu>3.4.0</version.org.fenixedu.bennu>
     </properties>
 
     <issueManagement>
