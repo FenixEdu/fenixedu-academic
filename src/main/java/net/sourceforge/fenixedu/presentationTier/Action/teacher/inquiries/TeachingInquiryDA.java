@@ -68,21 +68,15 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/teachingInquiry", module = "teacher", functionality = ManageExecutionCourseDA.class)
-@Forwards({
-        @Forward(name = "showFilledTeachingInquiry", path = "/coordinator/inquiries/showFilledTeachingInquiry.jsp"),
+@Forwards({ @Forward(name = "showFilledTeachingInquiry", path = "/coordinator/inquiries/showFilledTeachingInquiry.jsp"),
         @Forward(name = "showFilledTeachingInquiry_v2", path = "/coordinator/inquiries/showFilledTeachingInquiry_v2.jsp"),
-        @Forward(name = "showCourseInquiryResult", path = "/teacher/inquiries/showCourseInquiryResult.jsp", useTile = false,
-                tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "showCourseInquiryResult_v2", path = "/teacher/inquiries/showCourseInquiryResult_v2.jsp",
-                useTile = false, tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "showTeachingInquiryResult", path = "/teacher/inquiries/showTeachingInquiryResult.jsp", useTile = false,
-                tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
-        @Forward(name = "showTeachingInquiryResult_v2", path = "/teacher/inquiries/showTeachingInquiryResult_v2.jsp",
-                useTile = false, tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")) })
+        @Forward(name = "showCourseInquiryResult", path = "/teacher/inquiries/showCourseInquiryResult.jsp"),
+        @Forward(name = "showCourseInquiryResult_v2", path = "/teacher/inquiries/showCourseInquiryResult_v2.jsp"),
+        @Forward(name = "showTeachingInquiryResult", path = "/teacher/inquiries/showTeachingInquiryResult.jsp"),
+        @Forward(name = "showTeachingInquiryResult_v2", path = "/teacher/inquiries/showTeachingInquiryResult_v2.jsp") })
 public class TeachingInquiryDA extends ExecutionCourseBaseAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

@@ -188,40 +188,6 @@
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareSelectExecutionCourseAction" path="/prepareSelectExecutionCourseAction">
                   <forward path="/prepareSelectExecutionCourse.jsp" name="sucess"></forward>
             </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ExecutionCourseDA" parameter="method" path="/executionCourse">
-                  <forward path="execution-course-first-page" name="execution-course-first-page"></forward>
-                  <forward path="execution-course-summaries" name="execution-course-summaries"></forward>
-                  <forward path="execution-course-objectives" name="execution-course-objectives"></forward>
-                  <forward path="execution-course-program" name="execution-course-program"></forward>
-                  <forward path="execution-course-evaluation-method" name="execution-course-evaluation-method"></forward>
-                  <forward path="execution-course-bibliographic-reference" name="execution-course-bibliographic-reference"></forward>
-                  <forward path="execution-course-schedule" name="execution-course-schedule"></forward>
-                  <forward path="execution-course-shifts" name="execution-course-shifts"></forward>
-                  <forward path="execution-course-evaluations" name="execution-course-evaluations"></forward>
-                  <forward path="execution-course-marks" name="execution-course-marks"></forward>
-                  <forward path="execution-course-groupings" name="execution-course-groupings"></forward>
-                  <forward path="execution-course-grouping" name="execution-course-grouping"></forward>
-                  <forward path="execution-course-student-group" name="execution-course-student-group"></forward>
-                  <forward path="execution-course-student-groups-by-shift" name="execution-course-student-groups-by-shift"></forward>
-                  <forward path="execution-course-student-inquiries-result" name="execution-course-student-inquiries-result"></forward>
-                  <forward path="execution-course-inquiries-curricular-result" name="execution-course-inquiries-curricular-result"></forward>
-                  <forward path="execution-course-student-inquiries-full-result" name="execution-course-student-inquiries-full-result"></forward>
-                  <forward path="execution-course-student-inquiries-result-notAvailable" name="execution-course-student-inquiries-result-notAvailable"></forward>
-                  <forward path="/executionCourse/inquiries/showCourseInquiryResult.jsp" name="execution-course-show-course-inquiries-result"></forward>
-                  <forward path="/executionCourse/inquiries/showTeachingInquiryResult.jsp" name="execution-course-show-teaching-inquiries-result"></forward>
-                  <forward path="execution-course-section" name="site-section"></forward>
-                  <forward path="execution-course-section-deny" name="site-section-deny"></forward>
-                  <forward path="execution-course-section-adviseLogin" name="site-section-adviseLogin"></forward>
-                  <forward path="execution-course-item" name="site-item"></forward>
-                  <forward path="execution-course-item-deny" name="site-item-deny"></forward>
-                  <forward path="execution-course-item-adviseLogin" name="site-item-adviseLogin"></forward>
-                  <forward path="execution-course-rss" name="execution-course-rss"></forward>
-                  <forward path="execution-course-lesson-plannings" name="execution-course-lesson-plannings"></forward>
-                  <forward path="execution-course-not-found" name="execution-course-not-found"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ExecutionCourseDA" validate="false" scope="request" name="summariesSearchForm" parameter="method" path="/searchSummaries">
-                  <forward path="execution-course-summaries" name="execution-course-summaries"></forward>
-            </action>
             <!-- SALAS -->
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.RoomSiteViewerDispatchAction" validate="true" scope="request" path="/viewRoom" name="indexForm" parameter="method" input="/chooseRoomsForm.do">
                   <forward path="viewRoom" name="roomViewer"></forward>

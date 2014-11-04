@@ -50,7 +50,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * Action to upload personal photographs.
@@ -59,13 +58,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "person", path = "/uploadPhoto", attribute = "voidForm", formBean = "voidForm", scope = "request",
         parameter = "method", functionality = VisualizePersonalInfo.class)
-@Forwards(value = {
-        @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")),
-        @Forward(name = "confirm", path = "/person/uploadPhoto.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")),
-        @Forward(name = "upload", path = "/person/uploadPhoto.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")) })
+@Forwards({ @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp"),
+        @Forward(name = "confirm", path = "/person/uploadPhoto.jsp"), @Forward(name = "upload", path = "/person/uploadPhoto.jsp") })
 public class UploadPhotoDA extends FenixDispatchAction {
     private static final int MAX_RAW_SIZE = 1000000; // 2M
 

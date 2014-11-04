@@ -45,7 +45,6 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.hash.Hashing;
@@ -53,11 +52,8 @@ import com.google.common.hash.Hashing;
 @StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "label.title.sync", path = "sync",
         bundle = "MessagingResources", titleKey = "label.title.sync")
 @Mapping(path = "/ICalTimeTable", module = "student")
-@Forwards({
-        @Forward(name = "viewOptions", path = "/student/iCalendar/viewCalendarInformation.jsp", tileProperties = @Tile(
-                title = "private.student.view.sync")),
-        @Forward(name = "chooseRegistration", path = "/student/iCalendar/chooseRegistration.jsp", tileProperties = @Tile(
-                title = "private.student.view.sync")) })
+@Forwards({ @Forward(name = "viewOptions", path = "/student/iCalendar/viewCalendarInformation.jsp"),
+        @Forward(name = "chooseRegistration", path = "/student/iCalendar/chooseRegistration.jsp") })
 public class ICalStudentTimeTable extends FenixDispatchAction {
 
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

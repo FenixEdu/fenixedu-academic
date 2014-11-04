@@ -46,7 +46,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/gratuityPaymentsReminder")
 @Forwards({
 
-@Forward(name = "showGratuityPaymentsReminder", path = "/showGratuityPaymentsReminder.jsp", useTile = false)
+@Forward(name = "showGratuityPaymentsReminder", path = "/showGratuityPaymentsReminder.jsp")
 
 })
 public class GratuityPaymentsReminderAction extends FenixDispatchAction {

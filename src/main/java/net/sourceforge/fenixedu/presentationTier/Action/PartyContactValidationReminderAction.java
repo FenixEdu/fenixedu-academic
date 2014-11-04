@@ -34,7 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/partyContactValidationReminder")
 @Forwards({
 
-@Forward(name = "showReminder", path = "/showPartyContactsValidationReminder.jsp", useTile = false)
+@Forward(name = "showReminder", path = "/showPartyContactsValidationReminder.jsp")
 
 })
 public class PartyContactValidationReminderAction extends FenixDispatchAction {

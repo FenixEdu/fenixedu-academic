@@ -33,16 +33,12 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "title.student.dataShareAuthorizations", path = "data-share",
         titleKey = "title.student.dataShareAuthorizations.short")
 @Mapping(path = "/studentDataShareAuthorization", module = "student")
-@Forwards({
-        @Forward(name = "authorizations", path = "/student/dataShareAuthorization/manageAuthorizations.jsp",
-                tileProperties = @Tile(title = "private.student.view.dataauthorization")),
-        @Forward(name = "historic", path = "/student/dataShareAuthorization/authorizationHistory.jsp", tileProperties = @Tile(
-                title = "private.student.view.dataauthorization")) })
+@Forwards({ @Forward(name = "authorizations", path = "/student/dataShareAuthorization/manageAuthorizations.jsp"),
+        @Forward(name = "historic", path = "/student/dataShareAuthorization/authorizationHistory.jsp") })
 public class StudentDataShareAuthorizationDispatchAction extends FenixDispatchAction {
     @EntryPoint
     public ActionForward manageAuthorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

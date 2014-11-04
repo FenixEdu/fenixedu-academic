@@ -51,7 +51,6 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -59,8 +58,7 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 @StrutsFunctionality(app = PedagogicalControlApp.class, path = "view-quc-teacher-status",
         titleKey = "title.inquiries.teachers.status", bundle = "InquiriesResources")
 @Mapping(path = "/qucTeachersStatus", module = "pedagogicalCouncil")
-@Forwards({ @Forward(name = "viewQucTeachersState", path = "/pedagogicalCouncil/inquiries/viewQucTeachersStatus.jsp",
-        tileProperties = @Tile(title = "private.pedagogiccouncil.control.teachersstatusresponse")) })
+@Forwards({ @Forward(name = "viewQucTeachersState", path = "/pedagogicalCouncil/inquiries/viewQucTeachersStatus.jsp") })
 public class ViewQucTeacherStatus extends FenixDispatchAction {
 
     @EntryPoint

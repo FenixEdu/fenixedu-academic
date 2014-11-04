@@ -39,16 +39,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @StrutsFunctionality(app = AlumniProfessionalInfoApp.class, path = "professional-information",
         titleKey = "link.professional.information")
 @Mapping(module = "alumni", path = "/professionalInformation", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "innerProfessionalInformation", path = "/alumni/viewAlumniProfessionalInformation.jsp",
-                tileProperties = @Tile(title = "private.alumni.employment.professionalinformation")),
-        @Forward(name = "manageProfessionalInformation", path = "/alumni/alumniManageProfessionalInformation.jsp",
-                tileProperties = @Tile(title = "private.alumni.employment.professionalinformation")) })
+@Forwards(value = { @Forward(name = "innerProfessionalInformation", path = "/alumni/viewAlumniProfessionalInformation.jsp"),
+        @Forward(name = "manageProfessionalInformation", path = "/alumni/alumniManageProfessionalInformation.jsp") })
 public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 
     @EntryPoint

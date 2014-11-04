@@ -40,13 +40,11 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "label.student.statutes", path = "statutes",
         titleKey = "link.title.statutes")
 @Mapping(path = "/ShowStudentStatutes", module = "student")
-@Forwards({ @Forward(name = "studentStatutes", path = "/student/showStudentStatutes.jsp", tileProperties = @Tile(
-        title = "private.student.view.statutes")) })
+@Forwards({ @Forward(name = "studentStatutes", path = "/student/showStudentStatutes.jsp") })
 public class ShowStudentStatutesDA extends FenixDispatchAction {
 
     @EntryPoint

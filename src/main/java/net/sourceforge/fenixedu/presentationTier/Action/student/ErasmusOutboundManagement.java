@@ -40,13 +40,11 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @StrutsFunctionality(app = StudentParticipateApp.class, path = "outbound-mobility",
         titleKey = "link.title.student.mobility.outbound")
 @Mapping(module = "student", path = "/erasmusOutboundManagement")
-@Forwards(value = { @Forward(name = "erasmusOutboundManagement", path = "/student/erasmusOutboundManagement.jsp",
-        tileProperties = @Tile(title = "private.student.erasmusOutboundManagement")) })
+@Forwards(@Forward(name = "erasmusOutboundManagement", path = "/student/erasmusOutboundManagement.jsp"))
 public class ErasmusOutboundManagement extends FenixDispatchAction {
 
     @EntryPoint
